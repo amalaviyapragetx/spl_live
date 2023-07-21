@@ -203,4 +203,6 @@ final Map<String, String> enUs = {
       "2) SPL Starline shall play only Single Ank, Single Panna,Double Panna and Triple Panna.",
   "STARLINE_TEXT3":
       "3) SPL Starline results are valid only for SPL Starline Market.",
+  "FORGOT_SUBTEXT":
+      "Please enter your registered phone number to send the reset code"
 };

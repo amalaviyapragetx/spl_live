@@ -7,7 +7,7 @@ class ApiUtils {
   static String baseURL = "http://43.205.145.101:9867";
 
   // local url
-  // static String baseURL = "http://192.168.1.19:8080";
+  //static String baseURL = "http://192.168.1.5:8082";
 
   // endpoints
   static String signUP = '$baseURL/auth/signup';
@@ -49,4 +49,5 @@ class ApiUtils {
   static String normalMarketBidHistory = '$baseURL/bid/getByUserId';
   static String starlineMarketBidHistory = '$baseURL/bid/starline/getByUserId';
   static String changeMPIN = "$baseURL/auth/mPin/change";
+  static String webStarLinechar = "$baseURL/web/starlineChart";
 }

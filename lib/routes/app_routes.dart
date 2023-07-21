@@ -57,6 +57,7 @@ import '../screens/home_screen/binding/home_screen_binding.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/notification_page/notification.dart';
 import '../screens/sign_in_screen/sign_in_screen_page.dart';
+import '../screens/transaction_page/binding/transaction_page_binding.dart';
 import '../screens/transaction_page/transaction.dart';
 import '../screens/welcome_screen/bindings/welcome_screen_bindings.dart';
 import '../screens/welcome_screen/welcome_screen.dart';
@@ -96,10 +97,10 @@ class AppRoutes {
       name: AppRoutName.transactionPage,
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
-      page: () => const TransactionPage(),
-      // bindings: [
-      //   DashBoardPage(),
-      // ],
+      page: () => TransactionPage(),
+      bindings: [
+        TransactionPageBindings(),
+      ],
     ),
     GetPage(
       name: AppRoutName.notificationPage,

@@ -770,4 +770,26 @@ class ApiService extends GetConnect {
       return response.body;
     }
   }
+
+  Future<dynamic> getStarlineChar() async {
+    Future.delayed(const Duration(milliseconds: 2), () {
+      AppUtils.showProgressDialog(isCancellable: false);
+    });
+
+    await initApiService();
+    final response = await get(
+      ApiUtils.webStarLinechar,
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
 }

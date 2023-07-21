@@ -10,6 +10,7 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/dimentions.dart';
+import '../../helper_files/ui_utils.dart';
 import 'controller/forgot_password_page_controller.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -21,6 +22,12 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: AppColors.appbarColor),
+        systemOverlayStyle: AppUtils.toolBarStyleDark,
+      ),
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -46,7 +53,7 @@ class ForgotPasswordPage extends StatelessWidget {
               "FORGOTPASSWORD".tr,
               style: CustomTextStyle.textRobotoSlabBold.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: Dimensions.h24,
+                fontSize: Dimensions.h23,
                 letterSpacing: 1,
                 color: AppColors.appbarColor,
               ),
@@ -56,34 +63,37 @@ class ForgotPasswordPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
             child: Text(
-              "FORGOTPASSWORDTEXT".tr,
+              "FORGOT_SUBTEXT".tr,
               textAlign: TextAlign.center,
-              // style: CustomTextStyle.textGothamLight.copyWith(
-              //   fontSize: Dimensions.sp17,
-              //   letterSpacing: 1,
-              //   height: 1.5,
-              //   color: ColorConstant.textColorMain,
-              // ),
+              style: CustomTextStyle.textRobotoSansLight.copyWith(
+                fontSize: Dimensions.h14,
+                //  letterSpacing: 1,
+                height: 1.5,
+                color: AppColors.grey,
+              ),
             ),
           ),
           verticalSpace,
           _buildMobileNumberField(),
           verticalSpace,
-          RoundedCornerButton(
-            text: "CONTINUE".tr,
-            color: AppColors.appbarColor,
-            borderColor: AppColors.appbarColor,
-            fontSize: Dimensions.h15,
-            fontWeight: FontWeight.w500,
-            fontColor: AppColors.white,
-            letterSpacing: 0,
-            borderRadius: Dimensions.r25,
-            borderWidth: 1,
-            textStyle: CustomTextStyle.textRobotoSlabBold,
-            onTap: () => controller.onTapOfContinue(),
-            height: Dimensions.h40,
-            width: double.infinity,
-          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
+            child: RoundedCornerButton(
+              text: "SUBMIT".tr,
+              color: AppColors.appbarColor,
+              borderColor: AppColors.appbarColor,
+              fontSize: Dimensions.h12,
+              fontWeight: FontWeight.w200,
+              fontColor: AppColors.white,
+              letterSpacing: 0,
+              borderRadius: Dimensions.r25,
+              borderWidth: 0,
+              textStyle: CustomTextStyle.textRobotoSansLight,
+              onTap: () => controller.mobileNumberController.text.isNotEmpty,
+              height: Dimensions.h30,
+              width: double.infinity,
+            ),
+          )
         ],
       ),
     );
@@ -157,6 +167,7 @@ class ForgotPasswordPage extends StatelessWidget {
         Expanded(
           child: RoundedCornerEditTextWithIcon(
             height: Dimensions.h40,
+            onChanged: (v) {},
             controller: controller.mobileNumberController,
             keyboardType: TextInputType.phone,
             hintText: "ENTERMOBILENUMBER".tr,

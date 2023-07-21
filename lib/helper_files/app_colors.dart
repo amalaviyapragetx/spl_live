@@ -15,4 +15,5 @@ class AppColors {
   static Color greenShade = Colors.green.shade800;
   static Color greyShade = Colors.grey.shade600;
   static Color greywhite = const Color.fromARGB(255, 201, 198, 198);
+  static Color greenAccent = const Color(0xFFB2FF89);
 }

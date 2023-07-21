@@ -272,14 +272,17 @@ class AppUtils {
   //common method for show error snack-bar
   static void showErrorSnackBar({required String bodyText}) {
     Get.closeCurrentSnackbar();
-    Get.snackbar(
-      "ERRORMESSAGE".tr,
-      bodyText,
-      snackPosition: SnackPosition.BOTTOM,
-      isDismissible: true,
-      backgroundColor: Colors.red,
-      onTap: null,
-    );
+    Get.snackbar("ERRORMESSAGE".tr, bodyText,
+        padding: EdgeInsets.all(5),
+        snackPosition: SnackPosition.BOTTOM,
+        isDismissible: true,
+        onTap: null,
+        colorText: AppColors.white,
+        maxWidth: double.infinity,
+        snackStyle: SnackStyle.GROUNDED,
+        backgroundColor: AppColors.black.withOpacity(0.5),
+        borderRadius: 0,
+        margin: EdgeInsets.all(10));
   }
 
   //common method for show success snack-bar

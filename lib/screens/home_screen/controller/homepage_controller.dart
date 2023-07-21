@@ -13,6 +13,7 @@ import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
+import '../../../models/starline_chart_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
@@ -39,7 +40,8 @@ class HomePageController extends GetxController {
   RxBool noMarketFound = false.obs;
   RxList<StarlineMarketData> marketList = <StarlineMarketData>[].obs;
   RxList<StarlineMarketData> marketListForResult = <StarlineMarketData>[].obs;
-
+  RxList<Data2> starlineChartDate = <Data2>[].obs;
+  RxList<Time> starlineChartTime = <Time>[].obs;
   // UserDetailsModel userData = UserDetailsModel();
   // RxList<NormalMarketHistoryModel> marketHistoryList =
   //     <NormalMarketHistoryModel>[].obs;
@@ -50,6 +52,7 @@ class HomePageController extends GetxController {
     setboolData();
     callMarketsApi();
     getDailyStarLineMarkets();
+    callGetStarLineChart();
     // getUserData();
     super.onInit();
   }
@@ -188,7 +191,7 @@ class HomePageController extends GetxController {
       case 3:
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
-            child: HomeScreenUtils().bidHistory());
+            child: HomeScreenUtils().bidHistory(context));
       case 4:
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
@@ -207,15 +210,14 @@ class HomePageController extends GetxController {
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Row(
-                children: const [
-                  MyTable1(
-                    numberOfRows: 50,
-                  ),
-                  Expanded(
-                      child: MyTable2(
-                    numberOfHours: 10,
-                    numberOfRows: 50,
-                  ))
+                children: [
+                  HomeScreenUtils().dateColumn(),
+                  Expanded(child: HomeScreenUtils().timeColumn())
+                  // Expanded(
+                  //     child: MyTable2(
+                  //   numberOfHours: 10,
+                  //   numberOfRows: 50,
+                  // ))
                 ],
               ),
             ),
@@ -574,5 +576,27 @@ class HomePageController extends GetxController {
 
   Future<void> onSwipeRefresh() async {
     getDailyStarLineMarkets();
+  }
+
+  void callGetStarLineChart() async {
+    ApiService().getStarlineChar().then((value) async {
+      debugPrint("Starline chart Api Response :- $value");
+      if (value['status']) {
+        StarlineChartModel model = StarlineChartModel.fromJson(value);
+        starlineChartDate.value = model.data!;
+        for (var i = 0; i < model.data!.length; i++) {
+          starlineChartTime.value = model.data![i].time!;
+        }
+        print(starlineChartTime);
+        if (model.message!.isNotEmpty) {
+          AppUtils.showSuccessSnackBar(
+              bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+        }
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
   }
 }

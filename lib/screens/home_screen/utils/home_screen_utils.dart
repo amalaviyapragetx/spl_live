@@ -4,13 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:spllive/helper_files/common_utils.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/dimentions.dart';
+import '../../../models/starline_chart_model.dart';
 
 class HomeScreenUtils {
   var controller = Get.put(HomePageController());
@@ -475,36 +475,71 @@ class HomeScreenUtils {
     });
   }
 
-  bidHistory() {
+  bidHistory(context) {
     return Column(
       children: [
         const SizedBox(
           height: 10,
         ),
-        Container(
-          height: Dimensions.h35,
-          color: Colors.grey.withOpacity(0.1),
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 10,
+        SizedBox(
+          height: 45,
+          child: TextField(
+            controller: controller.dateinput,
+            decoration: InputDecoration(
+              hintText:
+                  DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+              hintStyle: TextStyle(color: AppColors.appbarColor),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide.none,
               ),
-              Icon(
-                Icons.calendar_month,
-                color: AppColors.appbarColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                "03-07-2023",
-                style: TextStyle(
-                  color: AppColors.appbarColor,
-                ),
-              ),
-            ],
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: Dimensions.w8, vertical: Dimensions.h10),
+              filled: true,
+              fillColor: Colors.grey.withOpacity(0.1),
+              prefixIcon: Icon(Icons.calendar_month_sharp,
+                  color: AppColors.appbarColor),
+            ),
+            readOnly: true,
+            onTap: () async {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2101));
+
+              if (pickedDate != null) {
+                String formattedDate =
+                    // .formatDateStringToDDMMMMMYYYY(pickedDate.toString());
+                    DateFormat('dd-MM-yyyy').format(pickedDate);
+                controller.dateinput.text = formattedDate;
+              } else {}
+            },
           ),
         ),
+        // Container(
+        //   height: Dimensions.h35,
+        //   color: Colors.grey.withOpacity(0.1),
+        //   child: Row(
+        //     children: [
+        //       const SizedBox(
+        //         width: 10,
+        //       ),
+        //       Icon(
+        //         Icons.calendar_month,
+        //         color: AppColors.appbarColor,
+        //       ),
+        //       const SizedBox(
+        //         width: 10,
+        //       ),
+        //       Text(
+        //         "03-07-2023",
+        //         style: TextStyle(
+        //           color: AppColors.appbarColor,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         SizedBox(
           height: Dimensions.h11,
         ),
@@ -546,34 +581,41 @@ class HomeScreenUtils {
             SizedBox(
               height: Dimensions.h11,
             ),
-            TextField(
-              controller: controller.dateinput,
-              decoration: InputDecoration(
-                hintText: "18-07-2023",
-                hintStyle: TextStyle(color: AppColors.appbarColor),
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide.none,
+            SizedBox(
+              height: 45,
+              child: TextField(
+                controller: controller.dateinput,
+                decoration: InputDecoration(
+                  hintText: DateFormat('dd-MM-yyyy')
+                      .format(DateTime.now())
+                      .toString(),
+                  hintStyle: TextStyle(color: AppColors.appbarColor),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.w8, vertical: Dimensions.h10),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  prefixIcon: Icon(Icons.calendar_month_sharp,
+                      color: AppColors.appbarColor),
                 ),
-                filled: true,
-                fillColor: Colors.grey[200],
-                prefixIcon: Icon(Icons.calendar_month_sharp,
-                    color: AppColors.appbarColor),
-              ),
-              readOnly: true,
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101));
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101));
 
-                if (pickedDate != null) {
-                  String formattedDate =
-                      // .formatDateStringToDDMMMMMYYYY(pickedDate.toString());
-                      DateFormat('dd-MM-yyyy').format(pickedDate);
-                  controller.dateinput.text = formattedDate;
-                } else {}
-              },
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        // .formatDateStringToDDMMMMMYYYY(pickedDate.toString());
+                        DateFormat('dd-MM-yyyy').format(pickedDate);
+                    controller.dateinput.text = formattedDate;
+                  } else {}
+                },
+              ),
             ),
             // Container(
             //   height: Dimensions.h35,
@@ -663,150 +705,229 @@ class HomeScreenUtils {
       ),
     );
   }
-}
 
-class MyTable1 extends StatelessWidget {
-  final int numberOfRows;
-
-  const MyTable1({super.key, required this.numberOfRows});
-
-  @override
-  Widget build(BuildContext context) {
-    List<DataRow> rows = List<DataRow>.generate(numberOfRows, (index) {
-      return const DataRow(
-        cells: [
-          DataCell(
-            Center(
-              child: Text(
-                '03/07/2023',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ],
-      );
-    });
-
-    return DataTable(
-      horizontalMargin: 0,
-      columnSpacing: 0,
-      showBottomBorder: false,
-      headingRowHeight: Dimensions.h30,
-      dataRowHeight: Dimensions.h30,
-      columns: [
-        DataColumn(
-          label: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Container(
-              height: Dimensions.h30,
-              width: Dimensions.w100,
-              decoration: BoxDecoration(
-                  color: AppColors.appbarColor,
-                  border: Border.all(color: AppColors.white)),
-              child: Center(
-                child: Text(
-                  'Date',
-                  style: TextStyle(color: AppColors.white),
+  dateColumn() {
+    return Obx(() {
+      return DataTable(
+        horizontalMargin: 0,
+        columnSpacing: 0,
+        showBottomBorder: false,
+        headingRowHeight: Dimensions.h30,
+        dataRowHeight: Dimensions.h30,
+        columns: [
+          DataColumn(
+            label: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Container(
+                height: Dimensions.h30,
+                width: Dimensions.w100,
+                decoration: BoxDecoration(
+                    color: AppColors.appbarColor,
+                    border: Border.all(color: AppColors.white)),
+                child: Center(
+                  child: Text(
+                    'Date',
+                    style: TextStyle(color: AppColors.white),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
-      rows: rows,
-    );
-  }
-}
-
-class MyTable2 extends StatelessWidget {
-  final int numberOfHours;
-  final int numberOfRows;
-
-  const MyTable2(
-      {super.key, required this.numberOfHours, required this.numberOfRows});
-
-  @override
-  Widget build(BuildContext context) {
-    List<DataColumn> columns = [];
-
-    for (int i = 0; i <= numberOfHours; i++) {
-      columns.add(
-        DataColumn(
-          label: Container(
-            height: Dimensions.h30,
-            width: Dimensions.w100,
-            decoration: BoxDecoration(
-                color: AppColors.appbarColor,
-                border: Border.all(color: AppColors.white)),
-            child: Center(
-              child: Text(
-                '10:00 AM',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.white),
-                // style: CustomTextStyle.textGothamMedium.copyWith(
-                //   color: ColorConstant.white,
-                //   fontWeight: FontWeight.normal,
-                //   fontSize: Dimensions.sp14,
-                // ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        headingRowHeight: Dimensions.h30,
-        dataRowHeight: Dimensions.h30,
-        horizontalMargin: 0,
-        headingRowColor: MaterialStateColor.resolveWith(
-          (states) => Colors.white,
-        ),
-        columnSpacing: 0,
-        columns: columns,
+        ],
         rows: List<DataRow>.generate(
-          numberOfRows,
+          controller.starlineChartDate.length,
           (index) {
             return DataRow(
-              color: MaterialStateColor.resolveWith(
-                (states) => Colors.white,
-              ),
               cells: [
-                for (int i = 0; i <= numberOfHours; i++)
-                  DataCell(
-                    Container(
-                      height: Dimensions.h30,
-                      width: Dimensions.w100,
-                      decoration: BoxDecoration(
-                        // borderRadius: i == 1
-                        //     ? BorderRadius.only(
-                        //         topRight: Radius.circular(4),
-                        //         bottomRight: Radius.circular(4),
-                        //       )
-                        //     : null,
-                        border:
-                            Border.all(color: AppColors.grey.withOpacity(0.2)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '288 -8',
-                          textAlign: TextAlign.center,
-                          // style: CustomTextStyle.textGothamLight.copyWith(
-                          //   color: ColorConstant.textColorMain,
-                          //   fontWeight: FontWeight.normal,
-                          //   fontSize: Dimensions.sp16,
-                          // ),
-                        ),
-                      ),
+                DataCell(
+                  Center(
+                    child: Text(
+                      controller.starlineChartDate[index].date ?? "",
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                ),
               ],
             );
           },
         ),
-      ),
+      );
+    });
+  }
+
+  timeColumn() {
+    return Obx(
+      () {
+        // List<DataColumn> columns = [];
+
+        // for (int i = 0; i < controller.starlineChartDate.length; i++) {
+        //   timeList.add(controller.starlineChartDate[i].time);
+        //   columns.add(
+        //     DataColumn(
+        //       label: Container(
+        //         height: Dimensions.h30,
+        //         width: Dimensions.w100,
+        //         decoration: BoxDecoration(
+        //             color: AppColors.appbarColor,
+        //             border: Border.all(color: AppColors.white)),
+        //         child: Center(
+        //           child: Text(
+        //             "",
+        //             textAlign: TextAlign.center,
+        //             style: TextStyle(color: AppColors.white),
+        //             // style: CustomTextStyle.textGothamMedium.copyWith(
+        //             //   color: ColorConstant.white,
+        //             //   fontWeight: FontWeight.normal,
+        //             //   fontSize: Dimensions.sp14,
+        //             // ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        // }
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            headingRowHeight: Dimensions.h30,
+            dataRowHeight: Dimensions.h30,
+            horizontalMargin: 0,
+            headingRowColor: MaterialStateColor.resolveWith(
+              (states) => Colors.white,
+            ),
+            rows: List<DataRow>.generate(
+              controller.starlineChartDate.length,
+              (i) {
+                return DataRow(
+                    color: MaterialStateColor.resolveWith(
+                      (states) => Colors.white,
+                    ),
+                    cells: List<DataCell>.generate(
+                      controller.starlineChartTime.length,
+                      (j) {
+                        return DataCell(
+                          Container(
+                            height: Dimensions.h30,
+                            width: Dimensions.w100,
+                            decoration: BoxDecoration(
+                              // borderRadius: i == 1
+                              //     ? BorderRadius.only(
+                              //         topRight: Radius.circular(4),
+                              //         bottomRight: Radius.circular(4),
+                              //       )
+                              //     : null,
+                              border: Border.all(
+                                  color: AppColors.grey.withOpacity(0.2)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "${controller.starlineChartDate[i].time![j].result ?? ""}",
+
+                                textAlign: TextAlign.center,
+                                // style: CustomTextStyle.textGothamLight.copyWith(
+                                //   color: ColorConstant.textColorMain,
+                                //   fontWeight: FontWeight.normal,
+                                //   fontSize: Dimensions.sp16,
+                                // ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    )
+                    // cells: [
+                    //   for (int i = 0;
+                    //       i < controller.starlineChartDate.length;
+                    //       i++)
+                    //     DataCell(
+                    //       Container(
+                    //         height: Dimensions.h30,
+                    //         width: Dimensions.w100,
+                    //         decoration: BoxDecoration(
+                    //           // borderRadius: i == 1
+                    //           //     ? BorderRadius.only(
+                    //           //         topRight: Radius.circular(4),
+                    //           //         bottomRight: Radius.circular(4),
+                    //           //       )
+                    //           //     : null,
+                    //           border: Border.all(
+                    //               color: AppColors.grey.withOpacity(0.2)),
+                    //         ),
+                    //         child: Center(
+                    //           child: Text(
+                    //             '288 -8',
+                    //             textAlign: TextAlign.center,
+                    //             // style: CustomTextStyle.textGothamLight.copyWith(
+                    //             //   color: ColorConstant.textColorMain,
+                    //             //   fontWeight: FontWeight.normal,
+                    //             //   fontSize: Dimensions.sp16,
+                    //             // ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    // ],
+                    );
+              },
+            ),
+            columnSpacing: 0,
+            columns: List<DataColumn>.generate(
+              controller.starlineChartTime.length,
+              (index) {
+                return DataColumn(
+                  label: Container(
+                    height: Dimensions.h30,
+                    width: Dimensions.w100,
+                    decoration: BoxDecoration(
+                        color: AppColors.appbarColor,
+                        border: Border.all(color: AppColors.white)),
+                    child: Center(
+                      child: Text(
+                        controller.starlineChartTime[index].name ?? "",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: AppColors.white),
+                        // style: CustomTextStyle.textGothamMedium.copyWith(
+                        //   color: ColorConstant.white,
+                        //   fontWeight: FontWeight.normal,
+                        //   fontSize: Dimensions.sp14,
+                        // ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
+
+// class MyTable1 extends StatelessWidget {
+//   final int numberOfRows;
+
+//   const MyTable1({
+//     super.key,
+//     required this.numberOfRows,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return dateColumn();
+//   }
+
+// class MyTable2 extends StatelessWidget {
+//   final int numberOfHours;
+//   final int numberOfRows;
+
+//   const MyTable2(
+//       {super.key, required this.numberOfHours, required this.numberOfRows});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return timeColumn();
+//   }
+
+ 
+

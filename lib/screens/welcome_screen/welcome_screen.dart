@@ -18,7 +18,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimensions.w50),
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.w25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -32,12 +32,18 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Text(
               "Welcome",
-              style: CustomTextStyle.textRobotoSlabBold
-                  .copyWith(fontSize: Dimensions.h30, color: AppColors.black),
+              style: CustomTextStyle.textRobotoSlabLight.copyWith(
+                fontSize: Dimensions.h25,
+                color: AppColors.black,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(
+              height: Dimensions.h10,
             ),
             Text("WELCOMETEXT".tr,
                 textAlign: TextAlign.center,
-                style: CustomTextStyle.textPTsansMedium.copyWith(
+                style: CustomTextStyle.textRobotoSansLight.copyWith(
                   fontSize: Dimensions.h14,
                 )),
             verticalSpace,
@@ -46,15 +52,15 @@ class WelcomeScreen extends StatelessWidget {
               text: "SIGNIN".tr,
               color: AppColors.appbarColor,
               borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h14,
-              fontWeight: FontWeight.w500,
+              fontSize: Dimensions.h12,
+              fontWeight: FontWeight.w300,
               fontColor: AppColors.white,
               letterSpacing: 0,
               borderRadius: Dimensions.r50,
               borderWidth: 1,
-              textStyle: CustomTextStyle.textPTsansBold,
+              textStyle: CustomTextStyle.textRobotoSansLight,
               onTap: () => Get.toNamed(AppRoutName.signInPage),
-              height: Dimensions.h35,
+              height: Dimensions.h30,
               width: double.infinity,
             ),
             verticalSpace,
@@ -64,15 +70,15 @@ class WelcomeScreen extends StatelessWidget {
               text: "SIGN UP".tr,
               color: AppColors.white,
               borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h14,
-              fontWeight: FontWeight.w500,
+              fontSize: Dimensions.h12,
+              fontWeight: FontWeight.w300,
               fontColor: AppColors.appbarColor,
               letterSpacing: 0,
               borderRadius: Dimensions.r50,
               borderWidth: 1,
-              textStyle: CustomTextStyle.textPTsansBold,
+              textStyle: CustomTextStyle.textRobotoSansLight,
               onTap: () => Get.toNamed(AppRoutName.signUnPage),
-              height: Dimensions.h35,
+              height: Dimensions.h30,
               width: double.infinity,
             ),
           ],
@@ -87,7 +93,7 @@ class WelcomeScreen extends StatelessWidget {
       children: [
         Expanded(
           child: Divider(
-            color: Colors.grey,
+            color: AppColors.greyShade.withOpacity(0.6),
             indent: Dimensions.w20,
             endIndent: Dimensions.w20,
             thickness: 2,
@@ -96,13 +102,14 @@ class WelcomeScreen extends StatelessWidget {
         Text(
           "OR",
           style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-              fontSize: Dimensions.h20,
-              color: AppColors.greyShade,
-              fontWeight: FontWeight.w300),
+            fontSize: Dimensions.h20,
+            color: AppColors.greyShade.withOpacity(0.6),
+            fontWeight: FontWeight.w300,
+          ),
         ),
         Expanded(
           child: Divider(
-            color: AppColors.grey,
+            color: AppColors.greyShade.withOpacity(0.6),
             indent: Dimensions.w20,
             endIndent: Dimensions.w20,
             thickness: 2,
