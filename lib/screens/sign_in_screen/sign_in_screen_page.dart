@@ -26,7 +26,7 @@ class SignInScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         iconTheme: IconThemeData(color: AppColors.appbarColor),
         systemOverlayStyle: AppUtils.toolBarStyleDark,
@@ -112,7 +112,7 @@ class SignInScreen extends StatelessWidget {
               showEnglishName: true,
               alphabetSelectedTextColor: AppColors.white,
               labelColor: AppColors.black,
-              alphabetTextColor: Colors.green,
+              alphabetTextColor: AppColors.green,
             ),
             initialSelection: '+91',
             onChanged: (code) {
@@ -132,7 +132,6 @@ class SignInScreen extends StatelessWidget {
             height: Dimensions.h40,
             controller: controller.mobileNumberController,
             keyboardType: TextInputType.phone,
-            //hintText: "Enter Mobile Number",
             hintText: "ENTERMOBILENUMBER".tr,
             imagePath: ConstantImage.phoneSVG,
             maxLines: 1,
@@ -177,39 +176,45 @@ class SignInScreen extends StatelessWidget {
             //   ),
             // ),
 
-            RoundedCornerButton(
-              text: "SIGNIN".tr,
-              color: AppColors.appbarColor,
-              borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h15,
-              fontWeight: FontWeight.w600,
-              fontColor: AppColors.white,
-              letterSpacing: 0,
-              borderRadius: Dimensions.r25,
-              borderWidth: 1,
-              textStyle: CustomTextStyle.textPTsansBold,
-              onTap: () => controller.onTapOfSignIn(),
-              height: Dimensions.h40,
-              width: double.infinity,
+            Padding(
+              padding: EdgeInsets.all(Dimensions.h5),
+              child: RoundedCornerButton(
+                text: "SIGNIN".tr,
+                color: AppColors.appbarColor,
+                borderColor: AppColors.appbarColor,
+                fontSize: Dimensions.h12,
+                fontWeight: FontWeight.w500,
+                fontColor: AppColors.white,
+                letterSpacing: 0,
+                borderRadius: Dimensions.r25,
+                borderWidth: 1,
+                textStyle: CustomTextStyle.textPTsansBold,
+                onTap: () => controller.onTapOfSignIn(),
+                height: Dimensions.h30,
+                width: double.infinity,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: orView(),
+            ),
+            SizedBox(
+              height: Dimensions.h5,
             ),
 
             RoundedCornerButton(
               text: "FORGOTPASS".tr,
               color: AppColors.white,
               borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h15,
+              fontSize: Dimensions.h12,
               fontWeight: FontWeight.w500,
               fontColor: AppColors.appbarColor,
-              letterSpacing: 0,
+              letterSpacing: 1,
               borderRadius: Dimensions.r25,
-              borderWidth: 1,
+              borderWidth: 1.5,
               textStyle: CustomTextStyle.textPTsansBold,
               onTap: () => Get.toNamed(AppRoutName.forgotPasswordPage),
-              height: Dimensions.h40,
+              height: Dimensions.h30,
               width: double.infinity,
             ),
             // GestureDetector(
@@ -241,7 +246,7 @@ class SignInScreen extends StatelessWidget {
       children: [
         Expanded(
           child: Divider(
-            color: Colors.grey,
+            color: AppColors.grey,
             indent: Dimensions.w20,
             endIndent: Dimensions.w20,
             thickness: 2,
@@ -271,7 +276,7 @@ class SignInScreen extends StatelessWidget {
       height: Dimensions.h40,
       keyBoardType: TextInputType.visiblePassword,
       controller: controller.passwordController,
-      hintText: "Please enter password",
+      hintText: "ENTERPASSWORDTEXT".tr,
       hidePassword: controller.visiblePassword.value,
       suffixIcon: InkWell(
         onTap: () {

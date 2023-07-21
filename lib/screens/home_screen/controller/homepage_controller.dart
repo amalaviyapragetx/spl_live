@@ -201,8 +201,8 @@ class HomePageController extends GetxController {
               "Starline Chart",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: Dimensions.h5,
             ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,

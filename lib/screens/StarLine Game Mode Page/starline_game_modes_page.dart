@@ -79,7 +79,7 @@ class StarLineGameModesPage extends StatelessWidget {
                         ),
                         verticalSpace,
                         Text(
-                          "Game Type",
+                          "GAMETYPE".tr,
                           style: CustomTextStyle.textPTsansMedium
                               .copyWith(fontSize: Dimensions.h15),
                         ),
@@ -178,7 +178,7 @@ class StarLineGameModesPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         RoundedCornerButton(
-                                          text: "Submit",
+                                          text: "SUBMIT".tr,
                                           color: AppColors.appbarColor,
                                           borderColor: AppColors.appbarColor,
                                           fontSize: Dimensions.h12,
@@ -316,7 +316,7 @@ class StarLineGameModesPage extends StatelessWidget {
   void showCustomAboutBoxDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.3), // Transparent background
+      barrierColor: AppColors.black.withOpacity(0.3), // Transparent background
       barrierDismissible:
           false, // Prevent users from dismissing the dialog by tapping outside
       builder: (context) => _buildCustomAboutBoxDialog(),
@@ -325,7 +325,7 @@ class StarLineGameModesPage extends StatelessWidget {
 
   Widget _buildCustomAboutBoxDialog() {
     return Dialog(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       child: Container(
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -338,7 +338,7 @@ class StarLineGameModesPage extends StatelessWidget {
             const CircularProgressIndicator(),
             SizedBox(width: Dimensions.w10),
             Text(
-              "Please Wait",
+              "PLEASEWAIT".tr,
               style: CustomTextStyle.textPTsansBold
                   .copyWith(fontSize: Dimensions.h15),
             ),

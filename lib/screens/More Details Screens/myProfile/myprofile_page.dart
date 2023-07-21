@@ -25,8 +25,8 @@ class ProfilePage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: Dimensions.h15,
                   ),
                   Padding(
                     padding:
@@ -104,8 +104,8 @@ class ProfilePage extends StatelessWidget {
                 },
                 controlAffinity: ListTileControlAffinity.trailing,
               ),
-              const Divider(
-                color: Colors.grey,
+              Divider(
+                color: AppColors.grey,
                 thickness: 0.3,
                 indent: 20,
                 height: 0.1,
@@ -127,8 +127,8 @@ class ProfilePage extends StatelessWidget {
                 },
                 controlAffinity: ListTileControlAffinity.trailing,
               ),
-              const Divider(
-                color: Colors.grey,
+              Divider(
+                color: AppColors.grey,
                 thickness: 0.3,
                 height: 0.1,
                 indent: 20,
@@ -143,7 +143,7 @@ class ProfilePage extends StatelessWidget {
 
   Card cardListwidget(String text, {required Function() onTap}) {
     return Card(
-      color: Colors.white,
+      color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
       ),
@@ -151,7 +151,7 @@ class ProfilePage extends StatelessWidget {
         height: Dimensions.h50,
         child: ListTile(
           onTap: onTap,
-          leading: const Icon(Icons.lock_outline, color: Colors.blue),
+          leading: Icon(Icons.lock_outline, color: AppColors.blueAccent),
           title: Text(
             text,
             // "Change Password",

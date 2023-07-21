@@ -18,7 +18,8 @@ class GameModePage extends StatelessWidget {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Game Modes", actions: [
+      appBar:
+          AppUtils().simpleAppbar(appBarTitle: "GAMEMODES_TEXT".tr, actions: [
         InkWell(
           onTap: () {},
           child: const Icon(Icons.wallet),
@@ -27,7 +28,7 @@ class GameModePage extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: Dimensions.h14, horizontal: Dimensions.h15),
           child: Text(
-            "40",
+            "40".tr,
             style: TextStyle(
               fontSize: Dimensions.h14,
               fontWeight: FontWeight.bold,
@@ -38,17 +39,17 @@ class GameModePage extends StatelessWidget {
       ]),
       body: Obx(
         () {
-          return SizedBox(  
+          return SizedBox(
             //height: size.height,
             child: Column(
               children: [
                 controller.openBiddingOpen.value
-                    ? const SizedBox(
-                        height: 11,
+                    ? SizedBox(
+                        height: Dimensions.h11,
                       )
                     : Container(
                         decoration: BoxDecoration(color: AppColors.redColor),
-                        height: 50,
+                        height: Dimensions.h50,
                         width: double.infinity,
                         child: Center(
                           child: Text(
@@ -65,8 +66,8 @@ class GameModePage extends StatelessWidget {
                     controller.marketValue.value.date.toString(),
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
+                SizedBox(
+                  height: Dimensions.h5,
                 ),
                 GameModeUtils().rowWidget2(
                   openBid: controller.marketValue.value.openTime.toString(),
@@ -234,7 +235,7 @@ class GameModePage extends StatelessWidget {
                             opacity: 0.0,
                             child: Image.asset(
                               ConstantImage.diceImage,
-                              height: 45,
+                              height: Dimensions.h45,
                             ),
                           )
                         ],

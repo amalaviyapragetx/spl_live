@@ -55,7 +55,9 @@ class MPINPageView extends StatelessWidget {
               child: Text(
                 "MPINPAGETEXT".tr,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: Dimensions.h14),
+                style: CustomTextStyle.textPTsansMedium
+                    .copyWith(fontSize: Dimensions.h15),
+                // style: TextStyle(fontSize: Dimensions.h14),
                 // style: CustomTextStyle.textGothamLight.copyWith(
                 //   fontSize: Dimensions.sp17,
                 //   letterSpacing: 1,
@@ -68,7 +70,7 @@ class MPINPageView extends StatelessWidget {
           verticalSpace,
           _buildPinCodeField(
             context: context,
-            title: "MPIN",
+            title: "MPIN".tr,
             pinType: controller.mpin,
             pinCodeLength: 4,
           ),
@@ -98,7 +100,7 @@ class MPINPageView extends StatelessWidget {
               child: Text(
                 "${"FORGOTYOURMPIN".tr}?",
                 textAlign: TextAlign.center,
-                style: CustomTextStyle.textRobotoSlabBold.copyWith(
+                style: CustomTextStyle.textPTsansMedium.copyWith(
                   fontWeight: FontWeight.normal,
                   fontSize: Dimensions.h12,
                   letterSpacing: 1,
@@ -126,7 +128,7 @@ class MPINPageView extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: CustomTextStyle.textRobotoSlabBold.copyWith(
+            style: CustomTextStyle.textPTsansMedium.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: Dimensions.h15,
               letterSpacing: 1,

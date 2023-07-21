@@ -20,7 +20,7 @@ class MoreOptions extends StatelessWidget {
     // ignore: sized_box_for_whitespace
     return Column(
       children: [
-        AppUtils().simpleAppbar(appBarTitle: "More", actions: [
+        AppUtils().simpleAppbar(appBarTitle: "MORE".tr, actions: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             child: InkWell(
@@ -28,7 +28,7 @@ class MoreOptions extends StatelessWidget {
                 Share.share("http://spl.live");
               },
               child: Container(
-                width: 25,
+                width: Dimensions.w25,
                 decoration: BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.circular(25)),
@@ -52,82 +52,82 @@ class MoreOptions extends StatelessWidget {
                 listItems(
                     onTap: () => Get.toNamed(AppRoutName.profilePage),
                     iconData: ConstantImage.profileIconSVG,
-                    text: "My Profile"),
+                    text: "MYPROFILE".tr),
                 listItems(
                     onTap: () {
                       Get.toNamed(AppRoutName.myAccountPage);
                     },
                     iconData: ConstantImage.bakAccount,
-                    text: "My Account"),
+                    text: "MYACCOUNT".tr),
                 listItems(
                     onTap: () {
                       Get.toNamed(AppRoutName.gameRatePage);
                     },
                     iconData: ConstantImage.gameRate,
-                    text: "Game rate"),
+                    text: "GAMERATE".tr),
                 listItems(
                     onTap: () {
                       Get.toNamed(AppRoutName.notificationDetailsPage);
                     },
                     iconData: ConstantImage.notifiacation,
-                    text: "Notifications"),
+                    text: "NOTIFICATIONS".tr),
                 listItems(
                     onTap: () {},
                     iconData: ConstantImage.playIcon,
-                    text: "How to Play"),
+                    text: "HOWTOPLAY".tr),
                 listItems(
                     onTap: () {},
                     iconData: ConstantImage.plusIcon,
-                    text: "Add Fund"),
+                    text: "ADDFUND".tr),
                 listItems(
                     onTap: () {},
                     iconData: ConstantImage.clockIcon,
-                    text: "Binding History"),
+                    text: "BIDDINGHISTORY".tr),
                 listItems(
                     onTap: () {
                       Get.toNamed(AppRoutName.withdrawalpage);
                     },
                     iconData: ConstantImage.withDrawalIcon,
-                    text: "WithDrawal"),
+                    text: "WITHDRAWAL_TXT1".tr),
                 listItems(
                     onTap: () {
                       Get.toNamed(AppRoutName.transactionPage);
                     },
                     iconData: ConstantImage.addFundIcon,
-                    text: "Transaction History"),
+                    text: "TRANSACTIONHISTORY".tr),
                 listItems(
                     onTap: () {
                       Get.toNamed(AppRoutName.feedBackPage);
                     },
                     iconData: ConstantImage.giveFeedbackIcon,
-                    text: "Give Feedback"),
+                    text: "GIVEFEEDBACK".tr),
                 listItems(
                   onTap: () {
                     controller.onTapOfRateUs();
                   },
                   iconData: ConstantImage.rateusStartIcon,
-                  text: "Rate Us",
+                  text: "RATEUS".tr,
                 ),
                 listItems(
                   onTap: () {
                     Get.toNamed(AppRoutName.stalineTerms);
                   },
                   iconData: ConstantImage.addFundIcon,
-                  text: "Starline Terms & Condition",
+                  text: "STARLINETERMS&CONDITION".tr,
                 ),
                 listItems(
                   onTap: () {
                     Get.toNamed(AppRoutName.aboutPage);
                   },
                   iconData: ConstantImage.infoIcon,
-                  text: "About Us",
+                  text: "ABOUTUS".tr,
                 ),
                 listItems(
                   onTap: () {
                     controller.callLogout();
                   },
                   iconData: ConstantImage.signOutIcon,
-                  text: "Sign out",
+                  text: "SIGNOUT".tr,
                 ),
               ],
             ),

@@ -18,7 +18,7 @@ class MyAccountPage extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
-        appBarTitle: "My Account",
+        appBarTitle: "MYACCOUNT".tr,
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),

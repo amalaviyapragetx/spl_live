@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -10,7 +11,7 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Notifications"),
+      appBar: AppUtils().simpleAppbar(appBarTitle: "NOTIFICATIONS".tr),
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: SizedBox(
@@ -39,7 +40,7 @@ class NotificationPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "GOOD AFTERNOON",
+              "GOODAFTERNOON".tr,
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text("GOOD AFTERNOON" * 10),
@@ -52,8 +53,8 @@ class NotificationPage extends StatelessWidget {
                 )
               ],
             ),
-            const Divider(
-              color: Colors.black,
+            Divider(
+              color: AppColors.black,
               thickness: 1,
             ),
           ],

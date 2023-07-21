@@ -29,8 +29,8 @@ class WithdrawalPage extends StatelessWidget {
                 bottom: Dimensions.r10,
                 left: Dimensions.r15,
                 right: Dimensions.r10),
-            child: const Text(
-              "30",
+            child: Text(
+              "30".tr,
               style: TextStyle(
                 fontSize: 20,
               ),

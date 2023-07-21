@@ -26,7 +26,7 @@ class StarLineGamePage extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
-        appBarTitle: "Market Name",
+        appBarTitle: "MARKETTEXT".tr,
         actions: [
           Row(
             children: [
@@ -184,7 +184,7 @@ class StarLineGamePage extends StatelessWidget {
                                         color: AppColors
                                             .black), // Set custom underline color when focused
                                   ),
-                                  hintText: "Enter Poins",
+                                  hintText: "ENTERPOINTS_TEXT".tr,
                                   hintStyle:
                                       CustomTextStyle.textPTsansBold.copyWith(),
                                 ),
@@ -248,7 +248,7 @@ class StarLineGamePage extends StatelessWidget {
               Expanded(
                 child: ButtonWidget(
                   onTap: () => Get.back(),
-                  text: "CANCEL",
+                  text: "CANCEL_TEXT".tr,
                   buttonColor: AppColors.buttonColorOrange,
                   height: Dimensions.h30,
                   width: size.width / 2,
@@ -262,7 +262,7 @@ class StarLineGamePage extends StatelessWidget {
                 child: ButtonWidget(
                   onTap: () => controller.onTapOfSaveButton(),
                   // onTap: () {},
-                  text: "SAVE",
+                  text: "SAVE_TEXT".tr,
                   buttonColor: AppColors.appbarColor,
                   height: Dimensions.h30,
                   width: size.width / 2,
@@ -335,7 +335,7 @@ class StarLineGamePage extends StatelessWidget {
                       color: AppColors
                           .black), // Set custom underline color when focused
                 ),
-                hintText: "Enter Poins",
+                hintText: "ENTERPOINTS_TEXT".tr,
                 hintStyle: CustomTextStyle.textPTsansBold.copyWith(),
               ),
             ),
@@ -395,7 +395,7 @@ class StarLineGamePage extends StatelessWidget {
                 horizontal: Dimensions.commonPaddingForScreen,
               ),
               child: Text(
-                "Total Coin",
+                "TOTALCOIN".tr,
                 style: TextStyle(
                   color: AppColors.white,
                   fontSize: Dimensions.h18,
@@ -405,8 +405,8 @@ class StarLineGamePage extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  height: 30,
-                  width: 30,
+                  height: Dimensions.h30,
+                  width: Dimensions.w30,
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(25)),
@@ -458,8 +458,8 @@ class StarLineGamePage extends StatelessWidget {
                             controller.selectedIndexOfDigitRow = index;
                           },
                           child: Container(
-                            width: 35,
-                            height: 30,
+                            width: Dimensions.w35,
+                            height: Dimensions.h30,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: controller.digitRow[index].isSelected!

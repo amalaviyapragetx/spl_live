@@ -16,7 +16,7 @@ class WelcomeScreen extends StatelessWidget {
       height: Dimensions.h10,
     );
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimensions.w50),
         child: Column(
@@ -31,9 +31,12 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ),
             Text(
-              "Welcome",
+              "WELCOME_TEXT".tr,
               style: CustomTextStyle.textRobotoSlabBold
                   .copyWith(fontSize: Dimensions.h30, color: AppColors.black),
+            ),
+            SizedBox(
+              height: Dimensions.h10,
             ),
             Text("WELCOMETEXT".tr,
                 textAlign: TextAlign.center,
@@ -46,15 +49,15 @@ class WelcomeScreen extends StatelessWidget {
               text: "SIGNIN".tr,
               color: AppColors.appbarColor,
               borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h14,
+              fontSize: Dimensions.h12,
               fontWeight: FontWeight.w500,
               fontColor: AppColors.white,
               letterSpacing: 0,
-              borderRadius: Dimensions.r50,
+              borderRadius: Dimensions.r25,
               borderWidth: 1,
               textStyle: CustomTextStyle.textPTsansBold,
               onTap: () => Get.toNamed(AppRoutName.signInPage),
-              height: Dimensions.h35,
+              height: Dimensions.h28,
               width: double.infinity,
             ),
             verticalSpace,
@@ -64,15 +67,15 @@ class WelcomeScreen extends StatelessWidget {
               text: "SIGN UP".tr,
               color: AppColors.white,
               borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h14,
+              fontSize: Dimensions.h12,
               fontWeight: FontWeight.w500,
               fontColor: AppColors.appbarColor,
               letterSpacing: 0,
-              borderRadius: Dimensions.r50,
-              borderWidth: 1,
+              borderRadius: Dimensions.r25,
+              borderWidth: 1.5,
               textStyle: CustomTextStyle.textPTsansBold,
               onTap: () => Get.toNamed(AppRoutName.signUnPage),
-              height: Dimensions.h35,
+              height: Dimensions.h28,
               width: double.infinity,
             ),
           ],
@@ -94,8 +97,8 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         Text(
-          "OR",
-          style: CustomTextStyle.textRobotoSlabMedium.copyWith(
+          "OR".tr,
+          style: CustomTextStyle.textRobotoSlabBold.copyWith(
               fontSize: Dimensions.h20,
               color: AppColors.greyShade,
               fontWeight: FontWeight.w300),

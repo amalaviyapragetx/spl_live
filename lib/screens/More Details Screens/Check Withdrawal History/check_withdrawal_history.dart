@@ -43,7 +43,7 @@ class CheckWithdrawalPage extends StatelessWidget {
                 width: Dimensions.w10,
               ),
               Text(
-                "30",
+                "30".tr,
                 style: CustomTextStyle.textPTsansBold
                     .copyWith(color: AppColors.white, fontSize: Dimensions.h18),
               ),

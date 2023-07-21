@@ -33,12 +33,13 @@ class ChangeMpinPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
             child: Column(
               children: [
+                // Padding(padding: EdgeInsets.all(Dimensions.h5)),
                 vericalSpace,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "ENTERNEWPIN".tr,
+                      "ENTERNEWPINTEXT".tr,
                       style: CustomTextStyle.textPTsansMedium.copyWith(
                         color: AppColors.appbarColor,
                         fontWeight: FontWeight.bold,
@@ -63,9 +64,10 @@ class ChangeMpinPage extends StatelessWidget {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           decoration: InputDecoration(
+                            filled: true,
                             counterText: "",
                             border: InputBorder.none,
-                            hintText: "NEWPIN".tr,
+                            hintText: "NEWPINTEXT".tr,
                             hintStyle:
                                 CustomTextStyle.textPTsansMedium.copyWith(
                               color: AppColors.appbarColor.withOpacity(0.5),
@@ -103,7 +105,7 @@ class ChangeMpinPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "ENTERPINTOCONFIRM".tr,
+                        "ENTERCONFIRMPINTEXT".tr,
                         style: CustomTextStyle.textPTsansMedium.copyWith(
                           color: AppColors.appbarColor,
                           fontSize: Dimensions.h15,
@@ -128,9 +130,10 @@ class ChangeMpinPage extends StatelessWidget {
                               FilteringTextInputFormatter.digitsOnly
                             ],
                             decoration: InputDecoration(
+                              filled: true,
                               counterText: "",
                               border: InputBorder.none,
-                              hintText: "CONFIRMPIN".tr,
+                              hintText: "CONFIRMPINTEXT".tr,
                               hintStyle:
                                   CustomTextStyle.textPTsansMedium.copyWith(
                                 color: AppColors.appbarColor.withOpacity(0.5),
@@ -163,7 +166,7 @@ class ChangeMpinPage extends StatelessWidget {
                         height: Dimensions.h20,
                       ),
                       Text(
-                        "*Must have 4 digit",
+                        "DIGITTEXT".tr,
                         style: CustomTextStyle.textPTsansMedium.copyWith(
                           color: AppColors.redColor,
                         ),
@@ -183,7 +186,7 @@ class ChangeMpinPage extends StatelessWidget {
                           }
                           controller.changePasswordApi();
                         },
-                        text: "SUBMIT",
+                        text: "SUBMIT".tr,
                         buttonColor: AppColors.appbarColor,
                         height: Dimensions.h30,
                         width: size.width / 1.2,
@@ -191,7 +194,7 @@ class ChangeMpinPage extends StatelessWidget {
                       )
                     : ButtonWidget(
                         onTap: () {},
-                        text: "SUBMIT",
+                        text: "SUBMIT".tr,
                         buttonColor: AppColors.grey,
                         height: Dimensions.h30,
                         width: size.width / 1.2,

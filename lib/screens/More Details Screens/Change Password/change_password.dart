@@ -144,7 +144,7 @@ class ChangePasswordPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "ENTERPASSWORDTOCONFIRM".tr,
+                      "CONFIRMPASSWORD".tr,
                       style: CustomTextStyle.textPTsansMedium.copyWith(
                           color: AppColors.appbarColor,
                           fontSize: Dimensions.h15,
@@ -220,10 +220,10 @@ class ChangePasswordPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(Dimensions.r8),
                       child: Text(
-                        "*First letter capital and should have minimum 6 characters",
+                        "PASSWORDTEXT".tr,
                         style: CustomTextStyle.textPTsansMedium.copyWith(
                           color: AppColors.redColor,
-                          fontSize: Dimensions.h12,
+                          fontSize: Dimensions.h10,
                         ),
                       ),
                     )
