@@ -43,10 +43,12 @@ class HomePageController extends GetxController {
   RxList<Data2> starlineChartDate = <Data2>[].obs;
   RxList<Time> starlineChartTime = <Time>[].obs;
   // UserDetailsModel userData = UserDetailsModel();
+  UserDetailsModel userData = UserDetailsModel();
+  RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   // RxList<NormalMarketHistoryModel> marketHistoryList =
   //     <NormalMarketHistoryModel>[].obs;
-  // RxBool isStarline2 = false.obs;
-  // int offset = 0;
+  RxBool isStarline2 = false.obs;
+  int offset = 0;
   @override
   void onInit() {
     setboolData();
@@ -250,8 +252,8 @@ class HomePageController extends GetxController {
                   Get.toNamed(AppRoutName.notificationPage);
                 },
                 onTapTelegram: () {
-                  launchUrl(
-                    Uri.parse("https://t.me/satta_matka_kalyan_bazar_milan"),
+                  launch(
+                    "https://t.me/satta_matka_kalyan_bazar_milan",
                   );
                 },
                 shareOntap: () {
@@ -591,6 +593,32 @@ class HomePageController extends GetxController {
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+        }
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+
+  void getMarketBidsByUserId({required bool lazyLoad}) {
+    ApiService()
+        .getBidHistoryByUserId(
+            userId: userData.id.toString(),
+            limit: "10",
+            offset: offset.toString(),
+            isStarline: isStarline.value)
+        .then((value) async {
+      debugPrint("Get Market Api Response :- $value");
+      if (value['status']) {
+        if (value['data'] != null) {
+          NormalMarketBidHistoryResponseModel model =
+              NormalMarketBidHistoryResponseModel.fromJson(value);
+          lazyLoad
+              ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
+              : marketHistoryList.value =
+                  model.data?.resultArr ?? <ResultArr>[];
         }
       } else {
         AppUtils.showErrorSnackBar(

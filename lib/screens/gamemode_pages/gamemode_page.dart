@@ -38,7 +38,7 @@ class GameModePage extends StatelessWidget {
       ]),
       body: Obx(
         () {
-          return SizedBox(  
+          return SizedBox(
             //height: size.height,
             child: Column(
               children: [
@@ -142,47 +142,64 @@ class GameModePage extends StatelessWidget {
   }
 
   Widget cardWidget(GameModePagesController controller) {
-    return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: controller.gameModesList.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisExtent: Dimensions.h100,
-      ),
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () => controller.onTapOfGameModeTile(index),
-          child: Card(
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: AppColors.blueAccent.withOpacity(0.7),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      //color: Colors.amber,
-                      width: double.infinity,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 90,
-                            child: Opacity(
-                              opacity: 0.3,
-                              // child: CachedNetworkImage(
-                              //   imageUrl: controller.gameModesList
-                              //       .elementAt(index)
-                              //       .image
-                              //       .toString(),
-                              //   height: Dimensions.h45,
-                              //   progressIndicatorBuilder:
-                              //       (context, url, progress) =>
-                              //           CircularProgressIndicator(),
-                              //   errorWidget: (context, url, error) =>
-                              //       Icon(Icons.error),
-                              // ),
+    return Expanded(
+      child: GridView.builder(
+        // physics: const NeverScrollableScrollPhysics(),
+        // shrinkWrap: true,
+        itemCount: controller.gameModesList.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: Dimensions.h100,
+        ),
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () => controller.onTapOfGameModeTile(index),
+            child: Card(
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: AppColors.blueAccent.withOpacity(0.7),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        //color: Colors.amber,
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 90,
+                              child: Opacity(
+                                opacity: 0.3,
+                                // child: CachedNetworkImage(
+                                //   imageUrl: controller.gameModesList
+                                //       .elementAt(index)
+                                //       .image
+                                //       .toString(),
+                                //   height: Dimensions.h45,
+                                //   progressIndicatorBuilder:
+                                //       (context, url, progress) =>
+                                //           CircularProgressIndicator(),
+                                //   errorWidget: (context, url, error) =>
+                                //       Icon(Icons.error),
+                                // ),
+                                child: controller.gameModesList
+                                            .elementAt(index)
+                                            .image !=
+                                        null
+                                    ? Image.network(
+                                        controller.gameModesList
+                                            .elementAt(index)
+                                            .image
+                                            .toString(),
+                                        height: Dimensions.h45,
+                                      )
+                                    : const Icon(Icons.error),
+                              ),
+                            ),
+                            Positioned(
+                              left: 60,
                               child: controller.gameModesList
                                           .elementAt(index)
                                           .image !=
@@ -196,66 +213,51 @@ class GameModePage extends StatelessWidget {
                                     )
                                   : const Icon(Icons.error),
                             ),
-                          ),
-                          Positioned(
-                            left: 60,
-                            child: controller.gameModesList
-                                        .elementAt(index)
-                                        .image !=
-                                    null
-                                ? Image.network(
-                                    controller.gameModesList
-                                        .elementAt(index)
-                                        .image
-                                        .toString(),
-                                    height: Dimensions.h45,
-                                  )
-                                : const Icon(Icons.error),
-                          ),
-                          Positioned(
-                            left: 30,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: controller.gameModesList
-                                          .elementAt(index)
-                                          .image !=
-                                      null
-                                  ? Image.network(
-                                      controller.gameModesList
-                                          .elementAt(index)
-                                          .image
-                                          .toString(),
-                                      height: Dimensions.h45,
-                                    )
-                                  : const Icon(Icons.error),
-                            ),
-                          ), // Bottom image
-                          Opacity(
-                            opacity: 0.0,
-                            child: Image.asset(
-                              ConstantImage.diceImage,
-                              height: 45,
-                            ),
-                          )
-                        ],
+                            Positioned(
+                              left: 30,
+                              child: Opacity(
+                                opacity: 0.3,
+                                child: controller.gameModesList
+                                            .elementAt(index)
+                                            .image !=
+                                        null
+                                    ? Image.network(
+                                        controller.gameModesList
+                                            .elementAt(index)
+                                            .image
+                                            .toString(),
+                                        height: Dimensions.h45,
+                                      )
+                                    : const Icon(Icons.error),
+                              ),
+                            ), // Bottom image
+                            Opacity(
+                              opacity: 0.0,
+                              child: Image.asset(
+                                ConstantImage.diceImage,
+                                height: 45,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    // Image(image: AssetImage(ConstantImage.diceImage)),
-                    Text(
-                      controller.gameModesList.elementAt(index).name ?? "",
-                      style: CustomTextStyle.textPTsansMedium.copyWith(
-                        color: AppColors.black,
-                        fontSize: Dimensions.h15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )
-                  ],
+                      // Image(image: AssetImage(ConstantImage.diceImage)),
+                      Text(
+                        controller.gameModesList.elementAt(index).name ?? "",
+                        style: CustomTextStyle.textPTsansMedium.copyWith(
+                          color: AppColors.black,
+                          fontSize: Dimensions.h15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

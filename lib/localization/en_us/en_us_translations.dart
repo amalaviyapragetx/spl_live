@@ -64,7 +64,7 @@ final Map<String, String> enUs = {
   "WALLETBALANCE": "Wallet Balance",
   "WALLET_TEXT": "Add or Withdraw money to or from SPL to play games.",
 
-  "WITHDRAWAL2": "WITHDRAWAL",
+  // "WITHDRAWAL2": "WITHDRAWAL",
   "BIDHISTORY": "BIDHISTORY",
 
   // drawer names
@@ -204,5 +204,7 @@ final Map<String, String> enUs = {
   "STARLINE_TEXT3":
       "3) SPL Starline results are valid only for SPL Starline Market.",
   "FORGOT_SUBTEXT":
-      "Please enter your registered phone number to send the reset code"
+      "Please enter your registered phone number to send the reset code",
+  "RESULTHISTORY2": "RESULT HISTORY",
+  "CHART2": "CHART",
 };

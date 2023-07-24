@@ -189,8 +189,12 @@ class StarLineGameModesPage extends StatelessWidget {
                                           borderWidth: 0.2,
                                           textStyle:
                                               CustomTextStyle.textPTsansMedium,
-                                          onTap: () =>
-                                              controller.createMarketBidApi(),
+                                          onTap: () {
+                                            controller.showConfirmationDialog(
+                                                context);
+                                          },
+                                          // onTap: () =>
+                                          //     controller.createMarketBidApi(),
                                           height: Dimensions.h40,
                                           width: size.width / 1.8,
                                         ),

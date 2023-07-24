@@ -154,7 +154,7 @@ class HomeScreenUtils {
               child: marketIcon(
                   onTap: onTap2,
                   iconColor: iconColor2,
-                  text: "RESULTHISTORY".tr,
+                  text: "RESULTHISTORY2".tr,
                   iconData: ConstantImage.resultHistoryIcons),
             ),
           ),
@@ -165,7 +165,7 @@ class HomeScreenUtils {
               child: marketIcon(
                   onTap: onTap3,
                   iconColor: iconColor3,
-                  text: "CHART".tr,
+                  text: "CHART2".tr,
                   iconData: ConstantImage.chartIcon),
             ),
           ),
@@ -653,7 +653,7 @@ class HomeScreenUtils {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Container(
-                    height: Dimensions.h40,
+                    height: Dimensions.h50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.white,
@@ -669,31 +669,42 @@ class HomeScreenUtils {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: Dimensions.w10,
+                          width: Dimensions.w20,
                         ),
-                        Icon(Icons.watch, color: AppColors.black),
+                        Container(
+                            width: Dimensions.w35,
+                            child:
+                                SvgPicture.asset(ConstantImage.stopWatchIcon)),
+                        // Icon(Icons.watch, color: AppColors.black),
                         SizedBox(
                           width: Dimensions.w10,
                         ),
-                        Text(controller.marketListForResult.value[index].time ??
-                            "00:00 AM"),
+                        Text(
+                          controller.marketListForResult.value[index].time ??
+                              "00:00 AM",
+                          style: CustomTextStyle.textRobotoSansBold
+                              .copyWith(fontSize: Dimensions.h15),
+                        ),
                         Expanded(
                           child: SizedBox(
                             width: Dimensions.w10,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(right: Dimensions.h50),
-                          child: Text(
-                            controller.getResult(
-                                controller.marketListForResult.value[index]
-                                        .isResultDeclared ??
-                                    false,
-                                controller.marketListForResult[index].result ??
-                                    0),
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                         Padding(
+                                padding: EdgeInsets.only(right: Dimensions.h50),
+                                child: Text(
+                                  controller.getResult(
+                                    controller.marketListForResult.value[index]
+                                            .isResultDeclared ??
+                                        false,
+                                    controller.marketListForResult[index]
+                                            .result ??
+                                        0,
+                                  ),
+                                  style: CustomTextStyle.textRobotoSansBold
+                                      .copyWith(fontSize: Dimensions.h15),
+                                ),
+                              ),
                       ],
                     ),
                   ),

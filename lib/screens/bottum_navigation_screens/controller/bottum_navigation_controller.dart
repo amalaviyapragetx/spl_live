@@ -59,27 +59,31 @@ class MoreListController extends GetxController {
   void getMarketBidsByUserId({required bool lazyLoad}) {
     ApiService()
         .getBidHistoryByUserId(
-            userId: userData.id.toString(),
+            // userId: userData.id.toString(),
+            userId: "3",
             limit: "10",
             offset: offset.toString(),
             isStarline: isStarline.value)
-        .then((value) async {
-      debugPrint("Get Market Api Response :- $value");
-      if (value['status']) {
-        if (value['data'] != null) {
-          NormalMarketBidHistoryResponseModel model =
-              NormalMarketBidHistoryResponseModel.fromJson(value);
-          lazyLoad
-              ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
-              : marketHistoryList.value =
-                  model.data?.resultArr ?? <ResultArr>[];
+        .then(
+      (value) async {
+        debugPrint("Get Market Api Response :- $value");
+        if (value['status']) {
+          if (value['data'] != null) {
+            NormalMarketBidHistoryResponseModel model =
+                NormalMarketBidHistoryResponseModel.fromJson(value);
+            lazyLoad
+                ? marketHistoryList
+                    .addAll(model.data?.resultArr ?? <ResultArr>[])
+                : marketHistoryList.value =
+                    model.data?.resultArr ?? <ResultArr>[];
+          }
+        } else {
+          AppUtils.showErrorSnackBar(
+            bodyText: value['message'] ?? "",
+          );
         }
-      } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
-      }
-    });
+      },
+    );
   }
 
   void getUserBalance() {
