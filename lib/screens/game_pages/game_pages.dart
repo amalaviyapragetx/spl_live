@@ -223,7 +223,7 @@ class SingleAnkPage extends StatelessWidget {
   bottomNavigationBar(String totalAmount) {
     return SafeArea(
       child: Container(
-        height: 50,
+        height: Dimensions.h50,
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

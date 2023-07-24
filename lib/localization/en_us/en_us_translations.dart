@@ -240,4 +240,12 @@ final Map<String, String> enUs = {
   "TIMEBAZAAR": "Time Bazaar",
   "GAMEMODES_TEXT": "Game Modes",
   "MARKETTEXT": "Market Name",
+
+  // My Account
+  "BANK_TEXT": "Bank:",
+  "ACNAME_TEXT": "Acc Name:",
+  "ACNO_TEXT": "Acc No.:",
+  "IFSC_TEXT": "IFSC Code:",
+  "MESSAGE_TEXT": "Error Message",
+  "SNACKMSG_TEXT": "Please contact to admin for edit",
 };

@@ -22,7 +22,14 @@ class MyAccountPage extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Icon(Icons.note_alt_rounded, color: AppColors.white),
+            child: InkWell(
+                onTap: () {
+                  Get.snackbar("MESSAGE_TEXT".tr, "SNACKMSG_TEXT".tr,
+                      backgroundColor: AppColors.black,
+                      colorText: AppColors.white,
+                      snackPosition: SnackPosition.BOTTOM);
+                },
+                child: Icon(Icons.note_alt_rounded, color: AppColors.white)),
           ),
         ],
       ),
@@ -33,19 +40,19 @@ class MyAccountPage extends StatelessWidget {
             children: [
               verticalSpace,
               listTileDetails(
-                text: "Bank:",
+                text: "BANK_TEXT".tr,
                 value: controller.bankName.value,
               ),
               listTileDetails(
-                text: "Acc Name:",
+                text: "ACNAME_TEXT".tr,
                 value: controller.accountName.value,
               ),
               listTileDetails(
-                text: "Acc No.:",
+                text: "ACNO_TEXT".tr,
                 value: controller.accountNumber.value,
               ),
               listTileDetails(
-                text: "IFSC Code:",
+                text: "IFSC_TEXT".tr,
                 value: controller.ifcsCode.value,
               ),
             ],

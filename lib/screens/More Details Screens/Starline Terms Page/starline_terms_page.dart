@@ -14,7 +14,7 @@ class StarlineTermsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          AppUtils().simpleAppbar(appBarTitle: "Starline Terms & Conditions"),
+          AppUtils().simpleAppbar(appBarTitle: "STARLINETERMSANDCONDITIONS".tr),
       body: Padding(
         padding: EdgeInsets.all(Dimensions.r8),
         child: Column(

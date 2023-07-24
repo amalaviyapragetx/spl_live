@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -11,7 +12,7 @@ class TransactionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Transactions"),
+      appBar: AppUtils().simpleAppbar(appBarTitle: "TRANSACTIONS".tr),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
@@ -87,8 +88,8 @@ class TransactionPage extends StatelessWidget {
                   ),
                   Image.asset(
                     ConstantImage.ruppeeBlueIcon,
-                    height: 25,
-                    width: 25,
+                    height: Dimensions.h25,
+                    width: Dimensions.w25,
                   ),
                   SizedBox(
                     width: Dimensions.w5,

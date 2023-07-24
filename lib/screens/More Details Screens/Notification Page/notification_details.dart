@@ -12,7 +12,7 @@ class NotificationDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Notifications"),
+      appBar: AppUtils().simpleAppbar(appBarTitle: "NOTIFICATIONS".tr),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

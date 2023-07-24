@@ -48,8 +48,8 @@ class SPLWallet extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: Dimensions.h20,
                 ),
                 Text(
                   "WALLET_TEXT".tr,

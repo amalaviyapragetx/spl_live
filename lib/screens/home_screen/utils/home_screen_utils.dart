@@ -599,8 +599,8 @@ class HomeScreenUtils {
             //     ],
             //   ),
             // ),
-            const SizedBox(
-              height: 11,
+            SizedBox(
+              height: Dimensions.h11,
             ),
             ListView.builder(
               padding: EdgeInsets.zero,
@@ -614,7 +614,7 @@ class HomeScreenUtils {
                     height: Dimensions.h40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
+                      color: AppColors.white,
                       boxShadow: [
                         BoxShadow(
                           spreadRadius: 0.2,
@@ -762,7 +762,7 @@ class MyTable2 extends StatelessWidget {
         dataRowHeight: Dimensions.h30,
         horizontalMargin: 0,
         headingRowColor: MaterialStateColor.resolveWith(
-          (states) => Colors.white,
+          (states) => AppColors.white,
         ),
         columnSpacing: 0,
         columns: columns,
@@ -771,7 +771,7 @@ class MyTable2 extends StatelessWidget {
           (index) {
             return DataRow(
               color: MaterialStateColor.resolveWith(
-                (states) => Colors.white,
+                (states) => AppColors.white,
               ),
               cells: [
                 for (int i = 0; i <= numberOfHours; i++)
