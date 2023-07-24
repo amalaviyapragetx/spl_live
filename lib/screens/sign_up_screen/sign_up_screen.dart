@@ -25,13 +25,14 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         iconTheme: IconThemeData(color: AppColors.appbarColor),
         systemOverlayStyle: AppUtils.toolBarStyleDark,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Dimensions.w35,
@@ -39,7 +40,8 @@ class SignUpScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            verticalSpace,
+            // Expanded(child: verticalSpace),
+            // verticalSpace,
             SizedBox(
               height: Dimensions.h150,
               width: Dimensions.w200,
@@ -54,12 +56,14 @@ class SignUpScreen extends StatelessWidget {
                   color: AppColors.appbarColor, fontSize: Dimensions.h20),
             ),
             verticalSpace,
-            Text(
-              "REGISTERTEXT".tr,
-              textAlign: TextAlign.center,
-              style:
-                  TextStyle(fontSize: Dimensions.h15, color: AppColors.black),
-            ),
+            Text("REGISTERTEXT".tr,
+                textAlign: TextAlign.center,
+                style: CustomTextStyle.textRobotoSansLight
+                    .copyWith(fontSize: Dimensions.h17, color: AppColors.black)
+                //   style:
+                //       TextStyle(fontSize: Dimensions.h15, color: AppColors.black),
+                // ),)
+                ),
             verticalSpace,
             _buildMobileNumberField(),
             verticalSpace,
@@ -67,18 +71,19 @@ class SignUpScreen extends StatelessWidget {
               text: "SEND OTP".tr,
               color: AppColors.appbarColor,
               borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h15,
+              fontSize: Dimensions.h12,
               fontWeight: FontWeight.w500,
               fontColor: AppColors.white,
               letterSpacing: 0,
               borderRadius: Dimensions.r25,
               borderWidth: 1,
-              textStyle: CustomTextStyle.textRobotoSlabMedium,
+              textStyle: CustomTextStyle.textRobotoSansMedium,
               onTap: () => controller.onTapOfSendOtp(),
-              height: Dimensions.h40,
+              height: Dimensions.h30,
               width: double.infinity,
             ),
-            verticalSpace,
+            // Expanded(child: verticalSpace),
+            // verticalSpace,
             // GestureDetector(
             //   onTap: () => Get.offAllNamed(AppRoutName.signInPage),
             //   child: Container(

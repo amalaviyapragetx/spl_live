@@ -18,11 +18,19 @@ class MyAccountPage extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
-        appBarTitle: "My Account",
+        appBarTitle: "MYACCOUNT".tr,
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Icon(Icons.note_alt_rounded, color: AppColors.white),
+            child: InkWell(
+              onTap: () {
+                AppUtils.showErrorSnackBar(bodyText: "SNACKMSG_TEXT".tr);
+              },
+              child: Icon(
+                Icons.note_alt_rounded,
+                color: AppColors.white,
+              ),
+            ),
           ),
         ],
       ),
@@ -33,19 +41,19 @@ class MyAccountPage extends StatelessWidget {
             children: [
               verticalSpace,
               listTileDetails(
-                text: "Bank:",
+                text: "BANK_TEXT".tr,
                 value: controller.bankName.value,
               ),
               listTileDetails(
-                text: "Acc Name:",
+                text: "ACNAME_TEXT".tr,
                 value: controller.accountName.value,
               ),
               listTileDetails(
-                text: "Acc No.:",
+                text: "ACNO_TEXT".tr,
                 value: controller.accountNumber.value,
               ),
               listTileDetails(
-                text: "IFSC Code:",
+                text: "IFSC_TEXT".tr,
                 value: controller.ifcsCode.value,
               ),
             ],

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 
 import '../../../components/button_widget.dart';
 import '../../../helper_files/app_colors.dart';
+import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import '../../../routes/app_routes_name.dart';
 
 class WithdrawalPage extends StatelessWidget {
-  const WithdrawalPage({super.key});
+  WithdrawalPage({super.key});
+  var walletController = Get.put(WalletController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +26,35 @@ class WithdrawalPage extends StatelessWidget {
       appBar: AppUtils().simpleAppbar(
         appBarTitle: "My Wallet",
         actions: [
-          const Icon(Icons.account_balance_wallet_rounded),
-          Padding(
-            padding: EdgeInsets.only(
-                top: Dimensions.r12,
-                bottom: Dimensions.r10,
-                left: Dimensions.r15,
-                right: Dimensions.r10),
-            child: const Text(
-              "30",
-              style: TextStyle(
-                fontSize: 20,
-              ),
+          InkWell(
+            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: Dimensions.w20,
+                  width: Dimensions.w20,
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    color: AppColors.white,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r10,
+                      left: Dimensions.r15,
+                      right: Dimensions.r10),
+                  child: Obx(
+                    () => Text(
+                      walletController.walletBalance.toString(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -42,7 +43,7 @@ class HomePageController extends GetxController {
   RxList<StarlineMarketData> marketListForResult = <StarlineMarketData>[].obs;
   RxList<Data2> starlineChartDate = <Data2>[].obs;
   RxList<Time> starlineChartTime = <Time>[].obs;
-  // UserDetailsModel userData = UserDetailsModel();
+//  UserDetailsModel userData = UserDetailsModel();
   UserDetailsModel userData = UserDetailsModel();
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   // RxList<NormalMarketHistoryModel> marketHistoryList =
@@ -55,7 +56,7 @@ class HomePageController extends GetxController {
     callMarketsApi();
     getDailyStarLineMarkets();
     callGetStarLineChart();
-    // getUserData();
+    getUserData();
     super.onInit();
   }
 
@@ -81,11 +82,11 @@ class HomePageController extends GetxController {
   //   getMarketBidsByUserId(lazyLoad: false);
   // }
 
-  // Future<void> getUserData() async {
-  //   var data = await LocalStorage.read(ConstantsVariables.userData);
-  //   userData = UserDetailsModel.fromJson(data);
-  //   getMarketBidsByUserId(lazyLoad: false);
-  // }
+  Future<void> getUserData() async {
+    var data = await LocalStorage.read(ConstantsVariables.userData);
+    userData = UserDetailsModel.fromJson(data);
+//    getMarketBidsByUserId(lazyLoad: false);
+  }
 
   void getStarLineMarkets() async {
     ApiService().getDailyStarLineMarkets().then((value) async {
@@ -206,23 +207,28 @@ class HomePageController extends GetxController {
               "Starline Chart",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: Dimensions.h5,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Row(
-                children: [
-                  HomeScreenUtils().dateColumn(),
-                  Expanded(child: HomeScreenUtils().timeColumn())
-                  // Expanded(
-                  //     child: MyTable2(
-                  //   numberOfHours: 10,
-                  //   numberOfRows: 50,
-                  // ))
-                ],
-              ),
-            ),
+            starlineChartDate.isEmpty
+                ? SizedBox(
+                    height: size.height / 2.5,
+                    child: Center(
+                      child: Text(
+                        "There is no Data in Starlin Chart",
+                        style: CustomTextStyle.textRobotoSansMedium,
+                      ),
+                    ),
+                  )
+                : SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Row(
+                      children: [
+                        HomeScreenUtils().dateColumn(),
+                        Expanded(child: HomeScreenUtils().timeColumn())
+                      ],
+                    ),
+                  ),
           ],
         );
       default:
@@ -495,7 +501,6 @@ class HomePageController extends GetxController {
     if (market.isBidOpenForClose ?? false) {
       Get.toNamed(AppRoutName.gameModePage, arguments: market);
     } else {
-      Get.toNamed(AppRoutName.gameModePage, arguments: market);
       AppUtils.showErrorSnackBar(
         bodyText: "Bidding is Closed!!!!",
       );

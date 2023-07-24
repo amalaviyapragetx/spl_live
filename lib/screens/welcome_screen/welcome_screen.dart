@@ -16,7 +16,7 @@ class WelcomeScreen extends StatelessWidget {
       height: Dimensions.h10,
     );
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimensions.w25),
         child: Column(
@@ -41,6 +41,9 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(
               height: Dimensions.h10,
             ),
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Text("WELCOMETEXT".tr,
                 textAlign: TextAlign.center,
                 style: CustomTextStyle.textRobotoSansLight.copyWith(
@@ -56,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
               fontWeight: FontWeight.w300,
               fontColor: AppColors.white,
               letterSpacing: 0,
-              borderRadius: Dimensions.r50,
+              borderRadius: Dimensions.r25,
               borderWidth: 1,
               textStyle: CustomTextStyle.textRobotoSansLight,
               onTap: () => Get.toNamed(AppRoutName.signInPage),

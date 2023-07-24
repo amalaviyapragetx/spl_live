@@ -8,11 +8,13 @@ import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/More%20Details%20Screens/myProfile/controller/myprofile_page_controller.dart';
+import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   String gender = '';
   var controller = Get.put(MyProfilePageController());
+  var homeController = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +27,8 @@ class ProfilePage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: Dimensions.h15,
                   ),
                   Padding(
                     padding:
@@ -39,26 +41,31 @@ class ProfilePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimensions.r50),
                       ),
                       child: InkWell(
-                          borderRadius: BorderRadius.circular(Dimensions.r50),
-                          onTap: () {
-                            controller.imageSelection();
-                          },
-                          child: controller.myimagepath != null
-                              ? Image.file(controller.myimagepath!)
-                              : Container(
-                                  height: Dimensions.h70,
-                                  width: Dimensions.w70,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.appbarColor,
-                                    borderRadius:
-                                        BorderRadius.circular(Dimensions.r50),
-                                  ),
-                                )),
+                        borderRadius: BorderRadius.circular(Dimensions.r50),
+                        onTap: () {
+                          controller.imageSelection();
+                        },
+                        child: controller.myimagepath != null
+                            ? Image.file(controller.myimagepath!)
+                            : Container(
+                                height: Dimensions.w70,
+                                width: Dimensions.w70,
+                                decoration: BoxDecoration(
+                                  color: AppColors.appbarColor,
+                                  borderRadius:
+                                      BorderRadius.circular(Dimensions.r100),
+                                ),
+                              ),
+                      ),
                     ),
                   ),
                   Text(
-                    "\nJevin \n8780339513 \n8780339513",
-                    style: TextStyle(fontSize: 17, color: AppColors.black),
+                    // "\nJevin \n8780339513 \n8780339513",
+                    "\n${homeController.userData.userName ?? ""}\n${homeController.userData.phoneNumber ?? ""}\n${homeController.userData.phoneNumber ?? ""}",
+                    // style: TextStyle(fontSize: 17, color: AppColors.black),\
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      fontSize: Dimensions.h15,
+                    ),
                   ),
                 ],
               ),
@@ -104,8 +111,8 @@ class ProfilePage extends StatelessWidget {
                 },
                 controlAffinity: ListTileControlAffinity.trailing,
               ),
-              const Divider(
-                color: Colors.grey,
+              Divider(
+                color: AppColors.grey,
                 thickness: 0.3,
                 indent: 20,
                 height: 0.1,
@@ -127,8 +134,8 @@ class ProfilePage extends StatelessWidget {
                 },
                 controlAffinity: ListTileControlAffinity.trailing,
               ),
-              const Divider(
-                color: Colors.grey,
+              Divider(
+                color: AppColors.grey,
                 thickness: 0.3,
                 height: 0.1,
                 indent: 20,
@@ -143,7 +150,7 @@ class ProfilePage extends StatelessWidget {
 
   Card cardListwidget(String text, {required Function() onTap}) {
     return Card(
-      color: Colors.white,
+      color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
       ),
@@ -151,7 +158,7 @@ class ProfilePage extends StatelessWidget {
         height: Dimensions.h50,
         child: ListTile(
           onTap: onTap,
-          leading: const Icon(Icons.lock_outline, color: Colors.blue),
+          leading: Icon(Icons.lock_outline, color: AppColors.blueAccent),
           title: Text(
             text,
             // "Change Password",

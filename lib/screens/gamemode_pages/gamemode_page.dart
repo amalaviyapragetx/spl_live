@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -13,28 +15,32 @@ import 'utils/game_mode_utils.dart';
 class GameModePage extends StatelessWidget {
   GameModePage({super.key});
   var controller = Get.put(GameModePagesController());
+  var walletController = Get.put(WalletController());
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Game Modes", actions: [
+      appBar:
+          AppUtils().simpleAppbar(appBarTitle: "GAMEMODES_TEXT".tr, actions: [
         InkWell(
           onTap: () {},
           child: const Icon(Icons.wallet),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: Dimensions.h14, horizontal: Dimensions.h15),
-          child: Text(
-            "40",
-            style: TextStyle(
-              fontSize: Dimensions.h14,
-              fontWeight: FontWeight.bold,
-              color: AppColors.white,
+        Obx(
+          () => Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: Dimensions.h14, horizontal: Dimensions.h15),
+            child: Text(
+              walletController.walletBalance.toString(),
+              style: TextStyle(
+                fontSize: Dimensions.h14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.white,
+              ),
             ),
           ),
-        ),
+        )
       ]),
       body: Obx(
         () {
@@ -43,12 +49,12 @@ class GameModePage extends StatelessWidget {
             child: Column(
               children: [
                 controller.openBiddingOpen.value
-                    ? const SizedBox(
-                        height: 11,
+                    ? SizedBox(
+                        height: Dimensions.h11,
                       )
                     : Container(
                         decoration: BoxDecoration(color: AppColors.redColor),
-                        height: 50,
+                        height: Dimensions.h50,
                         width: double.infinity,
                         child: Center(
                           child: Text(
@@ -65,8 +71,8 @@ class GameModePage extends StatelessWidget {
                     controller.marketValue.value.date.toString(),
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
+                SizedBox(
+                  height: Dimensions.h5,
                 ),
                 GameModeUtils().rowWidget2(
                   openBid: controller.marketValue.value.openTime.toString(),
@@ -178,58 +184,48 @@ class GameModePage extends StatelessWidget {
                                 //       .image
                                 //       .toString(),
                                 //   height: Dimensions.h45,
-                                //   progressIndicatorBuilder:
-                                //       (context, url, progress) =>
-                                //           CircularProgressIndicator(),
                                 //   errorWidget: (context, url, error) =>
-                                //       Icon(Icons.error),
+                                //       const Icon(Icons.error),
                                 // ),
-                                child: controller.gameModesList
-                                            .elementAt(index)
-                                            .image !=
-                                        null
-                                    ? Image.network(
-                                        controller.gameModesList
-                                            .elementAt(index)
-                                            .image
-                                            .toString(),
-                                        height: Dimensions.h45,
-                                      )
-                                    : const Icon(Icons.error),
+                                child: Image.network(
+                                  controller.gameModesList
+                                      .elementAt(index)
+                                      .image
+                                      .toString(),
+                                  height: Dimensions.h45,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Icon(Icons.error);
+                                  },
+                                ),
                               ),
                             ),
                             Positioned(
                               left: 60,
-                              child: controller.gameModesList
-                                          .elementAt(index)
-                                          .image !=
-                                      null
-                                  ? Image.network(
-                                      controller.gameModesList
-                                          .elementAt(index)
-                                          .image
-                                          .toString(),
-                                      height: Dimensions.h45,
-                                    )
-                                  : const Icon(Icons.error),
+                              child: Image.network(
+                                controller.gameModesList
+                                    .elementAt(index)
+                                    .image
+                                    .toString(),
+                                height: Dimensions.h45,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(Icons.error);
+                                },
+                              ),
                             ),
                             Positioned(
                               left: 30,
                               child: Opacity(
-                                opacity: 0.3,
-                                child: controller.gameModesList
-                                            .elementAt(index)
-                                            .image !=
-                                        null
-                                    ? Image.network(
-                                        controller.gameModesList
-                                            .elementAt(index)
-                                            .image
-                                            .toString(),
-                                        height: Dimensions.h45,
-                                      )
-                                    : const Icon(Icons.error),
-                              ),
+                                  opacity: 0.3,
+                                  child: Image.network(
+                                    controller.gameModesList
+                                        .elementAt(index)
+                                        .image
+                                        .toString(),
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Icon(Icons.error);
+                                    },
+                                    height: Dimensions.h45,
+                                  )),
                             ), // Bottom image
                             Opacity(
                               opacity: 0.0,

@@ -51,9 +51,9 @@ class VerifyOTPPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
           child: Text(
-            "Enter 6 digit code that you received in your mobile number".tr,
+            "OTPTEXT".tr,
             textAlign: TextAlign.center,
-            style: CustomTextStyle.textRobotoSlabLight.copyWith(
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
               fontSize: Dimensions.h14,
               letterSpacing: 1,
               height: 1.5,
@@ -77,16 +77,16 @@ class VerifyOTPPage extends StatelessWidget {
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: "Didn't receive the otp ? ",
-                    style: CustomTextStyle.textRobotoSlabMedium.copyWith(
+                    text: "DIDOTP".tr,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
                       color: AppColors.black,
                       fontWeight: FontWeight.normal,
                       fontSize: Dimensions.h14,
                     ),
                     children: [
                       TextSpan(
-                        text: "Resend OTP",
-                        style: CustomTextStyle.textRobotoSlabMedium.copyWith(
+                        text: "RESENDOTP".tr,
+                        style: CustomTextStyle.textRobotoSansLight.copyWith(
                           color: AppColors.black,
                           fontWeight: FontWeight.normal,
                           fontSize: Dimensions.h14,
@@ -104,15 +104,15 @@ class VerifyOTPPage extends StatelessWidget {
             text: "CONTINUE".tr,
             color: AppColors.appbarColor,
             borderColor: AppColors.appbarColor,
-            fontSize: Dimensions.h15,
+            fontSize: Dimensions.h12,
             fontWeight: FontWeight.w500,
             fontColor: AppColors.white,
-            letterSpacing: 0,
+            letterSpacing: 1,
             borderRadius: Dimensions.r9,
             borderWidth: 1,
-            textStyle: CustomTextStyle.textRobotoSlabMedium,
+            textStyle: CustomTextStyle.textRobotoSansMedium,
             onTap: () => controller.onTapOfContinue(),
-            height: Dimensions.h40,
+            height: Dimensions.h30,
             width: double.infinity,
           ),
         ),
@@ -134,7 +134,7 @@ class VerifyOTPPage extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: CustomTextStyle.textPTsansBold.copyWith(
+            style: CustomTextStyle.textRobotoSansMedium.copyWith(
               fontWeight: FontWeight.normal,
               fontSize: Dimensions.h15,
               letterSpacing: 1,

@@ -79,16 +79,16 @@ class BidHistory extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
               spreadRadius: 1,
-              color: Colors.grey,
+              color: AppColors.grey,
               blurRadius: 10,
               offset: Offset(7, 4),
             ),
           ],
           border: Border.all(width: 0.6),
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -138,8 +138,8 @@ class BidHistory extends StatelessWidget {
                   ),
                   Image.asset(
                     ConstantImage.ruppeeBlueIcon,
-                    height: 25,
-                    width: 25,
+                    height: Dimensions.h25,
+                    width: Dimensions.w25,
                   ),
                   SizedBox(
                     width: Dimensions.w5,

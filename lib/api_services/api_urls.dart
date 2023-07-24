@@ -4,8 +4,9 @@ class ApiUtils {
   // base urls
   //
   // // live url
-  static String baseURL = "http://43.205.145.101:9867";
-
+  // static String baseURL = "http://43.205.145.101:9867";
+  // static String baseURL = "http://65.0.132.151:9869";
+  static String baseURL = "http://35.154.94.107:9869";
   // local url
   //static String baseURL = "http://192.168.1.5:8082";
 

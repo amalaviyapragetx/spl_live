@@ -34,21 +34,35 @@ class StarLineGameModesPage extends StatelessWidget {
         ),
         actions: [
           InkWell(
-            onTap: () {},
-            child: const Icon(Icons.wallet),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: Dimensions.h14, horizontal: Dimensions.h15),
-            child: Obx(
-              () => Text(
-                walletController.walletBalance.toString(),
-                style: TextStyle(
-                  fontSize: Dimensions.h14,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.white,
+            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: Dimensions.w20,
+                  width: Dimensions.w20,
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    color: AppColors.white,
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: Dimensions.r8,
+                    bottom: Dimensions.r10,
+                    left: Dimensions.r15,
+                    right: Dimensions.r10,
+                  ),
+                  child: Obx(
+                    () => Text(
+                      walletController.walletBalance.toString(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -79,7 +93,7 @@ class StarLineGameModesPage extends StatelessWidget {
                         ),
                         verticalSpace,
                         Text(
-                          "Game Type",
+                          "GAMETYPE".tr,
                           style: CustomTextStyle.textPTsansMedium
                               .copyWith(fontSize: Dimensions.h15),
                         ),
@@ -178,7 +192,7 @@ class StarLineGameModesPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         RoundedCornerButton(
-                                          text: "Submit",
+                                          text: "SUBMIT".tr,
                                           color: AppColors.appbarColor,
                                           borderColor: AppColors.appbarColor,
                                           fontSize: Dimensions.h12,
@@ -320,7 +334,7 @@ class StarLineGameModesPage extends StatelessWidget {
   void showCustomAboutBoxDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.3), // Transparent background
+      barrierColor: AppColors.black.withOpacity(0.3), // Transparent background
       barrierDismissible:
           false, // Prevent users from dismissing the dialog by tapping outside
       builder: (context) => _buildCustomAboutBoxDialog(),
@@ -329,7 +343,7 @@ class StarLineGameModesPage extends StatelessWidget {
 
   Widget _buildCustomAboutBoxDialog() {
     return Dialog(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       child: Container(
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -342,7 +356,7 @@ class StarLineGameModesPage extends StatelessWidget {
             const CircularProgressIndicator(),
             SizedBox(width: Dimensions.w10),
             Text(
-              "Please Wait",
+              "PLEASEWAIT".tr,
               style: CustomTextStyle.textPTsansBold
                   .copyWith(fontSize: Dimensions.h15),
             ),

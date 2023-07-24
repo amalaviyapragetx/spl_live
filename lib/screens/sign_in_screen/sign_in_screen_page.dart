@@ -26,7 +26,7 @@ class SignInScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         iconTheme: IconThemeData(color: AppColors.appbarColor),
         systemOverlayStyle: AppUtils.toolBarStyleDark,
@@ -112,7 +112,7 @@ class SignInScreen extends StatelessWidget {
               showEnglishName: true,
               alphabetSelectedTextColor: AppColors.white,
               labelColor: AppColors.black,
-              alphabetTextColor: Colors.green,
+              alphabetTextColor: AppColors.green,
             ),
             initialSelection: '+91',
             onChanged: (code) {
@@ -132,7 +132,6 @@ class SignInScreen extends StatelessWidget {
             height: Dimensions.h40,
             controller: controller.mobileNumberController,
             keyboardType: TextInputType.phone,
-            //hintText: "Enter Mobile Number",
             hintText: "ENTERMOBILENUMBER".tr,
             imagePath: ConstantImage.phoneSVG,
             maxLines: 1,
@@ -276,7 +275,7 @@ class SignInScreen extends StatelessWidget {
       height: Dimensions.h40,
       keyBoardType: TextInputType.visiblePassword,
       controller: controller.passwordController,
-      hintText: "Please enter password",
+      hintText: "ENTERPASSWORDTEXT".tr,
       hidePassword: controller.visiblePassword.value,
       suffixIcon: InkWell(
         onTap: () {

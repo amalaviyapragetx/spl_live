@@ -44,8 +44,8 @@ class SetMPINPage extends StatelessWidget {
           verticalSpace,
           Center(
             child: Text(
-              "SET MPIN",
-              // "SETMPIN".tr,
+              // "SET MPIN",
+              "SETMPIN".tr,
               style: CustomTextStyle.textRobotoSlabBold.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: Dimensions.h25,
@@ -56,13 +56,15 @@ class SetMPINPage extends StatelessWidget {
           ),
           verticalSpace,
           Text(
-            "Set 4 digit code that you want to use for Login in your account",
-            // "SETMPINTEXT".tr,
+            // "Set 4 digit code that you want to use for Login in your account",
+            "SETMPINTEXT".tr,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: Dimensions.h14,
-            ),
+            style: CustomTextStyle.textRobotoSansLight
+                .copyWith(fontSize: Dimensions.h15),
+            // style: TextStyle(
+            //   color: AppColors.black,
+            //   fontSize: Dimensions.h14,
+            // ),
             // style: CustomTextStyle.textRobotoSlabLight.copyWith(
             //   fontSize: Dimensions.h17,
             //   letterSpacing: 1,
@@ -73,14 +75,14 @@ class SetMPINPage extends StatelessWidget {
           verticalSpace,
           _buildPinCodeField(
             context: context,
-            title: "MPIN",
+            title: "MPIN".tr,
             pinType: controller.mpin,
             pinCodeLength: 4,
           ),
           verticalSpace,
           _buildPinCodeField(
             context: context,
-            title: "RE-ENTER MPIN",
+            title: "REENTERMPIN".tr,
             pinType: controller.confirmMpin,
             pinCodeLength: 4,
           ),
@@ -89,15 +91,15 @@ class SetMPINPage extends StatelessWidget {
             text: "CONTINUE".tr,
             color: AppColors.appbarColor,
             borderColor: AppColors.appbarColor,
-            fontSize: Dimensions.h15,
+            fontSize: Dimensions.h13,
             fontWeight: FontWeight.w500,
             fontColor: AppColors.white,
-            letterSpacing: 0,
+            letterSpacing: 1,
             borderRadius: Dimensions.r9,
             borderWidth: 1,
-            textStyle: CustomTextStyle.textRobotoSlabLight,
+            textStyle: CustomTextStyle.textRobotoSansMedium,
             onTap: () => controller.onTapOfContinue(),
-            height: Dimensions.h40,
+            height: Dimensions.h30,
             width: double.infinity,
           ),
         ],
@@ -117,7 +119,7 @@ class SetMPINPage extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: CustomTextStyle.textRobotoSlabBold.copyWith(
+          style: CustomTextStyle.textRobotoSansMedium.copyWith(
             fontWeight: FontWeight.normal,
             fontSize: Dimensions.h15,
             letterSpacing: 1,

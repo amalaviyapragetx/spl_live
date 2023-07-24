@@ -35,6 +35,14 @@ class UserDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
+                "Hello,",
+                style: CustomTextStyle.textRobotoSlabLight.copyWith(
+                  fontSize: Dimensions.h13,
+                  letterSpacing: 1,
+                  color: AppColors.black,
+                ),
+              ),
+              Text(
                 "SIGN UP".tr,
                 style: CustomTextStyle.textRobotoSlabBold.copyWith(
                   fontWeight: FontWeight.bold,
@@ -135,14 +143,14 @@ class UserDetailsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         RoundedCornerButton(
-          height: Dimensions.h35,
+          height: Dimensions.h30,
           width: Dimensions.w300,
-          letterSpacing: 0,
+          letterSpacing: 1,
           color: AppColors.appbarColor,
-          fontSize: Dimensions.h14,
-          fontWeight: FontWeight.bold,
-          text: "REGISTER".tr,
-          textStyle: CustomTextStyle.textRobotoSlabBold,
+          fontSize: Dimensions.h12,
+          fontWeight: FontWeight.w500,
+          text: "SIGNUP".tr,
+          textStyle: CustomTextStyle.textRobotoSansMedium,
           borderRadius: Dimensions.h25,
           borderColor: AppColors.appbarColor,
           borderWidth: 2,
@@ -160,11 +168,11 @@ class UserDetailsPage extends StatelessWidget {
         onTap: () => Get.offAllNamed(AppRoutName.signInPage),
         child: Center(
           child: Text(
-            "Have an Account? Login here.",
+            "ACCOUNTLOGIN".tr,
             // "${"HAVEANACCOUNT".tr}? ${"LOGIN".tr} ${"HERE".tr}.",
-            style: CustomTextStyle.textRobotoSlabBold.copyWith(
+            style: CustomTextStyle.textPTsansMedium.copyWith(
               fontWeight: FontWeight.w500,
-              fontSize: Dimensions.h12,
+              fontSize: Dimensions.h14,
               letterSpacing: 1,
               color: AppColors.appbarColor,
             ),

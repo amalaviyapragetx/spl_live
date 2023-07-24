@@ -218,11 +218,9 @@ class HomeScreenUtils {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
                   child: GestureDetector(
-                    onTap: marketData.isBidOpenForClose ?? false
-                        ? () => controller.onTapOfNormalMarket(
-                              controller.normalMarketList[index],
-                            )
-                        : null,
+                    onTap: () => controller.onTapOfNormalMarket(
+                      controller.normalMarketList[index],
+                    ),
                     child: Container(
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -641,8 +639,8 @@ class HomeScreenUtils {
             //     ],
             //   ),
             // ),
-            const SizedBox(
-              height: 11,
+            SizedBox(
+              height: Dimensions.h11,
             ),
             ListView.builder(
               padding: EdgeInsets.zero,
@@ -656,7 +654,7 @@ class HomeScreenUtils {
                     height: Dimensions.h50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
+                      color: AppColors.white,
                       boxShadow: [
                         BoxShadow(
                           spreadRadius: 0.2,
@@ -690,21 +688,19 @@ class HomeScreenUtils {
                             width: Dimensions.w10,
                           ),
                         ),
-                         Padding(
-                                padding: EdgeInsets.only(right: Dimensions.h50),
-                                child: Text(
-                                  controller.getResult(
-                                    controller.marketListForResult.value[index]
-                                            .isResultDeclared ??
-                                        false,
-                                    controller.marketListForResult[index]
-                                            .result ??
-                                        0,
-                                  ),
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(fontSize: Dimensions.h15),
-                                ),
-                              ),
+                        Padding(
+                          padding: EdgeInsets.only(right: Dimensions.h50),
+                          child: Text(
+                            controller.getResult(
+                              controller.marketListForResult.value[index]
+                                      .isResultDeclared ??
+                                  false,
+                              controller.marketListForResult[index].result ?? 0,
+                            ),
+                            style: CustomTextStyle.textRobotoSansBold
+                                .copyWith(fontSize: Dimensions.h15),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -807,14 +803,14 @@ class HomeScreenUtils {
               (states) => Colors.white,
             ),
             rows: List<DataRow>.generate(
-              controller.starlineChartDate.length,
+              controller.starlineChartDate.length ?? 10,
               (i) {
                 return DataRow(
                     color: MaterialStateColor.resolveWith(
                       (states) => Colors.white,
                     ),
                     cells: List<DataCell>.generate(
-                      controller.starlineChartTime.length,
+                      controller.starlineChartTime.length ?? 10,
                       (j) {
                         return DataCell(
                           Container(
@@ -883,7 +879,7 @@ class HomeScreenUtils {
             ),
             columnSpacing: 0,
             columns: List<DataColumn>.generate(
-              controller.starlineChartTime.length,
+              controller.starlineChartTime.length ?? 10,
               (index) {
                 return DataColumn(
                   label: Container(
@@ -901,7 +897,7 @@ class HomeScreenUtils {
                         //   color: ColorConstant.white,
                         //   fontWeight: FontWeight.normal,
                         //   fontSize: Dimensions.sp14,
-                        // ),
+                        // ),5
                       ),
                     ),
                   ),

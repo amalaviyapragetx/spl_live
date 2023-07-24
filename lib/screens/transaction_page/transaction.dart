@@ -16,7 +16,7 @@ class TransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Transactions"),
+      appBar: AppUtils().simpleAppbar(appBarTitle: "TRANSACTIONS".tr),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),

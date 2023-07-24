@@ -150,7 +150,7 @@ class SelectedBidsPage extends StatelessWidget {
   bottomNavigationBar(String totalAmount) {
     return SafeArea(
       child: Container(
-        height: 50,
+        height: Dimensions.h50,
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,8 +170,8 @@ class SelectedBidsPage extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  height: 30,
-                  width: 30,
+                  height: Dimensions.h30,
+                  width: Dimensions.w30,
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(25)),

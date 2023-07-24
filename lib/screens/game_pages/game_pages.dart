@@ -24,7 +24,7 @@ class SingleAnkPage extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppUtils().simpleAppbar(
-          appBarTitle: "Time Bazaar".tr,
+          appBarTitle: "TIMEBAZAAR".tr,
           actions: [
             Row(
               children: [
@@ -115,7 +115,7 @@ class SingleAnkPage extends StatelessWidget {
                                     }
                                   }
                                 },
-                                hintText: "Enter Coins",
+                                hintText: "COINS".tr,
                                 imagePath: ConstantImage.rupeeImage,
                                 containerBackColor: AppColors.appbarColor,
                                 iconColor: AppColors.white,
@@ -129,7 +129,7 @@ class SingleAnkPage extends StatelessWidget {
                             child: RoundedCornerEditTextWithIcon(
                               width: size.width / 2,
                               controller: controller.searchController,
-                              hintText: "Search ...",
+                              hintText: "SEARCH_TEXT".tr,
                               imagePath: ConstantImage.serchZoomIcon,
                               containerBackColor: AppColors.transparent,
                               height: Dimensions.h50,
@@ -223,7 +223,7 @@ class SingleAnkPage extends StatelessWidget {
   bottomNavigationBar(String totalAmount) {
     return SafeArea(
       child: Container(
-        height: 50,
+        height: Dimensions.h50,
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,7 +233,7 @@ class SingleAnkPage extends StatelessWidget {
                 horizontal: Dimensions.commonPaddingForScreen,
               ),
               child: Text(
-                "Total Coin",
+                "TOTALCOIN".tr,
                 style: TextStyle(
                   color: AppColors.white,
                   fontSize: Dimensions.h18,
@@ -243,8 +243,8 @@ class SingleAnkPage extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  height: 30,
-                  width: 30,
+                  height: Dimensions.h30,
+                  width: Dimensions.w30,
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(25)),
@@ -288,7 +288,7 @@ class SingleAnkPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(Dimensions.r10),
         border: Border.all(
           color: color,
-          width: 2,
+          width: Dimensions.w2,
         ),
       ),
       height: Dimensions.h40,
@@ -318,7 +318,7 @@ class SingleAnkPage extends StatelessWidget {
   buttonContainer(size) {
     return Container(
       color: AppColors.grey.withOpacity(0.15),
-      height: 70,
+      height: Dimensions.h70,
       child: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -330,7 +330,7 @@ class SingleAnkPage extends StatelessWidget {
               Expanded(
                 child: ButtonWidget(
                   onTap: () => Get.back(),
-                  text: "CANCEL",
+                  text: "CANCEL".tr,
                   buttonColor: AppColors.buttonColorOrange,
                   height: Dimensions.h30,
                   width: size.width / 2,
@@ -343,7 +343,7 @@ class SingleAnkPage extends StatelessWidget {
               Expanded(
                 child: ButtonWidget(
                   onTap: () => controller.onTapOfSaveButton(),
-                  text: "SAVE",
+                  text: "SAVE".tr,
                   buttonColor: AppColors.appbarColor,
                   height: Dimensions.h30,
                   width: size.width / 2,
@@ -375,8 +375,8 @@ class SingleAnkPage extends StatelessWidget {
                           controller.selectedIndexOfDigitRow = index;
                         },
                         child: Container(
-                          width: 35,
-                          height: 30,
+                          width: Dimensions.w35,
+                          height: Dimensions.h30,
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: controller.digitRow[index].isSelected!
