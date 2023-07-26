@@ -40,7 +40,7 @@ class AppUtils {
       leadingWidth: leadingWidht,
       title: Text(
         appBarTitle,
-        style: CustomTextStyle.textPTsansBold,
+        style: CustomTextStyle.textRobotoSansMedium,
         // style: GoogleFonts.aclonica(
         //     color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
       ),
@@ -77,7 +77,7 @@ class AppUtils {
               child: Text(
                 iconText,
                 style: CustomTextStyle.textPTsansMedium.copyWith(
-                    color: textColor ?? AppColors.black,
+                    color: textColor ?? AppColors.grey,
                     fontSize: Dimensions.h11),
               ),
             ),
@@ -216,11 +216,16 @@ class AppUtils {
         height: Dimensions.w50,
         width: Dimensions.w50,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: AppColors.white.withOpacity(0.25),
-            boxShadow: [
-              BoxShadow(blurRadius: 10, spreadRadius: 2, color: AppColors.grey)
-            ]),
+          borderRadius: BorderRadius.circular(50),
+          color: AppColors.white.withOpacity(0.25),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              spreadRadius: 2,
+              color: AppColors.greyShade.withOpacity(0.3),
+            )
+          ],
+        ),
         child: const Image(
           image: AssetImage(
             ConstantImage.whatsaapIcon,
@@ -272,29 +277,55 @@ class AppUtils {
   //common method for show error snack-bar
   static void showErrorSnackBar({required String bodyText}) {
     Get.closeCurrentSnackbar();
-    Get.snackbar("ERRORMESSAGE".tr, bodyText,
-        padding: EdgeInsets.all(5),
-        snackPosition: SnackPosition.BOTTOM,
-        isDismissible: true,
-        onTap: null,
-        colorText: AppColors.white,
-        maxWidth: double.infinity,
-        snackStyle: SnackStyle.GROUNDED,
-        backgroundColor: AppColors.black.withOpacity(0.5),
-        borderRadius: 0,
-        margin: EdgeInsets.all(10));
+    Get.snackbar(
+      "",
+      "",
+      titleText: Padding(
+        padding: EdgeInsets.only(top: Dimensions.h20, left: Dimensions.w15),
+        child: Text(
+          bodyText,
+          textAlign: TextAlign.start,
+          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+      ),
+      padding: EdgeInsets.zero,
+      snackPosition: SnackPosition.BOTTOM,
+      isDismissible: true,
+      onTap: null,
+      colorText: AppColors.white,
+      maxWidth: double.infinity,
+      snackStyle: SnackStyle.FLOATING,
+      backgroundColor: AppColors.black.withOpacity(0.6),
+      borderRadius: 5,
+      margin: const EdgeInsets.all(10),
+    );
   }
 
   //common method for show success snack-bar
   static void showSuccessSnackBar({headerText, bodyText}) {
     Get.closeCurrentSnackbar();
     Get.snackbar(
-      headerText,
-      bodyText,
+      "",
+      "",
+      titleText: Padding(
+        padding: EdgeInsets.only(top: Dimensions.h20, left: Dimensions.w15),
+        child: Text(
+          bodyText,
+          textAlign: TextAlign.start,
+          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+      ),
+      padding: EdgeInsets.zero,
       snackPosition: SnackPosition.BOTTOM,
       isDismissible: true,
-      backgroundColor: Colors.green,
+      backgroundColor: AppColors.black.withOpacity(0.6),
       onTap: null,
+      borderRadius: 5,
+      margin: const EdgeInsets.all(10),
     );
   }
 

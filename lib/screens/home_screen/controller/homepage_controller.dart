@@ -299,13 +299,13 @@ class HomePageController extends GetxController {
                               HomeScreenUtils().iconsContainer(
                                 iconColor1: widgetContainer.value == 0
                                     ? AppColors.appbarColor
-                                    : AppColors.black,
+                                    : AppColors.iconColorMain,
                                 iconColor2: widgetContainer.value == 1
                                     ? AppColors.appbarColor
-                                    : AppColors.black,
+                                    : AppColors.iconColorMain,
                                 iconColor3: widgetContainer.value == 2
                                     ? AppColors.appbarColor
-                                    : AppColors.black,
+                                    : AppColors.iconColorMain,
                                 onTap1: () {
                                   position = 0;
                                   widgetContainer.value = position;
@@ -331,13 +331,13 @@ class HomePageController extends GetxController {
                                     ? HomeScreenUtils().iconsContainer2(
                                         iconColor1: widgetContainer.value == 3
                                             ? AppColors.appbarColor
-                                            : AppColors.black,
+                                            : AppColors.iconColorMain,
                                         iconColor2: widgetContainer.value == 4
                                             ? AppColors.appbarColor
-                                            : AppColors.black,
+                                            : AppColors.iconColorMain,
                                         iconColor3: widgetContainer.value == 5
                                             ? AppColors.appbarColor
-                                            : AppColors.black,
+                                            : AppColors.iconColorMain,
                                         onTap1: () {
                                           position = 3;
                                           widgetContainer.value = position;
@@ -416,13 +416,13 @@ class HomePageController extends GetxController {
                           HomeScreenUtils().iconsContainer(
                             iconColor1: widgetContainer.value == 0
                                 ? AppColors.appbarColor
-                                : AppColors.black,
+                                : AppColors.iconColorMain,
                             iconColor2: widgetContainer.value == 1
                                 ? AppColors.appbarColor
-                                : AppColors.black,
+                                : AppColors.iconColorMain,
                             iconColor3: widgetContainer.value == 2
                                 ? AppColors.appbarColor
-                                : AppColors.black,
+                                : AppColors.iconColorMain,
                             onTap1: () {
                               position = 0;
                               widgetContainer.value = position;
@@ -448,13 +448,13 @@ class HomePageController extends GetxController {
                                 ? HomeScreenUtils().iconsContainer2(
                                     iconColor1: widgetContainer.value == 3
                                         ? AppColors.appbarColor
-                                        : AppColors.black,
+                                        : AppColors.iconColorMain,
                                     iconColor2: widgetContainer.value == 4
                                         ? AppColors.appbarColor
-                                        : AppColors.black,
+                                        : AppColors.iconColorMain,
                                     iconColor3: widgetContainer.value == 5
                                         ? AppColors.appbarColor
-                                        : AppColors.black,
+                                        : AppColors.iconColorMain,
                                     onTap1: () {
                                       position = 3;
                                       widgetContainer.value = position;

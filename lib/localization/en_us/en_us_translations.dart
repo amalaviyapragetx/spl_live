@@ -72,10 +72,10 @@ final Map<String, String> enUs = {
   "OLDPASSWORD": "Old password",
 
   // "WITHDRAWAL2": "WITHDRAWAL",
-  "BIDHISTORY": "BIDHISTORY",
+  "BIDHISTORY": "BID HISTORY",
   "COINS": "Enter Coins",
   "SEARCH_TEXT": "Search ...",
-  "TOTALCOIN": "Total Coin",
+  "TOTALCOIN": "Total Coins",
   "40": "40",
   "GOODAFTERNOON": "GOOD AFTERNOON",
   "PLUSADD": "+ ADD",
@@ -241,7 +241,8 @@ final Map<String, String> enUs = {
   // AppBar names
 
   "SPL_WALLET": "Spl Wallet",
-  "TIMEBAZAAR": "Time Bazaar",
+  "TIMEBAZAAR": "TIME BAZAAR",
+
   "GAMEMODES_TEXT": "Game Modes",
   "MARKETTEXT": "Market Name",
 
@@ -256,4 +257,5 @@ final Map<String, String> enUs = {
       "Please enter your registered phone number to send the reset code",
   "RESULTHISTORY2": "RESULT HISTORY",
   "CHART2": "CHART",
+  "NOBIDHISTORY": "No Bid History"
 };

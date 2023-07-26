@@ -331,7 +331,7 @@ class ApiService extends GetConnect {
 
     await initApiService();
     final response = await get(
-      ApiUtils.getDailyStarLineMarkets,
+      "${ApiUtils.getDailyStarLineMarkets}",
       headers: headersWithToken,
     );
     if (response.status.hasError) {

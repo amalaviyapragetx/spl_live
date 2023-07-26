@@ -27,7 +27,7 @@ class CustomTextStyle {
   static TextStyle textRobotoSlabLight =
       const TextStyle(fontFamily: 'Roboto', fontWeight: FontWeight.w300);
   static TextStyle textPTsansBold =
-      const TextStyle(fontFamily: 'PTsans', fontWeight: FontWeight.w700);
+      const TextStyle(fontFamily: 'PTsans', fontWeight: FontWeight.w700 ,);
   static TextStyle textPTsansMedium =
       const TextStyle(fontFamily: 'PTsans', fontWeight: FontWeight.w500);
   static TextStyle textRobotoSansBold =

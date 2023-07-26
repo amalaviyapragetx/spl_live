@@ -34,7 +34,9 @@ class MyNavigationBar extends StatelessWidget {
             onTap: onTapHome,
             icon: ConstantImage.homeIcon,
             iconText: "Home",
-            textColor: currentIndex == 0 ? AppColors.appbarColor : Colors.black,
+            textColor: currentIndex == 0
+                ? AppColors.appbarColor
+                : AppColors.iconColorMain,
             color: currentIndex == 0 ? AppColors.appbarColor : Colors.grey,
           ),
           AppUtils().nameIcons(
@@ -42,7 +44,9 @@ class MyNavigationBar extends StatelessWidget {
             onTap: onTapBidHistory,
             icon: ConstantImage.bidHistoryListIcon,
             iconText: "Bid History",
-            textColor: currentIndex == 1 ? AppColors.appbarColor : Colors.black,
+            textColor: currentIndex == 1
+                ? AppColors.appbarColor
+                : AppColors.iconColorMain,
             color: currentIndex == 1 ? AppColors.appbarColor : Colors.grey,
           ),
           AppUtils().nameIcons(
@@ -50,7 +54,9 @@ class MyNavigationBar extends StatelessWidget {
             onTap: onTapWallet,
             icon: ConstantImage.walletAppbar,
             iconText: "Wallet",
-            textColor: currentIndex == 2 ? AppColors.appbarColor : Colors.black,
+            textColor: currentIndex == 2
+                ? AppColors.appbarColor
+                : AppColors.iconColorMain,
             color: currentIndex == 2 ? AppColors.appbarColor : Colors.grey,
           ),
           AppUtils().nameIcons(
@@ -58,7 +64,9 @@ class MyNavigationBar extends StatelessWidget {
             onTap: onTapMore,
             icon: ConstantImage.moreIcon,
             iconText: "More",
-            textColor: currentIndex == 3 ? AppColors.appbarColor : Colors.black,
+            textColor: currentIndex == 3
+                ? AppColors.appbarColor
+                : AppColors.iconColorMain,
             color: currentIndex == 3 ? AppColors.appbarColor : Colors.grey,
           ),
         ],

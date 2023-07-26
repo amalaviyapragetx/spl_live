@@ -33,22 +33,25 @@ class SangamPages extends StatelessWidget {
       appBar: AppUtils().simpleAppbar(
           appBarTitle: controller.marketData.value.market ?? '',
           actions: [
-            InkWell(
-              onTap: () {},
-              child: const Icon(Icons.wallet),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: Dimensions.h14, horizontal: Dimensions.h15),
-              child: Text(
-                walletController.walletBalance.toString(),
-                style: TextStyle(
-                  fontSize: Dimensions.h14,
-                  fontWeight: FontWeight.bold,
+            Row(
+              children: [
+                SvgPicture.asset(
+                  ConstantImage.walletAppbar,
+                  height: Dimensions.h20,
                   color: AppColors.white,
                 ),
-              ),
-            ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w11),
+                  child: Text(
+                    walletController.walletBalance.value,
+                    style: CustomTextStyle.textPTsansMedium.copyWith(
+                      color: AppColors.white,
+                      fontSize: Dimensions.h17,
+                    ),
+                  ),
+                )
+              ],
+            )
           ]),
       body: SizedBox(
         height: size.height,
@@ -60,10 +63,10 @@ class SangamPages extends StatelessWidget {
             children: [
               verticalSpace,
               Text(
-                controller.gameMode.value.name ?? "",
-                style: CustomTextStyle.textPTsansBold.copyWith(
+                controller.gameMode.value.name!.toUpperCase(),
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
                   color: AppColors.appbarColor,
-                  fontSize: Dimensions.h20,
+                  fontSize: Dimensions.h18,
                 ),
               ),
               verticalSpace,
@@ -72,12 +75,12 @@ class SangamPages extends StatelessWidget {
                 color: AppColors.appbarColor,
                 borderColor: AppColors.appbarColor,
                 fontSize: Dimensions.h12,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 fontColor: AppColors.white,
                 letterSpacing: 1,
                 borderRadius: Dimensions.r5,
                 borderWidth: 0.2,
-                textStyle: CustomTextStyle.textPTsansMedium,
+                textStyle: CustomTextStyle.textRobotoSansMedium,
                 onTap: () {
                   value2 = !value2;
                   controller.onTapOfGameModeButton(value: value2);
@@ -119,8 +122,10 @@ class SangamPages extends StatelessWidget {
                             keyboardType: TextInputType.number,
                             // inputFormatters: [],
                             cursorColor: AppColors.black,
-                            style: CustomTextStyle.textPTsansBold.copyWith(
-                              color: AppColors.black,
+                            textAlign: TextAlign.center,
+
+                            style: CustomTextStyle.textRobotoSansBold.copyWith(
+                              color: AppColors.appbarColor,
                               fontWeight: FontWeight.normal,
                               fontSize: Dimensions.h15,
                             ),
@@ -128,7 +133,7 @@ class SangamPages extends StatelessWidget {
                               contentPadding: imagePath.isEmpty
                                   ? EdgeInsets.symmetric(
                                       horizontal: Dimensions.w12)
-                                  : EdgeInsets.zero,
+                                  : EdgeInsets.only(left: 50),
                               focusColor: AppColors.appbarColor,
                               filled: true,
                               fillColor: AppColors.white,
@@ -142,7 +147,8 @@ class SangamPages extends StatelessWidget {
                               hintText: "ENTERCOIN".tr,
                               hintStyle: CustomTextStyle.textPTsansBold
                                   .copyWith(
-                                      color: AppColors.grey,
+                                      color: AppColors.appbarColor
+                                          .withOpacity(0.5),
                                       fontSize: Dimensions.h15,
                                       fontWeight: FontWeight.bold),
                               prefixIcon: imagePath.isNotEmpty
@@ -202,7 +208,7 @@ class SangamPages extends StatelessWidget {
                 letterSpacing: 1,
                 borderRadius: Dimensions.r5,
                 borderWidth: 0.2,
-                textStyle: CustomTextStyle.textPTsansMedium,
+                textStyle: CustomTextStyle.textRobotoSansBold,
                 onTap: () => controller.onTapOfAddBidButton(),
                 height: Dimensions.h30,
                 width: size.width / 1.8,
@@ -220,7 +226,7 @@ class SangamPages extends StatelessWidget {
                       letterSpacing: 1,
                       borderRadius: Dimensions.r5,
                       borderWidth: 0.2,
-                      textStyle: CustomTextStyle.textPTsansMedium,
+                      textStyle: CustomTextStyle.textRobotoSansBold,
                       onTap: () => controller.onTapOfSaveButton(),
                       height: Dimensions.h30,
                       width: size.width / 1.8,
@@ -277,7 +283,7 @@ class SangamPages extends StatelessWidget {
                 ),
                 title: Text(
                   "${controller.requestModel.value.bids![index].gameModeName} - ${controller.bidType}",
-                  style: CustomTextStyle.textPTsansBold.copyWith(
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                     fontWeight: FontWeight.w500,
                     fontSize: Dimensions.h14,
                     color: AppColors.black,
@@ -285,7 +291,7 @@ class SangamPages extends StatelessWidget {
                 ),
                 subtitle: Text(
                   "Bid No.: ${controller.requestModel.value.bids![index].bidNo}, Coins : ${controller.requestModel.value.bids![index].coins}",
-                  style: CustomTextStyle.textPTsansBold.copyWith(
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -305,11 +311,11 @@ class SangamPages extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  controller.openText.value,
+                  controller.openText.value.toUpperCase(),
                   // "OPEN DIGIT",
-                  style: CustomTextStyle.textPTsansBold.copyWith(
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                     color: AppColors.black,
-                    fontSize: Dimensions.h14,
+                    fontSize: Dimensions.h13,
                   ),
                 ),
               ),
@@ -332,6 +338,7 @@ class SangamPages extends StatelessWidget {
                   isBulkMode: true,
                   suggestionWidth: Dimensions.w150,
                   hintText: controller.openFieldHint.value,
+                  hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                   keyboardType: TextInputType.number,
                   validateValue: (validate, value) {
                     controller.validateEnteredOpenDigit(value);
@@ -366,11 +373,11 @@ class SangamPages extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  controller.closeText.value,
+                  controller.closeText.value.toUpperCase(),
                   // "CLOSE PANNA",
-                  style: CustomTextStyle.textPTsansBold.copyWith(
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                     color: AppColors.black,
-                    fontSize: Dimensions.h14,
+                    fontSize: Dimensions.h13,
                   ),
                 ),
               ),
@@ -384,6 +391,7 @@ class SangamPages extends StatelessWidget {
                 suggestionWidth: Dimensions.w150,
                 hintText: "ENTERPANA".tr,
                 maxLength: 3,
+                hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                 isBulkMode: true,
                 keyboardType: TextInputType.number,
                 validateValue: (validate, value) {
@@ -426,11 +434,15 @@ class SangamPages extends StatelessWidget {
                 horizontal: Dimensions.commonPaddingForScreen,
               ),
               child: Text(
-                "TOTAL_COIN".tr,
-                style: TextStyle(
+                "TOTALCOIN".tr,
+                style: CustomTextStyle.textPTsansMedium.copyWith(
                   color: AppColors.white,
                   fontSize: Dimensions.h18,
                 ),
+                // style: TextStyle(
+                //   color: AppColors.white,
+                //   fontSize: Dimensions.h18,
+                // ),
               ),
             ),
             Row(

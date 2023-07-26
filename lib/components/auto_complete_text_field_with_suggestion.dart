@@ -23,6 +23,7 @@ class AutoCompleteTextField extends StatelessWidget {
     this.focusNode,
     this.maxLength = 2,
     this.formatter,
+    this.hintTextColor,
   }) : super(key: key);
 
   double height, suggestionWidth;
@@ -35,6 +36,7 @@ class AutoCompleteTextField extends StatelessWidget {
   TextInputType keyboardType;
   FocusNode? focusNode;
   TextEditingController controller;
+  Color? hintTextColor;
   FutureOr<Iterable<String>> Function(TextEditingValue) optionsBuilder;
   Function(bool, String) validateValue;
 
@@ -82,8 +84,9 @@ class AutoCompleteTextField extends StatelessWidget {
             onChanged: (val) {
               validateValue(false, val);
             },
+            textAlign: TextAlign.center,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: Dimensions.w12),
+              contentPadding: EdgeInsets.only(right: Dimensions.w40),
               focusColor: AppColors.black,
               filled: true,
               fillColor: AppColors.white,
@@ -95,10 +98,10 @@ class AutoCompleteTextField extends StatelessWidget {
               enabledBorder: border,
               errorMaxLines: 0,
               hintText: hintText,
-              hintStyle: CustomTextStyle.textPTsansBold.copyWith(
-                color: AppColors.grey,
+              hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                color: hintTextColor ?? AppColors.grey,
                 fontSize: Dimensions.h16,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.bold,
               ),
             ),
           );

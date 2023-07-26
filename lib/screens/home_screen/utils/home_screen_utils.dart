@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
@@ -10,7 +9,6 @@ import 'package:spllive/screens/home_screen/controller/homepage_controller.dart'
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/dimentions.dart';
-import '../../../models/starline_chart_model.dart';
 
 class HomeScreenUtils {
   var controller = Get.put(HomePageController());
@@ -56,14 +54,21 @@ class HomeScreenUtils {
               width: Dimensions.w22,
               child: SvgPicture.asset(
                 iconData,
-                color: iconColor ?? AppColors.black,
+                color: iconColor ?? AppColors.iconColorMain,
               ),
             ),
             // Icon(iconData),
-            Text(
-              text,
-              style: CustomTextStyle.textPTsansBold
-                  .copyWith(color: iconColor ?? AppColors.black),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: CustomTextStyle.textPTsansMedium.copyWith(
+                    color: iconColor ?? AppColors.iconColorMain,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w600,
+                    fontSize: Dimensions.h11),
+              ),
             )
           ],
         ),
@@ -482,11 +487,15 @@ class HomeScreenUtils {
         SizedBox(
           height: 45,
           child: TextField(
+            style: CustomTextStyle.textRobotoSansLight
+                .copyWith(color: AppColors.appbarColor),
             controller: controller.dateinput,
             decoration: InputDecoration(
               hintText:
                   DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-              hintStyle: TextStyle(color: AppColors.appbarColor),
+              hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+                color: AppColors.appbarColor,
+              ),
               border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
@@ -558,11 +567,16 @@ class HomeScreenUtils {
           child: Center(
             child: Text(
               "NOBIDHISTORY".tr,
-              style: TextStyle(
+              style: CustomTextStyle.textRobotoSansMedium.copyWith(
                 fontSize: Dimensions.h16,
                 fontWeight: FontWeight.normal,
                 color: Colors.grey.shade600,
               ),
+              // style: TextStyle(
+              //   fontSize: Dimensions.h16,
+              //   fontWeight: FontWeight.normal,
+              //   color: Colors.grey.shade600,
+              // ),
             ),
           ),
         ),
@@ -583,6 +597,8 @@ class HomeScreenUtils {
               height: 45,
               child: TextField(
                 controller: controller.dateinput,
+                style: CustomTextStyle.textRobotoSansLight
+                    .copyWith(color: AppColors.appbarColor),
                 decoration: InputDecoration(
                   hintText: DateFormat('dd-MM-yyyy')
                       .format(DateTime.now())
@@ -688,19 +704,37 @@ class HomeScreenUtils {
                             width: Dimensions.w10,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(right: Dimensions.h50),
-                          child: Text(
-                            controller.getResult(
-                              controller.marketListForResult.value[index]
-                                      .isResultDeclared ??
-                                  false,
-                              controller.marketListForResult[index].result ?? 0,
-                            ),
-                            style: CustomTextStyle.textRobotoSansBold
-                                .copyWith(fontSize: Dimensions.h15),
-                          ),
-                        ),
+                        controller.getResult(
+                                  controller.marketListForResult.value[index]
+                                          .isResultDeclared ??
+                                      false,
+                                  controller
+                                          .marketListForResult[index].result ??
+                                      0,
+                                ) !=
+                                "***-*"
+                            ? Padding(
+                                padding: EdgeInsets.only(right: Dimensions.h50),
+                                child: Text(
+                                  controller.getResult(
+                                    controller.marketListForResult.value[index]
+                                            .isResultDeclared ??
+                                        false,
+                                    controller.marketListForResult[index]
+                                            .result ??
+                                        0,
+                                  ),
+                                  style: CustomTextStyle.textRobotoSansBold
+                                      .copyWith(fontSize: Dimensions.h15),
+                                ),
+                              )
+                            : Padding(
+                                padding: EdgeInsets.only(right: Dimensions.h50),
+                                child: SvgPicture.asset(
+                                  ConstantImage.openStarsSvg,
+                                  width: Dimensions.w60,
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -828,7 +862,7 @@ class HomeScreenUtils {
                             ),
                             child: Center(
                               child: Text(
-                                "${controller.starlineChartDate[i].time![j].result ?? ""}",
+                                "${controller.starlineChartDate[i].time![j].result ?? "***-*"}",
 
                                 textAlign: TextAlign.center,
                                 // style: CustomTextStyle.textGothamLight.copyWith(

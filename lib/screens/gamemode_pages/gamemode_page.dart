@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
@@ -21,27 +22,43 @@ class GameModePage extends StatelessWidget {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar:
-          AppUtils().simpleAppbar(appBarTitle: "GAMEMODES_TEXT".tr, actions: [
-        InkWell(
-          onTap: () {},
-          child: const Icon(Icons.wallet),
-        ),
-        Obx(
-          () => Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: Dimensions.h14, horizontal: Dimensions.h15),
-            child: Text(
-              walletController.walletBalance.toString(),
-              style: TextStyle(
-                fontSize: Dimensions.h14,
-                fontWeight: FontWeight.bold,
-                color: AppColors.white,
-              ),
+      appBar: AppUtils().simpleAppbar(
+        appBarTitle: "GAMEMODES_TEXT".tr,
+        actions: [
+          InkWell(
+            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: Dimensions.w20,
+                  width: Dimensions.w20,
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    color: AppColors.white,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: Dimensions.r8,
+                    bottom: Dimensions.r10,
+                    left: Dimensions.r15,
+                    right: Dimensions.r10,
+                  ),
+                  child: Obx(
+                    () => Text(
+                      walletController.walletBalance.toString(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        )
-      ]),
+        ],
+      ),
       body: Obx(
         () {
           return SizedBox(
@@ -50,21 +67,31 @@ class GameModePage extends StatelessWidget {
               children: [
                 controller.openBiddingOpen.value
                     ? SizedBox(
-                        height: Dimensions.h11,
+                        height: Dimensions.h10,
                       )
-                    : Container(
-                        decoration: BoxDecoration(color: AppColors.redColor),
-                        height: Dimensions.h50,
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            "BIDDINGFOROPENISCLOSED".tr,
-                            style: CustomTextStyle.textPTsansMedium.copyWith(
-                                color: AppColors.white,
-                                fontSize: Dimensions.h15),
+                    : Column(
+                        children: [
+                          Container(
+                            decoration:
+                                BoxDecoration(color: AppColors.redColor),
+                            height: Dimensions.h40,
+                            width: double.infinity,
+                            child: Center(
+                              child: Text(
+                                "BIDDINGFOROPENISCLOSED".tr,
+                                style: CustomTextStyle.textPTsansMedium
+                                    .copyWith(
+                                        color: AppColors.white,
+                                        fontSize: Dimensions.h15),
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            height: Dimensions.h5,
+                          ),
+                        ],
                       ),
+
                 GameModeUtils().rowWidget(
                   marketName: controller.marketValue.value.market.toString(),
                   date: controller.removeTimeStampFromDateString(
@@ -237,12 +264,12 @@ class GameModePage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // Image(image: AssetImage(ConstantImage.diceImage)),
                       Text(
                         controller.gameModesList.elementAt(index).name ?? "",
-                        style: CustomTextStyle.textPTsansMedium.copyWith(
+                        style: CustomTextStyle.textPTsansBold.copyWith(
                           color: AppColors.black,
                           fontSize: Dimensions.h15,
+                          height: 2,
                           fontWeight: FontWeight.w500,
                         ),
                       )
@@ -288,7 +315,7 @@ Widget radioButtonWidget(
               ),
               Text(
                 buttonText,
-                style: TextStyle(
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(
                   color:
                       controller.openCloseRadioValue.value == radioButtonValue
                           ? AppColors.buttonColorDarkGreen

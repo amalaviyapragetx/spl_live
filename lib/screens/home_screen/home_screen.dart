@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../../components/bottumnavigation/bottumnavigation.dart';
 import 'controller/homepage_controller.dart';
 import '../../helper_files/app_colors.dart';
@@ -20,7 +19,8 @@ class DashBoardPage extends StatelessWidget {
 
     return Scaffold(
       // appBar: Obx(() => ),
-      bottomNavigationBar: Obx(() => MyNavigationBar(
+      bottomNavigationBar: Obx(
+        () => MyNavigationBar(
           currentIndex: controller.currentIndex.value,
           onTapBidHistory: () {
             controller.pageWidget.value = 1;
@@ -41,10 +41,12 @@ class DashBoardPage extends StatelessWidget {
             controller.pageWidget.value = 2;
             controller.currentIndex.value = 2;
             //   appPosition = controller.pageWidget.value;
-          })),
+          },
+        ),
+      ),
       backgroundColor: AppColors.white,
       body: Obx(() => controller.getDashBoardPages(controller.pageWidget.value,
-          size, context, walletController.walletBalance.value ?? "")),
+          size, context, walletController.walletBalance.value.toString())),
       floatingActionButton: Obx(
         () => controller.pageWidget.value == 0
             ? AppUtils().flottingActionButton(

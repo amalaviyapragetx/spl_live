@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class StarLineGamePageController extends GetxController {
 
   RxBool showNumbersLine = false.obs;
   RxBool validCoinsEntered = false.obs;
+  Timer? _debounce;
 
   RxString totalAmount = "00".obs;
   int selectedIndexOfDigitRow = 0;
@@ -43,6 +45,7 @@ class StarLineGamePageController extends GetxController {
   List<FocusNode> focusNodes = [];
   List<int> newList = [];
   List<StarLineBids> jp = [];
+  var getBIdType = "";
   var biddingType = "".obs;
   var marketName = "".obs;
   var marketTime = "".obs;
@@ -80,6 +83,16 @@ class StarLineGamePageController extends GetxController {
     super.onClose();
   }
 
+  ondebounce(index) {
+    if (_debounce != null && _debounce!.isActive) {
+      _debounce!.cancel();
+    }
+    _debounce = Timer(const Duration(milliseconds: 700), () {
+      onTapOfDigitTile(index);
+      digitList[index].isSelected = true;
+      print("Text changed! Text: ${digitList[index].isSelected}");
+    });
+  }
   // void setContainerBorderColorForIndex(int index, Color color) {
   //   // Update the containerBorderColor value at the specified index
   //   containerBorderColor2[index] = color;
@@ -120,6 +133,8 @@ class StarLineGamePageController extends GetxController {
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
     getBidData = argument['getBidData'];
+    getBIdType = argument['getBIdType'];
+    print(getBIdType);
     await loadJsonFile();
     switch (gameMode.value.name) {
       case "Single Digit":
@@ -203,7 +218,6 @@ class StarLineGamePageController extends GetxController {
     }
     digitRow[index].isSelected = true;
     digitRow.refresh();
-
     if (gameMode.value.name == "Single Pana") {
       panaSwitchCase(jsonModel.singlePana!.single, index);
     } else {

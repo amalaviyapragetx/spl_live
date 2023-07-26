@@ -17,4 +17,7 @@ class AppColors {
   static Color greywhite = const Color.fromARGB(255, 201, 198, 198);
   static Color greenAccent = const Color(0xFFB2FF89);
   static Color balanceCoinsColor = const Color(0xFFb47e25);
+  static Color iconColorMain = const Color(0xff0b0b0b);
+  static Color numberListContainer = const Color(0xff9b8083);
+  static Color numberListgreen = const Color(0xff358138);
 }

@@ -123,7 +123,8 @@ class StarLineGameModesPageController extends GetxController {
     Get.offAndToNamed(AppRoutName.starLineGamePage, arguments: {
       "gameMode": gameModesList[index],
       "marketData": marketData.value,
-      "getBidData": getBidData
+      "getBidData": getBidData,
+      "getBIdType": gameModesList[index].name,
     });
   }
 
