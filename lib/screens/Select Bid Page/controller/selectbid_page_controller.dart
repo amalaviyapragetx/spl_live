@@ -10,6 +10,7 @@ import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
+import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
 
 class SelectBidPageController extends GetxController {
@@ -49,6 +50,9 @@ class SelectBidPageController extends GetxController {
     print("remodelDailyMarketId: ${requestModel.value.toJson()}");
     requestModel.refresh();
     gameName.value = arguments["gameName"];
+    // await LocalStorage.write(ConstantsVariables.playMore, true);
+    // var hh = await LocalStorage.read(ConstantsVariables.playMore);
+    // print("playMore $hh");
   }
 
   void onDeleteBids(int index) {
@@ -99,6 +103,10 @@ class SelectBidPageController extends GetxController {
         walletController.getUserBalance();
       },
     );
+  }
+
+  void playMore() async {
+    Get.toNamed(AppRoutName.gameModePage);
   }
 
   void showConfirmationDialog(BuildContext context) {

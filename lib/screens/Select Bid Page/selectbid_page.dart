@@ -113,7 +113,7 @@ class SelectedBidsPage extends StatelessWidget {
                           borderRadius: Dimensions.r5,
                           borderWidth: 2,
                           textStyle: CustomTextStyle.textRobotoSansMedium,
-                          onTap: () => Get.toNamed(AppRoutName.gameModePage),
+                          onTap: () => controller.playMore(),
                           height: Dimensions.h30,
                           width: double.infinity,
                         ),

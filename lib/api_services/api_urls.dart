@@ -51,4 +51,6 @@ class ApiUtils {
   static String starlineMarketBidHistory = '$baseURL/bid/starline/getByUserId';
   static String changeMPIN = "$baseURL/auth/mPin/change";
   static String webStarLinechar = "$baseURL/web/starlineChart";
+  static String dailyStarlineMarketBidHistory =
+      "$baseURL/bid/getAllBidByDailyStarlineMarketId";
 }

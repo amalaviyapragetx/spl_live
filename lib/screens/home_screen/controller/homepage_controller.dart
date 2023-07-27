@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
+import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -46,6 +47,7 @@ class HomePageController extends GetxController {
 //  UserDetailsModel userData = UserDetailsModel();
   UserDetailsModel userData = UserDetailsModel();
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
+  RxList<ResultArr> starLineMarketHistoryList = <ResultArr>[].obs;
   // RxList<NormalMarketHistoryModel> marketHistoryList =
   //     <NormalMarketHistoryModel>[].obs;
   RxBool isStarline2 = false.obs;
@@ -62,6 +64,7 @@ class HomePageController extends GetxController {
 
   void setboolData() async {
     await LocalStorage.write(ConstantsVariables.boolData, false);
+    // await LocalStorage.write(ConstantsVariables.withDrawal, false);
   }
 
   void callMarketsApi() {
@@ -69,9 +72,16 @@ class HomePageController extends GetxController {
     getStarLineMarkets();
   }
 
+  Future<void> handleRefresh() async {
+    // Put your reload logic here.
+    // For example, you can fetch new data from the server and update the UI.
+    await Future.delayed(Duration(seconds: 2));
+    print("Data reloaded!");
+  }
+
   @override
   void dispose() {
-    // marketHistoryList.clear();
+    marketHistoryList.clear();
     // scrollController.removeListener(_scrollListner);
     // scrollController.dispose();
     super.dispose();
@@ -85,7 +95,7 @@ class HomePageController extends GetxController {
   Future<void> getUserData() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
-//    getMarketBidsByUserId(lazyLoad: false);
+    getMarketBidsByUserId(lazyLoad: false);
   }
 
   void getStarLineMarkets() async {
@@ -315,9 +325,13 @@ class HomePageController extends GetxController {
                                 onTap2: () {
                                   position = 1;
                                   isStarline.value = true;
+                                  marketHistoryList.clear();
+                                  getMarketBidsByUserId(lazyLoad: false);
                                   // HomeScreenUtils().iconsContainer2();
                                   widgetContainer.value = position;
-                                  print(widgetContainer.value);
+                                  print(marketHistoryList.toJson());
+                                  print(
+                                      "${widgetContainer.value} ${isStarline.value}");
                                 },
                                 onTap3: () {
                                   position = 2;
@@ -379,6 +393,8 @@ class HomePageController extends GetxController {
         return SPLWallet();
       case 3:
         return const MoreOptions();
+      case 4:
+        return WithdrawalPage();
 
       default:
         return SafeArea(

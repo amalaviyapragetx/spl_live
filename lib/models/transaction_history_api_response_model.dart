@@ -48,7 +48,7 @@ class TransactionHistoryApiResponseModel {
 class Data {
   Data({
     dynamic count,
-    List<dynamic>? resultArr,
+    List<ResultArr>? resultArr,
   }) {
     _count = count;
     _resultArr = resultArr;
@@ -66,17 +66,17 @@ class Data {
     }
   }
   int? _count;
-  List<dynamic>? _resultArr;
+  List<ResultArr>? _resultArr;
   Data copyWith({
     int? count,
-    List<dynamic>? resultArr,
+    List<ResultArr>? resultArr,
   }) =>
       Data(
         count: count ?? _count,
         resultArr: resultArr ?? _resultArr,
       );
   int? get count => _count;
-  List<dynamic>? get resultArr => _resultArr;
+  List<ResultArr>? get resultArr => _resultArr;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

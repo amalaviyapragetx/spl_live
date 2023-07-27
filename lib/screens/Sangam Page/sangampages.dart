@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/edit_text_field_with_roundedcorner.dart';
@@ -133,7 +134,7 @@ class SangamPages extends StatelessWidget {
                               contentPadding: imagePath.isEmpty
                                   ? EdgeInsets.symmetric(
                                       horizontal: Dimensions.w12)
-                                  : EdgeInsets.only(left: 50),
+                                  : const EdgeInsets.only(left: 50),
                               focusColor: AppColors.appbarColor,
                               filled: true,
                               fillColor: AppColors.white,
@@ -333,8 +334,14 @@ class SangamPages extends StatelessWidget {
                 () => AutoCompleteTextField(
                   controller: controller.openValueController,
                   height: Dimensions.h40,
+                  textStyle: CustomTextStyle.textRobotoSlabBold.copyWith(
+                    color: AppColors.appbarColor,
+                    fontWeight: FontWeight.normal,
+                    fontSize: Dimensions.h15,
+                  ),
                   width: double.infinity,
-                  maxLength: 3,
+                  maxLength: 1,
+                  formatter: [FilteringTextInputFormatter.digitsOnly],
                   isBulkMode: true,
                   suggestionWidth: Dimensions.w150,
                   hintText: controller.openFieldHint.value,
@@ -349,7 +356,6 @@ class SangamPages extends StatelessWidget {
                     } else {
                       List<String> matches = <String>[];
                       matches.addAll(controller.suggestionOpenList);
-
                       matches.retainWhere(
                         (s) {
                           return s.toLowerCase().contains(
@@ -368,11 +374,11 @@ class SangamPages extends StatelessWidget {
         SizedBox(
           width: Dimensions.w10,
         ),
-        Expanded(
-          child: Column(
-            children: [
-              Obx(
-                () => Text(
+        Obx(
+          () => Expanded(
+            child: Column(
+              children: [
+                Text(
                   controller.closeText.value.toUpperCase(),
                   // "CLOSE PANNA",
                   style: CustomTextStyle.textRobotoSansBold.copyWith(
@@ -380,41 +386,49 @@ class SangamPages extends StatelessWidget {
                     fontSize: Dimensions.h13,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: Dimensions.h10,
-              ),
-              AutoCompleteTextField(
-                controller: controller.closeValueController,
-                height: Dimensions.h40,
-                width: double.infinity,
-                suggestionWidth: Dimensions.w150,
-                hintText: "ENTERPANA".tr,
-                maxLength: 3,
-                hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                isBulkMode: true,
-                keyboardType: TextInputType.number,
-                validateValue: (validate, value) {
-                  controller.validateEnteredCloseDigit(value);
-                },
-                optionsBuilder: (TextEditingValue textEditingValue) {
-                  if (textEditingValue.text == '') {
-                    return const Iterable<String>.empty();
-                  } else {
-                    List<String> matches = <String>[];
-                    matches.addAll(controller.suggestionCloseList);
-                    matches.retainWhere(
-                      (s) {
-                        return s.toLowerCase().contains(
-                              textEditingValue.text.toLowerCase(),
-                            );
-                      },
-                    );
-                    return matches;
-                  }
-                },
-              ),
-            ],
+                SizedBox(
+                  height: Dimensions.h10,
+                ),
+                AutoCompleteTextField(
+                  controller: controller.closeValueController,
+                  height: Dimensions.h40,
+                  width: double.infinity,
+                  suggestionWidth: Dimensions.w150,
+                  hintText: "ENTERPANA".tr,
+                  maxLength: 3,
+                  focusNode: FocusNode(),
+                  hintTextColor: AppColors.appbarColor.withOpacity(0.5),
+                  isBulkMode: true,
+                  keyboardType: TextInputType.number,
+                  validateValue: (validate, value) {
+                    controller.validateEnteredCloseDigit(value);
+                    print(controller.suggestionOpenList);
+                  },
+                  textStyle: CustomTextStyle.textRobotoSansBold
+                      .copyWith(color: AppColors.appbarColor),
+                  formatter: [FilteringTextInputFormatter.digitsOnly],
+                  optionsBuilder: (
+                    TextEditingValue textEditingValue,
+                  ) {
+                    if (textEditingValue.text == '') {
+                      return const Iterable<String>.empty();
+                    } else {
+                      List<String> matches = <String>[];
+                      matches.clear();
+                      matches.addAll(controller.suggestionCloseList);
+                      matches.retainWhere(
+                        (s) {
+                          return s.toLowerCase().contains(
+                                textEditingValue.text.toLowerCase(),
+                              );
+                        },
+                      );
+                      return matches;
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         )
       ],

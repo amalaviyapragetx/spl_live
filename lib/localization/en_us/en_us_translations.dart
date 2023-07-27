@@ -257,5 +257,6 @@ final Map<String, String> enUs = {
       "Please enter your registered phone number to send the reset code",
   "RESULTHISTORY2": "RESULT HISTORY",
   "CHART2": "CHART",
-  "NOBIDHISTORY": "No Bid History"
+  "NOBIDHISTORY": "No Bid History",
+  "NORESULTHISTORY": "No Result History"
 };

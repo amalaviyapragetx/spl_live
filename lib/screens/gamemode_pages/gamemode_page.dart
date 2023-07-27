@@ -91,7 +91,6 @@ class GameModePage extends StatelessWidget {
                           ),
                         ],
                       ),
-
                 GameModeUtils().rowWidget(
                   marketName: controller.marketValue.value.market.toString(),
                   date: controller.removeTimeStampFromDateString(
@@ -146,26 +145,28 @@ class GameModePage extends StatelessWidget {
                   ],
                 ),
                 cardWidget(controller),
-                SizedBox(
-                  height: Dimensions.h20,
-                ),
-                // RoundedCornerButton(
-                //   text: "VIEWBIDS".tr,
-                //   color: AppColors.greenShade,
-                //   borderColor: AppColors.greenShade,
-                //   fontSize: Dimensions.h14,
-                //   fontWeight: FontWeight.w500,
-                //   fontColor: AppColors.white,
-                //   letterSpacing: 0,
-                //   borderRadius: Dimensions.r5,
-                //   borderWidth: 1,
-                //   textStyle: CustomTextStyle.textPTsansBold,
-                //   onTap: () {
-                //     Get.offAndToNamed(AppRoutName.selectedBidsPage);
-                //   },
-                //   height: Dimensions.h30,
-                //   width: Dimensions.w100,
-                // )
+                // controller.playmore == false
+                //     ? Container()
+                //     : Padding(
+                //         padding: const EdgeInsets.all(15.0),
+                //         child: RoundedCornerButton(
+                //           text: "VIEWBIDS".tr,
+                //           color: AppColors.greenShade,
+                //           borderColor: AppColors.greenShade,
+                //           fontSize: Dimensions.h14,
+                //           fontWeight: FontWeight.w500,
+                //           fontColor: AppColors.white,
+                //           letterSpacing: 0,
+                //           borderRadius: Dimensions.r5,
+                //           borderWidth: 1,
+                //           textStyle: CustomTextStyle.textPTsansBold,
+                //           onTap: () {
+                //             Get.offAndToNamed(AppRoutName.selectedBidsPage);
+                //           },
+                //           height: Dimensions.h30,
+                //           width: Dimensions.w100,
+                //         ),
+                //       ),
               ],
             ),
           );

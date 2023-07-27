@@ -59,8 +59,8 @@ class MoreListController extends GetxController {
   void getMarketBidsByUserId({required bool lazyLoad}) {
     ApiService()
         .getBidHistoryByUserId(
-            // userId: userData.id.toString(),
-            userId: "3",
+            userId: userData.id.toString(),
+            //  userId: "3",
             limit: "10",
             offset: offset.toString(),
             isStarline: isStarline.value)

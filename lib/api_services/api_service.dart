@@ -792,4 +792,29 @@ class ApiService extends GetConnect {
       return response.body;
     }
   }
+
+  Future<dynamic> getStarLineBidHistoryByUserId({
+    required String userId,
+    required String limit,
+    required String offset,
+  }) async {
+    AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await get(
+      "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      AppUtils.hideProgressDialog();
+
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+
+      return response.body;
+    }
+  }
 }

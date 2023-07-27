@@ -24,6 +24,7 @@ class AutoCompleteTextField extends StatelessWidget {
     this.maxLength = 2,
     this.formatter,
     this.hintTextColor,
+    this.textStyle,
   }) : super(key: key);
 
   double height, suggestionWidth;
@@ -37,6 +38,7 @@ class AutoCompleteTextField extends StatelessWidget {
   FocusNode? focusNode;
   TextEditingController controller;
   Color? hintTextColor;
+  TextStyle? textStyle;
   FutureOr<Iterable<String>> Function(TextEditingValue) optionsBuilder;
   Function(bool, String) validateValue;
 
@@ -65,11 +67,12 @@ class AutoCompleteTextField extends StatelessWidget {
             (context, textEditingController, focusNod, onFieldSubmitted) {
           return TextFormField(
             textInputAction: TextInputAction.next,
-            style: CustomTextStyle.textPTsansMedium.copyWith(
-              color: AppColors.appbarColor,
-              fontWeight: FontWeight.normal,
-              fontSize: Dimensions.h16,
-            ),
+            style: textStyle ??
+                CustomTextStyle.textPTsansMedium.copyWith(
+                  color: AppColors.appbarColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: Dimensions.h16,
+                ),
             controller: textEditingController,
             focusNode: focusNode,
             autofocus: autoFocus!,
@@ -109,43 +112,42 @@ class AutoCompleteTextField extends StatelessWidget {
         optionsViewBuilder: (BuildContext context,
             AutocompleteOnSelected<String> onSelected,
             Iterable<String> options) {
-          return Container();
-          // return Align(
-          //   alignment: Alignment.topLeft,
-          //   child: Material(
-          //     elevation: 4.0,
-          //     child: SizedBox(
-          //       width: suggestionWidth,
-          //       child: ListView.builder(
-          //         shrinkWrap: true,
-          //         padding: const EdgeInsets.all(8.0),
-          //         itemCount: options.length,
-          //         itemBuilder: (BuildContext context, int index) {
-          //           final String option = options.elementAt(index);
-          //           return GestureDetector(
-          //             onTap: () {
-          //               FocusManager.instance.primaryFocus?.unfocus();
-          //               validateValue(true, option);
-          //               onSelected(option);
-          //             },
-          //             child: Container(
-          //               padding: EdgeInsets.all(Dimensions.h5),
-          //               height: Dimensions.h30,
-          //               child: Text(
-          //                 option,
-          //                 style: CustomTextStyle.textPTsansMedium.copyWith(
-          //                   color: AppColors.appbarColor,
-          //                   fontWeight: FontWeight.normal,
-          //                   fontSize: Dimensions.h16,
-          //                 ),
-          //               ),
-          //             ),
-          //           );
-          //         },
-          //       ),
-          //     ),
-          //   ),
-          // );
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Material(
+              elevation: 4.0,
+              child: SizedBox(
+                width: suggestionWidth,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(8.0),
+                  itemCount: options.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final String option = options.elementAt(index);
+                    return GestureDetector(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        validateValue(true, option);
+                        onSelected(option);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(Dimensions.h5),
+                        height: Dimensions.h30,
+                        child: Text(
+                          option,
+                          style: CustomTextStyle.textPTsansMedium.copyWith(
+                            color: AppColors.appbarColor,
+                            fontWeight: FontWeight.normal,
+                            fontSize: Dimensions.h16,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
         },
         onSelected: (String selection) {
           debugPrint(

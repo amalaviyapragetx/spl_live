@@ -336,7 +336,7 @@ class GamePageController extends GetxController {
   Future<void> onTapOfSaveButton() async {
     if (selectedBidsList.isNotEmpty) {
       await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
-      Get.toNamed(AppRoutName.selectedBidsPage, arguments: {
+      Get.offAndToNamed(AppRoutName.selectedBidsPage, arguments: {
         "bidsList": selectedBidsList,
         "biddingType": biddingType.value,
         "gameName": gameMode.name,

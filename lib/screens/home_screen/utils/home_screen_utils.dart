@@ -7,6 +7,7 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 import '../../../helper_files/app_colors.dart';
+import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/dimentions.dart';
 
@@ -36,6 +37,132 @@ class HomeScreenUtils {
         width: Dimensions.w60,
       );
     }
+  }
+
+  Widget listveiwTransaction({
+    required String marketName,
+    required String bidNumber,
+    required String coins,
+    required String ballance,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              color: AppColors.grey,
+              blurRadius: 10,
+              offset: Offset(7, 4),
+            ),
+          ],
+          border: Border.all(width: 0.6),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    marketName,
+                    style: CustomTextStyle.textRobotoSansBold
+                        .copyWith(fontSize: Dimensions.h14),
+                  ),
+                  Text(
+                    // "446-47-359",
+                    bidNumber,
+                    style: CustomTextStyle.textRobotoSansBold,
+                  ),
+                ],
+              ),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         "$openTime - $closeTime",
+            //         style: CustomTextStyle.textRobotoSansLight,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(
+                    "COINS",
+                    style: CustomTextStyle.textRobotoSansLight,
+                  ),
+                  SizedBox(
+                    width: Dimensions.w5,
+                  ),
+                  Image.asset(
+                    ConstantImage.ruppeeBlueIcon,
+                    height: Dimensions.h25,
+                    width: Dimensions.w25,
+                  ),
+                  SizedBox(
+                    width: Dimensions.w5,
+                  ),
+                  Text(
+                    coins,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      fontSize: Dimensions.h14,
+                      color: AppColors.balanceCoinsColor,
+                    ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  // Text(
+                  //   "Balance",
+                  //   style: CustomTextStyle.textRobotoSansLight,
+                  // ),
+                  SizedBox(
+                    width: Dimensions.w5,
+                  ),
+                  Image.asset(
+                    ConstantImage.ruppeeBlueIcon,
+                    height: 25,
+                    width: 25,
+                  ),
+                  SizedBox(
+                    width: Dimensions.w5,
+                  ),
+                  Text(
+                    ballance,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      fontSize: Dimensions.h14,
+                      color: AppColors.balanceCoinsColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Container(
+            //   height: 40,
+            //   width: double.infinity,
+            //   decoration: const BoxDecoration(
+            //     color: Color.fromARGB(255, 188, 185, 185),
+            //     borderRadius: BorderRadius.only(
+            //       bottomLeft: Radius.circular(8),
+            //       bottomRight: Radius.circular(8),
+            //     ),
+            //   ),
+            //   child: Center(child: Text("Time: 29 June,2023, 5:26:11 PM")),
+            // ),
+          ],
+        ),
+      ),
+    );
   }
 
   marketIcon(
@@ -478,6 +605,65 @@ class HomeScreenUtils {
     });
   }
 
+  bidHistoryList() {
+    return Obx(
+      () => controller.marketHistoryList.isEmpty
+          ? Container(
+              height: Dimensions.h35,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey.shade300,
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 0.2,
+                    color: AppColors.grey,
+                    blurRadius: 1,
+                    offset: const Offset(0, 2),
+                  )
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  "NOBIDHISTORY".tr,
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    fontSize: Dimensions.h16,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey.shade600,
+                  ),
+                  // style: TextStyle(
+                  //   fontSize: Dimensions.h16,
+                  //   fontWeight: FontWeight.normal,
+                  //   color: Colors.grey.shade600,
+                  // ),
+                ),
+              ),
+            )
+          : ListView.builder(
+              padding:
+                  EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+              itemCount: controller.marketHistoryList.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                // var data = controller.marketHistoryList.elementAt(index);
+                // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
+                return listveiwTransaction(
+                    ballance:
+                        controller.marketHistoryList[index].balance.toString(),
+                    coins: controller.marketHistoryList[index].coins.toString(),
+                    // closeTime:
+                    //     controller.marketHistoryList[index].openTime ?? "",
+                    // openTime:
+                    //     controller.marketHistoryList[index].openTime ?? "",
+                    bidNumber:
+                        controller.marketHistoryList[index].gameMode ?? "",
+                    marketName:
+                        controller.marketHistoryList[index].marketName ?? "");
+              },
+            ),
+    );
+  }
+
   bidHistory(context) {
     return Column(
       children: [
@@ -550,36 +736,7 @@ class HomeScreenUtils {
         SizedBox(
           height: Dimensions.h11,
         ),
-        Container(
-          height: Dimensions.h35,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.grey.shade300,
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 0.2,
-                color: AppColors.grey,
-                blurRadius: 1,
-                offset: const Offset(0, 2),
-              )
-            ],
-          ),
-          child: Center(
-            child: Text(
-              "NOBIDHISTORY".tr,
-              style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                fontSize: Dimensions.h16,
-                fontWeight: FontWeight.normal,
-                color: Colors.grey.shade600,
-              ),
-              // style: TextStyle(
-              //   fontSize: Dimensions.h16,
-              //   fontWeight: FontWeight.normal,
-              //   color: Colors.grey.shade600,
-              // ),
-            ),
-          ),
-        ),
+        bidHistoryList(),
       ],
     );
   }
@@ -658,19 +815,103 @@ class HomeScreenUtils {
             SizedBox(
               height: Dimensions.h11,
             ),
-            ListView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.marketListForResult.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Container(
-                    height: Dimensions.h50,
+            controller.marketListForResult.isNotEmpty
+                ? ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.marketListForResult.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Container(
+                          height: Dimensions.h50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AppColors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                spreadRadius: 0.2,
+                                color: AppColors.grey,
+                                blurRadius: 1,
+                                offset: const Offset(0, 2),
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: Dimensions.w20,
+                              ),
+                              Container(
+                                  width: Dimensions.w35,
+                                  child: SvgPicture.asset(
+                                      ConstantImage.stopWatchIcon)),
+                              // Icon(Icons.watch, color: AppColors.black),
+                              SizedBox(
+                                width: Dimensions.w10,
+                              ),
+                              Text(
+                                controller.marketListForResult.value[index]
+                                        .time ??
+                                    "00:00 AM",
+                                style: CustomTextStyle.textRobotoSansBold
+                                    .copyWith(fontSize: Dimensions.h15),
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  width: Dimensions.w10,
+                                ),
+                              ),
+                              controller.getResult(
+                                        controller
+                                                .marketListForResult
+                                                .value[index]
+                                                .isResultDeclared ??
+                                            false,
+                                        controller.marketListForResult[index]
+                                                .result ??
+                                            0,
+                                      ) !=
+                                      "***-*"
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          right: Dimensions.h50),
+                                      child: Text(
+                                        controller.getResult(
+                                          controller
+                                                  .marketListForResult
+                                                  .value[index]
+                                                  .isResultDeclared ??
+                                              false,
+                                          controller.marketListForResult[index]
+                                                  .result ??
+                                              0,
+                                        ),
+                                        style: CustomTextStyle
+                                            .textRobotoSansBold
+                                            .copyWith(fontSize: Dimensions.h15),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.only(
+                                          right: Dimensions.h50),
+                                      child: SvgPicture.asset(
+                                        ConstantImage.openStarsSvg,
+                                        width: Dimensions.w60,
+                                      ),
+                                    )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                : Container(
+                    height: Dimensions.h35,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: AppColors.white,
+                      color: Colors.grey.shade300,
                       boxShadow: [
                         BoxShadow(
                           spreadRadius: 0.2,
@@ -680,67 +921,22 @@ class HomeScreenUtils {
                         )
                       ],
                     ),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: Dimensions.w20,
+                    child: Center(
+                      child: Text(
+                        "NORESULTHISTORY".tr,
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          fontSize: Dimensions.h16,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.grey.shade600,
                         ),
-                        Container(
-                            width: Dimensions.w35,
-                            child:
-                                SvgPicture.asset(ConstantImage.stopWatchIcon)),
-                        // Icon(Icons.watch, color: AppColors.black),
-                        SizedBox(
-                          width: Dimensions.w10,
-                        ),
-                        Text(
-                          controller.marketListForResult.value[index].time ??
-                              "00:00 AM",
-                          style: CustomTextStyle.textRobotoSansBold
-                              .copyWith(fontSize: Dimensions.h15),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: Dimensions.w10,
-                          ),
-                        ),
-                        controller.getResult(
-                                  controller.marketListForResult.value[index]
-                                          .isResultDeclared ??
-                                      false,
-                                  controller
-                                          .marketListForResult[index].result ??
-                                      0,
-                                ) !=
-                                "***-*"
-                            ? Padding(
-                                padding: EdgeInsets.only(right: Dimensions.h50),
-                                child: Text(
-                                  controller.getResult(
-                                    controller.marketListForResult.value[index]
-                                            .isResultDeclared ??
-                                        false,
-                                    controller.marketListForResult[index]
-                                            .result ??
-                                        0,
-                                  ),
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(fontSize: Dimensions.h15),
-                                ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.only(right: Dimensions.h50),
-                                child: SvgPicture.asset(
-                                  ConstantImage.openStarsSvg,
-                                  width: Dimensions.w60,
-                                ),
-                              )
-                      ],
+                        // style: TextStyle(
+                        //   fontSize: Dimensions.h16,
+                        //   fontWeight: FontWeight.normal,
+                        //   color: Colors.grey.shade600,
+                        // ),
+                      ),
                     ),
                   ),
-                );
-              },
-            ),
           ],
         ),
       ),
@@ -944,31 +1140,3 @@ class HomeScreenUtils {
     );
   }
 }
-
-// class MyTable1 extends StatelessWidget {
-//   final int numberOfRows;
-
-//   const MyTable1({
-//     super.key,
-//     required this.numberOfRows,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return dateColumn();
-//   }
-
-// class MyTable2 extends StatelessWidget {
-//   final int numberOfHours;
-//   final int numberOfRows;
-
-//   const MyTable2(
-//       {super.key, required this.numberOfHours, required this.numberOfRows});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return timeColumn();
-//   }
-
- 
-

@@ -11,13 +11,14 @@ class MyNavigationBar extends StatelessWidget {
   Function() onTapWallet;
   Function() onTapMore;
 
-  MyNavigationBar(
-      {super.key,
-      this.currentIndex = 0,
-      required this.onTapBidHistory,
-      required this.onTapHome,
-      required this.onTapMore,
-      required this.onTapWallet});
+  MyNavigationBar({
+    super.key,
+    this.currentIndex = 0,
+    required this.onTapBidHistory,
+    required this.onTapHome,
+    required this.onTapMore,
+    required this.onTapWallet,
+  });
 
   @override
   Widget build(BuildContext context) {
