@@ -24,8 +24,9 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //  resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
@@ -37,70 +38,72 @@ class SignUpScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: Dimensions.w35,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Expanded(child: verticalSpace),
-            // verticalSpace,
-            SizedBox(
-              height: Dimensions.h150,
-              width: Dimensions.w200,
-              child: Image.asset(
-                ConstantImage.splLogo,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Text(
-              "REGISTER".tr,
-              style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-                  color: AppColors.appbarColor, fontSize: Dimensions.h20),
-            ),
-            verticalSpace,
-            Text("REGISTERTEXT".tr,
-                textAlign: TextAlign.center,
-                style: CustomTextStyle.textRobotoSansLight
-                    .copyWith(fontSize: Dimensions.h17, color: AppColors.black)
-                //   style:
-                //       TextStyle(fontSize: Dimensions.h15, color: AppColors.black),
-                // ),)
+        child: Container(
+          height: size.height,
+          width: size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Expanded(child: verticalSpace),
+              SizedBox(
+                height: Dimensions.h150,
+                width: Dimensions.w200,
+                child: Image.asset(
+                  ConstantImage.splLogo,
+                  fit: BoxFit.contain,
                 ),
-            verticalSpace,
-            _buildMobileNumberField(),
-            verticalSpace,
-            RoundedCornerButton(
-              text: "SEND OTP".tr,
-              color: AppColors.appbarColor,
-              borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h12,
-              fontWeight: FontWeight.w500,
-              fontColor: AppColors.white,
-              letterSpacing: 0,
-              borderRadius: Dimensions.r25,
-              borderWidth: 1,
-              textStyle: CustomTextStyle.textRobotoSansMedium,
-              onTap: () => controller.onTapOfSendOtp(),
-              height: Dimensions.h30,
-              width: double.infinity,
-            ),
-            // Expanded(child: verticalSpace),
-            // verticalSpace,
-            // GestureDetector(
-            //   onTap: () => Get.offAllNamed(AppRoutName.signInPage),
-            //   child: Container(
-            //     padding: const EdgeInsets.all(10),
-            //     child: Text(
-            //       "HAVEANACCOUNT".tr,
-            //       textAlign: TextAlign.center,
-            //       style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-            //         fontSize: Dimensions.h15,
-            //         letterSpacing: 1,
-            //         height: 1.5,
-            //         color: AppColors.black,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          ],
+              ),
+              Text(
+                "REGISTER".tr,
+                style: CustomTextStyle.textRobotoSlabMedium.copyWith(
+                    color: AppColors.appbarColor, fontSize: Dimensions.h20),
+              ),
+              verticalSpace,
+              Text("REGISTERTEXT".tr,
+                  textAlign: TextAlign.center,
+                  style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      fontSize: Dimensions.h17, color: AppColors.black)
+                  //   style:
+                  //       TextStyle(fontSize: Dimensions.h15, color: AppColors.black),
+                  // ),)
+                  ),
+              verticalSpace,
+              _buildMobileNumberField(),
+              verticalSpace,
+              RoundedCornerButton(
+                text: "SEND OTP".tr,
+                color: AppColors.appbarColor,
+                borderColor: AppColors.appbarColor,
+                fontSize: Dimensions.h12,
+                fontWeight: FontWeight.w500,
+                fontColor: AppColors.white,
+                letterSpacing: 0,
+                borderRadius: Dimensions.r25,
+                borderWidth: 1,
+                textStyle: CustomTextStyle.textRobotoSansMedium,
+                onTap: () => controller.onTapOfSendOtp(),
+                height: Dimensions.h30,
+                width: double.infinity,
+              ),
+              // verticalSpace,
+              // GestureDetector(
+              //   onTap: () => Get.offAllNamed(AppRoutName.signInPage),
+              //   child: Container(
+              //     padding: const EdgeInsets.all(10),
+              //     child: Text(
+              //       "HAVEANACCOUNT".tr,
+              //       textAlign: TextAlign.center,
+              //       style: CustomTextStyle.textRobotoSlabMedium.copyWith(
+              //         fontSize: Dimensions.h15,
+              //         letterSpacing: 1,
+              //         height: 1.5,
+              //         color: AppColors.black,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );

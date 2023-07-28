@@ -52,16 +52,17 @@ class BidHistory extends StatelessWidget {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return listveiwTransaction(
-                    ballance:
-                        controller.marketHistoryList[index].balance.toString(),
-                    coins: controller.marketHistoryList[index].coins.toString(),
-                    closeTime: CommonUtils().formatStringToHHMMA(
-                        controller.marketHistoryList[index].openTime ?? ""),
-                    openTime: CommonUtils().formatStringToHHMMA(
-                        controller.marketHistoryList[index].openTime ?? ""),
-                    bidNumber: controller.marketHistoryList[index].bidNo ?? "",
-                    marketName:
-                        controller.marketHistoryList[index].marketName ?? "");
+                  ballance:
+                      controller.marketHistoryList[index].balance.toString(),
+                  coins: controller.marketHistoryList[index].coins.toString(),
+                  closeTime: CommonUtils().formatStringToHHMMA(
+                      controller.marketHistoryList[index].closeTime ?? ""),
+                  openTime: CommonUtils().formatStringToHHMMA(
+                      controller.marketHistoryList[index].openTime ?? ""),
+                  bidNumber: controller.marketHistoryList[index].bidNo ?? "",
+                  marketName:
+                      controller.marketHistoryList[index].marketName ?? "",
+                );
               },
             ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:spllive/components/edit_text_field_with_roundedcorner.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -18,6 +17,12 @@ class SangamPages extends StatelessWidget {
   var controller = Get.put(SangamPageController());
   final walletController = Get.put(WalletController());
   var value2 = true;
+  List<String> matches = <String>[];
+  var border = const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.transparent,
+    ),
+  );
   @override
   Widget build(BuildContext context) {
     var decoration = const OutlineInputBorder(
@@ -57,183 +62,192 @@ class SangamPages extends StatelessWidget {
       body: SizedBox(
         height: size.height,
         width: size.width,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              verticalSpace,
-              Text(
-                controller.gameMode.value.name!.toUpperCase(),
-                style: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: AppColors.appbarColor,
-                  fontSize: Dimensions.h18,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                verticalSpace,
+                Text(
+                  controller.gameMode.value.name!.toUpperCase(),
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
+                    color: AppColors.appbarColor,
+                    fontSize: Dimensions.h18,
+                  ),
                 ),
-              ),
-              verticalSpace,
-              RoundedCornerButton(
-                text: "CHANGE".tr,
-                color: AppColors.appbarColor,
-                borderColor: AppColors.appbarColor,
-                fontSize: Dimensions.h12,
-                fontWeight: FontWeight.w500,
-                fontColor: AppColors.white,
-                letterSpacing: 1,
-                borderRadius: Dimensions.r5,
-                borderWidth: 0.2,
-                textStyle: CustomTextStyle.textRobotoSansMedium,
-                onTap: () {
-                  value2 = !value2;
-                  controller.onTapOfGameModeButton(value: value2);
-                },
-                height: Dimensions.h30,
-                width: size.width / 2,
-              ),
-              verticalSpace,
-              openCloseWidget(),
-              verticalSpace,
-              verticalSpace,
-              verticalSpace,
-              Row(
-                children: [
-                  Expanded(
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: AppColors.grey,
-                              spreadRadius: 2,
-                              offset: const Offset(1, 2),
-                            )
-                          ],
-                        ),
-                        height: Dimensions.h40,
-                        width: size.width / 1.8,
-                        child: Center(
-                          child: TextFormField(
-                            autofocus: false,
-                            enabled: true,
-                            controller: controller.coinsController,
-                            maxLength: 5,
-                            maxLines: 1,
-                            minLines: 1,
-                            keyboardType: TextInputType.number,
-                            // inputFormatters: [],
-                            cursorColor: AppColors.black,
-                            textAlign: TextAlign.center,
+                verticalSpace,
+                // controller.gameMode.value.name!.toUpperCase() == "FULL SANGAM"
+                //     ? Container()
+                //     : RoundedCornerButton(
+                //         text: "CHANGE".tr,
+                //         color: AppColors.appbarColor,
+                //         borderColor: AppColors.appbarColor,
+                //         fontSize: Dimensions.h12,
+                //         fontWeight: FontWeight.w500,
+                //         fontColor: AppColors.white,
+                //         letterSpacing: 1,
+                //         borderRadius: Dimensions.r5,
+                //         borderWidth: 0.2,
+                //         textStyle: CustomTextStyle.textRobotoSansMedium,
+                //         onTap: () {
+                //           value2 = !value2;
+                //           controller.onTapOfGameModeButton(value: value2);
+                //         },
+                //         height: Dimensions.h30,
+                //         width: size.width / 2,
+                //       ),
+                verticalSpace,
+                openCloseWidget(size),
+                verticalSpace,
+                verticalSpace,
+                verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5,
+                                color: AppColors.grey,
+                                spreadRadius: 2,
+                                offset: const Offset(1, 2),
+                              )
+                            ],
+                          ),
+                          height: Dimensions.h40,
+                          width: size.width / 1.8,
+                          child: Center(
+                            child: TextFormField(
+                              autofocus: false,
+                              enabled: true,
+                              controller: controller.coinsController,
+                              maxLength: 5,
+                              maxLines: 1,
+                              minLines: 1,
+                              keyboardType: TextInputType.number,
+                              // inputFormatters: [],
+                              cursorColor: AppColors.black,
+                              textAlign: TextAlign.center,
 
-                            style: CustomTextStyle.textRobotoSansBold.copyWith(
-                              color: AppColors.appbarColor,
-                              fontWeight: FontWeight.normal,
-                              fontSize: Dimensions.h15,
-                            ),
-                            decoration: InputDecoration(
-                              contentPadding: imagePath.isEmpty
-                                  ? EdgeInsets.symmetric(
-                                      horizontal: Dimensions.w12)
-                                  : const EdgeInsets.only(left: 50),
-                              focusColor: AppColors.appbarColor,
-                              filled: true,
-                              fillColor: AppColors.white,
-                              counterText: "",
-                              focusedBorder: decoration,
-                              border: decoration,
-                              errorBorder: decoration,
-                              disabledBorder: decoration,
-                              enabledBorder: decoration,
-                              errorMaxLines: 0,
-                              hintText: "ENTERCOIN".tr,
-                              hintStyle: CustomTextStyle.textPTsansBold
-                                  .copyWith(
-                                      color: AppColors.appbarColor
-                                          .withOpacity(0.5),
-                                      fontSize: Dimensions.h15,
-                                      fontWeight: FontWeight.bold),
-                              prefixIcon: imagePath.isNotEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: AppColors.appbarColor,
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: Dimensions.h4,
-                                              bottom: Dimensions.h4),
-                                          child: SvgPicture.asset(
-                                            imagePath,
-                                            color: AppColors.white,
-                                            height: 5,
+                              style:
+                                  CustomTextStyle.textRobotoSansBold.copyWith(
+                                color: AppColors.appbarColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: Dimensions.h15,
+                              ),
+                              decoration: InputDecoration(
+                                contentPadding: imagePath.isEmpty
+                                    ? EdgeInsets.symmetric(
+                                        horizontal: Dimensions.w12)
+                                    : const EdgeInsets.only(left: 50),
+                                focusColor: AppColors.appbarColor,
+                                filled: true,
+                                fillColor: AppColors.white,
+                                counterText: "",
+                                focusedBorder: decoration,
+                                border: decoration,
+                                errorBorder: decoration,
+                                disabledBorder: decoration,
+                                enabledBorder: decoration,
+                                errorMaxLines: 0,
+                                hintText: "ENTERCOIN".tr,
+                                hintStyle: CustomTextStyle.textPTsansBold
+                                    .copyWith(
+                                        color: AppColors.appbarColor
+                                            .withOpacity(0.5),
+                                        fontSize: Dimensions.h15,
+                                        fontWeight: FontWeight.bold),
+                                prefixIcon: imagePath.isNotEmpty
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: AppColors.appbarColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: Dimensions.h4,
+                                                bottom: Dimensions.h4),
+                                            child: SvgPicture.asset(
+                                              imagePath,
+                                              color: AppColors.white,
+                                              height: 5,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            onChanged: (val) {
-                              if (val != null) {
-                                if (val.characters.characterAt(0) ==
-                                        Characters("0") &&
-                                    val.length > 1) {
-                                  // we need to remove the first char
-                                  controller.coinsController.text =
-                                      val.substring(1);
-                                  // we need to move the cursor
-                                  controller.coinsController.selection =
-                                      TextSelection.collapsed(
-                                          offset: controller
-                                              .coinsController.text.length);
+                                      )
+                                    : null,
+                              ),
+                              onChanged: (val) {
+                                if (val != null) {
+                                  if (val.characters.characterAt(0) ==
+                                          Characters("0") &&
+                                      val.length > 1) {
+                                    // we need to remove the first char
+                                    controller.coinsController.text =
+                                        val.substring(1);
+                                    // we need to move the cursor
+                                    controller.coinsController.selection =
+                                        TextSelection.collapsed(
+                                            offset: controller
+                                                .coinsController.text.length);
+                                  }
                                 }
-                              }
-                            },
+                              },
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              verticalSpace,
-              verticalSpace,
-              RoundedCornerButton(
-                text: "PLUSADD".tr,
-                color: AppColors.appbarColor,
-                borderColor: AppColors.appbarColor,
-                fontSize: Dimensions.h12,
-                fontWeight: FontWeight.w600,
-                fontColor: AppColors.white,
-                letterSpacing: 1,
-                borderRadius: Dimensions.r5,
-                borderWidth: 0.2,
-                textStyle: CustomTextStyle.textRobotoSansBold,
-                onTap: () => controller.onTapOfAddBidButton(),
-                height: Dimensions.h30,
-                width: size.width / 1.8,
-              ),
-              verticalSpace,
-              listview(),
-              Obx(() => controller.addedSangamList.isNotEmpty
-                  ? RoundedCornerButton(
-                      text: "SUBMIT".tr,
-                      color: AppColors.appbarColor,
-                      borderColor: AppColors.appbarColor,
-                      fontSize: Dimensions.h12,
-                      fontWeight: FontWeight.w600,
-                      fontColor: AppColors.white,
-                      letterSpacing: 1,
-                      borderRadius: Dimensions.r5,
-                      borderWidth: 0.2,
-                      textStyle: CustomTextStyle.textRobotoSansBold,
-                      onTap: () => controller.onTapOfSaveButton(),
-                      height: Dimensions.h30,
-                      width: size.width / 1.8,
-                    )
-                  : Container())
-            ],
+                  ],
+                ),
+                verticalSpace,
+                verticalSpace,
+                RoundedCornerButton(
+                  text: "PLUSADD".tr,
+                  color: AppColors.appbarColor,
+                  borderColor: AppColors.appbarColor,
+                  fontSize: Dimensions.h12,
+                  fontWeight: FontWeight.w600,
+                  fontColor: AppColors.white,
+                  letterSpacing: 1,
+                  borderRadius: Dimensions.r5,
+                  borderWidth: 0.2,
+                  textStyle: CustomTextStyle.textRobotoSansBold,
+                  onTap: () => controller.onTapOfAddBidButton(),
+                  height: Dimensions.h30,
+                  width: size.width / 1.8,
+                ),
+                verticalSpace,
+                listview(),
+                Obx(() => controller.addedSangamList.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: RoundedCornerButton(
+                          text: "SUBMIT".tr,
+                          color: AppColors.appbarColor,
+                          borderColor: AppColors.appbarColor,
+                          fontSize: Dimensions.h12,
+                          fontWeight: FontWeight.w600,
+                          fontColor: AppColors.white,
+                          letterSpacing: 1,
+                          borderRadius: Dimensions.r5,
+                          borderWidth: 0.2,
+                          textStyle: CustomTextStyle.textRobotoSansBold,
+                          onTap: () => controller.onTapOfSaveButton(),
+                          height: Dimensions.h30,
+                          width: size.width / 1.8,
+                        ),
+                      )
+                    : Container())
+              ],
+            ),
           ),
         ),
       ),
@@ -304,7 +318,7 @@ class SangamPages extends StatelessWidget {
     );
   }
 
-  openCloseWidget() {
+  openCloseWidget(size) {
     return Row(
       children: [
         Expanded(
@@ -312,7 +326,10 @@ class SangamPages extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  controller.openText.value.toUpperCase(),
+                  controller.gameMode.value.name!.toUpperCase() ==
+                          "HALF SANGAM B"
+                      ? "CLOSEDIGIT".tr.toUpperCase()
+                      : controller.openText.value.toUpperCase(),
                   // "OPEN DIGIT",
                   style: CustomTextStyle.textRobotoSansBold.copyWith(
                     color: AppColors.black,
@@ -340,7 +357,10 @@ class SangamPages extends StatelessWidget {
                     fontSize: Dimensions.h15,
                   ),
                   width: double.infinity,
-                  maxLength: 1,
+                  maxLength: controller.gameMode.value.name!.toUpperCase() ==
+                          "FULL SANGAM"
+                      ? 3
+                      : 1,
                   formatter: [FilteringTextInputFormatter.digitsOnly],
                   isBulkMode: true,
                   suggestionWidth: Dimensions.w150,
@@ -354,15 +374,15 @@ class SangamPages extends StatelessWidget {
                     if (textEditingValue.text == '') {
                       return const Iterable<String>.empty();
                     } else {
-                      List<String> matches = <String>[];
-                      matches.addAll(controller.suggestionOpenList);
-                      matches.retainWhere(
-                        (s) {
-                          return s.toLowerCase().contains(
-                                textEditingValue.text.toLowerCase(),
-                              );
-                        },
-                      );
+                      // List<String> matches = <String>[];
+                      // matches.addAll(controller.suggestionOpenList);
+                      // matches.retainWhere(
+                      //   (s) {
+                      //     return s.toLowerCase().contains(
+                      //           textEditingValue.text.toLowerCase(),
+                      //         );
+                      //   },
+                      // );
                       return matches;
                     }
                   },
@@ -379,8 +399,11 @@ class SangamPages extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  controller.closeText.value.toUpperCase(),
-                  // "CLOSE PANNA",
+                  controller.gameMode.value.name!.toUpperCase() ==
+                          "HALF SANGAM B"
+                      ? "OPENPANA".tr.toUpperCase()
+                      : controller.closeText.value.toUpperCase(),
+                  //  controller.closeText.value.toUpperCase(),
                   style: CustomTextStyle.textRobotoSansBold.copyWith(
                     color: AppColors.black,
                     fontSize: Dimensions.h13,
@@ -389,44 +412,201 @@ class SangamPages extends StatelessWidget {
                 SizedBox(
                   height: Dimensions.h10,
                 ),
-                AutoCompleteTextField(
-                  controller: controller.closeValueController,
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          offset: const Offset(2, 2),
+                          blurRadius: 5,
+                          spreadRadius: 0.2,
+                          color: AppColors.grey)
+                    ],
+                  ),
                   height: Dimensions.h40,
                   width: double.infinity,
-                  suggestionWidth: Dimensions.w150,
-                  hintText: "ENTERPANA".tr,
-                  maxLength: 3,
-                  focusNode: FocusNode(),
-                  hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                  isBulkMode: true,
-                  keyboardType: TextInputType.number,
-                  validateValue: (validate, value) {
-                    controller.validateEnteredCloseDigit(value);
-                    print(controller.suggestionOpenList);
-                  },
-                  textStyle: CustomTextStyle.textRobotoSansBold
-                      .copyWith(color: AppColors.appbarColor),
-                  formatter: [FilteringTextInputFormatter.digitsOnly],
-                  optionsBuilder: (
-                    TextEditingValue textEditingValue,
-                  ) {
-                    if (textEditingValue.text == '') {
-                      return const Iterable<String>.empty();
-                    } else {
-                      List<String> matches = <String>[];
-                      matches.clear();
-                      matches.addAll(controller.suggestionCloseList);
-                      matches.retainWhere(
-                        (s) {
-                          return s.toLowerCase().contains(
-                                textEditingValue.text.toLowerCase(),
-                              );
+                  child: RawAutocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text == '') {
+                        matches.clear();
+                        return const Iterable<String>.empty();
+                      } else {
+                        //    List<String> matches = <String>[];
+                        matches.clear();
+                        matches.addAll(
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                    "HALF SANGAM B"
+                                ? controller.suggestionOpenList
+                                : controller.suggestionCloseList);
+                        matches.retainWhere(
+                          (s) {
+                            return s.toLowerCase().contains(
+                                  textEditingValue.text.toLowerCase(),
+                                );
+                          },
+                        );
+                        return matches;
+                      }
+                    },
+                    onSelected: (String selection) {
+                      debugPrint(
+                          'Selected Suggestion of auto complete text field is $selection');
+                    },
+                    fieldViewBuilder: (BuildContext context,
+                        TextEditingController textEditingController,
+                        FocusNode focusNode,
+                        VoidCallback onFieldSubmitted) {
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        maxLength: 3,
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          controller.validateEnteredCloseDigit(false, value);
                         },
+                        textAlign: TextAlign.center,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        style: CustomTextStyle.textRobotoSansBold
+                            .copyWith(color: AppColors.appbarColor),
+                        decoration: InputDecoration(
+                          hintStyle:
+                              CustomTextStyle.textRobotoSansBold.copyWith(
+                            color: AppColors.appbarColor.withOpacity(0.65),
+                            fontSize: Dimensions.h16,
+                          ),
+                          counterText: "",
+                          filled: true,
+                          errorMaxLines: 0,
+                          contentPadding:
+                              EdgeInsets.only(right: Dimensions.w40),
+                          hintText: "ENTERPANA".tr,
+                          fillColor: AppColors.white,
+                          focusedBorder: border,
+                          border: border,
+                          errorBorder: border,
+                          disabledBorder: border,
+                          enabledBorder: border,
+                        ),
                       );
-                      return matches;
-                    }
-                  },
+                    },
+                    optionsViewBuilder: (BuildContext context,
+                        AutocompleteOnSelected<String> onSelected,
+                        Iterable<String> options) {
+                      return Align(
+                        alignment: Alignment.topLeft,
+                        child: Material(
+                          elevation: 4.0,
+                          child: Container(
+                            width: size.width / 2.2,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(15),
+                              shrinkWrap: true,
+                              itemCount: options.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final String option = options.elementAt(index);
+                                return GestureDetector(
+                                  onTap: () {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    onSelected(option);
+                                    //onSelected(option);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(Dimensions.h5),
+                                    height: Dimensions.h30,
+                                    child: Center(
+                                      child: Text(
+                                        option,
+                                        style: CustomTextStyle
+                                            .textRobotoSansMedium
+                                            .copyWith(
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: Dimensions.h16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
+                // AutoCompleteTextField(
+                //   controller: controller.closeValueController,
+                //   height: Dimensions.h40,
+                //   width: double.infinity,
+                //   suggestionWidth: Dimensions.w150,
+                //   hintText: "ENTERPANA".tr,
+                //   maxLength: 3,
+                //   isBulkMode: true,
+                //   keyboardType: TextInputType.number,
+                //   hintTextColor: AppColors.appbarColor.withOpacity(0.5),
+                //   textStyle: CustomTextStyle.textRobotoSansBold
+                //       .copyWith(color: AppColors.appbarColor),
+                //   formatter: [FilteringTextInputFormatter.digitsOnly],
+                //   validateValue: (validate, value) {
+                //     controller.validateEnteredCloseDigit(validate, value);
+                //   },
+                //   // focusNode: FocusNode(),
+                //   optionsBuilder: (TextEditingValue textEditingValue) {
+                //     if (textEditingValue.text == '') {
+                //       return const Iterable<String>.empty();
+                //     } else {
+                //       matches.addAll(controller.suggestionCloseList);
+                //       matches.retainWhere(
+                //         (s) {
+                //           return s.toLowerCase().contains(
+                //                 textEditingValue.text.toLowerCase(),
+                //               );
+                //         },
+                //       );
+                //       return matches;
+                //     }
+                //   },
+                // ),
+                // AutoCompleteTextField(
+                //   controller: controller.closeValueController,
+                //   height: Dimensions.h40,
+                //   width: double.infinity,
+                //   suggestionWidth: Dimensions.w150,
+                //   hintText: "ENTERPANA".tr,
+                //   maxLength: 3,
+                //   focusNode: FocusNode(),
+                //   hintTextColor: AppColors.appbarColor.withOpacity(0.5),
+                //   isBulkMode: true,
+                //   keyboardType: TextInputType.number,
+                //   validateValue: (validate, value) {
+                //     controller.validateEnteredCloseDigit(validate, value);
+                //   },
+                //   textStyle: CustomTextStyle.textRobotoSansBold
+                //       .copyWith(color: AppColors.appbarColor),
+                //   formatter: [FilteringTextInputFormatter.digitsOnly],
+                //   optionsBuilder: (
+                //     TextEditingValue textEditingValue,
+                //   ) {
+                //     if (textEditingValue.text == '') {
+                //       return const Iterable<String>.empty();
+                //     } else {
+                //       List<String> matches = <String>[];
+                //       // matches.clear();
+                //       matches.addAll(controller.suggestionCloseList);
+                //       matches.retainWhere(
+                //         (s) {
+                //           return s.toLowerCase().contains(
+                //                 textEditingValue.text.toLowerCase(),
+                //               );
+                //         },
+                //       );
+                //       return matches;
+                //     }
+                //   },
+                // ),
               ],
             ),
           ),

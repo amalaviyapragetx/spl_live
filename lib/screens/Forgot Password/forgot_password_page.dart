@@ -89,7 +89,7 @@ class ForgotPasswordPage extends StatelessWidget {
               borderRadius: Dimensions.r25,
               borderWidth: 0,
               textStyle: CustomTextStyle.textRobotoSansLight,
-              onTap: () => controller.mobileNumberController.text.isNotEmpty,
+              onTap: () => controller.onTapOfContinue(),
               height: Dimensions.h30,
               width: double.infinity,
             ),

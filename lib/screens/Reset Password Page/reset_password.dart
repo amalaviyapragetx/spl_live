@@ -57,8 +57,8 @@ class ResetPasswordPage extends StatelessWidget {
             child: Text(
               "RESETPASSWORDTEXT".tr,
               textAlign: TextAlign.center,
-              style: CustomTextStyle.textPTsansMedium.copyWith(
-                fontSize: Dimensions.h17,
+              style: CustomTextStyle.textRobotoSansLight.copyWith(
+                fontSize: Dimensions.h16,
                 letterSpacing: 1,
                 height: 1.5,
                 color: AppColors.appbarColor,

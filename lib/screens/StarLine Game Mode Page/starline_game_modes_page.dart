@@ -93,7 +93,7 @@ class StarLineGameModesPage extends StatelessWidget {
                         verticalSpace,
                         Text(
                           "GAMETYPE".tr,
-                          style: CustomTextStyle.textRobotoSansMedium
+                          style: CustomTextStyle.textRobotoSansLight
                               .copyWith(fontSize: Dimensions.h15),
                         ),
                         verticalSpace,
@@ -282,7 +282,10 @@ class StarLineGameModesPage extends StatelessWidget {
     required double fontSize,
   }) {
     return ListTile(
-      tileColor: AppColors.grey.withOpacity(0.2),
+      visualDensity: const VisualDensity(
+        vertical: -2,
+      ),
+      tileColor: AppColors.grey.withOpacity(0.1),
       title: Row(
         children: [
           widget ?? Container(),
@@ -309,10 +312,10 @@ class StarLineGameModesPage extends StatelessWidget {
           color: AppColors.white,
           boxShadow: [
             BoxShadow(
-                color: AppColors.grey,
-                offset: const Offset(2, 2),
-                blurRadius: 10,
-                spreadRadius: 5),
+                color: AppColors.grey.withOpacity(0.7),
+                offset: const Offset(0, 0),
+                blurRadius: 5,
+                spreadRadius: 3.5),
           ],
           border: Border.all(width: 0.8),
         ),

@@ -63,7 +63,7 @@ class SangamPageController extends GetxController {
       // suggestionOpenList.value = digitList;
     } else {
       isHalfSangam.value = true;
-      // suggestionOpenList.value = digitList;
+      //  suggestionOpenList.value = digitList;
     }
     await loadJsonFile();
   }
@@ -108,17 +108,23 @@ class SangamPageController extends GetxController {
   }
 
   void validateEnteredOpenDigit(String value) {
-    enteredOpenDigitsIsValidate = true;
+    // enteredOpenDigitsIsValidate = true;
     openValue = value;
-    if (enteredOpenDigitsIsValidate) {
-      halfSangamPanaSwitchCase(
-          jsonModel.singlePana!.single, int.parse(openValue));
-    }
+    // if (enteredOpenDigitsIsValidate) {
+    //   halfSangamPanaSwitchCase(
+    //       jsonModel.singlePana!.single, int.parse(openValue));
+    // }
   }
 
-  void validateEnteredCloseDigit(String value) {
-    enteredCloseDigitsIsValidate = true;
+  void validateEnteredCloseDigit(bool validate, String value) {
+    enteredOpenDigitsIsValidate = validate;
+    //  enteredCloseDigitsIsValidate = true;
     closeValue = value;
+    print("closeValue$closeValue");
+    // if (enteredOpenDigitsIsValidate) {
+    //   halfSangamPanaSwitchCase(
+    //       jsonModel.singlePana!.single, int.parse(openValue));
+    // }
   }
 
   void onTapOfSaveButton() {
@@ -132,24 +138,24 @@ class SangamPageController extends GetxController {
     }
   }
 
-  void callback() {
-    if (isValue) {
-      onTapOfGameModeButton(value: true);
-    } else {
-      onTapOfGameModeButton(value: false);
-    }
-  }
+  // void callback() {
+  //   if (isValue) {
+  //     onTapOfGameModeButton(value: true);
+  //   } else {
+  //     onTapOfGameModeButton(value: false);
+  //   }
+  // }
 
-  void onTapOfGameModeButton({required bool value}) {
-    isOpenBid.value = value;
-    if (isOpenBid.value) {
-      openText.value = "OPENDIGIT".tr;
-      closeText.value = "CLOSEPANA".tr;
-    } else {
-      openText.value = "CLOSEDIGIT".tr;
-      closeText.value = "OPENPANA".tr;
-    }
-  }
+  // void onTapOfGameModeButton({required bool value}) {
+  //   isOpenBid.value = value;
+  //   if (isOpenBid.value) {
+  //     openText.value = "OPENDIGIT".tr;
+  //     closeText.value = "CLOSEPANA".tr;
+  //   } else {
+  //     openText.value = "CLOSEDIGIT".tr;
+  //     closeText.value = "OPENPANA".tr;
+  //   }
+  // }
 
   void halfSangamPanaSwitchCase(ThreePana panaList, int digit) {
     switch (digit) {

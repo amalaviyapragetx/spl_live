@@ -648,17 +648,13 @@ class HomeScreenUtils {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return listveiwTransaction(
-                    ballance:
-                        controller.marketHistoryList[index].balance.toString(),
-                    coins: controller.marketHistoryList[index].coins.toString(),
-                    // closeTime:
-                    //     controller.marketHistoryList[index].openTime ?? "",
-                    // openTime:
-                    //     controller.marketHistoryList[index].openTime ?? "",
-                    bidNumber:
-                        controller.marketHistoryList[index].gameMode ?? "",
-                    marketName:
-                        controller.marketHistoryList[index].marketName ?? "");
+                  ballance:
+                      controller.marketHistoryList[index].balance.toString(),
+                  coins: controller.marketHistoryList[index].coins.toString(),
+                  bidNumber: controller.marketHistoryList[index].bidNo ?? "",
+                  marketName:
+                      controller.marketHistoryList[index].marketName ?? "",
+                );
               },
             ),
     );
