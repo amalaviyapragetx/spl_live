@@ -1055,7 +1055,6 @@ class HomeScreenUtils {
                             child: Center(
                               child: Text(
                                 "${controller.starlineChartDate[i].time![j].result ?? "***-*"}",
-
                                 textAlign: TextAlign.center,
                                 // style: CustomTextStyle.textGothamLight.copyWith(
                                 //   color: ColorConstant.textColorMain,

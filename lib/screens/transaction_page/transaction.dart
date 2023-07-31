@@ -9,6 +9,7 @@ import 'package:spllive/helper_files/ui_utils.dart';
 import '../../helper_files/app_colors.dart';
 import 'controller/transaction_controller.dart';
 
+// ignore: must_be_immutable
 class TransactionPage extends StatelessWidget {
   TransactionPage({super.key});
   var controller = Get.put(TransactionHistoryPageController());
@@ -24,7 +25,7 @@ class TransactionPage extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: Obx(
               () {
-                return controller.transactionList!.isNotEmpty
+                return controller.transactionList.isNotEmpty
                     ? ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),

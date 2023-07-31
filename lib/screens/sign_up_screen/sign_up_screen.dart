@@ -112,68 +112,68 @@ class SignUpScreen extends StatelessWidget {
   _buildMobileNumberField() {
     return Row(
       children: [
-        Container(
-          height: Dimensions.h40,
-          padding: EdgeInsets.zero,
-          decoration: BoxDecoration(
-            color: AppColors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.all(
-              Radius.circular(Dimensions.r10),
-            ),
-          ),
-          child: CountryListPick(
-            appBar: AppBar(
-              backgroundColor: AppColors.grey.withOpacity(0.2),
-              title: const Text('Choose your country code'),
-            ),
-            pickerBuilder: (context, code) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
-                child: Row(
-                  children: [
-                    Text(
-                      code != null ? code.dialCode ?? "+91" : "91",
-                      style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-                        color: AppColors.appbarColor,
-                        fontSize: Dimensions.h16,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: Dimensions.w7,
-                      ),
-                      child: SvgPicture.asset(
-                        ConstantImage.dropDownArrowSVG,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            theme: CountryTheme(
-              isShowFlag: false,
-              isShowTitle: false,
-              isShowCode: true,
-              isDownIcon: true,
-              showEnglishName: true,
-              alphabetSelectedTextColor: AppColors.white,
-              labelColor: AppColors.grey,
-              alphabetTextColor: Colors.green,
-            ),
-            initialSelection: '+91',
-            onChanged: (code) {
-              String tempCountryCode =
-                  code != null ? code.dialCode ?? "+91" : "91";
-              controller.onChangeCountryCode(tempCountryCode);
-            },
-            useUiOverlay: true,
-            useSafeArea: false,
-          ),
-        ),
-        SizedBox(
-          width: Dimensions.w9,
-        ),
+        // Container(
+        //   height: Dimensions.h40,
+        //   padding: EdgeInsets.zero,
+        //   decoration: BoxDecoration(
+        //     color: AppColors.grey.withOpacity(0.2),
+        //     borderRadius: BorderRadius.all(
+        //       Radius.circular(Dimensions.r10),
+        //     ),
+        //   ),
+        //   child: CountryListPick(
+        //     appBar: AppBar(
+        //       backgroundColor: AppColors.grey.withOpacity(0.2),
+        //       title: const Text('Choose your country code'),
+        //     ),
+        //     pickerBuilder: (context, code) {
+        //       return Padding(
+        //         padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
+        //         child: Row(
+        //           children: [
+        //             Text(
+        //               code != null ? code.dialCode ?? "+91" : "91",
+        //               style: CustomTextStyle.textRobotoSlabMedium.copyWith(
+        //                 color: AppColors.appbarColor,
+        //                 fontSize: Dimensions.h16,
+        //               ),
+        //             ),
+        //             Padding(
+        //               padding: EdgeInsets.only(
+        //                 left: Dimensions.w7,
+        //               ),
+        //               child: SvgPicture.asset(
+        //                 ConstantImage.dropDownArrowSVG,
+        //                 color: AppColors.grey,
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       );
+        //     },
+        //     theme: CountryTheme(
+        //       isShowFlag: false,
+        //       isShowTitle: false,
+        //       isShowCode: true,
+        //       isDownIcon: true,
+        //       showEnglishName: true,
+        //       alphabetSelectedTextColor: AppColors.white,
+        //       labelColor: AppColors.grey,
+        //       alphabetTextColor: Colors.green,
+        //     ),
+        //     initialSelection: '+91',
+        //     onChanged: (code) {
+        //       String tempCountryCode =
+        //           code != null ? code.dialCode ?? "+91" : "91";
+        //       controller.onChangeCountryCode(tempCountryCode);
+        //     },
+        //     useUiOverlay: true,
+        //     useSafeArea: false,
+        //   ),
+        // ),
+        // SizedBox(
+        //   width: Dimensions.w9,
+        // ),
         Expanded(
           child: RoundedCornerEditTextWithIcon(
             height: Dimensions.h40,

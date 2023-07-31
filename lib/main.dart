@@ -9,18 +9,21 @@ import 'routes/app_routes.dart';
 import 'routes/app_routes_name.dart';
 import 'screens/Local Storage.dart';
 import 'screens/initial_bindings.dart';
+import 'self_closing_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  runApp(const MyApp());
+  Get.put(AppLifecycleController());
+  runApp(MyApp());
 }
 
 final GlobalKey<NavigatorState> navigatorKey =
     GlobalKey(debugLabel: "Main Navigator");
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final AppLifecycleController _controller = Get.find<AppLifecycleController>();
 
   @override
   Widget build(BuildContext context) {

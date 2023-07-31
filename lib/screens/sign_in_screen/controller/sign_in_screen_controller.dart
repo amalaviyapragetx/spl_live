@@ -11,7 +11,7 @@ class SignInPageController extends GetxController {
   final mobileNumberController = TextEditingController();
   final passwordController = TextEditingController();
   RxBool visiblePassword = false.obs;
-  var countryCode = '+91'.obs;
+  // var countryCode = '+91'.obs;
 
   @override
   void dispose() {
@@ -60,7 +60,7 @@ class SignInPageController extends GetxController {
     final signInBody = {
       "phoneNumber": mobileNumberController.text,
       "password": passwordController.text,
-      "countryCode": countryCode.value,
+      "countryCode": "+92",
       "deviceId": DeviceInfo.deviceId,
       // "fcmToken": fcmToken,
     };
@@ -88,7 +88,7 @@ class SignInPageController extends GetxController {
     }
   }
 
-  void onChangeCountryCode(String code) {
-    countryCode.value = code;
-  }
+  // void onChangeCountryCode(String code) {
+  //   countryCode.value = code;
+  // }
 }

@@ -76,8 +76,10 @@ class SingleAnkPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        " ${controller.gameMode.name}- ${controller.biddingType.value}"
-                            .toUpperCase(),
+                        controller.gameMode.name!.toUpperCase() == "JODI DIGIT"
+                            ? " ${controller.gameMode.name}".toUpperCase()
+                            : " ${controller.gameMode.name}- ${controller.biddingType.value}"
+                                .toUpperCase(),
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.appbarColor,
                             fontSize: Dimensions.h18),
