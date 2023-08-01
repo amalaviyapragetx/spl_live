@@ -20,4 +20,6 @@ class AppColors {
   static Color iconColorMain = const Color(0xff0b0b0b);
   static Color numberListContainer = const Color(0xff9b8083);
   static Color numberListgreen = const Color(0xff358138);
+  static Color wpColor1 = const Color(0xffFFA71E);
+  static Color wpColor2 = const Color(0xffD82700);
 }

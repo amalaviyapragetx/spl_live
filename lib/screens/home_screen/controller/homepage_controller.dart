@@ -26,6 +26,7 @@ import '../utils/home_screen_utils.dart';
 class HomePageController extends GetxController {
   TextEditingController dateinput = TextEditingController();
   RxBool isStarline = false.obs;
+  var arguments = Get.arguments;
   RxBool market = false.obs;
   RxBool bidHistory = false.obs;
   RxBool resultHistory = false.obs;

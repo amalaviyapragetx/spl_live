@@ -130,16 +130,18 @@ class SangamPages extends StatelessWidget {
                               maxLines: 1,
                               minLines: 1,
                               keyboardType: TextInputType.number,
-                              // inputFormatters: [],
-                              cursorColor: AppColors.black,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              cursorColor: AppColors.appbarColor,
                               textAlign: TextAlign.center,
-
                               style:
                                   CustomTextStyle.textRobotoSansBold.copyWith(
                                 color: AppColors.appbarColor,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 fontSize: Dimensions.h15,
                               ),
+                              focusNode: controller.coinsFocusNode,
                               decoration: InputDecoration(
                                 contentPadding: imagePath.isEmpty
                                     ? EdgeInsets.symmetric(
@@ -197,6 +199,17 @@ class SangamPages extends StatelessWidget {
                                         TextSelection.collapsed(
                                             offset: controller
                                                 .coinsController.text.length);
+                                  } else if (int.parse(val) == 0) {
+                                    print("value == 0");
+                                    AppUtils.showErrorSnackBar(
+                                      bodyText: "Please enter valid points",
+                                    );
+                                  } else if (int.parse(val) > 10000) {
+                                    print("value > 10000");
+                                    AppUtils.showErrorSnackBar(
+                                      bodyText:
+                                          "You can not add more than 10000 points",
+                                    );
                                   }
                                 }
                               },
@@ -220,7 +233,11 @@ class SangamPages extends StatelessWidget {
                   borderRadius: Dimensions.r5,
                   borderWidth: 0.2,
                   textStyle: CustomTextStyle.textRobotoSansBold,
-                  onTap: () => controller.onTapOfAddBidButton(),
+                  onTap: () {
+                    controller.coinsFocusNode.unfocus();
+                    controller.openFocusNode.requestFocus();
+                    controller.onTapOfAddBidButton();
+                  },
                   height: Dimensions.h30,
                   width: size.width / 1.8,
                 ),
@@ -305,7 +322,7 @@ class SangamPages extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  "Bid No.: ${controller.requestModel.value.bids![index].bidNo}, Coins : ${controller.requestModel.value.bids![index].coins}",
+                  "Bid No. : ${controller.requestModel.value.bids![index].bidNo}, Coins : ${controller.requestModel.value.bids![index].coins}",
                   style: CustomTextStyle.textRobotoSansBold.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
@@ -351,25 +368,41 @@ class SangamPages extends StatelessWidget {
                 () => AutoCompleteTextField(
                   controller: controller.openValueController,
                   height: Dimensions.h40,
-                  textStyle: CustomTextStyle.textRobotoSlabBold.copyWith(
-                    color: AppColors.appbarColor,
-                    fontWeight: FontWeight.normal,
-                    fontSize: Dimensions.h15,
-                  ),
+                  textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                      color: AppColors.appbarColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Dimensions.h15,
+                      letterSpacing: 1),
                   width: double.infinity,
+                  //   autoFocus: true,
                   maxLength: controller.gameMode.value.name!.toUpperCase() ==
                           "FULL SANGAM"
                       ? 3
                       : 1,
+
+                  focusNode: controller.openFocusNode,
                   formatter: [FilteringTextInputFormatter.digitsOnly],
-                  isBulkMode: true,
+                  isBulkMode: false,
                   suggestionWidth: Dimensions.w150,
                   hintText: controller.openFieldHint.value,
                   hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                   keyboardType: TextInputType.number,
                   validateValue: (validate, value) {
                     controller.validateEnteredOpenDigit(value);
+                    if (controller.gameMode.value.name!.toUpperCase() ==
+                        "FULL SANGAM") {
+                      if (value.length == 3) {
+                        controller.openFocusNode.unfocus();
+                        controller.closeFocusNode.requestFocus();
+                      }
+                    } else {
+                      if (value.length == 1) {
+                        controller.openFocusNode.unfocus();
+                        controller.closeFocusNode.requestFocus();
+                      }
+                    }
                   },
+
                   optionsBuilder: (TextEditingValue textEditingValue) {
                     if (textEditingValue.text == '') {
                       return const Iterable<String>.empty();
@@ -416,16 +449,19 @@ class SangamPages extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                          offset: const Offset(2, 2),
-                          blurRadius: 5,
-                          spreadRadius: 0.2,
-                          color: AppColors.grey)
+                        offset: const Offset(2, 2),
+                        blurRadius: 5,
+                        spreadRadius: 0.2,
+                        color: AppColors.grey,
+                      ),
                     ],
                   ),
                   height: Dimensions.h40,
                   width: double.infinity,
                   child: RawAutocomplete<String>(
                     optionsBuilder: (TextEditingValue textEditingValue) {
+                      // controller.closeValueController.text =
+                      //     textEditingValue.text;
                       if (textEditingValue.text == '') {
                         matches.clear();
                         return const Iterable<String>.empty();
@@ -433,10 +469,11 @@ class SangamPages extends StatelessWidget {
                         //    List<String> matches = <String>[];
                         matches.clear();
                         matches.addAll(
-                            controller.gameMode.value.name!.toUpperCase() ==
-                                    "HALF SANGAM B"
-                                ? controller.suggestionOpenList
-                                : controller.suggestionCloseList);
+                          controller.gameMode.value.name!.toUpperCase() ==
+                                  "HALF SANGAM B"
+                              ? controller.suggestionOpenList
+                              : controller.suggestionCloseList,
+                        );
                         matches.retainWhere(
                           (s) {
                             return s.toLowerCase().contains(
@@ -456,12 +493,15 @@ class SangamPages extends StatelessWidget {
                         FocusNode focusNode,
                         VoidCallback onFieldSubmitted) {
                       return TextFormField(
-                        controller: textEditingController,
-                        focusNode: focusNode,
+                        cursorColor: AppColors.appbarColor,
+                        controller: textEditingController =
+                            controller.closeValueController,
+                        focusNode: controller.closeFocusNode = focusNode,
                         maxLength: 3,
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
-                          controller.validateEnteredCloseDigit(false, value);
+                          controller.validateEnteredCloseDigit(
+                              false, controller.closeValueController.text);
                         },
                         textAlign: TextAlign.center,
                         inputFormatters: [
@@ -510,6 +550,7 @@ class SangamPages extends StatelessWidget {
                                     FocusManager.instance.primaryFocus
                                         ?.unfocus();
                                     onSelected(option);
+                                    controller.coinsFocusNode.requestFocus();
                                     //onSelected(option);
                                   },
                                   child: Container(

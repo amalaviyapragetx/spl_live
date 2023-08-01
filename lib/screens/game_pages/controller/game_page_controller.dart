@@ -74,8 +74,8 @@ class GamePageController extends GetxController {
       _debounce!.cancel();
     }
     Timer(const Duration(milliseconds: 400), () {
-      if (coinController.text.length < 2) {
-        AppUtils.showErrorSnackBar(bodyText: "Please enter minimun 10 coins");
+      if (int.parse(coinController.text) == 0) {
+        AppUtils.showErrorSnackBar(bodyText: "Please enter minimun 1 coin");
       }
     });
   }

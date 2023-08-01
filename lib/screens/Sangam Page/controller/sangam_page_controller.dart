@@ -40,6 +40,10 @@ class SangamPageController extends GetxController {
   var coinsController = TextEditingController();
   var openValueController = TextEditingController();
   var closeValueController = TextEditingController();
+  // final FocusNode focusNode1 = FocusNode();
+  final FocusNode coinsFocusNode = FocusNode();
+  final FocusNode openFocusNode = FocusNode();
+  FocusNode closeFocusNode = FocusNode();
 
   @override
   void onInit() {
@@ -117,14 +121,14 @@ class SangamPageController extends GetxController {
   }
 
   void validateEnteredCloseDigit(bool validate, String value) {
-    enteredOpenDigitsIsValidate = validate;
+    enteredOpenDigitsIsValidate = true;
     //  enteredCloseDigitsIsValidate = true;
     closeValue = value;
     print("closeValue$closeValue");
-    // if (enteredOpenDigitsIsValidate) {
-    //   halfSangamPanaSwitchCase(
-    //       jsonModel.singlePana!.single, int.parse(openValue));
-    // }
+    if (enteredOpenDigitsIsValidate) {
+      halfSangamPanaSwitchCase(
+          jsonModel.singlePana!.single, int.parse(openValue));
+    }
   }
 
   void onTapOfSaveButton() {
@@ -196,33 +200,33 @@ class SangamPageController extends GetxController {
   }
 
   void onTapOfAddBidButton() {
-    if (coinsController.text.isNotEmpty && coinsController.text.length > 1) {
+    if (int.parse(coinsController.text) > 0) {
       if (enteredOpenDigitsIsValidate) {
-        if (enteredCloseDigitsIsValidate) {
-          addedSangamList.add(
-            Bids(
-                bidNo: "$openValue-$closeValue",
-                coins: int.parse(coinsController.text),
-                gameId: gameMode.value.id,
-                gameModeName: gameMode.value.name,
-                remarks:
-                    "You invested At ${marketData.value.market} on $openValue-$closeValue (${gameMode.value.name})"),
-          );
-          openValueController.clear();
-          closeValueController.clear();
-          coinsController.clear();
-          int tempTotal = 0;
-          for (int i = 0; i < addedSangamList.length; i++) {
-            tempTotal += addedSangamList[i].coins ?? 0;
-          }
-          totalBiddingAmount.value = tempTotal.toString();
-          requestModel.value.bids = addedSangamList;
-        } else {
-          Get.closeCurrentSnackbar();
-          AppUtils.showErrorSnackBar(
-            bodyText: "Enter valid ${closeText.value}",
-          );
+        //  if (enteredCloseDigitsIsValidate) {
+        addedSangamList.add(
+          Bids(
+              bidNo: "$openValue-$closeValue",
+              coins: int.parse(coinsController.text),
+              gameId: gameMode.value.id,
+              gameModeName: gameMode.value.name,
+              remarks:
+                  "You invested At ${marketData.value.market} on $openValue-$closeValue (${gameMode.value.name})"),
+        );
+        openValueController.clear();
+        closeValueController.clear();
+        coinsController.clear();
+        int tempTotal = 0;
+        for (int i = 0; i < addedSangamList.length; i++) {
+          tempTotal += addedSangamList[i].coins ?? 0;
         }
+        totalBiddingAmount.value = tempTotal.toString();
+        requestModel.value.bids = addedSangamList;
+        // } else {
+        //   Get.closeCurrentSnackbar();
+        //   AppUtils.showErrorSnackBar(
+        //     bodyText: "Enter valid ${closeText.value}",
+        //   );
+        // }
       } else {
         Get.closeCurrentSnackbar();
         AppUtils.showErrorSnackBar(

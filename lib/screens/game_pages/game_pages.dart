@@ -78,7 +78,7 @@ class SingleAnkPage extends StatelessWidget {
                       Text(
                         controller.gameMode.name!.toUpperCase() == "JODI DIGIT"
                             ? " ${controller.gameMode.name}".toUpperCase()
-                            : " ${controller.gameMode.name}- ${controller.biddingType.value}"
+                            : " ${controller.gameMode.name} - ${controller.biddingType.value}"
                                 .toUpperCase(),
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.appbarColor,
@@ -139,6 +139,10 @@ class SingleAnkPage extends StatelessWidget {
                                         offset: controller
                                             .coinController.text.length,
                                       );
+                                    } else if (int.parse(val) > 10000) {
+                                      AppUtils.showErrorSnackBar(
+                                          bodyText:
+                                              "You can not add more than 10000 points");
                                     } else {
                                       if (val.length >= 2) {
                                         print(
@@ -150,6 +154,7 @@ class SingleAnkPage extends StatelessWidget {
                                         print(
                                             "444444444444444444   ${val.length}");
                                         controller.ondebounce();
+
                                         controller.validCoinsEntered.value =
                                             false;
                                         controller.isEnable.value = false;
@@ -157,6 +162,7 @@ class SingleAnkPage extends StatelessWidget {
                                     }
                                   }
                                 },
+                                maxLength: 5,
                                 hintText: "COINS".tr,
                                 contentPadding:
                                     const EdgeInsets.only(right: 40),

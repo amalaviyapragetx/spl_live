@@ -9,6 +9,9 @@ class ChangeMpinPageController extends GetxController {
   TextEditingController oldMPIN = TextEditingController();
   TextEditingController newMPIN = TextEditingController();
   TextEditingController reEnterMPIN = TextEditingController();
+  final FocusNode oldMPINFocusNode = FocusNode();
+  final FocusNode newMPINFocusNode = FocusNode();
+  final FocusNode reEnterMPINFocusNode = FocusNode();
   RxBool isObscureOldPin = true.obs;
   RxBool isObscureNewPin = true.obs;
   RxBool isObscureConfirmPin = true.obs;
@@ -16,6 +19,14 @@ class ChangeMpinPageController extends GetxController {
   RxString confirmPinMessage = "".obs;
   RxString oldPinMessage = "".obs;
   RxBool isValidate = false.obs;
+
+  @override
+  void dispose() {
+    oldMPINFocusNode.dispose();
+    newMPINFocusNode.dispose();
+    reEnterMPINFocusNode.dispose();
+    super.dispose();
+  }
 
   changePassBody() async {
     final verifyUserBody = {

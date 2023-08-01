@@ -73,6 +73,7 @@ class AutoCompleteTextField extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: Dimensions.h16,
                 ),
+            cursorColor: AppColors.appbarColor,
             controller: textEditingController,
             focusNode: focusNode,
             autofocus: autoFocus!,
@@ -81,6 +82,8 @@ class AutoCompleteTextField extends StatelessWidget {
             onFieldSubmitted: (String value) {
               if (isBulkMode ?? false) {
                 textEditingController.clear();
+              } else {
+                onFieldSubmitted;
               }
             },
             keyboardType: keyboardType,
@@ -112,42 +115,43 @@ class AutoCompleteTextField extends StatelessWidget {
         optionsViewBuilder: (BuildContext context,
             AutocompleteOnSelected<String> onSelected,
             Iterable<String> options) {
-          return Align(
-            alignment: Alignment.topLeft,
-            child: Material(
-              elevation: 4.0,
-              child: SizedBox(
-                width: suggestionWidth,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: options.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final String option = options.elementAt(index);
-                    return GestureDetector(
-                      onTap: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        validateValue(true, option);
-                        onSelected(option);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(Dimensions.h5),
-                        height: Dimensions.h30,
-                        child: Text(
-                          option,
-                          style: CustomTextStyle.textPTsansMedium.copyWith(
-                            color: AppColors.appbarColor,
-                            fontWeight: FontWeight.normal,
-                            fontSize: Dimensions.h16,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          );
+          return Container();
+          // return Align(
+          //   alignment: Alignment.topLeft,
+          //   child: Material(
+          //     elevation: 4.0,
+          //     child: SizedBox(
+          //       width: suggestionWidth,
+          //       child: ListView.builder(
+          //         shrinkWrap: true,
+          //         padding: const EdgeInsets.all(8.0),
+          //         itemCount: options.length,
+          //         itemBuilder: (BuildContext context, int index) {
+          //           final String option = options.elementAt(index);
+          //           return GestureDetector(
+          //             onTap: () {
+          //               FocusManager.instance.primaryFocus?.unfocus();
+          //               validateValue(true, option);
+          //               onSelected(option);
+          //             },
+          //             child: Container(
+          //               padding: EdgeInsets.all(Dimensions.h5),
+          //               height: Dimensions.h30,
+          //               child: Text(
+          //                 option,
+          //                 style: CustomTextStyle.textPTsansMedium.copyWith(
+          //                   color: AppColors.appbarColor,
+          //                   fontWeight: FontWeight.normal,
+          //                   fontSize: Dimensions.h16,
+          //                 ),
+          //               ),
+          //             ),
+          //           );
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // );
         },
         onSelected: (String selection) {
           debugPrint(

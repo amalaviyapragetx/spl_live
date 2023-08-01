@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,31 +34,45 @@ class SignInScreen extends StatelessWidget {
         systemOverlayStyle: AppUtils.toolBarStyleDark,
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "WELCOMEBACK".tr,
-              style: CustomTextStyle.textPTsansMedium.copyWith(
-                fontWeight: FontWeight.w500,
-                fontSize: Dimensions.h12,
-                letterSpacing: 1,
-                color: AppColors.black.withAlpha(200),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              verticalSpace,
+              verticalSpace,
+              verticalSpace,
+              SizedBox(
+                height: Dimensions.h70,
+                width: Dimensions.w150,
+                child: Image.asset(
+                  ConstantImage.splLogo,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-            Text(
-              "SIGNIN".tr,
-              style: CustomTextStyle.textRobotoSlabBold.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: Dimensions.h20,
-                letterSpacing: 1,
-                color: AppColors.appbarColor,
+              verticalSpace,
+              Text(
+                "WELCOMEBACK".tr,
+                style: CustomTextStyle.textPTsansMedium.copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: Dimensions.h12,
+                  letterSpacing: 1,
+                  color: AppColors.black.withAlpha(200),
+                ),
               ),
-            ),
-            verticalSpace,
-            _buildSignInForm(),
-          ],
+              Text(
+                "SIGNIN".tr,
+                style: CustomTextStyle.textRobotoSlabBold.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimensions.h20,
+                  letterSpacing: 1,
+                  color: AppColors.appbarColor,
+                ),
+              ),
+              verticalSpace,
+              _buildSignInForm()
+            ],
+          ),
         ),
       ),
     );
@@ -134,7 +150,23 @@ class SignInScreen extends StatelessWidget {
             keyboardType: TextInputType.phone,
             hintText: "ENTERMOBILENUMBER".tr,
             imagePath: ConstantImage.phoneSVG,
+            autofocus: true,
+            onChanged: (v) {
+              if (v?.length == 10) {
+                controller.focusNode1.unfocus();
+                controller.focusNode2.requestFocus();
+                controller.cursorTimer?.cancel();
+                controller.cursorTimer = Timer(Duration(milliseconds: 50), () {
+                  controller.mobileNumberController.selection =
+                      TextSelection.fromPosition(
+                    TextPosition(
+                        offset: controller.mobileNumberController.text.length),
+                  );
+                });
+              }
+            },
             maxLines: 1,
+            focusNode: controller.focusNode1,
             minLines: 1,
             isEnabled: true,
             maxLength: 10,
@@ -201,7 +233,7 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: orView(),
             ),
             Padding(
@@ -278,6 +310,7 @@ class SignInScreen extends StatelessWidget {
 
   _buildPasswordField() {
     return PasswordFieldWithIcon(
+      focusNode: controller.focusNode2,
       height: Dimensions.h40,
       keyBoardType: TextInputType.visiblePassword,
       controller: controller.passwordController,

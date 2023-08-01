@@ -29,19 +29,20 @@ class MoreOptions extends StatelessWidget {
       children: [
         AppUtils().simpleAppbar(appBarTitle: "MORE".tr, actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
             child: InkWell(
               onTap: () {
                 Share.share("http://spl.live");
               },
               child: Container(
-                width: Dimensions.w25,
+                width: Dimensions.w20,
                 decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(25)),
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(25),
+                ),
                 child: Icon(
                   Icons.share,
-                  size: 15,
+                  size: 13,
                   color: AppColors.appbarColor,
                 ),
               ),

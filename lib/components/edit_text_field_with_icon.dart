@@ -32,15 +32,19 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
     this.onEditingComplete,
     this.onTapOutside,
     this.hintTextStyle,
+    this.autofocus,
+    this.focusNode,
   }) : super(key: key);
 
   final TextEditingController controller;
 
   int? maxLength;
   int? maxLines;
+  bool? autofocus;
   int? minLines;
   String hintText;
   String imagePath;
+  FocusNode? focusNode;
   bool isEnabled;
   double height;
   double? width;
@@ -65,10 +69,11 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
         height: height,
         width: width,
         child: TextFormField(
-          autofocus: false,
+          autofocus: autofocus ?? false,
           enabled: isEnabled,
           controller: controller,
           maxLength: maxLength,
+          focusNode: focusNode,
           maxLines: maxLines,
           minLines: minLines,
           onTapOutside: onTapOutside,

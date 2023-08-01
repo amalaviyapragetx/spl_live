@@ -51,6 +51,8 @@ class ChangeMpinPage extends StatelessWidget {
                     Obx(
                       () => EdittextFieldwithvalidation(
                         controller: controller.oldMPIN,
+                        autofocus: true,
+                        focusNode: controller.oldMPINFocusNode,
                         hintText: "OLDPINTEXT".tr,
                         maxLength: 4,
                         keyboardType: TextInputType.number,
@@ -60,6 +62,10 @@ class ChangeMpinPage extends StatelessWidget {
                         obscureText: controller.isObscureOldPin.value,
                         onChanged: (value) {
                           controller.onChanged1(value);
+                          if (value.length == 4) {
+                            controller.oldMPINFocusNode.unfocus();
+                            controller.newMPINFocusNode.requestFocus();
+                          }
                         },
                         onTap: () {
                           controller.isObscureOldPin.value =
@@ -95,6 +101,7 @@ class ChangeMpinPage extends StatelessWidget {
                     vericalSpace,
                     Obx(
                       () => EdittextFieldwithvalidation(
+                        focusNode: controller.newMPINFocusNode,
                         controller: controller.newMPIN,
                         hintText: "NEWPINTEXT".tr,
                         maxLength: 4,
@@ -105,6 +112,10 @@ class ChangeMpinPage extends StatelessWidget {
                         obscureText: controller.isObscureNewPin.value,
                         onChanged: (value) {
                           controller.onChanged2(value);
+                          if (value.length == 4) {
+                            controller.newMPINFocusNode.unfocus();
+                            controller.reEnterMPINFocusNode.requestFocus();
+                          }
                         },
                         onTap: () {
                           controller.isObscureNewPin.value =
@@ -143,6 +154,7 @@ class ChangeMpinPage extends StatelessWidget {
                       vericalSpace,
                       Obx(
                         () => EdittextFieldwithvalidation(
+                          focusNode: controller.reEnterMPINFocusNode,
                           controller: controller.reEnterMPIN,
                           hintText: "NEWPINTEXT".tr,
                           maxLength: 4,

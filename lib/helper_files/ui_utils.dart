@@ -162,11 +162,11 @@ class AppUtils {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.symmetric(vertical: 17),
           child: InkWell(
             onTap: onTapTelegram,
             child: Container(
-              width: 25,
+              width: 20,
               decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(25)),
@@ -180,7 +180,7 @@ class AppUtils {
                   ),
                   child: Icon(
                     Icons.send,
-                    size: 15,
+                    size: 13,
                     color: AppColors.appbarColor,
                   ),
                 ),
@@ -189,17 +189,17 @@ class AppUtils {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
           child: InkWell(
             onTap: shareOntap,
             child: Container(
-              width: 25,
+              width: 20,
               decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(25)),
               child: Icon(
                 Icons.share,
-                size: 15,
+                size: 13,
                 color: AppColors.appbarColor,
               ),
             ),

@@ -34,21 +34,21 @@ class WelcomeScreen extends StatelessWidget {
               "Welcome",
               style: CustomTextStyle.textRobotoSlabLight.copyWith(
                 fontSize: Dimensions.h25,
-                color: AppColors.black,
-                fontWeight: FontWeight.w400,
+                color: AppColors.appbarColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(
-              height: Dimensions.h10,
-            ),
-            SizedBox(
-              height: Dimensions.h10,
-            ),
-            Text("WELCOMETEXT".tr,
-                textAlign: TextAlign.center,
-                style: CustomTextStyle.textRobotoSansLight.copyWith(
-                  fontSize: Dimensions.h14,
-                )),
+            // SizedBox(
+            //   height: Dimensions.h10,
+            // ),
+            // SizedBox(
+            //   height: Dimensions.h10,
+            // ),
+            // Text("WELCOMETEXT".tr,
+            //     textAlign: TextAlign.center,
+            //     style: CustomTextStyle.textRobotoSansLight.copyWith(
+            //       fontSize: Dimensions.h14,
+            //     )),
             verticalSpace,
             verticalSpace,
             RoundedCornerButton(
@@ -56,7 +56,7 @@ class WelcomeScreen extends StatelessWidget {
               color: AppColors.appbarColor,
               borderColor: AppColors.appbarColor,
               fontSize: Dimensions.h12,
-              fontWeight: FontWeight.w300,
+              fontWeight: FontWeight.w500,
               fontColor: AppColors.white,
               letterSpacing: 0,
               borderRadius: Dimensions.r25,
@@ -70,16 +70,16 @@ class WelcomeScreen extends StatelessWidget {
             orView(),
             verticalSpace,
             RoundedCornerButton(
-              text: "SIGN UP".tr,
+              text: "SIGNUP".tr,
               color: AppColors.white,
               borderColor: AppColors.appbarColor,
               fontSize: Dimensions.h12,
-              fontWeight: FontWeight.w300,
+              fontWeight: FontWeight.w500,
               fontColor: AppColors.appbarColor,
               letterSpacing: 0,
               borderRadius: Dimensions.r50,
               borderWidth: 1,
-              textStyle: CustomTextStyle.textRobotoSansLight,
+              textStyle: CustomTextStyle.textRobotoSansMedium,
               onTap: () => Get.toNamed(AppRoutName.signUnPage),
               height: Dimensions.h30,
               width: double.infinity,

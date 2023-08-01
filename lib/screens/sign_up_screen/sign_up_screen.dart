@@ -56,17 +56,20 @@ class SignUpScreen extends StatelessWidget {
               Text(
                 "REGISTER".tr,
                 style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-                    color: AppColors.appbarColor, fontSize: Dimensions.h20),
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              verticalSpace,
-              Text("REGISTERTEXT".tr,
-                  textAlign: TextAlign.center,
-                  style: CustomTextStyle.textRobotoSansLight.copyWith(
-                      fontSize: Dimensions.h17, color: AppColors.black)
-                  //   style:
-                  //       TextStyle(fontSize: Dimensions.h15, color: AppColors.black),
-                  // ),)
-                  ),
+              //verticalSpace,
+              // Text("REGISTERTEXT".tr,
+              //     textAlign: TextAlign.center,
+              //     style: CustomTextStyle.textRobotoSansLight.copyWith(
+              //         fontSize: Dimensions.h17, color: AppColors.black)
+              //     //   style:
+              //     //       TextStyle(fontSize: Dimensions.h15, color: AppColors.black),
+              //     // ),)
+              //     ),
               verticalSpace,
               _buildMobileNumberField(),
               verticalSpace,
@@ -181,6 +184,7 @@ class SignUpScreen extends StatelessWidget {
             keyboardType: TextInputType.phone,
             hintText: "Enter Mobile Number".tr,
             imagePath: ConstantImage.phoneSVG,
+            autofocus: true,
             maxLines: 1,
             minLines: 1,
             isEnabled: true,

@@ -47,17 +47,17 @@ class DashBoardPage extends StatelessWidget {
       backgroundColor: AppColors.white,
       body: Obx(() => controller.getDashBoardPages(controller.pageWidget.value,
           size, context, walletController.walletBalance.value.toString())),
-      floatingActionButton: Obx(
-        () => controller.pageWidget.value == 0
-            ? AppUtils().flottingActionButton(
-                onTap: () {
-                  launch(
-                    "https://wa.me/+917769826748/?text=hi",
-                  );
-                },
-              )
-            : Container(),
-      ),
+      // floatingActionButton: Obx(
+      //   () => controller.pageWidget.value == 0
+      //       ? AppUtils().flottingActionButton(
+      //           onTap: () {
+      //             launch(
+      //               "https://wa.me/+917769826748/?text=hi",
+      //             );
+      //           },
+      //         )
+      //       : Container(),
+      // ),
     );
   }
 }

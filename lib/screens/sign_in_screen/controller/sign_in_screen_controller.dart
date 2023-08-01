@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -10,13 +12,19 @@ import '../../Local Storage.dart';
 class SignInPageController extends GetxController {
   final mobileNumberController = TextEditingController();
   final passwordController = TextEditingController();
+  final FocusNode focusNode1 = FocusNode();
+  final FocusNode focusNode2 = FocusNode();
   RxBool visiblePassword = false.obs;
+  Timer? cursorTimer;
   // var countryCode = '+91'.obs;
 
   @override
   void dispose() {
+    cursorTimer?.cancel();
     mobileNumberController.dispose();
     passwordController.dispose();
+    focusNode1.dispose();
+    focusNode2.dispose();
     super.dispose();
   }
 

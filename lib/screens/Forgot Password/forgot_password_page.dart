@@ -49,30 +49,44 @@ class ForgotPasswordPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Text(
-              "FORGOTPASSWORD".tr,
-              style: CustomTextStyle.textRobotoSlabBold.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: Dimensions.h23,
-                letterSpacing: 1,
-                color: AppColors.appbarColor,
+            child: SizedBox(
+              height: Dimensions.h80,
+              width: Dimensions.w200,
+              child: Image.asset(
+                ConstantImage.splLogo,
+                fit: BoxFit.contain,
               ),
             ),
           ),
           verticalSpace,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
-            child: Text(
-              "FORGOT_SUBTEXT".tr,
-              textAlign: TextAlign.center,
-              style: CustomTextStyle.textRobotoSansLight.copyWith(
-                fontSize: Dimensions.h14,
-                //  letterSpacing: 1,
-                height: 1.5,
-                color: AppColors.grey,
+          Center(
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                "FORGOTPASSWORD".tr,
+                style: CustomTextStyle.textRobotoSlabBold.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimensions.h23,
+                  letterSpacing: 1,
+                  color: AppColors.appbarColor,
+                ),
               ),
             ),
           ),
+          //  verticalSpace,
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
+          //   child: Text(
+          //     "FORGOT_SUBTEXT".tr,
+          //     textAlign: TextAlign.center,
+          //     style: CustomTextStyle.textRobotoSansLight.copyWith(
+          //       fontSize: Dimensions.h14,
+          //       //  letterSpacing: 1,
+          //       height: 1.5,
+          //       color: AppColors.grey,
+          //     ),
+          //   ),
+          // ),
           verticalSpace,
           _buildMobileNumberField(),
           verticalSpace,
@@ -168,6 +182,7 @@ class ForgotPasswordPage extends StatelessWidget {
             child: RoundedCornerEditTextWithIcon(
               height: Dimensions.h40,
               onChanged: (v) {},
+              autofocus: true,
               controller: controller.mobileNumberController,
               keyboardType: TextInputType.phone,
               hintText: "ENTERMOBILENUMBER".tr,

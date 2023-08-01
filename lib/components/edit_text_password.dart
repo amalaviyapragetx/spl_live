@@ -16,6 +16,8 @@ class EdittextFieldwithvalidation extends StatelessWidget {
     this.validator,
     this.inputFormatters,
     this.keyboardType,
+    this.focusNode,
+    this.autofocus,
   });
 
   final TextEditingController controller;
@@ -27,6 +29,8 @@ class EdittextFieldwithvalidation extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusNode;
+  final bool? autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,8 @@ class EdittextFieldwithvalidation extends StatelessWidget {
       maxLength: maxLength,
       obscureText: obscureText,
       validator: validator,
+      autofocus: autofocus ?? false,
+      focusNode: focusNode,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
