@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:spllive/screens/Normal%20Market%20List/normal_market_page.dart';
 
 import 'helper_files/constant_variables.dart';
 import 'localization/app_localization.dart';
@@ -39,7 +40,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           navigatorKey: navigatorKey,
           transitionDuration: const Duration(milliseconds: 500),
-          //  home: const DashBoardPage(),
           translations: AppLocalization(),
           locale: getLocale(),
           initialBinding: InitialBindings(),

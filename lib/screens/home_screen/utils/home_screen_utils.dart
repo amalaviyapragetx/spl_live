@@ -55,7 +55,7 @@ class HomeScreenUtils {
               spreadRadius: 1,
               color: AppColors.grey,
               blurRadius: 10,
-              offset: Offset(7, 4),
+              offset: const Offset(7, 4),
             ),
           ],
           border: Border.all(width: 0.6),
@@ -1103,7 +1103,13 @@ class HomeScreenUtils {
                             ),
                             child: Center(
                               child: Text(
-                                "${controller.starlineChartDate[i].time![j].result ?? "***-*"}",
+                                controller.starlineChartDate.length ==
+                                        controller
+                                            .starlineChartDate[i].time!.length
+                                    ? controller.starlineChartDate[i].time![j]
+                                            .result ??
+                                        "***-*"
+                                    : "***-*",
                                 textAlign: TextAlign.center,
                                 // style: CustomTextStyle.textGothamLight.copyWith(
                                 //   color: ColorConstant.textColorMain,

@@ -57,4 +57,10 @@ class AppRoutName {
 
   /// CheckWithDrawal History Page
   static String checkWithDrawalPage = "/check_withdrawal_page";
+
+  /// NormalMarketPage
+  static String normalMarketPage = "/normal_market_page";
+
+  /// NewGamemodePage
+  static String newGameModePage = "/new_gamemode_page";
 }

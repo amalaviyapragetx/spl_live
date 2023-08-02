@@ -12,7 +12,7 @@ class AppLifecycleController extends GetxController
   @override
   void onInit() {
     WidgetsBinding.instance.addObserver(this);
-    startTimer();
+    //  startTimer();
     super.onInit();
   }
 
@@ -32,7 +32,7 @@ class AppLifecycleController extends GetxController
     _isActive = false;
     _timer = Timer(const Duration(minutes: 3), () {
       if (!_isActive) {
-        Get.close(1); // Close the app entirely.
+        ///  Get.close(1); // Close the app entirely.
         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
       }
     });
@@ -40,11 +40,11 @@ class AppLifecycleController extends GetxController
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.inactive) {
-      resetTimer();
-    } else {
-      startTimer();
-      print("hello");
-    }
+    // if (state == AppLifecycleState.inactive) {
+    //   resetTimer();
+    // } else {
+    //   startTimer();
+    //   print("hello");
+    // }
   }
 }

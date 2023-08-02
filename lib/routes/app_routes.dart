@@ -4,6 +4,10 @@ import 'package:spllive/screens/More%20Details%20Screens/Change%20Mpin/binding/c
 import 'package:spllive/screens/More%20Details%20Screens/Notification%20Page/binding/notification_details_page_binding.dart';
 import 'package:spllive/screens/More%20Details%20Screens/myProfile/binding/myprofile_page_binding.dart';
 import 'package:spllive/screens/More%20Details%20Screens/myProfile/myprofile_page.dart';
+import 'package:spllive/screens/New%20GameModes/binding/new_gamemode_page_bindings.dart';
+import 'package:spllive/screens/New%20GameModes/new_gamemodes_page.dart';
+import 'package:spllive/screens/Normal%20Market%20List/binding/normal_market_page_binding.dart';
+import 'package:spllive/screens/Normal%20Market%20List/normal_market_page.dart';
 import 'package:spllive/screens/Sangam%20Page/binding/snagam_page_binding.dart';
 import 'package:spllive/screens/Sangam%20Page/controller/sangam_page_controller.dart';
 import 'package:spllive/screens/game_pages/game_pages.dart';
@@ -369,5 +373,19 @@ class AppRoutes {
       page: () => CheckWithdrawalPage(),
       bindings: [CheckWithdrawalPageBinding()],
     ),
+    GetPage(
+      name: AppRoutName.normalMarketPage,
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 300),
+      page: () => NormalMarketPage(),
+      bindings: [NormalMarketPageBinding()],
+    ),
+    GetPage(
+      name: AppRoutName.newGameModePage,
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 300),
+      page: () => NewGameModePage(),
+      bindings: [NewGamemodePageBindings()],
+    )
   ];
 }

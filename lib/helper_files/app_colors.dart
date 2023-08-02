@@ -22,4 +22,5 @@ class AppColors {
   static Color numberListgreen = const Color(0xff358138);
   static Color wpColor1 = const Color(0xffFFA71E);
   static Color wpColor2 = const Color(0xffD82700);
+  static Color textFieldFillColor = const Color(0xffF1F1F1);
 }
