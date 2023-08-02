@@ -91,11 +91,20 @@ class NewGameModePage extends StatelessWidget {
             ),
             verticalSpace,
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                spDpTp(AppColors.wpColor1, "SP", AppColors.white),
+                spDpTp(AppColors.wpColor1, "DP", AppColors.white),
+                spDpTp(AppColors.white, "TP", AppColors.grey)
+              ],
+            ),
+            Row(
               children: [
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: AutoTextFieldWithSuggetion(
+                      imagePath: "",
                       optionsBuilder: (p0) {
                         return Characters("");
                       },
@@ -111,6 +120,7 @@ class NewGameModePage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: AutoTextFieldWithSuggetion(
+                      imagePath: "",
                       optionsBuilder: (p0) {
                         return Characters("");
                       },
@@ -166,9 +176,21 @@ class NewGameModePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        nameColumn(titleText: "Single Ank", subText: "open"),
-                        nameColumn(titleText: "Ank", subText: "1"),
-                        nameColumn(titleText: "points", subText: "20"),
+                        nameColumn(
+                            subText: "",
+                            titleText: "open",
+                            textColor2: AppColors.black.withOpacity(0.5),
+                            textColor: AppColors.black),
+                        nameColumn(
+                            subText: "",
+                            titleText: "1",
+                            textColor2: AppColors.black.withOpacity(0.5),
+                            textColor: AppColors.black),
+                        nameColumn(
+                            subText: "",
+                            titleText: "20",
+                            textColor2: AppColors.black.withOpacity(0.5),
+                            textColor: AppColors.black),
                       ],
                     ),
                     Padding(
@@ -177,7 +199,7 @@ class NewGameModePage extends StatelessWidget {
                         onTap: () {},
                         child: Icon(
                           Icons.delete,
-                          color: AppColors.wpColor1,
+                          color: AppColors.redColor,
                         ),
                       ),
                     )
@@ -190,34 +212,43 @@ class NewGameModePage extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         width: size.width,
-        height: Dimensions.h55,
+        height: Dimensions.h45,
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            nameColumn(titleText: "Bids", subText: "0"),
-            nameColumn(titleText: "Bids", subText: "0"),
-            SizedBox(
-              width: 15,
-            ),
-            RoundedCornerButton(
-              text: "SAVE".tr.toUpperCase(),
-              color: AppColors.white,
-              borderColor: AppColors.white,
-              fontSize: Dimensions.h11,
-              fontWeight: FontWeight.w600,
-              fontColor: AppColors.black,
-              letterSpacing: 1,
-              borderRadius: Dimensions.r5,
-              borderWidth: 0.2,
-              textStyle: CustomTextStyle.textRobotoSansBold,
-              onTap: () {
-                // controller.coinsFocusNode.unfocus();
-                // controller.openFocusNode.requestFocus();
-                // controller.onTapOfAddBidButton();
-              },
-              height: Dimensions.h25,
-              width: Dimensions.w100,
+            nameColumn(
+                titleText: "Bids",
+                subText: "0",
+                textColor: AppColors.white,
+                textColor2: AppColors.white),
+            nameColumn(
+                titleText: "Bids",
+                subText: "0",
+                textColor: AppColors.white,
+                textColor2: AppColors.white),
+            const Expanded(child: SizedBox()),
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: RoundedCornerButton(
+                text: "SAVE".tr.toUpperCase(),
+                color: AppColors.white,
+                borderColor: AppColors.white,
+                fontSize: Dimensions.h11,
+                fontWeight: FontWeight.w600,
+                fontColor: AppColors.black,
+                letterSpacing: 1,
+                borderRadius: Dimensions.r5,
+                borderWidth: 0.2,
+                textStyle: CustomTextStyle.textRobotoSansBold,
+                onTap: () {
+                  // controller.coinsFocusNode.unfocus();
+                  // controller.openFocusNode.requestFocus();
+                  // controller.onTapOfAddBidButton();
+                },
+                height: Dimensions.h25,
+                width: Dimensions.w100,
+              ),
             ),
           ],
         ),
@@ -225,37 +256,73 @@ class NewGameModePage extends StatelessWidget {
     );
   }
 
-  Widget nameColumn({required String titleText, required String subText}) {
+  Widget spDpTp(Color containerColor, String text, Color textColor) {
+    return Container(
+      height: Dimensions.h20,
+      width: Dimensions.w70,
+      decoration: BoxDecoration(
+        color: containerColor,
+        border: Border.all(color: AppColors.grey),
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style:
+                CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor),
+          ),
+          Icon(
+            Icons.check_box,
+            color: textColor,
+            size: 15,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget nameColumn(
+      {required String? titleText,
+      required String subText,
+      required Color textColor,
+      required Color textColor2}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
+        vertical: 3.0,
       ),
-      child: Container(
+      child: SizedBox(
         // color: AppColors.balanceCoinsColor,
         width: Dimensions.w95,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                textAlign: TextAlign.center,
-                titleText,
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h13,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  subText,
-                  style: CustomTextStyle.textRobotoSansLight.copyWith(
-                    color: AppColors.black.withOpacity(0.5),
-                    fontSize: Dimensions.h13,
-                  ),
-                ),
-              )
+              titleText == ""
+                  ? Container()
+                  : Text(
+                      textAlign: TextAlign.center,
+                      titleText!,
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        color: textColor,
+                        fontSize: Dimensions.h13,
+                      ),
+                    ),
+              subText == ""
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        subText,
+                        style: CustomTextStyle.textRobotoSansLight.copyWith(
+                          color: textColor2,
+                          fontSize: Dimensions.h13,
+                        ),
+                      ),
+                    )
             ],
           ),
         ),

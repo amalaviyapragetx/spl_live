@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -27,13 +28,13 @@ class GamePageController extends GetxController {
   var biddingType = "".obs;
   var marketName = "".obs;
   var marketTime = "".obs;
-  RxString totalAmount = "00".obs;
+  RxString totalAmount = "0".obs;
   var marketId = 0;
   RxBool isBulkMode = false.obs;
   RxBool validCoinsEntered = false.obs;
   String addedNormalBidValue = "";
   RxInt panaControllerLength = 2.obs;
-
+  RxString totalBid = "0".obs;
   int selectedIndexOfDigitRow = 0;
 
   var argument = Get.arguments;
@@ -347,7 +348,8 @@ class GamePageController extends GetxController {
       digitList.clear();
       searchController.clear();
       coinController.clear();
-      totalAmount.value = "00";
+      totalAmount.value = "0";
+      totalBid.value == "0";
       getArguments();
     } else {
       AppUtils.showErrorSnackBar(
