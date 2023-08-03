@@ -16,13 +16,13 @@ class StarLineGameModesPage extends StatelessWidget {
   StarLineGameModesPage({super.key});
   var walletController = Get.put(WalletController());
   final controller = Get.put(StarLineGameModesPageController());
+  var verticalSpace = SizedBox(
+    height: Dimensions.h10,
+  );
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var verticalSpace = SizedBox(
-      height: Dimensions.h10,
-    );
 
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
@@ -79,11 +79,11 @@ class StarLineGameModesPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        textListWidget(
-                            text: controller.formattedDate,
-                            widget: const Icon(Icons.calendar_month),
-                            fontSize: Dimensions.h14),
-                        verticalSpace,
+                        // textListWidget(
+                        //     text: controller.formattedDate,
+                        //     widget: const Icon(Icons.calendar_month),
+                        //     fontSize: Dimensions.h14),
+                        // verticalSpace,
                         textListWidget(
                           text:
                               "Starline Market :- ${controller.marketData.value.time}"
@@ -326,6 +326,54 @@ class StarLineGameModesPage extends StatelessWidget {
               color: AppColors.appbarColor,
               fontSize: Dimensions.h15,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  gamelist(Size size) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          Get.toNamed(AppRoutName.newGameModePage);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 2,
+                blurRadius: 5,
+                color: AppColors.grey.withOpacity(0.5),
+                offset: const Offset(2, 2),
+              )
+            ],
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                backgroundColor: AppColors.wpColor1,
+                maxRadius: Dimensions.r35,
+              ),
+              verticalSpace,
+              SizedBox(
+                width: size.width - 5,
+                child: Center(
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      "Single Ank",
+                      style: CustomTextStyle.textRobotoSansBold
+                          .copyWith(fontSize: Dimensions.h15),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

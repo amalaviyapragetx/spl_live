@@ -15,7 +15,7 @@ import '../../../models/game_modes_api_response_model.dart';
 import '../../Local Storage.dart';
 
 class GamePageController extends GetxController {
-  // RxList<String> filteredItems = RxList<String>();
+  //RxList<String> filteredItems = RxList<String>();
   RxInt containerWidget = 0.obs;
   var coinController = TextEditingController();
   var searchController = TextEditingController();
@@ -24,7 +24,6 @@ class GamePageController extends GetxController {
   GameMode gameMode = GameMode();
   List<String> matches = <String>[].obs;
   bool enteredDigitsIsValidate = false;
-
   var biddingType = "".obs;
   var marketName = "".obs;
   var marketTime = "".obs;
@@ -97,7 +96,7 @@ class GamePageController extends GetxController {
     isBulkMode.value = argument['isBulkMode'];
     await loadJsonFile();
     switch (gameMode.name) {
-      case "Single Digit":
+      case "Single Ank Bulk":
         showNumbersLine.value = false;
         enteredDigitsIsValidate = true;
         panaControllerLength.value = 1;
@@ -107,7 +106,7 @@ class GamePageController extends GetxController {
         }
         digitList.value = singleAnkList;
         break;
-      case "Jodi Digit":
+      case "Jodi Bulk":
         showNumbersLine.value = false;
         suggestionList.value = jsonModel.jodi!;
         panaControllerLength.value = 2;
@@ -116,7 +115,7 @@ class GamePageController extends GetxController {
         }
         digitList.value = jodiList;
         break;
-      case "Single Pana":
+      case "Single Pana Bulk":
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
         panaControllerLength.value = 3;
@@ -126,7 +125,7 @@ class GamePageController extends GetxController {
         }
         digitList.value = singlePanaList;
         break;
-      case "Double Pana":
+      case "Double Pana Bulk":
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
         panaControllerLength.value = 3;

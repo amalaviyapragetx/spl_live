@@ -63,4 +63,7 @@ class AppRoutName {
 
   /// NewGamemodePage
   static String newGameModePage = "/new_gamemode_page";
+
+  /// oddEvenGamePage
+  static String newOddEvenPage = "/new_game_page_odd_even";
 }

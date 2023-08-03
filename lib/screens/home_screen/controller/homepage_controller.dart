@@ -393,10 +393,11 @@ class HomePageController extends GetxController {
       case 2:
         return SPLWallet();
       case 3:
-        return const MoreOptions();
+        return Container();
       case 4:
+        return const MoreOptions();
+      case 5:
         return WithdrawalPage();
-
       default:
         return SafeArea(
           child: SizedBox(

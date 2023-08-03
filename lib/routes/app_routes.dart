@@ -40,6 +40,8 @@ import '../screens/More Details Screens/Starline Terms Page/binding/starline_ter
 import '../screens/More Details Screens/Starline Terms Page/starline_terms_page.dart';
 import '../screens/More Details Screens/Withdrawal Page/binding/withdrawal_page_binding.dart';
 import '../screens/More Details Screens/Withdrawal Page/withdrawal_page.dart';
+import '../screens/Normal Game Pages/binding/normal_game_page_controller.dart';
+import '../screens/Normal Game Pages/normal_game_pages.dart';
 import '../screens/Reset Password Page/binding/reset_password_binding.dart';
 import '../screens/Reset Password Page/reset_password.dart';
 import '../screens/Sangam Page/sangampages.dart';
@@ -386,6 +388,13 @@ class AppRoutes {
       transitionDuration: const Duration(milliseconds: 300),
       page: () => NewGameModePage(),
       bindings: [NewGamemodePageBindings()],
+    ),
+    GetPage(
+      name: AppRoutName.newOddEvenPage,
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 300),
+      page: () => NormalGamePage(),
+      bindings: [NormalGamePageBindings()],
     )
   ];
 }

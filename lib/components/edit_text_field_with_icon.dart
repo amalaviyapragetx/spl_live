@@ -89,11 +89,10 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
               ),
           textAlign: textAlign ?? TextAlign.start,
           decoration: InputDecoration(
-            contentPadding: contentPadding == null
-                ? imagePath.isEmpty
+            contentPadding: contentPadding ??
+                (imagePath.isEmpty
                     ? EdgeInsets.symmetric(horizontal: Dimensions.w12)
-                    : EdgeInsets.zero
-                : contentPadding,
+                    : EdgeInsets.zero),
             focusColor: AppColors.appbarColor,
             filled: true,
             fillColor: AppColors.grey.withOpacity(0.2),

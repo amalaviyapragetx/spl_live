@@ -50,13 +50,17 @@ class AutoCompleteTextField extends StatelessWidget {
       ),
     );
     return Container(
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            offset: const Offset(2, 2),
-            blurRadius: 5,
-            spreadRadius: 0.2,
-            color: AppColors.grey)
-      ]),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(2, 2),
+              blurRadius: 5,
+              spreadRadius: 0.2,
+              color: AppColors.grey)
+        ],
+      ),
       height: height,
       width: width,
       child: RawAutocomplete(
@@ -68,12 +72,12 @@ class AutoCompleteTextField extends StatelessWidget {
           return TextFormField(
             textInputAction: TextInputAction.next,
             style: textStyle ??
-                CustomTextStyle.textPTsansMedium.copyWith(
-                  color: AppColors.appbarColor,
-                  fontWeight: FontWeight.normal,
+                CustomTextStyle.textRobotoSansMedium.copyWith(
+                  color: AppColors.black.withOpacity(0.7),
+                  fontWeight: FontWeight.w500,
                   fontSize: Dimensions.h16,
                 ),
-            cursorColor: AppColors.appbarColor,
+            cursorColor: AppColors.black,
             controller: textEditingController,
             focusNode: focusNode,
             autofocus: autoFocus!,
@@ -92,10 +96,10 @@ class AutoCompleteTextField extends StatelessWidget {
             },
             textAlign: TextAlign.center,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(right: Dimensions.w40),
-              focusColor: AppColors.black,
+              contentPadding: EdgeInsets.only(right: Dimensions.w30),
+              focusColor: AppColors.white,
               filled: true,
-              fillColor: AppColors.white,
+              fillColor: AppColors.grey.withOpacity(0.2),
               counterText: "",
               focusedBorder: border,
               border: border,
@@ -105,8 +109,8 @@ class AutoCompleteTextField extends StatelessWidget {
               errorMaxLines: 0,
               hintText: hintText,
               hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                color: hintTextColor ?? AppColors.grey,
-                fontSize: Dimensions.h16,
+                color: hintTextColor ?? AppColors.black.withOpacity(0.7),
+                fontSize: Dimensions.h15,
                 fontWeight: FontWeight.bold,
               ),
             ),

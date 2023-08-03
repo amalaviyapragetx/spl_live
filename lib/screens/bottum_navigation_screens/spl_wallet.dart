@@ -95,8 +95,8 @@ class SPLWallet extends StatelessWidget {
                       Expanded(
                         child: ButtonWidget(
                           onTap: () {
-                            homeController.pageWidget.value = 4;
-                            homeController.currentIndex.value = 4;
+                            homeController.pageWidget.value = 5;
+                            homeController.currentIndex.value = 5;
                           },
                           text: "WITHDRAWAL_TXT".tr,
                           buttonColor: AppColors.buttonColorOrange,

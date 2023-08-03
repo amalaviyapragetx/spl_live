@@ -8,7 +8,9 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import '../../Custom Controllers/wallet_controller.dart';
+import '../../components/edit_text_field_with_icon.dart';
 import '../../components/new_auto_complete_text_field_with_suggetion.dart';
+import '../../components/new_edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import 'controller/game_page_controller.dart';
 
@@ -73,17 +75,19 @@ class SingleAnkPage extends StatelessWidget {
                         height: Dimensions.h10,
                       ),
                       Row(
-                        mainAxisAlignment:
-                            controller.gameMode.name!.toUpperCase() ==
-                                    "JODI DIGIT"
-                                ? MainAxisAlignment.center
-                                : MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: controller.gameMode.name!
+                                .toUpperCase()
+                                .contains("JODI")
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.gameMode.name!.toUpperCase() ==
-                                    "JODI DIGIT"
-                                ? " ${controller.gameMode.name}".toUpperCase()
-                                : " ${controller.gameMode.name}".toUpperCase(),
+                            "${controller.gameMode.name}".toUpperCase(),
+                            // controller.gameMode.name!
+                            //         .toUpperCase()
+                            //         .contains("JODI")
+                            //     ? " ${controller.gameMode.name}".toUpperCase(),
+                            // : " ${controller.gameMode.name}".toUpperCase(),
                             style: CustomTextStyle.textRobotoSansBold.copyWith(
                                 color: AppColors.appbarColor,
                                 fontSize: Dimensions.h18),
@@ -93,8 +97,9 @@ class SingleAnkPage extends StatelessWidget {
                             //     fontSize: Dimensions.h18),
                           ),
                           Text(
-                            controller.gameMode.name!.toUpperCase() ==
-                                    "JODI DIGIT"
+                            controller.gameMode.name!
+                                    .toUpperCase()
+                                    .contains("JODI")
                                 ? ""
                                 : controller.biddingType.value.toUpperCase(),
                             style: CustomTextStyle.textRobotoSansBold.copyWith(
@@ -112,73 +117,238 @@ class SingleAnkPage extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 5),
-                              child: AutoTextFieldWithSuggetion(
-                                imagePath: "",
-                                optionsBuilder: (p0) {
-                                  return Characters("");
-                                },
-                                onChanged: (val) {
-                                  if (val != null) {
-                                    print("111111111111");
-                                    if (val.characters.characterAt(0) ==
-                                            Characters("0") &&
-                                        val.length > 1) {
-                                      print("22222222222222");
-                                      // we need to remove the first char
-                                      controller.coinController.text =
-                                          val.substring(1);
-                                      // we need to move the cursor
-                                      controller.coinController.selection =
-                                          TextSelection.collapsed(
-                                        offset: controller
-                                            .coinController.text.length,
-                                      );
-                                    } else if (int.parse(val) > 10000) {
-                                      AppUtils.showErrorSnackBar(
-                                          bodyText:
-                                              "You can not add more than 10000 points");
-                                    } else {
-                                      if (int.parse(val) > 0) {
-                                        print(
-                                            "333333333333333   ${val.length}");
-                                        controller.validCoinsEntered.value =
-                                            true;
-                                        controller.isEnable.value = true;
-                                      } else {
-                                        print(
-                                            "444444444444444444   ${val.length}");
-                                        controller.ondebounce();
+                          // Expanded(
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.symmetric(
+                          //         vertical: 8.0, horizontal: 5),
+                          //     child: AutoTextFieldWithSuggetion(
+                          //       imagePath: "",
+                          //       optionsBuilder: (p0) {
+                          //         return Characters("");
+                          //       },
+                          //       onChanged: (val) {
+                          //         if (val != null) {
+                          //           print("111111111111");
+                          //           if (val.characters.characterAt(0) ==
+                          //                   Characters("0") &&
+                          //               val.length > 1) {
+                          //             print("22222222222222");
+                          //             // we need to remove the first char
+                          //             controller.coinController.text =
+                          //                 val.substring(1);
+                          //             // we need to move the cursor
+                          //             controller.coinController.selection =
+                          //                 TextSelection.collapsed(
+                          //               offset: controller
+                          //                   .coinController.text.length,
+                          //             );
+                          //           } else if (int.parse(val) > 10000) {
+                          //             AppUtils.showErrorSnackBar(
+                          //                 bodyText:
+                          //                     "You can not add more than 10000 points");
+                          //           } else {
+                          //             if (int.parse(val) > 0) {
+                          //               print(
+                          //                   "333333333333333   ${val.length}");
+                          //               controller.validCoinsEntered.value =
+                          //                   true;
+                          //               controller.isEnable.value = true;
+                          //             } else {
+                          //               print(
+                          //                   "444444444444444444   ${val.length}");
+                          //               controller.ondebounce();
 
-                                        controller.validCoinsEntered.value =
-                                            false;
-                                        controller.isEnable.value = false;
+                          //               controller.validCoinsEntered.value =
+                          //                   false;
+                          //               controller.isEnable.value = false;
+                          //             }
+                          //           }
+                          //         }
+                          //       },
+                          //       height: Dimensions.h35,
+                          //       controller: controller.coinController,
+                          //       hintText: "Enter Single Ank",
+                          //       containerWidth: double.infinity,
+                          //       inputFormatters: [
+                          //         FilteringTextInputFormatter.digitsOnly
+                          //       ],
+                          //       keyboardType: TextInputType.number,
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(8.0),
+                          //     child: AutoTextFieldWithSuggetion(
+                          //       imagePath: ConstantImage.serchZoomIcon,
+                          //       optionsBuilder: (p0) {
+                          //         return Characters("");
+                          //       },
+                          //       onChanged: (value) {
+                          //         if (value == '') {
+                          //           controller.matches.clear();
+                          //           return const Iterable<String>.empty();
+                          //         } else {
+                          //           controller.matches.clear();
+                          //           controller.matches
+                          //               .addAll(controller.suggestionList);
+                          //           controller.matches.retainWhere(
+                          //             (s) {
+                          //               return s.toLowerCase().contains(
+                          //                     value!.toLowerCase(),
+                          //                   );
+                          //             },
+                          //           );
+                          //           for (var i = 0;
+                          //               i < controller.matches.length;
+                          //               i++) {
+                          //             print(controller.matches[i]);
+                          //           }
+                          //         }
+                          //       },
+                          //       height: Dimensions.h35,
+                          //       controller: controller.searchController,
+                          //       hintText: "SEARCH_TEXT".tr,
+                          //       containerWidth: double.infinity,
+                          //       inputFormatters: [
+                          //         FilteringTextInputFormatter.digitsOnly
+                          //       ],
+                          //       keyboardType: TextInputType.number,
+                          //     ),
+                          //   ),
+                          // ),
+                          Expanded(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(Dimensions.r10)),
+                                color: AppColors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 4),
+                                    blurRadius: 3,
+                                    spreadRadius: 0.2,
+                                    color: AppColors.grey.withOpacity(0.7),
+                                  ),
+                                ],
+                              ),
+                              child: RoundedCornerEditTextWithIcon(
+                                  tapTextStyle: AppColors.appbarColor,
+                                  hintTextColor:
+                                      AppColors.appbarColor.withOpacity(0.5),
+                                  width: size.width / 2,
+                                  textAlign: TextAlign.center,
+                                  controller: controller.coinController,
+                                  textStyle:
+                                      CustomTextStyle.textPTsansMedium.copyWith(
+                                    color: AppColors.black.withOpacity(0.8),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Dimensions.h15,
+                                  ),
+                                  hintTextStyle: CustomTextStyle
+                                      .textRobotoSansMedium
+                                      .copyWith(
+                                    color: AppColors.black.withOpacity(0.5),
+                                    fontSize: Dimensions.h15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  formatter: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  // onEditingComplete: () {
+                                  //   if (controller.coinController.text.length <
+                                  //       2) {
+                                  //
+                                  //   }
+                                  // },
+                                  onChanged: (val) {
+                                    if (val != null) {
+                                      print("111111111111");
+                                      if (val.characters.characterAt(0) ==
+                                          Characters("0")) {
+                                        print("22222222222222");
+                                        // we need to remove the first char
+                                        controller.coinController.text =
+                                            val.substring(1);
+                                        // we need to move the cursor
+                                        controller.coinController.selection =
+                                            TextSelection.collapsed(
+                                          offset: controller
+                                              .coinController.text.length,
+                                        );
+                                      } else if (int.parse(val) > 10000) {
+                                        AppUtils.showErrorSnackBar(
+                                            bodyText:
+                                                "You can not add more than 10000 points");
+                                      } else {
+                                        if (int.parse(val) >= 1) {
+                                          print(
+                                              "333333333333333   ${val.length}");
+                                          controller.validCoinsEntered.value =
+                                              true;
+                                          controller.isEnable.value = true;
+                                        } else {
+                                          print(
+                                              "444444444444444444   ${val.length}");
+                                          controller.ondebounce();
+
+                                          controller.validCoinsEntered.value =
+                                              false;
+                                          controller.isEnable.value = false;
+                                        }
                                       }
                                     }
-                                  }
-                                },
-                                height: Dimensions.h35,
-                                controller: controller.coinController,
-                                hintText: "Enter Single Ank",
-                                containerWidth: double.infinity,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                keyboardType: TextInputType.number,
-                              ),
+                                  },
+                                  maxLength: 5,
+                                  hintText: "COINS".tr,
+                                  contentPadding:
+                                      const EdgeInsets.only(right: 40),
+                                  imagePath: "",
+                                  containerBackColor: AppColors.black,
+                                  iconColor: AppColors.white,
+                                  height: Dimensions.h35,
+                                  keyboardType: TextInputType.number),
                             ),
                           ),
+                          SizedBox(
+                            width: Dimensions.w10,
+                          ),
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: AutoTextFieldWithSuggetion(
-                                imagePath: ConstantImage.serchZoomIcon,
-                                optionsBuilder: (p0) {
-                                  return Characters("");
-                                },
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(Dimensions.r10)),
+                                color: AppColors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 4),
+                                    blurRadius: 3,
+                                    spreadRadius: 0.2,
+                                    color: AppColors.grey.withOpacity(0.7),
+                                  ),
+                                ],
+                              ),
+                              child: RoundedCornerEditTextWithIcon2(
+                                formatter: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                tapTextStyle: AppColors.black,
+                                hintTextColor: AppColors.black.withOpacity(0.5),
+                                //textAlign: TextAlign.center,
+                                hintTextStyle: CustomTextStyle
+                                    .textRobotoSansMedium
+                                    .copyWith(
+                                  color: AppColors.black.withOpacity(0.5),
+                                  fontSize: Dimensions.h15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textStyle: CustomTextStyle.textRobotoSansMedium
+                                    .copyWith(
+                                  color: AppColors.black.withOpacity(0.8),
+                                  fontSize: Dimensions.h15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                width: size.width / 2,
                                 onChanged: (value) {
                                   if (value == '') {
                                     controller.matches.clear();
@@ -201,57 +371,15 @@ class SingleAnkPage extends StatelessWidget {
                                     }
                                   }
                                 },
-                                height: Dimensions.h35,
                                 controller: controller.searchController,
                                 hintText: "SEARCH_TEXT".tr,
-                                containerWidth: double.infinity,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
+                                imagePath: ConstantImage.serchZoomIcon,
+                                containerBackColor: AppColors.transparent,
+                                height: Dimensions.h35,
                                 keyboardType: TextInputType.number,
                               ),
                             ),
                           ),
-                          // Expanded(
-                          //   child: RoundedCornerEditTextWithIcon(
-                          //     formatter: [
-                          //       FilteringTextInputFormatter.digitsOnly
-                          //     ],
-                          //     tapTextStyle: AppColors.black,
-                          //     hintTextColor:
-                          //         AppColors.appbarColor.withOpacity(0.5),
-                          //     //textAlign: TextAlign.center,
-                          //     width: size.width / 2,
-                          //     onChanged: (value) {
-                          //       if (value == '') {
-                          //         controller.matches.clear();
-                          //         return const Iterable<String>.empty();
-                          //       } else {
-                          //         controller.matches.clear();
-                          //         controller.matches
-                          //             .addAll(controller.suggestionList);
-                          //         controller.matches.retainWhere(
-                          //           (s) {
-                          //             return s.toLowerCase().contains(
-                          //                   value!.toLowerCase(),
-                          //                 );
-                          //           },
-                          //         );
-                          //         for (var i = 0;
-                          //             i < controller.matches.length;
-                          //             i++) {
-                          //           print(controller.matches[i]);
-                          //         }
-                          //       }
-                          //     },
-                          //     controller: controller.searchController,
-                          //     hintText: "SEARCH_TEXT".tr,
-                          //     imagePath: ConstantImage.serchZoomIcon,
-                          //     containerBackColor: AppColors.transparent,
-                          //     height: Dimensions.h40,
-                          //     keyboardType: TextInputType.number,
-                          //   ),
-                          // ),
                         ],
                       ),
                       // Row(

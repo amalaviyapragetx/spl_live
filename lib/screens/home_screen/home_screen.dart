@@ -33,14 +33,18 @@ class DashBoardPage extends StatelessWidget {
             controller.currentIndex.value = 0;
           },
           onTapMore: () {
-            controller.pageWidget.value = 3;
+            controller.pageWidget.value = 4;
             //    appPosition = controller.pageWidget.value;
-            controller.currentIndex.value = 3;
+            controller.currentIndex.value = 4;
           },
           onTapWallet: () {
             controller.pageWidget.value = 2;
             controller.currentIndex.value = 2;
             //   appPosition = controller.pageWidget.value;
+          },
+          onTapPassbook: () {
+            controller.pageWidget.value = 3;
+            controller.currentIndex.value = 3;
           },
         ),
       ),
