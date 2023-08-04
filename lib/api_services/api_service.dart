@@ -817,4 +817,26 @@ class ApiService extends GetConnect {
       return response.body;
     }
   }
+
+  Future<dynamic> newGameModeApi(body, url) async {
+    AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await post(
+      url,
+      body,
+      //  headers: headersWithToken,
+    );
+
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      print(response.status.code.toString() + response.toString());
+      return response.body;
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
 }

@@ -314,7 +314,7 @@ class SangamPages extends StatelessWidget {
                             text: "PLUSADD".tr,
                             color: AppColors.appbarColor,
                             borderColor: AppColors.appbarColor,
-                            fontSize: Dimensions.h12,
+                            fontSize: Dimensions.h13,
                             fontWeight: FontWeight.w600,
                             fontColor: AppColors.white,
                             letterSpacing: 1,
@@ -336,7 +336,6 @@ class SangamPages extends StatelessWidget {
                 ),
                 verticalSpace,
                 verticalSpace,
-
                 verticalSpace,
                 // listview(),
                 bidList(size)

@@ -106,7 +106,7 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
             hintText: hintText,
             hintStyle: hintTextStyle ??
                 CustomTextStyle.textRobotoSansLight.copyWith(
-                  color: hintTextColor ?? AppColors.grey,
+                  color: hintTextColor ?? AppColors.black.withOpacity(0.65),
                   fontSize: Dimensions.h15,
                   // fontWeight: FontWeight.bold,
                 ),

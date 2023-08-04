@@ -53,4 +53,12 @@ class ApiUtils {
   static String webStarLinechar = "$baseURL/web/starlineChart";
   static String dailyStarlineMarketBidHistory =
       "$baseURL/bid/getAllBidByDailyStarlineMarketId";
+  static String spdptp = "$baseURL/gameMode/getSPDPTPPana";
+  static String panelGroup = "$baseURL/gameMode/getPanelGroupPana";
+  static String spMotor = "$baseURL/gameMode/getSPMotorPana";
+  static String dpMotor = "$baseURL/gameMode/getDPMotorPana";
+  static String towDigitJodi = "$baseURL/gameMode/getTwoDigitPanelPana";
+  static String groupJody = "$baseURL/gameMode/groupJodi";
+  static String choicePanaSPDP = "$baseURL/gameMode/getChoicePanaSPDPTP";
+  static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
 }

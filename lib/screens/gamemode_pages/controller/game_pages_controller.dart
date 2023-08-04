@@ -17,6 +17,7 @@ class GameModePagesController extends GetxController {
   // RxString selectedRadioValue = 'open'.obs;
   RxBool containerChange = false.obs;
   var arguments = Get.arguments;
+  var gameModeList = [];
   var marketValue = MarketData().obs;
   var openBiddingOpen = true.obs;
   // var openCloseRadioValue = 0.obs;
@@ -100,9 +101,12 @@ class GameModePagesController extends GetxController {
             marketID: marketValue.value.id ?? 0)
         .then((value) async {
       debugPrint("Get Game modes Api Response :- $value");
+
       if (value['status']) {
         GameModesApiResponseModel gameModeModel =
             GameModesApiResponseModel.fromJson(value);
+        gameModeList.add(gameModeModel);
+        print("Game modes Api Response $gameModeList ");
         if (gameModeModel.data != null) {
           openBiddingOpen.value = gameModeModel.data!.isBidOpenForOpen ?? false;
           closeBiddingOpen.value =
@@ -123,6 +127,7 @@ class GameModePagesController extends GetxController {
       Get.toNamed(AppRoutName.sangamPages, arguments: {
         "gameMode": gameModesList[index],
         "marketData": marketValue.value,
+        "gameModeList": gameModeList,
       });
       print(gameModesList[index].name.toString());
     } else if (gameModesList[index].name!.contains("Bulk") ||
@@ -136,8 +141,23 @@ class GameModePagesController extends GetxController {
             : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": true,
+        "gameModeList": gameModeList,
       });
       print(gameModesList[index].name.toString());
+    } else if (gameModesList[index].name!.contains("Choice") ||
+        gameModesList[index].name!.contains("Digits Based Jodi") ||
+        gameModesList[index].name!.contains("Odd Even")) {
+      Get.toNamed(AppRoutName.newOddEvenPage, arguments: {
+        "gameMode": gameModesList[index],
+        "marketName": marketValue.value.market ?? "",
+        "marketId": marketValue.value.id ?? "",
+        "time": openCloseValue.value == "OPENBID".tr
+            ? marketValue.value.openTime ?? ""
+            : marketValue.value.closeTime ?? "",
+        "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
+        "isBulkMode": false,
+        "gameModeList": gameModeList,
+      });
     } else {
       Get.toNamed(AppRoutName.newGameModePage, arguments: {
         "gameMode": gameModesList[index],
@@ -148,6 +168,7 @@ class GameModePagesController extends GetxController {
             : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": false,
+        "gameModeList": gameModeList,
       });
     }
   }

@@ -271,7 +271,7 @@ class GameModePage extends StatelessWidget {
                   child: Text(
                     text,
                     style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(color: textColor, fontSize: Dimensions.h11),
+                        .copyWith(color: textColor, fontSize: Dimensions.h10),
                   ),
                 ),
               ),
@@ -345,18 +345,21 @@ Widget cardWidget(GameModePagesController controller, Size size) {
                     //     maxRadius: Dimensions.r35,
                     //     backgroundImage:),
                     SizedBox(
-                      height: Dimensions.h15,
+                      height: Dimensions.h17,
                     ),
-                    SizedBox(
-                      width: size.width - 5,
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            controller.gameModesList.elementAt(index).name ??
-                                "",
-                            style: CustomTextStyle.textRobotoSansBold
-                                .copyWith(fontSize: Dimensions.h15),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: SizedBox(
+                        width: size.width,
+                        child: Center(
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              controller.gameModesList.elementAt(index).name ??
+                                  "",
+                              style: CustomTextStyle.textRobotoSansBold
+                                  .copyWith(fontSize: Dimensions.h14),
+                            ),
                           ),
                         ),
                       ),

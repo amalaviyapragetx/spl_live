@@ -249,7 +249,8 @@ class GamePageController extends GetxController {
     digitRow[index].isSelected = true;
     digitRow.refresh();
 
-    if (gameMode.name == "Single Pana") {
+    if (gameMode.name!.toUpperCase() == "SINGLE PANA BULK") {
+      print(gameMode.name);
       panaSwitchCase(jsonModel.singlePana!.single, index);
     } else {
       panaSwitchCase(jsonModel.doublePana!.single, index);
@@ -357,76 +358,3 @@ class GamePageController extends GetxController {
     }
   }
 }
-
-// void onTapOfDigitTile(int index) {
-//   if (coinController.text.isNotEmpty) {
-//     if (isBulkMode.value) {
-//       if (!validCoinsEntered.value) {
-//         AppUtils.showErrorSnackBar(bodyText: "Please enter valid coins");
-//         return;
-//       }
-//       int tempCoins = int.parse("${digitList[index].coins}");
-//       digitList[index].coins = tempCoins + int.parse(coinController.text);
-//       digitList[index].isSelected = true;
-//       digitList.refresh();
-//       if (selectedBidsList.isNotEmpty) {
-//         var tempBid = selectedBidsList
-//             .where((element) => element.bidNo == digitList[index].value)
-//             .toList();
-//         if (tempBid.isNotEmpty) {
-//           for (var element in selectedBidsList) {
-//             if (element.bidNo == digitList[index].value) {
-//               element.coins = digitList[index].coins;
-//             }
-//           }
-//         } else {
-//           selectedBidsList.add(
-//             Bids(
-//               bidNo: digitList[index].value,
-//               coins: int.parse(coinController.text),
-//               gameId: gameMode.id,
-//               gameModeName: gameMode.name,
-//               remarks:
-//                   "You invested At ${marketName.value} on ${digitList[index].value} (${gameMode.name})",
-//             ),
-//           );
-//         }
-//       } else {
-//         selectedBidsList.add(
-//           Bids(
-//             bidNo: digitList[index].value,
-//             coins: int.parse(coinController.text),
-//             gameId: gameMode.id,
-//             gameModeName: gameMode.name,
-//             remarks:
-//                 "You invested At ${marketName.value} on ${digitList[index].value} (${gameMode.name})",
-//           ),
-//         );
-//       }
-//     } else {
-//       digitList[index].isSelected = digitList[index].isSelected! ? false : true;
-//       digitList.refresh();
-//       if (digitList[index].isSelected == true) {
-//         selectedBidsList.add(
-//           Bids(
-//             bidNo: digitList[index].value,
-//             coins: int.parse(coinController.text),
-//             gameId: gameMode.id,
-//             gameModeName: gameMode.name,
-//             remarks:
-//                 "You invested At ${marketName.value} on ${digitList[index].value} (${gameMode.name})",
-//           ),
-//         );
-//       } else {
-//         selectedBidsList
-//             .removeWhere((element) => element.bidNo == digitList[index].value);
-//       }
-//     }
-
-//     _calculateTotalAmount();
-//   } else {
-//     AppUtils.showErrorSnackBar(bodyText: "Please enter coins!");
-//   }
-// }
-
-// }

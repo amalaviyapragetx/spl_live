@@ -20,7 +20,7 @@ class GameModesApiResponseModel {
     }
     return data;
   }
-}
+} 
 
 class GameModesData {
   bool? isBidOpenForOpen;

@@ -55,6 +55,7 @@ class AutoTextFieldWithSuggetion extends StatelessWidget {
     );
     return Container(
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, 4),

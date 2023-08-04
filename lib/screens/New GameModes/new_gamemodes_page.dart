@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/new_auto_complete_text_field_with_suggetion.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
+import 'package:spllive/models/game_modes_api_response_model.dart';
+import 'package:spllive/models/starline_chart_model.dart';
 import 'package:spllive/screens/New%20GameModes/controller/new_gamemode_page_controller.dart';
 import '../../Custom Controllers/wallet_controller.dart';
 import '../../components/auto_complete_text_field_with_suggestion.dart';
@@ -83,7 +87,7 @@ class NewGameModePage extends StatelessWidget {
                     controller.gameMode.value.name!.toUpperCase(),
                     style: CustomTextStyle.textRobotoSansBold.copyWith(
                       color: AppColors.appbarColor,
-                      fontSize: Dimensions.h20,
+                      fontSize: Dimensions.h18,
                     ),
                   ),
                   Text(
@@ -102,13 +106,66 @@ class NewGameModePage extends StatelessWidget {
             ),
             verticalSpace,
             controller.gameMode.value.name!.toUpperCase().contains("SPDP")
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      spDpTp(AppColors.wpColor1, "SP", AppColors.white),
-                      spDpTp(AppColors.wpColor1, "DP", AppColors.white),
-                      spDpTp(AppColors.white, "TP", AppColors.grey)
-                    ],
+                ? Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        spDpTp(
+                          controller.spValue1.value
+                              ? AppColors.wpColor1
+                              : AppColors.white,
+                          controller.spValue,
+                          controller.spValue1.value
+                              ? AppColors.white
+                              : AppColors.grey,
+                          onTap: () {
+                            controller.spValue1.value =
+                                !controller.spValue1.value;
+                            if (controller.spValue1.value) {
+                              controller.selectedValues.add("SP");
+                            } else {
+                              controller.selectedValues.remove("SP");
+                            }
+                          },
+                        ),
+                        spDpTp(
+                          controller.dpValue2.value
+                              ? AppColors.wpColor1
+                              : AppColors.white,
+                          controller.dpValue,
+                          controller.dpValue2.value
+                              ? AppColors.white
+                              : AppColors.grey,
+                          onTap: () {
+                            controller.dpValue2.value =
+                                !controller.dpValue2.value;
+                            if (controller.dpValue2.value) {
+                              controller.selectedValues.add("DP");
+                            } else {
+                              controller.selectedValues.remove("DP");
+                            }
+                          },
+                        ),
+                        spDpTp(
+                          controller.tpValue3.value
+                              ? AppColors.wpColor1
+                              : AppColors.white,
+                          controller.tpValue,
+                          controller.tpValue3.value
+                              ? AppColors.white
+                              : AppColors.grey,
+                          onTap: () {
+                            controller.tpValue3.value =
+                                !controller.tpValue3.value;
+                            if (controller.dpValue2.value) {
+                              controller.selectedValues.add("TP");
+                            } else {
+                              controller.selectedValues.remove("TP");
+                            }
+                          },
+                        )
+                      ],
+                    ),
                   )
                 : Container(),
             controller.gameMode.value.name!.toUpperCase().contains("SPDP")
@@ -119,117 +176,39 @@ class NewGameModePage extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(Dimensions.r10)),
-                        color: AppColors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 4),
-                            blurRadius: 3,
-                            spreadRadius: 0.2,
-                            color: AppColors.grey.withOpacity(0.7),
-                          ),
-                        ],
-                      ),
-                      child: AutoCompleteTextField(
-                        controller: controller.autoCompleteFieldController,
-                        isBulkMode: false,
-                        autoFocus: true,
-                        height: Dimensions.w35,
-                        width: Dimensions.w200,
-                        suggestionWidth: Dimensions.w200,
-                        hintText:
-                            "${"ENTER".tr} ${controller.gameMode.value.name}",
-                        focusNode: controller.focusNode,
-                        maxLength: controller.panaControllerLength.value,
-                        formatter: [FilteringTextInputFormatter.digitsOnly],
-                        keyboardType: TextInputType.number,
-                        validateValue: (validate, value) {
-                          validate = false;
-                          controller.validateEnteredDigit(false, value);
-                        },
-                        optionsBuilder: (TextEditingValue textEditingValue) {
-                          // if (textEditingValue.text == '') {
-                          //   return const Iterable<String>.empty();
-                          // }
-                          // } else {
-                          //   List<String> matches = <String>[];
-                          //   // matches.addAll(controller.suggestionList);
-                          //   matches.retainWhere((s) {
-                          //     return s.toLowerCase().contains(
-                          //           textEditingValue.text.toLowerCase(),
-                          //         );
-                          //   });
-                          return [];
-                          // }
-                        },
-                      ),
-                      //   child: RoundedCornerEditTextWithIcon(
-                      //       tapTextStyle: AppColors.appbarColor,
-                      //       hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                      //       width: size.width / 2,
-                      //       textAlign: TextAlign.center,
-                      //       controller: controller.digitController,
-                      //       textStyle: CustomTextStyle.textPTsansMedium.copyWith(
-                      //         color: AppColors.black.withOpacity(0.8),
-                      //         fontWeight: FontWeight.bold,
-                      //         fontSize: Dimensions.h15,
-                      //       ),
-                      //       hintTextStyle:
-                      //           CustomTextStyle.textRobotoSansMedium.copyWith(
-                      //         color: AppColors.black.withOpacity(0.5),
-                      //         fontSize: Dimensions.h15,
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //       formatter: [FilteringTextInputFormatter.digitsOnly],
-                      //       // onEditingComplete: () {
-                      //       //   if (controller.coinController.text.length <
-                      //       //       2) {
-                      //       //
-                      //       //   }
-                      //       // },
-                      //       onChanged: (val) {
-                      //         // if (val != null) {
-                      //         //   print("111111111111");
-                      //         //   if (val.characters.characterAt(0) ==
-                      //         //       Characters("0")) {
-                      //         //     print("22222222222222");
-                      //         //     // we need to remove the first char
-                      //         //     controller.coinController.text = val.substring(1);
-                      //         //     // we need to move the cursor
-                      //         //     controller.coinController.selection =
-                      //         //         TextSelection.collapsed(
-                      //         //       offset: controller.coinController.text.length,
-                      //         //     );
-                      //         //   } else if (int.parse(val) > 10000) {
-                      //         //     AppUtils.showErrorSnackBar(
-                      //         //         bodyText:
-                      //         //             "You can not add more than 10000 points");
-                      //         //   } else {
-                      //         //     if (int.parse(val) >= 1) {
-                      //         //       print("333333333333333   ${val.length}");
-                      //         //       controller.validCoinsEntered.value = true;
-                      //         //       controller.isEnable.value = true;
-                      //         //     } else {
-                      //         //       print("444444444444444444   ${val.length}");
-                      //         //       controller.ondebounce();
-                      //         //       controller.validCoinsEntered.value = false;
-                      //         //       controller.isEnable.value = false;
-                      //         //     }
-                      //         //   }
-                      //         // }
-                      //       },
-                      //       maxLength: 5,
-                      //       hintText:
-                      //           "${"ENTER".tr} ${controller.gameMode.value.name}",
-                      //       contentPadding: const EdgeInsets.only(right: 40),
-                      //       imagePath: "",
-                      //       containerBackColor: AppColors.black,
-                      //       iconColor: AppColors.white,
-                      //       height: Dimensions.h35,
-                      //       keyboardType: TextInputType.number),
+                    child: AutoCompleteTextField(
+                      controller: controller.autoCompleteFieldController,
+                      isBulkMode: false,
+                      autoFocus: true,
+                      height: Dimensions.w37,
+                      width: Dimensions.w200,
+                      suggestionWidth: Dimensions.w200,
+                      hintTextColor: AppColors.black.withOpacity(0.65),
+                      hintText:
+                          "${"ENTER".tr} ${controller.gameMode.value.name}",
+                      focusNode: controller.focusNode,
+                      maxLength: controller.panaControllerLength.value,
+                      formatter: [FilteringTextInputFormatter.digitsOnly],
+                      keyboardType: TextInputType.number,
+                      validateValue: (validate, value) {
+                        validate = false;
+                        controller.validateEnteredDigit(false, value);
+                      },
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        // if (textEditingValue.text == '') {
+                        //   return const Iterable<String>.empty();
+                        // }
+                        // } else {
+                        //   List<String> matches = <String>[];
+                        //   // matches.addAll(controller.suggestionList);
+                        //   matches.retainWhere((s) {
+                        //     return s.toLowerCase().contains(
+                        //           textEditingValue.text.toLowerCase(),
+                        //         );
+                        //   });
+                        return [];
+                        // }
+                      },
                     ),
                   ),
                   SizedBox(
@@ -251,70 +230,70 @@ class NewGameModePage extends StatelessWidget {
                         ],
                       ),
                       child: RoundedCornerEditTextWithIcon(
-                          tapTextStyle: AppColors.appbarColor,
-                          hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                          width: size.width / 2,
-                          textAlign: TextAlign.center,
-                          controller: controller.coinController,
-                          textStyle: CustomTextStyle.textPTsansMedium.copyWith(
-                            color: AppColors.black.withOpacity(0.7),
-                            fontWeight: FontWeight.bold,
-                            fontSize: Dimensions.h15,
-                          ),
-                          hintTextStyle:
-                              CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.black.withOpacity(0.7),
-                            fontSize: Dimensions.h15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          formatter: [FilteringTextInputFormatter.digitsOnly],
-                          // onEditingComplete: () {
-                          //   if (controller.coinController.text.length <
-                          //       2) {
-                          //
-                          //   }
-                          // },
-                          onChanged: (val) {
-                            if (val != null) {
-                              print("111111111111");
-                              if (val.characters.characterAt(0) ==
-                                  Characters("0")) {
-                                print("22222222222222");
-                                // we need to remove the first char
-                                controller.coinController.text =
-                                    val.substring(1);
-                                // we need to move the cursor
-                                controller.coinController.selection =
-                                    TextSelection.collapsed(
-                                  offset: controller.coinController.text.length,
-                                );
-                              } else if (int.parse(val) > 10000) {
-                                AppUtils.showErrorSnackBar(
-                                    bodyText:
-                                        "You can not add more than 10000 points");
-                              } else {
-                                // if (int.parse(val) >= 1) {
-                                //   print("333333333333333   ${val.length}");
-                                //   // controller.validCoinsEntered.value = true;
-                                //   // controller.isEnable.value = true;
-                                // } else {
-                                //   print("444444444444444444   ${val.length}");
-                                //   // controller.ondebounce();
+                        tapTextStyle: AppColors.appbarColor,
+                        hintTextColor: AppColors.appbarColor.withOpacity(0.5),
+                        width: size.width / 2,
+                        textAlign: TextAlign.center,
+                        controller: controller.coinController,
+                        textStyle:
+                            CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.black.withOpacity(0.7),
+                          // fontWeight: FontWeight.bold,
+                          fontSize: Dimensions.h15,
+                        ),
+                        hintTextStyle:
+                            CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.black.withOpacity(0.65),
+                          fontSize: Dimensions.h15,
+                        ),
+                        formatter: [FilteringTextInputFormatter.digitsOnly],
+                        // onEditingComplete: () {
+                        //   if (controller.coinController.text.length <
+                        //       2) {
+                        //
+                        //   }
+                        // },
+                        onChanged: (val) {
+                          if (val != null) {
+                            print("111111111111");
+                            if (val.characters.characterAt(0) ==
+                                Characters("0")) {
+                              print("22222222222222");
+                              // we need to remove the first char
+                              controller.coinController.text = val.substring(1);
+                              // we need to move the cursor
+                              controller.coinController.selection =
+                                  TextSelection.collapsed(
+                                offset: controller.coinController.text.length,
+                              );
+                            } else if (int.parse(val) > 10000) {
+                              AppUtils.showErrorSnackBar(
+                                  bodyText:
+                                      "You can not add more than 10000 points");
+                            } else {
+                              // if (int.parse(val) >= 1) {
+                              //   print("333333333333333   ${val.length}");
+                              //   // controller.validCoinsEntered.value = true;
+                              //   // controller.isEnable.value = true;
+                              // } else {
+                              //   print("444444444444444444   ${val.length}");
+                              //   // controller.ondebounce();
 
-                                //   // controller.validCoinsEntered.value = false;
-                                //   // controller.isEnable.value = false;
-                                // }
-                              }
+                              //   // controller.validCoinsEntered.value = false;
+                              //   // controller.isEnable.value = false;
+                              // }
                             }
-                          },
-                          maxLength: 5,
-                          hintText: "COINS".tr,
-                          contentPadding: const EdgeInsets.only(right: 40),
-                          imagePath: "",
-                          containerBackColor: AppColors.black,
-                          iconColor: AppColors.white,
-                          height: Dimensions.h35,
-                          keyboardType: TextInputType.number),
+                          }
+                        },
+                        maxLength: 5,
+                        hintText: "COINS".tr,
+                        contentPadding: const EdgeInsets.only(right: 40),
+                        imagePath: "",
+                        containerBackColor: AppColors.black,
+                        iconColor: AppColors.white,
+                        height: Dimensions.h35,
+                        keyboardType: TextInputType.number,
+                      ),
                     ),
                   ),
 
@@ -343,7 +322,7 @@ class NewGameModePage extends StatelessWidget {
               text: "PLUSADD".tr,
               color: AppColors.appbarColor,
               borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h12,
+              fontSize: Dimensions.h13,
               fontWeight: FontWeight.w600,
               fontColor: AppColors.white,
               letterSpacing: 1,
@@ -353,7 +332,33 @@ class NewGameModePage extends StatelessWidget {
               onTap: () {
                 // controller.coinsFocusNode.unfocus();
                 // controller.openFocusNode.requestFocus();
-                controller.onTapOfAddButton();
+                print(controller.gameMode.value.name);
+                if (controller.gameMode.value.name!.toUpperCase() ==
+                    "PANEL GROUP") {
+                  controller.getpanelData();
+                } else if (controller.gameMode.value.name!.toUpperCase() ==
+                    "GROUP JODI") {
+                  controller.getspdptp();
+                } else if (controller.gameMode.value.name!.toUpperCase() ==
+                        "SINGLE ANK" ||
+                    controller.gameMode.value.name! == "Jodi" ||
+                    controller.gameMode.value.name!.toUpperCase() ==
+                        "SINGLE PANA" ||
+                    controller.gameMode.value.name!.toUpperCase() ==
+                        "DOUBLE PANA" ||
+                    controller.gameMode.value.name!.toUpperCase() ==
+                        "TRIPPLE PANA" ||
+                    controller.gameMode.value.name!.toUpperCase() ==
+                        "DOUBLE PANA" ||
+                    controller.gameMode.value.name!.toUpperCase() ==
+                        "RED BRACKETS") {
+                  controller.onTapOfAddButton();
+                } else {
+                  controller.getspdptp();
+                }
+                // Timer(const Duration(seconds: 2), () {
+                //
+                // });
               },
               height: Dimensions.h30,
               width: Dimensions.w150,
@@ -404,6 +409,7 @@ class NewGameModePage extends StatelessWidget {
                   // controller.coinsFocusNode.unfocus();
                   // controller.openFocusNode.requestFocus();
                   // controller.onTapOfAddBidButton();
+
                   controller.onTapOfSaveButton();
                 },
                 height: Dimensions.h25,
@@ -496,29 +502,43 @@ class NewGameModePage extends StatelessWidget {
     );
   }
 
-  Widget spDpTp(Color containerColor, String text, Color textColor) {
-    return Container(
-      height: Dimensions.h20,
-      width: Dimensions.w70,
-      decoration: BoxDecoration(
-        color: containerColor,
-        border: Border.all(color: AppColors.grey),
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            style:
-                CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor),
-          ),
-          Icon(
-            Icons.check_box,
-            color: textColor,
-            size: 15,
-          )
-        ],
+  Widget spDpTp(Color containerColor, String text, Color textColor,
+      {required Function() onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(25),
+      child: Container(
+        height: Dimensions.h25,
+        width: Dimensions.w70,
+        decoration: BoxDecoration(
+          color: containerColor,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 1,
+              spreadRadius: 0.2,
+              color: AppColors.grey.withOpacity(0.7),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: CustomTextStyle.textRobotoSansMedium
+                  .copyWith(color: textColor),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: Icon(
+                Icons.check_box,
+                color: textColor,
+                size: 15,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
