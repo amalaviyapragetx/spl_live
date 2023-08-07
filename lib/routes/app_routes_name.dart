@@ -66,4 +66,10 @@ class AppRoutName {
 
   /// oddEvenGamePage
   static String newOddEvenPage = "/new_game_page_odd_even";
+
+  /// starlineBidPage
+  static String starlineBidpage = "/starline_bid_page";
+
+  /// starlineBidPage
+  static String newStarlineGames = "/new_starline_games";
 }

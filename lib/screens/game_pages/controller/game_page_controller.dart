@@ -33,7 +33,7 @@ class GamePageController extends GetxController {
   RxBool validCoinsEntered = false.obs;
   String addedNormalBidValue = "";
   RxInt panaControllerLength = 2.obs;
-  RxString totalBid = "0".obs;
+  RxInt totalBid = 0.obs;
   int selectedIndexOfDigitRow = 0;
 
   var argument = Get.arguments;
@@ -161,7 +161,7 @@ class GamePageController extends GetxController {
         onTapOfDigitTile(index);
         digitList[index].isSelected = true;
       } else {
-        digitList[index].isSelected = false;
+        // digitList[index].isSelected = false;
         onLongPressDigitTile(index);
       }
     }
@@ -211,11 +211,10 @@ class GamePageController extends GetxController {
           ),
         );
       }
-      print(digitList[index].isSelected);
       _calculateTotalAmount();
     } else {
       // digitList[index].coins = 0;
-      // digitList[index].isSelected = false;
+      // digitList[index].isSelected = true;
       // digitList.refresh();
       // selectedBidsList
       //     .removeWhere((element) => element.bidNo == digitList[index].value);
@@ -248,7 +247,6 @@ class GamePageController extends GetxController {
     }
     digitRow[index].isSelected = true;
     digitRow.refresh();
-
     if (gameMode.name!.toUpperCase() == "SINGLE PANA BULK") {
       print(gameMode.name);
       panaSwitchCase(jsonModel.singlePana!.single, index);

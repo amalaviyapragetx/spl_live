@@ -72,7 +72,7 @@ class SelectedBidsPage extends StatelessWidget {
                             subtitle: Padding(
                               padding: const EdgeInsets.only(top: 2.0),
                               child: Text(
-                                "Bid no. : ${controller.requestModel.value.bids![index].gameId} , Coins : ${controller.requestModel.value.bids![index].coins}",
+                                "Bid no. : ${controller.requestModel.value.bids![index].bidNo} , Coins : ${controller.requestModel.value.bids![index].coins}",
                                 style: CustomTextStyle.textRobotoSansLight
                                     .copyWith(fontSize: Dimensions.h12),
                               ),

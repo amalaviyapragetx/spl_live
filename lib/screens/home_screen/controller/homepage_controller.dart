@@ -21,6 +21,7 @@ import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
 import '../../bottum_navigation_screens/bid_history.dart';
 import '../../bottum_navigation_screens/moreoptions.dart';
+import '../../bottum_navigation_screens/passbook_page.dart';
 import '../utils/home_screen_utils.dart';
 
 class HomePageController extends GetxController {
@@ -393,7 +394,7 @@ class HomePageController extends GetxController {
       case 2:
         return SPLWallet();
       case 3:
-        return Container();
+        return PassBook();
       case 4:
         return const MoreOptions();
       case 5:
@@ -527,9 +528,10 @@ class HomePageController extends GetxController {
 
   void onTapOfStarlineMarket(StarlineMarketData market) {
     if (market.isBidOpen ?? false) {
-      Get.toNamed(AppRoutName.starLineGameModesPage, arguments: {
-        "marketData": market,
-      });
+      Get.toNamed(
+        AppRoutName.starLineGameModesPage,
+        arguments: market,
+      );
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Bidding is Closed!!!!",

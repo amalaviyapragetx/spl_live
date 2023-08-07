@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:spllive/components/new_auto_complete_text_field_with_suggetion.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/models/game_modes_api_response_model.dart';
@@ -192,7 +193,23 @@ class NewGameModePage extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       validateValue: (validate, value) {
                         validate = false;
-                        controller.validateEnteredDigit(false, value);
+                        if (controller.gameMode.value.name!.toUpperCase() ==
+                                "SINGLE ANK" ||
+                            controller.gameMode.value.name! == "Jodi" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "SINGLE PANA" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "DOUBLE PANA" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "TRIPPLE PANA" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "DOUBLE PANA" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "RED BRACKETS") {
+                          controller.validateEnteredDigit(false, value);
+                        } else {
+                          controller.ondebounce(false, value);
+                        }
                       },
                       optionsBuilder: (TextEditingValue textEditingValue) {
                         // if (textEditingValue.text == '') {
@@ -286,7 +303,7 @@ class NewGameModePage extends StatelessWidget {
                           }
                         },
                         maxLength: 5,
-                        hintText: "COINS".tr,
+                        hintText: "Enter Points",
                         contentPadding: const EdgeInsets.only(right: 40),
                         imagePath: "",
                         containerBackColor: AppColors.black,
@@ -335,7 +352,20 @@ class NewGameModePage extends StatelessWidget {
                 print(controller.gameMode.value.name);
                 if (controller.gameMode.value.name!.toUpperCase() ==
                     "PANEL GROUP") {
-                  controller.getpanelData();
+                  if (controller.autoCompleteFieldController.text.isNotEmpty &&
+                      controller.coinController.text.isNotEmpty) {
+                    controller.getspdptp();
+                  } else if (controller
+                      .autoCompleteFieldController.text.isEmpty) {
+                    AppUtils.showErrorSnackBar(
+                      bodyText:
+                          "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
+                    );
+                  } else if (controller.coinController.text.isEmpty) {
+                    AppUtils.showErrorSnackBar(
+                      bodyText: "Please enter valid points",
+                    );
+                  }
                 } else if (controller.gameMode.value.name!.toUpperCase() ==
                     "GROUP JODI") {
                   controller.getspdptp();
@@ -354,7 +384,20 @@ class NewGameModePage extends StatelessWidget {
                         "RED BRACKETS") {
                   controller.onTapOfAddButton();
                 } else {
-                  controller.getspdptp();
+                  if (controller.autoCompleteFieldController.text.isNotEmpty ||
+                      controller.coinController.text.isNotEmpty) {
+                    controller.getspdptp();
+                  } else if (controller
+                      .autoCompleteFieldController.text.isEmpty) {
+                    AppUtils.showErrorSnackBar(
+                      bodyText:
+                          "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
+                    );
+                  } else if (controller.coinController.text.isEmpty) {
+                    AppUtils.showErrorSnackBar(
+                      bodyText: "Please enter valid points",
+                    );
+                  }
                 }
                 // Timer(const Duration(seconds: 2), () {
                 //

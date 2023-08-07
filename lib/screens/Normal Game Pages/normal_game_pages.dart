@@ -583,7 +583,7 @@ class NormalGamePage extends StatelessWidget {
                             }
                           },
                           maxLength: 5,
-                          hintText: "COINS".tr,
+                          hintText: "Enter Points",
                           contentPadding: const EdgeInsets.only(right: 40),
                           imagePath: "",
                           containerBackColor: AppColors.black,

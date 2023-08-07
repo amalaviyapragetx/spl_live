@@ -130,7 +130,6 @@ class NormalGamePageController extends GetxController {
       case "Odd Even":
         showNumbersLine.value = false;
         panaControllerLength.value = 1;
-        apiUrl = ApiUtils.digitsBasedJodi;
         _tempValidationList = jsonModel.singleAnk!;
         // suggestionList.value = jsonModel.singleAnk!;
         // enteredDigitsIsValidate = true;

@@ -17,7 +17,7 @@ class GameModePagesController extends GetxController {
   // RxString selectedRadioValue = 'open'.obs;
   RxBool containerChange = false.obs;
   var arguments = Get.arguments;
-  var gameModeList = [];
+  Rx<GameModesApiResponseModel> gameModeList = GameModesApiResponseModel().obs;
   var marketValue = MarketData().obs;
   var openBiddingOpen = true.obs;
   // var openCloseRadioValue = 0.obs;
@@ -105,7 +105,7 @@ class GameModePagesController extends GetxController {
       if (value['status']) {
         GameModesApiResponseModel gameModeModel =
             GameModesApiResponseModel.fromJson(value);
-        gameModeList.add(gameModeModel);
+        gameModeList.value = gameModeModel;
         print("Game modes Api Response $gameModeList ");
         if (gameModeModel.data != null) {
           openBiddingOpen.value = gameModeModel.data!.isBidOpenForOpen ?? false;

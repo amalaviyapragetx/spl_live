@@ -26,7 +26,22 @@ class SPLWallet extends StatelessWidget {
       width: double.infinity,
       child: Column(
         children: [
-          AppUtils().simpleAppbar(appBarTitle: "SPL_WALLET".tr),
+          AppUtils().simpleAppbar(
+            appBarTitle: "",
+            leadingWidht: Dimensions.w200,
+            leading: Container(
+              child: Row(
+                children: [
+                  SizedBox(width: Dimensions.w15),
+                  Text(
+                    "SPL_WALLET".tr,
+                    style: CustomTextStyle.textRobotoSansMedium
+                        .copyWith(fontSize: Dimensions.h20),
+                  ),
+                ],
+              ),
+            ),
+          ),
           SizedBox(
             child: Column(
               children: [
