@@ -63,6 +63,7 @@ class GamePageController extends GetxController {
     DigitListModelOffline(value: "9", isSelected: false),
   ].obs;
   Timer? _debounce;
+
   @override
   void onInit() {
     super.onInit();
@@ -159,9 +160,8 @@ class GamePageController extends GetxController {
     if (validCoinsEntered.value) {
       if (digitList[index].isSelected == false) {
         onTapOfDigitTile(index);
-        digitList[index].isSelected = true;
+        // digitList[index].isSelected = true;
       } else {
-        // digitList[index].isSelected = false;
         onLongPressDigitTile(index);
       }
     }
@@ -214,11 +214,14 @@ class GamePageController extends GetxController {
       _calculateTotalAmount();
     } else {
       // digitList[index].coins = 0;
-      // digitList[index].isSelected = true;
-      // digitList.refresh();
-      // selectedBidsList
-      //     .removeWhere((element) => element.bidNo == digitList[index].value);
-      // _calculateTotalAmount();
+      validCoinsEntered.value = false;
+      digitList.refresh();
+      digitList[index].isSelected = false;
+      isEnable.value = false;
+      digitList.refresh();
+      selectedBidsList
+          .removeWhere((element) => element.bidNo == digitList[index].value);
+      _calculateTotalAmount();
       // print("Enable Value:${isEnable.value}");
       AppUtils.showErrorSnackBar(bodyText: "Please enter coins!");
     }
@@ -248,7 +251,7 @@ class GamePageController extends GetxController {
     digitRow[index].isSelected = true;
     digitRow.refresh();
     if (gameMode.name!.toUpperCase() == "SINGLE PANA BULK") {
-      print(gameMode.name);
+      print(jsonModel.singlePana!.single.l0);
       panaSwitchCase(jsonModel.singlePana!.single, index);
     } else {
       panaSwitchCase(jsonModel.doublePana!.single, index);

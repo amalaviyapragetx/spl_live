@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import '../../../api_services/api_service.dart';
 import '../../../api_services/api_urls.dart';
+import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
+import '../../../helper_files/custom_text_style.dart';
+import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
-import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
@@ -68,18 +68,55 @@ class StarlineNewGamePageController extends GetxController {
     }
   }
 
-  // ondebounce(bool validate, String value) {
-  //   if (_debounce != null && _debounce!.isActive) {
-  //     _debounce!.cancel();
-  //   }
-  //   Timer(const Duration(milliseconds: 400), () {
-  //     // newGamemodeValidation(validate, value);
-  //   });
-  // }
-  Future<void> onTapOfSaveButton() async {
+  void showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm!'),
+          content: Text(
+            'Do you really wish to submit?',
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
+              color: AppColors.grey,
+              fontSize: Dimensions.h14,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Handle cancel button press
+                Get.back();
+              },
+              child: Text(
+                'CANCLE',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                createMarketBidApi();
+              },
+              child: Text(
+                'OKAY',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> onTapOfSaveButton(context) async {
     if (selectedBidsList.isNotEmpty) {
       requestModel.value.bids = selectedBidsList;
-      createMarketBidApi();
+      showConfirmationDialog(context);
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Please add some bids!",
@@ -89,33 +126,69 @@ class StarlineNewGamePageController extends GetxController {
 
   onTapAddOddEven() {
     for (var i = 0; i < 10; i++) {
+      var bidNo = i.toString();
+      var existingIndex =
+          selectedBidsList.indexWhere((element) => element.bidNo == bidNo);
+      var coins = int.parse(coinController.text);
       if (oddbool.value) {
         if (i % 2 != 0) {
-          selectedBidsList.add(
-            StarLineBids(
-              bidNo: i.toString(),
-              coins: int.parse(coinController.text),
-              starlineGameId: gameMode.value.id,
-              //  gameModeName: gameMode.value.name,
-              // subGameId: checkPanaType(),
-              remarks:
-                  "You invested At ${marketName.value} on $i (${gameMode.value.name})",
-            ),
-          );
+          if (existingIndex != -1) {
+            // If the bidNo already exists in selectedBidsList, update coins value.
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! + coins);
+          } else {
+            // If bidNo doesn't exist in selectedBidsList, add a new entry.
+            selectedBidsList.add(
+              StarLineBids(
+                bidNo: bidNo,
+                coins: coins,
+                starlineGameId: gameMode.value.id,
+                remarks:
+                    "You invested At ${marketName.value} on $bidNo (${gameMode.value.name})",
+              ),
+            );
+          }
+          // selectedBidsList.add(
+          //   StarLineBids(
+          //     bidNo: i.toString(),
+          //     coins: int.parse(coinController.text),
+          //     starlineGameId: gameMode.value.id,
+          //     //  gameModeName: gameMode.value.name,
+          //     // subGameId: checkPanaType(),
+          //     remarks:
+          //         "You invested At ${marketName.value} on $i (${gameMode.value.name})",
+          //   ),
+          // );
         }
       } else {
         if (i % 2 == 0) {
-          selectedBidsList.add(
-            StarLineBids(
-              bidNo: i.toString(),
-              coins: int.parse(coinController.text),
-              starlineGameId: gameMode.value.id,
-              // gameModeName: gameMode.value.name,
-              // subGameId: checkPanaType(),
-              remarks:
-                  "You invested At ${marketName.value} on $i (${gameMode.value.name})",
-            ),
-          );
+          if (existingIndex != -1) {
+            // If the bidNo already exists in selectedBidsList, update coins value.
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! + coins);
+          } else {
+            // If bidNo doesn't exist in selectedBidsList, add a new entry.
+            selectedBidsList.add(
+              StarLineBids(
+                bidNo: bidNo,
+                coins: coins,
+                starlineGameId: gameMode.value.id,
+                remarks:
+                    "You invested At ${marketName.value} on $bidNo (${gameMode.value.name})",
+              ),
+            );
+          }
+          // selectedBidsList.add(
+          //   StarLineBids(
+          //     bidNo: i.toString(),
+          //     coins: int.parse(coinController.text),
+          //     starlineGameId: gameMode.value.id,
+          //     // gameModeName: gameMode.value.name,
+          //     // subGameId: checkPanaType(),
+          //     remarks:
+          //         "You invested At ${marketName.value} on $i (${gameMode.value.name})",
+          //   ),
+          // );
         }
       }
     }
@@ -286,6 +359,9 @@ class StarlineNewGamePageController extends GetxController {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
         );
+        autoCompleteFieldController.clear();
+        coinController.clear();
+        selectedBidsList.refresh();
         focusNode.previousFocus();
       } else if (coinController.text.trim().isEmpty ||
           int.parse(coinController.text.trim()) < 1) {
@@ -296,19 +372,62 @@ class StarlineNewGamePageController extends GetxController {
         AppUtils.showErrorSnackBar(
           bodyText: "You can not add more than 10000 points",
         );
+        autoCompleteFieldController.clear();
+        coinController.clear();
+        selectedBidsList.refresh();
+        focusNode.previousFocus();
       } else {
         if (spdptpList.isEmpty) {
-          selectedBidsList.add(
-            StarLineBids(
-              bidNo: addedNormalBidValue,
-              coins: int.parse(coinController.text),
-              starlineGameId: gameMode.value.id,
-              // subGameId: gameMode.value.id,
-              // gameModeName: gameMode.value.name,
-              remarks:
-                  "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-            ),
-          );
+          // selectedBidsList.add(
+          //   StarLineBids(
+          //     bidNo: addedNormalBidValue,
+          //     coins: int.parse(coinController.text),
+          //     starlineGameId: gameMode.value.id,
+          //     // subGameId: gameMode.value.id,
+          //     // gameModeName: gameMode.value.name,
+          //     remarks:
+          //         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+          //   ),
+          // );
+          var existingIndex = selectedBidsList
+              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          if (existingIndex != -1) {
+            // If the bidNo already exists in selectedBidsList, update coins value.
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! +
+                    int.parse(coinController.text));
+          } else {
+            // If bidNo doesn't exist in selectedBidsList, add a new entry.
+            selectedBidsList.add(
+              StarLineBids(
+                bidNo: addedNormalBidValue,
+                coins: int.parse(coinController.text),
+                starlineGameId: gameMode.value.id,
+                remarks:
+                    "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+              ),
+            );
+          }
+        } else {
+          var existingIndex = selectedBidsList
+              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          if (existingIndex != -1) {
+            // If the bidNo already exists in selectedBidsList, update coins value.
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! +
+                    int.parse(coinController.text));
+          } else {
+            // If bidNo doesn't exist in selectedBidsList, add a new entry.
+            selectedBidsList.add(
+              StarLineBids(
+                bidNo: addedNormalBidValue,
+                coins: int.parse(coinController.text),
+                starlineGameId: gameMode.value.id,
+                remarks:
+                    "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+              ),
+            );
+          }
         }
         print("===== selectedBidsList =======");
         // print(selectedBidsList.toList());
@@ -323,6 +442,8 @@ class StarlineNewGamePageController extends GetxController {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
         );
+        autoCompleteFieldController.clear();
+        coinController.clear();
         return;
       } else if (addedNormalBidValue.isEmpty) {
         AppUtils.showErrorSnackBar(
@@ -339,18 +460,42 @@ class StarlineNewGamePageController extends GetxController {
         AppUtils.showErrorSnackBar(
           bodyText: "You can not add more than 10000 points",
         );
+        autoCompleteFieldController.clear();
+        coinController.clear();
+        selectedBidsList.refresh();
+        focusNode.previousFocus();
       } else {
-        selectedBidsList.add(
-          StarLineBids(
-            bidNo: addedNormalBidValue,
-            coins: int.parse(coinController.text),
-            starlineGameId: gameMode.value.id,
-            // gameModeName: gameMode.value.name,
-            // subGameId: gameMode.value.id,
-            remarks:
-                "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-          ),
-        );
+        var existingIndex = selectedBidsList
+            .indexWhere((element) => element.bidNo == addedNormalBidValue);
+        if (existingIndex != -1) {
+          // If the bidNo already exists in selectedBidsList, update coins value.
+          selectedBidsList[existingIndex].coins =
+              (selectedBidsList[existingIndex].coins! +
+                  int.parse(coinController.text));
+        } else {
+          // If bidNo doesn't exist in selectedBidsList, add a new entry.
+          selectedBidsList.add(
+            StarLineBids(
+              bidNo: addedNormalBidValue,
+              coins: int.parse(coinController.text),
+              starlineGameId: gameMode.value.id,
+              remarks:
+                  "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+            ),
+          );
+        }
+
+        // selectedBidsList.add(
+        //   StarLineBids(
+        //     bidNo: addedNormalBidValue,
+        //     coins: int.parse(coinController.text),
+        //     starlineGameId: gameMode.value.id,
+        //     // gameModeName: gameMode.value.name,
+        //     // subGameId: gameMode.value.id,
+        //     remarks:
+        //         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+        //   ),
+        // );
         print("selectebidlist : $selectedBidsList");
         autoCompleteFieldController.clear();
         coinController.clear();
@@ -379,7 +524,7 @@ class StarlineNewGamePageController extends GetxController {
     };
     if (gameMode.value.name == "Panel Group") {
       return b;
-    } else if (gameMode.value.name == "Choice Pana SPDP") {
+    } else if (gameMode.value.name!.toUpperCase() == "CHOICE PANA SPDP") {
       return c;
     } else {
       return a;
@@ -387,121 +532,254 @@ class StarlineNewGamePageController extends GetxController {
   }
 
   void getspdptp() async {
-    ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
-      (value) async {
-        debugPrint("New Game-Mode Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
-          //_validationListForNormalMode = spdptpList as List<String>;
-          // print(spdptpList.toList());
-          if (coinController.text.trim().isEmpty ||
-              int.parse(coinController.text.trim()) < 1) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "Please enter valid points",
-            );
-          } else if (int.parse(coinController.text) > 10000) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "You can not add more than 10000 points",
-            );
-          } else {
-            if (spdptpList.isEmpty) {
-              print("===== spdptpList empty =================");
-              print(spdptpList);
-              for (var i = 0; i < spdptpList.length; i++) {
-                selectedBidsList.add(
-                  StarLineBids(
-                    bidNo: addedNormalBidValue,
-                    coins: int.parse(coinController.text),
-                    starlineGameId: gameMode.value.id,
-                    // gameModeName: gameMode.value.name,
-                    // subGameId: gameMode.value.id,
-                    remarks:
-                        "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                  ),
+    if (gameMode.value.name == "Choice Pana SPDP") {
+      if (spValue1.value == false &&
+          dpValue2.value == false &&
+          tpValue3.value == false) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please Check SP or DP Values",
+        );
+      } else {
+        ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
+          (value) async {
+            debugPrint("New Game-Mode Api Response :- $value");
+            if (value['status']) {
+              spdptpList = value['data'];
+              if (coinController.text.trim().isEmpty ||
+                  int.parse(coinController.text.trim()) < 1) {
+                AppUtils.showErrorSnackBar(
+                  bodyText: "Please enter valid points",
                 );
+              } else if (int.parse(coinController.text) > 10000) {
+                AppUtils.showErrorSnackBar(
+                  bodyText: "You can not add more than 10000 points",
+                );
+              } else {
+                if (spdptpList.isEmpty) {
+                  AppUtils.showErrorSnackBar(
+                    bodyText:
+                        "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+                  );
+                  // print("===== spdptpList empty =================");
+                  // print(spdptpList);
+                  // for (var i = 0; i < spdptpList.length; i++) {
+                  //   selectedBidsList.add(
+                  //     StarLineBids(
+                  //       bidNo: addedNormalBidValue,
+                  //       coins: int.parse(coinController.text),
+                  //       starlineGameId: gameMode.value.id,
+                  //       // gameModeName: gameMode.value.name,
+                  //       // subGameId: gameMode.value.id,
+                  //       remarks:
+                  //           "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                  //     ),
+                  //   );
+                  // }
+                } else {
+                  print("======= List not empty =====");
+                  // print(spdptpList);
+                  //  var gameArr = gameModeList;
+                  // print("Jevin");
+                  // print(gameModeList);
+//               for (var i = 0; i < spdptpList.length; i++) {
+//                 print("spdptpList${spdptpList[i]}");
+//                 //     Roshan
+//                 //   int checkPanaType(String digit) {
+//                 //     int count = 1;
+//                 //     for (int i = 0; i < digit.length; i++) {
+//                 //       if (digit.lastIndexOf(digit[i]) != i) {
+//                 //         count += 1;
+//                 //       }
+//                 //     }
+//                 //     return count;
+//                 //   }
+
+//                 //   String determinePanaType(String digit) {
+//                 //     int panaType = checkPanaType(digit);
+//                 //     if (panaType == 1) {
+//                 //       return 'singlePana';
+//                 //     } else if (panaType == 2) {
+//                 //       return 'doublePana';
+//                 //     } else {
+//                 //       return 'tripplePana';
+//                 //     }
+//                 //   }
+
+//                 // check pana type
+//                 // var count = 1;
+//                 // for (var i = 0; i < spdptpList.length; i++) {
+//                 //   if (spdptpList.lastIndexOf(spdptpList[i]) != i) {
+//                 //     count += 1;
+//                 //   }
+//                 // }
+//                 // if (count == 1) {
+//                 //   // singlePana
+//                 // } else if (count == 2) {
+//                 //   // doublePana
+//                 // } else {
+//                 //   // tripplePana
+//                 // }
+//                 // }
+//                 //   print(spdptpList[i].toString());
+                  for (var i = 0; i < spdptpList.length; i++) {
+                    addedNormalBidValue = spdptpList[i].toString();
+                    var existingIndex = selectedBidsList.indexWhere(
+                        (element) => element.bidNo == addedNormalBidValue);
+                    if (existingIndex != -1) {
+                      // If the bidNo already exists in selectedBidsList, update coins value.
+                      selectedBidsList[existingIndex].coins =
+                          (selectedBidsList[existingIndex].coins! +
+                              int.parse(coinController.text));
+                    } else {
+                      // If bidNo doesn't exist in selectedBidsList, add a new entry.
+                      selectedBidsList.add(
+                        StarLineBids(
+                          bidNo: addedNormalBidValue,
+                          coins: int.parse(coinController.text),
+                          starlineGameId: gameMode.value.id,
+                          remarks:
+                              "You invested At ${marketName.value} on ${spdptpList[i]} (${gameMode.value.name})",
+                        ),
+                      );
+                    }
+                  }
+                }
+                _calculateTotalAmount();
               }
             } else {
-              print("======= List not empty =====");
-              // print(spdptpList);
-              //  var gameArr = gameModeList;
-              // print("Jevin");
-              // print(gameModeList);
-              for (var i = 0; i < spdptpList.length; i++) {
-                //     Roshan
-                //   int checkPanaType(String digit) {
-                //     int count = 1;
-                //     for (int i = 0; i < digit.length; i++) {
-                //       if (digit.lastIndexOf(digit[i]) != i) {
-                //         count += 1;
-                //       }
-                //     }
-                //     return count;
-                //   }
-
-                //   String determinePanaType(String digit) {
-                //     int panaType = checkPanaType(digit);
-                //     if (panaType == 1) {
-                //       return 'singlePana';
-                //     } else if (panaType == 2) {
-                //       return 'doublePana';
-                //     } else {
-                //       return 'tripplePana';
-                //     }
-                //   }
-
-                // check pana type
-                // var count = 1;
-                // for (var i = 0; i < spdptpList.length; i++) {
-                //   if (spdptpList.lastIndexOf(spdptpList[i]) != i) {
-                //     count += 1;
-                //   }
-                // }
-
-//               var obj = gameArr
-// .where((oldValue) => "Single Pana" == (oldValue.name));
-//               print(obj.elementAt(0).name);
-
-                // if (count == 1) {
-                //   // singlePana
-                // } else if (count == 2) {
-                //   // doublePana
-                // } else {
-                //   // tripplePana
-                // }
-                // }
-                //   print(spdptpList[i].toString());
-                selectedBidsList.add(
-                  StarLineBids(
-                    bidNo: spdptpList[i].toString(),
-                    coins: int.parse(coinController.text),
-                    starlineGameId: gameMode.value.id,
-                    // subGameId: gameMode.value.id,
-                    // gameModeName: gameMode.value.name,
-                    remarks:
-                        "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                  ),
-                );
-              }
-              print("===== selectedBidsList =======");
-              // print(selectedBidsList.toJson());
+              AppUtils.showErrorSnackBar(
+                bodyText: value['message'] ?? "",
+              );
             }
-            _calculateTotalAmount();
+            autoCompleteFieldController.clear();
+            leftAnkController.clear();
+            rightAnkController.clear();
+            middleAnkController.clear();
+            coinController.clear();
             selectedBidsList.refresh();
+          },
+        );
+      }
+    } else {
+      ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
+        (value) async {
+          debugPrint("New Game-Mode Api Response :- $value");
+          if (value['status']) {
+            spdptpList = value['data'];
+            if (coinController.text.trim().isEmpty ||
+                int.parse(coinController.text.trim()) < 1) {
+              AppUtils.showErrorSnackBar(
+                bodyText: "Please enter valid points",
+              );
+            } else if (int.parse(coinController.text) > 10000) {
+              AppUtils.showErrorSnackBar(
+                bodyText: "You can not add more than 10000 points",
+              );
+            } else {
+              if (spdptpList.isEmpty) {
+                AppUtils.showErrorSnackBar(
+                  bodyText:
+                      "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+                );
+                // print("===== spdptpList empty =================");
+                // print(spdptpList);
+                // for (var i = 0; i < spdptpList.length; i++) {
+                //   selectedBidsList.add(
+                //     StarLineBids(
+                //       bidNo: addedNormalBidValue,
+                //       coins: int.parse(coinController.text),
+                //       starlineGameId: gameMode.value.id,
+                //       // gameModeName: gameMode.value.name,
+                //       // subGameId: gameMode.value.id,
+                //       remarks:
+                //           "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                //     ),
+                //   );
+                // }
+              } else {
+                print("======= List not empty =====");
+                // print(spdptpList);
+                //  var gameArr = gameModeList;
+                // print("Jevin");
+                // print(gameModeList);
+//               for (var i = 0; i < spdptpList.length; i++) {
+//                 print("spdptpList${spdptpList[i]}");
+//                 //     Roshan
+//                 //   int checkPanaType(String digit) {
+//                 //     int count = 1;
+//                 //     for (int i = 0; i < digit.length; i++) {
+//                 //       if (digit.lastIndexOf(digit[i]) != i) {
+//                 //         count += 1;
+//                 //       }
+//                 //     }
+//                 //     return count;
+//                 //   }
+
+//                 //   String determinePanaType(String digit) {
+//                 //     int panaType = checkPanaType(digit);
+//                 //     if (panaType == 1) {
+//                 //       return 'singlePana';
+//                 //     } else if (panaType == 2) {
+//                 //       return 'doublePana';
+//                 //     } else {
+//                 //       return 'tripplePana';
+//                 //     }
+//                 //   }
+
+//                 // check pana type
+//                 // var count = 1;
+//                 // for (var i = 0; i < spdptpList.length; i++) {
+//                 //   if (spdptpList.lastIndexOf(spdptpList[i]) != i) {
+//                 //     count += 1;
+//                 //   }
+//                 // }
+//                 // if (count == 1) {
+//                 //   // singlePana
+//                 // } else if (count == 2) {
+//                 //   // doublePana
+//                 // } else {
+//                 //   // tripplePana
+//                 // }
+//                 // }
+//                 //   print(spdptpList[i].toString());
+                for (var i = 0; i < spdptpList.length; i++) {
+                  addedNormalBidValue = spdptpList[i].toString();
+                  var existingIndex = selectedBidsList.indexWhere(
+                      (element) => element.bidNo == addedNormalBidValue);
+                  if (existingIndex != -1) {
+                    // If the bidNo already exists in selectedBidsList, update coins value.
+                    selectedBidsList[existingIndex].coins =
+                        (selectedBidsList[existingIndex].coins! +
+                            int.parse(coinController.text));
+                  } else {
+                    // If bidNo doesn't exist in selectedBidsList, add a new entry.
+                    selectedBidsList.add(
+                      StarLineBids(
+                        bidNo: addedNormalBidValue,
+                        coins: int.parse(coinController.text),
+                        starlineGameId: gameMode.value.id,
+                        remarks:
+                            "You invested At ${marketName.value} on ${spdptpList[i]} (${gameMode.value.name})",
+                      ),
+                    );
+                  }
+                }
+              }
+              _calculateTotalAmount();
+            }
+          } else {
+            AppUtils.showErrorSnackBar(
+              bodyText: value['message'] ?? "",
+            );
           }
-          // print(spdptpList);
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-        autoCompleteFieldController.clear();
-        leftAnkController.clear();
-        rightAnkController.clear();
-        middleAnkController.clear();
-        coinController.clear();
-        selectedBidsList.refresh();
-        //focusNode.previousFocus();
-      },
-    );
+          autoCompleteFieldController.clear();
+          leftAnkController.clear();
+          rightAnkController.clear();
+          middleAnkController.clear();
+          coinController.clear();
+          selectedBidsList.refresh();
+        },
+      );
+    }
   }
 }

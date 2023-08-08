@@ -247,36 +247,68 @@ class NormalGamePageController extends GetxController {
 
   onTapAddOddEven() {
     for (var i = 0; i < 10; i++) {
+      var bidNo = i.toString();
+      var existingIndex =
+          selectedBidsList.indexWhere((element) => element.bidNo == bidNo);
+      var coins = int.parse(coinController.text);
       if (oddbool.value) {
         if (i % 2 != 0) {
-          selectedBidsList.add(
-            Bids(
-              bidNo: i.toString(),
-              coins: int.parse(coinController.text),
-              gameId: gameMode.value.id,
-              gameModeName: gameMode.value.name,
-              // subGameId: checkPanaType(),
-              remarks:
-                  "You invested At ${marketName.value} on $i (${gameMode.value.name})",
-            ),
-          );
+          if (existingIndex != -1) {
+            // If the bidNo already exists in selectedBidsList, update coins value.
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! + coins);
+          } else {
+            // If bidNo doesn't exist in selectedBidsList, add a new entry.
+            selectedBidsList.add(
+              Bids(
+                bidNo: bidNo,
+                coins: coins,
+                gameId: gameMode.value.id,
+                gameModeName: gameMode.value.name,
+                subGameId: gameMode.value.id,
+                remarks:
+                    "You invested At ${marketName.value} on $bidNo (${gameMode.value.name})",
+              ),
+            );
+          }
+
+          // selectedBidsList.add(
+          //   Bids(
+          //     bidNo: i.toString(),
+          //     coins: int.parse(coinController.text),
+          //     gameId: gameMode.value.id,
+          //     gameModeName: gameMode.value.name,
+          //     subGameId: gameMode.value.id,
+          //     remarks:
+          //         "You invested At ${marketName.value} on $i (${gameMode.value.name})",
+          //   ),
+          // );
         }
       } else {
         if (i % 2 == 0) {
-          selectedBidsList.add(
-            Bids(
-              bidNo: i.toString(),
-              coins: int.parse(coinController.text),
-              gameId: gameMode.value.id,
-              gameModeName: gameMode.value.name,
-              // subGameId: checkPanaType(),
-              remarks:
-                  "You invested At ${marketName.value} on $i (${gameMode.value.name})",
-            ),
-          );
+          if (existingIndex != -1) {
+            // If the bidNo already exists in selectedBidsList, update coins value.
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! + coins);
+          } else {
+            selectedBidsList.add(
+              Bids(
+                bidNo: i.toString(),
+                coins: int.parse(coinController.text),
+                gameId: gameMode.value.id,
+                gameModeName: gameMode.value.name,
+                subGameId: gameMode.value.id,
+                remarks:
+                    "You invested At ${marketName.value} on $i (${gameMode.value.name})",
+              ),
+            );
+          }
         }
       }
     }
+    coinController.clear();
+    selectedBidsList.refresh();
+    _calculateTotalAmount();
   }
 
   void createMarketBidApi() async {
@@ -348,57 +380,63 @@ class NormalGamePageController extends GetxController {
         debugPrint("Forgot MPIN Api Response :- $value");
         if (value['status']) {
           spdptpList = value['data'];
-          if (spdptpList.isEmpty) {
-            print("===== spdptpList empty =================");
-            print(spdptpList);
-            // selectedBidsList.add(
-            //   Bids(
-            //     bidNo: addedNormalBidValue,
-            //     coins: int.parse(coinController.text),
-            //     gameId: gameMode.value.id,s
-            //     subGameId: checkPanaType(),
-            //     gameModeName: gameMode.value.name,
-            //     remarks:
-            //         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-            //   ),
-            // );
+          if (coinController.text.trim().isEmpty ||
+              int.parse(coinController.text.trim()) < 1) {
+            AppUtils.showErrorSnackBar(
+              bodyText: "Please enter valid points",
+            );
+            return;
+          } else if (int.parse(coinController.text) > 10000) {
+            AppUtils.showErrorSnackBar(
+              bodyText: "You can not add more than 10000 points",
+            );
+            return;
           } else {
-            print("======= List not empty =====");
-            // print(spdptpList);
-            for (var i = 0; i < spdptpList.length; i++) {
-// spdptpList[i].toString() pass this value in one fiunction which returm the type of the pana
-
-// gameId
-// Main game modes
-// Single Ank, Jodi, Single Pana, Double Pana, Triple Pana
-// Single Ank, Jodi,  Single Pana, Double Pana, ==> Bulk
-// make once fucntion which takes  child game modes name and will return parent game modes with Id == GameId
-// Panel Group, SDDPTP, Red Brackets, Choice Pana SPDP, SP Moter, DP Moter, Group Jodi, Digit Based Jodi,
-// Odd Even
-// make One function which will take pana as a parameter and will return pana type with parent game
-// mode name ==? Sub game mode Id
-              print(spdptpList[i].toString());
-              selectedBidsList.add(
-                Bids(
-                  bidNo: spdptpList[i].toString(),
-                  coins: int.parse(coinController.text),
-                  gameId: gameMode.value.id,
-                  // subGameId: ,
-                  gameModeName: gameMode.value.name,
-                  remarks:
-                      "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                ),
+            if (spdptpList.isEmpty) {
+              AppUtils.showErrorSnackBar(
+                bodyText:
+                    "Please enter valid ${gameMode.value.name!.toLowerCase()}",
               );
+            } else {
+              for (var i = 0; i < spdptpList.length; i++) {
+                addedNormalBidValue = spdptpList[i].toString();
+                var existingIndex = selectedBidsList.indexWhere(
+                    (element) => element.bidNo == addedNormalBidValue);
+
+                if (existingIndex != -1) {
+                  // If the bidNo already exists in selectedBidsList, update coins value.
+                  selectedBidsList[existingIndex].coins =
+                      (selectedBidsList[existingIndex].coins! +
+                          int.parse(coinController.text));
+                } else {
+                  selectedBidsList.add(
+                    Bids(
+                      bidNo: addedNormalBidValue,
+                      coins: int.parse(coinController.text),
+                      gameId: gameMode.value.id,
+                      subGameId: gameMode.value.id,
+                      gameModeName: gameMode.value.name,
+                      remarks:
+                          "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                    ),
+                  );
+                }
+              }
             }
-            print("===== selectedBidsList =======");
-            print(selectedBidsList.toJson());
+            _calculateTotalAmount();
+            // print(spdptpList);
           }
-          // print(spdptpList);
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
           );
         }
+        // autoCompleteFieldController.clear();
+        coinController.clear();
+        leftAnkController.clear();
+        middleAnkController.clear();
+        rightAnkController.clear();
+        selectedBidsList.refresh();
       },
     );
   }
@@ -417,51 +455,53 @@ class NormalGamePageController extends GetxController {
         debugPrint("Forgot MPIN Api Response :- $value");
         if (value['status']) {
           spdptpList = value['data'];
-
-          if (spdptpList.isEmpty) {
-            print("===== spdptpList empty =================");
-            print(spdptpList);
-            // selectedBidsList.add(
-            //   Bids(
-            //     bidNo: addedNormalBidValue,
-            //     coins: int.parse(coinController.text),
-            //     gameId: gameMode.value.id,s
-            //     subGameId: checkPanaType(),
-            //     gameModeName: gameMode.value.name,
-            //     remarks:
-            //         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-            //   ),
-            // );
+          if (coinController.text.trim().isEmpty ||
+              int.parse(coinController.text.trim()) < 1) {
+            AppUtils.showErrorSnackBar(
+              bodyText: "Please enter valid points",
+            );
+            return;
+          } else if (int.parse(coinController.text) > 10000) {
+            AppUtils.showErrorSnackBar(
+              bodyText: "You can not add more than 10000 points",
+            );
+            return;
           } else {
-            print("======= List not empty =====");
-            // print(spdptpList);
-            for (var i = 0; i < spdptpList.length; i++) {
-// spdptpList[i].toString() pass this value in one fiunction which returm the type of the pana
-
-// gameId
-// Main game modes
-// Single Ank, Jodi, Single Pana, Double Pana, Triple Pana
-// Single Ank, Jodi,  Single Pana, Double Pana, ==> Bulk
-// make once fucntion which takes  child game modes name and will return parent game modes with Id == GameId
-// Panel Group, SDDPTP, Red Brackets, Choice Pana SPDP, SP Moter, DP Moter, Group Jodi, Digit Based Jodi,
-// Odd Even
-// make One function which will take pana as a parameter and will return pana type with parent game
-// mode name ==? Sub game mode Id
-              print(spdptpList[i].toString());
-              selectedBidsList.add(
-                Bids(
-                  bidNo: spdptpList[i].toString(),
-                  coins: int.parse(coinController.text),
-                  gameId: gameMode.value.id,
-                  // subGameId: ,
-                  gameModeName: gameMode.value.name,
-                  remarks:
-                      "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                ),
+            if (spdptpList.isEmpty) {
+              AppUtils.showErrorSnackBar(
+                bodyText:
+                    "Please enter valid ${gameMode.value.name!.toLowerCase()}",
               );
+            } else {
+              print("======= List not empty =====");
+              // print(spdptpList);
+              for (var i = 0; i < spdptpList.length; i++) {
+                addedNormalBidValue = spdptpList[i].toString();
+                var existingIndex = selectedBidsList.indexWhere(
+                    (element) => element.bidNo == addedNormalBidValue);
+                if (existingIndex != -1) {
+                  // If the bidNo already exists in selectedBidsList, update coins value.
+                  selectedBidsList[existingIndex].coins =
+                      (selectedBidsList[existingIndex].coins! +
+                          int.parse(coinController.text));
+                } else {
+                  print(spdptpList[i].toString());
+                  selectedBidsList.add(
+                    Bids(
+                      bidNo: spdptpList[i].toString(),
+                      coins: int.parse(coinController.text),
+                      gameId: gameMode.value.id,
+                      // subGameId: ,
+                      gameModeName: gameMode.value.name,
+                      remarks:
+                          "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                    ),
+                  );
+                }
+              }
+              print("===== selectedBidsList =======");
+              print(selectedBidsList.toJson());
             }
-            print("===== selectedBidsList =======");
-            print(selectedBidsList.toJson());
           }
           // print(spdptpList);
         } else {
@@ -469,6 +509,13 @@ class NormalGamePageController extends GetxController {
             bodyText: value['message'] ?? "",
           );
         }
+        //  autoCompleteFieldController.clear();
+        leftAnkController.clear();
+        rightAnkController.clear();
+        middleAnkController.clear();
+        coinController.clear();
+        selectedBidsList.refresh();
+        _calculateTotalAmount();
       },
     );
   }

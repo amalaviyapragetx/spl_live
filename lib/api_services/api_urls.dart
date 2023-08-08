@@ -61,4 +61,5 @@ class ApiUtils {
   static String groupJody = "$baseURL/gameMode/groupJodi";
   static String choicePanaSPDP = "$baseURL/gameMode/getChoicePanaSPDPTP";
   static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
+  static String passBookApi = "$baseURL/user/getUserPassbookDetails";
 }

@@ -15,6 +15,7 @@ import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
+import '../../../models/passbook_page_model.dart';
 import '../../../models/starline_chart_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../routes/app_routes_name.dart';
@@ -50,10 +51,12 @@ class HomePageController extends GetxController {
   UserDetailsModel userData = UserDetailsModel();
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   RxList<ResultArr> starLineMarketHistoryList = <ResultArr>[].obs;
+  RxList<Rows> passBookModelData = <Rows>[].obs;
   // RxList<NormalMarketHistoryModel> marketHistoryList =
   //     <NormalMarketHistoryModel>[].obs;
   RxBool isStarline2 = false.obs;
   int offset = 0;
+
   @override
   void onInit() {
     setboolData();
@@ -61,6 +64,7 @@ class HomePageController extends GetxController {
     getDailyStarLineMarkets();
     callGetStarLineChart();
     getUserData();
+    getPassBookData();
     super.onInit();
   }
 
@@ -644,6 +648,31 @@ class HomePageController extends GetxController {
               ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
               : marketHistoryList.value =
                   model.data?.resultArr ?? <ResultArr>[];
+        }
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+
+  void getPassBookData() {
+    ApiService()
+        .getPassBookData(
+      userId: "18",
+      isAll: true,
+      limit: "10",
+      offset: "0",
+    )
+        .then((value) async {
+      debugPrint(" Get passBook Data @@@@@@@@@@@@@@@@:- $value");
+      if (value['status']) {
+        print(value['status']);
+        if (value['data'] != null) {
+          PassbookModel model = PassbookModel.fromJson(value);
+          passBookModelData.value = model.data?.rows ?? <Rows>[];
+          // passBookList.value = model.data ?? <Data>[];
         }
       } else {
         AppUtils.showErrorSnackBar(

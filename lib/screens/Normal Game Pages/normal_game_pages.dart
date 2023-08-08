@@ -27,6 +27,7 @@ class NormalGamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppUtils().simpleAppbar(
         appBarTitle: controller.marketName.toString(),
         actions: [
@@ -152,7 +153,7 @@ class NormalGamePage extends StatelessWidget {
                           onTap: () {
                             controller.tpValue3.value =
                                 !controller.tpValue3.value;
-                            if (controller.dpValue2.value) {
+                            if (controller.tpValue3.value) {
                               controller.selectedValues.add("TP");
                             } else {
                               controller.selectedValues.remove("TP");
@@ -245,8 +246,8 @@ class NormalGamePage extends StatelessWidget {
                                 width: size.width / 2,
                                 textAlign: TextAlign.center,
                                 controller: controller.leftAnkController,
-                                textStyle:
-                                    CustomTextStyle.textPTsansMedium.copyWith(
+                                textStyle: CustomTextStyle.textRobotoSansMedium
+                                    .copyWith(
                                   color: AppColors.black.withOpacity(0.7),
                                   fontWeight: FontWeight.bold,
                                   fontSize: Dimensions.h15,
@@ -437,7 +438,7 @@ class NormalGamePage extends StatelessWidget {
                               textAlign: TextAlign.center,
                               controller: controller.rightAnkController,
                               textStyle:
-                                  CustomTextStyle.textPTsansMedium.copyWith(
+                                  CustomTextStyle.textRobotoSansMedium.copyWith(
                                 color: AppColors.black.withOpacity(0.7),
                                 fontWeight: FontWeight.bold,
                                 fontSize: Dimensions.h15,
@@ -534,21 +535,15 @@ class NormalGamePage extends StatelessWidget {
                           textStyle: CustomTextStyle.textPTsansMedium.copyWith(
                             color: AppColors.black.withOpacity(0.7),
                             fontWeight: FontWeight.bold,
-                            fontSize: Dimensions.h15,
+                            fontSize: Dimensions.h13,
                           ),
                           hintTextStyle:
                               CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.black.withOpacity(0.7),
-                            fontSize: Dimensions.h15,
+                            fontSize: Dimensions.h13,
                             fontWeight: FontWeight.bold,
                           ),
                           formatter: [FilteringTextInputFormatter.digitsOnly],
-                          // onEditingComplete: () {
-                          //   if (controller.coinController.text.length <
-                          //       2) {
-                          //
-                          //   }
-                          // },
                           onChanged: (val) {
                             if (val != null) {
                               print("111111111111");
@@ -631,9 +626,21 @@ class NormalGamePage extends StatelessWidget {
                                 .contains("ODD EVEN")) {
                               controller.onTapAddOddEven();
                             } else if (controller.gameMode.value.name!
-                                .toUpperCase()
-                                .contains("DIGITS BASED JODI")) {
+                                    .toUpperCase() ==
+                                "DIGITS BASED JODI") {
                               controller.digitsBasedJodiData();
+                            } else if (controller.gameMode.value.name ==
+                                "Choice Pana SPDP") {
+                              if (controller.spValue1.value == false &&
+                                  controller.dpValue2.value == false &&
+                                  controller.tpValue3.value == false) {
+                                AppUtils.showErrorSnackBar(
+                                  bodyText: "Please Check SP or DP Values",
+                                );
+                              } else {
+                                controller.groupJodiData();
+                              }
+                              // controller.groupJodiData();
                             } else {
                               controller.groupJodiData();
                             }

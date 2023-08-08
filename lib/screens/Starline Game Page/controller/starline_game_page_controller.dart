@@ -172,6 +172,7 @@ class StarLineGamePageController extends GetxController {
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
         panaControllerLength.value = 3;
+        suggestionList.value = jsonModel.singlePana!.single.l0!;
         for (var e in jsonModel.singlePana!.single.l0!) {
           singlePanaList.add(DigitListModelOffline.fromJson(e));
         }
@@ -182,6 +183,7 @@ class StarLineGamePageController extends GetxController {
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
         panaControllerLength.value = 3;
+        suggestionList.value = jsonModel.doublePana!.single.l0!;
         for (var e in jsonModel.doublePana!.single.l0!) {
           doublePanaList.add(DigitListModelOffline.fromJson(e));
         }
@@ -254,7 +256,7 @@ class StarLineGamePageController extends GetxController {
     }
     digitRow[index].isSelected = true;
     digitRow.refresh();
-    if (gameMode.value.name == "Single Pana") {
+    if (gameMode.value.name!.toUpperCase() == "SINGLE PANA BULK") {
       panaSwitchCase(jsonModel.singlePana!.single, index);
     } else {
       panaSwitchCase(jsonModel.doublePana!.single, index);
@@ -271,64 +273,78 @@ class StarLineGamePageController extends GetxController {
 
   void panaSwitchCase(ThreePana panaList, int index) {
     List<DigitListModelOffline> tempList = [];
+    List<String> temListFor = [];
     switch (index) {
       case 0:
         for (var e in panaList.l0!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 1:
         for (var e in panaList.l1!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 2:
         for (var e in panaList.l2!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 3:
         for (var e in panaList.l3!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 4:
         for (var e in panaList.l4!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 5:
         for (var e in panaList.l5!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 6:
         for (var e in panaList.l6!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 7:
         for (var e in panaList.l7!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 8:
         for (var e in panaList.l8!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       case 9:
         for (var e in panaList.l9!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+          temListFor.add(e);
         }
         break;
       default:
         for (var e in panaList.l0!) {
           tempList.add(DigitListModelOffline.fromJson(e));
+
+          temListFor.add(e);
         }
         break;
     }
     digitList.value = tempList;
+    suggestionList.value = temListFor;
   }
 
   // void onTapNumberList(index) {

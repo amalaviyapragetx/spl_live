@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,6 +16,10 @@ import 'self_closing_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // Allow only portrait orientation
+    DeviceOrientation.portraitDown,
+  ]);
   Get.put(AppLifecycleController());
   runApp(MyApp());
 }
@@ -25,7 +30,6 @@ final GlobalKey<NavigatorState> navigatorKey =
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   final AppLifecycleController _controller = Get.find<AppLifecycleController>();
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

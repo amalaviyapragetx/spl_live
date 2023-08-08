@@ -53,6 +53,7 @@ class GameModePagesController extends GetxController {
   @override
   void onInit() {
     marketValue.value = arguments;
+    print(marketValue.value.closeTime);
     checkBiddingStatus();
     callGetGameModes();
     getArguments();
@@ -174,7 +175,7 @@ class GameModePagesController extends GetxController {
   }
 
   Future<void> getArguments() async {
-    // biddingType.value = arguments["biddingType"];
+    //biddingType.value = arguments["biddingType"];
     // marketName.value = arguments["marketName"];
     // totalAmount.value = arguments["totalAmount"];
     // requestModel.value.bids = arguments["bidsList"];

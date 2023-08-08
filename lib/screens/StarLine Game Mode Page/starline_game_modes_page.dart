@@ -26,7 +26,8 @@ class StarLineGameModesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
-        appBarTitle: "STARLINEGAME".tr,
+        // appBarTitle: "STARLINEGAME".tr,
+        appBarTitle: controller.marketData.value.time.toString(),
         leading: GestureDetector(
           onTap: () {
             Get.offAndToNamed(AppRoutName.dashBoardPage);
@@ -74,7 +75,7 @@ class StarLineGameModesPage extends StatelessWidget {
               ? _buildCustomAboutBoxDialog()
               : Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.w10, vertical: Dimensions.h10),
+                      horizontal: Dimensions.w10, vertical: Dimensions.h5),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,19 +85,19 @@ class StarLineGameModesPage extends StatelessWidget {
                         //     widget: const Icon(Icons.calendar_month),
                         //     fontSize: Dimensions.h14),
                         // verticalSpace,
-                        textListWidget(
-                          text:
-                              "Starline Market :- ${controller.marketData.value.time}"
-                                  .tr,
-                          fontSize: Dimensions.h16,
-                        ),
+                        // textListWidget(
+                        //   text:
+                        //       "Starline Market :- ${controller.marketData.value.time}"
+                        //           .tr,
+                        //   fontSize: Dimensions.h16,
+                        // ),
                         // verticalSpace,
                         // Text(
                         //   "GAMETYPE".tr,
                         //   style: CustomTextStyle.textRobotoSansLight
                         //       .copyWith(fontSize: Dimensions.h15),
                         // ),
-                        verticalSpace,
+                        // verticalSpace,
                         SizedBox(
                           child: cardWidget(controller, size),
                         ),

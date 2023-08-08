@@ -136,7 +136,7 @@ class StarLineNewGamePage extends StatelessWidget {
                             onTap: () {
                               controller.tpValue3.value =
                                   !controller.tpValue3.value;
-                              if (controller.dpValue2.value) {
+                              if (controller.tpValue3.value) {
                                 controller.selectedValues.add("TP");
                               } else {
                                 controller.selectedValues.remove("TP");
@@ -248,45 +248,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                       formatter: [
                                         FilteringTextInputFormatter.digitsOnly
                                       ],
-                                      // onEditingComplete: () {
-                                      //   if (controller.coinController.text.length <
-                                      //       2) {
-                                      //
-                                      //   }
-                                      // },
-                                      onChanged: (val) {
-                                        // if (val != null) {
-                                        //   print("111111111111");
-                                        //   if (val.characters.characterAt(0) ==
-                                        //       Characters("0")) {
-                                        //     print("22222222222222");
-                                        //     // we need to remove the first char
-                                        //     controller.coinController.text =
-                                        //         val.substring(1);
-                                        //     // we need to move the cursor
-                                        //     controller.coinController.selection =
-                                        //         TextSelection.collapsed(
-                                        //       offset: controller.coinController.text.length,
-                                        //     );
-                                        //   } else if (int.parse(val) > 10000) {
-                                        //     AppUtils.showErrorSnackBar(
-                                        //         bodyText:
-                                        //             "You can not add more than 10000 points");
-                                        //   } else {
-                                        //     // if (int.parse(val) >= 1) {
-                                        //     //   print("333333333333333   ${val.length}");
-                                        //     //   // controller.validCoinsEntered.value = true;
-                                        //     //   // controller.isEnable.value = true;
-                                        //     // } else {
-                                        //     //   print("444444444444444444   ${val.length}");
-                                        //     //   // controller.ondebounce();
-
-                                        //     //   // controller.validCoinsEntered.value = false;
-                                        //     //   // controller.isEnable.value = false;
-                                        //     // }
-                                        //   }
-                                        // }
-                                      },
+                                      onChanged: (val) {},
                                       maxLength:
                                           controller.panaControllerLength.value,
                                       hintText: "Left Ank",
@@ -354,45 +316,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                               FilteringTextInputFormatter
                                                   .digitsOnly
                                             ],
-                                            // onEditingComplete: () {
-                                            //   if (controller.coinController.text.length <
-                                            //       2) {
-                                            //
-                                            //   }
-                                            // },
-                                            onChanged: (val) {
-                                              // if (val != null) {
-                                              //   print("111111111111");
-                                              //   if (val.characters.characterAt(0) ==
-                                              //       Characters("0")) {
-                                              //     print("22222222222222");
-                                              //     // we need to remove the first char
-                                              //     controller.coinController.text =
-                                              //         val.substring(1);
-                                              //     // we need to move the cursor
-                                              //     controller.coinController.selection =
-                                              //         TextSelection.collapsed(
-                                              //       offset: controller.coinController.text.length,
-                                              //     );
-                                              //   } else if (int.parse(val) > 10000) {
-                                              //     AppUtils.showErrorSnackBar(
-                                              //         bodyText:
-                                              //             "You can not add more than 10000 points");
-                                              //   } else {
-                                              //     // if (int.parse(val) >= 1) {
-                                              //     //   print("333333333333333   ${val.length}");
-                                              //     //   // controller.validCoinsEntered.value = true;
-                                              //     //   // controller.isEnable.value = true;
-                                              //     // } else {
-                                              //     //   print("444444444444444444   ${val.length}");
-                                              //     //   // controller.ondebounce();
-
-                                              //     //   // controller.validCoinsEntered.value = false;
-                                              //     //   // controller.isEnable.value = false;
-                                              //     // }
-                                              //   }
-                                              // }
-                                            },
+                                            onChanged: (val) {},
                                             maxLength: controller
                                                 .panaControllerLength.value,
                                             hintText: "Middle Ank",
@@ -446,44 +370,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                     formatter: [
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
-                                    // onEditingComplete: () {
-                                    //   if (controller.coinController.text.length <
-                                    //       2) {
-                                    //
-                                    //   }
-                                    // },
-                                    onChanged: (val) {
-                                      // if (val != null) {
-                                      //   print("111111111111");
-                                      //   if (val.characters.characterAt(0) ==
-                                      //       Characters("0")) {
-                                      //     print("22222222222222");
-                                      //     // we need to remove the first char
-                                      //     controller.coinController.text = val.substring(1);
-                                      //     // we need to move the cursor
-                                      //     controller.coinController.selection =
-                                      //         TextSelection.collapsed(
-                                      //       offset: controller.coinController.text.length,
-                                      //     );
-                                      //   } else if (int.parse(val) > 10000) {
-                                      //     AppUtils.showErrorSnackBar(
-                                      //         bodyText:
-                                      //             "You can not add more than 10000 points");
-                                      //   } else {
-                                      //     // if (int.parse(val) >= 1) {
-                                      //     //   print("333333333333333   ${val.length}");
-                                      //     //   // controller.validCoinsEntered.value = true;
-                                      //     //   // controller.isEnable.value = true;
-                                      //     // } else {
-                                      //     //   print("444444444444444444   ${val.length}");
-                                      //     //   // controller.ondebounce();
-
-                                      //     //   // controller.validCoinsEntered.value = false;
-                                      //     //   // controller.isEnable.value = false;
-                                      //     // }
-                                      //   }
-                                      // }
-                                    },
+                                    onChanged: (val) {},
                                     maxLength:
                                         controller.panaControllerLength.value,
                                     hintText: "Right Ank",
@@ -687,31 +574,58 @@ class StarLineNewGamePage extends StatelessWidget {
                       borderWidth: 0.2,
                       textStyle: CustomTextStyle.textRobotoSansBold,
                       onTap: () {
-                        // controller.coinsFocusNode.unfocus();
-                        // controller.openFocusNode.requestFocus();
-                        print(controller.gameMode.value.name);
                         if (controller.gameMode.value.name!.toUpperCase() ==
                             "PANEL GROUP") {
-                          if (controller.autoCompleteFieldController.text
-                                  .isNotEmpty &&
-                              controller.coinController.text.isNotEmpty) {
-                            //    controller.getpanelData();
-                          } else if (controller
+                          if (controller
                               .autoCompleteFieldController.text.isEmpty) {
                             AppUtils.showErrorSnackBar(
                               bodyText:
-                                  "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
+                                  "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                             );
-                          } else if (controller.coinController.text.isEmpty) {
+                          } else if (controller.coinController.text.isEmpty ||
+                              int.parse(controller.coinController.text) >
+                                  10000) {
                             AppUtils.showErrorSnackBar(
                               bodyText: "Please enter valid points",
                             );
+                          } else if (controller
+                                      .autoCompleteFieldController.text.length <
+                                  3 ==
+                              true) {
+                            AppUtils.showErrorSnackBar(
+                              bodyText:
+                                  "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                            );
+                          } else {
+                            controller.getspdptp();
                           }
-                          controller.getspdptp();
+                        } else if (controller.gameMode.value.name!
+                                .toUpperCase() ==
+                            "SPDPTP") {
+                          if (controller.spValue1.value == false &&
+                              controller.dpValue2.value == false &&
+                              controller.tpValue3.value == false) {
+                            AppUtils.showErrorSnackBar(
+                              bodyText: "Please Check SP or DP or TP Values",
+                            );
+                          } else {
+                            controller.getspdptp();
+                          }
                         } else if (controller.gameMode.value.name!
                                 .toUpperCase() ==
                             "GROUP JODI") {
-                          controller.getspdptp();
+                          if (controller
+                                  .autoCompleteFieldController.text.length <=
+                              1) {
+                            print("@@@@@@@@@@@");
+                            AppUtils.showErrorSnackBar(
+                              bodyText:
+                                  "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                            );
+                          } else {
+                            print("@@@@@@@@@@@");
+                            controller.getspdptp();
+                          }
                         } else if (controller.gameMode.value.name!
                                     .toUpperCase() ==
                                 "SINGLE ANK" ||
@@ -721,13 +635,53 @@ class StarLineNewGamePage extends StatelessWidget {
                             controller.gameMode.value.name!.toUpperCase() ==
                                 "DOUBLE PANA" ||
                             controller.gameMode.value.name!.toUpperCase() ==
-                                "TRIPPLE PANA") {
+                                "TRIPPLE PANA" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "DOUBLE PANA" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "RED BRACKETS") {
                           controller.onTapOfAddButton();
                         } else {
                           if (controller.autoCompleteFieldController.text
                                   .isNotEmpty ||
                               controller.coinController.text.isNotEmpty) {
-                            controller.getspdptp();
+                            if (controller.gameMode.value.name!.toUpperCase() ==
+                                    "DP MOTOR" ||
+                                controller.gameMode.value.name!.toUpperCase() ==
+                                    "SP MOTOR") {
+                              if (controller.autoCompleteFieldController.text
+                                          .length <=
+                                      3 ==
+                                  true) {
+                                print("@@@@@@@@@@@@@@@@@@@@");
+                                AppUtils.showErrorSnackBar(
+                                  bodyText:
+                                      "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                );
+                              } else if (controller
+                                  .coinController.text.isEmpty) {
+                                AppUtils.showErrorSnackBar(
+                                  bodyText: "Please enter valid points",
+                                );
+                              } else {
+                                controller.getspdptp();
+                              }
+                            } else if (controller.gameMode.value.name!
+                                    .toUpperCase() ==
+                                "TWO DIGITS PANEL") {
+                              if (controller.autoCompleteFieldController.text
+                                      .length ==
+                                  2) {
+                                controller.getspdptp();
+                              } else {
+                                AppUtils.showErrorSnackBar(
+                                  bodyText:
+                                      "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                );
+                              }
+                            } else {
+                              controller.getspdptp();
+                            }
                           } else if (controller
                               .autoCompleteFieldController.text.isEmpty) {
                             AppUtils.showErrorSnackBar(
@@ -834,6 +788,11 @@ class StarLineNewGamePage extends StatelessWidget {
                                       }
                                     }
                                   },
+                                  autofocus: controller.gameMode.value.name!
+                                          .toUpperCase()
+                                          .contains("ODD EVEN")
+                                      ? true
+                                      : false,
                                   maxLength: 5,
                                   hintText: "Enter Points",
                                   contentPadding:
@@ -907,7 +866,8 @@ class StarLineNewGamePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: bottombar(size),
+      resizeToAvoidBottomInset: false,
+      bottomSheet: bottombar(size, context),
     );
   }
 
@@ -949,7 +909,7 @@ class StarLineNewGamePage extends StatelessWidget {
     );
   }
 
-  bottombar(Size size) {
+  bottombar(Size size, context) {
     return Obx(
       () => Container(
         width: size.width,
@@ -987,7 +947,7 @@ class StarLineNewGamePage extends StatelessWidget {
                   // controller.openFocusNode.requestFocus();
                   // controller.onTapOfAddBidButton();
 
-                  controller.onTapOfSaveButton();
+                  controller.onTapOfSaveButton(context);
                 },
                 height: Dimensions.h25,
                 width: Dimensions.w100,
@@ -1032,8 +992,8 @@ class StarLineNewGamePage extends StatelessWidget {
                             children: [
                               nameColumn(
                                   subText: "",
-                                  titleText:
-                                      controller.gameMode.value.name.toString(),
+                                  titleText: controller.marketData.value.time
+                                      .toString(),
                                   textColor2: AppColors.black.withOpacity(0.5),
                                   textColor: AppColors.black),
                               nameColumn(

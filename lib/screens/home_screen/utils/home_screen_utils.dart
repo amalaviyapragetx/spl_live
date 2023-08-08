@@ -101,17 +101,17 @@ class HomeScreenUtils {
               child: Row(
                 children: [
                   Text(
-                    "COINS",
+                    "POINTS",
                     style: CustomTextStyle.textRobotoSansLight,
                   ),
                   SizedBox(
                     width: Dimensions.w5,
                   ),
-                  Image.asset(
-                    ConstantImage.ruppeeBlueIcon,
-                    height: Dimensions.h25,
-                    width: Dimensions.w25,
-                  ),
+                  // Image.asset(
+                  //   ConstantImage.ruppeeBlueIcon,
+                  //   height: Dimensions.h25,
+                  //   width: Dimensions.w25,
+                  // ),
                   SizedBox(
                     width: Dimensions.w5,
                   ),
@@ -130,11 +130,11 @@ class HomeScreenUtils {
                   SizedBox(
                     width: Dimensions.w5,
                   ),
-                  Image.asset(
-                    ConstantImage.ruppeeBlueIcon,
-                    height: 25,
-                    width: 25,
-                  ),
+                  // Image.asset(
+                  //   ConstantImage.ruppeeBlueIcon,
+                  //   height: 25,
+                  //   width: 25,
+                  // ),
                   SizedBox(
                     width: Dimensions.w5,
                   ),
