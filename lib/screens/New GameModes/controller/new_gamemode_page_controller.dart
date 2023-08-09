@@ -295,6 +295,10 @@ class NewGamemodePageController extends GetxController {
             TextButton(
               onPressed: () {
                 createMarketBidApi();
+
+                selectedBidsList.clear();
+                coinController.clear();
+                _calculateTotalAmount();
               },
               child: Text(
                 'OKAY',
@@ -328,6 +332,7 @@ class NewGamemodePageController extends GetxController {
         // Get.back();
         // Get.back();
         if (value['data'] == false) {
+          selectedBidsList.clear();
           Get.offAndToNamed(AppRoutName.dashBoardPage);
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",

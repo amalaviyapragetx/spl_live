@@ -52,10 +52,12 @@ class HomePageController extends GetxController {
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   RxList<ResultArr> starLineMarketHistoryList = <ResultArr>[].obs;
   RxList<Rows> passBookModelData = <Rows>[].obs;
+  RxList<Rows> passBookModelData2 = <Rows>[].obs;
+  RxInt passbookCount = 0.obs;
   // RxList<NormalMarketHistoryModel> marketHistoryList =
   //     <NormalMarketHistoryModel>[].obs;
   RxBool isStarline2 = false.obs;
-  int offset = 0;
+  RxInt offset = 0.obs;
 
   @override
   void onInit() {
@@ -64,7 +66,6 @@ class HomePageController extends GetxController {
     getDailyStarLineMarkets();
     callGetStarLineChart();
     getUserData();
-    getPassBookData();
     super.onInit();
   }
 
@@ -343,6 +344,9 @@ class HomePageController extends GetxController {
                                   position = 2;
                                   widgetContainer.value = position;
                                   isStarline.value = false;
+                                  launch(
+                                    "https://wa.me/+917769826748/?text=hi",
+                                  );
                                 },
                               ),
                               spaceBeetween,
@@ -636,7 +640,7 @@ class HomePageController extends GetxController {
         .getBidHistoryByUserId(
             userId: userData.id.toString(),
             limit: "10",
-            offset: offset.toString(),
+            offset: offset.value.toString(),
             isStarline: isStarline.value)
         .then((value) async {
       debugPrint("Get Market Api Response :- $value");
@@ -657,21 +661,27 @@ class HomePageController extends GetxController {
     });
   }
 
-  void getPassBookData() {
+  final int itemLimit = 10;
+
+  void getPassBookData({required bool lazyLoad, required String offset}) {
+    print("@@@@@@@@@@@@@@@@:-  ${offset.toString()}");
     ApiService()
         .getPassBookData(
-      userId: "18",
+      userId: userData.id.toString(),
       isAll: true,
-      limit: "10",
-      offset: "0",
+      limit: itemLimit.toString(),
+      offset: offset.toString(),
     )
         .then((value) async {
       debugPrint(" Get passBook Data @@@@@@@@@@@@@@@@:- $value");
+      print("@@@@@@@@@@@@@@@@:-   ${offset.toString()}");
       if (value['status']) {
         print(value['status']);
         if (value['data'] != null) {
           PassbookModel model = PassbookModel.fromJson(value);
+          passbookCount.value = int.parse(model.data!.count!.toString());
           passBookModelData.value = model.data?.rows ?? <Rows>[];
+          passBookModelData.refresh();
           // passBookList.value = model.data ?? <Data>[];
         }
       } else {
@@ -680,5 +690,35 @@ class HomePageController extends GetxController {
         );
       }
     });
+  }
+
+  int calculateTotalPages() {
+    return (passbookCount.value / itemLimit).ceil();
+  }
+
+  void nextPage() {
+    if (offset.value < calculateTotalPages()) {
+      print("offset.value ${offset.value}");
+      passBookModelData.clear();
+      offset.value++;
+      print("offset.value ${offset.value}");
+      getPassBookData(lazyLoad: false, offset: offset.value.toString());
+      print("offset.value ${offset.value}");
+      passBookModelData.refresh();
+      update();
+    }
+  }
+
+  void prevPage() {
+    if (offset.value > 0) {
+      print("offset.value ${offset.value}");
+      passBookModelData.clear();
+      offset.value--;
+      print("offset.value ${offset.value}");
+      getPassBookData(lazyLoad: false, offset: offset.value.toString());
+      print("offset.value ${offset.value}");
+      passBookModelData.refresh();
+      update();
+    }
   }
 }

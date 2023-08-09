@@ -27,6 +27,11 @@ class StarlineBidsController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    requestModel.value.bids?.clear();
+  }
+
   Future<void> getArguments() async {
     gameMode.value = arguments['gameMode'];
     marketData.value = arguments['marketData'];
@@ -38,7 +43,7 @@ class StarlineBidsController extends GetxController {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    print(requestModel.value.bids!.length);
+    print(requestModel.value.userId);
   }
 
   void showConfirmationDialog(BuildContext context) {
@@ -71,6 +76,8 @@ class StarlineBidsController extends GetxController {
             TextButton(
               onPressed: () {
                 createMarketBidApi();
+                requestModel.value.bids!.clear();
+                requestModel.refresh();
               },
               child: Text(
                 'OKAY',
@@ -102,7 +109,6 @@ class StarlineBidsController extends GetxController {
     requestModel.value.bids!.remove(requestModel.value.bids![index]);
     requestModel.refresh();
     _calculateTotalAmount();
-
     if (requestModel.value.bids!.isEmpty) {
       Get.offAndToNamed(AppRoutName.dashBoardPage);
       // Get.back();
@@ -114,6 +120,7 @@ class StarlineBidsController extends GetxController {
         .createStarLineMarketBid(requestModel.value.toJson())
         .then((value) async {
       debugPrint("create starline bid api response :- $value");
+      print(requestModel.value.toJson());
       if (value['status']) {
         Get.offAndToNamed(AppRoutName.dashBoardPage);
         if (value['data'] == false) {

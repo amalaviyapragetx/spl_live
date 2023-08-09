@@ -663,7 +663,7 @@ class NormalGamePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: bottombar(size),
+      bottomSheet: bottombar(size, context),
     );
   }
 
@@ -705,7 +705,7 @@ class NormalGamePage extends StatelessWidget {
     );
   }
 
-  bottombar(Size size) {
+  bottombar(Size size, context) {
     return Obx(
       () => Container(
         width: size.width,
@@ -743,7 +743,7 @@ class NormalGamePage extends StatelessWidget {
                   // controller.openFocusNode.requestFocus();
                   // controller.onTapOfAddBidButton();
 
-                  controller.onTapOfSaveButton();
+                  controller.onTapOfSaveButton(context);
                 },
                 height: Dimensions.h25,
                 width: Dimensions.w100,

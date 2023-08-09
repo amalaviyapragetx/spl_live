@@ -367,7 +367,7 @@ class HomeScreenUtils {
                             width: 4,
                           ),
                           Text(
-                            "+91 ${controller.userData.phoneNumber}",
+                            "+91 7769826748",
                             style: CustomTextStyle.textRobotoSansBold
                                 .copyWith(color: AppColors.white),
                           ),

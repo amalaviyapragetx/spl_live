@@ -10,6 +10,7 @@ import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../home_screen/controller/homepage_controller.dart';
 import 'controller/bottum_navigation_controller.dart';
+import 'package:spllive/models/passbook_page_model.dart';
 
 class PassBook extends StatelessWidget {
   PassBook({super.key});
@@ -23,13 +24,13 @@ class PassBook extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: size.height,
-      width: double.infinity,
+      //width: double.infinity,
       child: Column(
         children: [
           AppUtils().simpleAppbar(
             appBarTitle: "",
             leadingWidht: 900,
-            leading: Container(
+            leading: SizedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -66,251 +67,203 @@ class PassBook extends StatelessWidget {
               ),
             ),
           ),
-
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Container(
-                height: size.height - 210,
-                child: Expanded(
-                  child: Row(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.zero,
-                                height: Dimensions.h35,
-                                width: Dimensions.h200,
-                                decoration:
-                                    BoxDecoration(color: AppColors.wpColor1),
-                                child: const Center(
-                                    child: Text("Transaction Date")),
-                              ),
-                              SizedBox(
-                                width: Dimensions.w2,
-                              ),
-                              Container(
-                                padding: EdgeInsets.zero,
-                                height: Dimensions.h35,
-                                width: Dimensions.h200,
-                                decoration:
-                                    BoxDecoration(color: AppColors.wpColor1),
-                                child: const Center(child: Text("Perticulars")),
-                              ),
-                              SizedBox(
-                                width: Dimensions.w2,
-                              ),
-                              Container(
-                                padding: EdgeInsets.zero,
-                                height: Dimensions.h35,
-                                width: Dimensions.h200,
-                                decoration:
-                                    BoxDecoration(color: AppColors.wpColor1),
-                                child: const Center(
-                                    child: Text("Previous Amount")),
-                              ),
-
-                              SizedBox(
-                                width: Dimensions.w2,
-                              ),
-                              Container(
-                                padding: EdgeInsets.zero,
-                                height: Dimensions.h35,
-                                width: Dimensions.h200,
-                                decoration:
-                                    BoxDecoration(color: AppColors.wpColor1),
-                                child: const Center(
-                                    child: Text("Transaction Amount")),
-                              ),
-
-                              // SizedBox(
-                              //   width: Dimensions.w2,
-                              // ),
-                              // Amount(text: "Current Amount"),
-                            ],
-                          ),
-                          Container(
-                            height: 510,
-                            //  color: AppColors.appbarColor,
-                            width: 1000,
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount:
-                                  homeController.passBookModelData.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                var data = homeController.passBookModelData
-                                    .elementAt(index);
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Container(
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5.0),
-                                          child: Container(
-                                            padding: EdgeInsets.zero,
-                                            height: Dimensions.h40,
-                                            width: Dimensions.w210,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.white,
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(5),
-                                                  bottomLeft:
-                                                      Radius.circular(5),
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 2,
-                                                    spreadRadius: 0.2,
-                                                    offset: Offset(0, 2),
-                                                    color: AppColors.grey,
-                                                  )
-                                                ]),
-                                            child: Center(
-                                                child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                CommonUtils()
-                                                    .formatStringToDDMMYYYYHHMMA(
-                                                  data.createdAt.toString(),
-                                                ),
-                                              ),
-                                            )),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: Dimensions.w2,
-                                        ),
-                                        Amount(
-                                            text:
-                                                "${data.transactionType} (${data.marketOpenTime} : ${data.modeName} : ${data.bidType}) : ${data.id}"),
-                                        SizedBox(
-                                          width: Dimensions.w2,
-                                        ),
-                                        Amount(
-                                            text:
-                                                data.previousAmount.toString()),
-                                        SizedBox(
-                                          width: Dimensions.w2,
-                                        ),
-                                        Amount(
-                                          text: data.balance.toString(),
-                                        ),
-                                        // SizedBox(
-                                        //   width: Dimensions.w2,
-                                        // ),
-                                        // Amount(text: "Current Amount"),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: table(),
               ),
             ),
           ),
-          Container(
-            child: Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  BottomPage(text: "PREVIOUS"),
-                  verticalSpace,
-                  BottomPage(text: "(1/0)"),
-                  verticalSpace,
-                  BottomPage(text: "NEXT"),
-                ],
-              ),
+          Obx(
+            () => Row(
+              children: [
+                pageWidget(
+                  "previous",
+                  onTap: () {
+                    print("previous");
+                    homeController.prevPage();
+                  },
+                ),
+                pageWidget(
+                  "(${homeController.offset} / ${homeController.calculateTotalPages().toString()})",
+                ),
+                pageWidget(
+                  "NEXT",
+                  onTap: () {
+                    print("next");
+                    homeController.nextPage();
+                  },
+                ),
+              ],
             ),
           )
-          // const Expanded(child: SizedBox()),
-          // SingleChildScrollView(
-          //   scrollDirection: Axis.horizontal,
-          //   child: Padding(
-          //     padding: EdgeInsets.all(Dimensions.h5),
-          //     child: Row(
-          //       children: [],
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
   }
-}
 
-// ignore: camel_case_types
-class BottomPage extends StatelessWidget {
-  BottomPage({super.key, required this.text});
-  String text;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: Dimensions.h35,
-      width: Dimensions.w120 - 4,
-      decoration: BoxDecoration(
-          color: AppColors.wpColor1,
-          borderRadius: BorderRadius.circular(Dimensions.r5)),
-      child: Center(
-        child: Text(
-          text,
-          style: CustomTextStyle.textRobotoSansLight.copyWith(
-            color: AppColors.black,
+  Expanded pageWidget(String text, {Function()? onTap}) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            height: Dimensions.h35,
+            decoration: BoxDecoration(
+              color: AppColors.wpColor1,
+            ),
+            child: Center(
+              child: Text(
+                text.toUpperCase(),
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  color: AppColors.black,
+                ),
+              ),
+            ),
           ),
         ),
       ),
     );
   }
-}
 
-//  ignore: must_be_immutable
-class Amount extends StatelessWidget {
-  Amount({super.key, required this.text});
-  String text;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 2.0),
-      child: Container(
-        height: Dimensions.h40,
-        width: Dimensions.w210,
-        decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(0),
+  table() {
+    print(homeController.passBookModelData.toJson());
+    return Obx(
+      () => DataTable(
+        headingRowHeight: Dimensions.h45,
+        dataRowHeight: Dimensions.h45,
+        horizontalMargin: 0,
+        decoration: BoxDecoration(color: AppColors.white),
+        // columnSpacing: 30,
+        columns: [
+          dataColumns(
+            text: "Transaction Date",
+            width: Dimensions.w150,
+          ),
+          dataColumns(
+            text: "Particulers",
+            width: Dimensions.w300,
+          ),
+          dataColumns(
+            text: "Previous Amount",
+            width: Dimensions.w150,
+          ),
+          dataColumns(text: "Transaction Amount", width: Dimensions.w150),
+          dataColumns(text: "Current Amount", width: Dimensions.w150),
+        ],
+        columnSpacing: 1,
+
+        rows: List.generate(
+          homeController.passBookModelData.length,
+          (index) {
+            var data = homeController.passBookModelData.elementAt(index);
+            return DataRow(cells: [
+              dataCells(
+                width: Dimensions.w150,
+                textColor: AppColors.black,
+                text: CommonUtils().formatStringToDDMMYYYYHHMMA(
+                  data.createdAt.toString(),
+                ),
+              ),
+              dataCells(
+                  width: Dimensions.w300,
+                  textColor: AppColors.black,
+                  text: data.marketName == null
+                      ? "${data.transactionType ?? ""} (${data.marketTime ?? ""}) : ${data.id ?? ""}"
+                      : "${data.transactionType ?? ""} (${data.marketOpenTime ?? ""} : ${data.marketName ?? ""} : ${data.bidType ?? ""} ) : ${data.id ?? ""}"),
+              dataCells(
+                width: Dimensions.w150,
+                textColor: AppColors.black,
+                text: data.previousAmount.toString(),
+              ),
+              dataCells(
+                width: Dimensions.w150,
+                textColor: data.createdAt == "" ||
+                        data.createdAt == "null" ||
+                        data.createdAt == null
+                    ? AppColors.black
+                    : AppColors.redColor,
+                text: data.createdAt == "" ||
+                        data.createdAt == "null" ||
+                        data.createdAt == null
+                    ? data.createdAt.toString()
+                    : "-${data.debit.toString()}",
+              ),
+              dataCells(
+                width: Dimensions.w150,
+                textColor: AppColors.black,
+                text: data.balance.toString(),
+              ),
+            ]);
+          },
+        ).toList(),
+        showBottomBorder: true,
+      ),
+    );
+  }
+
+  DataColumn dataColumns({required String text, required double width}) {
+    return DataColumn(
+      label: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Container(
+          height: Dimensions.h45,
+          width: width,
+          decoration: BoxDecoration(
+            color: AppColors.wpColor1,
             boxShadow: [
               BoxShadow(
                 blurRadius: 2,
                 spreadRadius: 0.2,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
                 color: AppColors.grey,
               )
-            ]),
-        child: Center(
-          child: FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                text,
-                style: CustomTextStyle.textRobotoSansLight
-                    .copyWith(color: AppColors.black),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: CustomTextStyle.textRobotoSansMedium,
+            ),
+          ),
+        ),
+      ),
+      numeric: true,
+    );
+  }
+
+  DataCell dataCells(
+      {required String text, required Color textColor, required double width}) {
+    return DataCell(
+      Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Container(
+          height: Dimensions.h45,
+          width: width,
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 2,
+                spreadRadius: 0.2,
+                offset: const Offset(0, 2),
+                color: AppColors.grey,
+              )
+            ],
+          ),
+          child: Center(
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  text,
+                  style: CustomTextStyle.textRobotoSansMedium
+                      .copyWith(color: textColor),
+                ),
               ),
             ),
           ),
@@ -319,3 +272,151 @@ class Amount extends StatelessWidget {
     );
   }
 }
+
+// Row(
+//   children: [
+//     BottomPage(
+//       text: "PREVIOUS",
+//     ),
+//     const SizedBox(
+//       width: 50,
+//     ),
+//     BottomPage(
+//       text: "(1/0)",
+//     ),
+//     const SizedBox(
+//       width: 50,
+//     ),
+//     BottomPage(
+//       text: "NEXT",
+//     ),
+//   ],
+// )
+
+//   timeColumn() {
+//     return SingleChildScrollView(
+//       scrollDirection: Axis.horizontal,
+//       child: DataTable(
+//         headingRowHeight: Dimensions.h45,
+//         dataRowHeight: Dimensions.h45,
+//         horizontalMargin: 0,
+//         headingRowColor: MaterialStateColor.resolveWith(
+//           (states) => Colors.white,
+//         ),
+//         rows: List<DataRow>.generate(
+//           homeController.passBookModelData.length,
+//           (i) {
+//             return DataRow(
+//                 color: MaterialStateColor.resolveWith(
+//                   (states) => Colors.white,
+//                 ),
+//                 cells: List<DataCell>.generate(
+//                   homeController.passBookModelData.length,
+//                   (j) {
+//                     return DataCell(
+//                       Padding(
+//                         padding: const EdgeInsets.all(1.0),
+//                         child: Container(
+//                           height: Dimensions.h45,
+//                           width: Dimensions.w200,
+//                           decoration: BoxDecoration(
+//                             color: AppColors.white,
+//                             boxShadow: [
+//                               BoxShadow(
+//                                 blurRadius: 2,
+//                                 spreadRadius: 0.2,
+//                                 offset: Offset(0, 2),
+//                                 color: AppColors.grey,
+//                               )
+//                             ],
+//                           ),
+//                           child: Center(
+//                             child: Text(
+//                               "***-*",
+//                               textAlign: TextAlign.center,
+//                               // style: CustomTextStyle.textGothamLight.copyWith(
+//                               //   color: ColorConstant.textColorMain,
+//                               //   fontWeight: FontWeight.normal,
+//                               //   fontSize: Dimensions.sp16,
+//                               // ),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 ));
+//           },
+//         ),
+//         columnSpacing: 0,
+//         columns: List<DataColumn>.generate(
+//           homeController.passBookModelData.length,
+//           (index) {
+//             return DataColumn(
+//               label: Container(
+//                 height: Dimensions.h45,
+//                 width: Dimensions.w200,
+//                 decoration: BoxDecoration(
+//                     color: AppColors.wpColor1,
+//                     border: Border.all(color: AppColors.white)),
+//                 child: Center(
+//                   child: Text(
+//                     textAlign: TextAlign.center,
+//                     style: TextStyle(color: AppColors.white),
+//                     // style: CustomTextStyle.textGothamMedium.copyWith(
+//                     //   color: ColorConstant.white,
+//                     //   fontWeight: FontWeight.normal,
+//                     //   fontSize: Dimensions.sp14,
+//                     // ),5
+//                   ),
+//                 ),
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// ignore: camel_case_types
+
+// //  ignore: must_be_immutable
+// class Amount extends StatelessWidget {
+//   Amount({super.key, required this.text});
+//   String text;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(left: 2.0),
+//       child: Container(
+//         height: Dimensions.h40,
+//         width: Dimensions.w210,
+//         decoration: BoxDecoration(
+//             color: AppColors.white,
+//             borderRadius: BorderRadius.circular(0),
+//             boxShadow: [
+//               BoxShadow(
+//                 blurRadius: 2,
+//                 spreadRadius: 0.2,
+//                 offset: Offset(0, 2),
+//                 color: AppColors.grey,
+//               )
+//             ]),
+//         child: Center(
+//           child: FittedBox(
+//             fit: BoxFit.fitWidth,
+//             child: Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//               child: Text(
+//                 text,
+//                 style: CustomTextStyle.textRobotoSansLight
+//                     .copyWith(color: AppColors.black),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

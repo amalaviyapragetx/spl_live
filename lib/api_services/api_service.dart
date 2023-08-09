@@ -278,6 +278,7 @@ class ApiService extends GetConnect {
   Future<dynamic> createStarLineMarketBid(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
+    print("Starline body $body");
     final response = await post(
       ApiUtils.createStarLineMarketBid,
       body,

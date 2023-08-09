@@ -17,8 +17,8 @@ import '../../Local Storage.dart';
 class GamePageController extends GetxController {
   //RxList<String> filteredItems = RxList<String>();
   RxInt containerWidget = 0.obs;
-  var coinController = TextEditingController();
-  var searchController = TextEditingController();
+  TextEditingController coinController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   RxBool isEnable = false.obs;
   RxBool showNumbersLine = false.obs;
   GameMode gameMode = GameMode();
@@ -80,6 +80,8 @@ class GamePageController extends GetxController {
       }
     });
   }
+
+  // onchangeBulk(String val) {}
 
   Future<void> loadJsonFile() async {
     final String response =

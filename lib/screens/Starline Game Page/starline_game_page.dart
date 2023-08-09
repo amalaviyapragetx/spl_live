@@ -105,24 +105,25 @@ class StarLineGamePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: RoundedCornerEditTextWithIcon(
-                          tapTextStyle: AppColors.appbarColor,
-                          hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                          width: size.width / 2,
-                          textAlign: TextAlign.center,
-                          controller: controller.coinController,
-                          textStyle: CustomTextStyle.textPTsansMedium.copyWith(
-                            color: AppColors.black.withOpacity(0.8),
-                            fontWeight: FontWeight.bold,
-                            fontSize: Dimensions.h15,
-                          ),
+                        child: RoundedCornerEditTextWithIcon2(
+                          formatter: [FilteringTextInputFormatter.digitsOnly],
+                          tapTextStyle: AppColors.black,
+                          hintTextColor: AppColors.black.withOpacity(0.5),
+                          //textAlign: TextAlign.center,
                           hintTextStyle:
                               CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.black.withOpacity(0.5),
                             fontSize: Dimensions.h15,
                             fontWeight: FontWeight.bold,
                           ),
-                          formatter: [FilteringTextInputFormatter.digitsOnly],
+                          textStyle:
+                              CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.black.withOpacity(0.8),
+                            fontSize: Dimensions.h15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLength: 5,
+                          width: size.width / 2,
                           onChanged: (val) {
                             if (val != null) {
                               print("111111111111");
@@ -155,16 +156,75 @@ class StarLineGamePage extends StatelessWidget {
                               }
                             }
                           },
-                          autofocus: true,
-                          maxLength: 5,
+                          controller: controller.coinController,
                           hintText: "Enter Points",
-                          contentPadding: const EdgeInsets.only(right: 40),
                           imagePath: "",
-                          containerBackColor: AppColors.black,
-                          iconColor: AppColors.white,
+                          textAlign: TextAlign.center,
+                          contentPadding: EdgeInsets.only(right: 40),
+                          containerBackColor: AppColors.transparent,
                           height: Dimensions.h35,
                           keyboardType: TextInputType.number,
                         ),
+                        // child: RoundedCornerEditTextWithIcon(
+                        //   tapTextStyle: AppColors.appbarColor,
+                        //   hintTextColor: AppColors.appbarColor.withOpacity(0.5),
+                        //   width: size.width / 2,
+                        //   textAlign: TextAlign.center,
+                        //   controller: controller.coinController,
+                        //   textStyle: CustomTextStyle.textPTsansMedium.copyWith(
+                        //     color: AppColors.black.withOpacity(0.8),
+                        //     fontWeight: FontWeight.bold,
+                        //     fontSize: Dimensions.h15,
+                        //   ),
+                        //   hintTextStyle:
+                        //       CustomTextStyle.textRobotoSansMedium.copyWith(
+                        //     color: AppColors.black.withOpacity(0.5),
+                        //     fontSize: Dimensions.h15,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        //   formatter: [FilteringTextInputFormatter.digitsOnly],
+                        //   onChanged: (val) {
+                        //     if (val != null) {
+                        //       print("111111111111");
+                        //       if (val.characters.characterAt(0) ==
+                        //           Characters("0")) {
+                        //         print("22222222222222");
+                        //         // we need to remove the first char
+                        //         controller.coinController.text =
+                        //             val.substring(1);
+                        //         // we need to move the cursor
+                        //         controller.coinController.selection =
+                        //             TextSelection.collapsed(
+                        //           offset: controller.coinController.text.length,
+                        //         );
+                        //       } else if (int.parse(val) > 10000) {
+                        //         AppUtils.showErrorSnackBar(
+                        //             bodyText:
+                        //                 "You can not add more than 10000 points");
+                        //       } else {
+                        //         if (int.parse(val) >= 1) {
+                        //           print("333333333333333   ${val.length}");
+                        //           controller.validCoinsEntered.value = true;
+                        //           controller.isEnable.value = true;
+                        //         } else {
+                        //           print("444444444444444444   ${val.length}");
+                        //           controller.ondebounce();
+                        //           controller.validCoinsEntered.value = false;
+                        //           controller.isEnable.value = true;
+                        //         }
+                        //       }
+                        //     }
+                        //   },
+                        //   autofocus: true,
+                        //   maxLength: 5,
+                        //   hintText: "Enter Points",
+                        //   contentPadding: const EdgeInsets.only(right: 40),
+                        //   imagePath: "",
+                        //   containerBackColor: AppColors.black,
+                        //   iconColor: AppColors.white,
+                        //   height: Dimensions.h35,
+                        //   keyboardType: TextInputType.number,
+                        // ),
                       ),
                     ),
                     SizedBox(
@@ -534,7 +594,6 @@ class StarLineGamePage extends StatelessWidget {
                   // controller.coinsFocusNode.unfocus();
                   // controller.openFocusNode.requestFocus();
                   // controller.onTapOfAddBidButton();
-
                   controller.onTapOfSaveButton();
                 },
                 height: Dimensions.h25,

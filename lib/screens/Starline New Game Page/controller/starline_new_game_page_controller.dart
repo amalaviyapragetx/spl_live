@@ -12,6 +12,7 @@ import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
+import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
 import '../../../routes/app_routes_name.dart';
@@ -40,7 +41,7 @@ class StarlineNewGamePageController extends GetxController {
   String addedNormalBidValue = "";
   RxInt panaControllerLength = 2.obs;
   Rx<StarlineBidRequestModel> requestModel = StarlineBidRequestModel().obs;
-  // Rx<StarlineMarketData> marketData = StarlineMarketData().obs;
+//  Rx<StarlineMarketData> marketData = StarlineMarketData().obs;
   RxBool isBulkMode = false.obs;
   var spdptpList = [];
   var selectedBidsList = <StarLineBids>[].obs;
@@ -58,6 +59,21 @@ class StarlineNewGamePageController extends GetxController {
     getArguments();
     super.onInit();
     focusNode = FocusNode();
+  }
+
+  @override
+  void onClose() {
+    requestModel.value.bids?.clear();
+    selectedBidsList.clear();
+  }
+
+  @override
+  void dispose() {
+    leftAnkController.dispose();
+    rightAnkController.dispose();
+    middleAnkController.dispose();
+    coinController.dispose();
+    super.dispose();
   }
 
   void validateEnteredDigit(bool validate, String value) {
@@ -98,6 +114,8 @@ class StarlineNewGamePageController extends GetxController {
             TextButton(
               onPressed: () {
                 createMarketBidApi();
+                selectedBidsList.clear();
+                coinController.clear();
               },
               child: Text(
                 'OKAY',
@@ -144,7 +162,7 @@ class StarlineNewGamePageController extends GetxController {
                 coins: coins,
                 starlineGameId: gameMode.value.id,
                 remarks:
-                    "You invested At ${marketName.value} on $bidNo (${gameMode.value.name})",
+                    "You invested At ${marketData.value.time} on $bidNo (${gameMode.value.name})",
               ),
             );
           }
@@ -174,7 +192,7 @@ class StarlineNewGamePageController extends GetxController {
                 coins: coins,
                 starlineGameId: gameMode.value.id,
                 remarks:
-                    "You invested At ${marketName.value} on $bidNo (${gameMode.value.name})",
+                    "You invested At ${marketData.value.time} on $bidNo (${gameMode.value.name})",
               ),
             );
           }
@@ -200,13 +218,16 @@ class StarlineNewGamePageController extends GetxController {
   }
 
   void createMarketBidApi() async {
+    print(marketData.value);
     ApiService()
         .createStarLineMarketBid(requestModel.value.toJson())
         .then((value) async {
       debugPrint("create starline bid api response :- $value");
       if (value['status']) {
+        selectedBidsList.clear();
         Get.offAndToNamed(AppRoutName.dashBoardPage);
         if (value['data'] == false) {
+          selectedBidsList.clear();
           Get.offAndToNamed(AppRoutName.dashBoardPage);
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
@@ -237,11 +258,19 @@ class StarlineNewGamePageController extends GetxController {
   Future<void> getArguments() async {
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
-    getBidData = argument['getBidData'];
-    getBIdType = argument['getBIdType'];
+    requestModel.value.bids = argument['bidsList'];
+    print("req model : ${requestModel.value.toJson()}");
+    requestModel.refresh();
+    _calculateTotalAmount();
+    requestModel.value.dailyStarlineMarketId = marketData.value.id;
+    var data = await LocalStorage.read(ConstantsVariables.userData);
+    UserDetailsModel userData = UserDetailsModel.fromJson(data);
+    requestModel.value.userId = userData.id;
+    print(requestModel.value.toJson());
     print(getBIdType);
     await loadJsonFile();
     List<String> _tempValidationList = [];
+
     switch (gameMode.value.name) {
       case "Single Ank":
         // showNumbersLine.value = false;
@@ -346,6 +375,8 @@ class StarlineNewGamePageController extends GetxController {
 
   void onDeleteBids(int index) {
     selectedBidsList.remove(selectedBidsList[index]);
+    // LocalStorage.write(ConstantsVariables.bidsList,
+    //     requestModel.value.bids!.map((v) => v.toJson()).toList());
     selectedBidsList.refresh();
     _calculateTotalAmount();
   }
@@ -404,7 +435,7 @@ class StarlineNewGamePageController extends GetxController {
                 coins: int.parse(coinController.text),
                 starlineGameId: gameMode.value.id,
                 remarks:
-                    "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                    "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
               ),
             );
           }
@@ -424,7 +455,7 @@ class StarlineNewGamePageController extends GetxController {
                 coins: int.parse(coinController.text),
                 starlineGameId: gameMode.value.id,
                 remarks:
-                    "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                    "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
               ),
             );
           }
@@ -480,22 +511,10 @@ class StarlineNewGamePageController extends GetxController {
               coins: int.parse(coinController.text),
               starlineGameId: gameMode.value.id,
               remarks:
-                  "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                  "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
             ),
           );
         }
-
-        // selectedBidsList.add(
-        //   StarLineBids(
-        //     bidNo: addedNormalBidValue,
-        //     coins: int.parse(coinController.text),
-        //     starlineGameId: gameMode.value.id,
-        //     // gameModeName: gameMode.value.name,
-        //     // subGameId: gameMode.value.id,
-        //     remarks:
-        //         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-        //   ),
-        // );
         print("selectebidlist : $selectedBidsList");
         autoCompleteFieldController.clear();
         coinController.clear();
@@ -560,67 +579,8 @@ class StarlineNewGamePageController extends GetxController {
                     bodyText:
                         "Please enter valid ${gameMode.value.name!.toLowerCase()}",
                   );
-                  // print("===== spdptpList empty =================");
-                  // print(spdptpList);
-                  // for (var i = 0; i < spdptpList.length; i++) {
-                  //   selectedBidsList.add(
-                  //     StarLineBids(
-                  //       bidNo: addedNormalBidValue,
-                  //       coins: int.parse(coinController.text),
-                  //       starlineGameId: gameMode.value.id,
-                  //       // gameModeName: gameMode.value.name,
-                  //       // subGameId: gameMode.value.id,
-                  //       remarks:
-                  //           "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                  //     ),
-                  //   );
-                  // }
                 } else {
                   print("======= List not empty =====");
-                  // print(spdptpList);
-                  //  var gameArr = gameModeList;
-                  // print("Jevin");
-                  // print(gameModeList);
-//               for (var i = 0; i < spdptpList.length; i++) {
-//                 print("spdptpList${spdptpList[i]}");
-//                 //     Roshan
-//                 //   int checkPanaType(String digit) {
-//                 //     int count = 1;
-//                 //     for (int i = 0; i < digit.length; i++) {
-//                 //       if (digit.lastIndexOf(digit[i]) != i) {
-//                 //         count += 1;
-//                 //       }
-//                 //     }
-//                 //     return count;
-//                 //   }
-
-//                 //   String determinePanaType(String digit) {
-//                 //     int panaType = checkPanaType(digit);
-//                 //     if (panaType == 1) {
-//                 //       return 'singlePana';
-//                 //     } else if (panaType == 2) {
-//                 //       return 'doublePana';
-//                 //     } else {
-//                 //       return 'tripplePana';
-//                 //     }
-//                 //   }
-
-//                 // check pana type
-//                 // var count = 1;
-//                 // for (var i = 0; i < spdptpList.length; i++) {
-//                 //   if (spdptpList.lastIndexOf(spdptpList[i]) != i) {
-//                 //     count += 1;
-//                 //   }
-//                 // }
-//                 // if (count == 1) {
-//                 //   // singlePana
-//                 // } else if (count == 2) {
-//                 //   // doublePana
-//                 // } else {
-//                 //   // tripplePana
-//                 // }
-//                 // }
-//                 //   print(spdptpList[i].toString());
                   for (var i = 0; i < spdptpList.length; i++) {
                     addedNormalBidValue = spdptpList[i].toString();
                     var existingIndex = selectedBidsList.indexWhere(
@@ -638,7 +598,7 @@ class StarlineNewGamePageController extends GetxController {
                           coins: int.parse(coinController.text),
                           starlineGameId: gameMode.value.id,
                           remarks:
-                              "You invested At ${marketName.value} on ${spdptpList[i]} (${gameMode.value.name})",
+                              "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
                         ),
                       );
                     }
@@ -759,7 +719,7 @@ class StarlineNewGamePageController extends GetxController {
                         coins: int.parse(coinController.text),
                         starlineGameId: gameMode.value.id,
                         remarks:
-                            "You invested At ${marketName.value} on ${spdptpList[i]} (${gameMode.value.name})",
+                            "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
                       ),
                     );
                   }
@@ -783,3 +743,12 @@ class StarlineNewGamePageController extends GetxController {
     }
   }
 }
+
+
+// ,
+//         {
+//             "starlineGameId": 2,
+//             "bidNo": "895",
+//             "coins": 10,
+//             "remarks": "Starline 18:00:00 859 (Single Pana)"
+//         }

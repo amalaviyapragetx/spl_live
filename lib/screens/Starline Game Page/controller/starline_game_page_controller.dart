@@ -22,7 +22,7 @@ class StarLineGamePageController extends GetxController {
   RxBool showNumbersLine = false.obs;
   RxBool validCoinsEntered = false.obs;
   Timer? _debounce;
-  RxString totalAmount = "00".obs;
+  RxString totalAmount = "0".obs;
   int selectedIndexOfDigitRow = 0;
   Rx<StarLineGameMod> gameMode = StarLineGameMod().obs;
   Rx<StarlineMarketData> marketData = StarlineMarketData().obs;
@@ -75,9 +75,7 @@ class StarLineGamePageController extends GetxController {
       focusNode.dispose();
     }
     coinController.dispose();
-    // for (var controller in coinController) {
-    //
-    // }
+
     super.onClose();
   }
 
@@ -85,9 +83,6 @@ class StarLineGamePageController extends GetxController {
   void dispose() {
     super.dispose();
     searchController.dispose();
-    // for (var i = 0; i < coinController.length; i++) {
-    //   coinController[i].dispose();
-    // }
   }
 
   ondebounce() {
@@ -216,19 +211,12 @@ class StarLineGamePageController extends GetxController {
         "bidsList": selectedBidsList,
         "gameMode": gameMode.value,
         "marketData": marketData.value,
-        // "biddingType": biddingType.value,
-        // "marketName": marketName.value,
-        // "marketId": marketId,
-        // "totalAmount": totalAmount.value,
       })?.then((value) => selectedBidsList.clear());
       for (int i = 0; i < digitList.length; i++) {
         digitList[i].isSelected = false;
       }
       digitList.refresh();
       coinController.clear();
-      // for (int i = 0; i < coinController.length; i++) {
-      //   coinController[i].clear();
-      // }
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Please add some bids!",

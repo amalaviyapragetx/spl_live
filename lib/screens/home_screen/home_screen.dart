@@ -61,6 +61,8 @@ class DashBoardPage extends StatelessWidget {
               //   appPosition = controller.pageWidget.value;
             },
             onTapPassbook: () {
+              controller.getPassBookData(
+                  lazyLoad: false, offset: controller.offset.value.toString());
               controller.pageWidget.value = 3;
               controller.currentIndex.value = 3;
             },

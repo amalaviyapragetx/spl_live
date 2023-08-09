@@ -207,8 +207,11 @@ class StarlineBidsPage extends StatelessWidget {
                                   borderWidth: 1,
                                   textStyle:
                                       CustomTextStyle.textRobotoSansMedium,
-                                  onTap: () => controller
-                                      .showConfirmationDialog(context),
+                                  onTap: () {
+                                    controller.showConfirmationDialog(context);
+                                    controller.requestModel.value.bids?.clear();
+                                    controller.totalAmount.value = "0";
+                                  },
                                   //onTap: () {},
                                   height: Dimensions.h30,
                                   width: double.infinity,

@@ -6,7 +6,7 @@ class PassbookModel {
   PassbookModel({
     String? message,
     bool? status,
-    Data? data,
+    Data3? data,
   }) {
     _message = message;
     _status = status;
@@ -16,15 +16,15 @@ class PassbookModel {
   PassbookModel.fromJson(dynamic json) {
     _message = json['message'];
     _status = json['status'];
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    _data = json['data'] != null ? Data3.fromJson(json['data']) : null;
   }
   String? _message;
   bool? _status;
-  Data? _data;
+  Data3? _data;
   PassbookModel copyWith({
     String? message,
     bool? status,
-    Data? data,
+    Data3? data,
   }) =>
       PassbookModel(
         message: message ?? _message,
@@ -33,7 +33,7 @@ class PassbookModel {
       );
   String? get message => _message;
   bool? get status => _status;
-  Data? get data => _data;
+  Data3? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -49,8 +49,8 @@ class PassbookModel {
 /// count : 21
 /// rows : [{"id":"59","UserId":2,"ProcessedBy":"admin","BidType":null,"BidNo":null,"TransactionType":"Debit","Debit":25,"Credit":null,"PreviousAmount":140,"Remarks":"Amount debited","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":115,"createdAt":"2023-08-08T09:30:42.622Z"},{"id":"58","UserId":2,"ProcessedBy":"admin","BidType":null,"BidNo":null,"TransactionType":"Deposit","Debit":null,"Credit":5,"PreviousAmount":135,"Remarks":"Amount credited","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":140,"createdAt":"2023-08-08T09:30:10.440Z"},{"id":"57","UserId":2,"ProcessedBy":"admin","BidType":null,"BidNo":null,"TransactionType":"Deposit","Debit":null,"Credit":55,"PreviousAmount":80,"Remarks":"Amount credited","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":135,"createdAt":"2023-08-08T09:28:48.348Z"},{"id":"55","UserId":2,"ProcessedBy":"","BidType":"Open","BidNo":"8","TransactionType":"Bid","Debit":20,"Credit":null,"PreviousAmount":100,"Remarks":"You invested At Shridevi (Singal Ank)","MarketName":"MidNightMarket - 1","MarketOpenTime":"23:30:00","MarketCloseTime":"00:30:00","ModeName":"Jodi Digit","Balance":80,"createdAt":"2023-08-02T12:32:27.195Z"},{"id":"54","UserId":2,"ProcessedBy":"subadmin1","BidType":null,"BidNo":null,"TransactionType":"Deposit","Debit":null,"Credit":100,"PreviousAmount":0,"Remarks":"Amount credited","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":100,"createdAt":"2023-08-02T12:12:31.849Z"},{"id":"53","UserId":2,"ProcessedBy":"","BidType":null,"BidNo":null,"TransactionType":"Withdraw","Debit":990,"Credit":null,"PreviousAmount":990,"Remarks":"Withdrawal of 990 coins On 02-08-2023","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":0,"createdAt":"2023-08-02T12:08:24.118Z"},{"id":"52","UserId":2,"ProcessedBy":"","BidType":null,"BidNo":null,"TransactionType":"Withdraw","Debit":990,"Credit":null,"PreviousAmount":-10,"Remarks":"Withdrawal of 990 coins On 02-08-2023","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":-1000,"createdAt":"2023-08-02T12:06:13.477Z"},{"id":"51","UserId":2,"ProcessedBy":"","BidType":null,"BidNo":null,"TransactionType":"Withdraw","Debit":990,"Credit":null,"PreviousAmount":260,"Remarks":"Withdrawal of 990 coins On 02-08-2023","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":-730,"createdAt":"2023-08-02T12:03:36.139Z"},{"id":"50","UserId":2,"ProcessedBy":"","BidType":null,"BidNo":null,"TransactionType":"Withdraw","Debit":990,"Credit":null,"PreviousAmount":1260,"Remarks":"Withdrawal of 990 coins On 02-08-2023","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":270,"createdAt":"2023-08-02T11:53:12.599Z"},{"id":"48","UserId":2,"ProcessedBy":"subadmin1","BidType":null,"BidNo":null,"TransactionType":"DebitToCredit","Debit":230,"Credit":null,"PreviousAmount":1270,"Remarks":"230 transferred to null","MarketName":null,"MarketOpenTime":null,"MarketCloseTime":null,"ModeName":"","Balance":1270,"createdAt":"2023-08-02T09:55:06.061Z"}]
 
-class Data {
-  Data({
+class Data3 {
+  Data3({
     num? count,
     List<Rows>? rows,
   }) {
@@ -58,7 +58,7 @@ class Data {
     _rows = rows;
   }
 
-  Data.fromJson(dynamic json) {
+  Data3.fromJson(dynamic json) {
     _count = json['count'];
     if (json['rows'] != null) {
       _rows = [];
@@ -69,11 +69,11 @@ class Data {
   }
   num? _count;
   List<Rows>? _rows;
-  Data copyWith({
+  Data3 copyWith({
     num? count,
     List<Rows>? rows,
   }) =>
-      Data(
+      Data3(
         count: count ?? _count,
         rows: rows ?? _rows,
       );
@@ -125,6 +125,7 @@ class Rows {
     String? modeName,
     num? balance,
     String? createdAt,
+    String? marketTime,
   }) {
     _id = id;
     _userId = userId;
@@ -142,6 +143,7 @@ class Rows {
     _modeName = modeName;
     _balance = balance;
     _createdAt = createdAt;
+    _marketTime = marketTime;
   }
 
   Rows.fromJson(dynamic json) {
@@ -161,6 +163,7 @@ class Rows {
     _modeName = json['ModeName'];
     _balance = json['Balance'];
     _createdAt = json['createdAt'];
+    _marketTime = json['MarketTime'];
   }
   String? _id;
   num? _userId;
@@ -178,6 +181,7 @@ class Rows {
   String? _modeName;
   num? _balance;
   String? _createdAt;
+  String? _marketTime;
   Rows copyWith({
     String? id,
     num? userId,
@@ -195,6 +199,7 @@ class Rows {
     String? modeName,
     num? balance,
     String? createdAt,
+    String? marketTime,
   }) =>
       Rows(
         id: id ?? _id,
@@ -213,6 +218,7 @@ class Rows {
         modeName: modeName ?? _modeName,
         balance: balance ?? _balance,
         createdAt: createdAt ?? _createdAt,
+        marketTime: marketTime ?? _marketTime,
       );
   String? get id => _id;
   num? get userId => _userId;
@@ -230,6 +236,7 @@ class Rows {
   String? get modeName => _modeName;
   num? get balance => _balance;
   String? get createdAt => _createdAt;
+  String? get marketTime => _marketTime;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -249,6 +256,7 @@ class Rows {
     map['ModeName'] = _modeName;
     map['Balance'] = _balance;
     map['createdAt'] = _createdAt;
+    map['MarketTime'] = _marketTime;
     return map;
   }
 }

@@ -1,13 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../api_services/api_urls.dart';
+import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
+import '../../../helper_files/custom_text_style.dart';
+import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
@@ -318,6 +319,7 @@ class NormalGamePageController extends GetxController {
         // Get.back();
         // Get.back();
         if (value['data'] == false) {
+          selectedBidsList.clear();
           Get.offAndToNamed(AppRoutName.dashBoardPage);
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
@@ -352,10 +354,57 @@ class NormalGamePageController extends GetxController {
     _calculateTotalAmount();
   }
 
-  Future<void> onTapOfSaveButton() async {
+  void showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm!'),
+          content: Text(
+            'Do you really wish to submit?',
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
+              color: AppColors.grey,
+              fontSize: Dimensions.h14,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Handle cancel button press
+                Get.back();
+              },
+              child: Text(
+                'CANCLE',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                createMarketBidApi();
+                selectedBidsList.clear();
+                coinController.clear();
+              },
+              child: Text(
+                'OKAY',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> onTapOfSaveButton(context) async {
     if (selectedBidsList.isNotEmpty) {
       requestModel.value.bids = selectedBidsList;
-      createMarketBidApi();
+      showConfirmationDialog(context);
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Please add some bids!",
