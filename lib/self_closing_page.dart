@@ -124,8 +124,8 @@ class InactivityController extends GetxController {
         ],
       ),
       actions: [
-        TextButton(
-          onPressed: () async {
+        InkWell(
+          onTap: () async {
             bool alreadyLoggedIn = await getStoredUserData();
             bool isActive =
                 await LocalStorage.read(ConstantsVariables.isActive) ?? false;
@@ -134,15 +134,24 @@ class InactivityController extends GetxController {
                 await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
             if (alreadyLoggedIn) {
               if (isActive && isVerified) {
-                Get.offAllNamed(AppRoutName.mPINPage,
-                    arguments: {"id": _userDetailsModel.id});
+                Get.offAllNamed(
+                  AppRoutName.mPINPage,
+                  arguments: {"id": _userDetailsModel.id},
+                );
               }
             }
           },
-          child: Text(
-            'OK',
-            style: CustomTextStyle.textRobotoSansBold.copyWith(
-              color: AppColors.appbarColor,
+          child: Container(
+            color: AppColors.appbarColor,
+            height: Dimensions.h40,
+            width: Dimensions.w200,
+            child: Center(
+              child: Text(
+                'OK',
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: AppColors.white,
+                ),
+              ),
             ),
           ),
         ),

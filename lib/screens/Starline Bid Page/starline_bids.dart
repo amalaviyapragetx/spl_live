@@ -18,6 +18,7 @@ class StarlineBidsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // print(controller.requestModel.value.bids!.length);
+    // controller.showData();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppUtils().simpleAppbar(

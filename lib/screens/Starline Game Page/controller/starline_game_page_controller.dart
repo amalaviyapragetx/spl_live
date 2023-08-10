@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/models/starline_chart_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -27,7 +29,7 @@ class StarLineGamePageController extends GetxController {
   Rx<StarLineGameMod> gameMode = StarLineGameMod().obs;
   Rx<StarlineMarketData> marketData = StarlineMarketData().obs;
   var argument = Get.arguments;
-  var selectedBidsList = <StarLineBids>[];
+  RxList<StarLineBids> selectedBidsList = <StarLineBids>[].obs;
   JsonFileModel jsonModel = JsonFileModel();
   var digitList = <DigitListModelOffline>[].obs;
   var singleAnkList = <DigitListModelOffline>[];
@@ -62,6 +64,7 @@ class StarLineGamePageController extends GetxController {
   final Rx<Color> containerBorderColor = AppColors.black.obs;
   RxList<Color> containerBorderColor2 = <Color>[].obs;
   RxInt panaControllerLength = 2.obs;
+  RxList<StarLineBids> bidList = <StarLineBids>[].obs;
   // var arguments = Get.arguments;
   @override
   void onInit() {
@@ -135,6 +138,7 @@ class StarLineGamePageController extends GetxController {
   // }
 
   Future<void> getArguments() async {
+    bidList = await LocalStorage.read(ConstantsVariables.starlineBidsList);
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
     getBidData = argument['getBidData'];
@@ -203,11 +207,40 @@ class StarLineGamePageController extends GetxController {
     // requestModel.dailyMarketId = marketId;
   }
 
-  void onTapOfSaveButton() async {
+  Future<void> onTapOfSaveButton() async {
     if (selectedBidsList.isNotEmpty) {
+      // if (bidList.isNotEmpty) {
+      //   for (var i = 0; i < bidList.length; i++) {
+      //     // selectedBidsList.add(bidsList[i]);
+      //     var existingIndex = selectedBidsList.indexOf(bidList[i]);
+      //     selectedBidsList.add(bidList[i]);
+      //   }
+      //   print("========= jevin ================ ${selectedBidsList.toList()}");
+
+      //   await LocalStorage.write(
+      //       ConstantsVariables.starlineBidsList, selectedBidsList);
+      //   Timer(const Duration(milliseconds: 900), () {
+      //     Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
+      //       "bidsList": selectedBidsList,
+      //       "gameMode": gameMode.value,
+      //       "marketData": marketData.value,
+      //     })?.then((value) {
+      //       print("selectedBidsList $selectedBidsList");
+      //       selectedBidsList.clear();
+      //     });
+      //     for (int i = 0; i < digitList.length; i++) {
+      //       digitList[i].isSelected = false;
+      //     }
+
+      //     digitList.refresh();
+      //     coinController.clear();
+      //   });
+      //   getArguments();
+      // } else {
       //   await LocalStorage.write(ConstantsVariables.boolData, true);
-      print("============ ${selectedBidsList.toList()}");
-      Get.toNamed(AppRoutName.starlineBidpage, arguments: {
+      await LocalStorage.write(
+          ConstantsVariables.starlineBidsList, selectedBidsList);
+      Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
         "bidsList": selectedBidsList,
         "gameMode": gameMode.value,
         "marketData": marketData.value,
@@ -217,6 +250,8 @@ class StarLineGamePageController extends GetxController {
       }
       digitList.refresh();
       coinController.clear();
+      getArguments();
+      // }
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Please add some bids!",

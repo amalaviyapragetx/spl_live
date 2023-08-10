@@ -172,8 +172,8 @@ class PassBook extends StatelessWidget {
                   width: Dimensions.w300,
                   textColor: AppColors.black,
                   text: data.marketName == null
-                      ? "${data.transactionType ?? ""} (${data.marketTime ?? ""}) : ${data.id ?? ""}"
-                      : "${data.transactionType ?? ""} (${data.marketOpenTime ?? ""} : ${data.marketName ?? ""} : ${data.bidType ?? ""} ) : ${data.id ?? ""}"),
+                      ? "${data.transactionType ?? ""} ( ${data.marketTime ?? ""} ) : ${data.id ?? ""}"
+                      : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} : ${data.bidType ?? ""} ) : ${data.id ?? ""}"),
               dataCells(
                 width: Dimensions.w150,
                 textColor: AppColors.black,

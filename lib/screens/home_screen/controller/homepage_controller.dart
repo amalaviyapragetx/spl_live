@@ -12,6 +12,8 @@ import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
+import '../../../models/commun_models/bid_request_model.dart';
+import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
@@ -58,7 +60,8 @@ class HomePageController extends GetxController {
   //     <NormalMarketHistoryModel>[].obs;
   RxBool isStarline2 = false.obs;
   RxInt offset = 0.obs;
-
+  RxList<Bids> selectedBidsList = <Bids>[].obs;
+  RxList<StarLineBids> bidList = <StarLineBids>[].obs;
   @override
   void onInit() {
     setboolData();
@@ -71,7 +74,9 @@ class HomePageController extends GetxController {
 
   void setboolData() async {
     await LocalStorage.write(ConstantsVariables.boolData, false);
-    // await LocalStorage.write(ConstantsVariables.withDrawal, false);
+    await LocalStorage.write(ConstantsVariables.playMore, true);
+    await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+    await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
   }
 
   void callMarketsApi() {
@@ -693,32 +698,40 @@ class HomePageController extends GetxController {
   }
 
   int calculateTotalPages() {
-    return (passbookCount.value / itemLimit).ceil();
+    return (passbookCount.value / itemLimit).ceil() - 1;
   }
+
+  var num = 0;
 
   void nextPage() {
     if (offset.value < calculateTotalPages()) {
-      print("offset.value ${offset.value}");
+      ///  print("offset.value ${offset.value}");
       passBookModelData.clear();
       offset.value++;
-      print("offset.value ${offset.value}");
-      getPassBookData(lazyLoad: false, offset: offset.value.toString());
-      print("offset.value ${offset.value}");
-      passBookModelData.refresh();
+
+      num = num + 10;
+      print("nextpage $num");
+      //  print("offset.value ${offset.value}");
+      getPassBookData(lazyLoad: false, offset: num.toString());
+      //  print("offset.value ${offset.value}");
+      // passBookModelData.refresh();
       update();
     }
   }
 
   void prevPage() {
     if (offset.value > 0) {
-      print("offset.value ${offset.value}");
+      //print("offset.value ${offset.value}");
       passBookModelData.clear();
       offset.value--;
-      print("offset.value ${offset.value}");
-      getPassBookData(lazyLoad: false, offset: offset.value.toString());
-      print("offset.value ${offset.value}");
+      num = num - 10;
+      print("prevPage : $num");
+      //print("offset.value ${offset.value}");
+      getPassBookData(lazyLoad: false, offset: num.toString());
+      // print("offset.value ${offset.value}");
       passBookModelData.refresh();
       update();
     }
+    print("prevPage : $num");
   }
 }

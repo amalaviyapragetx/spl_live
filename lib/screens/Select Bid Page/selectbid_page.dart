@@ -17,6 +17,7 @@ class SelectedBidsPage extends StatelessWidget {
   // var controller = Get.put(SelectBidPageController());
   @override
   Widget build(BuildContext context) {
+    // controller.newBidListreaddata();
     return Obx(
       () => Scaffold(
         appBar: AppUtils().simpleAppbar(

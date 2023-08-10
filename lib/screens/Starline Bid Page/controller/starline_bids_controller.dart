@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -20,6 +21,7 @@ class StarlineBidsController extends GetxController {
   var arguments = Get.arguments;
   RxString totalAmount = "0".obs;
   Rx<StarLineGameMod> gameMode = StarLineGameMod().obs;
+  RxList<StarLineBids> bidList = <StarLineBids>[].obs;
 
   @override
   void onInit() async {
@@ -27,10 +29,15 @@ class StarlineBidsController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    requestModel.value.bids?.clear();
-  }
+  // @override
+  // void onClose() {
+  //   requestModel.value.bids?.clear();
+  // }
+
+  // showData() async {
+  //   var a = await LocalStorage.read(ConstantsVariables.starlineBidsList);
+  //   print("======================== $a =========================");
+  // }
 
   Future<void> getArguments() async {
     gameMode.value = arguments['gameMode'];
@@ -136,6 +143,9 @@ class StarlineBidsController extends GetxController {
         LocalStorage.remove(ConstantsVariables.bidsList);
         LocalStorage.remove(ConstantsVariables.marketName);
         LocalStorage.remove(ConstantsVariables.biddingType);
+        final walletController = Get.find<WalletController>();
+        walletController.getUserBalance();
+        walletController.walletBalance.refresh();
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
