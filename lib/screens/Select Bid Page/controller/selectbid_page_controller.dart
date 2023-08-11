@@ -101,6 +101,8 @@ class SelectBidPageController extends GetxController {
             bodyText: value['message'] ?? "",
           );
         }
+        requestModel.value.bids!.clear();
+        _calculateTotalAmount();
         walletController.getUserBalance();
         walletController.walletBalance.refresh();
       },
@@ -149,8 +151,7 @@ class SelectBidPageController extends GetxController {
             TextButton(
               onPressed: () {
                 createMarketBidApi();
-                requestModel.value.bids!.clear();
-                _calculateTotalAmount();
+                // requestModel.value.bids!.clear();
               },
               child: Text(
                 'OKAY',

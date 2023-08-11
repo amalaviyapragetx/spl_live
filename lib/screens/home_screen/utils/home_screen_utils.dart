@@ -1103,10 +1103,13 @@ class HomeScreenUtils {
                             ),
                             child: Center(
                               child: Text(
-                                controller
-                                        .starlineChartDate[i].time![j].result ??
-                                    "***-*",
-
+                                controller.starlineChartDate.length ==
+                                        controller
+                                            .starlineChartDate[i].time!.length
+                                    ? controller.starlineChartDate[i].time![j]
+                                            .result ??
+                                        "***-*"
+                                    : "***-*",
                                 textAlign: TextAlign.center,
                                 // style: CustomTextStyle.textGothamLight.copyWith(
                                 //   color: ColorConstant.textColorMain,

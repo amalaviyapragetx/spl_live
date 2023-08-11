@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
+import '../../../models/bid_history_model_new.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
@@ -62,6 +63,10 @@ class HomePageController extends GetxController {
   RxInt offset = 0.obs;
   RxList<Bids> selectedBidsList = <Bids>[].obs;
   RxList<StarLineBids> bidList = <StarLineBids>[].obs;
+  RxList<BidHistoryNew> marketbidhistory = <BidHistoryNew>[].obs;
+  RxList<dynamic> result = [].obs;
+
+  // Rx<Bidhistorymodel> bidMarketModel = Bidhistorymodel().obs;
   @override
   void onInit() {
     setboolData();
@@ -103,11 +108,15 @@ class HomePageController extends GetxController {
   //   offset = 0;
   //   getMarketBidsByUserId(lazyLoad: false);
   // }
+  ontapOfBidData() {
+    Get.toNamed(AppRoutName.newBidHistorypage);
+  }
 
   Future<void> getUserData() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
     getMarketBidsByUserId(lazyLoad: false);
+    marketBidsByUserId(lazyLoad: false);
   }
 
   void getStarLineMarkets() async {
@@ -608,10 +617,20 @@ class HomePageController extends GetxController {
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
       }
+      print("$result - ${sum % 10}");
       return "$result - ${sum % 10}";
     } else {
       return "***-*";
     }
+  }
+
+  reverse(String originalString) {
+    String reversedString = '';
+
+    for (int i = originalString.length - 1; i >= 0; i--) {
+      reversedString += originalString[i];
+    }
+    return reversedString;
   }
 
   Future<void> onSwipeRefresh() async {
@@ -666,7 +685,7 @@ class HomePageController extends GetxController {
     });
   }
 
-  final int itemLimit = 10;
+  final int itemLimit = 13;
 
   void getPassBookData({required bool lazyLoad, required String offset}) {
     print("@@@@@@@@@@@@@@@@:-  ${offset.toString()}");
@@ -709,7 +728,7 @@ class HomePageController extends GetxController {
       passBookModelData.clear();
       offset.value++;
 
-      num = num + 10;
+      num = num + itemLimit;
       print("nextpage $num");
       //  print("offset.value ${offset.value}");
       getPassBookData(lazyLoad: false, offset: num.toString());
@@ -721,10 +740,9 @@ class HomePageController extends GetxController {
 
   void prevPage() {
     if (offset.value > 0) {
-      //print("offset.value ${offset.value}");
       passBookModelData.clear();
       offset.value--;
-      num = num - 10;
+      num = num - itemLimit;
       print("prevPage : $num");
       //print("offset.value ${offset.value}");
       getPassBookData(lazyLoad: false, offset: num.toString());
@@ -733,5 +751,39 @@ class HomePageController extends GetxController {
       update();
     }
     print("prevPage : $num");
+  }
+
+  void marketBidsByUserId({required bool lazyLoad}) {
+    ApiService()
+        .bidHistoryByUserId(
+      userId: userData.id.toString(),
+    )
+        .then(
+      (value) async {
+        debugPrint("Get Bid History New List  :- $value");
+        if (value['status']) {
+          if (value['data'] != null) {
+            Bidhistorymodel model = Bidhistorymodel.fromJson(value);
+            lazyLoad
+                ? marketbidhistory.addAll(model.data ?? <BidHistoryNew>[])
+                : marketbidhistory.value = model.data ?? <BidHistoryNew>[];
+
+            for (var i = 0; i < marketbidhistory.length; i++) {
+              var openResult = marketbidhistory[i].openResult != null
+                  ? getResult(true, marketbidhistory[i].openResult)
+                  : "";
+
+              var closeResult = marketbidhistory[i].closeResult != null
+                  ? getResult(true, marketbidhistory[i].closeResult)
+                  : "";
+            }
+          }
+        } else {
+          AppUtils.showErrorSnackBar(
+            bodyText: value['message'] ?? "",
+          );
+        }
+      },
+    );
   }
 }

@@ -34,16 +34,26 @@ class StarlineBidsController extends GetxController {
   //   requestModel.value.bids?.clear();
   // }
 
-  // showData() async {
-  //   var a = await LocalStorage.read(ConstantsVariables.starlineBidsList);
-  //   print("======================== $a =========================");
-  // }
+  showData() async {
+    bidList.value =
+        await LocalStorage.read(ConstantsVariables.starlineBidsList);
+    print("====in Bids List Page = $bidList =========================");
+  }
+
+  void playMore() async {
+    await LocalStorage.write(
+        ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    Get.offAndToNamed(
+      AppRoutName.starLineGameModesPage,
+    );
+  }
 
   Future<void> getArguments() async {
+    showData();
+    print("======================== $bidList =========================");
     gameMode.value = arguments['gameMode'];
     marketData.value = arguments['marketData'];
     requestModel.value.bids = arguments['bidsList'];
-    print(requestModel.value.toJson());
     requestModel.refresh();
     _calculateTotalAmount();
     requestModel.value.dailyStarlineMarketId = marketData.value.id;
@@ -51,6 +61,7 @@ class StarlineBidsController extends GetxController {
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
     print(requestModel.value.userId);
+    print(requestModel.value.toJson());
   }
 
   void showConfirmationDialog(BuildContext context) {
@@ -100,10 +111,6 @@ class StarlineBidsController extends GetxController {
     );
   }
 
-  void playMore() async {
-    Get.toNamed(AppRoutName.starLineGameModesPage);
-  }
-
   void _calculateTotalAmount() {
     int tempTotal = 0;
     for (var element in requestModel.value.bids ?? []) {
@@ -143,6 +150,7 @@ class StarlineBidsController extends GetxController {
         LocalStorage.remove(ConstantsVariables.bidsList);
         LocalStorage.remove(ConstantsVariables.marketName);
         LocalStorage.remove(ConstantsVariables.biddingType);
+        requestModel.value.bids?.clear();
         final walletController = Get.find<WalletController>();
         walletController.getUserBalance();
         walletController.walletBalance.refresh();

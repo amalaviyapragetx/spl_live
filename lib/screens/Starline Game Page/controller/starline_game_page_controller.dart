@@ -143,6 +143,7 @@ class StarLineGamePageController extends GetxController {
     marketData.value = argument['marketData'];
     getBidData = argument['getBidData'];
     getBIdType = argument['getBIdType'];
+    // selectedBidsList = argument['bidsList'];
     print(getBIdType);
     await loadJsonFile();
     switch (gameMode.value.name) {
@@ -209,49 +210,48 @@ class StarLineGamePageController extends GetxController {
 
   Future<void> onTapOfSaveButton() async {
     if (selectedBidsList.isNotEmpty) {
-      // if (bidList.isNotEmpty) {
-      //   for (var i = 0; i < bidList.length; i++) {
-      //     // selectedBidsList.add(bidsList[i]);
-      //     var existingIndex = selectedBidsList.indexOf(bidList[i]);
-      //     selectedBidsList.add(bidList[i]);
-      //   }
-      //   print("========= jevin ================ ${selectedBidsList.toList()}");
+      if (bidList.isNotEmpty) {
+        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$bidList");
+        for (var i = 0; i < bidList.length; i++) {
+          // selectedBidsList.add(bidsList[i]);
+          selectedBidsList.add(bidList[i]);
+          var existingIndex = selectedBidsList.indexOf(bidList[i]);
+          selectedBidsList.refresh();
+        }
+        print("========= jevin ================ ${selectedBidsList.toList()}");
+        await LocalStorage.write(
+            ConstantsVariables.starlineBidsList, selectedBidsList);
 
-      //   await LocalStorage.write(
-      //       ConstantsVariables.starlineBidsList, selectedBidsList);
-      //   Timer(const Duration(milliseconds: 900), () {
-      //     Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
-      //       "bidsList": selectedBidsList,
-      //       "gameMode": gameMode.value,
-      //       "marketData": marketData.value,
-      //     })?.then((value) {
-      //       print("selectedBidsList $selectedBidsList");
-      //       selectedBidsList.clear();
-      //     });
-      //     for (int i = 0; i < digitList.length; i++) {
-      //       digitList[i].isSelected = false;
-      //     }
-
-      //     digitList.refresh();
-      //     coinController.clear();
-      //   });
-      //   getArguments();
-      // } else {
-      //   await LocalStorage.write(ConstantsVariables.boolData, true);
-      await LocalStorage.write(
-          ConstantsVariables.starlineBidsList, selectedBidsList);
-      Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
-        "bidsList": selectedBidsList,
-        "gameMode": gameMode.value,
-        "marketData": marketData.value,
-      })?.then((value) => selectedBidsList.clear());
-      for (int i = 0; i < digitList.length; i++) {
-        digitList[i].isSelected = false;
+        Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
+          "bidsList": selectedBidsList,
+          "gameMode": gameMode.value,
+          "marketData": marketData.value,
+        })?.then((value) {
+          // selectedBidsList.clear();
+        });
+        for (int i = 0; i < digitList.length; i++) {
+          digitList[i].isSelected = false;
+        }
+        digitList.refresh();
+        coinController.clear();
+      } else {
+        print("else");
+        await LocalStorage.write(
+            ConstantsVariables.starlineBidsList, selectedBidsList);
+        Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
+          "bidsList": selectedBidsList,
+          "gameMode": gameMode.value,
+          "marketData": marketData.value,
+        })?.then((value) {
+          // selectedBidsList.clear();
+        });
+        for (int i = 0; i < digitList.length; i++) {
+          digitList[i].isSelected = false;
+        }
+        digitList.refresh();
+        coinController.clear();
+        getArguments();
       }
-      digitList.refresh();
-      coinController.clear();
-      getArguments();
-      // }
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Please add some bids!",

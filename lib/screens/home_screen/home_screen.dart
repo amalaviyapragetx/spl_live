@@ -23,20 +23,28 @@ class DashBoardPage extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        return await showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (context) => onExitAlert(context, onCancel: () {
-                Navigator.of(context).pop(false);
-              }, onExit: () {
-                // Navigator.of(context).pop(true);
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              }),
-            ) ??
-            false;
+        if (controller.pageWidget.value == 1 ||
+            controller.pageWidget.value == 2 ||
+            controller.pageWidget.value == 3 ||
+            controller.pageWidget.value == 4) {
+          controller.pageWidget.value = 0;
+          controller.currentIndex.value = 0;
+          return false;
+        } else {
+          return await showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) => onExitAlert(context, onCancel: () {
+                  Navigator.of(context).pop(false);
+                }, onExit: () {
+                  // Navigator.of(context).pop(true);
+                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                }),
+              ) ??
+              false;
+        }
       },
       child: Scaffold(
-        // appBar: Obx(() => ),
         bottomNavigationBar: Obx(
           () => MyNavigationBar(
             currentIndex: controller.currentIndex.value,
@@ -77,17 +85,6 @@ class DashBoardPage extends StatelessWidget {
             walletController.walletBalance.value.toString(),
           ),
         ),
-        // floatingActionButton: Obx(
-        //   () => controller.pageWidget.value == 0
-        //       ? AppUtils().flottingActionButton(
-        //           onTap: () {
-        //             launch(
-        //               "https://wa.me/+917769826748/?text=hi",
-        //             );
-        //           },
-        //         )
-        //       : Container(),
-        // ),
       ),
     );
   }
@@ -124,14 +121,3 @@ class DashBoardPage extends StatelessWidget {
     );
   }
 }
-
-// HomeScreenUtils().gridColumnForStarLine()
-// class ExitConfirmationDialog extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return 
-//   }
-
-  
-
-

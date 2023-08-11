@@ -29,7 +29,8 @@ class StarLineGameModesPageController extends GetxController {
   RxString totalAmount = "00".obs;
   bool getBidData = false;
   num count = 0;
-
+  // var argument = Get.arguments;
+  // RxList<StarLineBids> selectedBidsList = <StarLineBids>[].obs;
   @override
   void onInit() async {
     super.onInit();
@@ -51,6 +52,8 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   getBidListData() async {
+    // selectedBidsList = argument['bidsList'];
+    //  print("==**************** ============ $selectedBidsList ==============");
     var a = await LocalStorage.read(ConstantsVariables.starlineBidsList);
     print("==**************** ============ $a ==============");
   }

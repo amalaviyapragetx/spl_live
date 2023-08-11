@@ -62,4 +62,8 @@ class ApiUtils {
   static String choicePanaSPDP = "$baseURL/gameMode/getChoicePanaSPDPTP";
   static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
   static String passBookApi = "$baseURL/user/getUserPassbookDetails";
+  static String marketbidHistory = "$baseURL/bid/getBidHistory";
+  // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
+  // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
+  static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
 }

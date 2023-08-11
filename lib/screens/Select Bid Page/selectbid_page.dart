@@ -136,7 +136,6 @@ class SelectedBidsPage extends StatelessWidget {
                           textStyle: CustomTextStyle.textRobotoSansMedium,
                           onTap: () {
                             controller.showConfirmationDialog(context);
-                            controller.requestModel.value.bids!.clear();
                           },
                           //onTap: () {},
                           height: Dimensions.h30,

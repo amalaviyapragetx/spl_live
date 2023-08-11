@@ -335,6 +335,8 @@ class ApiService extends GetConnect {
       "${ApiUtils.getDailyStarLineMarkets}",
       headers: headersWithToken,
     );
+    print(
+        "#################################################### ${response.body}");
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -851,6 +853,59 @@ class ApiService extends GetConnect {
     await initApiService();
     final response = await get(
       "${ApiUtils.passBookApi}/$userId?isAll=$isAll&limit=$limit&offset=$offset",
+      //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      AppUtils.hideProgressDialog();
+
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> bidHistoryByUserId({
+    required String userId,
+  }) async {
+    print("${ApiUtils.marketbidHistory}/$userId");
+    AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await get(
+      "${ApiUtils.marketbidHistory}/$userId",
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      AppUtils.hideProgressDialog();
+
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getNewMarketBidlistData({
+    required String dailyMarketId,
+    required String limit,
+    required String offset,
+    required String bidType,
+  }) async {
+    print(
+        "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType");
+    // AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+
+    final response = await get(
+      "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType",
       //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
       headers: headersWithToken,
     );
