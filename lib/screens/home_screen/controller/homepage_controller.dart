@@ -9,6 +9,7 @@ import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../api_services/api_service.dart';
+import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
@@ -17,6 +18,7 @@ import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
+import '../../../models/market_bid_history.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
 import '../../../models/passbook_page_model.dart';
 import '../../../models/starline_chart_model.dart';
@@ -56,6 +58,7 @@ class HomePageController extends GetxController {
   RxList<ResultArr> starLineMarketHistoryList = <ResultArr>[].obs;
   RxList<Rows> passBookModelData = <Rows>[].obs;
   RxList<Rows> passBookModelData2 = <Rows>[].obs;
+
   RxInt passbookCount = 0.obs;
   // RxList<NormalMarketHistoryModel> marketHistoryList =
   //     <NormalMarketHistoryModel>[].obs;
@@ -64,9 +67,14 @@ class HomePageController extends GetxController {
   RxList<Bids> selectedBidsList = <Bids>[].obs;
   RxList<StarLineBids> bidList = <StarLineBids>[].obs;
   RxList<BidHistoryNew> marketbidhistory = <BidHistoryNew>[].obs;
+  RxList<MarketBidHistory> marketbidhistory1 = <MarketBidHistory>[].obs;
   RxList<dynamic> result = [].obs;
 
-  // Rx<Bidhistorymodel> bidMarketModel = Bidhistorymodel().obs;
+  Rx<Bidhistorymodel> bidMarketModel = Bidhistorymodel().obs;
+
+  Rx<MarketBidHistory> marketBidHistory = MarketBidHistory().obs;
+  RxList<MarketBidHistoryList> marketBidHistoryList =
+      <MarketBidHistoryList>[].obs;
   @override
   void onInit() {
     setboolData();
@@ -116,7 +124,15 @@ class HomePageController extends GetxController {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
     getMarketBidsByUserId(lazyLoad: false);
-    marketBidsByUserId(lazyLoad: false);
+  }
+
+  onTapOficonButton() {
+    if (pageWidget.value == 1 && currentIndex.value == 1) {
+      marketBidsByUserId(lazyLoad: false);
+    } else if (pageWidget.value == 2 && currentIndex.value == 2) {
+    } else if (pageWidget.value == 3 && currentIndex.value == 3) {
+      getPassBookData(lazyLoad: false, offset: offset.value.toString());
+    } else if (pageWidget.value == 1 && currentIndex.value == 1) {}
   }
 
   void getStarLineMarkets() async {
@@ -706,7 +722,6 @@ class HomePageController extends GetxController {
           passbookCount.value = int.parse(model.data!.count!.toString());
           passBookModelData.value = model.data?.rows ?? <Rows>[];
           passBookModelData.refresh();
-          // passBookList.value = model.data ?? <Data>[];
         }
       } else {
         AppUtils.showErrorSnackBar(
@@ -760,24 +775,22 @@ class HomePageController extends GetxController {
     )
         .then(
       (value) async {
-        debugPrint("Get Bid History New List  :- $value");
+        print("Get Bid History New List  :- $value");
         if (value['status']) {
           if (value['data'] != null) {
-            Bidhistorymodel model = Bidhistorymodel.fromJson(value);
+            MarketBidHistory model = MarketBidHistory.fromJson(value['data']);
+            print(
+                "================================  model data =================================");
+            print(model.toJson());
             lazyLoad
-                ? marketbidhistory.addAll(model.data ?? <BidHistoryNew>[])
-                : marketbidhistory.value = model.data ?? <BidHistoryNew>[];
-
-            for (var i = 0; i < marketbidhistory.length; i++) {
-              var openResult = marketbidhistory[i].openResult != null
-                  ? getResult(true, marketbidhistory[i].openResult)
-                  : "";
-
-              var closeResult = marketbidhistory[i].closeResult != null
-                  ? getResult(true, marketbidhistory[i].closeResult)
-                  : "";
-            }
+                ? marketBidHistoryList
+                    .addAll(model.rows ?? <MarketBidHistoryList>[])
+                : marketBidHistoryList.value =
+                    model.rows ?? <MarketBidHistoryList>[];
           }
+
+          print("================== Final List ======================");
+          print(marketBidHistoryList.toJson());
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",

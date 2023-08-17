@@ -31,11 +31,13 @@ class AppUtils {
       {required String appBarTitle,
       List<Widget>? actions,
       Widget? leading,
-      double? leadingWidht}) {
+      double? leadingWidht,
+      bool? centerTitle}) {
     return AppBar(
       backgroundColor: AppColors.appbarColor,
       shadowColor: AppColors.white,
       elevation: 0,
+      centerTitle: centerTitle,
       leading: leading,
       leadingWidth: leadingWidht,
       title: Text(

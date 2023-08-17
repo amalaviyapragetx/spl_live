@@ -51,7 +51,7 @@ class BidHistory extends StatelessWidget {
 
   bidHistoryList() {
     return Obx(
-      () => homePageController.marketbidhistory.isEmpty
+      () => homePageController.marketBidHistoryList.isEmpty
           ? Center(
               child: Text(
                 "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
@@ -64,59 +64,79 @@ class BidHistory extends StatelessWidget {
           : ListView.builder(
               padding:
                   EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
-              itemCount: homePageController.marketbidhistory.length,
+              itemCount: homePageController.marketBidHistoryList.length,
               itemBuilder: (context, index) {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return listveiwTransaction(
                   ballance: homePageController
-                      .marketbidhistory[index].totalWonAmount
+                      .marketBidHistoryList[index].balance
                       .toString(),
-                  coins: homePageController
-                      .marketbidhistory[index].totalBidAmount
+                  coins: homePageController.marketBidHistoryList[index].coins
                       .toString(),
                   closeTime: CommonUtils().formatStringToHHMMA(
-                      homePageController.marketbidhistory[index].closeTime ??
+                      homePageController
+                              .marketBidHistoryList[index].closeTime ??
                           ""),
                   openTime: CommonUtils().formatStringToHHMMA(
-                      homePageController.marketbidhistory[index].openTime ??
+                      homePageController.marketBidHistoryList[index].openTime ??
                           ""),
-                  openResut:
-                      homePageController.marketbidhistory[index].openResult ==
-                              null
-                          ? ""
-                          : homePageController
-                              .getResult(
-                                true,
-                                homePageController
-                                        .marketbidhistory[index].openResult ??
-                                    0,
-                              )
-                              .toString(),
-                  marketName:
-                      homePageController.marketbidhistory[index].marketName ??
+                  transactiontype: homePageController
+                      .marketBidHistoryList[index].marketName
+                      .toString(),
+                  timeDate: CommonUtils().formatStringToDDMMYYYYHHMMA(
+                    homePageController.marketBidHistoryList[index].bidTime
+                        .toString(),
+                  ),
+                  // openResut:
+                  //     homePageController.marketBidHistoryList[index].openTime ==
+                  //             null
+                  //         ? ""
+                  //         : homePageController
+                  //             .getResult(
+                  //               true,
+                  //               homePageController
+                  //                       .marketBidHistoryList[index].openTime ??
+                  //                   0,
+                  //             )
+                  //             .toString(),
+                  marketName: homePageController
+                          .marketBidHistoryList[index].transactionType ??
+                      "",
+                  containerColor:
+                      homePageController.marketBidHistoryList[index].isWin ==
+                              true
+                          ? AppColors.greenAccent.withOpacity(0.65)
+                          : AppColors.white,
+
+                  gameMode:
+                      homePageController.marketBidHistoryList[index].gameMode ??
                           "",
-                  closeResult:
-                      homePageController.marketbidhistory[index].closeResult ==
-                              null
-                          ? ""
-                          : homePageController
-                              .reverse(homePageController.getResult(
-                                true,
-                                homePageController
-                                        .marketbidhistory[index].closeResult ??
-                                    0,
-                              ))
-                              .toString(),
-                  onTap: () {
-                    Get.toNamed(AppRoutName.newBidHistorypage, arguments: {
-                      "marketData": homePageController.marketbidhistory.value,
-                      "marketId": homePageController.marketbidhistory[index].id
-                          .toString(),
-                      "marketName":
-                          homePageController.marketbidhistory[index].marketName,
-                    });
-                  },
+
+                  bidType:
+                      homePageController.marketBidHistoryList[index].bidType ??
+                          "",
+                  // closeResult:
+                  //     homePageController.marketBidHistoryList[index].closeResult ==
+                  //             null
+                  //         ? ""
+                  //         : homePageController
+                  //             .reverse(homePageController.getResult(
+                  //               true,
+                  //               homePageController
+                  //                       .marketBidHistoryList[index].closeResult ??
+                  //                   0,
+                  //             ))
+                  //             .toString(),
+                  // onTap: () {
+                  //   Get.toNamed(AppRoutName.newBidHistorypage, arguments: {
+                  //     "marketData": homePageController.marketBidHistoryList.value,
+                  //     "marketId": homePageController.marketBidHistoryList[index].id
+                  //         .toString(),
+                  //     "marketName":
+                  //         homePageController.marketBidHistoryList[index].marketName,
+                  //   });
+                  // },
                 );
               },
             ),
@@ -125,18 +145,23 @@ class BidHistory extends StatelessWidget {
 
   Widget listveiwTransaction({
     required String marketName,
-    required String openResut,
+    // required String openResut,
     required String openTime,
     required String closeTime,
     required String coins,
     required String ballance,
-    required String closeResult,
-    required Function() onTap,
+    required String transactiontype,
+    required Color containerColor,
+    required String timeDate,
+    required String gameMode,
+    required String bidType,
+    // required String closeResult,
+    // required Function() onTap,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
       child: InkWell(
-        onTap: onTap,
+        // onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
             boxShadow: [
@@ -170,26 +195,30 @@ class BidHistory extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 2),
                       child: Row(
                         children: [
-                          openResut != ""
-                              ? Text(
-                                  // "446-47-359",
-                                  openResut,
-                                  style: CustomTextStyle.textRobotoSansBold,
-                                )
-                              : SvgPicture.asset(
-                                  ConstantImage.openStarsSvg,
-                                  height: Dimensions.h13,
-                                ),
-                          closeResult != ""
-                              ? Text(
-                                  // "446-47-359",
-                                  closeResult,
-                                  style: CustomTextStyle.textRobotoSansBold,
-                                )
-                              : SvgPicture.asset(
-                                  ConstantImage.closeStarsSvg,
-                                  height: Dimensions.h13,
-                                ),
+                          Text(
+                            transactiontype,
+                            style: CustomTextStyle.textRobotoSansLight,
+                          ),
+                          // openResut != ""
+                          //     ? Text(
+                          //         // "446-47-359",
+                          //         openResut,
+                          //         style: CustomTextStyle.textRobotoSansBold,
+                          //       )
+                          //     : SvgPicture.asset(
+                          //         ConstantImage.openStarsSvg,
+                          //         height: Dimensions.h13,
+                          //       ),
+                          // closeResult != ""
+                          //     ? Text(
+                          //         // "446-47-359",
+                          //         closeResult,
+                          //         style: CustomTextStyle.textRobotoSansBold,
+                          //       )
+                          //     : SvgPicture.asset(
+                          //         ConstantImage.closeStarsSvg,
+                          //         height: Dimensions.h13,
+                          //       ),
                         ],
                       ),
                     )
@@ -205,6 +234,14 @@ class BidHistory extends StatelessWidget {
                       "$openTime - $closeTime",
                       style: CustomTextStyle.textRobotoSansLight,
                     ),
+                    Text(
+                      "$gameMode - $bidType",
+                      style: CustomTextStyle.textRobotoSansLight,
+                    ),
+                    // Text(
+                    //   bidType,
+                    //   style: CustomTextStyle.textRobotoSansLight,
+                    // ),
                   ],
                 ),
               ),
@@ -219,9 +256,9 @@ class BidHistory extends StatelessWidget {
                     SizedBox(
                       width: Dimensions.w5,
                     ),
-                    SizedBox(
-                      width: Dimensions.w5,
-                    ),
+                    // SizedBox(
+                    //   width: Dimensions.w5,
+                    // ),
                     Text(
                       coins,
                       style: CustomTextStyle.textRobotoSansLight.copyWith(
@@ -246,10 +283,28 @@ class BidHistory extends StatelessWidget {
                   ],
                 ),
               ),
+              Container(
+                height: Dimensions.h30,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.greywhite,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(Dimensions.r8),
+                    bottomRight: Radius.circular(Dimensions.r8),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "Time : $timeDate",
+                    style: CustomTextStyle.textRobotoSansLight,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
 }

@@ -7,10 +7,10 @@ import '../../../models/transaction_history_api_response_model.dart';
 import '../../Local Storage.dart';
 
 class TransactionHistoryPageController extends GetxController {
-  var transactionModel = TransactionHistoryApiResponseModel();
-  var transactionList = <ResultArr>[].obs;
+  // TransactionHistoryApiResponseModel transactionModel = TransactionHistoryApiResponseModel();
+  RxList<ResultArr> transactionList = <ResultArr>[].obs;
   UserDetailsModel userDetailsModel = UserDetailsModel();
-  int offset = 1;
+  int offset = 0;
   Future<void> onSwipeRefresh() async {
     if (userDetailsModel.id != null) {
       getTransactionHistory(offset: offset);
@@ -31,6 +31,7 @@ class TransactionHistoryPageController extends GetxController {
     var userData = await LocalStorage.read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(userData);
     if (userDetailsModel.id != null) {
+      print("_______________________");
       getTransactionHistory(offset: offset);
     } else {
       AppUtils.showErrorSnackBar(
@@ -47,13 +48,16 @@ class TransactionHistoryPageController extends GetxController {
       (value) async {
         print("Get transaction history Api Response :- $value");
         if (value['status']) {
-          transactionModel = TransactionHistoryApiResponseModel.fromJson(value);
+          TransactionHistoryApiResponseModel transactionModel =
+              TransactionHistoryApiResponseModel.fromJson(value);
+
           if (transactionModel.data?.resultArr != null &&
               transactionModel.data!.resultArr!.isNotEmpty) {
             transactionList.value =
                 transactionModel.data!.resultArr as List<ResultArr>;
           } else {
             transactionList.value = <ResultArr>[];
+            print(transactionList.value);
           }
         } else {
           AppUtils.showErrorSnackBar(

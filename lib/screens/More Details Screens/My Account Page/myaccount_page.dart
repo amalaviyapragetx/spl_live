@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/custom_text_style.dart';
@@ -41,21 +42,38 @@ class MyAccountPage extends StatelessWidget {
             children: [
               verticalSpace,
               listTileDetails(
-                text: "BANK_TEXT".tr,
-                value: controller.bankName.value,
-              ),
+                  text: "BANK_TEXT".tr,
+                  value: controller.bankName.value,
+                  fieldController: controller.bankNameController),
               listTileDetails(
-                text: "ACNAME_TEXT".tr,
-                value: controller.accountName.value,
-              ),
+                  text: "ACNAME_TEXT".tr,
+                  value: controller.accountName.value,
+                  fieldController: controller.accHolderNameController),
               listTileDetails(
-                text: "ACNO_TEXT".tr,
-                value: controller.accountNumber.value,
-              ),
+                  text: "ACNO_TEXT".tr,
+                  value: controller.accountNumber.value,
+                  fieldController: controller.accNoController),
               listTileDetails(
-                text: "IFSC_TEXT".tr,
-                value: controller.ifcsCode.value,
-              ),
+                  text: "IFSC_TEXT".tr,
+                  value: controller.ifcsCode.value,
+                  fieldController: controller.ifscCodeController),
+              controller.isEditDetails == true
+                  ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.appbarColor),
+                      onPressed: () {
+                        controller.onTapOfEditDetails();
+                        Get.back();
+                      },
+                      child: Text(
+                        "Submit",
+                        style: CustomTextStyle.textPTsansMedium.copyWith(
+                          fontSize: Dimensions.h14,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -63,7 +81,10 @@ class MyAccountPage extends StatelessWidget {
     );
   }
 
-  Padding listTileDetails({required String text, required String value}) {
+  Padding listTileDetails(
+      {required String text,
+      required String value,
+      required TextEditingController fieldController}) {
     return Padding(
       padding: EdgeInsets.all(Dimensions.w8),
       child: Container(
@@ -87,12 +108,14 @@ class MyAccountPage extends StatelessWidget {
                     )),
               ),
               Expanded(
-                child: Text(
-                  value,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
-                    fontSize: Dimensions.h14,
-                  ),
-                ),
+                child: controller.isEditDetails == false
+                    ? Text(
+                        value,
+                        style: CustomTextStyle.textPTsansMedium.copyWith(
+                          fontSize: Dimensions.h14,
+                        ),
+                      )
+                    : bidHistoryList(fieldController),
               )
             ],
           ),
@@ -100,4 +123,12 @@ class MyAccountPage extends StatelessWidget {
       ),
     );
   }
+}
+
+bidHistoryList(TextEditingController controller) {
+  return TextField(
+      controller: controller,
+      style: CustomTextStyle.textPTsansMedium.copyWith(
+        fontSize: Dimensions.h14,
+      ));
 }

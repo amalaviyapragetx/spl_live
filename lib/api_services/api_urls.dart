@@ -20,7 +20,7 @@ class ApiUtils {
   static String logout = '$baseURL/auth/logout';
   static String resetPassword = '$baseURL/auth/resetPassword';
   static String changePassword = '$baseURL/auth/changePassword';
-  static String getBankDetails = '$baseURL/bank/getByUserId/';
+  static String getBankDetails = '$baseURL/bank/getByUserId';
   static String editBankDetails = '$baseURL/bank/createOrUpdate';
   static String getDailyMarkets = '$baseURL/market/getDailyMarket';
   static String getGameModes =
@@ -63,6 +63,7 @@ class ApiUtils {
   static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
   static String passBookApi = "$baseURL/user/getUserPassbookDetails";
   static String marketbidHistory = "$baseURL/bid/getBidHistory";
+  static String bidHistory = "$baseURL/bid/getByUserId";
   // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
   // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
   static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";

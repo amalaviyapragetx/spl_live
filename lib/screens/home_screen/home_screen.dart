@@ -51,28 +51,24 @@ class DashBoardPage extends StatelessWidget {
             onTapBidHistory: () {
               controller.pageWidget.value = 1;
               controller.currentIndex.value = 1;
-              //  appPosition = controller.pageWidget.value;
+              controller.onTapOficonButton();
             },
             onTapHome: () {
               controller.pageWidget.value = 0;
-              //   appPosition = controller.pageWidget.value;
               controller.currentIndex.value = 0;
             },
             onTapMore: () {
               controller.pageWidget.value = 4;
-              //    appPosition = controller.pageWidget.value;
               controller.currentIndex.value = 4;
             },
             onTapWallet: () {
               controller.pageWidget.value = 2;
               controller.currentIndex.value = 2;
-              //   appPosition = controller.pageWidget.value;
             },
             onTapPassbook: () {
-              controller.getPassBookData(
-                  lazyLoad: false, offset: controller.offset.value.toString());
               controller.pageWidget.value = 3;
               controller.currentIndex.value = 3;
+              controller.onTapOficonButton();
             },
           ),
         ),

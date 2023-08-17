@@ -82,7 +82,6 @@ class PassBook extends StatelessWidget {
                 pageWidget(
                   "previous",
                   onTap: () {
-                    print("previous");
                     homeController.prevPage();
                   },
                 ),
@@ -92,7 +91,6 @@ class PassBook extends StatelessWidget {
                 pageWidget(
                   "NEXT",
                   onTap: () {
-                    print("next");
                     homeController.nextPage();
                   },
                 ),
@@ -131,6 +129,7 @@ class PassBook extends StatelessWidget {
 
   table() {
     print(homeController.passBookModelData.toJson());
+
     return Obx(
       () => DataTable(
         headingRowHeight: Dimensions.h45,
@@ -160,6 +159,9 @@ class PassBook extends StatelessWidget {
           homeController.passBookModelData.length,
           (index) {
             var data = homeController.passBookModelData.elementAt(index);
+            // print(
+            //     "***********20***************${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")}");
+            // print("*********27*****************${data.marketTime}");
             return DataRow(cells: [
               dataCells(
                 width: Dimensions.w150,
@@ -172,7 +174,8 @@ class PassBook extends StatelessWidget {
                   width: 370,
                   textColor: AppColors.black,
                   text: data.marketName == null
-                      ? data.transactionType == "Deposit"
+                      ? data.transactionType == "Withdraw" ||
+                              data.transactionType == "Deposit"
                           ? "${data.remarks}"
                           : "${data.transactionType ?? ""} ( ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
                       : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType.toUpperCase() ?? ""} ) : ${data.bidNo ?? ""}"),

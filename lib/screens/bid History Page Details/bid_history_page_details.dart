@@ -33,8 +33,7 @@ class BidHistoryDetailsNewPage extends StatelessWidget {
                   children: [
                     radioButtonWidget(
                         onTapContainer: () {
-                          print(
-                              "==== open ${controller.openCloseRadioValue.value}");
+                          print("${controller.openCloseRadioValue.value}");
                           if (controller.openCloseRadioValue.value != 0) {
                             controller.openCloseRadioValue.value = 0;
                             controller.getPassBookData(lazyLoad: false);
@@ -55,8 +54,7 @@ class BidHistoryDetailsNewPage extends StatelessWidget {
                     ),
                     radioButtonWidget(
                       onTapContainer: () {
-                        print(
-                            "==== close ${controller.openCloseRadioValue.value}");
+                        print(" ${controller.openCloseRadioValue.value}");
 
                         if (controller.openCloseRadioValue.value != 1) {
                           controller.openCloseRadioValue.value = 1;
@@ -64,8 +62,7 @@ class BidHistoryDetailsNewPage extends StatelessWidget {
                         }
                       },
                       onChanged: (val) {
-                        print(
-                            "==== close ${controller.openCloseRadioValue.value}");
+                        print("${controller.openCloseRadioValue.value}");
                         controller.openCloseRadioValue.value = val!;
                         controller.getPassBookData(lazyLoad: false);
                       },
@@ -110,8 +107,7 @@ class BidHistoryDetailsNewPage extends StatelessWidget {
           // var data = controller.marketHistoryList.elementAt(index);
 
           return listveiwTransaction(
-            coins:
-                "${controller.bidHistoryData[index].balance.toString()} ===== ${controller.bidHistoryData[index].bidType.toString()}",
+            coins: "${controller.bidHistoryData[index].balance.toString()}",
             closeTime: controller.bidHistoryData[index].bidNo.toString(),
             marketName: controller.bidHistoryData[index].game!.name.toString(),
             closeResult: controller.bidHistoryData[index].winAmount.toString(),
@@ -119,6 +115,8 @@ class BidHistoryDetailsNewPage extends StatelessWidget {
               controller.bidHistoryData[index].bidTime.toString(),
             ),
           );
+
+          // ${controller.bidHistoryData[index].bidType.toString()}
           // } else {
           //   return listveiwTransaction(
           //     coins:
@@ -200,12 +198,12 @@ class BidHistoryDetailsNewPage extends StatelessWidget {
                     style: CustomTextStyle.textRobotoSansLight,
                   ),
                   const Expanded(child: SizedBox()),
+                  SizedBox(
+                    width: Dimensions.w5,
+                  ),
                   Text(
                     "Points",
                     style: CustomTextStyle.textRobotoSansLight,
-                  ),
-                  SizedBox(
-                    width: Dimensions.w5,
                   ),
                   SizedBox(
                     width: Dimensions.w5,

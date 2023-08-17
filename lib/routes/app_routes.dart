@@ -376,7 +376,7 @@ class AppRoutes {
       name: AppRoutName.checkWithDrawalPage,
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
-      page: () => const CheckWithdrawalPage(),
+      page: () => CheckWithdrawalPage(),
       bindings: [CheckWithdrawalPageBinding()],
     ),
     // GetPage(

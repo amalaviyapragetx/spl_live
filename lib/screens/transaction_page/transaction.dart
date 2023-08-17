@@ -15,6 +15,7 @@ class TransactionPage extends StatelessWidget {
   var controller = Get.put(TransactionHistoryPageController());
   @override
   Widget build(BuildContext context) {
+    print(controller.transactionList);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppUtils().simpleAppbar(appBarTitle: "TRANSACTIONS".tr),
