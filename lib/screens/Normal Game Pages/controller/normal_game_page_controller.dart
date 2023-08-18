@@ -14,6 +14,7 @@ import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
+import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
 import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
@@ -33,6 +34,7 @@ class NormalGamePageController extends GetxController {
   String addedNormalBidValue = "";
   RxBool tpValue3 = false.obs;
   RxString totalAmount = "00".obs;
+  //RxInt bidlistTotal = 0.obs;
   RxInt panaControllerLength = 2.obs;
   late FocusNode focusNode;
   JsonFileModel jsonModel = JsonFileModel();
@@ -66,10 +68,12 @@ class NormalGamePageController extends GetxController {
   void onInit() {
     super.onInit();
     getArguments();
+
     focusNode = FocusNode();
   }
 
   void getArguments() async {
+    marketValue.value = argument["marketValue"];
     gameMode.value = argument['gameMode'];
     biddingType.value = argument['biddingType'];
     marketName.value = argument['marketName'];
@@ -142,110 +146,6 @@ class NormalGamePageController extends GetxController {
     _validationListForNormalMode.addAll(_tempValidationList);
   }
 
-  // void onTapOfAddButton() {
-  //   // FocusManager.instance.primaryFocus?.unfocus();
-
-  //   print(requestModel.value.dailyMarketId);
-  //   if (!isBulkMode.value) {
-  //     if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
-  //       );
-  //       focusNode.previousFocus();
-  //     } else if (coinController.text.trim().isEmpty ||
-  //         int.parse(coinController.text.trim()) < 1) {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: "Please enter valid points",
-  //       );
-  //     } else if (int.parse(coinController.text) > 10000) {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: "You can not add more than 10000 points",
-  //       );
-  //     } else {
-  //       if (spdptpList.isEmpty) {
-  //         selectedBidsList.add(
-  //           Bids(
-  //             bidNo: addedNormalBidValue,
-  //             coins: int.parse(coinController.text),
-  //             gameId: gameMode.value.id,
-  //             subGameId: checkPanaType(),
-  //             gameModeName: gameMode.value.name,
-  //             remarks:
-  //                 "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-  //           ),
-  //         );
-  //       } else {
-  //         print("======= List not empty =====");
-  //         for (var i = 0; i < spdptpList.length; i++) {
-  //           selectedBidsList.add(
-  //             Bids(
-  //               bidNo: spdptpList[i],
-  //               coins: int.parse(coinController.text),
-  //               gameId: gameMode.value.id,
-  //               // subGameId: checkPanaType(),
-  //               gameModeName: gameMode.value.name,
-  //               remarks:
-  //                   "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-  //             ),
-  //           );
-  //         }
-  //       }
-  //       print("===== selectedBidsList =======");
-  //       print(selectedBidsList.toList());
-  //       _calculateTotalAmount();
-  //       autoCompleteFieldController.clear();
-  //       coinController.clear();
-  //       selectedBidsList.refresh();
-  //       focusNode.previousFocus();
-  //     }
-  //   } else {
-  //     if (!enteredDigitsIsValidate) {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
-  //       );
-  //       return;
-  //     } else if (addedNormalBidValue.isEmpty) {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
-  //       );
-  //       return;
-  //     } else if (coinController.text.isEmpty ||
-  //         coinController.text.length < 2) {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: "Please enter valid points",
-  //       );
-  //       return;
-  //     } else if (int.parse(coinController.text) > 10000) {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: "You can not add more than 10000 points",
-  //       );
-  //     } else {
-  //       selectedBidsList.add(
-  //         Bids(
-  //           bidNo: addedNormalBidValue,
-  //           coins: int.parse(coinController.text),
-  //           gameId: gameMode.value.id,
-  //           gameModeName: gameMode.value.name,
-  //           subGameId: checkPanaType(),
-  //           remarks:
-  //               "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-  //         ),
-  //       );
-  //       print("selectebidlist : $selectedBidsList");
-  //       autoCompleteFieldController.clear();
-  //       coinController.clear();
-  //       selectedBidsList.refresh();
-  //     }
-  //   }
-
-  ///  print(requestModel.toJson());
-  //   for (var index in selectedBidsList) {
-  //     print(
-  //         "${index.bidNo} ${index.gameId} ${index.gameModeName} ${index.subGameId} ");
-  //     // print("checkPanaType() ${checkPanaType()}");
-  //   }
-  // }
-
   onTapAddOddEven() {
     for (var i = 0; i < 10; i++) {
       var bidNo = i.toString();
@@ -272,18 +172,6 @@ class NormalGamePageController extends GetxController {
               ),
             );
           }
-
-          // selectedBidsList.add(
-          //   Bids(
-          //     bidNo: i.toString(),
-          //     coins: int.parse(coinController.text),
-          //     gameId: gameMode.value.id,
-          //     gameModeName: gameMode.value.name,
-          //     subGameId: gameMode.value.id,
-          //     remarks:
-          //         "You invested At ${marketName.value} on $i (${gameMode.value.name})",
-          //   ),
-          // );
         }
       } else {
         if (i % 2 == 0) {
@@ -312,6 +200,7 @@ class NormalGamePageController extends GetxController {
     _calculateTotalAmount();
   }
 
+  var marketValue = MarketData().obs;
   void createMarketBidApi() async {
     ApiService().createMarketBid(requestModel.toJson()).then((value) async {
       debugPrint("create bid api response :- $value");
@@ -320,12 +209,18 @@ class NormalGamePageController extends GetxController {
         // Get.back();
         if (value['data'] == false) {
           selectedBidsList.clear();
-          Get.offAndToNamed(AppRoutName.dashBoardPage);
+          Get.offAllNamed(
+            AppRoutName.gameModePage,
+            arguments: marketValue.value,
+          );
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
           );
         } else {
-          Get.offAndToNamed(AppRoutName.dashBoardPage);
+          Get.offAllNamed(
+            AppRoutName.gameModePage,
+            arguments: marketValue.value,
+          );
           AppUtils.showSuccessSnackBar(
               bodyText: value['message'] ?? "",
               headerText: "SUCCESSMESSAGE".tr);
@@ -333,6 +228,10 @@ class NormalGamePageController extends GetxController {
           walletController.getUserBalance();
           walletController.walletBalance.refresh();
         }
+        LocalStorage.remove(ConstantsVariables.bidsList);
+        requestModel.value.bids!.clear();
+        LocalStorage.remove(ConstantsVariables.marketName);
+        LocalStorage.remove(ConstantsVariables.biddingType);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
@@ -505,6 +404,8 @@ class NormalGamePageController extends GetxController {
         debugPrint("Forgot MPIN Api Response :- $value");
         if (value['status']) {
           spdptpList = value['data'];
+          // bidlistTotal.value += spdptpList.length;
+
           if (coinController.text.trim().isEmpty ||
               int.parse(coinController.text.trim()) < 1) {
             AppUtils.showErrorSnackBar(
@@ -525,30 +426,31 @@ class NormalGamePageController extends GetxController {
             } else {
               print("======= List not empty =====");
               // print(spdptpList);
+
               for (var i = 0; i < spdptpList.length; i++) {
                 addedNormalBidValue = spdptpList[i].toString();
-                var existingIndex = selectedBidsList.indexWhere(
-                    (element) => element.bidNo == addedNormalBidValue);
-                if (existingIndex != -1) {
-                  // If the bidNo already exists in selectedBidsList, update coins value.
-                  selectedBidsList[existingIndex].coins =
-                      (selectedBidsList[existingIndex].coins! +
-                          int.parse(coinController.text));
-                } else {
-                  print(spdptpList[i].toString());
-                  selectedBidsList.add(
-                    Bids(
-                      bidNo: spdptpList[i].toString(),
-                      coins: int.parse(coinController.text),
-                      gameId: gameMode.value.id,
-                      // subGameId: ,
-                      gameModeName: gameMode.value.name,
-                      remarks:
-                          "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                    ),
-                  );
-                }
+                //   var existingIndex = selectedBidsList.indexWhere(
+                //       (element) => element.bidNo == addedNormalBidValue);
+                //   if (existingIndex != -1) {
+                //     // If the bidNo already exists in selectedBidsList, update coins value.
+                //     selectedBidsList[existingIndex].coins =
+                //         (selectedBidsList[existingIndex].coins! +
+                //             int.parse(coinController.text));
+                //   } else {
+                //     print(spdptpList[i].toString());
+                selectedBidsList.add(
+                  Bids(
+                    bidNo: spdptpList[i].toString(),
+                    coins: int.parse(coinController.text),
+                    gameId: gameMode.value.id,
+                    // subGameId: ,
+                    gameModeName: gameMode.value.name,
+                    remarks:
+                        "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                  ),
+                );
               }
+              // }
               print("===== selectedBidsList =======");
               print(selectedBidsList.toJson());
             }

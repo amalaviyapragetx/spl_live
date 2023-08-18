@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
 import '../../../../api_services/api_service.dart';
@@ -21,6 +22,7 @@ class MyAccountPageController extends GetxController {
   RxString ifcsCode = "".obs;
   var userId = "";
   int bankId = 0;
+  var walletbalance = Get.put(WalletController());
 
   @override
   void onInit() {
@@ -34,6 +36,7 @@ class MyAccountPageController extends GetxController {
     userId = userData.id == null ? "" : userData.id.toString();
     if (userId.isNotEmpty) {
       callGetBankDetails(userId);
+      walletbalance.walletBalance.refresh();
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "SOMETHINGWENTWRONG".tr,
@@ -44,6 +47,7 @@ class MyAccountPageController extends GetxController {
   void onTapOfEditDetails() async {
     if (isEditDetails.value) {
       callEditBankDetailsApi();
+      walletbalance.walletBalance.refresh();
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "CONTACTADMINTOEDITDETAILS".tr,
@@ -60,7 +64,6 @@ class MyAccountPageController extends GetxController {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
-
         isEditDetails.value = model.data!.isEditPermission ?? false;
         accountName.value = model.data!.accountHolderName ?? "";
         bankName.value = model.data!.bankName ?? "";
@@ -99,7 +102,7 @@ class MyAccountPageController extends GetxController {
         accNoController.text = model.data!.accountNumber ?? "Null From API";
         ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
         bankId = model.data!.id ?? 0;
-      
+
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {

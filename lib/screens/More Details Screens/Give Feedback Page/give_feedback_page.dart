@@ -21,10 +21,9 @@ class GiveFeedbackPage extends StatelessWidget {
       appBar: AppUtils().simpleAppbar(
         appBarTitle: "GIVEFEEDBACK".tr,
       ),
-      // customAppBar(title: "GIVEFEEDBACK".tr, onTapOfBack: () => Get.back()),
-      body: SafeArea(
-        child: Expanded(
-          child: Padding(
+      body: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +67,7 @@ class GiveFeedbackPage extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

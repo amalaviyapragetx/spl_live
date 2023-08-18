@@ -19,219 +19,228 @@ class GameModePage extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.checkBids();
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppUtils().simpleAppbar(
-        appBarTitle: "GAMEMODES_TEXT".tr,
-        leading: IconButton(
-          onPressed: () => controller.onBackButton(),
-          icon: const Icon(Icons.arrow_back),
-        ),
-        actions: [
-          InkWell(
-            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: Dimensions.w20,
-                  width: Dimensions.w20,
-                  child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    color: AppColors.white,
-                    fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () async {
+        controller.onBackButton();
+        return false;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppUtils().simpleAppbar(
+          appBarTitle: "GAMEMODES_TEXT".tr,
+          leading: IconButton(
+            onPressed: () => controller.onBackButton(),
+            icon: const Icon(Icons.arrow_back),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: Dimensions.w20,
+                    width: Dimensions.w20,
+                    child: SvgPicture.asset(
+                      ConstantImage.walletAppbar,
+                      color: AppColors.white,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: Dimensions.r8,
-                    bottom: Dimensions.r10,
-                    left: Dimensions.r15,
-                    right: Dimensions.r10,
-                  ),
-                  child: Obx(
-                    () => Text(
-                      walletController.walletBalance.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r10,
+                      left: Dimensions.r15,
+                      right: Dimensions.r10,
+                    ),
+                    child: Obx(
+                      () => Text(
+                        walletController.walletBalance.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-      body: Obx(
-        () {
-          return SizedBox(
-            //height: size.height,
-            child: Column(
-              children: [
-                // controller.openBiddingOpen.value
-                //     ? SizedBox(
-                //         height: Dimensions.h10,
-                //       )
-                //     : Column(
-                //         children: [
-                //           Container(
-                //             decoration:
-                //                 BoxDecoration(color: AppColors.redColor),
-                //             height: Dimensions.h40,
-                //             width: double.infinity,
-                //             child: Center(
-                //               child: Text(
-                //                 "BIDDINGFOROPENISCLOSED".tr,
-                //                 style: CustomTextStyle.textPTsansMedium
-                //                     .copyWith(
-                //                         color: AppColors.white,
-                //                         fontSize: Dimensions.h15),
-                //               ),
-                //             ),
-                //           ),
-                //           SizedBox(
-                //             height: Dimensions.h5,
-                //           ),
-                //         ],
-                //       ),
-                // GameModeUtils().rowWidget(
-                //   marketName: controller.marketValue.value.market.toString(),
-                //   date: controller.removeTimeStampFromDateString(
-                //     controller.marketValue.value.date.toString(),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: Dimensions.h5,
-                // ),
-                // GameModeUtils().rowWidget2(
-                //   openBid: controller.marketValue.value.openTime.toString(),
-                //   closeBid: controller.marketValue.value.closeTime.toString(),
-                // ),
-                // Row(
-                //   children: [
-                //     radioButtonWidget(
-                //         onTapContainer: () {
-                //           if (controller.openBiddingOpen.value &&
-                //               controller.openCloseRadioValue.value != 0) {
-                //             controller.openCloseRadioValue.value = 0;
-                //             controller.callGetGameModes();
-                //           }
-                //         },
-                //         onChanged: (val) {
-                //           if (controller.openBiddingOpen.value) {
-                //             controller.openCloseRadioValue.value = val!;
-                //             controller.callGetGameModes();
-                //           }
-                //         },
-                //         opasity: controller.openBiddingOpen.value ? 1 : 0.5,
-                //         controller: controller,
-                //         radioButtonValue: 0,
-                //         buttonText: "OPENBID".tr),
-                //     const SizedBox(
-                //       width: 11,
-                //     ),
-                //     radioButtonWidget(
-                //         onTapContainer: () {
-                //           if (controller.openCloseRadioValue.value != 1) {
-                //             controller.openCloseRadioValue.value = 1;
-                //             controller.callGetGameModes();
-                //           }
-                //         },
-                //         onChanged: (val) {
-                //           controller.openCloseRadioValue.value = val!;
-                //           controller.callGetGameModes();
-                //         },
-                //         opasity: 1,
-                //         controller: controller,
-                //         radioButtonValue: 1,
-                //         buttonText: "CLOSEBID".tr)
-                //   ],
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Obx(
-                  () => Row(
-                    children: [
-                      openCloseMarket(
-                        textColor:
-                            controller.openCloseValue.value == "OPENBID".tr
-                                ? AppColors.white
-                                : AppColors.black,
-                        "${"OPENBID".tr.toUpperCase()} : ${controller.marketValue.value.openTime.toString()}",
-                        onTap: () {
-                          if (controller.openBiddingOpen.value &&
-                              controller.openCloseValue.value != "OPENBID".tr) {
-                            controller.openCloseValue.value = "OPENBID".tr;
-                            controller.callGetGameModes();
-                          }
-                          //                      controller.onTapOpenClose;
-                        },
-                        // if (controller.openBiddingOpen.value &&
-                        //     controller.openCloseRadioValue.value !=
-                        //         "OPENBID".tr) {
-                        //   controller.openCloseRadioValue.value = "OPENBID".tr;
-                        //   controller.callGetGameModes();
-                        // }
-
-                        containerColor:
-                            controller.openCloseValue.value == "OPENBID".tr
-                                ? AppColors.appbarColor
-                                : AppColors.openclose,
-                      ),
-                      openCloseMarket(
-                        "${"CLOSEBID".tr.toUpperCase()} : ${controller.marketValue.value.closeTime.toString()}",
-                        onTap: () {
-                          print("sfdasdsa");
-                          if (controller.openCloseValue.value !=
-                              "CLOSEBID".tr) {
-                            controller.openCloseValue.value = "CLOSEBID".tr;
-                            controller.callGetGameModes();
-                          }
-                          controller.onTapOpenClose;
-                        },
-                        containerColor:
-                            controller.openCloseValue.value == "CLOSEBID".tr
-                                ? AppColors.appbarColor
-                                : AppColors.openclose,
-                        textColor:
-                            controller.openCloseValue.value == "CLOSEBID".tr
-                                ? AppColors.white
-                                : AppColors.black,
-                      ),
-                    ],
+          ],
+        ),
+        body: Obx(
+          () {
+            return SizedBox(
+              //height: size.height,
+              child: Column(
+                children: [
+                  // controller.openBiddingOpen.value
+                  //     ? SizedBox(
+                  //         height: Dimensions.h10,
+                  //       )
+                  //     : Column(
+                  //         children: [
+                  //           Container(
+                  //             decoration:
+                  //                 BoxDecoration(color: AppColors.redColor),
+                  //             height: Dimensions.h40,
+                  //             width: double.infinity,
+                  //             child: Center(
+                  //               child: Text(
+                  //                 "BIDDINGFOROPENISCLOSED".tr,
+                  //                 style: CustomTextStyle.textPTsansMedium
+                  //                     .copyWith(
+                  //                         color: AppColors.white,
+                  //                         fontSize: Dimensions.h15),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           SizedBox(
+                  //             height: Dimensions.h5,
+                  //           ),
+                  //         ],
+                  //       ),
+                  // GameModeUtils().rowWidget(
+                  //   marketName: controller.marketValue.value.market.toString(),
+                  //   date: controller.removeTimeStampFromDateString(
+                  //     controller.marketValue.value.date.toString(),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: Dimensions.h5,
+                  // ),
+                  // GameModeUtils().rowWidget2(
+                  //   openBid: controller.marketValue.value.openTime.toString(),
+                  //   closeBid: controller.marketValue.value.closeTime.toString(),
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     radioButtonWidget(
+                  //         onTapContainer: () {
+                  //           if (controller.openBiddingOpen.value &&
+                  //               controller.openCloseRadioValue.value != 0) {
+                  //             controller.openCloseRadioValue.value = 0;
+                  //             controller.callGetGameModes();
+                  //           }
+                  //         },
+                  //         onChanged: (val) {
+                  //           if (controller.openBiddingOpen.value) {
+                  //             controller.openCloseRadioValue.value = val!;
+                  //             controller.callGetGameModes();
+                  //           }
+                  //         },
+                  //         opasity: controller.openBiddingOpen.value ? 1 : 0.5,
+                  //         controller: controller,
+                  //         radioButtonValue: 0,
+                  //         buttonText: "OPENBID".tr),
+                  //     const SizedBox(
+                  //       width: 11,
+                  //     ),
+                  //     radioButtonWidget(
+                  //         onTapContainer: () {
+                  //           if (controller.openCloseRadioValue.value != 1) {
+                  //             controller.openCloseRadioValue.value = 1;
+                  //             controller.callGetGameModes();
+                  //           }
+                  //         },
+                  //         onChanged: (val) {
+                  //           controller.openCloseRadioValue.value = val!;
+                  //           controller.callGetGameModes();
+                  //         },
+                  //         opasity: 1,
+                  //         controller: controller,
+                  //         radioButtonValue: 1,
+                  //         buttonText: "CLOSEBID".tr)
+                  //   ],
+                  // ),
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                cardWidget(controller, size),
-                // controller.playmore == false
-                //     ? Container()
-                //     : Padding(
-                //         padding: const EdgeInsets.all(15.0),
-                //         child: RoundedCornerButton(
-                //           text: "VIEWBIDS".tr,
-                //           color: AppColors.greenShade,
-                //           borderColor: AppColors.greenShade,
-                //           fontSize: Dimensions.h14,
-                //           fontWeight: FontWeight.w500,
-                //           fontColor: AppColors.white,
-                //           letterSpacing: 0,
-                //           borderRadius: Dimensions.r5,
-                //           borderWidth: 1,
-                //           textStyle: CustomTextStyle.textPTsansBold,
-                //           onTap: () {
-                //             Get.offAndToNamed(AppRoutName.selectedBidsPage);
-                //           },
-                //           height: Dimensions.h30,
-                //           width: Dimensions.w100,
-                //         ),
-                //       ),
-              ],
-            ),
-          );
-        },
+                  Obx(
+                    () => Row(
+                      children: [
+                        openCloseMarket(
+                          textColor:
+                              controller.openCloseValue.value == "OPENBID".tr
+                                  ? AppColors.white
+                                  : AppColors.black,
+                          "${"OPENBID".tr.toUpperCase()} : ${controller.marketValue.value.openTime.toString()}",
+                          onTap: () {
+                            if (controller.openBiddingOpen.value &&
+                                controller.openCloseValue.value !=
+                                    "OPENBID".tr) {
+                              controller.openCloseValue.value = "OPENBID".tr;
+                              controller.callGetGameModes();
+                            }
+                            //                      controller.onTapOpenClose;
+                          },
+                          // if (controller.openBiddingOpen.value &&
+                          //     controller.openCloseRadioValue.value !=
+                          //         "OPENBID".tr) {
+                          //   controller.openCloseRadioValue.value = "OPENBID".tr;
+                          //   controller.callGetGameModes();
+                          // }
+
+                          containerColor:
+                              controller.openCloseValue.value == "OPENBID".tr
+                                  ? AppColors.appbarColor
+                                  : AppColors.openclose,
+                        ),
+                        openCloseMarket(
+                          "${"CLOSEBID".tr.toUpperCase()} : ${controller.marketValue.value.closeTime.toString()}",
+                          onTap: () {
+                            print("sfdasdsa");
+                            if (controller.openCloseValue.value !=
+                                "CLOSEBID".tr) {
+                              controller.openCloseValue.value = "CLOSEBID".tr;
+                              controller.callGetGameModes();
+                            }
+                            controller.onTapOpenClose;
+                          },
+                          containerColor:
+                              controller.openCloseValue.value == "CLOSEBID".tr
+                                  ? AppColors.appbarColor
+                                  : AppColors.openclose,
+                          textColor:
+                              controller.openCloseValue.value == "CLOSEBID".tr
+                                  ? AppColors.white
+                                  : AppColors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  cardWidget(controller, size),
+                  // controller.playmore == false
+                  //     ? Container()
+                  //     : Padding(
+                  //         padding: const EdgeInsets.all(15.0),
+                  //         child: RoundedCornerButton(
+                  //           text: "VIEWBIDS".tr,
+                  //           color: AppColors.greenShade,
+                  //           borderColor: AppColors.greenShade,
+                  //           fontSize: Dimensions.h14,
+                  //           fontWeight: FontWeight.w500,
+                  //           fontColor: AppColors.white,
+                  //           letterSpacing: 0,
+                  //           borderRadius: Dimensions.r5,
+                  //           borderWidth: 1,
+                  //           textStyle: CustomTextStyle.textPTsansBold,
+                  //           onTap: () {
+                  //             Get.offAndToNamed(AppRoutName.selectedBidsPage);
+                  //           },
+                  //           height: Dimensions.h30,
+                  //           width: Dimensions.w100,
+                  //         ),
+                  //       ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

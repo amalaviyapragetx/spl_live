@@ -170,7 +170,7 @@ class MPINPageView extends StatelessWidget {
             textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                 color: AppColors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 20),
+                fontSize: 20,),
             animationDuration: const Duration(milliseconds: 200),
             onComplete: (val) {
               pinType.value = val;

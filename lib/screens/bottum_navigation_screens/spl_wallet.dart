@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/button_widget.dart';
 import '../../helper_files/constant_image.dart';
@@ -17,6 +19,7 @@ class SPLWallet extends StatelessWidget {
   SPLWallet({super.key});
   var controller = Get.put(MoreListController());
   var homeController = Get.put(HomePageController());
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -67,7 +70,7 @@ class SPLWallet extends StatelessWidget {
                     ),
                     Obx(
                       () => Text(
-                        controller.walletBalance.value,
+                        controller.walletBalance.toString(),
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           fontSize: Dimensions.h35,
                           color: AppColors.buttonColorDarkGreen,
@@ -96,7 +99,11 @@ class SPLWallet extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ButtonWidget(
-                          onTap: () {},
+                          onTap: () {
+                            launch(
+                              "https://wa.me/+917769826748/?text=hi",
+                            );
+                          },
                           text: "ADDFUND".tr,
                           buttonColor: AppColors.buttonColorDarkGreen,
                           height: Dimensions.h30,

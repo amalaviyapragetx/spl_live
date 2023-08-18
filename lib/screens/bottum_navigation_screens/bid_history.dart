@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
-
 import '../../helper_files/common_utils.dart';
-import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
-import '../../models/normal_market_bid_history_response_model.dart';
 import 'controller/bottum_navigation_controller.dart';
 
 class BidHistory extends StatelessWidget {
@@ -51,7 +46,7 @@ class BidHistory extends StatelessWidget {
 
   bidHistoryList() {
     return Obx(
-      () => homePageController.marketBidHistoryList.isEmpty
+      () => homePageController.marketBidHistoryList.value.isEmpty
           ? Center(
               child: Text(
                 "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
@@ -62,81 +57,30 @@ class BidHistory extends StatelessWidget {
               ),
             )
           : ListView.builder(
-              padding:
-                  EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+              padding: EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: Dimensions.h10,
+              ),
               itemCount: homePageController.marketBidHistoryList.length,
               itemBuilder: (context, index) {
-                // var data = controller.marketHistoryList.elementAt(index);
-                // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
+                var data = homePageController.marketBidHistoryList[index];
+
                 return listveiwTransaction(
-                  ballance: homePageController
-                      .marketBidHistoryList[index].balance
-                      .toString(),
-                  coins: homePageController.marketBidHistoryList[index].coins
-                      .toString(),
-                  closeTime: CommonUtils().formatStringToHHMMA(
-                      homePageController
-                              .marketBidHistoryList[index].closeTime ??
-                          ""),
-                  openTime: CommonUtils().formatStringToHHMMA(
-                      homePageController.marketBidHistoryList[index].openTime ??
-                          ""),
-                  transactiontype: homePageController
-                      .marketBidHistoryList[index].marketName
-                      .toString(),
-                  timeDate: CommonUtils().formatStringToDDMMYYYYHHMMA(
-                    homePageController.marketBidHistoryList[index].bidTime
-                        .toString(),
-                  ),
-                  // openResut:
-                  //     homePageController.marketBidHistoryList[index].openTime ==
-                  //             null
-                  //         ? ""
-                  //         : homePageController
-                  //             .getResult(
-                  //               true,
-                  //               homePageController
-                  //                       .marketBidHistoryList[index].openTime ??
-                  //                   0,
-                  //             )
-                  //             .toString(),
-                  marketName: homePageController
-                          .marketBidHistoryList[index].transactionType ??
-                      "",
-                  containerColor:
-                      homePageController.marketBidHistoryList[index].isWin ==
-                              true
-                          ? AppColors.greenAccent.withOpacity(0.65)
-                          : AppColors.white,
-
-                  gameMode:
-                      homePageController.marketBidHistoryList[index].gameMode ??
-                          "",
-
-                  bidType:
-                      homePageController.marketBidHistoryList[index].bidType ??
-                          "",
-                  // closeResult:
-                  //     homePageController.marketBidHistoryList[index].closeResult ==
-                  //             null
-                  //         ? ""
-                  //         : homePageController
-                  //             .reverse(homePageController.getResult(
-                  //               true,
-                  //               homePageController
-                  //                       .marketBidHistoryList[index].closeResult ??
-                  //                   0,
-                  //             ))
-                  //             .toString(),
-                  // onTap: () {
-                  //   Get.toNamed(AppRoutName.newBidHistorypage, arguments: {
-                  //     "marketData": homePageController.marketBidHistoryList.value,
-                  //     "marketId": homePageController.marketBidHistoryList[index].id
-                  //         .toString(),
-                  //     "marketName":
-                  //         homePageController.marketBidHistoryList[index].marketName,
-                  //   });
-                  // },
+                  isWin: data.isWin ?? false,
+                  bidNo: data.bidNo.toString(),
+                  ballance: data.balance.toString(),
+                  coins: data.coins.toString(),
+                  closeTime:
+                      CommonUtils().formatStringToHHMMA(data.closeTime ?? ""),
+                  openTime:
+                      CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
+                  transactiontype: data.marketName.toString(),
+                  timeDate: CommonUtils()
+                      .convertUtcToIstFormatStringToDDMMYYYYHHMMA(
+                          data.bidTime.toString()),
+                  marketName: data.transactionType ?? "",
+                  gameMode: data.gameMode ?? "",
+                  bidType: data.bidType ?? "",
                 );
               },
             ),
@@ -145,17 +89,16 @@ class BidHistory extends StatelessWidget {
 
   Widget listveiwTransaction({
     required String marketName,
-    // required String openResut,
+    required String bidNo,
     required String openTime,
     required String closeTime,
     required String coins,
     required String ballance,
     required String transactiontype,
-    required Color containerColor,
     required String timeDate,
     required String gameMode,
     required String bidType,
-    // required String closeResult,
+    required bool isWin,
     // required Function() onTap,
   }) {
     return Padding(
@@ -165,15 +108,17 @@ class BidHistory extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             boxShadow: [
-              BoxShadow(
-                spreadRadius: 1,
-                color: AppColors.grey,
-                blurRadius: 10,
-                offset: Offset(7, 4),
-              ),
+              isWin == true
+                  ? BoxShadow()
+                  : BoxShadow(
+                      spreadRadius: 1,
+                      color: AppColors.grey,
+                      blurRadius: 10,
+                      offset: const Offset(7, 4),
+                    ),
             ],
             border: Border.all(width: 0.6),
-            color: AppColors.white,
+            color: isWin == true ? AppColors.greenAccent : AppColors.white,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
@@ -186,10 +131,23 @@ class BidHistory extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      marketName,
-                      style: CustomTextStyle.textRobotoSansBold
-                          .copyWith(fontSize: Dimensions.h14),
+                    Row(
+                      children: [
+                        Text(
+                          " $marketName",
+                          style: CustomTextStyle.textRobotoSansBold
+                              .copyWith(fontSize: Dimensions.h14),
+                        ),
+                        SizedBox(
+                          width: Dimensions.w8,
+                        ),
+                        Text(
+                          bidNo.toString(),
+                          style: CustomTextStyle.textRobotoSansLight.copyWith(
+                            fontSize: Dimensions.h14,
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
@@ -306,5 +264,4 @@ class BidHistory extends StatelessWidget {
       ),
     );
   }
-
 }

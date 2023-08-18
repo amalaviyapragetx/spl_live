@@ -27,168 +27,182 @@ class WithdrawalPage extends StatelessWidget {
     var verticalSpace = SizedBox(
       height: Dimensions.h15,
     );
-    return Scaffold(
-      appBar: AppUtils().simpleAppbar(
-        appBarTitle: "My Wallet",
-        leading: IconButton(
-          onPressed: () {
-            homeController.pageWidget.value = 4;
-            homeController.currentIndex.value = 4;
-            Get.toNamed(AppRoutName.dashBoardPage);
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-        actions: [
-          InkWell(
-            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: Dimensions.w20,
-                  width: Dimensions.w20,
-                  child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    color: AppColors.white,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: Dimensions.r8,
-                      bottom: Dimensions.r10,
-                      left: Dimensions.r15,
-                      right: Dimensions.r10),
-                  child: Obx(
-                    () => Text(
-                      walletController.walletBalance.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+    return WillPopScope(
+      onWillPop: () async {
+        homeController.pageWidget.value = 4;
+        homeController.currentIndex.value = 4;
+        Get.toNamed(AppRoutName.dashBoardPage);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppUtils().simpleAppbar(
+          appBarTitle: "My Wallet",
+          leading: IconButton(
+            onPressed: () {
+              homeController.pageWidget.value = 4;
+              homeController.currentIndex.value = 4;
+              Get.toNamed(AppRoutName.dashBoardPage);
+            },
+            icon: const Icon(Icons.arrow_back),
           ),
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: Dimensions.w20, vertical: Dimensions.h10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            verticalSpace,
-            Text(
-              "WITHDRAWAL_TEXT".tr,
-              style: CustomTextStyle.textRobotoSansLight.copyWith(
-                color: AppColors.black,
-                fontSize: Dimensions.h14,
-              ),
-            ),
-            Text(
-              "WITHDRAWAL_TEXT2".tr,
-              style: CustomTextStyle.textRobotoSansLight.copyWith(
-                color: AppColors.black,
-                fontSize: Dimensions.h14,
-              ),
-            ),
-            verticalSpace,
-            Text(
-              "WITHDRAWAL_TEXT3".tr,
-              style: CustomTextStyle.textRobotoSansLight.copyWith(
-                color: AppColors.black,
-                fontSize: Dimensions.h14,
-              ),
-            ),
-            SizedBox(
-              height: Dimensions.h15,
-            ),
-            Text(
-              "WITHDRAWAL_TEXT4".tr,
-              style: CustomTextStyle.textRobotoSansLight.copyWith(
-                color: AppColors.black,
-                fontSize: Dimensions.h14,
-              ),
-            ),
-            verticalSpace,
-            Text(
-              "WITHDRAWAL_TEXT5".tr,
-              style: CustomTextStyle.textRobotoSansLight.copyWith(
-                color: AppColors.black,
-                fontSize: Dimensions.h14,
-              ),
-            ),
-            verticalSpace,
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Dimensions.w10, vertical: Dimensions.h10),
+          actions: [
+            InkWell(
+              onTap: () {
+                // Get.offAndToNamed(AppRoutName.transactionPage);
+              },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: RoundedCornerButton(
-                      // CHANGE TEXT TO CREATE WITHDRAWAL REQUEST
-                      text: "CHECKWITHDRAWAL".tr,
-                      color: AppColors.buttonColorDarkGreen,
-                      borderColor: AppColors.buttonColorDarkGreen,
-                      fontSize: Dimensions.h13,
-                      fontWeight: FontWeight.w500,
-                      fontColor: AppColors.white,
-                      letterSpacing: 0.5,
-                      borderRadius: Dimensions.h50,
-                      borderWidth: 0,
-                      textStyle: CustomTextStyle.textRobotoSansLight,
-                      onTap: () {
-                        Get.toNamed(AppRoutName.createWithDrawalPage);
-                      },
-                      height: Dimensions.h30,
-                      width: Dimensions.w200,
+                  SizedBox(
+                    height: Dimensions.w20,
+                    width: Dimensions.w20,
+                    child: SvgPicture.asset(
+                      ConstantImage.walletAppbar,
+                      color: AppColors.white,
+                      fit: BoxFit.fill,
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: Dimensions.h70,
-              color: AppColors.appbarColor,
-              // child: Image.asset(
-              //   'assets/images/samsung.jpg',
-              // ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(Dimensions.r10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: RoundedCornerButton(
-                      text: "CHECKHISTORY".tr,
-                      color: AppColors.blueButton,
-                      borderColor: AppColors.blueButton,
-                      fontSize: Dimensions.h13,
-                      fontWeight: FontWeight.w500,
-                      fontColor: AppColors.white,
-                      letterSpacing: 0.5,
-                      borderRadius: Dimensions.h50,
-                      borderWidth: 0,
-                      textStyle: CustomTextStyle.textRobotoSansLight,
-                      onTap: () {
-                        // checkWithdrawalPageController.get(lazyLoad: false);
-                        print(
-                            "====== My Wallet screen ====== Check withdrawalPageController ======");
-                        Get.offAndToNamed(AppRoutName.checkWithDrawalPage);
-                      },
-                      height: Dimensions.h30,
-                      width: Dimensions.w200,
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: Dimensions.r8,
+                        bottom: Dimensions.r10,
+                        left: Dimensions.r15,
+                        right: Dimensions.r10),
+                    child: Obx(
+                      () => Text(
+                        walletController.walletBalance.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
           ],
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimensions.w20, vertical: Dimensions.h10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              verticalSpace,
+              Text(
+                "WITHDRAWAL_TEXT".tr,
+                style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  color: AppColors.black,
+                  fontSize: Dimensions.h14,
+                ),
+              ),
+              Text(
+                "WITHDRAWAL_TEXT2".tr,
+                style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  color: AppColors.black,
+                  fontSize: Dimensions.h14,
+                ),
+              ),
+              verticalSpace,
+              Text(
+                "WITHDRAWAL_TEXT3".tr,
+                style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  color: AppColors.black,
+                  fontSize: Dimensions.h14,
+                ),
+              ),
+              SizedBox(
+                height: Dimensions.h15,
+              ),
+              Text(
+                "WITHDRAWAL_TEXT4".tr,
+                style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  color: AppColors.black,
+                  fontSize: Dimensions.h14,
+                ),
+              ),
+              verticalSpace,
+              Text(
+                "WITHDRAWAL_TEXT5".tr,
+                style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  color: AppColors.black,
+                  fontSize: Dimensions.h14,
+                ),
+              ),
+              verticalSpace,
+              Padding(
+                padding: EdgeInsets.only(
+                  left: Dimensions.w10,
+                  right: Dimensions.w10,
+                  top: Dimensions.h10,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: RoundedCornerButton(
+                        // CHANGE TEXT TO CREATE WITHDRAWAL REQUEST
+                        text: "CHECKWITHDRAWAL".tr,
+                        color: AppColors.buttonColorDarkGreen,
+                        borderColor: AppColors.buttonColorDarkGreen,
+                        fontSize: Dimensions.h13,
+                        fontWeight: FontWeight.w500,
+                        fontColor: AppColors.white,
+                        letterSpacing: 0.5,
+                        borderRadius: Dimensions.h50,
+                        borderWidth: 0,
+                        textStyle: CustomTextStyle.textRobotoSansLight,
+                        onTap: () {
+                          Get.toNamed(AppRoutName.createWithDrawalPage);
+                        },
+                        height: Dimensions.h30,
+                        width: Dimensions.w200,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: Dimensions.h70,
+                // color: AppColors.appbarColor,
+                child: SvgPicture.asset(
+                  ConstantImage.withDrawalPageIcon,
+                  color: AppColors.withDrawalSvgColor,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: RoundedCornerButton(
+                        text: "CHECKHISTORY".tr,
+                        color: AppColors.blueButton,
+                        borderColor: AppColors.blueButton,
+                        fontSize: Dimensions.h13,
+                        fontWeight: FontWeight.w500,
+                        fontColor: AppColors.white,
+                        letterSpacing: 0.5,
+                        borderRadius: Dimensions.h50,
+                        borderWidth: 0,
+                        textStyle: CustomTextStyle.textRobotoSansLight,
+                        onTap: () {
+                          // checkWithdrawalPageController.get(lazyLoad: false);
+                          print(
+                              "====== My Wallet screen ====== Check withdrawalPageController ======");
+                          Get.offAndToNamed(AppRoutName.checkWithDrawalPage);
+                        },
+                        height: Dimensions.h30,
+                        width: Dimensions.w200,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

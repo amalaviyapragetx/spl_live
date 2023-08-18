@@ -34,32 +34,14 @@ class StarLineGameModesPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // This code will be executed after 3 secondsa
-    // getBool();
-    // print(getBidData);
-    // Timer(
-    //   const Duration(seconds: 1),
-    //   () {
-    //     if (!getBidData) {
-    //       marketData.value = arguments['marketData'];
-    //     }
     marketData.value = arguments;
+    print("********* ${marketData.value.toJson()}");
     checkBiddingStatus();
     callGetGameModes();
-    getBidListData();
-    // },
-    // );
-  }
-
-  getBidListData() async {
-    // selectedBidsList = argument['bidsList'];
-    //  print("==**************** ============ $selectedBidsList ==============");
-    var a = await LocalStorage.read(ConstantsVariables.starlineBidsList);
-    print("==**************** ============ $a ==============");
   }
 
   onBackButton() async {
-    Get.offAndToNamed(AppRoutName.dashBoardPage);
+    Get.toNamed(AppRoutName.dashBoardPage);
     requestModel.value.bids?.clear();
     await LocalStorage.write(
         ConstantsVariables.starlineBidsList, requestModel.value.bids);
@@ -85,6 +67,11 @@ class StarLineGameModesPageController extends GetxController {
   //   }
   //   update();
   // }
+  @override
+  void onClose() {
+    requestModel.value.bids?.clear();
+    super.onClose();
+  }
 
   void _calculateTotalAmount() {
     int tempTotal = 0;
@@ -99,48 +86,110 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   void callGetGameModes() async {
-    ApiService()
-        .getStarLineGameModes(marketID: marketData.value.id ?? 0)
-        .then((value) async {
-      print("Get StarLine Game Modes Api Response :- $value");
-      if (value['status']) {
-        StarLineGameModesApiResponseModel gameModeModel =
-            StarLineGameModesApiResponseModel.fromJson(value);
-        if (gameModeModel.data != null) {
-          biddingOpen.value = gameModeModel.data!.isBidOpen ?? false;
-          gameModesList.value =
-              gameModeModel.data!.gameMode ?? <StarLineGameMod>[];
+    ApiService().getStarLineGameModes(marketID: marketData.value.id ?? 0).then(
+      (value) async {
+        print("Get StarLine Game Modes Api Response :- $value");
+        if (value['status']) {
+          StarLineGameModesApiResponseModel gameModeModel =
+              StarLineGameModesApiResponseModel.fromJson(value);
+          if (gameModeModel.data != null) {
+            biddingOpen.value = gameModeModel.data!.isBidOpen ?? false;
+            gameModesList.value =
+                gameModeModel.data!.gameMode ?? <StarLineGameMod>[];
+          }
+        } else {
+          AppUtils.showErrorSnackBar(
+            bodyText: value['message'] ?? "",
+          );
         }
-      } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
-      }
-    });
+      },
+    );
   }
 
   void checkBiddingStatus() {
     var timeDiffForOpenBidding = CommonUtils()
         .getDifferenceBetweenGivenTimeFromNow(
             marketData.value.time ?? "00:00 AM");
-
     timeDiffForOpenBidding < 15 ? biddingOpen.value = false : true;
 
     if (!biddingOpen.value) {}
   }
 
   void onTapOfGameModeTile(int index) async {
-    await LocalStorage.write(ConstantsVariables.boolData, getBidData);
-    if (gameModesList[index].name!.contains("Bulk")) {
+    print("================================================================");
+    print(gameModesList[index].name);
+    bool isBulkMode = false;
+    bool normalMode = false;
+
+    switch (gameModesList[index].name) {
+      case "Single Ank":
+        isBulkMode = false;
+        break;
+      case "Single Pana":
+        isBulkMode = false;
+        break;
+      case "Double Pana":
+        isBulkMode = false;
+        break;
+      case "Tripple Pana":
+        isBulkMode = false;
+        break;
+      case "Single Ank Bulk":
+        isBulkMode = true;
+        break;
+      case "Jodi Bulk":
+        isBulkMode = true;
+        break;
+      case "Single Pana Bulk":
+        isBulkMode = true;
+        break;
+      case "Double Pana Bulk":
+        isBulkMode = true;
+        break;
+
+      case "Panel Group":
+        isBulkMode = false;
+        break;
+      case "SP Motor":
+        isBulkMode = false;
+        break;
+      case "DP Motor":
+        isBulkMode = false;
+        break;
+      case "SPDPTP":
+        isBulkMode = false;
+        break;
+      case "Digit Based Jodi":
+        isBulkMode = false;
+        break;
+      case "Choice Pana SPDP":
+        isBulkMode = false;
+        break;
+      case "Two Digits Panel":
+        isBulkMode = false;
+        break;
+      case "Odd Even":
+        isBulkMode = false;
+        break;
+
+      default:
+    }
+    //await LocalStorage.write(ConstantsVariables.boolData, getBidData);
+    print("==== From Main data ===== $isBulkMode");
+    if (isBulkMode) {
       Get.toNamed(AppRoutName.starLineGamePage, arguments: {
         "gameMode": gameModesList[index],
+        //   "gameModeName": gameModesList[index].name,
         "marketData": marketData.value,
         "getBidData": getBidData,
         "getBIdType": gameModesList[index].name,
       });
     } else {
+      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+      print(gameModesList[index].name);
       Get.toNamed(AppRoutName.newStarlineGames, arguments: {
         "gameMode": gameModesList[index],
+        "gameModeName": gameModesList[index].name,
         "marketData": marketData.value,
         "getBidData": getBidData,
         "getBIdType": gameModesList[index].name,

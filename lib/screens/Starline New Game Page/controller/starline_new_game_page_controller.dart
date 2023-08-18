@@ -54,6 +54,7 @@ class StarlineNewGamePageController extends GetxController {
   var leftAnkController = TextEditingController();
   var rightAnkController = TextEditingController();
   var middleAnkController = TextEditingController();
+  var gameModeName = "";
 
   @override
   void onInit() {
@@ -218,6 +219,7 @@ class StarlineNewGamePageController extends GetxController {
     //  focusNode.previousFcus();
   }
 
+  RxList<StarLineGameMod> gameModesList = <StarLineGameMod>[].obs;
   void createMarketBidApi() async {
     print(marketData.value);
     ApiService()
@@ -226,10 +228,26 @@ class StarlineNewGamePageController extends GetxController {
       debugPrint("create starline bid api response :- $value");
       if (value['status']) {
         selectedBidsList.clear();
-        Get.offAndToNamed(AppRoutName.dashBoardPage);
+        print(
+            "== From Starline ===================================$gameModeName");
+        print(marketData.value.toJson());
+        print(gameMode.value.toJson());
+        Get.offAllNamed(
+          AppRoutName.starLineGameModesPage, arguments: marketData.value,
+          // "gameMode": gameMode.value,
+          // "getBidData": getBidData,
+          // "getBIdType": getBIdType,
+          // "gameModeName": gameModeName
+        );
         if (value['data'] == false) {
           selectedBidsList.clear();
-          Get.offAndToNamed(AppRoutName.dashBoardPage);
+          Get.offAllNamed(
+            AppRoutName.starLineGameModesPage, arguments: marketData.value,
+            // "gameMode": gameMode.value,
+            // "getBidData": getBidData,
+            // "getBIdType": getBIdType,
+            // "gameModeName": gameModeName
+          );
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
           );
@@ -260,11 +278,15 @@ class StarlineNewGamePageController extends GetxController {
   }
 
   Future<void> getArguments() async {
+    print("****************************************************************");
+    gameModeName = argument['gameModeName'];
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
     requestModel.value.bids = argument['bidsList'];
     print("req model : ${requestModel.value.toJson()}");
     requestModel.refresh();
+    print(
+        "****************************************************************${marketData.value}");
     _calculateTotalAmount();
     requestModel.value.dailyStarlineMarketId = marketData.value.id;
     var data = await LocalStorage.read(ConstantsVariables.userData);
@@ -274,30 +296,15 @@ class StarlineNewGamePageController extends GetxController {
     print(getBIdType);
     await loadJsonFile();
     List<String> _tempValidationList = [];
-
     switch (gameMode.value.name) {
       case "Single Ank":
-        // showNumbersLine.value = false;
         enteredDigitsIsValidate = true;
         panaControllerLength.value = 1;
         _tempValidationList = jsonModel.singleAnk!;
-        // suggestionList.value = jsonModel.singleAnk!;
-        // for (var e in jsonModel.singleAnk!) {
-        //   singleAnkList.add(DigitListModelOffline.fromJson(e));
-        // }
-        // digitList.value = singleAnkList;
-        //    initializeTextControllers();
         break;
       case "Single Pana":
-        // showNumbersLine.value = false;
-        // suggestionList.value = jsonModel.jodi!;
         panaControllerLength.value = 3;
         _tempValidationList = jsonModel.allSinglePana!;
-        // for (var e in jsonModel.jodi!) {
-        //   jodiList.add(DigitListModelOffline.fromJson(e));
-        // }
-        // digitList.value = jodiList;
-        //   initializeTextControllers();
         break;
       case "Double Pana":
         panaControllerLength.value = 3;
@@ -321,11 +328,11 @@ class StarlineNewGamePageController extends GetxController {
         apiUrl = ApiUtils.choicePanaSPDP;
         break;
       case "SP Motor":
-        panaControllerLength.value = 9;
+        panaControllerLength.value = 10;
         apiUrl = ApiUtils.spMotor;
         break;
       case "DP Motor":
-        panaControllerLength.value = 9;
+        panaControllerLength.value = 10;
         apiUrl = ApiUtils.dpMotor;
         break;
       case "Odd Even":
@@ -335,36 +342,6 @@ class StarlineNewGamePageController extends GetxController {
         apiUrl = ApiUtils.towDigitJodi;
         panaControllerLength.value = 2;
         break;
-      //   case "Single Pana Bulk":
-      //     digitRow.first.isSelected = true;
-      //     showNumbersLine.value = true;
-      //     panaControllerLength.value = 3;
-      //     for (var e in jsonModel.singlePana!.single.l0!) {
-      //       singlePanaList.add(DigitListModelOffline.fromJson(e));
-      //     }
-      //     digitList.value = singlePanaList;
-      //     //  initializeTextControllers();
-      //     break;
-      //   case "Double Pana Bulk":
-      //     digitRow.first.isSelected = true;
-      //     showNumbersLine.value = true;
-      //     panaControllerLength.value = 3;
-      //     for (var e in jsonModel.doublePana!.single.l0!) {
-      //       doublePanaList.add(DigitListModelOffline.fromJson(e));
-      //     }
-      //     digitList.value = doublePanaList;
-      //     //  initializeTextControllers();
-      //     break;
-      //   case "Tripple Pana":
-      //     showNumbersLine.value = false;
-      //     suggestionList.value = jsonModel.triplePana!;
-      //     panaControllerLength.value = 3;
-      //     for (var e in jsonModel.triplePana!) {
-      //       triplePanaList.add(DigitListModelOffline.fromJson(e));
-      //     }
-      //     digitList.value = triplePanaList;
-      //     // initializeTextControllers();
-      //     break;
     }
     _validationListForNormalMode.addAll(_tempValidationList);
   }
@@ -413,17 +390,6 @@ class StarlineNewGamePageController extends GetxController {
         focusNode.previousFocus();
       } else {
         if (spdptpList.isEmpty) {
-          // selectedBidsList.add(
-          //   StarLineBids(
-          //     bidNo: addedNormalBidValue,
-          //     coins: int.parse(coinController.text),
-          //     starlineGameId: gameMode.value.id,
-          //     // subGameId: gameMode.value.id,
-          //     // gameModeName: gameMode.value.name,
-          //     remarks:
-          //         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-          //   ),
-          // );
           var existingIndex = selectedBidsList
               .indexWhere((element) => element.bidNo == addedNormalBidValue);
           if (existingIndex != -1) {
@@ -525,13 +491,6 @@ class StarlineNewGamePageController extends GetxController {
         selectedBidsList.refresh();
       }
     }
-
-    ///  print(requestModel.toJson());
-    // for (var index in selectedBidsList) {
-    //   print(
-    //       "${index.bidNo} ${index.gameId} ${index.gameModeName} ${index.subGameId} ");
-    //   // print("checkPanaType() ${checkPanaType()}");
-    // }
   }
 
   Future<Map> spdptpbody() async {
@@ -645,67 +604,7 @@ class StarlineNewGamePageController extends GetxController {
                   bodyText:
                       "Please enter valid ${gameMode.value.name!.toLowerCase()}",
                 );
-                // print("===== spdptpList empty =================");
-                // print(spdptpList);
-                // for (var i = 0; i < spdptpList.length; i++) {
-                //   selectedBidsList.add(
-                //     StarLineBids(
-                //       bidNo: addedNormalBidValue,
-                //       coins: int.parse(coinController.text),
-                //       starlineGameId: gameMode.value.id,
-                //       // gameModeName: gameMode.value.name,
-                //       // subGameId: gameMode.value.id,
-                //       remarks:
-                //           "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                //     ),
-                //   );
-                // }
               } else {
-                print("======= List not empty =====");
-                // print(spdptpList);
-                //  var gameArr = gameModeList;
-                // print("Jevin");
-                // print(gameModeList);
-//               for (var i = 0; i < spdptpList.length; i++) {
-//                 print("spdptpList${spdptpList[i]}");
-//                 //     Roshan
-//                 //   int checkPanaType(String digit) {
-//                 //     int count = 1;
-//                 //     for (int i = 0; i < digit.length; i++) {
-//                 //       if (digit.lastIndexOf(digit[i]) != i) {
-//                 //         count += 1;
-//                 //       }
-//                 //     }
-//                 //     return count;
-//                 //   }
-
-//                 //   String determinePanaType(String digit) {
-//                 //     int panaType = checkPanaType(digit);
-//                 //     if (panaType == 1) {
-//                 //       return 'singlePana';
-//                 //     } else if (panaType == 2) {
-//                 //       return 'doublePana';
-//                 //     } else {
-//                 //       return 'tripplePana';
-//                 //     }
-//                 //   }
-
-//                 // check pana type
-//                 // var count = 1;
-//                 // for (var i = 0; i < spdptpList.length; i++) {
-//                 //   if (spdptpList.lastIndexOf(spdptpList[i]) != i) {
-//                 //     count += 1;
-//                 //   }
-//                 // }
-//                 // if (count == 1) {
-//                 //   // singlePana
-//                 // } else if (count == 2) {
-//                 //   // doublePana
-//                 // } else {
-//                 //   // tripplePana
-//                 // }
-//                 // }
-//                 //   print(spdptpList[i].toString());
                 for (var i = 0; i < spdptpList.length; i++) {
                   addedNormalBidValue = spdptpList[i].toString();
                   var existingIndex = selectedBidsList.indexWhere(
@@ -747,12 +646,3 @@ class StarlineNewGamePageController extends GetxController {
     }
   }
 }
-
-
-// ,
-//         {
-//             "starlineGameId": 2,
-//             "bidNo": "895",
-//             "coins": 10,
-//             "remarks": "Starline 18:00:00 859 (Single Pana)"
-//         }

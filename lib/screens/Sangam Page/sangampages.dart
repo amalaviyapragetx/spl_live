@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -124,8 +125,9 @@ class SangamPages extends StatelessWidget {
                                 // we need to move the cursor
                                 controller.coinsController.selection =
                                     TextSelection.collapsed(
-                                        offset: controller
-                                            .coinsController.text.length);
+                                  offset:
+                                      controller.coinsController.text.length,
+                                );
                               } else if (int.parse(val) == 0) {
                                 print("value == 0");
                                 AppUtils.showErrorSnackBar(
@@ -142,7 +144,7 @@ class SangamPages extends StatelessWidget {
                           },
                           height: Dimensions.h35,
                           controller: controller.coinsController,
-                          hintText: "ENTERCOIN".tr,
+                          hintText: "Enter Poins".tr,
                           containerWidth: double.infinity,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
@@ -153,11 +155,6 @@ class SangamPages extends StatelessWidget {
                             // if (controller.gameMode.value.name!.toUpperCase() ==
                             //     "FULL SANGAM") {
                             //   if (value.length == 3) {
-                            //     controller.openFocusNode.unfocus();
-                            //     controller.closeFocusNode.requestFocus();
-                            //   }
-                            // } else {
-                            //   if (value.length == 1) {
                             //     controller.openFocusNode.unfocus();
                             //     controller.closeFocusNode.requestFocus();
                             //   }
@@ -183,119 +180,6 @@ class SangamPages extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Expanded(
-                    //   child: Center(
-                    //     child: Container(
-                    //       decoration: BoxDecoration(
-                    //         color: AppColors.white,
-                    //         boxShadow: [
-                    //           BoxShadow(
-                    //             blurRadius: 5,
-                    //             color: AppColors.grey,
-                    //             spreadRadius: 2,
-                    //             offset: const Offset(1, 2),
-                    //           )
-                    //         ],
-                    //       ),
-                    //       height: Dimensions.h40,
-                    //       width: size.width / 1.8,
-                    //       child: Center(
-                    //         child: TextFormField(
-                    //           autofocus: false,
-                    //           enabled: true,
-                    //           controller: controller.coinsController,
-                    //           maxLength: 5,
-                    //           maxLines: 1,
-                    //           minLines: 1,
-                    //           keyboardType: TextInputType.number,
-                    //           inputFormatters: [
-                    //             FilteringTextInputFormatter.digitsOnly
-                    //           ],
-                    //           cursorColor: AppColors.appbarColor,
-                    //           textAlign: TextAlign.center,
-                    //           style:
-                    //               CustomTextStyle.textRobotoSansBold.copyWith(
-                    //             color: AppColors.appbarColor,
-                    //             fontWeight: FontWeight.bold,
-                    //             fontSize: Dimensions.h15,
-                    //           ),
-                    //           focusNode: controller.coinsFocusNode,
-                    //           decoration: InputDecoration(
-                    //             contentPadding: imagePath.isEmpty
-                    //                 ? EdgeInsets.symmetric(
-                    //                     horizontal: Dimensions.w12)
-                    //                 : const EdgeInsets.only(left: 50),
-                    //             focusColor: AppColors.appbarColor,
-                    //             filled: true,
-                    //             fillColor: AppColors.white,
-                    //             counterText: "",
-                    //             focusedBorder: decoration,
-                    //             border: decoration,
-                    //             errorBorder: decoration,
-                    //             disabledBorder: decoration,
-                    //             enabledBorder: decoration,
-                    //             errorMaxLines: 0,
-                    //             hintText: "ENTERCOIN".tr,
-                    //             hintStyle: CustomTextStyle.textPTsansBold
-                    //                 .copyWith(
-                    //                     color: AppColors.appbarColor
-                    //                         .withOpacity(0.5),
-                    //                     fontSize: Dimensions.h15,
-                    //                     fontWeight: FontWeight.bold),
-                    //             prefixIcon: imagePath.isNotEmpty
-                    //                 ? Padding(
-                    //                     padding: const EdgeInsets.all(8.0),
-                    //                     child: Container(
-                    //                       decoration: BoxDecoration(
-                    //                           color: AppColors.appbarColor,
-                    //                           borderRadius:
-                    //                               BorderRadius.circular(50)),
-                    //                       child: Padding(
-                    //                         padding: EdgeInsets.only(
-                    //                             top: Dimensions.h4,
-                    //                             bottom: Dimensions.h4),
-                    //                         child: SvgPicture.asset(
-                    //                           imagePath,
-                    //                           color: AppColors.white,
-                    //                           height: 5,
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                   )
-                    //                 : null,
-                    //           ),
-                    //           onChanged: (val) {
-                    //             if (val != null) {
-                    //               if (val.characters.characterAt(0) ==
-                    //                       Characters("0") &&
-                    //                   val.length > 1) {
-                    //                 // we need to remove the first char
-                    //                 controller.coinsController.text =
-                    //                     val.substring(1);
-                    //                 // we need to move the cursor
-                    //                 controller.coinsController.selection =
-                    //                     TextSelection.collapsed(
-                    //                         offset: controller
-                    //                             .coinsController.text.length);
-                    //               } else if (int.parse(val) == 0) {
-                    //                 print("value == 0");
-                    //                 AppUtils.showErrorSnackBar(
-                    //                   bodyText: "Please enter valid points",
-                    //                 );
-                    //               } else if (int.parse(val) > 10000) {
-                    //                 print("value > 10000");
-                    //                 AppUtils.showErrorSnackBar(
-                    //                   bodyText:
-                    //                       "You can not add more than 10000 points",
-                    //                 );
-                    //               }
-                    //             }
-                    //           },
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 5),
@@ -339,26 +223,6 @@ class SangamPages extends StatelessWidget {
                 verticalSpace,
                 // listview(),
                 bidList(size)
-                // Obx(() => controller.addedSangamList.isNotEmpty
-                //     ? Padding(
-                //         padding: const EdgeInsets.only(bottom: 10.0),
-                //         child: RoundedCornerButton(
-                //           text: "SUBMIT".tr,
-                //           color: AppColors.appbarColor,
-                //           borderColor: AppColors.appbarColor,
-                //           fontSize: Dimensions.h12,
-                //           fontWeight: FontWeight.w600,
-                //           fontColor: AppColors.white,
-                //           letterSpacing: 1,
-                //           borderRadius: Dimensions.r5,
-                //           borderWidth: 0.2,
-                //           textStyle: CustomTextStyle.textRobotoSansBold,
-                //           onTap: () => controller.onTapOfSaveButton(),
-                //           height: Dimensions.h30,
-                //           width: size.width / 1.8,
-                //         ),
-                //       )
-                //     : Container())
               ],
             ),
           ),
@@ -368,6 +232,7 @@ class SangamPages extends StatelessWidget {
         () => bottumNav(
           size,
           controller.totalBiddingAmount.toString(),
+          controller.addedSangamList.length.toString(),
         ),
       ),
       // bottomNavigationBar:
@@ -448,7 +313,7 @@ class SangamPages extends StatelessWidget {
                 () => Text(
                   controller.gameMode.value.name!.toUpperCase() ==
                           "HALF SANGAM B"
-                      ? "CLOSEDIGIT".tr.toUpperCase()
+                      ? "OPENPANA".tr.toUpperCase()
                       : controller.openText.value.toUpperCase(),
                   // "OPEN DIGIT",
                   style: CustomTextStyle.textRobotoSansBold.copyWith(
@@ -464,7 +329,9 @@ class SangamPages extends StatelessWidget {
                   child: AutoTextFieldWithSuggetion(
                     imagePath: "",
                     maxLength: controller.gameMode.value.name!.toUpperCase() ==
-                            "FULL SANGAM"
+                                "FULL SANGAM" ||
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                "HALF SANGAM B"
                         ? 3
                         : 1,
                     autofocus: true,
@@ -473,7 +340,10 @@ class SangamPages extends StatelessWidget {
                     enable: true,
                     height: Dimensions.h35,
                     controller: controller.openValueController,
-                    hintText: controller.openFieldHint.value,
+                    hintText: controller.gameMode.value.name!.toUpperCase() ==
+                            "HALF SANGAM B"
+                        ? "ENTERPANA".tr
+                        : controller.openFieldHint.value,
                     containerWidth: double.infinity,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     keyboardType: TextInputType.number,
@@ -481,6 +351,15 @@ class SangamPages extends StatelessWidget {
                       controller.validateEnteredOpenDigit(value);
                       if (controller.gameMode.value.name!.toUpperCase() ==
                           "FULL SANGAM") {
+                        controller.addedNormalBidValue = value;
+                        if (value.length == 3) {
+                          controller.openFocusNode.unfocus();
+                          controller.closeFocusNode.requestFocus();
+                        }
+                      } else if (controller.gameMode.value.name!
+                              .toUpperCase() ==
+                          "HALF SANGAM B") {
+                        controller.addedNormalBidValue = value;
                         if (value.length == 3) {
                           controller.openFocusNode.unfocus();
                           controller.closeFocusNode.requestFocus();
@@ -582,7 +461,7 @@ class SangamPages extends StatelessWidget {
                 Text(
                   controller.gameMode.value.name!.toUpperCase() ==
                           "HALF SANGAM B"
-                      ? "OPENPANA".tr.toUpperCase()
+                      ? "CLOSEDIGIT".tr.toUpperCase()
                       : controller.closeText.value.toUpperCase(),
                   //  controller.closeText.value.toUpperCase(),
                   style: CustomTextStyle.textRobotoSansBold.copyWith(
@@ -645,15 +524,44 @@ class SangamPages extends StatelessWidget {
                           controller: textEditingController =
                               controller.closeValueController,
                           focusNode: controller.closeFocusNode = focusNode,
-                          maxLength: 3,
+                          maxLength:
+                              controller.gameMode.value.name!.toUpperCase() ==
+                                      "HALF SANGAM B"
+                                  ? 1
+                                  : 3,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             controller.validateEnteredCloseDigit(
                                 false, controller.closeValueController.text);
-                            if (controller.closeValueController.text.length ==
-                                3) {
-                              controller.closeFocusNode.unfocus();
-                              controller.coinsFocusNode.requestFocus();
+                            // if (controller.closeValueController.text.length ==
+                            //     3) {
+                            //   //controller.addedNormalBidValue = value;
+                            //   controller.closeFocusNode.unfocus();
+                            //   controller.coinsFocusNode.requestFocus();
+                            // } else {
+                            //   controller.openValue = value;
+                            // }
+                            if (controller.gameMode.value.name!.toUpperCase() ==
+                                "FULL SANGAM") {
+                              controller.addedNormalBidValue = value;
+                              controller.addedNormalBidValue = value;
+                              if (value.length == 3) {
+                                controller.openFocusNode.unfocus();
+                                controller.closeFocusNode.requestFocus();
+                              }
+                            } else if (controller.gameMode.value.name!
+                                    .toUpperCase() ==
+                                "HALF SANGAM B") {
+                              if (value.length == 1) {
+                                controller.openFocusNode.unfocus();
+                                controller.closeFocusNode.requestFocus();
+                              }
+                            } else {
+                              if (value.length == 3) {
+                                controller.addedNormalBidValue = value;
+                                controller.openFocusNode.unfocus();
+                                controller.closeFocusNode.requestFocus();
+                              }
                             }
                           },
                           textAlign: TextAlign.start,
@@ -672,7 +580,14 @@ class SangamPages extends StatelessWidget {
                             filled: true,
                             errorMaxLines: 0,
                             contentPadding: const EdgeInsets.only(left: 10),
-                            hintText: "ENTERPANA".tr,
+                            hintText:
+                                controller.gameMode.value.name!.toUpperCase() ==
+                                            "FULL SANGAM" ||
+                                        controller.gameMode.value.name!
+                                                .toUpperCase() ==
+                                            "HALF SANGAM A"
+                                    ? "ENTERPANA".tr
+                                    : "ENTERDIGIT".tr,
                             fillColor: AppColors.textFieldFillColor,
                             focusedBorder: border,
                             border: border,
@@ -871,7 +786,7 @@ class SangamPages extends StatelessWidget {
     );
   }
 
-  bottumNav(Size size, String totalAmount) {
+  bottumNav(Size size, String totalAmount, String bids) {
     return Container(
       width: size.width,
       height: Dimensions.h45,
@@ -881,7 +796,7 @@ class SangamPages extends StatelessWidget {
         children: [
           nameColumn(
               titleText: "Bids",
-              subText: "00",
+              subText: bids,
               textColor: AppColors.white,
               textColor2: AppColors.white),
           nameColumn(

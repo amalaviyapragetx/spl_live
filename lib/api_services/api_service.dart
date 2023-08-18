@@ -326,14 +326,17 @@ class ApiService extends GetConnect {
     }
   }
 
-  Future<dynamic> getDailyStarLineMarkets() async {
+  Future<dynamic> getDailyStarLineMarkets(
+      {required String startDate, required String endDate}) async {
     Future.delayed(const Duration(milliseconds: 2), () {
       AppUtils.showProgressDialog(isCancellable: false);
     });
-
+    print(
+      "####################################################${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
+    );
     await initApiService();
     final response = await get(
-      "${ApiUtils.getDailyStarLineMarkets}",
+      "${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
       headers: headersWithToken,
     );
     print(
@@ -708,15 +711,20 @@ class ApiService extends GetConnect {
     }
   }
 
-  Future<dynamic> getBidHistoryByUserId(
-      {required String userId,
-      required String limit,
-      required String offset,
-      required bool isStarline}) async {
+  Future<dynamic> getBidHistoryByUserId({
+    required String userId,
+    required String limit,
+    required String offset,
+    required bool isStarline,
+    required String? startDate,
+    required String? endDate,
+  }) async {
+    print(
+        "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await get(
-      "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
+      "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
       headers: headersWithToken,
     );
     if (response.status.hasError) {
@@ -724,11 +732,9 @@ class ApiService extends GetConnect {
         tokenExpired();
       }
       AppUtils.hideProgressDialog();
-
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
-
       return response.body;
     }
   }
@@ -881,7 +887,6 @@ class ApiService extends GetConnect {
   }) async {
     print(
         "==== Jevin  bhai from service =======================================");
-    print("${ApiUtils.marketbidHistory}/$userId");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     // final response = await get(

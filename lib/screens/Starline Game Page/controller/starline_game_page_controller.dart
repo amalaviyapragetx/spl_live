@@ -65,7 +65,6 @@ class StarLineGamePageController extends GetxController {
   RxList<Color> containerBorderColor2 = <Color>[].obs;
   RxInt panaControllerLength = 2.obs;
   RxList<StarLineBids> bidList = <StarLineBids>[].obs;
-  // var arguments = Get.arguments;
   @override
   void onInit() {
     getArguments();
@@ -78,7 +77,6 @@ class StarLineGamePageController extends GetxController {
       focusNode.dispose();
     }
     coinController.dispose();
-
     super.onClose();
   }
 
@@ -99,43 +97,9 @@ class StarLineGamePageController extends GetxController {
     });
   }
 
-  // ondebounce(index) {
-  //   if (_debounce != null && _debounce!.isActive) {
-  //     _debounce!.cancel();
-  //   }
-  //   _debounce = Timer(const Duration(milliseconds: 700), () {
-  //     onTapOfDigitTile(index);
-  //     digitList[index].isSelected = true;
-  //     print("Text changed! Text: ${digitList[index].isSelected}");
-  //   });
-  // }
-  // void setContainerBorderColorForIndex(int index, Color color) {
-  //   // Update the containerBorderColor value at the specified index
-  //   containerBorderColor2[index] = color;
-
-  //   // Trigger an update to rebuild the UI
-  //   update();
-  // }
-
-  // Color getContainerBorderColor(int index) {
-  //   if (index < 0 || index >= containerBorderColor2.length) {
-  //     // Handle out-of-bounds index if necessary
-  //     return Colors.black; // Default border color
-  //   }
-  //   return containerBorderColor2[index];
-  // }
-
   void setContainerBorderColor(Color color) {
     containerBorderColor.value = color;
   }
-
-  // void setupFocusNodeListeners() {
-  //   for (int i = 0; i < digitList.length; i++) {
-  //     focusNodes[i].addListener(() {
-  //       focusNodes[i].requestFocus();
-  //     });
-  //   }
-  // }
 
   Future<void> getArguments() async {
     bidList = await LocalStorage.read(ConstantsVariables.starlineBidsList);
@@ -143,7 +107,6 @@ class StarLineGamePageController extends GetxController {
     marketData.value = argument['marketData'];
     getBidData = argument['getBidData'];
     getBIdType = argument['getBIdType'];
-    // selectedBidsList = argument['bidsList'];
     print(getBIdType);
     await loadJsonFile();
     switch (gameMode.value.name) {
@@ -158,16 +121,16 @@ class StarLineGamePageController extends GetxController {
         digitList.value = singleAnkList;
         //    initializeTextControllers();
         break;
-      case "Jodi Bulk":
-        showNumbersLine.value = false;
-        suggestionList.value = jsonModel.jodi!;
-        panaControllerLength.value = 2;
-        for (var e in jsonModel.jodi!) {
-          jodiList.add(DigitListModelOffline.fromJson(e));
-        }
-        digitList.value = jodiList;
-        //   initializeTextControllers();
-        break;
+      // case "Jodi Bulk":
+      //   showNumbersLine.value = false;
+      //   suggestionList.value = jsonModel.jodi!;
+      //   panaControllerLength.value = 2;
+      //   for (var e in jsonModel.jodi!) {
+      //     jodiList.add(DigitListModelOffline.fromJson(e));
+      //   }
+      //   digitList.value = jodiList;
+      //   //   initializeTextControllers();
+      //   break;
       case "Single Pana Bulk":
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
@@ -211,17 +174,15 @@ class StarLineGamePageController extends GetxController {
   Future<void> onTapOfSaveButton() async {
     if (selectedBidsList.isNotEmpty) {
       if (bidList.isNotEmpty) {
-        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$bidList");
         for (var i = 0; i < bidList.length; i++) {
           // selectedBidsList.add(bidsList[i]);
           selectedBidsList.add(bidList[i]);
           var existingIndex = selectedBidsList.indexOf(bidList[i]);
           selectedBidsList.refresh();
         }
-        print("========= jevin ================ ${selectedBidsList.toList()}");
+
         await LocalStorage.write(
             ConstantsVariables.starlineBidsList, selectedBidsList);
-
         Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
           "bidsList": selectedBidsList,
           "gameMode": gameMode.value,
@@ -235,7 +196,6 @@ class StarLineGamePageController extends GetxController {
         digitList.refresh();
         coinController.clear();
       } else {
-        print("else");
         await LocalStorage.write(
             ConstantsVariables.starlineBidsList, selectedBidsList);
         Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
@@ -270,8 +230,6 @@ class StarLineGamePageController extends GetxController {
       }
     }
   }
-
-  // void onTapOfSaveButton()
 
   void onTapOfNumbersLine(int index) {
     for (int i = 0; i < digitRow.length; i++) {

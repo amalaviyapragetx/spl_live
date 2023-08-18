@@ -92,7 +92,7 @@ class GamePageController extends GetxController {
   }
 
   Future<void> getArguments() async {
-    bidsList = await LocalStorage.read(ConstantsVariables.bidsList);
+    bidsList.value = await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
     print("BidList  on bulkgame Page : ------ $bidsList");
     var a = await LocalStorage.read(ConstantsVariables.playMore);
     print("plamore on game page: $a");
@@ -153,15 +153,12 @@ class GamePageController extends GetxController {
         digitList.value = triplePanaList;
         break;
     }
-
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.userId = userData.id;
     requestModel.bidType = biddingType.value;
     requestModel.dailyMarketId = marketId;
   }
-
-  // void onTapOfDigitTile(int index) {}
 
   void onTapNumberList(index) {
     if (validCoinsEntered.value) {
@@ -346,17 +343,10 @@ class GamePageController extends GetxController {
     if (selectedBidsList.isNotEmpty) {
       if (bidsList.isNotEmpty) {
         for (var i = 0; i < bidsList.length; i++) {
-          print("${bidsList[i]}\n");
-          // selectedBidsList.add(bidsList[i]);
           var existingIndex = selectedBidsList.indexOf(bidsList[i]);
-          print("existingIndex  $existingIndex");
           selectedBidsList.add(bidsList[i]);
         }
-        print(selectedBidsList.length);
-        print("%%%%%%%%%%%%%%%%%%%%%%%%% ${selectedBidsList}");
         await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
-        print(
-            "----------------------------------------------------------------");
         Get.offAndToNamed(AppRoutName.selectedBidsPage, arguments: {
           "bidsList": selectedBidsList,
           "biddingType": biddingType.value,

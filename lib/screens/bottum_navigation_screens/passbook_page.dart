@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-
 import '../../helper_files/app_colors.dart';
-
 import '../../helper_files/common_utils.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../home_screen/controller/homepage_controller.dart';
 import 'controller/bottum_navigation_controller.dart';
-import 'package:spllive/models/passbook_page_model.dart';
 
 class PassBook extends StatelessWidget {
   PassBook({super.key});
@@ -178,7 +175,7 @@ class PassBook extends StatelessWidget {
                               data.transactionType == "Deposit"
                           ? "${data.remarks}"
                           : "${data.transactionType ?? ""} ( ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
-                      : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType.toUpperCase() ?? ""} ) : ${data.bidNo ?? ""}"),
+                      : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType ?? ""} ) : ${data.bidNo ?? ""}"),
               dataCells(
                 width: Dimensions.w150,
                 textColor: AppColors.black,

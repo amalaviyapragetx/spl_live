@@ -41,7 +41,6 @@ class ApiUtils {
   static String getTransactionHistory = '$baseURL/bid/getByUserId';
   static String verifyMPIN = '$baseURL/auth/mPin/verify';
   static String forgotMPIN = '$baseURL/auth/mPin/forgot';
-
   // new api endpoints
   static String setUserDetails = '$baseURL/auth/setUserDetails';
   static String setDeviceDetails = '$baseURL/auth/setDeviceDetails';

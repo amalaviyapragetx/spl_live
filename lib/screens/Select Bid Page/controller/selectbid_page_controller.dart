@@ -112,13 +112,13 @@ class SelectBidPageController extends GetxController {
   void playMore() async {
     Get.offAndToNamed(AppRoutName.gameModePage, arguments: {
       "biddingType": biddingType.value,
-      "marketName": marketName.value,
-      "totalAmount": totalAmount.value,
+      // "marketName": marketName.value,
+      //  "totalAmount": totalAmount.value,
       "bidsList": requestModel.value.bids,
-      "gameName": gameName.value,
-      "marketId": requestModel.value.dailyMarketId,
+      //  "gameName": gameName.value,
+      //  "marketId": requestModel.value.dailyMarketId,
     });
-    getArguments();
+    //getArguments();
   }
 
   void showConfirmationDialog(BuildContext context) {

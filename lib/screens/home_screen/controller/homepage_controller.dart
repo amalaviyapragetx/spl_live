@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -9,7 +8,6 @@ import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../api_services/api_service.dart';
-import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
@@ -32,6 +30,8 @@ import '../utils/home_screen_utils.dart';
 
 class HomePageController extends GetxController {
   TextEditingController dateinput = TextEditingController();
+  TextEditingController dateinputForResultHistory = TextEditingController();
+  DateTime bidHistotyDate = DateTime.now();
   RxBool isStarline = false.obs;
   var arguments = Get.arguments;
   RxBool market = false.obs;
@@ -58,7 +58,6 @@ class HomePageController extends GetxController {
   RxList<ResultArr> starLineMarketHistoryList = <ResultArr>[].obs;
   RxList<Rows> passBookModelData = <Rows>[].obs;
   RxList<Rows> passBookModelData2 = <Rows>[].obs;
-
   RxInt passbookCount = 0.obs;
   // RxList<NormalMarketHistoryModel> marketHistoryList =
   //     <NormalMarketHistoryModel>[].obs;
@@ -69,17 +68,16 @@ class HomePageController extends GetxController {
   RxList<BidHistoryNew> marketbidhistory = <BidHistoryNew>[].obs;
   RxList<MarketBidHistory> marketbidhistory1 = <MarketBidHistory>[].obs;
   RxList<dynamic> result = [].obs;
-
   Rx<Bidhistorymodel> bidMarketModel = Bidhistorymodel().obs;
-
   Rx<MarketBidHistory> marketBidHistory = MarketBidHistory().obs;
   RxList<MarketBidHistoryList> marketBidHistoryList =
       <MarketBidHistoryList>[].obs;
+  DateTime startEndDate = DateTime.now();
+
   @override
   void onInit() {
     setboolData();
     callMarketsApi();
-    getDailyStarLineMarkets();
     callGetStarLineChart();
     getUserData();
     super.onInit();
@@ -94,13 +92,17 @@ class HomePageController extends GetxController {
 
   void callMarketsApi() {
     getDailyMarkets();
-    getStarLineMarkets();
+    marketBidHistoryList.refresh();
+    passBookModelData.refresh();
+    passBookModelData2.refresh();
+    getStarLineMarkets(DateFormat('yyyy-MM-dd').format(startEndDate),
+        DateFormat('yyyy-MM-dd').format(startEndDate));
   }
 
   Future<void> handleRefresh() async {
     // Put your reload logic here.
     // For example, you can fetch new data from the server and update the UI.
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     print("Data reloaded!");
   }
 
@@ -123,20 +125,25 @@ class HomePageController extends GetxController {
   Future<void> getUserData() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
-    getMarketBidsByUserId(lazyLoad: false);
+    getMarketBidsByUserId(
+        lazyLoad: false,
+        startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+        endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
   }
 
-  onTapOficonButton() {
-    if (pageWidget.value == 1 && currentIndex.value == 1) {
-      marketBidsByUserId(lazyLoad: false);
-    } else if (pageWidget.value == 2 && currentIndex.value == 2) {
-    } else if (pageWidget.value == 3 && currentIndex.value == 3) {
-      getPassBookData(lazyLoad: false, offset: offset.value.toString());
-    } else if (pageWidget.value == 1 && currentIndex.value == 1) {}
-  }
+  // onTapOficonButton() {
+  //   if (pageWidget.value == 1 && currentIndex.value == 1) {
+  //     marketBidsByUserId(lazyLoad: false);
+  //   } else if (pageWidget.value == 2 && currentIndex.value == 2) {
+  //   } else if (pageWidget.value == 3 && currentIndex.value == 3) {
+  //     getPassBookData(lazyLoad: false, offset: offset.value.toString());
+  //   }
+  // }
 
-  void getStarLineMarkets() async {
-    ApiService().getDailyStarLineMarkets().then((value) async {
+  void getStarLineMarkets(String startDate, String endDate) async {
+    ApiService()
+        .getDailyStarLineMarkets(startDate: startDate, endDate: endDate)
+        .then((value) async {
       debugPrint("Get Daily Starline Markets Api Response :- $value");
       if (value['status']) {
         StarLineDailyMarketApiResponseModel responseModel =
@@ -167,6 +174,7 @@ class HomePageController extends GetxController {
           });
           tempFinalMarketList.addAll(biddingClosedMarketList);
           starLineMarketList.value = tempFinalMarketList;
+          print("Star ********************* ${starLineMarketList.toJson()}");
         }
       } else {
         AppUtils.showErrorSnackBar(
@@ -299,7 +307,7 @@ class HomePageController extends GetxController {
                 size,
                 walletText: walletText,
                 onTapTranction: () {
-                  Get.toNamed(AppRoutName.transactionPage);
+                  // Get.toNamed(AppRoutName.transactionPage);
                 },
                 onTapNotifiaction: () {
                   Get.toNamed(AppRoutName.notificationPage);
@@ -362,13 +370,22 @@ class HomePageController extends GetxController {
                                 onTap2: () {
                                   position = 1;
                                   isStarline.value = true;
-                                  marketHistoryList.clear();
-                                  getMarketBidsByUserId(lazyLoad: false);
+                                  getDailyStarLineMarkets(
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(startEndDate),
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(startEndDate));
+                                  getMarketBidsByUserId(
+                                      lazyLoad: false,
+                                      endDate: DateFormat('yyyy-MM-dd')
+                                          .format(startEndDate),
+                                      startDate: DateFormat('yyyy-MM-dd')
+                                          .format(startEndDate));
                                   // HomeScreenUtils().iconsContainer2();
                                   widgetContainer.value = position;
                                   print(marketHistoryList.toJson());
-                                  print(
-                                      "${widgetContainer.value} ${isStarline.value}");
+                                  // print(
+                                  //     "${widgetContainer.value} ${isStarline.value}");
                                 },
                                 onTap3: () {
                                   position = 2;
@@ -484,14 +501,13 @@ class HomePageController extends GetxController {
                               position = 0;
                               widgetContainer.value = position;
                               isStarline.value = false;
-                              print(widgetContainer.value);
+                              // print(widgetContainer.value);
                             },
                             onTap2: () {
                               position = 1;
                               isStarline.value = true;
-                              // HomeScreenUtils().iconsContainer2();
                               widgetContainer.value = position;
-                              print(widgetContainer.value);
+                              //   print(widgetContainer.value);
                             },
                             onTap3: () {
                               position = 2;
@@ -515,17 +531,18 @@ class HomePageController extends GetxController {
                                     onTap1: () {
                                       position = 3;
                                       widgetContainer.value = position;
-                                      print(widgetContainer.value);
+                                      //   print(widgetContainer.value);
                                     },
                                     onTap2: () {
                                       position = 4;
                                       widgetContainer.value = position;
-                                      print(widgetContainer.value);
+                                      print(
+                                          " ************ ${widgetContainer.value}");
                                     },
                                     onTap3: () {
                                       position = 5;
                                       widgetContainer.value = position;
-                                      print(widgetContainer.value);
+                                      // print(widgetContainer.value);
                                     })
                                 : Container();
                           }),
@@ -577,8 +594,10 @@ class HomePageController extends GetxController {
     }
   }
 
-  void getDailyStarLineMarkets() async {
-    ApiService().getDailyStarLineMarkets().then((value) async {
+  void getDailyStarLineMarkets(String startDate, String endDate) async {
+    ApiService()
+        .getDailyStarLineMarkets(startDate: startDate, endDate: endDate)
+        .then((value) async {
       print("Get Daily Starline Markets Result Api Response :- $value");
       if (value['status']) {
         StarLineDailyMarketApiResponseModel responseModel =
@@ -650,7 +669,7 @@ class HomePageController extends GetxController {
   }
 
   Future<void> onSwipeRefresh() async {
-    getDailyStarLineMarkets();
+    // getDailyStarLineMarkets();
   }
 
   void callGetStarLineChart() async {
@@ -675,36 +694,45 @@ class HomePageController extends GetxController {
     });
   }
 
-  void getMarketBidsByUserId({required bool lazyLoad}) {
+  void getMarketBidsByUserId({
+    required bool lazyLoad,
+    required String startDate,
+    required String endDate,
+  }) {
     ApiService()
         .getBidHistoryByUserId(
-            userId: userData.id.toString(),
-            limit: "10",
-            offset: offset.value.toString(),
-            isStarline: isStarline.value)
-        .then((value) async {
-      debugPrint("Get Market Api Response :- $value");
-      if (value['status']) {
-        if (value['data'] != null) {
-          NormalMarketBidHistoryResponseModel model =
-              NormalMarketBidHistoryResponseModel.fromJson(value);
-          lazyLoad
-              ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
-              : marketHistoryList.value =
-                  model.data?.resultArr ?? <ResultArr>[];
+      userId: userData.id.toString(),
+      startDate: startDate,
+      endDate: endDate,
+      limit: "10",
+      offset: offset.value.toString(),
+      isStarline: isStarline.value,
+    )
+        .then(
+      (value) async {
+        debugPrint("Get Market Api Response :- $value");
+        if (value['status']) {
+          if (value['data'] != null) {
+            NormalMarketBidHistoryResponseModel model =
+                NormalMarketBidHistoryResponseModel.fromJson(value);
+            lazyLoad
+                ? marketHistoryList
+                    .addAll(model.data?.resultArr ?? <ResultArr>[])
+                : marketHistoryList.value =
+                    model.data?.resultArr ?? <ResultArr>[];
+          }
+        } else {
+          AppUtils.showErrorSnackBar(
+            bodyText: value['message'] ?? "",
+          );
         }
-      } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
-      }
-    });
+      },
+    );
   }
 
-  final int itemLimit = 13;
+  final int itemLimit = 30;
 
   void getPassBookData({required bool lazyLoad, required String offset}) {
-    print("@@@@@@@@@@@@@@@@:-  ${offset.toString()}");
     ApiService()
         .getPassBookData(
       userId: userData.id.toString(),
@@ -714,7 +742,7 @@ class HomePageController extends GetxController {
     )
         .then((value) async {
       debugPrint(" Get passBook Data @@@@@@@@@@@@@@@@:- $value");
-      print("@@@@@@@@@@@@@@@@:-   ${offset.toString()}");
+
       if (value['status']) {
         print(value['status']);
         if (value['data'] != null) {
@@ -732,7 +760,13 @@ class HomePageController extends GetxController {
   }
 
   int calculateTotalPages() {
-    return (passbookCount.value / itemLimit).ceil() - 1;
+    var passbookValue = (passbookCount.value / itemLimit).ceil() - 1;
+    var passbookValueZero = (passbookCount.value / itemLimit).ceil();
+    if (passbookCount.value < 30) {
+      return passbookValueZero;
+    } else {
+      return passbookValue;
+    }
   }
 
   var num = 0;
@@ -788,9 +822,7 @@ class HomePageController extends GetxController {
                 : marketBidHistoryList.value =
                     model.rows ?? <MarketBidHistoryList>[];
           }
-
-          print("================== Final List ======================");
-          print(marketBidHistoryList.toJson());
+          marketBidHistoryList.refresh();
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",

@@ -55,7 +55,6 @@ class GameModePagesController extends GetxController {
   @override
   void onInit() {
     marketValue.value = arguments;
-    print(marketValue.value.closeTime);
     checkBiddingStatus();
     callGetGameModes();
     getArguments();
@@ -99,7 +98,7 @@ class GameModePagesController extends GetxController {
   }
 
   onBackButton() async {
-    Get.offAndToNamed(AppRoutName.dashBoardPage);
+    Get.toNamed(AppRoutName.dashBoardPage);
     selectedBidsList.clear();
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
   }
@@ -148,22 +147,73 @@ class GameModePagesController extends GetxController {
   }
 
   void onTapOfGameModeTile(int index) {
-    if (gameModesList[index].name!.contains("Sangam")) {
+    print("================================================================");
+    print(gameModesList[index].name);
+    bool isBulkMode = false;
+    bool digitBasedJodi = false;
+    bool choicePanaSpDp = false;
+    bool digitsBasedJodi = false;
+    bool oddEven = false;
+    bool halfSangamA = false;
+    bool halfSangamB = false;
+    bool fullSangam = false;
+    switch (gameModesList[index].name) {
+      case "Single Ank Bulk":
+        isBulkMode = true;
+        break;
+      case "Jodi Bulk":
+        isBulkMode = true;
+        break;
+      case "Single Pana Bulk":
+        isBulkMode = true;
+        break;
+      case "Double Pana Bulk":
+        isBulkMode = true;
+        break;
+      case "Digit Based Jodi":
+        digitBasedJodi = true;
+        break;
+      case "Choice Pana SPDP":
+        choicePanaSpDp = true;
+        break;
+      case "Digits Based Jodi":
+        digitsBasedJodi = true;
+        break;
+      case "Odd Even":
+        oddEven = true;
+        break;
+      case "Half Sangam A":
+        halfSangamA = true;
+        break;
+      case "Half Sangam B":
+        halfSangamB = true;
+
+        break;
+      case "Full Sangam":
+        halfSangamB = true;
+        break;
+      default:
+    }
+
+    if (halfSangamA || halfSangamB || fullSangam) {
       Get.toNamed(AppRoutName.sangamPages, arguments: {
         "gameMode": gameModesList[index],
+        "marketName": marketValue.value.market ?? "",
         "marketData": marketValue.value,
         "gameModeList": gameModeList,
+        "marketValue": marketValue.value,
         "bidsList": selectedBidsList,
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    } else if (gameModesList[index].name!.contains("Bulk") ||
-        gameModesList[index].name!.contains("jodi")) {
+      print(marketValue.value.market);
+    } else if (isBulkMode) {
       print(selectedBidsList);
       Get.toNamed(AppRoutName.singleAnkPage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
+        "marketValue": marketValue.value,
         "time": openCloseValue.value == "OPENBID".tr
             ? marketValue.value.openTime ?? ""
             : marketValue.value.closeTime ?? "",
@@ -174,9 +224,8 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    } else if (gameModesList[index].name!.contains("Choice") ||
-        gameModesList[index].name!.contains("Digits Based Jodi") ||
-        gameModesList[index].name!.contains("Odd Even")) {
+      print(marketValue.value.market);
+    } else if (choicePanaSpDp || digitsBasedJodi || oddEven) {
       Get.toNamed(AppRoutName.newOddEvenPage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
@@ -187,16 +236,17 @@ class GameModePagesController extends GetxController {
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": false,
         "gameModeList": gameModeList,
+        "marketValue": marketValue.value,
         "bidsList": selectedBidsList,
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
     } else {
-      print(selectedBidsList);
       Get.toNamed(AppRoutName.newGameModePage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
+        "marketValue": marketValue.value,
         "time": openCloseValue.value == "OPENBID".tr
             ? marketValue.value.openTime ?? ""
             : marketValue.value.closeTime ?? "",
@@ -207,6 +257,7 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
+      print(marketValue.value.market);
     }
   }
 
@@ -224,7 +275,8 @@ class GameModePagesController extends GetxController {
     print("playmore $playmore");
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    selectedBidsList = await LocalStorage.read(ConstantsVariables.bidsList);
+    selectedBidsList.value =
+        await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
     print("@#@@#@#@@#$selectedBidsList");
     // requestModel.value.bidType = arguments["biddingType"];
     // requestModel.value.dailyMarketId = arguments["marketId"];

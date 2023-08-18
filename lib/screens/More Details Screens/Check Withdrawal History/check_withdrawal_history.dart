@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
@@ -24,50 +25,56 @@ class CheckWithdrawalPage extends StatelessWidget {
     var verticalSpace = SizedBox(
       height: Dimensions.h10,
     );
-    return Scaffold(
-      appBar: AppUtils().simpleAppbar(
-        appBarTitle: "Withdrawal",
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.offAllNamed(AppRoutName.withdrawalpage);
-            },
-            icon: const Icon(Icons.close),
-          )
-        ],
-        leadingWidht: Dimensions.w110,
-        leading: Row(
-          children: [
-            Container(
-              width: Dimensions.w38,
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 4.0, left: 8.0, bottom: 4.0),
-                child: SvgPicture.asset(
-                  ConstantImage.walletAppbar,
-                  color: AppColors.white,
+    return WillPopScope(
+      onWillPop: () async {
+        Get.offAllNamed(AppRoutName.withdrawalpage);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppUtils().simpleAppbar(
+          appBarTitle: "Withdrawal",
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.offAllNamed(AppRoutName.withdrawalpage);
+              },
+              icon: const Icon(Icons.close),
+            )
+          ],
+          leadingWidht: Dimensions.w110,
+          leading: Row(
+            children: [
+              Container(
+                width: Dimensions.w38,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 4.0, left: 8.0, bottom: 4.0),
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: Dimensions.w10),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                walletController.walletBalance.toString(),
-                style: CustomTextStyle.textRobotoSansMedium
-                    .copyWith(fontSize: Dimensions.h16),
+              SizedBox(width: Dimensions.w10),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  walletController.walletBalance.toString(),
+                  style: CustomTextStyle.textRobotoSansMedium
+                      .copyWith(fontSize: Dimensions.h16),
+                ),
               ),
+            ],
+          ),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: withdrawalHistoryList(),
             ),
           ],
         ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: withdrawalHistoryList(),
-          ),
-        ],
       ),
     );
   }
@@ -269,6 +276,38 @@ class CheckWithdrawalPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  AlertDialog onExitAlert(BuildContext context,
+      {required Function() onExit, required Function() onCancel}) {
+    return AlertDialog(
+      title: Text(
+        'Exit App',
+        style: CustomTextStyle.textRobotoSansBold,
+      ),
+      content: Text('Are you sure you want to exit the app?',
+          style: CustomTextStyle.textRobotoSansMedium),
+      actions: [
+        TextButton(
+          onPressed: onCancel,
+          child: Text(
+            'Cancel',
+            style: CustomTextStyle.textRobotoSansBold.copyWith(
+              color: AppColors.appbarColor,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: onExit,
+          child: Text(
+            'Exit',
+            style: CustomTextStyle.textRobotoSansBold.copyWith(
+              color: AppColors.redColor,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

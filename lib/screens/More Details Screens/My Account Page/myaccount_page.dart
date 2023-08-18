@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/components/edit_text_field_with_icon.dart';
+import 'package:spllive/components/edit_text_field_with_roundedcorner.dart';
+import 'package:spllive/components/edit_text_password.dart';
+import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../helper_files/app_colors.dart';
@@ -44,7 +48,8 @@ class MyAccountPage extends StatelessWidget {
               listTileDetails(
                   text: "BANK_TEXT".tr,
                   value: controller.bankName.value,
-                  fieldController: controller.bankNameController),
+                  fieldController: controller.bankNameController,
+                  autofocus: true),
               listTileDetails(
                   text: "ACNAME_TEXT".tr,
                   value: controller.accountName.value,
@@ -57,23 +62,40 @@ class MyAccountPage extends StatelessWidget {
                   text: "IFSC_TEXT".tr,
                   value: controller.ifcsCode.value,
                   fieldController: controller.ifscCodeController),
-              controller.isEditDetails == true
-                  ? ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.appbarColor),
-                      onPressed: () {
+              controller.isEditDetails.value == true
+                  ? RoundedCornerButton(
+                      text: "Submit",
+                      color: AppColors.appbarColor,
+                      borderColor: AppColors.appbarColor,
+                      fontSize: Dimensions.h13,
+                      fontWeight: FontWeight.bold,
+                      fontColor: AppColors.white,
+                      letterSpacing: 1,
+                      borderRadius: 5,
+                      borderWidth: 0,
+                      textStyle: CustomTextStyle.textPTsansMedium,
+                      onTap: () {
                         controller.onTapOfEditDetails();
                         Get.back();
                       },
-                      child: Text(
-                        "Submit",
-                        style: CustomTextStyle.textPTsansMedium.copyWith(
-                          fontSize: Dimensions.h14,
-                          color: AppColors.white,
-                        ),
-                      ),
+                      height: 40,
+                      width: 200,
                     )
-                  : Container()
+                  // ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //         backgroundColor: AppColors.appbarColor),
+                  //     onPressed: () {
+                  //       controller.onTapOfEditDetails();
+                  //     },
+                  //     child: Text(
+                  //       "Submit",
+                  //       style: CustomTextStyle.textPTsansMedium.copyWith(
+                  //         fontSize: Dimensions.h14,
+                  //         color: AppColors.white,
+                  //       ),
+                  //     ),
+                  //   )
+                  : Container(),
             ],
           ),
         ),
@@ -84,7 +106,8 @@ class MyAccountPage extends StatelessWidget {
   Padding listTileDetails(
       {required String text,
       required String value,
-      required TextEditingController fieldController}) {
+      required TextEditingController fieldController,
+      bool? autofocus}) {
     return Padding(
       padding: EdgeInsets.all(Dimensions.w8),
       child: Container(
@@ -100,35 +123,52 @@ class MyAccountPage extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(text,
-                    style: CustomTextStyle.textPTsansBold.copyWith(
-                      color: AppColors.black,
-                      fontSize: Dimensions.h16,
-                      fontWeight: FontWeight.bold,
-                    )),
+                child: Text(
+                  text,
+                  style: CustomTextStyle.textPTsansBold.copyWith(
+                    color: AppColors.black,
+                    fontSize: Dimensions.h16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               Expanded(
-                child: controller.isEditDetails == false
+                child: controller.isEditDetails.value == false
                     ? Text(
                         value,
-                        style: CustomTextStyle.textPTsansMedium.copyWith(
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           fontSize: Dimensions.h14,
                         ),
                       )
-                    : bidHistoryList(fieldController),
-              )
+                    : Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: bidHistoryList(fieldController,
+                            autofocus: autofocus),
+                      ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  bidHistoryList(TextEditingController controller, {bool? autofocus}) {
+    return RoundedCornerEditTextWithIcon(
+      controller: controller,
+      hintText: "",
+      imagePath: "",
+      height: Dimensions.h42,
+      keyboardType: TextInputType.text,
+      autofocus: autofocus,
+    );
+  }
 }
 
-bidHistoryList(TextEditingController controller) {
-  return TextField(
-      controller: controller,
-      style: CustomTextStyle.textPTsansMedium.copyWith(
-        fontSize: Dimensions.h14,
-      ));
-}
+// bidHistoryList(TextEditingController controller) {
+//   return TextField(
+//       controller: controller,
+//       style: CustomTextStyle.textPTsansMedium.copyWith(
+//         fontSize: Dimensions.h14,
+//       ));
+// }

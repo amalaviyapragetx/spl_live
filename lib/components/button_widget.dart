@@ -35,10 +35,6 @@ class ButtonWidget extends StatelessWidget {
               color: AppColors.white,
               wordSpacing: 1,
             ),
-            // style: TextStyle(
-            //   color: AppColors.white,
-            //   fontWeight: FontWeight.bold,
-            // ),
           ),
         ),
       ),

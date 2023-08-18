@@ -32,7 +32,9 @@ class NormalGamePage extends StatelessWidget {
         appBarTitle: controller.marketName.toString(),
         actions: [
           InkWell(
-            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
+            onTap: () {
+              //  Get.offAndToNamed(AppRoutName.transactionPage);
+            },
             child: Row(
               children: [
                 SizedBox(
@@ -228,7 +230,8 @@ class NormalGamePage extends StatelessWidget {
                             child: DecoratedBox(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.r10)),
+                                  Radius.circular(Dimensions.r10),
+                                ),
                                 color: AppColors.white,
                                 boxShadow: [
                                   BoxShadow(
@@ -262,12 +265,6 @@ class NormalGamePage extends StatelessWidget {
                                 formatter: [
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
-                                // onEditingComplete: () {
-                                //   if (controller.coinController.text.length <
-                                //       2) {
-                                //
-                                //   }
-                                // },
                                 onChanged: (val) {
                                   // if (val != null) {
                                   //   print("111111111111");
@@ -307,6 +304,11 @@ class NormalGamePage extends StatelessWidget {
                                 contentPadding:
                                     const EdgeInsets.only(right: 30),
                                 imagePath: "",
+                                autofocus: controller.gameMode.value.name!
+                                            .toUpperCase() ==
+                                        "DIGITS BASED JODI"
+                                    ? false
+                                    : true,
                                 containerBackColor: AppColors.black,
                                 iconColor: AppColors.white,
                                 height: Dimensions.h35,
@@ -362,6 +364,12 @@ class NormalGamePage extends StatelessWidget {
                                       formatter: [
                                         FilteringTextInputFormatter.digitsOnly
                                       ],
+                                      autofocus: controller.gameMode.value.name!
+                                                  .toUpperCase() ==
+                                              "DIGITS BASED JODI"
+                                          ? true
+                                          : false,
+                                      // focusNode: controller.focusNode,
                                       // onEditingComplete: () {
                                       //   if (controller.coinController.text.length <
                                       //       2) {
@@ -449,15 +457,12 @@ class NormalGamePage extends StatelessWidget {
                                 fontSize: Dimensions.h13,
                                 fontWeight: FontWeight.bold,
                               ),
+                              autofocus: false,
+                              // focusNode: controller.focusNode,
                               formatter: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
-                              // onEditingComplete: () {
-                              //   if (controller.coinController.text.length <
-                              //       2) {
-                              //
-                              //   }
-                              // },
+
                               onChanged: (val) {
                                 // if (val != null) {
                                 //   print("111111111111");

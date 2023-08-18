@@ -8,6 +8,7 @@ import 'package:spllive/helper_files/ui_utils.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/bid_request_model.dart';
+import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
@@ -30,7 +31,7 @@ class SangamPageController extends GetxController {
   String closeValue = "";
   RxList<String> suggestionOpenList = <String>["222", "124", "125", "145"].obs;
   RxList<String> suggestionCloseList = <String>["111", "123", "122", "145"].obs;
-  List<String> digitList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
   var argument = Get.arguments;
   Rx<BidRequestModel> requestModel = BidRequestModel().obs;
   RxBool isHalfSangam = false.obs;
@@ -44,6 +45,7 @@ class SangamPageController extends GetxController {
   final FocusNode coinsFocusNode = FocusNode();
   final FocusNode openFocusNode = FocusNode();
   FocusNode closeFocusNode = FocusNode();
+  var digitList = <DigitListModelOffline>[].obs;
 
   @override
   void onInit() {
@@ -51,6 +53,10 @@ class SangamPageController extends GetxController {
     getArguments();
   }
 
+  String addedNormalBidValue = "";
+  List<String> _validationListForNormalMode = [];
+  var allThreePanaList = <DigitListModelOffline>[].obs;
+  List<String> _tempValidationList = [];
   void getArguments() async {
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
@@ -59,17 +65,45 @@ class SangamPageController extends GetxController {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    if (gameMode.value.name == "Full Sangam") {
-      openText.value = "OPENPANA".tr;
-      openFieldHint.value = "ENTERPANA".tr;
-      bidType = "Open";
-      isHalfSangam.value = false;
-      // suggestionOpenList.value = digitList;
-    } else {
-      isHalfSangam.value = true;
-      //  suggestionOpenList.value = digitList;
-    }
     await loadJsonFile();
+    switch (gameMode.value.name) {
+      case "Full Sangam":
+        openText.value = "OPENPANA".tr;
+        openFieldHint.value = "ENTERPANA".tr;
+        bidType = "Open";
+        isHalfSangam.value = false;
+        _tempValidationList = jsonModel.allThreePana!;
+        // jsonModel.allThreePana = digitList;
+        for (var e in jsonModel.triplePana!) {
+          allThreePanaList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = allThreePanaList;
+        break;
+      case "Half Sangam A":
+        isHalfSangam.value = true;
+        _tempValidationList = jsonModel.allThreePana!;
+        for (var e in jsonModel.triplePana!) {
+          allThreePanaList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = allThreePanaList;
+        break;
+      case "Half Sangam B":
+        isHalfSangam.value = true;
+        _tempValidationList = jsonModel.allThreePana!;
+        for (var e in jsonModel.triplePana!) {
+          allThreePanaList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = allThreePanaList;
+        break;
+      default:
+    }
+    // if (gameMode.value.name == "Full Sangam") {
+    // } else {
+    //   isHalfSangam.value = true;
+    // }
+    _validationListForNormalMode.addAll(_tempValidationList);
+    print("************${_validationListForNormalMode}");
+    //await loadJsonFile();
   }
 
   Future<void> loadJsonFile() async {
@@ -112,9 +146,12 @@ class SangamPageController extends GetxController {
   // }
 
   void onDeleteBids(int index) {
+    // addedSangamList.remove(addedSangamList[index]);
     requestModel.value.bids = addedSangamList;
     requestModel.value.bids!.remove(addedSangamList[index]);
     requestModel.refresh();
+    addedSangamList.refresh();
+    _calculateTotalAmount();
   }
 
   void validateEnteredOpenDigit(String value) {
@@ -129,12 +166,13 @@ class SangamPageController extends GetxController {
   void validateEnteredCloseDigit(bool validate, String value) {
     enteredOpenDigitsIsValidate = true;
     //  enteredCloseDigitsIsValidate = true;
+    // closeValue = value;
     closeValue = value;
-    print("closeValue$closeValue");
-    // if (enteredOpenDigitsIsValidate) {
-    //   halfSangamPanaSwitchCase(
-    //       jsonModel.singlePana!.single, int.parse(openValue));
-    // }
+    addedNormalBidValue = value;
+    if (enteredOpenDigitsIsValidate) {
+      // halfSangamPanaSwitchCase(
+      //     jsonModel.singlePana!.single, int.parse(openValue));
+    }
   }
 
   void onTapOfSaveButton() {
@@ -148,26 +186,7 @@ class SangamPageController extends GetxController {
     }
   }
 
-  // void callback() {
-  //   if (isValue) {
-  //     onTapOfGameModeButton(value: true);
-  //   } else {
-  //     onTapOfGameModeButton(value: false);
-  //   }
-  // }
-
-  // void onTapOfGameModeButton({required bool value}) {
-  //   isOpenBid.value = value;
-  //   if (isOpenBid.value) {
-  //     openText.value = "OPENDIGIT".tr;
-  //     closeText.value = "CLOSEPANA".tr;
-  //   } else {
-  //     openText.value = "CLOSEDIGIT".tr;
-  //     closeText.value = "OPENPANA".tr;
-  //   }
-  // }
-
-  void halfSangamPanaSwitchCase(ThreePana panaList, int digit) {
+  halfSangamPanaSwitchCase(ThreePana panaList, int digit) {
     switch (digit) {
       case 0:
         suggestionCloseList.value = panaList.l0!;
@@ -205,10 +224,23 @@ class SangamPageController extends GetxController {
     }
   }
 
+  void _calculateTotalAmount() {
+    var tempTotal = 0;
+    for (var element in addedSangamList) {
+      tempTotal += element.coins ?? 0;
+    }
+    totalBiddingAmount.value = tempTotal.toString();
+  }
+
   void onTapOfAddBidButton() {
     if (int.parse(coinsController.text) > 0) {
-      if (enteredOpenDigitsIsValidate) {
-        //  if (enteredCloseDigitsIsValidate) {
+      //if (enteredOpenDigitsIsValidate) {
+      if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+        );
+        digitList.clear();
+      } else {
         addedSangamList.add(
           Bids(
               bidNo: "$openValue-$closeValue",
@@ -221,23 +253,8 @@ class SangamPageController extends GetxController {
         openValueController.clear();
         closeValueController.clear();
         coinsController.clear();
-        int tempTotal = 0;
-        for (int i = 0; i < addedSangamList.length; i++) {
-          tempTotal += addedSangamList[i].coins ?? 0;
-        }
-        totalBiddingAmount.value = tempTotal.toString();
+        _calculateTotalAmount();
         requestModel.value.bids = addedSangamList;
-        // } else {
-        //   Get.closeCurrentSnackbar();
-        //   AppUtils.showErrorSnackBar(
-        //     bodyText: "Enter valid ${closeText.value}",
-        //   );
-        // }
-      } else {
-        Get.closeCurrentSnackbar();
-        AppUtils.showErrorSnackBar(
-          bodyText: "Enter valid ${openText.value}",
-        );
       }
     } else {
       Get.closeCurrentSnackbar();

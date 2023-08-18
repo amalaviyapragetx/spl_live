@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 
+import '../../../../Custom Controllers/wallet_controller.dart';
 import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/constant_variables.dart';
 import '../../../../helper_files/ui_utils.dart';
@@ -10,7 +11,7 @@ import '../../../Local Storage.dart';
 
 class WithdrawalPageController extends GetxController {
   var userId = "";
-  
+  var walletbalance = Get.put(WalletController());
   @override
   void onInit() {
     fetchStoredUserDetailsAndGetBankDetailsByUserId();
@@ -23,6 +24,7 @@ class WithdrawalPageController extends GetxController {
     userId = userData.id == null ? "" : userData.id.toString();
     if (userId.isNotEmpty) {
       callGetBankDetails(userId);
+      walletbalance.refresh();
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "SOMETHINGWENTWRONG".tr,
@@ -30,8 +32,7 @@ class WithdrawalPageController extends GetxController {
     }
   }
 
-
-   void callGetBankDetails(String userId) async {
+  void callGetBankDetails(String userId) async {
     ApiService().getBankDetails(userId).then((value) async {
       if (value['status']) {
         BankDetailsResponseModel model =
@@ -40,7 +41,6 @@ class WithdrawalPageController extends GetxController {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
-
         // isEditDetails.value = model.data!.isEditPermission ?? false;
         // accountName.value = model.data!.accountHolderName ?? "";
         // bankName.value = model.data!.bankName ?? "";
@@ -63,5 +63,4 @@ class WithdrawalPageController extends GetxController {
       }
     });
   }
-
 }

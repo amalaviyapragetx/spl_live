@@ -30,6 +30,10 @@ class DashBoardPage extends StatelessWidget {
           controller.pageWidget.value = 0;
           controller.currentIndex.value = 0;
           return false;
+        } else if (controller.pageWidget.value == 5) {
+          controller.pageWidget.value = 4;
+          controller.currentIndex.value = 4;
+          return false;
         } else {
           return await showDialog(
                 barrierDismissible: false,
@@ -51,7 +55,7 @@ class DashBoardPage extends StatelessWidget {
             onTapBidHistory: () {
               controller.pageWidget.value = 1;
               controller.currentIndex.value = 1;
-              controller.onTapOficonButton();
+              controller.marketBidsByUserId(lazyLoad: false);
             },
             onTapHome: () {
               controller.pageWidget.value = 0;
@@ -64,11 +68,13 @@ class DashBoardPage extends StatelessWidget {
             onTapWallet: () {
               controller.pageWidget.value = 2;
               controller.currentIndex.value = 2;
+              walletController.walletBalance.refresh();
             },
             onTapPassbook: () {
+              controller.getPassBookData(
+                  lazyLoad: false, offset: controller.offset.value.toString());
               controller.pageWidget.value = 3;
               controller.currentIndex.value = 3;
-              controller.onTapOficonButton();
             },
           ),
         ),

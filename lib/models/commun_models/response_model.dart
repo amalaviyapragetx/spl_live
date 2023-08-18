@@ -2,7 +2,7 @@ class ResponseModel {
   ResponseModel({
     String? message,
     bool? status,
-    dynamic? data,
+    dynamic data,
   }) {
     _message = message;
     _status = status;
@@ -20,7 +20,7 @@ class ResponseModel {
   ResponseModel copyWith({
     String? message,
     bool? status,
-    dynamic? data,
+    dynamic data,
   }) =>
       ResponseModel(
         message: message ?? _message,
@@ -29,7 +29,7 @@ class ResponseModel {
       );
   String? get message => _message;
   bool? get status => _status;
-  dynamic? get data => _data;
+  dynamic get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

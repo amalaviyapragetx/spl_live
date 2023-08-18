@@ -25,13 +25,16 @@ class StarLineNewGamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //000print("---------------------${controller.gameModeName}");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
         appBarTitle: "${controller.marketData.value.time}",
         actions: [
           InkWell(
-            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
+            onTap: () {
+              //  Get.offAndToNamed(AppRoutName.transactionPage);
+            },
             child: Row(
               children: [
                 SizedBox(
@@ -77,7 +80,7 @@ class StarLineNewGamePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${controller.gameMode.value.name}".toUpperCase(),
+                    "${controller.gameModeName}".toUpperCase(),
                     style: CustomTextStyle.textRobotoSansBold.copyWith(
                         color: AppColors.appbarColor, fontSize: Dimensions.h18),
                   ),

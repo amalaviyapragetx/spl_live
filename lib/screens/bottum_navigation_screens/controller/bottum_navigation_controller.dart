@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -20,12 +18,12 @@ class MoreListController extends GetxController {
   int offset = 0;
   RxString walletBalance = "00".obs;
   double ratingValue = 0.00;
-
   @override
   void onInit() {
-    //scrollController.addListener(_scrollListner);
     getUserData();
+    walletBalance.refresh();
     getUserBalance();
+    walletBalance.refresh();
     super.onInit();
   }
 
@@ -63,6 +61,8 @@ class MoreListController extends GetxController {
     ApiService()
         .getBidHistoryByUserId(
             userId: userData.id.toString(),
+            endDate: "2023-08-17",
+            startDate: "2023-08-17",
             //  userId: "3",
             limit: "10",
             offset: offset.toString(),

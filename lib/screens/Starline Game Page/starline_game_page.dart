@@ -4,17 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/Starline%20Game%20Page/controller/starline_game_page_controller.dart';
-
 import '../../Custom Controllers/wallet_controller.dart';
 import '../../components/button_widget.dart';
-import '../../components/edit_text_field_with_icon.dart';
 import '../../components/new_edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
-import '../../routes/app_routes_name.dart';
 
 class StarLineGamePage extends StatelessWidget {
   StarLineGamePage({super.key});
@@ -34,7 +31,9 @@ class StarLineGamePage extends StatelessWidget {
         appBarTitle: "STARLINEGAME".tr,
         actions: [
           InkWell(
-            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
+            onTap: () {
+              //  Get.offAndToNamed(AppRoutName.transactionPage);
+            },
             child: Row(
               children: [
                 SizedBox(

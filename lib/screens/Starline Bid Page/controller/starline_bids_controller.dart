@@ -29,11 +29,6 @@ class StarlineBidsController extends GetxController {
     super.onInit();
   }
 
-  // @override
-  // void onClose() {
-  //   requestModel.value.bids?.clear();
-  // }
-
   showData() async {
     bidList.value =
         await LocalStorage.read(ConstantsVariables.starlineBidsList);

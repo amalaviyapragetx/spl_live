@@ -23,68 +23,76 @@ class StarLineGameModesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    controller.getBidListData();
-    return Scaffold(
-      appBar: AppUtils().simpleAppbar(
-        // appBarTitle: "STARLINEGAME".tr,
-        appBarTitle: controller.marketData.value.time.toString(),
-        leading: IconButton(
-          onPressed: () => controller.onBackButton(),
-          icon: const Icon(Icons.arrow_back),
-        ),
-        actions: [
-          InkWell(
-            onTap: () => Get.offAndToNamed(AppRoutName.transactionPage),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: Dimensions.w20,
-                  width: Dimensions.w20,
-                  child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    color: AppColors.white,
-                    fit: BoxFit.fill,
+    // controller.getBidListData();
+    return WillPopScope(
+      onWillPop: () async {
+        controller.onBackButton();
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppUtils().simpleAppbar(
+          // appBarTitle: "STARLINEGAME".tr,
+          appBarTitle: controller.marketData.value.time.toString(),
+          leading: IconButton(
+            onPressed: () => controller.onBackButton(),
+            icon: const Icon(Icons.arrow_back),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: Dimensions.w20,
+                    width: Dimensions.w20,
+                    child: SvgPicture.asset(
+                      ConstantImage.walletAppbar,
+                      color: AppColors.white,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: Dimensions.r8,
-                    bottom: Dimensions.r10,
-                    left: Dimensions.r15,
-                    right: Dimensions.r10,
-                  ),
-                  child: Obx(
-                    () => Text(
-                      walletController.walletBalance.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r10,
+                      left: Dimensions.r15,
+                      right: Dimensions.r10,
+                    ),
+                    child: Obx(
+                      () => Text(
+                        walletController.walletBalance.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-      body: Obx(
-        () => SizedBox(
-          child: controller.gameModesList.isEmpty
-              ? _buildCustomAboutBoxDialog()
-              : Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.w10, vertical: Dimensions.h5),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          child: cardWidget(controller, size),
-                        ),
-                      ],
+          ],
+        ),
+        body: Obx(
+          () => SizedBox(
+            child: controller.gameModesList.isEmpty
+                ? _buildCustomAboutBoxDialog()
+                : Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.w10, vertical: Dimensions.h5),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            child: cardWidget(controller, size),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+          ),
         ),
       ),
     );

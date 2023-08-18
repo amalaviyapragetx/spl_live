@@ -574,11 +574,6 @@ class HomeScreenUtils {
             mainAxisExtent: size.width / 2.5,
             crossAxisSpacing: 7,
             mainAxisSpacing: Dimensions.h10),
-        // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //   crossAxisCount: 2,
-        //   crossAxisSpacing: 10,
-        //   mainAxisSpacing: 10,
-        // ),
         itemCount: controller.starLineMarketList.length,
         itemBuilder: (context, index) {
           return InkWell(
@@ -601,9 +596,12 @@ class HomeScreenUtils {
                     height: Dimensions.h5,
                   ),
                   Text(
-                      controller.starLineMarketList.elementAt(index).time ?? "",
-                      style: CustomTextStyle.textPTsansBold.copyWith(
-                          color: AppColors.black, fontSize: Dimensions.h15)),
+                    controller.starLineMarketList.elementAt(index).time ?? "",
+                    style: CustomTextStyle.textPTsansBold.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h15,
+                    ),
+                  ),
                   SizedBox(
                     height: Dimensions.h5,
                   ),
@@ -679,11 +677,6 @@ class HomeScreenUtils {
                     fontWeight: FontWeight.normal,
                     color: Colors.grey.shade600,
                   ),
-                  // style: TextStyle(
-                  //   fontSize: Dimensions.h16,
-                  //   fontWeight: FontWeight.normal,
-                  //   color: Colors.grey.shade600,
-                  // ),
                 ),
               ),
             )
@@ -692,7 +685,7 @@ class HomeScreenUtils {
                   EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
               itemCount: controller.marketHistoryList.length,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
@@ -744,40 +737,23 @@ class HomeScreenUtils {
                   initialDate: DateTime.now(),
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2101));
-
               if (pickedDate != null) {
                 String formattedDate =
-                    // .formatDateStringToDDMMMMMYYYY(pickedDate.toString());
-                    DateFormat('dd-MM-yyyy').format(pickedDate);
+                    DateFormat('yyyy-MM-dd').format(pickedDate);
                 controller.dateinput.text = formattedDate;
-              } else {}
+                print(controller.dateinput.text);
+                controller.getMarketBidsByUserId(
+                  lazyLoad: false,
+                  startDate: controller.dateinput.text,
+                  endDate: controller.dateinput.text,
+                );
+              } else {
+                controller.dateinput.text =
+                    DateFormat('yyyy-MM-dd').format(pickedDate!);
+              }
             },
           ),
         ),
-        // Container(
-        //   height: Dimensions.h35,
-        //   color: Colors.grey.withOpacity(0.1),
-        //   child: Row(
-        //     children: [
-        //       const SizedBox(
-        //         width: 10,
-        //       ),
-        //       Icon(
-        //         Icons.calendar_month,
-        //         color: AppColors.appbarColor,
-        //       ),
-        //       const SizedBox(
-        //         width: 10,
-        //       ),
-        //       Text(
-        //         "03-07-2023",
-        //         style: TextStyle(
-        //           color: AppColors.appbarColor,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         SizedBox(
           height: Dimensions.h11,
         ),
@@ -798,7 +774,7 @@ class HomeScreenUtils {
             SizedBox(
               height: 45,
               child: TextField(
-                controller: controller.dateinput,
+                controller: controller.dateinputForResultHistory,
                 style: CustomTextStyle.textRobotoSansLight
                     .copyWith(color: AppColors.appbarColor),
                 decoration: InputDecoration(
@@ -820,16 +796,20 @@ class HomeScreenUtils {
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
                       context: context,
-                      initialDate: DateTime.now(),
+                      initialDate: controller.bidHistotyDate,
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2101));
 
                   if (pickedDate != null) {
                     String formattedDate =
                         // .formatDateStringToDDMMMMMYYYY(pickedDate.toString());
-                        DateFormat('dd-MM-yyyy').format(pickedDate);
-                    controller.dateinput.text = formattedDate;
-                  } else {}
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                    controller.dateinputForResultHistory.text = formattedDate;
+
+                    controller.getDailyStarLineMarkets(
+                        formattedDate, formattedDate);
+                    controller.bidHistotyDate = pickedDate;
+                  }
                 },
               ),
             ),
