@@ -62,7 +62,7 @@ class InactivityController extends GetxController {
       title: "",
       content: Column(
         children: [
-          Container(
+          SizedBox(
             height: 50,
             width: 50,
             child: SvgPicture.asset(

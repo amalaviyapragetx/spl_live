@@ -96,11 +96,11 @@ class SetMPINPageController extends GetxController {
           String authToken = userData['Token'] ?? "Null From API";
           bool isActive = userData['IsActive'] ?? false;
           bool isVerified = userData['IsVerified'] ?? false;
-          // bool isMpinSet =  userData['IsMPinSet'] ?? false;
+          bool isMpinSet = userData['IsMPinSet'] ?? false;
           await LocalStorage.write(ConstantsVariables.authToken, authToken);
           await LocalStorage.write(ConstantsVariables.isActive, isActive);
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
-          // await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
+          await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
@@ -138,11 +138,11 @@ class SetMPINPageController extends GetxController {
           String authToken = userData['Token'] ?? "Null From API";
           bool isActive = userData['IsActive'] ?? false;
           bool isVerified = userData['IsVerified'] ?? false;
-          // bool isMpinSet =  userData['IsMPinSet'] ?? false;
+          bool isMpinSet = userData['IsMPinSet'] ?? false;
           await LocalStorage.write(ConstantsVariables.authToken, authToken);
           await LocalStorage.write(ConstantsVariables.isActive, isActive);
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
-          // await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
+          await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");

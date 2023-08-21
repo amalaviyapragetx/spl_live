@@ -7,6 +7,7 @@ import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withd
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/dimentions.dart';
@@ -73,7 +74,7 @@ class HomePageController extends GetxController {
   RxList<MarketBidHistoryList> marketBidHistoryList =
       <MarketBidHistoryList>[].obs;
   DateTime startEndDate = DateTime.now();
-
+  var walletController = Get.put(WalletController());
   @override
   void onInit() {
     setboolData();
@@ -95,6 +96,7 @@ class HomePageController extends GetxController {
     marketBidHistoryList.refresh();
     passBookModelData.refresh();
     passBookModelData2.refresh();
+
     getStarLineMarkets(DateFormat('yyyy-MM-dd').format(startEndDate),
         DateFormat('yyyy-MM-dd').format(startEndDate));
   }
@@ -105,13 +107,13 @@ class HomePageController extends GetxController {
     callMarketsApi();
     callGetStarLineChart();
     getUserData();
+    WalletController().getUserBalance();
   }
 
   @override
   void dispose() {
     marketHistoryList.clear();
-    // scrollController.removeListener(_scrollListner);
-    // scrollController.dispose();
+
     super.dispose();
   }
 

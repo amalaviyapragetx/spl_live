@@ -6,8 +6,9 @@ import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
-import '../../../routes/app_routes.dart';
+import '../../../models/commun_models/user_details_model.dart';
 import '../../Local Storage.dart';
+import '../../Set MPIN Page/model/user_details_model.dart';
 
 class VerifyOTPController extends GetxController {
   var argument = Get.arguments;
@@ -25,6 +26,7 @@ class VerifyOTPController extends GetxController {
   }
 
   Future<void> getStoredUserData() async {
+    print(verifyOTP);
     if (argument != null) {
       phoneNumber = argument['phoneNumber'];
       // countryCode = argument['countryCode'];
@@ -35,6 +37,7 @@ class VerifyOTPController extends GetxController {
   }
 
   void onTapOfContinue() {
+    print(verifyOTP);
     if (otp.isEmpty) {
       AppUtils.showErrorSnackBar(
         bodyText: "ENTEROTP".tr,
@@ -94,7 +97,9 @@ class VerifyOTPController extends GetxController {
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
         if (userData != null) {
-          Get.toNamed(AppRoutName.setMPINPage);
+          Get.toNamed(
+            AppRoutName.setMPINPage,
+          );
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }

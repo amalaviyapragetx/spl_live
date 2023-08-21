@@ -40,28 +40,29 @@ class SangamPages extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
-          appBarTitle: controller.marketData.value.market ?? '',
-          actions: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  ConstantImage.walletAppbar,
-                  height: Dimensions.h20,
-                  color: AppColors.white,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w11),
-                  child: Text(
-                    walletController.walletBalance.value,
-                    style: CustomTextStyle.textPTsansMedium.copyWith(
-                      color: AppColors.white,
-                      fontSize: Dimensions.h17,
-                    ),
+        appBarTitle: controller.marketData.value.market ?? '',
+        actions: [
+          Row(
+            children: [
+              SvgPicture.asset(
+                ConstantImage.walletAppbar,
+                height: Dimensions.h20,
+                color: AppColors.white,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.w11),
+                child: Text(
+                  walletController.walletBalance.value,
+                  style: CustomTextStyle.textPTsansMedium.copyWith(
+                    color: AppColors.white,
+                    fontSize: Dimensions.h17,
                   ),
-                )
-              ],
-            )
-          ]),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
       body: SizedBox(
         height: size.height,
         width: size.width,
@@ -81,27 +82,6 @@ class SangamPages extends StatelessWidget {
                   ),
                 ),
                 verticalSpace,
-                // controller.gameMode.value.name!.toUpperCase() == "FULL SANGAM"
-                //     ? Container()
-                //     : RoundedCornerButton(
-                //         text: "CHANGE".tr,
-                //         color: AppColors.appbarColor,
-                //         borderColor: AppColors.appbarColor,
-                //         fontSize: Dimensions.h12,
-                //         fontWeight: FontWeight.w500,
-                //         fontColor: AppColors.white,
-                //         letterSpacing: 1,
-                //         borderRadius: Dimensions.r5,
-                //         borderWidth: 0.2,
-                //         textStyle: CustomTextStyle.textRobotoSansMedium,
-                //         onTap: () {
-                //           value2 = !value2;
-                //           controller.onTapOfGameModeButton(value: value2);
-                //         },
-                //         height: Dimensions.h30,
-                //         width: size.width / 2,
-                //       ),
-
                 openCloseWidget(size),
                 verticalSpace,
                 Row(
@@ -165,15 +145,6 @@ class SangamPages extends StatelessWidget {
                             if (textEditingValue.text == '') {
                               return const Iterable<String>.empty();
                             } else {
-                              // List<String> matches = <String>[];
-                              // matches.addAll(controller.suggestionOpenList);
-                              // matches.retainWhere(
-                              //   (s) {
-                              //     return s.toLowerCase().contains(
-                              //           textEditingValue.text.toLowerCase(),
-                              //         );
-                              //   },
-                              // );
                               return matches;
                             }
                           },
@@ -348,24 +319,27 @@ class SangamPages extends StatelessWidget {
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     keyboardType: TextInputType.number,
                     validateValue: (validate, value) {
-                      controller.validateEnteredOpenDigit(value);
                       if (controller.gameMode.value.name!.toUpperCase() ==
                           "FULL SANGAM") {
-                        controller.addedNormalBidValue = value;
                         if (value.length == 3) {
+                          controller.addedNormalBidValue = value;
                           controller.openFocusNode.unfocus();
                           controller.closeFocusNode.requestFocus();
+                          controller.validateEnteredOpenDigit(value);
                         }
                       } else if (controller.gameMode.value.name!
                               .toUpperCase() ==
                           "HALF SANGAM B") {
-                        controller.addedNormalBidValue = value;
                         if (value.length == 3) {
+                          controller.addedNormalBidValue = value;
+                          print("++++++++++${controller.addedNormalBidValue}");
                           controller.openFocusNode.unfocus();
                           controller.closeFocusNode.requestFocus();
+                          controller.validateEnteredOpenDigit(value);
                         }
                       } else {
                         if (value.length == 1) {
+                          controller.validateEnteredCloseDigit(false, value);
                           controller.openFocusNode.unfocus();
                           controller.closeFocusNode.requestFocus();
                         }
@@ -376,78 +350,12 @@ class SangamPages extends StatelessWidget {
                       if (textEditingValue.text == '') {
                         return const Iterable<String>.empty();
                       } else {
-                        // List<String> matches = <String>[];
-                        // matches.addAll(controller.suggestionOpenList);
-                        // matches.retainWhere(
-                        //   (s) {
-                        //     return s.toLowerCase().contains(
-                        //           textEditingValue.text.toLowerCase(),
-                        //         );
-                        //   },
-                        // );
                         return matches;
                       }
                     },
                   ),
                 ),
               ),
-              // Obx(
-              //   () => AutoCompleteTextField(
-              //     controller: controller.openValueController,
-              //     height: Dimensions.h40,
-              //     textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-              //         color: AppColors.appbarColor,
-              //         fontWeight: FontWeight.bold,
-              //         fontSize: Dimensions.h15,
-              //         letterSpacing: 1),
-              //     width: double.infinity,
-              //     //   autoFocus: true,
-              //     maxLength: controller.gameMode.value.name!.toUpperCase() ==
-              //             "FULL SANGAM"
-              //         ? 3
-              //         : 1,
-
-              //     focusNode: controller.openFocusNode,
-              //     formatter: [FilteringTextInputFormatter.digitsOnly],
-              //     isBulkMode: false,
-              //     suggestionWidth: Dimensions.w150,
-              //     hintText: controller.openFieldHint.value,
-              //     hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-              //     keyboardType: TextInputType.number,
-              //     validateValue: (validate, value) {
-              //       controller.validateEnteredOpenDigit(value);
-              //       if (controller.gameMode.value.name!.toUpperCase() ==
-              //           "FULL SANGAM") {
-              //         if (value.length == 3) {
-              //           controller.openFocusNode.unfocus();
-              //           controller.closeFocusNode.requestFocus();
-              //         }
-              //       } else {
-              //         if (value.length == 1) {
-              //           controller.openFocusNode.unfocus();
-              //           controller.closeFocusNode.requestFocus();
-              //         }
-              //       }
-              //     },
-
-              //     optionsBuilder: (TextEditingValue textEditingValue) {
-              //       if (textEditingValue.text == '') {
-              //         return const Iterable<String>.empty();
-              //       } else {
-              //         // List<String> matches = <String>[];
-              //         // matches.addAll(controller.suggestionOpenList);
-              //         // matches.retainWhere(
-              //         //   (s) {
-              //         //     return s.toLowerCase().contains(
-              //         //           textEditingValue.text.toLowerCase(),
-              //         //         );
-              //         //   },
-              //         // );
-              //         return matches;
-              //       }
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -531,23 +439,15 @@ class SangamPages extends StatelessWidget {
                                   : 3,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            controller.validateEnteredCloseDigit(
-                                false, controller.closeValueController.text);
-                            // if (controller.closeValueController.text.length ==
-                            //     3) {
-                            //   //controller.addedNormalBidValue = value;
-                            //   controller.closeFocusNode.unfocus();
-                            //   controller.coinsFocusNode.requestFocus();
-                            // } else {
-                            //   controller.openValue = value;
-                            // }
                             if (controller.gameMode.value.name!.toUpperCase() ==
                                 "FULL SANGAM") {
-                              controller.addedNormalBidValue = value;
-                              controller.addedNormalBidValue = value;
                               if (value.length == 3) {
+                                controller.addedNormalBidValue = value;
                                 controller.openFocusNode.unfocus();
                                 controller.closeFocusNode.requestFocus();
+                                controller.validateEnteredCloseDigit(false,
+                                    controller.closeValueController.text);
+                                controller.validateEnteredOpenDigit(value);
                               }
                             } else if (controller.gameMode.value.name!
                                     .toUpperCase() ==
@@ -555,12 +455,15 @@ class SangamPages extends StatelessWidget {
                               if (value.length == 1) {
                                 controller.openFocusNode.unfocus();
                                 controller.closeFocusNode.requestFocus();
+                                controller.validateEnteredCloseDigit(false,
+                                    controller.closeValueController.text);
                               }
                             } else {
                               if (value.length == 3) {
                                 controller.addedNormalBidValue = value;
                                 controller.openFocusNode.unfocus();
                                 controller.closeFocusNode.requestFocus();
+                                controller.validateEnteredOpenDigit(value);
                               }
                             }
                           },
@@ -604,7 +507,7 @@ class SangamPages extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: Material(
                             elevation: 4.0,
-                            child: Container(
+                            child: SizedBox(
                               width: size.width / 2.2,
                               child: ListView.builder(
                                 padding: const EdgeInsets.all(15),
@@ -647,76 +550,6 @@ class SangamPages extends StatelessWidget {
                     ),
                   ),
                 ),
-                // AutoCompleteTextField(
-                //   controller: controller.closeValueController,
-                //   height: Dimensions.h40,
-                //   width: double.infinity,
-                //   suggestionWidth: Dimensions.w150,
-                //   hintText: "ENTERPANA".tr,
-                //   maxLength: 3,
-                //   isBulkMode: true,
-                //   keyboardType: TextInputType.number,
-                //   hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                //   textStyle: CustomTextStyle.textRobotoSansBold
-                //       .copyWith(color: AppColors.appbarColor),
-                //   formatter: [FilteringTextInputFormatter.digitsOnly],
-                //   validateValue: (validate, value) {
-                //     controller.validateEnteredCloseDigit(validate, value);
-                //   },
-                //   // focusNode: FocusNode(),
-                //   optionsBuilder: (TextEditingValue textEditingValue) {
-                //     if (textEditingValue.text == '') {
-                //       return const Iterable<String>.empty();
-                //     } else {
-                //       matches.addAll(controller.suggestionCloseList);
-                //       matches.retainWhere(
-                //         (s) {
-                //           return s.toLowerCase().contains(
-                //                 textEditingValue.text.toLowerCase(),
-                //               );
-                //         },
-                //       );
-                //       return matches;
-                //     }
-                //   },
-                // ),
-                // AutoCompleteTextField(
-                //   controller: controller.closeValueController,
-                //   height: Dimensions.h40,
-                //   width: double.infinity,
-                //   suggestionWidth: Dimensions.w150,
-                //   hintText: "ENTERPANA".tr,
-                //   maxLength: 3,
-                //   focusNode: FocusNode(),
-                //   hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                //   isBulkMode: true,
-                //   keyboardType: TextInputType.number,
-                //   validateValue: (validate, value) {
-                //     controller.validateEnteredCloseDigit(validate, value);
-                //   },
-                //   textStyle: CustomTextStyle.textRobotoSansBold
-                //       .copyWith(color: AppColors.appbarColor),
-                //   formatter: [FilteringTextInputFormatter.digitsOnly],
-                //   optionsBuilder: (
-                //     TextEditingValue textEditingValue,
-                //   ) {
-                //     if (textEditingValue.text == '') {
-                //       return const Iterable<String>.empty();
-                //     } else {
-                //       List<String> matches = <String>[];
-                //       // matches.clear();
-                //       matches.addAll(controller.suggestionCloseList);
-                //       matches.retainWhere(
-                //         (s) {
-                //           return s.toLowerCase().contains(
-                //                 textEditingValue.text.toLowerCase(),
-                //               );
-                //         },
-                //       );
-                //       return matches;
-                //     }
-                //   },
-                // ),
               ],
             ),
           ),
@@ -917,19 +750,29 @@ class SangamPages extends StatelessWidget {
                           textColor2: AppColors.black.withOpacity(0.5),
                           textColor: AppColors.black),
                       nameColumn(
-                          subText: "",
-                          titleText: controller
-                                  .requestModel.value.bids![index].bidNo ??
-                              "",
-                          textColor2: AppColors.black.withOpacity(0.5),
-                          textColor: AppColors.black),
+                        subText: "",
+                        titleText:
+                            controller.gameMode.value.name!.toUpperCase() ==
+                                    "HALF SANGAM A"
+                                ? controller.reverse(
+                                    controller.requestModel.value.bids![index]
+                                            .bidNo ??
+                                        "",
+                                  )
+                                : controller.requestModel.value.bids![index]
+                                        .bidNo ??
+                                    "",
+                        textColor2: AppColors.black.withOpacity(0.5),
+                        textColor: AppColors.black,
+                      ),
                       nameColumn(
-                          subText: "",
-                          titleText: controller
-                              .requestModel.value.bids![index].coins
-                              .toString(),
-                          textColor2: AppColors.black.withOpacity(0.5),
-                          textColor: AppColors.black),
+                        subText: "",
+                        titleText: controller
+                            .requestModel.value.bids![index].coins
+                            .toString(),
+                        textColor2: AppColors.black.withOpacity(0.5),
+                        textColor: AppColors.black,
+                      ),
                     ],
                   ),
                   Padding(

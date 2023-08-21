@@ -49,9 +49,9 @@ class CheckWithdrawalPageController extends GetxController {
             print(
                 "============== Get withdrawal history ==============  :- ${withdrawalRequestList.toJson()}");
           } else {
-            AppUtils.showErrorSnackBar(
-              bodyText: value['message'] ?? "",
-            );
+            // AppUtils.showErrorSnackBar(
+            //   bodyText: value['message'] ?? "",
+            // );
           }
         } else {
           AppUtils.showErrorSnackBar(

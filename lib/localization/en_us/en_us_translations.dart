@@ -92,7 +92,7 @@ final Map<String, String> enUs = {
 
   // drawer names
   "MYPROFILE": "My profile",
-  "MYACCOUNT": "My Account",
+  "MYACCOUNT": "My Bank Account",
   "GAMERATE": "Game rate",
   "NOTIFICATIONS": "Notifications",
   "HOWTOPLAY": "How To Play",
@@ -180,7 +180,7 @@ final Map<String, String> enUs = {
   "DIGIT": "Digit",
   "AMOUNT": "Amount",
   "HISTORY": "HISTORY",
-  "NOHISTORYAVAILABLEFORLAST7DAYS": "No history available for last 7 Days",
+  "NOHISTORYAVAILABLEFORLAST7DAYS": "No history available",
   "MYBID": "My Bid",
   "BALANCE": "Balance",
   "WINNINGMESSAGE": "Congratulation! You WIN",
@@ -247,9 +247,9 @@ final Map<String, String> enUs = {
   "MARKETTEXT": "Market Name",
 
   // My Account
-  "BANK_TEXT": "Bank:",
-  "ACNAME_TEXT": "Acc Name:",
-  "ACNO_TEXT": "Acc No.:",
+  "BANK_TEXT": "Bank Name:",
+  "ACNAME_TEXT": "Account Holder Name:",
+  "ACNO_TEXT": "Account No.:",
   "IFSC_TEXT": "IFSC Code:",
   "MESSAGE_TEXT": "Error Message",
   "SNACKMSG_TEXT": "Please contact to admin for edit",

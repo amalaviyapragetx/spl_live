@@ -133,15 +133,11 @@ class GameModePagesController extends GetxController {
 
   void checkBids() async {
     var hh = await LocalStorage.read(ConstantsVariables.playMore);
-    print("read PlayMore  $hh");
+
     if (!hh) {
       var bidList = await LocalStorage.read(ConstantsVariables.bidsList);
       // selectedBidsList.value = bidList as List<Bids>;
-      print(
-          " bidList on GameModes page ${bidList.toString()}  -----------------");
-    } else {
-      print("THre is no Play More");
-    }
+    } else {}
     // requestModel.refresh();
     // print("${requestModel.value.bids.toString()}  + +++++++");
   }
@@ -272,7 +268,6 @@ class GameModePagesController extends GetxController {
     // checkBidsList();
     var data = await LocalStorage.read(ConstantsVariables.userData);
     playmore = await LocalStorage.read(ConstantsVariables.playMore);
-    print("playmore $playmore");
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
     selectedBidsList.value =

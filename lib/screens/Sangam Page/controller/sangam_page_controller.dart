@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/bid_request_model.dart';
@@ -20,7 +18,6 @@ class SangamPageController extends GetxController {
   String bidType = "Open";
   Rx<GameMode> gameMode = GameMode().obs;
   Rx<MarketData> marketData = MarketData().obs;
-  // RxString totalAmount = "00".obs;
   RxString openText = "OPENDIGIT".tr.obs;
   RxString closeText = "CLOSEPANA".tr.obs;
   RxString openFieldHint = "ENTERDIGIT".tr.obs;
@@ -53,10 +50,20 @@ class SangamPageController extends GetxController {
     getArguments();
   }
 
+  reverse(String originalString) {
+    String reversedString = '';
+
+    for (int i = originalString.length - 1; i >= 0; i--) {
+      reversedString += originalString[i];
+    }
+    return reversedString;
+  }
+
   String addedNormalBidValue = "";
   List<String> _validationListForNormalMode = [];
   var allThreePanaList = <DigitListModelOffline>[].obs;
   List<String> _tempValidationList = [];
+
   void getArguments() async {
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
@@ -102,7 +109,7 @@ class SangamPageController extends GetxController {
     //   isHalfSangam.value = true;
     // }
     _validationListForNormalMode.addAll(_tempValidationList);
-    print("************${_validationListForNormalMode}");
+
     //await loadJsonFile();
   }
 
@@ -137,14 +144,6 @@ class SangamPageController extends GetxController {
     });
   }
 
-  // void onDeleteSangamBid(int index) {
-  //   addedSangamList.remove(addedSangamList[index]);
-  //   addedSangamList.refresh();
-  //   totalBiddingAmount.value =
-  //       (int.parse(coinsController.text.toString()) * addedSangamList.length)
-  //           .toString();
-  // }
-
   void onDeleteBids(int index) {
     // addedSangamList.remove(addedSangamList[index]);
     requestModel.value.bids = addedSangamList;
@@ -156,23 +155,29 @@ class SangamPageController extends GetxController {
 
   void validateEnteredOpenDigit(String value) {
     // enteredOpenDigitsIsValidate = true;
+    //  enteredOpenDigitsIsValidate = true;
+
+    addedNormalBidValue = value;
     openValue = value;
+    print("********openValue****************$value");
     // if (enteredOpenDigitsIsValidate) {
+    //   print(enteredOpenDigitsIsValidate);
     //   halfSangamPanaSwitchCase(
     //       jsonModel.singlePana!.single, int.parse(openValue));
     // }
   }
 
   void validateEnteredCloseDigit(bool validate, String value) {
-    enteredOpenDigitsIsValidate = true;
+    //  enteredOpenDigitsIsValidate = true;
     //  enteredCloseDigitsIsValidate = true;
     // closeValue = value;
     closeValue = value;
-    addedNormalBidValue = value;
-    if (enteredOpenDigitsIsValidate) {
-      // halfSangamPanaSwitchCase(
-      //     jsonModel.singlePana!.single, int.parse(openValue));
-    }
+    // addedNormalBidValue = value;
+    print("***********closeValue***************$value");
+    // if (enteredOpenDigitsIsValidate) {
+    //   // halfSangamPanaSwitchCase(
+    //   //     jsonModel.singlePana!.single, int.parse(openValue));
+    // }
   }
 
   void onTapOfSaveButton() {
@@ -235,6 +240,9 @@ class SangamPageController extends GetxController {
   void onTapOfAddBidButton() {
     if (int.parse(coinsController.text) > 0) {
       //if (enteredOpenDigitsIsValidate) {
+      print("++++++++++++++++++++++++++++++++++++${addedNormalBidValue}");
+      print(
+          "++++++++++++++++++++++++++++++++++++${_validationListForNormalMode.contains(addedNormalBidValue)}");
       if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",

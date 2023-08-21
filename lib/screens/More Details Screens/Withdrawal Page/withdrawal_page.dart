@@ -4,17 +4,12 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
-
-import '../../../components/button_widget.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_image.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import '../../../routes/app_routes_name.dart';
-import '../../Local Storage.dart';
-import '../Check Withdrawal History/controller/check_withdrawal_history_controller.dart';
 
 class WithdrawalPage extends StatelessWidget {
   WithdrawalPage({super.key});
@@ -141,7 +136,6 @@ class WithdrawalPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: RoundedCornerButton(
-                        // CHANGE TEXT TO CREATE WITHDRAWAL REQUEST
                         text: "CHECKWITHDRAWAL".tr,
                         color: AppColors.buttonColorDarkGreen,
                         borderColor: AppColors.buttonColorDarkGreen,
@@ -162,7 +156,7 @@ class WithdrawalPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: Dimensions.h70,
                 // color: AppColors.appbarColor,

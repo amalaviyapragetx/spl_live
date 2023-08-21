@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import '../../Custom Controllers/wallet_controller.dart';
-import '../../components/edit_text_field_with_icon.dart';
-import '../../components/new_auto_complete_text_field_with_suggetion.dart';
 import '../../components/new_edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import 'controller/game_page_controller.dart';
@@ -163,7 +160,7 @@ class SingleAnkPage extends StatelessWidget {
                                               "You can not add more than 10000 points");
                                       controller.validCoinsEntered.value =
                                           false;
-                                      controller.isEnable.value = true;
+                                      controller.isEnable.value = false;
                                     } else {
                                       print(
                                           "444444444444444444   ${val.length}");
@@ -188,83 +185,6 @@ class SingleAnkPage extends StatelessWidget {
                                 height: Dimensions.h35,
                                 keyboardType: TextInputType.number,
                               ),
-                              // child: RoundedCornerEditTextWithIcon(
-                              //   tapTextStyle: AppColors.appbarColor,
-                              //   hintTextColor:
-                              //       AppColors.appbarColor.withOpacity(0.5),
-                              //   width: size.width / 2,
-                              //   textAlign: TextAlign.center,
-                              //   controller: controller.coinController,
-                              //   textStyle:
-                              //       CustomTextStyle.textPTsansMedium.copyWith(
-                              //     color: AppColors.black.withOpacity(0.8),
-                              //     fontWeight: FontWeight.bold,
-                              //     fontSize: Dimensions.h15,
-                              //   ),
-                              //   hintTextStyle: CustomTextStyle
-                              //       .textRobotoSansMedium
-                              //       .copyWith(
-                              //     color: AppColors.black.withOpacity(0.5),
-                              //     fontSize: Dimensions.h15,
-                              //     fontWeight: FontWeight.bold,
-                              //   ),
-                              //   formatter: [
-                              //     FilteringTextInputFormatter.digitsOnly
-                              //   ],
-                              //   onChanged: (val) {
-                              //     if (val != null) {
-                              //       print("111111111111");
-
-                              //       if (val.characters.characterAt(0) ==
-                              //           Characters("0")) {
-                              //         print("22222222222222");
-                              //         // we need to remove the first char
-                              //         controller.coinController.text =
-                              //             val.substring(1);
-                              //         // we need to move the cursor
-                              //         controller.coinController.selection =
-                              //             TextSelection.collapsed(
-                              //           offset: controller
-                              //               .coinController.text.length,
-                              //         );
-                              //       } else if (int.parse(val) >= 1) {
-                              //         print(
-                              //             "333333333333333   ${val.length}");
-                              //         controller.validCoinsEntered.value =
-                              //             true;
-                              //         controller.isEnable.value = true;
-                              //       } else if (int.parse(val) > 10000) {
-                              //         AppUtils.showErrorSnackBar(
-                              //             bodyText:
-                              //                 "You can not add more than 10000 points");
-                              //         controller.validCoinsEntered.value =
-                              //             false;
-                              //         controller.isEnable.value = true;
-                              //       } else {
-                              //         print(
-                              //             "444444444444444444   ${val.length}");
-                              //         controller.ondebounce();
-                              //         controller.validCoinsEntered.value =
-                              //             false;
-                              //         controller.isEnable.value = true;
-                              //       }
-                              //     } else {
-                              //       controller.validCoinsEntered.value =
-                              //           false;
-                              //       controller.isEnable.value = false;
-                              //     }
-                              //   },
-                              //   autofocus: true,
-                              //   maxLength: 5,
-                              //   hintText: "Enter Points",
-                              //   contentPadding:
-                              //       const EdgeInsets.only(right: 40),
-                              //   imagePath: "",
-                              //   containerBackColor: AppColors.black,
-                              //   iconColor: AppColors.white,
-                              //   height: Dimensions.h35,
-                              //   keyboardType: TextInputType.number,
-                              // ),
                             ),
                           ),
                           SizedBox(
@@ -307,11 +227,14 @@ class SingleAnkPage extends StatelessWidget {
                                 ),
                                 width: size.width / 2,
                                 onChanged: (value) {
+                                  controller.serchListMatch =
+                                      controller.digitList;
                                   if (value == '') {
                                     controller.matches.clear();
+                                    //controller.serchListMatch.clear();
                                     return const Iterable<String>.empty();
                                   } else {
-                                    controller.matches.clear();
+                                    // controller.matches.clear();
                                     controller.matches
                                         .addAll(controller.suggestionList);
                                     controller.matches.retainWhere((s) {
@@ -320,12 +243,22 @@ class SingleAnkPage extends StatelessWidget {
                                           );
                                     });
                                     for (var i = 0;
-                                        i < controller.matches.length;
+                                        i < controller.serchListMatch.length;
                                         i++) {
-                                      print(controller.matches[i]);
+                                      print(controller
+                                          .serchListMatch[i].isSelected);
+                                      print(
+                                          "******${controller.serchListMatch[i].value!} -- ${controller.serchListMatch[i].value!.contains(controller.searchController.text)}");
+                                      if (controller.serchListMatch[i].value!
+                                          .contains(
+                                        controller.searchController.text,
+                                      )) {
+                                        print(
+                                          " controller.serchListMatch[index].isSelected :- ${controller.serchListMatch[i].isSelected} ",
+                                        );
+                                      }
                                     }
                                   }
-                                  controller.update();
                                 },
                                 controller: controller.searchController,
                                 hintText: "SEARCH_TEXT".tr,
@@ -342,45 +275,46 @@ class SingleAnkPage extends StatelessWidget {
                   ),
                 ),
               ),
-
               SizedBox(
                 height: Dimensions.h11,
               ),
               numberLine(controller: controller),
               Obx(
-                () => controller.matches.isNotEmpty
-                    ? Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisExtent: 50,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                            ),
-                            itemCount: controller.matches.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.r10),
-                                onTap: () => controller.isEnable.value
-                                    ? controller.onTapNumberList(index)
-                                    : null,
-                                child: Opacity(
-                                  opacity: controller.validCoinsEntered.value
-                                      ? 1
-                                      : 0.5,
-                                  child: numberRedioButton(
+                () {
+                  return controller.matches.isNotEmpty
+                      ? Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 50.0),
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisExtent: 50,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                              ),
+                              itemCount: controller.matches.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  borderRadius:
+                                      BorderRadius.circular(Dimensions.r10),
+                                  onTap: () => controller.isEnable.value
+                                      ? controller.onTapNumberList(index)
+                                      : null,
+                                  child: Opacity(
+                                    opacity: controller.validCoinsEntered.value
+                                        ? 1
+                                        : 0.5,
+                                    child: numberRedioButton(
                                       textColor: controller.digitList[index]
                                                   .isSelected ??
                                               false
                                           ? AppColors.green
                                           : AppColors.appbarColor,
                                       container: controller.digitList[index]
-                                                  .isSelected ??
-                                              false
+                                                  .isSelected ==
+                                              true
                                           ? Container(
                                               height: Dimensions.h15,
                                               width: Dimensions.h15,
@@ -396,9 +330,11 @@ class SingleAnkPage extends StatelessWidget {
                                               child: Center(
                                                 child: FittedBox(
                                                   fit: BoxFit.fitWidth,
-                                                  child: Icon(Icons.check,
-                                                      size: 13,
-                                                      color: AppColors.white),
+                                                  child: Icon(
+                                                    Icons.check,
+                                                    size: 13,
+                                                    color: AppColors.white,
+                                                  ),
                                                 ),
                                               ),
                                             )
@@ -420,93 +356,99 @@ class SingleAnkPage extends StatelessWidget {
                                               false
                                           ? AppColors.green
                                           : AppColors.transparent,
+
+                                      /////// Machis //////
                                       controller.matches[index].toString(),
-                                      controller: controller),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    : Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisExtent: 50,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
+                                      controller: controller,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                            itemCount: controller.digitList.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.r10),
-                                onTap: () => controller.isEnable.value
-                                    ? controller.onTapNumberList(index)
-                                    : null,
-                                child: Opacity(
-                                  opacity: controller.validCoinsEntered.value
-                                      ? 1
-                                      : 0.5,
-                                  child: numberRedioButton(
-                                      textColor: controller.digitList[index]
-                                                  .isSelected ??
-                                              false
-                                          ? AppColors.green
-                                          : AppColors.appbarColor,
-                                      container: controller.digitList[index]
-                                                  .isSelected ??
-                                              false
-                                          ? Container(
-                                              height: Dimensions.h15,
-                                              width: Dimensions.h15,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.green,
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                border: Border.all(
-                                                  color: AppColors.green,
-                                                  width: Dimensions.w2,
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: FittedBox(
-                                                  fit: BoxFit.fitWidth,
-                                                  child: Icon(Icons.check,
-                                                      size: 13,
-                                                      color: AppColors.white),
-                                                ),
-                                              ),
-                                            )
-                                          : Container(
-                                              height: Dimensions.h15,
-                                              width: Dimensions.w15,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.transparent,
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                                border: Border.all(
-                                                  color: AppColors.appbarColor,
-                                                  width: Dimensions.w2,
-                                                ),
-                                              ),
-                                            ),
-                                      color: controller.digitList[index]
-                                                  .isSelected ??
-                                              false
-                                          ? AppColors.green
-                                          : AppColors.transparent,
-                                      controller.digitList[index].value ?? "",
-                                      controller: controller),
-                                ),
-                              );
-                            },
                           ),
-                        ),
-                      ),
+                        )
+                      : Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 50.0),
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisExtent: 50,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                              ),
+                              itemCount: controller.digitList.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  borderRadius:
+                                      BorderRadius.circular(Dimensions.r10),
+                                  onTap: () => controller.isEnable.value
+                                      ? controller.onTapNumberList(index)
+                                      : null,
+                                  child: Opacity(
+                                    opacity: controller.validCoinsEntered.value
+                                        ? 1
+                                        : 0.5,
+                                    child: numberRedioButton(
+                                        textColor: controller.digitList[index]
+                                                    .isSelected ??
+                                                false
+                                            ? AppColors.green
+                                            : AppColors.appbarColor,
+                                        container: controller.digitList[index]
+                                                    .isSelected ??
+                                                false
+                                            ? Container(
+                                                height: Dimensions.h15,
+                                                width: Dimensions.h15,
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.green,
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                    color: AppColors.green,
+                                                    width: Dimensions.w2,
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.fitWidth,
+                                                    child: Icon(Icons.check,
+                                                        size: 13,
+                                                        color: AppColors.white),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(
+                                                height: Dimensions.h15,
+                                                width: Dimensions.w15,
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.transparent,
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  border: Border.all(
+                                                    color:
+                                                        AppColors.appbarColor,
+                                                    width: Dimensions.w2,
+                                                  ),
+                                                ),
+                                              ),
+                                        color: controller.digitList[index]
+                                                    .isSelected ??
+                                                false
+                                            ? AppColors.green
+                                            : AppColors.transparent,
+                                        controller.digitList[index].value ?? "",
+                                        controller: controller),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                },
               )
               //  buttonContainer(size),
             ],

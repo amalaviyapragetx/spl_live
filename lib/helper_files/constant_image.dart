@@ -41,4 +41,5 @@ class ConstantImage {
   static String stopWatchIcon = "assets/images/stop_watch.svg";
   static String passBookIcon = "assets/images/passbook_icon.svg";
   static String withDrawalPageIcon = "assets/images/bid_History_Icon.svg";
+  static String clockSvg = "assets/images/clock.svg";
 }

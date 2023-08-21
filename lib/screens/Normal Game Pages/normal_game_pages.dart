@@ -66,7 +66,7 @@ class NormalGamePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
+      body: SizedBox(
         child: Column(
           children: [
             verticalSpace,

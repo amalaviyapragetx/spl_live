@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -11,11 +10,11 @@ import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
+import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
 import '../../Local Storage.dart';
 
 class GamePageController extends GetxController {
-  //RxList<String> filteredItems = RxList<String>();
   RxInt containerWidget = 0.obs;
   TextEditingController coinController = TextEditingController();
   TextEditingController searchController = TextEditingController();
@@ -42,6 +41,7 @@ class GamePageController extends GetxController {
   JsonFileModel jsonModel = JsonFileModel();
 
   var digitList = <DigitListModelOffline>[].obs;
+  var serchListMatch = <DigitListModelOffline>[].obs;
   RxList<String> suggestionList = <String>[].obs;
   TextEditingController autoCompleteFieldController = TextEditingController();
   BidRequestModel requestModel = BidRequestModel();
@@ -91,17 +91,18 @@ class GamePageController extends GetxController {
     jsonModel = JsonFileModel.fromJson(data);
   }
 
+  // var marketList = MarketData().obs;
+  // List<MarketData> tempMarketList = <MarketData>[];
   Future<void> getArguments() async {
     bidsList.value = await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
-    print("BidList  on bulkgame Page : ------ $bidsList");
-    var a = await LocalStorage.read(ConstantsVariables.playMore);
-    print("plamore on game page: $a");
     gameMode = argument['gameMode'];
     biddingType.value = argument['biddingType'];
     marketName.value = argument['marketName'];
     marketId = argument['marketId'];
     marketTime.value = argument['time'];
     isBulkMode.value = argument['isBulkMode'];
+    // marketList.value = argument['marketValue'];
+    // print(marketList.toJson());
     await loadJsonFile();
     switch (gameMode.name) {
       case "Single Ank Bulk":
@@ -113,6 +114,9 @@ class GamePageController extends GetxController {
           singleAnkList.add(DigitListModelOffline.fromJson(e));
         }
         digitList.value = singleAnkList;
+        for (var e in digitList) {
+          print(e.value);
+        }
         break;
       case "Jodi Bulk":
         showNumbersLine.value = false;
@@ -164,7 +168,6 @@ class GamePageController extends GetxController {
     if (validCoinsEntered.value) {
       if (digitList[index].isSelected == false) {
         onTapOfDigitTile(index);
-        // digitList[index].isSelected = true;
       } else {
         onLongPressDigitTile(index);
       }
@@ -185,6 +188,7 @@ class GamePageController extends GetxController {
         var tempBid = selectedBidsList
             .where((element) => element.bidNo == digitList[index].value)
             .toList();
+        print("***********$tempBid");
         if (tempBid.isNotEmpty) {
           for (var element in selectedBidsList) {
             if (element.bidNo == digitList[index].value) {
@@ -221,6 +225,7 @@ class GamePageController extends GetxController {
       validCoinsEntered.value = false;
       digitList.refresh();
       digitList[index].isSelected = false;
+      print(digitList[index].isSelected);
       isEnable.value = false;
       digitList.refresh();
       selectedBidsList
@@ -336,7 +341,6 @@ class GamePageController extends GetxController {
     }
     digitList.value = tempList;
     suggestionList.value = temListFor;
-    // print(temListFor);
   }
 
   Future<void> onTapOfSaveButton() async {
@@ -386,4 +390,27 @@ class GamePageController extends GetxController {
       );
     }
   }
+
+  // List<MarketData> tempMarketList = <MarketData>[];
+  // void onSearch(String val) {
+  //   if (val.isNotEmpty) {
+  //     var searchResultList = tempMarketList
+  //         .where((element) => element.market
+  //             .toString()
+  //             .toLowerCase()
+  //             .trim()
+  //             .startsWith(val.toString().toLowerCase().trim()))
+  //         .toList();
+  //     searchResultList.toSet().toList();
+  //     if (searchResultList.isNotEmpty) {
+  //       noMarketFound.value = false;
+  //       marketList.value = searchResultList;
+  //     } else {
+  //       noMarketFound.value = true;
+  //     }
+  //   } else {
+  //     noMarketFound.value = false;
+  //     marketList.value = tempMarketList;
+  //   }
+  // }
 }

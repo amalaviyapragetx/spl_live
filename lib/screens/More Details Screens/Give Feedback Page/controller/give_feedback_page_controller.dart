@@ -13,18 +13,12 @@ class GiveFeedbackPageController extends GetxController {
   final feedbackController = TextEditingController();
   var feedbackModel = GetFeedbackByIdApiResponseModel().obs;
   UserDetailsModel userDetailsModel = UserDetailsModel();
-  var userId = "1";
+
   @override
   void onInit() {
     super.onInit();
-    getFeedbackAndRatingsById();
+    getArguments();
   }
-
-  @override
-  void onClose() {}
-
-  @override
-  void onReady() {}
 
   void addFeedbackApi() async {
     ApiService().createFeedback(await createFeedbackBody()).then((value) async {
@@ -41,9 +35,16 @@ class GiveFeedbackPageController extends GetxController {
     });
   }
 
+  getArguments() async {
+    var data = await LocalStorage.read(ConstantsVariables.userData);
+    userDetailsModel = UserDetailsModel.fromJson(data);
+    print(userDetailsModel.toJson());
+    getFeedbackAndRatingsById();
+  }
+
   Future<Map> createFeedbackBody() async {
     final createFeedbackBody = {
-      "userId": int.parse(userId),
+      "userId": int.parse(userDetailsModel.id.toString()),
       "feedback": feedbackController.text,
       "rating": 0
     };
@@ -52,12 +53,9 @@ class GiveFeedbackPageController extends GetxController {
   }
 
   void getFeedbackAndRatingsById() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
-    // UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    // userId = userData.id == null ? "" : userData.id.toString();
     ApiService()
-        .getFeedbackAndRatingsById(userId: int.parse(userId))
-        //  .getFeedbackAndRatingsById(userId: userDetailsModel.id)
+        //.getFeedbackAndRatingsById(userId: int.parse(userId))
+        .getFeedbackAndRatingsById(userId: userDetailsModel.id)
         .then(
       (value) async {
         debugPrint("Get StarLine Daily Markets Api Response :- $value");

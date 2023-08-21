@@ -192,7 +192,6 @@ class ApiService extends GetConnect {
       ApiUtils.editBankDetails,
       body,
       headers: headersWithToken,
-      // contentType: contentType,
     );
 
     if (response.status.hasError) {
@@ -404,6 +403,7 @@ class ApiService extends GetConnect {
     });
 
     await initApiService();
+    print("${ApiUtils.getFeedbackAndRatingsById}$userId");
     final response = await get(
       "${ApiUtils.getFeedbackAndRatingsById}$userId",
       headers: headersWithToken,

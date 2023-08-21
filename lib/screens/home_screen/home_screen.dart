@@ -14,9 +14,6 @@ class DashBoardPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     var controller = Get.put(HomePageController());
     var walletController = Get.put(WalletController());
-
-    // var spaceBeetween = const SizedBox(height: 10);
-
     return WillPopScope(
       onWillPop: () async {
         if (controller.pageWidget.value == 1 ||
@@ -39,7 +36,6 @@ class DashBoardPage extends StatelessWidget {
                 builder: (context) => onExitAlert(context, onCancel: () {
                   Navigator.of(context).pop(false);
                 }, onExit: () {
-                  // Navigator.of(context).pop(true);
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 }),
               ) ??
@@ -58,6 +54,7 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
+              walletController.walletBalance.refresh();
             },
             onTapHome: () {
               controller.pageWidget.value = 0;
@@ -66,6 +63,7 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
+              walletController.walletBalance.refresh();
             },
             onTapMore: () {
               controller.pageWidget.value = 4;
@@ -74,6 +72,7 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
+              walletController.walletBalance.refresh();
             },
             onTapWallet: () {
               controller.pageWidget.value = 2;
@@ -83,19 +82,24 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
+              walletController.walletBalance.refresh();
             },
             onTapPassbook: () {
               controller.getPassBookData(
                   lazyLoad: false, offset: controller.offset.value.toString());
               controller.pageWidget.value = 3;
               controller.currentIndex.value = 3;
+              walletController.walletBalance.refresh();
             },
           ),
         ),
         backgroundColor: AppColors.white,
         body: RefreshIndicator(
           onRefresh: () async {
-            controller.handleRefresh();
+            if (controller.pageWidget.value == 0 ||
+                controller.pageWidget.value == 2) {
+              controller.handleRefresh();
+            }
           },
           child: Obx(
             () => controller.getDashBoardPages(

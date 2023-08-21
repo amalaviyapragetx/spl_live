@@ -23,6 +23,8 @@ class SplashController extends GetxController {
     print(isActive);
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    bool hasMPIN =
+        await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
     //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
       if (!isActive && !isVerified) {
@@ -34,10 +36,17 @@ class SplashController extends GetxController {
           Get.offAllNamed(AppRoutName.userDetailsPage);
         });
       } else {
-        Future.delayed(const Duration(seconds: 2), () {
-          Get.offAllNamed(AppRoutName.mPINPage,
-              arguments: {"id": _userDetailsModel.id});
-        });
+        if (hasMPIN) {
+          Future.delayed(const Duration(seconds: 2), () {
+            Get.offAllNamed(AppRoutName.mPINPage,
+                arguments: {"id": _userDetailsModel.id});
+          });
+        } else {
+          Future.delayed(const Duration(seconds: 2), () {
+            Get.offAllNamed(AppRoutName.signInPage,
+                arguments: {"id": _userDetailsModel.id});
+          });
+        }
       }
     } else {
       Future.delayed(const Duration(seconds: 2), () {

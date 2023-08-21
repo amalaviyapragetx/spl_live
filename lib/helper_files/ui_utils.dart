@@ -101,13 +101,10 @@ class AppUtils {
     var math;
     return AppBar(
       backgroundColor: AppColors.appbarColor,
-      title: const Center(
-        child: Text(
-          "SPL",
-          // style: GoogleFonts.aclonica(
-          //     color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
-        ),
+      title: Text(
+        "SPL",
       ),
+      centerTitle: true,
       leading: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -132,6 +129,7 @@ class AppUtils {
             ),
             Text(
               walletText,
+              // "12345678",
               style: CustomTextStyle.textPTsansBold
                   .copyWith(color: AppColors.white, fontSize: Dimensions.h18),
             ),
@@ -139,20 +137,7 @@ class AppUtils {
           ],
         ),
       ),
-      leadingWidth: Dimensions.w100,
-      // flexibleSpace: SafeArea(
-      //   child: Padding(
-      //     padding: EdgeInsets.only(left: size.width / 8, top: Dimensions.h13),
-      //     child: Text(
-      //       "50",
-      //       style: CustomTextStyle.textPTsansBold
-      //           .copyWith(color: AppColors.white, fontSize: Dimensions.h18),
-      //     ),
-      //   ),
-      // ),
-      // leading: InkWell(
-      //     onTap: onTapTranction,
-      //     child: const Icon(Icons.account_balance_wallet, color: Colors.white)),
+      leadingWidth: Dimensions.w150,
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -334,17 +319,21 @@ class AppUtils {
 
   ///drawer
   Future<dynamic> showRateUsBoxDailog(
-      callCreateRatingApi, double? givenRatings) async {
+      Function callCreateRatingApi, double? givenRatings) async {
     double tempRatings = 0.00;
     IconData? selectedIcon;
+    print(givenRatings);
     return Get.dialog(
       Padding(
         padding: EdgeInsets.symmetric(
             horizontal: Dimensions.w15, vertical: Dimensions.h220),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(Dimensions.r18))),
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.r18),
+            ),
+          ),
           child: Center(
             child: Material(
               color: Colors.white,
@@ -358,7 +347,7 @@ class AppUtils {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Rate SPL live App",
+                      "Rate SPL live App ${givenRatings}",
                       style: CustomTextStyle.textPTsansMedium.copyWith(
                           color: AppColors.grey,
                           fontWeight: FontWeight.w600,
@@ -366,10 +355,10 @@ class AppUtils {
                           letterSpacing: 1.29),
                     ),
                     RatingBar.builder(
-                      initialRating:
-                          givenRatings != null && givenRatings != 0.00
-                              ? givenRatings
-                              : 0,
+                      initialRating: givenRatings != null ||
+                              givenRatings!.toDouble() != 0.00
+                          ? givenRatings
+                          : 0,
                       minRating: 0,
                       direction: Axis.horizontal,
                       allowHalfRating: false,
@@ -458,12 +447,14 @@ class AppUtils {
                                     BorderRadius.circular(Dimensions.h5),
                                 color: AppColors.white),
                             child: Center(
-                              child: Text("SUBMIT",
-                                  style:
-                                      CustomTextStyle.textPTsansMedium.copyWith(
-                                    color: AppColors.appbarColor,
-                                    fontSize: Dimensions.h18,
-                                  )),
+                              child: Text(
+                                "SUBMIT",
+                                style:
+                                    CustomTextStyle.textPTsansMedium.copyWith(
+                                  color: AppColors.appbarColor,
+                                  fontSize: Dimensions.h18,
+                                ),
+                              ),
                             ),
                           ),
                         ),

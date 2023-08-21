@@ -80,9 +80,9 @@ class MyAccountPageController extends GetxController {
         bankId = model.data!.id ?? 0;
       } else {
         isEditDetails.value = true;
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
       }
     });
   }
@@ -116,20 +116,21 @@ class MyAccountPageController extends GetxController {
 
   Future<Map> ediBankDetailsBody() async {
     var ediBankDetailsBody = {
-      "id": bankId,
+      //  "id": bankId,
       "userId": int.parse(userId),
       "bankName": bankNameController.text,
       "accountHolderName": accHolderNameController.text,
       "accountNumber": accNoController.text,
-      "IFSCCode": ifscCodeController.text,
+      "ifscCode": ifscCodeController.text,
       // "gpayNumber": gPayNumberController.text,
       // "paytmNumber": paytmNumberController.text,
       // "bhimUPI": bhimUpiController.text,
     };
-
-    ediBankDetailsBody.addIf(bankId != 0, "id", bankId);
-
-    debugPrint(ediBankDetailsBody.toString());
+    if (bankId != 0) {
+      ediBankDetailsBody["id"] = bankId;
+    }
+    // ediBankDetailsBody.addIf(bankId != 0, "id", bankId);
+    //  debugPrint(ediBankDetailsBody.toString());
     print(ediBankDetailsBody);
     return ediBankDetailsBody;
   }

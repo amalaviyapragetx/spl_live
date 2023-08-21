@@ -27,7 +27,7 @@ class GameRatePage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(Dimensions.r8),
                   child: Container(
-                    height: size.height / 2,
+                    height: size.height / 1.8,
                     decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(Dimensions.r5),
@@ -39,10 +39,11 @@ class GameRatePage extends StatelessWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.fromLTRB(
-                                  Dimensions.r15,
-                                  Dimensions.r15,
-                                  Dimensions.r15,
-                                  Dimensions.r10),
+                                Dimensions.r15,
+                                Dimensions.r15,
+                                Dimensions.r15,
+                                Dimensions.r10,
+                              ),
                               child: Text(
                                 "MARKETGAMEWINRATIO".tr,
                                 style:
@@ -65,11 +66,13 @@ class GameRatePage extends StatelessWidget {
                   height: size.height / 3.1,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(Dimensions.r5),
-                      border: Border.all(
-                          width: 0.2,
-                          color: const Color.fromARGB(255, 214, 209, 209))),
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(Dimensions.r5),
+                    border: Border.all(
+                      width: 0.2,
+                      color: const Color.fromARGB(255, 214, 209, 209),
+                    ),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +164,7 @@ class GameRatePage extends StatelessWidget {
                 child: Text(
                   trailing,
                   style: CustomTextStyle.textPTsansMedium.copyWith(
-                    color: AppColors.grey,
+                    color: AppColors.greyShade,
                     fontSize: Dimensions.h15,
                   ),
                 ),
@@ -173,54 +176,3 @@ class GameRatePage extends StatelessWidget {
     );
   }
 }
-
-// class starline2 extends StatelessWidget {
-//   final String text1;
-//   final String value1;
-//   const starline2({
-//     super.key,
-//     required this.text1,
-//     required this.value1,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Obx(() => ListView.builder(
-//         shrinkWrap: true,
-//         physics: NeverScrollableScrollPhysics(),
-//         itemCount: controller.gamerateModel.value.data?.length ?? 0,
-//         itemBuilder: (context, index) {
-//           final item = controller.gamerateModel.value.data?[index];
-//           return Column(
-//             children: [
-//               Row(
-//                 children: [
-//                   Padding(
-//                     padding: EdgeInsets.all(Dimensions.r5),
-//                     child: Text(
-//                       item?.name ?? "",
-//                       style: CustomTextStyle.textPTsansMedium.copyWith(
-//                         color: AppColors.black,
-//                         fontSize: Dimensions.h18,
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     width: Dimensions.w30,
-//                   ),
-//                   Text(
-//                     '${item?.baseRate.toString() ?? ""} KA ${item?.rate.toString()}  ',
-//                     style: CustomTextStyle.textPTsansMedium.copyWith(
-//                       color: AppColors.grey,
-//                       fontSize: Dimensions.h15,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           );
-//         }));
-//   }
-
-  
-

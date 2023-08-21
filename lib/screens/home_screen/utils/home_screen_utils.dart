@@ -8,7 +8,6 @@ import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/dimentions.dart';
 
@@ -332,167 +331,175 @@ class HomeScreenUtils {
   gridColumn(
     size,
   ) {
-    return Obx(() {
-      return controller.normalMarketList.isNotEmpty
-          ? Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: InkWell(
-                    onTap: () {
-                      launch(
-                        "https://wa.me/+917769826748/?text=hi",
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: Dimensions.h30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        gradient: LinearGradient(
-                          colors: [AppColors.wpColor1, AppColors.wpColor2],
+    return Obx(
+      () {
+        return controller.normalMarketList.isNotEmpty
+            ? Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: InkWell(
+                      onTap: () {
+                        launch(
+                          "https://wa.me/+917769826748/?text=hi",
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: Dimensions.h30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          gradient: LinearGradient(
+                            colors: [AppColors.wpColor1, AppColors.wpColor2],
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Image.asset(
-                              ConstantImage.whatsaapIcon,
-                              fit: BoxFit.contain,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Image.asset(
+                                ConstantImage.whatsaapIcon,
+                                fit: BoxFit.contain,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "+91 7769826748",
-                            style: CustomTextStyle.textRobotoSansBold
-                                .copyWith(color: AppColors.white),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              "+91 7769826748",
+                              style: CustomTextStyle.textRobotoSansBold
+                                  .copyWith(color: AppColors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                GridView.builder(
-                  padding: EdgeInsets.all(Dimensions.h5),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: size.width / 2,
-                    mainAxisExtent: size.width / 2.4,
-                    crossAxisSpacing: 0,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: controller.normalMarketList.length,
-                  itemBuilder: (context, index) {
-                    MarketData marketData;
-                    marketData = controller.normalMarketList[index];
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
-                      child: GestureDetector(
-                        onTap: () => controller.onTapOfNormalMarket(
-                          controller.normalMarketList[index],
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                spreadRadius: 0.2,
-                                color: AppColors.grey,
-                                blurRadius: 3.5,
-                                offset: const Offset(2, 4),
-                              )
-                            ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(Dimensions.h10),
-                            border: Border.all(color: Colors.red, width: 1),
+                  GridView.builder(
+                    padding: EdgeInsets.all(Dimensions.h5),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: size.width / 2,
+                      mainAxisExtent: size.width / 2.4,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: controller.normalMarketList.length,
+                    itemBuilder: (context, index) {
+                      MarketData marketData;
+                      marketData = controller.normalMarketList[index];
+                      return Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: Dimensions.h5),
+                        child: GestureDetector(
+                          onTap: () => controller.onTapOfNormalMarket(
+                            controller.normalMarketList[index],
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                height: Dimensions.h10,
-                              ),
-                              Text(
-                                "${marketData.openTime ?? " "} | ${marketData.closeTime ?? ""}",
-                                style: CustomTextStyle.textPTsansMedium
-                                    .copyWith(fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                controller.normalMarketList[index].market ?? "",
-                                // "MADHUR DAY",
-                                style: CustomTextStyle.textPTsansBold.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: Dimensions.h14,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  spreadRadius: 0.2,
+                                  color: AppColors.grey,
+                                  blurRadius: 3.5,
+                                  offset: const Offset(2, 4),
+                                )
+                              ],
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.h10),
+                              border: Border.all(color: Colors.red, width: 1),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  height: Dimensions.h10,
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  buildResult(
-                                      isOpenResult: true,
+                                Text(
+                                  "${marketData.openTime ?? " "} | ${marketData.closeTime ?? ""}",
+                                  style: CustomTextStyle.textPTsansMedium
+                                      .copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  controller.normalMarketList[index].market ??
+                                      "",
+                                  // "MADHUR DAY",
+                                  style:
+                                      CustomTextStyle.textPTsansBold.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: Dimensions.h14,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    buildResult(
+                                        isOpenResult: true,
+                                        resultDeclared:
+                                            marketData.isOpenResultDeclared ??
+                                                false,
+                                        result: marketData.openResult ?? 0),
+                                    buildResult(
+                                      isOpenResult: false,
                                       resultDeclared:
-                                          marketData.isOpenResultDeclared ??
+                                          marketData.isCloseResultDeclared ??
                                               false,
-                                      result: marketData.openResult ?? 0),
-                                  buildResult(
-                                    isOpenResult: false,
-                                    resultDeclared:
-                                        marketData.isCloseResultDeclared ??
-                                            false,
-                                    result: marketData.closeResult ?? 0,
-                                  )
-                                ],
-                              ),
-                              playButton(),
-                              SizedBox(
-                                height: Dimensions.h5,
-                              ),
-                              Container(
-                                height: Dimensions.h30,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade400.withOpacity(0.8),
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
+                                      result: marketData.closeResult ?? 0,
+                                    )
+                                  ],
+                                ),
+                                playButton(),
+                                SizedBox(
+                                  height: Dimensions.h5,
+                                ),
+                                Container(
+                                  height: Dimensions.h30,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Colors.grey.shade400.withOpacity(0.8),
+                                    borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      marketData.isBidOpenForClose ?? false
+                                          ? "Bidding is Open"
+                                          : "Bidding is Closed",
+                                      style:
+                                          marketData.isBidOpenForClose ?? false
+                                              ? CustomTextStyle.textPTsansMedium
+                                                  .copyWith(
+                                                  color: AppColors.greenShade,
+                                                  fontWeight: FontWeight.w500,
+                                                )
+                                              : CustomTextStyle.textPTsansMedium
+                                                  .copyWith(
+                                                  color: AppColors.redColor,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                    ),
                                   ),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    marketData.isBidOpenForClose ?? false
-                                        ? "Bidding is Open"
-                                        : "Bidding is Closed",
-                                    style: marketData.isBidOpenForClose ?? false
-                                        ? CustomTextStyle.textPTsansMedium
-                                            .copyWith(
-                                            color: AppColors.greenShade,
-                                            fontWeight: FontWeight.w500,
-                                          )
-                                        : CustomTextStyle.textPTsansMedium
-                                            .copyWith(
-                                            color: AppColors.redColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            )
-          : Center(
-              child: Container(child: Text("No Data Found")),
-            );
-    });
+                      );
+                    },
+                  ),
+                ],
+              )
+            : const Center(
+                child: Text("No Data Found"),
+              );
+      },
+    );
   }
 
   Container playButton() {
@@ -694,8 +701,8 @@ class HomeScreenUtils {
                       controller.marketHistoryList[index].balance.toString(),
                   coins: controller.marketHistoryList[index].coins.toString(),
                   bidNumber: controller.marketHistoryList[index].bidNo ?? "",
-                  marketName:
-                     controller.marketHistoryList[index].marketName ?? "00:00 AM",
+                  marketName: controller.marketHistoryList[index].marketName ??
+                      "00:00 AM",
                 );
               },
             ),
@@ -868,7 +875,7 @@ class HomeScreenUtils {
                               SizedBox(
                                 width: Dimensions.w20,
                               ),
-                              Container(
+                              SizedBox(
                                   width: Dimensions.w35,
                                   child: SvgPicture.asset(
                                       ConstantImage.stopWatchIcon)),

@@ -131,9 +131,17 @@ class StarlineBidsController extends GetxController {
       debugPrint("create starline bid api response :- $value");
       print(requestModel.value.toJson());
       if (value['status']) {
-        Get.offAndToNamed(AppRoutName.dashBoardPage);
+        Get.offAllNamed(
+          AppRoutName.starLineGameModesPage,
+          arguments: marketData.value,
+        );
+        //  Get.offAndToNamed(AppRoutName.dashBoardPage);
         if (value['data'] == false) {
-          Get.offAndToNamed(AppRoutName.dashBoardPage);
+          Get.offAllNamed(
+            AppRoutName.starLineGameModesPage,
+            arguments: marketData.value,
+          );
+          // Get.offAndToNamed(AppRoutName.dashBoardPage);
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
           );

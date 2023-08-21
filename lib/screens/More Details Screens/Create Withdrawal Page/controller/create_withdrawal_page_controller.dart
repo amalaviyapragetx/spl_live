@@ -57,15 +57,14 @@ class CreateWithDrawalPageController extends GetxController {
         //   AppUtils.showSuccessSnackBar(
         //       bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         // }
-
         accountName.value = model.data!.accountHolderName ?? "";
         bankName.value = model.data!.bankName ?? "";
         accountNumber.value = model.data!.accountNumber ?? "";
         ifcsCode.value = model.data!.iFSCCode ?? "";
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
       }
     });
   }

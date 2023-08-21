@@ -65,19 +65,19 @@ class CreatewithDrawalPage extends StatelessWidget {
                   ),
                   verticalSpace,
                   listTileDetails(
-                    text: "Bank:",
+                    text: "BANK_TEXT".tr,
                     value: controller.bankName.value,
                   ),
                   listTileDetails(
-                    text: "Acc Name:",
+                    text: "ACNAME_TEXT".tr,
                     value: controller.accountName.value,
                   ),
                   listTileDetails(
-                    text: "Acc No.:",
+                    text: "ACNO_TEXT".tr,
                     value: controller.accountNumber.value,
                   ),
                   listTileDetails(
-                    text: "IFSC Code:",
+                    text: "IFSC_TEXT".tr,
                     value: controller.ifcsCode.value,
                   ),
                   verticalSpace,

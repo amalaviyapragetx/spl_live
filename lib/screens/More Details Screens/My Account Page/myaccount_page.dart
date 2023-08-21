@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/edit_text_field_with_icon.dart';
-import 'package:spllive/components/edit_text_field_with_roundedcorner.dart';
-import 'package:spllive/components/edit_text_password.dart';
+
 import 'package:spllive/components/simple_button_with_corner.dart';
-import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/custom_text_style.dart';
@@ -123,6 +121,7 @@ class MyAccountPage extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
+                flex: 1,
                 child: Text(
                   text,
                   style: CustomTextStyle.textPTsansBold.copyWith(

@@ -38,7 +38,7 @@ class MoreListController extends GetxController {
   Future<void> getUserData() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
-    getMarketBidsByUserId(lazyLoad: false);
+    // getMarketBidsByUserId(lazyLoad: false);
   }
 
   void callLogout() async {
@@ -57,37 +57,37 @@ class MoreListController extends GetxController {
     });
   }
 
-  void getMarketBidsByUserId({required bool lazyLoad}) {
-    ApiService()
-        .getBidHistoryByUserId(
-            userId: userData.id.toString(),
-            endDate: "2023-08-17",
-            startDate: "2023-08-17",
-            //  userId: "3",
-            limit: "10",
-            offset: offset.toString(),
-            isStarline: isStarline.value)
-        .then(
-      (value) async {
-        debugPrint("Get Market Api Response :- $value");
-        if (value['status']) {
-          if (value['data'] != null) {
-            NormalMarketBidHistoryResponseModel model =
-                NormalMarketBidHistoryResponseModel.fromJson(value);
-            lazyLoad
-                ? marketHistoryList
-                    .addAll(model.data?.resultArr ?? <ResultArr>[])
-                : marketHistoryList.value =
-                    model.data?.resultArr ?? <ResultArr>[];
-          }
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-      },
-    );
-  }
+  // void getMarketBidsByUserId({required bool lazyLoad}) {
+  //   ApiService()
+  //       .getBidHistoryByUserId(
+  //           userId: userData.id.toString(),
+  //           endDate: "2023-08-17",
+  //           startDate: "2023-08-17",
+  //           //  userId: "3",
+  //           limit: "10",
+  //           offset: offset.toString(),
+  //           isStarline: isStarline.value)
+  //       .then(
+  //     (value) async {
+  //       debugPrint("Get Market Api Response :- $value");
+  //       if (value['status']) {
+  //         if (value['data'] != null) {
+  //           NormalMarketBidHistoryResponseModel model =
+  //               NormalMarketBidHistoryResponseModel.fromJson(value);
+  //           lazyLoad
+  //               ? marketHistoryList
+  //                   .addAll(model.data?.resultArr ?? <ResultArr>[])
+  //               : marketHistoryList.value =
+  //                   model.data?.resultArr ?? <ResultArr>[];
+  //         }
+  //       } else {
+  //         AppUtils.showErrorSnackBar(
+  //           bodyText: value['message'] ?? "",
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
 
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
@@ -110,9 +110,10 @@ class MoreListController extends GetxController {
 
   Future<void> getFeedbackAndRatingsById() async {
     var tempRatings = 0.00;
+    var tempFeedBack = "";
     ApiService()
-        .getFeedbackAndRatingsById(userId: 1)
-        // .getFeedbackAndRatingsById(userId: userDetailsModel.value.id)
+        //.getFeedbackAndRatingsById(userId: 1)
+        .getFeedbackAndRatingsById(userId: userData.id)
         .then(
       (value) async {
         debugPrint("Get Feed back and Ratings Api Response :- $value");
@@ -122,6 +123,7 @@ class MoreListController extends GetxController {
             tempRatings = feedbackModel.data!.rating != null
                 ? feedbackModel.data!.rating!.toDouble()
                 : 0.00;
+            tempFeedBack = feedbackModel.data!.feedback.toString();
           } else {
             tempRatings = 0.00;
           }
@@ -132,20 +134,20 @@ class MoreListController extends GetxController {
         }
         if (tempRatings > 0.00) {
           AppUtils().showRateUsBoxDailog((rat) {
-            addFeedbackApi(rat);
+            addFeedbackApi(rat, tempFeedBack);
           }, tempRatings);
         } else {
           AppUtils().showRateUsBoxDailog((rat) {
-            addFeedbackApi(rat);
+            addFeedbackApi(rat, tempFeedBack);
           }, 0);
         }
       },
     );
   }
 
-  void addFeedbackApi(ratingValue) async {
+  void addFeedbackApi(ratingValue, feedBack) async {
     ApiService()
-        .createFeedback(await createFeedbackBody(ratingValue))
+        .createFeedback(await createFeedbackBody(ratingValue, feedBack))
         .then((value) async {
       debugPrint("Create Feedback Api Response :- $value");
       if (value['status']) {
@@ -160,11 +162,10 @@ class MoreListController extends GetxController {
     });
   }
 
-  Future<Map> createFeedbackBody(rating) async {
+  Future<Map> createFeedbackBody(rating, String? feedBack) async {
     final createFeedbackBody = {
-      "userId": 1,
-      //  "userId": userDetailsModel.value.id,
-      "feedback": "",
+      "userId": userData.id,
+      "feedback": feedBack,
       "rating": rating,
     };
     debugPrint(createFeedbackBody.toString());
