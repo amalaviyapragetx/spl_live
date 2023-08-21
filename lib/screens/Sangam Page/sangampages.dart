@@ -144,7 +144,7 @@ class SangamPages extends StatelessWidget {
                           },
                           height: Dimensions.h35,
                           controller: controller.coinsController,
-                          hintText: "Enter Poins".tr,
+                          hintText: "Enter Points".tr,
                           containerWidth: double.infinity,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly

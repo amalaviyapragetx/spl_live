@@ -21,7 +21,6 @@ class PassBook extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: size.height,
-      //width: double.infinity,
       child: Column(
         children: [
           AppUtils().simpleAppbar(
@@ -50,6 +49,11 @@ class PassBook extends StatelessWidget {
                           SystemChrome.setPreferredOrientations(
                               [DeviceOrientation.portraitUp]);
                         }
+                      } else {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                          DeviceOrientation.landscapeLeft
+                        ]);
                       }
                     },
                     child: Padding(

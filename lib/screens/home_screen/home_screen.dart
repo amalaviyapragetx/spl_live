@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
-import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../components/bottumnavigation/bottumnavigation.dart';
 import 'controller/homepage_controller.dart';
 import '../../helper_files/app_colors.dart';
@@ -29,6 +25,8 @@ class DashBoardPage extends StatelessWidget {
             controller.pageWidget.value == 4) {
           controller.pageWidget.value = 0;
           controller.currentIndex.value = 0;
+          SystemChrome.setPreferredOrientations(
+              [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
           return false;
         } else if (controller.pageWidget.value == 5) {
           controller.pageWidget.value = 4;
@@ -56,19 +54,35 @@ class DashBoardPage extends StatelessWidget {
               controller.pageWidget.value = 1;
               controller.currentIndex.value = 1;
               controller.marketBidsByUserId(lazyLoad: false);
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.landscapeLeft
+              ]);
             },
             onTapHome: () {
               controller.pageWidget.value = 0;
               controller.currentIndex.value = 0;
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.landscapeLeft
+              ]);
             },
             onTapMore: () {
               controller.pageWidget.value = 4;
               controller.currentIndex.value = 4;
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.landscapeLeft
+              ]);
             },
             onTapWallet: () {
               controller.pageWidget.value = 2;
               controller.currentIndex.value = 2;
               walletController.walletBalance.refresh();
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.landscapeLeft
+              ]);
             },
             onTapPassbook: () {
               controller.getPassBookData(
@@ -79,12 +93,17 @@ class DashBoardPage extends StatelessWidget {
           ),
         ),
         backgroundColor: AppColors.white,
-        body: Obx(
-          () => controller.getDashBoardPages(
-            controller.pageWidget.value,
-            size,
-            context,
-            walletController.walletBalance.value.toString(),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            controller.handleRefresh();
+          },
+          child: Obx(
+            () => controller.getDashBoardPages(
+              controller.pageWidget.value,
+              size,
+              context,
+              walletController.walletBalance.value.toString(),
+            ),
           ),
         ),
       ),

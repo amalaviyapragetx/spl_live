@@ -695,7 +695,7 @@ class HomeScreenUtils {
                   coins: controller.marketHistoryList[index].coins.toString(),
                   bidNumber: controller.marketHistoryList[index].bidNo ?? "",
                   marketName:
-                      controller.marketHistoryList[index].marketName ?? "",
+                     controller.marketHistoryList[index].marketName ?? "00:00 AM",
                 );
               },
             ),

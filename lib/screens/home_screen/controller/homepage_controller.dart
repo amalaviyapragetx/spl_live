@@ -100,10 +100,11 @@ class HomePageController extends GetxController {
   }
 
   Future<void> handleRefresh() async {
-    // Put your reload logic here.
-    // For example, you can fetch new data from the server and update the UI.
-    await Future.delayed(const Duration(seconds: 2));
-    print("Data reloaded!");
+    await Future.delayed(const Duration(seconds: 1));
+    setboolData();
+    callMarketsApi();
+    callGetStarLineChart();
+    getUserData();
   }
 
   @override

@@ -98,7 +98,7 @@ class GameModePagesController extends GetxController {
   }
 
   onBackButton() async {
-    Get.toNamed(AppRoutName.dashBoardPage);
+    Get.offNamed(AppRoutName.dashBoardPage);
     selectedBidsList.clear();
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
   }

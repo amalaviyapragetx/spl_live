@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-
-import '../../../components/edit_text_field_with_roundedcorner.dart';
 import '../../../components/simple_button_with_corner.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
@@ -37,32 +35,35 @@ class GiveFeedbackPage extends StatelessWidget {
                   height: Dimensions.h10,
                 ),
                 RoundedCornerEditText2(
-                    isEnabled: true,
-                    controller: controller.feedbackController,
-                    maxLines: 10,
-                    minLines: 10,
-                    hintText: "",
-                    keyboardType: TextInputType.multiline),
+                  isEnabled: true,
+                  controller: controller.feedbackController,
+                  maxLines: 10,
+                  minLines: 10,
+                  hintText: "",
+                  keyboardType: TextInputType.multiline,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w80),
-                  child: RoundedCornerButton(
-                    height: Dimensions.h30,
-                    width: Dimensions.w130,
-                    letterSpacing: 0,
-                    color: AppColors.appbarColor,
-                    fontSize: Dimensions.h16,
-                    fontWeight: FontWeight.bold,
-                    text: "SUBMIT".tr,
-                    textStyle: CustomTextStyle.textPTsansMedium,
-                    borderRadius: Dimensions.r50,
-                    borderColor: AppColors.appbarColor,
-                    borderWidth: 1,
-                    fontColor: AppColors.white,
-                    onTap: () => controller.addFeedbackApi(),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RoundedCornerButton(
+                      height: Dimensions.h30,
+                      width: Dimensions.w130,
+                      letterSpacing: 0,
+                      color: AppColors.appbarColor,
+                      fontSize: Dimensions.h16,
+                      fontWeight: FontWeight.bold,
+                      text: "SUBMIT".tr,
+                      textStyle: CustomTextStyle.textPTsansMedium,
+                      borderRadius: Dimensions.r50,
+                      borderColor: AppColors.appbarColor,
+                      borderWidth: 1,
+                      fontColor: AppColors.white,
+                      onTap: () => controller.addFeedbackApi(),
+                    ),
+                  ],
                 ),
               ],
             ),

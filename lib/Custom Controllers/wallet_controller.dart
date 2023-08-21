@@ -14,12 +14,6 @@ class WalletController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() async {
-    // await LocalStorage.write(ConstantsVariables.withDrawal, false);
-    super.onClose();
-  }
-
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
       debugPrint("Forgot MPIN Api Response :- $value");

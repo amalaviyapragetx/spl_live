@@ -41,7 +41,7 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   onBackButton() async {
-    Get.toNamed(AppRoutName.dashBoardPage);
+    Get.offNamed(AppRoutName.dashBoardPage);
     requestModel.value.bids?.clear();
     await LocalStorage.write(
         ConstantsVariables.starlineBidsList, requestModel.value.bids);
