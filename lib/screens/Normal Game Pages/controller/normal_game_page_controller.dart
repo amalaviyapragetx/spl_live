@@ -24,7 +24,11 @@ class NormalGamePageController extends GetxController {
   var leftAnkController = TextEditingController();
   var rightAnkController = TextEditingController();
   var middleAnkController = TextEditingController();
-
+  final FocusNode leftFocusNode = FocusNode();
+  final FocusNode middleFocusNode = FocusNode();
+  final FocusNode rightFocusNode = FocusNode();
+  final FocusNode coinFocusNode = FocusNode();
+  // late FocusNode focusNode;
   var spdptpList = [];
   String spValue = "SP";
   String dpValue = "DP";
@@ -34,9 +38,7 @@ class NormalGamePageController extends GetxController {
   String addedNormalBidValue = "";
   RxBool tpValue3 = false.obs;
   RxString totalAmount = "00".obs;
-  //RxInt bidlistTotal = 0.obs;
   RxInt panaControllerLength = 2.obs;
-  late FocusNode focusNode;
   JsonFileModel jsonModel = JsonFileModel();
   Rx<BidRequestModel> requestModel = BidRequestModel().obs;
   List<String> selectedValues = [];
@@ -68,8 +70,7 @@ class NormalGamePageController extends GetxController {
   void onInit() {
     super.onInit();
     getArguments();
-
-    focusNode = FocusNode();
+    // focusNode = FocusNode();
   }
 
   void getArguments() async {
@@ -87,60 +88,27 @@ class NormalGamePageController extends GetxController {
     requestModel.value.userId = userData.id;
     requestModel.value.bidType = biddingType.value;
     requestModel.value.dailyMarketId = marketId;
-
     await loadJsonFile();
     RxBool showNumbersLine = false.obs;
     RxList<String> suggestionList = <String>[].obs;
     List<String> _tempValidationList = [];
-
     switch (gameMode.value.name) {
-      case "Single Ank":
-        showNumbersLine.value = false;
-        panaControllerLength.value = 1;
-        _tempValidationList = jsonModel.singleAnk!;
-        suggestionList.value = jsonModel.singleAnk!;
-        enteredDigitsIsValidate = true;
-        panaControllerLength.value = 1;
-        for (var e in jsonModel.singleAnk!) {
-          singleAnkList.add(DigitListModelOffline.fromJson(e));
-        }
-        digitList.value = singleAnkList;
-        break;
       case "Choice Pana SPDP":
         showNumbersLine.value = false;
-        panaControllerLength.value = 1;
         apiUrl = ApiUtils.choicePanaSPDP;
-        // _tempValidationList = jsonModel.singleAnk!;
-        // suggestionList.value = jsonModel.singleAnk!;
-        // enteredDigitsIsValidate = true;
-        // panaControllerLength.value = 1;
-        // for (var e in jsonModel.singleAnk!) {
-        //   singleAnkList.add(DigitListModelOffline.fromJson(e));
-        // }
-        // digitList.value = singleAnkList;
+        panaControllerLength.value = 1;
+        _tempValidationList = jsonModel.singleAnk!;
         break;
       case "Digits Based Jodi":
         showNumbersLine.value = false;
         panaControllerLength.value = 1;
         apiUrl = ApiUtils.digitsBasedJodi;
-        // _tempValidationList = jsonModel.singleAnk!;
-        // suggestionList.value = jsonModel.singleAnk!;
-        // enteredDigitsIsValidate = true;
-        // panaControllerLength.value = 1;
-        // for (var e in jsonModel.singleAnk!) {
-        //   singleAnkList.add(DigitListModelOffline.fromJson(e));
-        // }
-        // digitList.value = singleAnkList;
+        _tempValidationList = jsonModel.singleAnk!;
         break;
       case "Odd Even":
         showNumbersLine.value = false;
         panaControllerLength.value = 1;
         _tempValidationList = jsonModel.singleAnk!;
-        // suggestionList.value = jsonModel.singleAnk!;
-        // enteredDigitsIsValidate = true;
-        // panaControllerLength.value = 1;
-
-        // digitList.value = singleAnkList;
         break;
     }
     _validationListForNormalMode.addAll(_tempValidationList);
@@ -334,11 +302,15 @@ class NormalGamePageController extends GetxController {
             AppUtils.showErrorSnackBar(
               bodyText: "Please enter valid points",
             );
+            coinFocusNode.nextFocus();
+            leftFocusNode.requestFocus();
             return;
           } else if (int.parse(coinController.text) > 10000) {
             AppUtils.showErrorSnackBar(
               bodyText: "You can not add more than 10000 points",
             );
+            coinFocusNode.nextFocus();
+            leftFocusNode.requestFocus();
             return;
           } else {
             if (spdptpList.isEmpty) {
@@ -346,14 +318,14 @@ class NormalGamePageController extends GetxController {
                 bodyText:
                     "Please enter valid ${gameMode.value.name!.toLowerCase()}",
               );
+              coinFocusNode.nextFocus();
+              leftFocusNode.requestFocus();
             } else {
               for (var i = 0; i < spdptpList.length; i++) {
                 addedNormalBidValue = spdptpList[i].toString();
                 var existingIndex = selectedBidsList.indexWhere(
                     (element) => element.bidNo == addedNormalBidValue);
-
                 if (existingIndex != -1) {
-                  // If the bidNo already exists in selectedBidsList, update coins value.
                   selectedBidsList[existingIndex].coins =
                       (selectedBidsList[existingIndex].coins! +
                           int.parse(coinController.text));
@@ -373,18 +345,21 @@ class NormalGamePageController extends GetxController {
               }
             }
             _calculateTotalAmount();
-            // print(spdptpList);
+            coinFocusNode.nextFocus();
+            leftFocusNode.requestFocus();
           }
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
           );
         }
-        // autoCompleteFieldController.clear();
+
         coinController.clear();
         leftAnkController.clear();
         middleAnkController.clear();
         rightAnkController.clear();
+        coinFocusNode.nextFocus();
+        leftFocusNode.requestFocus();
         selectedBidsList.refresh();
       },
     );
@@ -404,18 +379,20 @@ class NormalGamePageController extends GetxController {
         debugPrint("Forgot MPIN Api Response :- $value");
         if (value['status']) {
           spdptpList = value['data'];
-          // bidlistTotal.value += spdptpList.length;
-
           if (coinController.text.trim().isEmpty ||
               int.parse(coinController.text.trim()) < 1) {
             AppUtils.showErrorSnackBar(
               bodyText: "Please enter valid points",
             );
+            coinFocusNode.nextFocus();
+            leftFocusNode.requestFocus();
             return;
           } else if (int.parse(coinController.text) > 10000) {
             AppUtils.showErrorSnackBar(
               bodyText: "You can not add more than 10000 points",
             );
+            coinFocusNode.nextFocus();
+            leftFocusNode.requestFocus();
             return;
           } else {
             if (spdptpList.isEmpty) {
@@ -423,10 +400,9 @@ class NormalGamePageController extends GetxController {
                 bodyText:
                     "Please enter valid ${gameMode.value.name!.toLowerCase()}",
               );
+              coinFocusNode.nextFocus();
+              leftFocusNode.requestFocus();
             } else {
-              print("======= List not empty =====");
-              // print(spdptpList);
-
               for (var i = 0; i < spdptpList.length; i++) {
                 addedNormalBidValue = spdptpList[i].toString();
                 //   var existingIndex = selectedBidsList.indexWhere(
@@ -450,23 +426,23 @@ class NormalGamePageController extends GetxController {
                   ),
                 );
               }
-              // }
-              print("===== selectedBidsList =======");
-              print(selectedBidsList.toJson());
             }
+            coinFocusNode.nextFocus();
+            leftFocusNode.requestFocus();
           }
-          // print(spdptpList);
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
           );
         }
-        //  autoCompleteFieldController.clear();
+
         leftAnkController.clear();
         rightAnkController.clear();
         middleAnkController.clear();
         coinController.clear();
         selectedBidsList.refresh();
+        coinFocusNode.nextFocus();
+        leftFocusNode.requestFocus();
         _calculateTotalAmount();
       },
     );

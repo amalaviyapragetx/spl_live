@@ -75,21 +75,3 @@ class MyApp extends StatelessWidget {
     return locale;
   }
 }
-
-class AppLifecycleObserver extends WidgetsBindingObserver {
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-
-    if (state == AppLifecycleState.resumed) {
-      print("hello world");
-      // App is in the foreground
-    } else if (state == AppLifecycleState.paused) {
-      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-      // App is in the background
-    } else if (state == AppLifecycleState.inactive) {
-      print(
-          "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-    }
-  }
-}

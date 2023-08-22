@@ -31,13 +31,23 @@ class UserDetailsPageController extends GetxController {
       AppUtils.showErrorSnackBar(
         bodyText: "ENTERUSERNAME".tr,
       );
-    } else if (passwordController.text.isEmpty) {
+    }
+    //else if (isPasswordValid(passwordController.text) == false) {
+    //   AppUtils.showErrorSnackBar(
+    //     bodyText: "REGEXPASSWORDCHECK".tr,
+    //   );
+    // } else if (isPasswordValid(confirmPasswordController.text) == false) {
+    //   AppUtils.showErrorSnackBar(
+    //     bodyText: "REGEXPASSWORDCHECK".tr,
+    //   );
+    // }
+    else if (passwordController.text.isEmpty) {
       AppUtils.showErrorSnackBar(
         bodyText: "ENTERPASSWORD".tr,
       );
     } else if (passwordController.text.toString().length < 6) {
       AppUtils.showErrorSnackBar(
-        bodyText: "ENTERVALIDPASSWORD".tr,
+        bodyText: "MINSIXCHAR".tr,
       );
     } else if (confirmPasswordController.text.isEmpty) {
       AppUtils.showErrorSnackBar(
@@ -45,7 +55,7 @@ class UserDetailsPageController extends GetxController {
       );
     } else if (confirmPasswordController.text.toString().length < 6) {
       AppUtils.showErrorSnackBar(
-        bodyText: "ENTERVALIDCONFIRMPASSWORD".tr,
+        bodyText: "MINSIXCHAR".tr,
       );
     } else if (passwordController.text != confirmPasswordController.text) {
       AppUtils.showErrorSnackBar(
@@ -61,3 +71,10 @@ class UserDetailsPageController extends GetxController {
     }
   }
 }
+
+// bool isPasswordValid(String password) {
+//   // Regular expression for password validation
+//   // This example requires at least 1 uppercase letter, 1 lowercase letter, and 1 digit
+//   RegExp passwordRegExp = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)');
+//   return passwordRegExp.hasMatch(password);
+// }

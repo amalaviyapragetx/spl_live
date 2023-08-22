@@ -79,14 +79,17 @@ class VerifyOTPPage extends StatelessWidget {
           pinCodeLength: 6,
         ),
         verticalSpace,
-        Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.h12),
-            child: GestureDetector(
-              onTap: () => controller.callResendOtpApi(),
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
+        Obx(
+          () => Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.h12),
+              child: GestureDetector(
+                onTap: () => controller.formattedTime.toString() != "0:00"
+                    ? null
+                    : controller.callResendOtpApi(),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
                     text: "DIDOTP".tr,
                     style: CustomTextStyle.textRobotoSansLight.copyWith(
                       color: AppColors.appbarColor,
@@ -94,16 +97,30 @@ class VerifyOTPPage extends StatelessWidget {
                       fontSize: Dimensions.h14,
                     ),
                     children: [
-                      TextSpan(
-                        text: "RESENDOTP".tr,
-                        style: CustomTextStyle.textRobotoSansLight.copyWith(
-                          color: AppColors.appbarColor,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.normal,
-                          fontSize: Dimensions.h14,
-                        ),
-                      )
-                    ]),
+                      controller.formattedTime.toString() != "0:00"
+                          ? TextSpan(
+                              text: controller.formattedTime.toString(),
+                              style:
+                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                                color: AppColors.appbarColor,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.normal,
+                                fontSize: Dimensions.h14,
+                              ),
+                            )
+                          : TextSpan(
+                              text: "RESENDOTP".tr,
+                              style:
+                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                                color: AppColors.appbarColor,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.normal,
+                                fontSize: Dimensions.h14,
+                              ),
+                            )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

@@ -56,13 +56,16 @@ class SelectBidPageController extends GetxController {
     print("Bid List : ${newBidList}");
   }
 
-  void onDeleteBids(int index) {
+  void onDeleteBids(int index) async {
     requestModel.value.bids!.remove(requestModel.value.bids![index]);
     requestModel.refresh();
     LocalStorage.write(ConstantsVariables.bidsList,
         requestModel.value.bids!.map((v) => v.toJson()).toList());
     _calculateTotalAmount();
     if (requestModel.value.bids!.isEmpty) {
+      requestModel.value.bids!.clear();
+      await LocalStorage.write(
+          ConstantsVariables.bidsList, requestModel.value.bids!);
       Get.back();
       Get.back();
     }

@@ -177,7 +177,8 @@ class PassBook extends StatelessWidget {
                   text: data.marketName == null
                       ? data.transactionType == "Withdraw" ||
                               data.transactionType == "Deposit" ||
-                              data.transactionType == "Debit"
+                              data.transactionType == "Debit" ||
+                              data.transactionType == "DebitToCredit"
                           ? "${data.remarks}"
                           : "${data.transactionType ?? ""} ( ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
                       : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType ?? ""} ) : ${data.bidNo ?? ""}"),

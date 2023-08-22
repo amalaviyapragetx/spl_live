@@ -71,7 +71,7 @@ class CheckWithdrawalPage extends StatelessWidget {
         body: Column(
           children: [
             Expanded(
-              child: withdrawalHistoryList(),
+              child: withdrawalHistoryList2(),
             ),
           ],
         ),
@@ -112,62 +112,219 @@ class CheckWithdrawalPage extends StatelessWidget {
                       .toString(),
                   status:
                       controller.withdrawalRequestList[index].status.toString(),
-                  // timeDate: CommonUtils().formatStringToDDMMYYYYHHMMA(
-                  //   controller.marketBidHistoryList[index].bidTime
-                  //       .toString(),
-                  // ),
-                  // openResut:
-                  //     homePageController.marketBidHistoryList[index].openTime ==
-                  //             null
-                  //         ? ""
-                  //         : homePageController
-                  //             .getResult(
-                  //               true,
-                  //               homePageController
-                  //                       .marketBidHistoryList[index].openTime ??
-                  //                   0,
-                  //             )
-                  //             .toString(),
-                  // marketName: controller
-                  //         .marketBidHistoryList[index].transactionType ??
-                  //     "",
-                  // containerColor:
-                  //     controller.marketBidHistoryList[index].isWin ==
-                  //             true
-                  //         ? AppColors.greenAccent.withOpacity(0.65)
-                  //         : AppColors.white,
-
-                  // gameMode:
-                  //     controller.marketBidHistoryList[index].gameMode ??
-                  //         "",
-
-                  // bidType:
-                  //     controller.marketBidHistoryList[index].bidType ??
-                  //         "",
-                  // closeResult:
-                  //     homePageController.marketBidHistoryList[index].closeResult ==
-                  //             null
-                  //         ? ""
-                  //         : homePageController
-                  //             .reverse(homePageController.getResult(
-                  //               true,
-                  //               homePageController
-                  //                       .marketBidHistoryList[index].closeResult ??
-                  //                   0,
-                  //             ))
-                  //             .toString(),
-                  // onTap: () {
-                  //   Get.toNamed(AppRoutName.newBidHistorypage, arguments: {
-                  //     "marketData": homePageController.marketBidHistoryList.value,
-                  //     "marketId": homePageController.marketBidHistoryList[index].id
-                  //         .toString(),
-                  //     "marketName":
-                  //         homePageController.marketBidHistoryList[index].marketName,
-                  //   });
-                  // },
                 );
               },
             ),
+    );
+  }
+
+  withdrawalHistoryList2() {
+    return Obx(
+      () => controller.withdrawalRequestList.isEmpty
+          ? Center(
+              child: Text(
+                "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
+                style: CustomTextStyle.textPTsansMedium.copyWith(
+                  fontSize: Dimensions.h13,
+                  color: AppColors.black,
+                ),
+              ),
+            )
+          : ListView.builder(
+              padding:
+                  EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+              itemCount: controller.withdrawalRequestList.length,
+              itemBuilder: (context, index) {
+                // var data = controller.marketHistoryList.elementAt(index);
+                // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
+                return withDrawalHistoryDetails(
+                  requestTimeColor: controller
+                              .withdrawalRequestList[index].status
+                              .toString() ==
+                          "Pending"
+                      ? AppColors.black
+                      : AppColors.white,
+                  onStatusContainerColor: controller
+                              .withdrawalRequestList[index].status
+                              .toString() ==
+                          "Pending"
+                      ? controller.withdrawalRequestList[index].status
+                                  .toString() ==
+                              "Rejected"
+                          ? AppColors.redColor.withOpacity(0.4)
+                          : AppColors.greyShade.withOpacity(0.4)
+                      : AppColors.greenShade.withOpacity(0.9),
+                  statusColor: controller.withdrawalRequestList[index].status
+                              .toString() ==
+                          "Pending"
+                      ? AppColors.appbarColor
+                      : AppColors.white,
+                  coins: "",
+                  marketName: "",
+                  requestId: controller.withdrawalRequestList[index].requestId
+                      .toString(),
+                  // requestProcessedAt: controller
+                  //     .withdrawalRequestList[index].requestProcessedAt
+                  //     .toString(),
+                  requestTime: CommonUtils().formatStringToDDMMMYYYYHHMMSSA(
+                      controller.withdrawalRequestList[index].requestTime
+                          .toString()),
+                  requestedAmount: controller
+                      .withdrawalRequestList[index].requestedAmount
+                      .toString(),
+                  status:
+                      controller.withdrawalRequestList[index].status.toString(),
+                );
+              },
+            ),
+    );
+  }
+
+  Widget withDrawalHistoryDetails(
+      {required String marketName,
+      required String coins,
+      required String requestTime,
+      required String requestId,
+      required String status,
+      required String requestedAmount,
+      required Color statusColor,
+      required Color onStatusContainerColor,
+      required Color requestTimeColor}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+      child: InkWell(
+        // onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 1,
+                color: AppColors.white,
+                blurRadius: 10,
+                offset: const Offset(7, 4),
+              ),
+            ],
+            border: Border.all(width: 0.2),
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(Dimensions.r8),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "RequestId : $requestId",
+                      style: CustomTextStyle.textRobotoSansBold
+                          .copyWith(fontSize: Dimensions.h14),
+                    ),
+                    SizedBox(
+                      width: Dimensions.w5,
+                    ),
+                    // Text(
+                    //   requestedAmount,
+                    //   style: CustomTextStyle.textRobotoSansBold.copyWith(
+                    //       color: AppColors.appbarColor,
+                    //       fontSize: Dimensions.h13),
+                    // ),
+                    const Expanded(child: SizedBox()),
+                    Text(
+                      requestedAmount,
+                      style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          color: AppColors.appbarColor,
+                          fontSize: Dimensions.h13),
+                    ),
+                    // Text(
+                    //   requestedAmount,
+                    //   style: CustomTextStyle.textRobotoSansBold,
+                    // ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(Dimensions.h8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Status",
+                      style: CustomTextStyle.textRobotoSansBold,
+                    ),
+                    Text(
+                      "Request On",
+                      style: CustomTextStyle.textRobotoSansBold,
+                    ),
+                    // Text(
+                    //   gameMode,
+                    //   style: CustomTextStyle.textRobotoSansLight
+                    //       .copyWith(fontSize: Dimensions.h12),
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     SvgPicture.asset(
+                    //       ConstantImage.walletAppbar,
+                    //       height: Dimensions.h13,
+                    //     ),
+                    //     SizedBox(
+                    //       width: Dimensions.w8,
+                    //     ),
+                    //     Text(ballance,
+                    //         style: CustomTextStyle.textRobotoSansLight
+                    //             .copyWith(fontSize: Dimensions.h12)),
+                    //   ],
+                    // ),
+                  ],
+                ),
+              ),
+              Container(
+                height: Dimensions.h30,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: onStatusContainerColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(Dimensions.r8),
+                    bottomRight: Radius.circular(Dimensions.r8),
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(Dimensions.h8),
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.asset(
+                        ConstantImage.clockSvg,
+                        height: Dimensions.h14,
+                      ),
+                      SizedBox(
+                        width: Dimensions.w8,
+                      ),
+                      Text(
+                        status,
+                        style: CustomTextStyle.textRobotoSansLight.copyWith(
+                          color: statusColor,
+                        ),
+                      ),
+                      SizedBox(
+                        width: Dimensions.w8,
+                      ),
+                      const Expanded(child: SizedBox()),
+                      Text(
+                        requestTime,
+                        style: CustomTextStyle.textRobotoSansLight
+                            .copyWith(color: requestTimeColor),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -240,10 +397,6 @@ class CheckWithdrawalPage extends StatelessWidget {
                       "Request On",
                       style: CustomTextStyle.textRobotoSansBold,
                     ),
-                    // Text(
-                    //   bidType,
-                    //   style: CustomTextStyle.textRobotoSansLight,
-                    // ),
                   ],
                 ),
               ),

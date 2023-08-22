@@ -5,7 +5,7 @@ class ApiUtils {
   // Spl Production
   static String baseURL = "http://35.154.94.107:9869";
   // local url
-  //static String baseURL = "http://192.168.1.5:8082";
+  // static String baseURL = "http://192.168.1.30:8080";
 
   // endpoints
   static String signUP = '$baseURL/auth/signup';

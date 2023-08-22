@@ -101,7 +101,7 @@ class AppUtils {
     var math;
     return AppBar(
       backgroundColor: AppColors.appbarColor,
-      title: Text(
+      title: const Text(
         "SPL",
       ),
       centerTitle: true,
@@ -110,13 +110,14 @@ class AppUtils {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              width: Dimensions.w10,
+              width: Dimensions.w5,
             ),
-            Expanded(
-              child: InkWell(
-                onTap: onTapTranction,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+            InkWell(
+              onTap: onTapTranction,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                child: SizedBox(
+                  width: Dimensions.w45,
                   child: SvgPicture.asset(
                     ConstantImage.walletAppbar,
                     color: AppColors.white,
@@ -124,14 +125,12 @@ class AppUtils {
                 ),
               ),
             ),
-            SizedBox(
-              width: Dimensions.w10,
-            ),
             Text(
               walletText,
-              // "12345678",
-              style: CustomTextStyle.textPTsansBold
-                  .copyWith(color: AppColors.white, fontSize: Dimensions.h18),
+              style: CustomTextStyle.textPTsansBold.copyWith(
+                color: AppColors.white,
+                fontSize: Dimensions.h18,
+              ),
             ),
             const Expanded(child: SizedBox())
           ],
@@ -263,7 +262,8 @@ class AppUtils {
   }
 
   //common method for show error snack-bar
-  static void showErrorSnackBar({required String bodyText}) {
+  static void showErrorSnackBar(
+      {required String bodyText, Duration? duration}) {
     Get.closeCurrentSnackbar();
     Get.snackbar(
       "",
@@ -282,6 +282,7 @@ class AppUtils {
       snackPosition: SnackPosition.BOTTOM,
       isDismissible: true,
       onTap: null,
+      duration: duration ?? const Duration(seconds: 3),
       colorText: AppColors.white,
       maxWidth: double.infinity,
       snackStyle: SnackStyle.FLOATING,
@@ -347,16 +348,17 @@ class AppUtils {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Rate SPL live App ${givenRatings}",
+                      "Rate SPL live App",
                       style: CustomTextStyle.textPTsansMedium.copyWith(
-                          color: AppColors.grey,
-                          fontWeight: FontWeight.w600,
-                          fontSize: Dimensions.h20,
-                          letterSpacing: 1.29),
+                        color: AppColors.grey,
+                        fontWeight: FontWeight.w600,
+                        fontSize: Dimensions.h20,
+                        letterSpacing: 1.29,
+                      ),
                     ),
                     RatingBar.builder(
                       initialRating: givenRatings != null ||
-                              givenRatings!.toDouble() != 0.00
+                              givenRatings!.toDouble() != 0.0
                           ? givenRatings
                           : 0,
                       minRating: 0,
@@ -364,22 +366,31 @@ class AppUtils {
                       allowHalfRating: false,
                       itemCount: 5,
                       itemSize: Dimensions.h37,
-                      ignoreGestures: givenRatings != null &&
-                              givenRatings.toDouble() != 0.00
-                          ? true
-                          : false,
+                      ignoreGestures:
+                          givenRatings != null && givenRatings.toDouble() != 0.0
+                              ? true
+                              : false,
                       glowColor: AppColors.appbarColor,
                       unratedColor: AppColors.grey,
+
                       itemPadding:
                           EdgeInsets.symmetric(horizontal: Dimensions.w4),
                       itemBuilder: (context, index) {
                         if (index >= tempRatings) {
-                          // Unrated items
-                          return Icon(
-                            selectedIcon ?? Icons.star_border,
-                            color: AppColors.grey,
-                            size: 35,
-                          );
+                          if (givenRatings.toDouble() != 0.0) {
+                            return Icon(
+                              selectedIcon ?? Icons.star,
+                              color: AppColors.appbarColor,
+                              size: 35,
+                            );
+                          } else {
+                            // Unrated items
+                            return Icon(
+                              selectedIcon ?? Icons.star_border,
+                              color: AppColors.grey,
+                              size: 35,
+                            );
+                          }
                         } else {
                           // Rated items
                           return Icon(

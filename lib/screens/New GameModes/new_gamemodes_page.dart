@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,7 +12,6 @@ import '../../helper_files/app_colors.dart';
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
-import '../../routes/app_routes_name.dart';
 
 class NewGameModePage extends StatelessWidget {
   NewGameModePage({super.key});
@@ -211,19 +208,7 @@ class NewGameModePage extends StatelessWidget {
                           }
                         },
                         optionsBuilder: (TextEditingValue textEditingValue) {
-                          // if (textEditingValue.text == '') {
-                          //   return const Iterable<String>.empty();
-                          // }
-                          // } else {
-                          //   List<String> matches = <String>[];
-                          //   // matches.addAll(controller.suggestionList);
-                          //   matches.retainWhere((s) {
-                          //     return s.toLowerCase().contains(
-                          //           textEditingValue.text.toLowerCase(),
-                          //         );
-                          //   });
                           return [];
-                          // }
                         },
                       ),
                     ),
@@ -335,19 +320,21 @@ class NewGameModePage extends StatelessWidget {
                       "PANEL GROUP") {
                     if (controller.autoCompleteFieldController.text.isEmpty) {
                       AppUtils.showErrorSnackBar(
+                        duration: const Duration(seconds: 1),
                         bodyText:
                             "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                       );
                     } else if (controller.coinController.text.isEmpty ||
                         int.parse(controller.coinController.text) > 10000) {
                       AppUtils.showErrorSnackBar(
+                        duration: const Duration(seconds: 1),
                         bodyText: "Please enter valid points",
                       );
                     } else if (controller
-                                .autoCompleteFieldController.text.length <
-                            3 ==
-                        true) {
+                            .autoCompleteFieldController.text.length <=
+                        2) {
                       AppUtils.showErrorSnackBar(
+                        duration: const Duration(seconds: 1),
                         bodyText:
                             "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                       );
@@ -358,13 +345,11 @@ class NewGameModePage extends StatelessWidget {
                       "GROUP JODI") {
                     if (controller.autoCompleteFieldController.text.length <=
                         1) {
-                      print("@@@@@@@@@@@");
                       AppUtils.showErrorSnackBar(
                         bodyText:
                             "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                       );
                     } else {
-                      print("@@@@@@@@@@@");
                       controller.getspdptp();
                     }
                   } else if (controller.gameMode.value.name!.toUpperCase() ==
@@ -392,7 +377,6 @@ class NewGameModePage extends StatelessWidget {
                         if (controller.autoCompleteFieldController.text.length <
                                 3 ==
                             true) {
-                          print("@@@@@@@@@@@@@@@@@@@@");
                           AppUtils.showErrorSnackBar(
                             bodyText:
                                 "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",

@@ -39,15 +39,16 @@ class SangamPageController extends GetxController {
   var openValueController = TextEditingController();
   var closeValueController = TextEditingController();
   // final FocusNode focusNode1 = FocusNode();
-  final FocusNode coinsFocusNode = FocusNode();
-  final FocusNode openFocusNode = FocusNode();
-  FocusNode closeFocusNode = FocusNode();
+  // final FocusNode coinsFocusNode = FocusNode();
+  // final FocusNode openFocusNode = FocusNode();
+  // FocusNode closeFocusNode = FocusNode();
   var digitList = <DigitListModelOffline>[].obs;
-
+  late FocusNode focusNode;
   @override
   void onInit() {
     super.onInit();
     getArguments();
+    focusNode = FocusNode();
   }
 
   reverse(String originalString) {
@@ -248,6 +249,20 @@ class SangamPageController extends GetxController {
           bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
         );
         digitList.clear();
+        openValueController.clear();
+        closeValueController.clear();
+        coinsController.clear();
+        focusNode.previousFocus();
+        focusNode.previousFocus();
+      } else if (int.parse(coinsController.text) > 10000) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "You can not add more than 10000 points",
+        );
+        openValueController.clear();
+        closeValueController.clear();
+        coinsController.clear();
+        focusNode.previousFocus();
+        focusNode.previousFocus();
       } else {
         addedSangamList.add(
           Bids(
@@ -261,6 +276,8 @@ class SangamPageController extends GetxController {
         openValueController.clear();
         closeValueController.clear();
         coinsController.clear();
+        focusNode.previousFocus();
+        focusNode.previousFocus();
         _calculateTotalAmount();
         requestModel.value.bids = addedSangamList;
       }

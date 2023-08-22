@@ -331,15 +331,14 @@ class ApiService extends GetConnect {
       AppUtils.showProgressDialog(isCancellable: false);
     });
     print(
-      "####################################################${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
+      "##starline###${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
     );
     await initApiService();
     final response = await get(
       "${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
       headers: headersWithToken,
     );
-    print(
-        "#################################################### ${response.body}");
+
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {

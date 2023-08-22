@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -10,7 +11,6 @@ import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
-import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
 import '../../Local Storage.dart';
 
@@ -391,26 +391,39 @@ class GamePageController extends GetxController {
     }
   }
 
-  // List<MarketData> tempMarketList = <MarketData>[];
-  // void onSearch(String val) {
-  //   if (val.isNotEmpty) {
-  //     var searchResultList = tempMarketList
-  //         .where((element) => element.market
-  //             .toString()
-  //             .toLowerCase()
-  //             .trim()
-  //             .startsWith(val.toString().toLowerCase().trim()))
-  //         .toList();
-  //     searchResultList.toSet().toList();
-  //     if (searchResultList.isNotEmpty) {
-  //       noMarketFound.value = false;
-  //       marketList.value = searchResultList;
-  //     } else {
-  //       noMarketFound.value = true;
-  //     }
-  //   } else {
-  //     noMarketFound.value = false;
-  //     marketList.value = tempMarketList;
-  //   }
-  // }
+  void onSearch(val) {
+    debugPrint(val);
+    debugPrint(gameMode.id.toString());
+    List<DigitListModelOffline> tempList = digitList;
+    if (val.toString().isNotEmpty) {
+      var searchResultList = tempList
+          .where((element) => element.value
+              .toString()
+              .toLowerCase()
+              .trim()
+              .contains(val.toString().toLowerCase().trim()))
+          .toList();
+      searchResultList.toSet().toList();
+      digitList.value = searchResultList;
+    } else {
+      debugPrint(" ===== Empty search bar =====");
+      switch (gameMode.id) {
+        case 19:
+          digitList.value = singleAnkList;
+          break;
+        case 20:
+          digitList.value = jodiList;
+          break;
+        case 21:
+          panaSwitchCase(jsonModel.singlePana!.single, selectedIndexOfDigitRow);
+          break;
+        case 22:
+          panaSwitchCase(jsonModel.doublePana!.single, selectedIndexOfDigitRow);
+          break;
+        default:
+          AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);
+          break;
+      }
+    }
+  }
 }

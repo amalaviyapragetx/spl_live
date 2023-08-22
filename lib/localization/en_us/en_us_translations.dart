@@ -130,6 +130,9 @@ final Map<String, String> enUs = {
   "CONFIRMPINTEXT": "Confirm pin",
   "DIGITTEXT": "*Must have 4 digit",
   "PASSWORDTEXT": "*First letter capital and should have minimum 6 characters",
+  "REGEXPASSWORDCHECK":
+      "Password must contain at least one uppercase letter, one lowercase letter, and one digit",
+  "MINSIXCHAR": "Password should have minimum 6 characters",
 
   // new design texts
   "SHRI": "Shri",

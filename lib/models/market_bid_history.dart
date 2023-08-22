@@ -90,7 +90,6 @@ class MarketBidHistory {
   }
 }
 
-
 class MarketBidHistoryList {
   MarketBidHistoryList({
     String? id,
@@ -108,7 +107,7 @@ class MarketBidHistoryList {
     String? closeTime,
     String? transactionType,
     bool? isResultDeclared,
-
+    String? requestId,
   }) {
     _id = id;
     _bidType = bidType;
@@ -125,7 +124,7 @@ class MarketBidHistoryList {
     _closeTime = closeTime;
     _transactionType = transactionType;
     _isResultDeclared = isResultDeclared;
-
+    _requestId = requestId;
   }
 
   MarketBidHistoryList.fromJson(dynamic json) {
@@ -144,7 +143,7 @@ class MarketBidHistoryList {
     _closeTime = json['CloseTime'];
     _transactionType = json['TransactionType'];
     _isResultDeclared = json['IsResultDeclared'];
-
+    _requestId = json['RequestId'];
   }
   String? _id;
   String? _bidType;
@@ -161,6 +160,7 @@ class MarketBidHistoryList {
   String? _closeTime;
   String? _transactionType;
   bool? _isResultDeclared;
+  String? _requestId;
 
   MarketBidHistoryList copyWith({
     String? id,
@@ -177,7 +177,7 @@ class MarketBidHistoryList {
     String? openTime,
     String? closeTime,
     String? transactionType,
-    
+    String? requestId,
   }) =>
       MarketBidHistoryList(
         id: id ?? _id,
@@ -189,12 +189,12 @@ class MarketBidHistoryList {
         winAmount: winAmount ?? _winAmount,
         isWin: isWin ?? _isWin,
         bidTime: bidTime ?? _bidTime,
-        gameMode: gameMode?? _gameMode,
-        marketName: marketName?? _marketName,
-        openTime: openTime?? _openTime,
-        closeTime: closeTime?? _closeTime,
-        transactionType: transactionType?? _transactionType,
-        
+        gameMode: gameMode ?? _gameMode,
+        marketName: marketName ?? _marketName,
+        openTime: openTime ?? _openTime,
+        closeTime: closeTime ?? _closeTime,
+        transactionType: transactionType ?? _transactionType,
+        requestId: requestId ?? _requestId,
       );
   String? get id => _id;
   String? get bidType => _bidType;
@@ -211,7 +211,8 @@ class MarketBidHistoryList {
   String? get closeTime => _closeTime;
   String? get transactionType => _transactionType;
   bool? get isResultDeclared => _isResultDeclared;
-  
+  String? get requestId => _requestId;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -229,7 +230,7 @@ class MarketBidHistoryList {
     map['CloseTime'] = _closeTime;
     map['TransactionType'] = _transactionType;
     map['IsResultDeclared'] = _isResultDeclared;
-    
+    map['requestId'] = _requestId;
     return map;
   }
 }

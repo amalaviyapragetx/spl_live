@@ -68,7 +68,8 @@ class BidHistory extends StatelessWidget {
                 var data = homePageController.marketBidHistoryList[index];
 
                 return listveiwTransactionNew(
-                  // isWin: data.isWin ?? false,
+                  requestId: "RequestId :  ${data.requestId ?? ""}",
+                  //  isWin: data.isWin ?? false,
                   bidNo: data.bidNo.toString(),
                   ballance: data.balance.toString(),
                   coins: data.coins.toString(),
@@ -279,6 +280,7 @@ class BidHistory extends StatelessWidget {
     required String gameMode,
     required String bidType,
     required String bidNo,
+    required String requestId,
 
     // required String closeResult,
     // required Function() onTap,
@@ -338,27 +340,20 @@ class BidHistory extends StatelessWidget {
                               fontSize: Dimensions.h14,
                               color: AppColors.appbarColor),
                         ),
-                        // openResut != ""
-                        //     ? Text(
-                        //         // "446-47-359",
-                        //         openResut,
-                        //         style: CustomTextStyle.textRobotoSansBold,
-                        //       )
-                        //     : SvgPicture.asset(
-                        //         ConstantImage.openStarsSvg,
-                        //         height: Dimensions.h13,
-                        //       ),
-                        // closeResult != ""
-                        //     ? Text(
-                        //         // "446-47-359",
-                        //         closeResult,
-                        //         style: CustomTextStyle.textRobotoSansBold,
-                        //       )
-                        //     : SvgPicture.asset(
-                        //         ConstantImage.closeStarsSvg,
-                        //         height: Dimensions.h13,
-                        //       ),
                       ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(Dimensions.h8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      requestId,
+                      style: CustomTextStyle.textRobotoSansLight
+                          .copyWith(fontSize: Dimensions.h12),
                     ),
                   ],
                 ),

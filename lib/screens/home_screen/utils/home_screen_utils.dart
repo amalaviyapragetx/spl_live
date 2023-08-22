@@ -8,6 +8,7 @@ import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../helper_files/app_colors.dart';
+import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/dimentions.dart';
 
@@ -44,6 +45,8 @@ class HomeScreenUtils {
     required String bidNumber,
     required String coins,
     required String ballance,
+    required String bidTime,
+    required String requestId,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
@@ -96,11 +99,24 @@ class HomeScreenUtils {
             //   ),
             // ),
             Padding(
+              padding: EdgeInsets.all(Dimensions.h8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "RequestId:  $requestId",
+                    style: CustomTextStyle.textRobotoSansLight
+                        .copyWith(fontSize: Dimensions.h12),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Text(
-                    "POINTS",
+                    "POINTS  ",
                     style: CustomTextStyle.textRobotoSansLight,
                   ),
                   SizedBox(
@@ -147,6 +163,39 @@ class HomeScreenUtils {
                 ],
               ),
             ),
+            Container(
+              height: Dimensions.h30,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.greyShade.withOpacity(0.4),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(Dimensions.r8),
+                  bottomRight: Radius.circular(Dimensions.r8),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(Dimensions.h8),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // SvgPicture.asset(
+                    //   ConstantImage.clockSvg,
+                    //   height: Dimensions.h14,
+                    // ),
+                    // SizedBox(
+                    //   width: Dimensions.w8,
+                    // ),
+                    const Expanded(child: SizedBox()),
+                    Text(
+                      bidTime,
+                      style: CustomTextStyle.textRobotoSansBold,
+                    ),
+                    const Expanded(child: SizedBox()),
+                  ],
+                ),
+              ),
+            ),
+
             // Container(
             //   height: 40,
             //   width: double.infinity,
@@ -697,10 +746,17 @@ class HomeScreenUtils {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return listveiwTransaction(
+                  requestId:
+                      controller.marketHistoryList[index].requestId ?? "",
+                  bidTime: CommonUtils()
+                      .convertUtcToIstFormatStringToDDMMYYYYHHMMA(controller
+                          .marketHistoryList[index].bidTime
+                          .toString()),
                   ballance:
-                      controller.marketHistoryList[index].balance.toString(),
+                      " ${controller.marketHistoryList[index].balance.toString()} ",
                   coins: controller.marketHistoryList[index].coins.toString(),
-                  bidNumber: controller.marketHistoryList[index].bidNo ?? "",
+                  bidNumber:
+                      "${controller.marketHistoryList[index].gameMode ?? ""} ${controller.marketHistoryList[index].bidNo ?? ""}",
                   marketName: controller.marketHistoryList[index].marketName ??
                       "00:00 AM",
                 );
@@ -723,7 +779,7 @@ class HomeScreenUtils {
             controller: controller.dateinput,
             decoration: InputDecoration(
               hintText:
-                  DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                  DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
               hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
                 color: AppColors.appbarColor,
               ),
@@ -741,7 +797,7 @@ class HomeScreenUtils {
             onTap: () async {
               DateTime? pickedDate = await showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
+                  initialDate: controller.startEndDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2101));
               if (pickedDate != null) {
@@ -751,12 +807,12 @@ class HomeScreenUtils {
                 print(controller.dateinput.text);
                 controller.getMarketBidsByUserId(
                   lazyLoad: false,
-                  startDate: controller.dateinput.text,
-                  endDate: controller.dateinput.text,
+                  startDate: formattedDate,
+                  endDate: formattedDate,
                 );
               } else {
                 controller.dateinput.text =
-                    DateFormat('yyyy-MM-dd').format(pickedDate!);
+                    DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
               }
             },
           ),
@@ -785,7 +841,7 @@ class HomeScreenUtils {
                 style: CustomTextStyle.textRobotoSansLight
                     .copyWith(color: AppColors.appbarColor),
                 decoration: InputDecoration(
-                  hintText: DateFormat('dd-MM-yyyy')
+                  hintText: DateFormat('yyyy-MM-dd')
                       .format(DateTime.now())
                       .toString(),
                   hintStyle: TextStyle(color: AppColors.appbarColor),

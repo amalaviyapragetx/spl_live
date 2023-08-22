@@ -24,82 +24,129 @@ class UserDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(left: Dimensions.h15, right: Dimensions.h15),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                verticalSpace,
-                verticalSpace,
-                verticalSpace,
-                verticalSpace,
-                verticalSpace,
-                verticalSpace,
-                verticalSpace,
-                Center(
-                  child: SizedBox(
-                    height: Dimensions.h70,
-                    width: Dimensions.w150,
-                    child: Image.asset(
-                      ConstantImage.splLogo,
-                      fit: BoxFit.contain,
+    return WillPopScope(
+      onWillPop: () async {
+        return await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) => onExitAlert(context, onCancel: () {
+                Navigator.of(context).pop(false);
+              }, onExit: () {
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              }),
+            ) ??
+            false;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: AppColors.white,
+        body: SafeArea(
+          child: Padding(
+            padding:
+                EdgeInsets.only(left: Dimensions.h15, right: Dimensions.h15),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  verticalSpace,
+                  verticalSpace,
+                  verticalSpace,
+                  verticalSpace,
+                  verticalSpace,
+                  verticalSpace,
+                  verticalSpace,
+                  Center(
+                    child: SizedBox(
+                      height: Dimensions.h70,
+                      width: Dimensions.w150,
+                      child: Image.asset(
+                        ConstantImage.splLogo,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-                verticalSpace,
-                Text(
-                  "SIGN UP".tr,
-                  style: CustomTextStyle.textRobotoSlabBold.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: Dimensions.h25,
-                    letterSpacing: 1,
-                    color: AppColors.appbarColor,
+                  verticalSpace,
+                  Text(
+                    "SIGN UP".tr,
+                    style: CustomTextStyle.textRobotoSlabBold.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: Dimensions.h25,
+                      letterSpacing: 1,
+                      color: AppColors.appbarColor,
+                    ),
                   ),
-                ),
-                verticalSpace,
-                _buildNormalField(
-                  hintText: "Enter Full Name".tr,
-                  textController: controller.fullNameController,
-                  maxLength: 100,
-                  keyboardType: TextInputType.name,
-                  autofocus: true,
-                  //focusNode: controller.fullNameFocusNode,
-                ),
-                verticalSpace,
-                _buildNormalField(
-                  hintText: "Enter User Name".tr,
-                  textController: controller.userNameController,
-                  maxLength: 100,
-                  keyboardType: TextInputType.name,
-                  //  focusNode: controller.userNameFocusNode,
-                ),
-                verticalSpace,
-                _buildPasswordField(
-                  hintText: "Enter Password".tr,
-                  textController: controller.passwordController,
-                  visibility: controller.pVisibility,
-                ),
-                verticalSpace,
-                _buildPasswordField(
-                  hintText: "Enter Confirm Password".tr,
-                  textController: controller.confirmPasswordController,
-                  visibility: controller.cpVisibility,
-                ),
-                verticalSpace,
-                _buildSignUpButtonRow(),
-                verticalSpace,
-                _buildCreateAccount(),
-              ],
+                  verticalSpace,
+                  _buildNormalField(
+                    hintText: "Enter Full Name".tr,
+                    textController: controller.fullNameController,
+                    maxLength: 100,
+                    keyboardType: TextInputType.name,
+                    autofocus: true,
+                    //focusNode: controller.fullNameFocusNode,
+                  ),
+                  verticalSpace,
+                  _buildNormalField(
+                    hintText: "Enter User Name".tr,
+                    textController: controller.userNameController,
+                    maxLength: 100,
+                    keyboardType: TextInputType.name,
+                    //  focusNode: controller.userNameFocusNode,
+                  ),
+                  verticalSpace,
+                  _buildPasswordField(
+                    hintText: "Enter Password".tr,
+                    textController: controller.passwordController,
+                    visibility: controller.pVisibility,
+                  ),
+                  verticalSpace,
+                  _buildPasswordField(
+                    hintText: "Enter Confirm Password".tr,
+                    textController: controller.confirmPasswordController,
+                    visibility: controller.cpVisibility,
+                  ),
+                  verticalSpace,
+                  _buildSignUpButtonRow(),
+                  verticalSpace,
+                  _buildCreateAccount(),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  AlertDialog onExitAlert(BuildContext context,
+      {required Function() onExit, required Function() onCancel}) {
+    return AlertDialog(
+      title: Text(
+        'Exit App',
+        style: CustomTextStyle.textRobotoSansBold,
+      ),
+      content: Text('Are you sure you want to exit the app?',
+          style: CustomTextStyle.textRobotoSansMedium),
+      actions: [
+        TextButton(
+          onPressed: onCancel,
+          child: Text(
+            'Cancel',
+            style: CustomTextStyle.textRobotoSansBold.copyWith(
+              color: AppColors.appbarColor,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: onExit,
+          child: Text(
+            'Exit',
+            style: CustomTextStyle.textRobotoSansBold.copyWith(
+              color: AppColors.redColor,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -125,6 +172,11 @@ class UserDetailsPage extends StatelessWidget {
       formatter: formatter,
       focusNode: focusNode,
       autofocus: autofocus ?? false,
+      hintTextStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+        color: AppColors.grey,
+        fontSize: Dimensions.h14,
+        // fontWeight: FontWeight.w500,
+      ),
     );
   }
 

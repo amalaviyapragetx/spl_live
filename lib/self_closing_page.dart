@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
@@ -97,6 +98,8 @@ class InactivityController extends GetxController {
                   arguments: {"id": _userDetailsModel.id},
                 );
               }
+            } else {
+              _inactivityTimer?.cancel();
             }
           },
           child: Container(

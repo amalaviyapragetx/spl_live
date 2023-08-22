@@ -164,7 +164,7 @@ class GameRatePage extends StatelessWidget {
                 child: Text(
                   trailing,
                   style: CustomTextStyle.textPTsansMedium.copyWith(
-                    color: AppColors.greyShade,
+                    color: AppColors.black,
                     fontSize: Dimensions.h15,
                   ),
                 ),

@@ -4,16 +4,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/models/starline_chart_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
-import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
 import '../../Local Storage.dart';
@@ -32,6 +29,7 @@ class StarLineGamePageController extends GetxController {
   RxList<StarLineBids> selectedBidsList = <StarLineBids>[].obs;
   JsonFileModel jsonModel = JsonFileModel();
   var digitList = <DigitListModelOffline>[].obs;
+  var searchDigitList = <DigitListModelOffline>[].obs;
   var singleAnkList = <DigitListModelOffline>[];
   var jodiList = <DigitListModelOffline>[];
   var triplePanaList = <DigitListModelOffline>[];
@@ -403,5 +401,40 @@ class StarLineGamePageController extends GetxController {
       tempTotal += element.coins ?? 0;
     }
     totalAmount.value = tempTotal.toString();
+  }
+
+  void onSearch(val) {
+    debugPrint(val);
+    digitList.refresh();
+    debugPrint(" ===== ${gameMode.value.id}=====");
+    List<DigitListModelOffline> tempList = digitList;
+    if (val.toString().isNotEmpty) {
+      var searchResultList = tempList
+          .where((element) => element.value
+              .toString()
+              .toLowerCase()
+              .trim()
+              .contains(val.toString().toLowerCase().trim()))
+          .toList();
+      searchResultList.toSet().toList();
+      digitList.value = searchResultList;
+    } else {
+      debugPrint(" ===== Empty search bar =====");
+      debugPrint(" ===== ${gameMode.value.id}=====");
+      switch (gameMode.value.id) {
+        case 5:
+          digitList.value = singleAnkList;
+          break;
+        case 6:
+          panaSwitchCase(jsonModel.singlePana!.single, selectedIndexOfDigitRow);
+          break;
+        case 7:
+          panaSwitchCase(jsonModel.doublePana!.single, selectedIndexOfDigitRow);
+          break;
+        default:
+          AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);
+          break;
+      }
+    }
   }
 }

@@ -93,7 +93,7 @@ class SangamPages extends StatelessWidget {
                           imagePath: "",
                           maxLength: 5,
                           enable: true,
-                          focusNode: controller.coinsFocusNode,
+                          focusNode: controller.focusNode,
                           onChanged: (val) {
                             if (val != null) {
                               if (val.characters.characterAt(0) ==
@@ -130,16 +130,7 @@ class SangamPages extends StatelessWidget {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           keyboardType: TextInputType.number,
-                          validateValue: (validate, value) {
-                            // controller.validateEnteredOpenDigit(value);
-                            // if (controller.gameMode.value.name!.toUpperCase() ==
-                            //     "FULL SANGAM") {
-                            //   if (value.length == 3) {
-                            //     controller.openFocusNode.unfocus();
-                            //     controller.closeFocusNode.requestFocus();
-                            //   }
-                            // }
-                          },
+                          validateValue: (validate, value) {},
                           isBulkMode: false,
                           optionsBuilder: (TextEditingValue textEditingValue) {
                             if (textEditingValue.text == '') {
@@ -177,8 +168,6 @@ class SangamPages extends StatelessWidget {
                             borderWidth: 0.2,
                             textStyle: CustomTextStyle.textRobotoSansBold,
                             onTap: () {
-                              controller.coinsFocusNode.unfocus();
-                              controller.openFocusNode.requestFocus();
                               controller.onTapOfAddBidButton();
                             },
                             height: Dimensions.h35,
@@ -306,7 +295,7 @@ class SangamPages extends StatelessWidget {
                         ? 3
                         : 1,
                     autofocus: true,
-                    focusNode: controller.openFocusNode,
+                    focusNode: controller.focusNode,
                     onChanged: (val) {},
                     enable: true,
                     height: Dimensions.h35,
@@ -323,8 +312,9 @@ class SangamPages extends StatelessWidget {
                           "FULL SANGAM") {
                         if (value.length == 3) {
                           controller.addedNormalBidValue = value;
-                          controller.openFocusNode.unfocus();
-                          controller.closeFocusNode.requestFocus();
+                          controller.focusNode.nextFocus();
+                          // controller.openFocusNode.unfocus();
+                          // controller.closeFocusNode.requestFocus();
                           controller.validateEnteredOpenDigit(value);
                         }
                       } else if (controller.gameMode.value.name!
@@ -333,15 +323,17 @@ class SangamPages extends StatelessWidget {
                         if (value.length == 3) {
                           controller.addedNormalBidValue = value;
                           print("++++++++++${controller.addedNormalBidValue}");
-                          controller.openFocusNode.unfocus();
-                          controller.closeFocusNode.requestFocus();
+                          controller.focusNode.nextFocus();
+                          // controller.openFocusNode.unfocus();
+                          // controller.closeFocusNode.requestFocus();
                           controller.validateEnteredOpenDigit(value);
                         }
                       } else {
                         if (value.length == 1) {
                           controller.validateEnteredCloseDigit(false, value);
-                          controller.openFocusNode.unfocus();
-                          controller.closeFocusNode.requestFocus();
+                          controller.focusNode.nextFocus();
+                          // controller.openFocusNode.unfocus();
+                          // controller.closeFocusNode.requestFocus();
                         }
                       }
                     },
@@ -431,7 +423,7 @@ class SangamPages extends StatelessWidget {
                           cursorColor: AppColors.appbarColor,
                           controller: textEditingController =
                               controller.closeValueController,
-                          focusNode: controller.closeFocusNode = focusNode,
+                          focusNode: controller.focusNode = focusNode,
                           maxLength:
                               controller.gameMode.value.name!.toUpperCase() ==
                                       "HALF SANGAM B"
@@ -443,8 +435,9 @@ class SangamPages extends StatelessWidget {
                                 "FULL SANGAM") {
                               if (value.length == 3) {
                                 controller.addedNormalBidValue = value;
-                                controller.openFocusNode.unfocus();
-                                controller.closeFocusNode.requestFocus();
+                                controller.focusNode.nextFocus();
+                                // controller.closeFocusNode.unfocus();
+                                // controller.coinsFocusNode.requestFocus();
                                 controller.validateEnteredCloseDigit(false,
                                     controller.closeValueController.text);
                                 controller.validateEnteredOpenDigit(value);
@@ -453,16 +446,18 @@ class SangamPages extends StatelessWidget {
                                     .toUpperCase() ==
                                 "HALF SANGAM B") {
                               if (value.length == 1) {
-                                controller.openFocusNode.unfocus();
-                                controller.closeFocusNode.requestFocus();
+                                controller.focusNode.nextFocus();
+                                // controller.closeFocusNode.unfocus();
+                                // controller.coinsFocusNode.requestFocus();
                                 controller.validateEnteredCloseDigit(false,
                                     controller.closeValueController.text);
                               }
                             } else {
                               if (value.length == 3) {
                                 controller.addedNormalBidValue = value;
-                                controller.openFocusNode.unfocus();
-                                controller.closeFocusNode.requestFocus();
+                                controller.focusNode.nextFocus();
+                                // controller.closeFocusNode.unfocus();
+                                // controller.coinsFocusNode.requestFocus();
                                 controller.validateEnteredOpenDigit(value);
                               }
                             }
@@ -521,7 +516,7 @@ class SangamPages extends StatelessWidget {
                                       FocusManager.instance.primaryFocus
                                           ?.unfocus();
                                       onSelected(option);
-                                      controller.coinsFocusNode.requestFocus();
+                                      controller.focusNode.previousFocus();
                                       // onSelected(option);
                                     },
                                     child: Container(

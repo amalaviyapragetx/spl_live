@@ -87,10 +87,10 @@ class SetMPINPageController extends GetxController {
     ApiService().setUserDetails(await userDetailsBody()).then((value) async {
       debugPrint("Set User Details Api Response :- $value");
       if (value != null && value['status']) {
-        AppUtils.showSuccessSnackBar(
-          bodyText: "${value['message']}",
-          headerText: "SUCCESSMESSAGE".tr,
-        );
+        // AppUtils.showSuccessSnackBar(
+        //   bodyText: "${value['message']}",
+        //   headerText: "SUCCESSMESSAGE".tr,
+        // );
         var userData = value['data'];
         if (userData != null) {
           String authToken = userData['Token'] ?? "Null From API";

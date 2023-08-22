@@ -55,6 +55,10 @@ class StarlineNewGamePageController extends GetxController {
   var rightAnkController = TextEditingController();
   var middleAnkController = TextEditingController();
   var gameModeName = "";
+  final FocusNode leftFocusNode = FocusNode();
+  final FocusNode middleFocusNode = FocusNode();
+  final FocusNode rightFocusNode = FocusNode();
+  final FocusNode coinFocusNode = FocusNode();
 
   @override
   void onInit() {
@@ -82,8 +86,54 @@ class StarlineNewGamePageController extends GetxController {
     enteredDigitsIsValidate = validate;
     addedNormalBidValue = value;
     if (value.length == panaControllerLength.value) {
+      if (gameMode.value.name!.toUpperCase() == "CHOICE PANA SPDP") {
+        coinFocusNode.nextFocus();
+        leftFocusNode.requestFocus();
+      } else {
+        focusNode.nextFocus();
+      }
+    }
+  }
+
+  ondebounce(bool validate, String value) {
+    if (_debounce != null && _debounce!.isActive) {
+      _debounce!.cancel();
+    }
+    Timer(const Duration(milliseconds: 10), () {
+      enteredDigitsIsValidate = validate;
+      addedNormalBidValue = value;
+      newGamemodeValidation(validate, value);
+    });
+  }
+
+  newGamemodeValidation(bool validate, String value) {
+    if (value.length == panaControllerLength.value) {
       focusNode.nextFocus();
     }
+    if (autoCompleteFieldController.text.isEmpty) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
+      );
+    } else if (gameMode.value.name == "Red Brackets") {
+      if (autoCompleteFieldController.text.length < 2) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
+        );
+      }
+    } else if (gameMode.value.name == "SPDPTP") {
+      if (spValue1.value == false &&
+          dpValue2.value == false &&
+          tpValue3.value == false) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please select SP,DP or TP",
+        );
+      } else if (autoCompleteFieldController.text.isEmpty) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
+        );
+      }
+    }
+    enteredDigitsIsValidate = validate;
   }
 
   void showConfirmationDialog(BuildContext context) {
@@ -316,16 +366,18 @@ class StarlineNewGamePageController extends GetxController {
         break;
       case "Panel Group":
         panaControllerLength.value = 3;
+        _tempValidationList = jsonModel.allThreePana!;
         apiUrl = ApiUtils.panelGroup;
         break;
       case "SPDPTP":
         panaControllerLength.value = 1;
-
+        _tempValidationList = jsonModel.singleAnk!;
         apiUrl = ApiUtils.spdptp;
         break;
       case "Choice Pana SPDP":
         panaControllerLength.value = 1;
         apiUrl = ApiUtils.choicePanaSPDP;
+        _tempValidationList = jsonModel.singleAnk!;
         break;
       case "SP Motor":
         panaControllerLength.value = 10;
@@ -337,9 +389,11 @@ class StarlineNewGamePageController extends GetxController {
         break;
       case "Odd Even":
         panaControllerLength.value = 1;
+        _tempValidationList = jsonModel.singleAnk!;
         break;
       case "Two Digits Panel":
         apiUrl = ApiUtils.towDigitJodi;
+
         panaControllerLength.value = 2;
         break;
     }
@@ -380,6 +434,10 @@ class StarlineNewGamePageController extends GetxController {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid points",
         );
+        autoCompleteFieldController.clear();
+        coinController.clear();
+        selectedBidsList.refresh();
+        focusNode.previousFocus();
       } else if (int.parse(coinController.text) > 10000) {
         AppUtils.showErrorSnackBar(
           bodyText: "You can not add more than 10000 points",
@@ -519,7 +577,7 @@ class StarlineNewGamePageController extends GetxController {
           dpValue2.value == false &&
           tpValue3.value == false) {
         AppUtils.showErrorSnackBar(
-          bodyText: "Please Check SP or DP Values",
+          bodyText: "Please select SP,DP or TP",
         );
       } else {
         ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
@@ -532,18 +590,32 @@ class StarlineNewGamePageController extends GetxController {
                 AppUtils.showErrorSnackBar(
                   bodyText: "Please enter valid points",
                 );
+                autoCompleteFieldController.clear();
+                coinController.clear();
+                selectedBidsList.refresh();
+                coinFocusNode.nextFocus();
+                leftFocusNode.requestFocus();
               } else if (int.parse(coinController.text) > 10000) {
                 AppUtils.showErrorSnackBar(
                   bodyText: "You can not add more than 10000 points",
                 );
+                autoCompleteFieldController.clear();
+                coinController.clear();
+                selectedBidsList.refresh();
+                coinFocusNode.nextFocus();
+                leftFocusNode.requestFocus();
               } else {
                 if (spdptpList.isEmpty) {
                   AppUtils.showErrorSnackBar(
                     bodyText:
                         "Please enter valid ${gameMode.value.name!.toLowerCase()}",
                   );
+                  autoCompleteFieldController.clear();
+                  coinController.clear();
+                  selectedBidsList.refresh();
+                  coinFocusNode.nextFocus();
+                  leftFocusNode.requestFocus();
                 } else {
-                  print("======= List not empty =====");
                   for (var i = 0; i < spdptpList.length; i++) {
                     addedNormalBidValue = spdptpList[i].toString();
                     var existingIndex = selectedBidsList.indexWhere(
@@ -580,6 +652,8 @@ class StarlineNewGamePageController extends GetxController {
             middleAnkController.clear();
             coinController.clear();
             selectedBidsList.refresh();
+            coinFocusNode.nextFocus();
+            leftFocusNode.requestFocus();
           },
         );
       }
@@ -594,16 +668,28 @@ class StarlineNewGamePageController extends GetxController {
               AppUtils.showErrorSnackBar(
                 bodyText: "Please enter valid points",
               );
+              autoCompleteFieldController.clear();
+              coinController.clear();
+              selectedBidsList.refresh();
+              focusNode.previousFocus();
             } else if (int.parse(coinController.text) > 10000) {
               AppUtils.showErrorSnackBar(
                 bodyText: "You can not add more than 10000 points",
               );
+              autoCompleteFieldController.clear();
+              coinController.clear();
+              selectedBidsList.refresh();
+              focusNode.previousFocus();
             } else {
               if (spdptpList.isEmpty) {
                 AppUtils.showErrorSnackBar(
                   bodyText:
                       "Please enter valid ${gameMode.value.name!.toLowerCase()}",
                 );
+                autoCompleteFieldController.clear();
+                coinController.clear();
+                selectedBidsList.refresh();
+                focusNode.previousFocus();
               } else {
                 for (var i = 0; i < spdptpList.length; i++) {
                   addedNormalBidValue = spdptpList[i].toString();
@@ -641,6 +727,7 @@ class StarlineNewGamePageController extends GetxController {
           middleAnkController.clear();
           coinController.clear();
           selectedBidsList.refresh();
+          focusNode.previousFocus();
         },
       );
     }

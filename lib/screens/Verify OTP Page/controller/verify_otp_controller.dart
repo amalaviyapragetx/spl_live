@@ -23,6 +23,7 @@ class VerifyOTPController extends GetxController {
   void onInit() {
     super.onInit();
     getStoredUserData();
+    _startTimer();
   }
 
   Future<void> getStoredUserData() async {
@@ -139,5 +140,30 @@ class VerifyOTPController extends GetxController {
       "countryCode": "+91",
     };
     return resendOtpBody;
+  }
+
+  var secondsRemaining = 90.obs;
+  late Timer _timer;
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (secondsRemaining.value > 0) {
+        secondsRemaining.value--;
+      } else {
+        _timer.cancel(); // Stop the timer when it reaches 0
+      }
+    });
+  }
+
+  String get formattedTime {
+    int minutes = (secondsRemaining.value ~/ 60);
+    int seconds = (secondsRemaining.value % 60);
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  void onClose() {
+    _timer.cancel(); // Cancel the timer when the controller is closed
+    super.onClose();
   }
 }

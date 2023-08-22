@@ -101,7 +101,7 @@ class NewGamemodePageController extends GetxController {
     if (_debounce != null && _debounce!.isActive) {
       _debounce!.cancel();
     }
-    Timer(const Duration(milliseconds: 800), () {
+    Timer(const Duration(milliseconds: 10), () {
       enteredDigitsIsValidate = validate;
       addedNormalBidValue = value;
       newGamemodeValidation(validate, value);
@@ -469,7 +469,6 @@ class NewGamemodePageController extends GetxController {
       case "Group Jodi":
         showNumbersLine.value = false;
         apiUrl = ApiUtils.groupJody;
-        print(apiUrl);
         panaControllerLength.value = 2;
         break;
     }
@@ -496,6 +495,9 @@ class NewGamemodePageController extends GetxController {
   }
 
   newGamemodeValidation(bool validate, String value) {
+    if (value.length == panaControllerLength.value) {
+      focusNode.nextFocus();
+    }
     if (autoCompleteFieldController.text.isEmpty) {
       AppUtils.showErrorSnackBar(
         bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
@@ -511,7 +513,7 @@ class NewGamemodePageController extends GetxController {
           dpValue2.value == false &&
           tpValue3.value == false) {
         AppUtils.showErrorSnackBar(
-          bodyText: "Please Check SP or DP Values}",
+          bodyText: "Please select SP,DP or TP",
         );
       } else if (autoCompleteFieldController.text.isEmpty) {
         AppUtils.showErrorSnackBar(
@@ -520,10 +522,6 @@ class NewGamemodePageController extends GetxController {
       }
     }
     enteredDigitsIsValidate = validate;
-    // addedNormalBidValue = value;
-    if (value.length == panaControllerLength.value) {
-      focusNode.nextFocus();
-    }
   }
 
   void getspdptp() async {
@@ -532,7 +530,7 @@ class NewGamemodePageController extends GetxController {
           dpValue2.value == false &&
           tpValue3.value == false) {
         AppUtils.showErrorSnackBar(
-          bodyText: "Please Check SP or DP Values",
+          bodyText: "Please select SP,DP or TP",
         );
       } else {
         ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
@@ -545,16 +543,19 @@ class NewGamemodePageController extends GetxController {
                   int.parse(coinController.text.trim()) < 1) {
                 AppUtils.showErrorSnackBar(
                   bodyText: "Please enter valid points",
+                  duration: const Duration(seconds: 1),
                 );
               } else if (int.parse(coinController.text) > 10000) {
                 AppUtils.showErrorSnackBar(
                   bodyText: "You can not add more than 10000 points",
+                  duration: const Duration(seconds: 1),
                 );
               } else {
                 if (spdptpList.isEmpty) {
                   AppUtils.showErrorSnackBar(
                     bodyText:
                         "Please enter ${gameMode.value.name!.toLowerCase()}",
+                    duration: const Duration(seconds: 1),
                   );
                 } else {
                   for (var i = 0; i < spdptpList.length; i++) {
@@ -596,6 +597,7 @@ class NewGamemodePageController extends GetxController {
             autoCompleteFieldController.clear();
             coinController.clear();
             selectedBidsList.refresh();
+            focusNode.previousFocus();
           },
         );
       }
@@ -621,13 +623,16 @@ class NewGamemodePageController extends GetxController {
                   bodyText:
                       "Please enter valid ${gameMode.value.name!.toLowerCase()}",
                 );
+                autoCompleteFieldController.clear();
+                coinController.clear();
+                selectedBidsList.refresh();
+                focusNode.previousFocus();
               } else {
                 print("======= List not empty =====");
                 for (var i = 0; i < spdptpList.length; i++) {
                   addedNormalBidValue = spdptpList[i].toString();
                   var existingIndex = selectedBidsList.indexWhere(
                       (element) => element.bidNo == addedNormalBidValue);
-
                   if (existingIndex != -1) {
                     // If the bidNo already exists in selectedBidsList, update coins value.
                     selectedBidsList[existingIndex].coins =
@@ -647,14 +652,13 @@ class NewGamemodePageController extends GetxController {
                     );
                   }
                 }
-
-                print("===== selectedBidsList =======");
-                // print(selectedBidsList.toJson());
+                autoCompleteFieldController.clear();
+                coinController.clear();
+                selectedBidsList.refresh();
+                focusNode.previousFocus();
               }
               _calculateTotalAmount();
-              //selectedBidsList.refresh();
             }
-            // print(spdptpList);
           } else {
             AppUtils.showErrorSnackBar(
               bodyText: value['message'] ?? "",
@@ -663,6 +667,7 @@ class NewGamemodePageController extends GetxController {
           autoCompleteFieldController.clear();
           coinController.clear();
           selectedBidsList.refresh();
+          focusNode.previousFocus();
         },
       );
     }
@@ -712,10 +717,10 @@ class NewGamemodePageController extends GetxController {
                   ),
                 );
               }
+              focusNode.previousFocus();
               autoCompleteFieldController.clear();
               coinController.clear();
               selectedBidsList.refresh();
-              focusNode.previousFocus();
             } else {
               for (var i = 0; i < spdptpList.length; i++) {
                 selectedBidsList.add(
@@ -761,11 +766,7 @@ class NewGamemodePageController extends GetxController {
         if (value['status']) {
           spdptpList = value['data'];
           if (spdptpList.isEmpty) {
-            print("===== spdptpList empty =================");
-            print(spdptpList);
           } else {
-            print("======= List not empty =====");
-            // print(spdptpList);
             for (var i = 0; i < spdptpList.length; i++) {
               print(spdptpList[i].toString());
               selectedBidsList.add(

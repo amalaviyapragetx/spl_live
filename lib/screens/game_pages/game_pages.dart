@@ -226,40 +226,41 @@ class SingleAnkPage extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 width: size.width / 2,
-                                onChanged: (value) {
-                                  controller.serchListMatch =
-                                      controller.digitList;
-                                  if (value == '') {
-                                    controller.matches.clear();
-                                    //controller.serchListMatch.clear();
-                                    return const Iterable<String>.empty();
-                                  } else {
-                                    // controller.matches.clear();
-                                    controller.matches
-                                        .addAll(controller.suggestionList);
-                                    controller.matches.retainWhere((s) {
-                                      return s.toLowerCase().contains(
-                                            value!.toLowerCase(),
-                                          );
-                                    });
-                                    for (var i = 0;
-                                        i < controller.serchListMatch.length;
-                                        i++) {
-                                      print(controller
-                                          .serchListMatch[i].isSelected);
-                                      print(
-                                          "******${controller.serchListMatch[i].value!} -- ${controller.serchListMatch[i].value!.contains(controller.searchController.text)}");
-                                      if (controller.serchListMatch[i].value!
-                                          .contains(
-                                        controller.searchController.text,
-                                      )) {
-                                        print(
-                                          " controller.serchListMatch[index].isSelected :- ${controller.serchListMatch[i].isSelected} ",
-                                        );
-                                      }
-                                    }
-                                  }
-                                },
+                                onChanged: (val) => controller.onSearch(val),
+                                // onChanged: (value) {
+                                //   controller.serchListMatch =
+                                //       controller.digitList;
+                                //   if (value == '') {
+                                //     controller.matches.clear();
+                                //     //controller.serchListMatch.clear();
+                                //     return const Iterable<String>.empty();
+                                //   } else {
+                                //     // controller.matches.clear();
+                                //     controller.matches
+                                //         .addAll(controller.suggestionList);
+                                //     controller.matches.retainWhere((s) {
+                                //       return s.toLowerCase().contains(
+                                //             value!.toLowerCase(),
+                                //           );
+                                //     });
+                                //     for (var i = 0;
+                                //         i < controller.serchListMatch.length;
+                                //         i++) {
+                                //       print(controller
+                                //           .serchListMatch[i].isSelected);
+                                //       print(
+                                //           "******${controller.serchListMatch[i].value!} -- ${controller.serchListMatch[i].value!.contains(controller.searchController.text)}");
+                                //       if (controller.serchListMatch[i].value!
+                                //           .contains(
+                                //         controller.searchController.text,
+                                //       )) {
+                                //         print(
+                                //           " controller.serchListMatch[index].isSelected :- ${controller.serchListMatch[i].isSelected} ",
+                                //         );
+                                //       }
+                                //     }
+                                //   }
+                                // },
                                 controller: controller.searchController,
                                 hintText: "SEARCH_TEXT".tr,
                                 imagePath: ConstantImage.serchZoomIcon,

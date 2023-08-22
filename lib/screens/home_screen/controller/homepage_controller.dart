@@ -74,6 +74,7 @@ class HomePageController extends GetxController {
   RxList<MarketBidHistoryList> marketBidHistoryList =
       <MarketBidHistoryList>[].obs;
   DateTime startEndDate = DateTime.now();
+  DateTime startEndDateForBidHistory = DateTime.now();
   var walletController = Get.put(WalletController());
   @override
   void onInit() {
@@ -130,8 +131,8 @@ class HomePageController extends GetxController {
     userData = UserDetailsModel.fromJson(data);
     getMarketBidsByUserId(
         lazyLoad: false,
-        startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-        endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
+        startDate: DateFormat('yyyy-MM-dd').format(startEndDateForBidHistory),
+        endDate: DateFormat('yyyy-MM-dd').format(startEndDateForBidHistory));
   }
 
   // onTapOficonButton() {
@@ -381,12 +382,13 @@ class HomePageController extends GetxController {
                                   getMarketBidsByUserId(
                                       lazyLoad: false,
                                       endDate: DateFormat('yyyy-MM-dd')
-                                          .format(startEndDate),
+                                          .format(startEndDateForBidHistory),
                                       startDate: DateFormat('yyyy-MM-dd')
-                                          .format(startEndDate));
+                                          .format(startEndDateForBidHistory));
                                   // HomeScreenUtils().iconsContainer2();
                                   widgetContainer.value = position;
-                                  print(marketHistoryList.toJson());
+                                  print(
+                                      "marketHistoryList :  ${marketHistoryList.toJson()}");
                                   // print(
                                   //     "${widgetContainer.value} ${isStarline.value}");
                                 },

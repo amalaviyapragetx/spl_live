@@ -12,7 +12,6 @@ import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
-import '../../routes/app_routes_name.dart';
 import 'controller/starline_new_game_page_controller.dart';
 
 class StarLineNewGamePage extends StatelessWidget {
@@ -25,7 +24,6 @@ class StarLineNewGamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //000print("---------------------${controller.gameModeName}");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
@@ -251,7 +249,16 @@ class StarLineNewGamePage extends StatelessWidget {
                                       formatter: [
                                         FilteringTextInputFormatter.digitsOnly
                                       ],
-                                      onChanged: (val) {},
+                                      onChanged: (val) {
+                                        if (int.parse(val!) ==
+                                            controller
+                                                .panaControllerLength.value) {
+                                          controller.leftFocusNode.nextFocus();
+                                          controller.middleFocusNode
+                                              .requestFocus();
+                                        }
+                                      },
+                                      focusNode: controller.leftFocusNode,
                                       maxLength:
                                           controller.panaControllerLength.value,
                                       hintText: "Left Ank",
@@ -319,7 +326,19 @@ class StarLineNewGamePage extends StatelessWidget {
                                               FilteringTextInputFormatter
                                                   .digitsOnly
                                             ],
-                                            onChanged: (val) {},
+                                            focusNode:
+                                                controller.middleFocusNode,
+                                            onChanged: (val) {
+                                              if (int.parse(val!) ==
+                                                  controller
+                                                      .panaControllerLength
+                                                      .value) {
+                                                controller.middleFocusNode
+                                                    .nextFocus();
+                                                controller.rightFocusNode
+                                                    .requestFocus();
+                                              }
+                                            },
                                             maxLength: controller
                                                 .panaControllerLength.value,
                                             hintText: "Middle Ank",
@@ -373,7 +392,15 @@ class StarLineNewGamePage extends StatelessWidget {
                                     formatter: [
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
-                                    onChanged: (val) {},
+                                    onChanged: (val) {
+                                      if (int.parse(val!) ==
+                                          controller
+                                              .panaControllerLength.value) {
+                                        controller.rightFocusNode.nextFocus();
+                                        controller.coinFocusNode.requestFocus();
+                                      }
+                                    },
+                                    focusNode: controller.rightFocusNode,
                                     maxLength:
                                         controller.panaControllerLength.value,
                                     hintText: "Right Ank",
@@ -412,7 +439,11 @@ class StarLineNewGamePage extends StatelessWidget {
                               hintTextColor: AppColors.black.withOpacity(0.65),
                               hintText:
                                   "${"ENTER".tr} ${controller.gameMode.value.name}",
-                              focusNode: controller.focusNode,
+                              focusNode: controller.gameMode.value.name!
+                                          .toUpperCase() ==
+                                      "CHOICE PANA SPDP"
+                                  ? controller.coinFocusNode
+                                  : controller.focusNode,
                               maxLength: controller.panaControllerLength.value,
                               formatter: [
                                 FilteringTextInputFormatter.digitsOnly
@@ -435,7 +466,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                         "TRIPPLE PANA") {
                                   controller.validateEnteredDigit(false, value);
                                 } else {
-                                  // controller.ondebounce(false, value);
+                                  controller.ondebounce(false, value);
                                 }
                               },
                               optionsBuilder:
@@ -537,6 +568,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                   }
                                 },
                                 maxLength: 5,
+                                focusNode: controller.coinFocusNode,
                                 hintText: "Enter Points",
                                 contentPadding:
                                     const EdgeInsets.only(right: 40),
@@ -609,7 +641,7 @@ class StarLineNewGamePage extends StatelessWidget {
                               controller.dpValue2.value == false &&
                               controller.tpValue3.value == false) {
                             AppUtils.showErrorSnackBar(
-                              bodyText: "Please Check SP or DP or TP Values",
+                              bodyText: "Please select SP,DP or TP",
                             );
                           } else {
                             controller.getspdptp();
@@ -791,6 +823,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                       }
                                     }
                                   },
+                                  focusNode: controller.coinFocusNode,
                                   autofocus: controller.gameMode.value.name!
                                           .toUpperCase()
                                           .contains("ODD EVEN")

@@ -255,6 +255,7 @@ class NormalGamePage extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: Dimensions.h15,
                                 ),
+                                autofocus: true,
                                 hintTextStyle: CustomTextStyle
                                     .textRobotoSansMedium
                                     .copyWith(
@@ -262,41 +263,16 @@ class NormalGamePage extends StatelessWidget {
                                   fontSize: Dimensions.h13,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                focusNode: controller.leftFocusNode,
                                 formatter: [
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 onChanged: (val) {
-                                  // if (val != null) {
-                                  //   print("111111111111");
-                                  //   if (val.characters.characterAt(0) ==
-                                  //       Characters("0")) {
-                                  //     print("22222222222222");
-                                  //     // we need to remove the first char
-                                  //     controller.coinController.text =
-                                  //         val.substring(1);
-                                  //     // we need to move the cursor
-                                  //     controller.coinController.selection =
-                                  //         TextSelection.collapsed(
-                                  //       offset: controller.coinController.text.length,
-                                  //     );
-                                  //   } else if (int.parse(val) > 10000) {
-                                  //     AppUtils.showErrorSnackBar(
-                                  //         bodyText:
-                                  //             "You can not add more than 10000 points");
-                                  //   } else {
-                                  //     // if (int.parse(val) >= 1) {
-                                  //     //   print("333333333333333   ${val.length}");
-                                  //     //   // controller.validCoinsEntered.value = true;
-                                  //     //   // controller.isEnable.value = true;
-                                  //     // } else {
-                                  //     //   print("444444444444444444   ${val.length}");
-                                  //     //   // controller.ondebounce();
-
-                                  //     //   // controller.validCoinsEntered.value = false;
-                                  //     //   // controller.isEnable.value = false;
-                                  //     // }
-                                  //   }
-                                  // }
+                                  if (int.parse(val!) ==
+                                      controller.panaControllerLength.value) {
+                                    controller.leftFocusNode.nextFocus();
+                                    controller.middleFocusNode.requestFocus();
+                                  }
                                 },
                                 maxLength:
                                     controller.panaControllerLength.value,
@@ -304,11 +280,6 @@ class NormalGamePage extends StatelessWidget {
                                 contentPadding:
                                     const EdgeInsets.only(right: 30),
                                 imagePath: "",
-                                autofocus: controller.gameMode.value.name!
-                                            .toUpperCase() ==
-                                        "DIGITS BASED JODI"
-                                    ? false
-                                    : true,
                                 containerBackColor: AppColors.black,
                                 iconColor: AppColors.white,
                                 height: Dimensions.h35,
@@ -317,9 +288,8 @@ class NormalGamePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        controller.gameMode.value.name!
-                                .toUpperCase()
-                                .contains("DIGITS BASED JODI")
+                        controller.gameMode.value.name!.toUpperCase() ==
+                                "DIGITS BASED JODI"
                             ? Container()
                             : Expanded(
                                 child: Padding(
@@ -364,50 +334,16 @@ class NormalGamePage extends StatelessWidget {
                                       formatter: [
                                         FilteringTextInputFormatter.digitsOnly
                                       ],
-                                      autofocus: controller.gameMode.value.name!
-                                                  .toUpperCase() ==
-                                              "DIGITS BASED JODI"
-                                          ? true
-                                          : false,
-                                      // focusNode: controller.focusNode,
-                                      // onEditingComplete: () {
-                                      //   if (controller.coinController.text.length <
-                                      //       2) {
-                                      //
-                                      //   }
-                                      // },
+                                      focusNode: controller.middleFocusNode,
                                       onChanged: (val) {
-                                        // if (val != null) {
-                                        //   print("111111111111");
-                                        //   if (val.characters.characterAt(0) ==
-                                        //       Characters("0")) {
-                                        //     print("22222222222222");
-                                        //     // we need to remove the first char
-                                        //     controller.coinController.text =
-                                        //         val.substring(1);
-                                        //     // we need to move the cursor
-                                        //     controller.coinController.selection =
-                                        //         TextSelection.collapsed(
-                                        //       offset: controller.coinController.text.length,
-                                        //     );
-                                        //   } else if (int.parse(val) > 10000) {
-                                        //     AppUtils.showErrorSnackBar(
-                                        //         bodyText:
-                                        //             "You can not add more than 10000 points");
-                                        //   } else {
-                                        //     // if (int.parse(val) >= 1) {
-                                        //     //   print("333333333333333   ${val.length}");
-                                        //     //   // controller.validCoinsEntered.value = true;
-                                        //     //   // controller.isEnable.value = true;
-                                        //     // } else {
-                                        //     //   print("444444444444444444   ${val.length}");
-                                        //     //   // controller.ondebounce();
-
-                                        //     //   // controller.validCoinsEntered.value = false;
-                                        //     //   // controller.isEnable.value = false;
-                                        //     // }
-                                        //   }
-                                        // }
+                                        if (int.parse(val!) ==
+                                            controller
+                                                .panaControllerLength.value) {
+                                          controller.middleFocusNode
+                                              .nextFocus();
+                                          controller.rightFocusNode
+                                              .requestFocus();
+                                        }
                                       },
                                       maxLength:
                                           controller.panaControllerLength.value,
@@ -457,43 +393,16 @@ class NormalGamePage extends StatelessWidget {
                                 fontSize: Dimensions.h13,
                                 fontWeight: FontWeight.bold,
                               ),
-                              autofocus: false,
-                              // focusNode: controller.focusNode,
                               formatter: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
-
+                              focusNode: controller.rightFocusNode,
                               onChanged: (val) {
-                                // if (val != null) {
-                                //   print("111111111111");
-                                //   if (val.characters.characterAt(0) ==
-                                //       Characters("0")) {
-                                //     print("22222222222222");
-                                //     // we need to remove the first char
-                                //     controller.coinController.text = val.substring(1);
-                                //     // we need to move the cursor
-                                //     controller.coinController.selection =
-                                //         TextSelection.collapsed(
-                                //       offset: controller.coinController.text.length,
-                                //     );
-                                //   } else if (int.parse(val) > 10000) {
-                                //     AppUtils.showErrorSnackBar(
-                                //         bodyText:
-                                //             "You can not add more than 10000 points");
-                                //   } else {
-                                //     // if (int.parse(val) >= 1) {
-                                //     //   print("333333333333333   ${val.length}");
-                                //     //   // controller.validCoinsEntered.value = true;
-                                //     //   // controller.isEnable.value = true;
-                                //     // } else {
-                                //     //   print("444444444444444444   ${val.length}");
-                                //     //   // controller.ondebounce();
-
-                                //     //   // controller.validCoinsEntered.value = false;
-                                //     //   // controller.isEnable.value = false;
-                                //     // }
-                                //   }
-                                // }
+                                if (int.parse(val!) ==
+                                    controller.panaControllerLength.value) {
+                                  controller.rightFocusNode.nextFocus();
+                                  controller.coinFocusNode.requestFocus();
+                                }
                               },
                               maxLength: controller.panaControllerLength.value,
                               hintText: "Right Ank",
@@ -549,6 +458,12 @@ class NormalGamePage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                           formatter: [FilteringTextInputFormatter.digitsOnly],
+                          focusNode: controller.coinFocusNode,
+                          autofocus:
+                              controller.gameMode.value.name!.toUpperCase() ==
+                                      "ODD EVEN"
+                                  ? true
+                                  : false,
                           onChanged: (val) {
                             if (val != null) {
                               print("111111111111");
@@ -640,7 +555,7 @@ class NormalGamePage extends StatelessWidget {
                                   controller.dpValue2.value == false &&
                                   controller.tpValue3.value == false) {
                                 AppUtils.showErrorSnackBar(
-                                  bodyText: "Please Check SP or DP Values",
+                                  bodyText: "Please select SP,DP or TP",
                                 );
                               } else {
                                 controller.groupJodiData();
