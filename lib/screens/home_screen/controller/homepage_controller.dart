@@ -19,6 +19,7 @@ import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/market_bid_history.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
+import '../../../models/notifiaction_models/notification_count_model.dart';
 import '../../../models/passbook_page_model.dart';
 import '../../../models/starline_chart_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
@@ -53,15 +54,12 @@ class HomePageController extends GetxController {
   RxList<StarlineMarketData> marketListForResult = <StarlineMarketData>[].obs;
   RxList<Data2> starlineChartDate = <Data2>[].obs;
   RxList<Time> starlineChartTime = <Time>[].obs;
-//  UserDetailsModel userData = UserDetailsModel();
   UserDetailsModel userData = UserDetailsModel();
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   RxList<ResultArr> starLineMarketHistoryList = <ResultArr>[].obs;
   RxList<Rows> passBookModelData = <Rows>[].obs;
   RxList<Rows> passBookModelData2 = <Rows>[].obs;
   RxInt passbookCount = 0.obs;
-  // RxList<NormalMarketHistoryModel> marketHistoryList =
-  //     <NormalMarketHistoryModel>[].obs;
   RxBool isStarline2 = false.obs;
   RxInt offset = 0.obs;
   RxList<Bids> selectedBidsList = <Bids>[].obs;
@@ -76,12 +74,17 @@ class HomePageController extends GetxController {
   DateTime startEndDate = DateTime.now();
   DateTime startEndDateForBidHistory = DateTime.now();
   var walletController = Get.put(WalletController());
+  RxString walletBalance = "00".obs;
+  RxString getNotifiactionCount = "".obs;
+
   @override
   void onInit() {
+    getNotificationCount();
     setboolData();
     callMarketsApi();
-    callGetStarLineChart();
+    // callGetStarLineChart();
     getUserData();
+    getUserBalance();
     super.onInit();
   }
 
@@ -97,7 +100,6 @@ class HomePageController extends GetxController {
     marketBidHistoryList.refresh();
     passBookModelData.refresh();
     passBookModelData2.refresh();
-
     getStarLineMarkets(DateFormat('yyyy-MM-dd').format(startEndDate),
         DateFormat('yyyy-MM-dd').format(startEndDate));
   }
@@ -108,20 +110,16 @@ class HomePageController extends GetxController {
     callMarketsApi();
     callGetStarLineChart();
     getUserData();
-    WalletController().getUserBalance();
+    getNotificationCount();
+    getUserBalance();
   }
 
   @override
   void dispose() {
     marketHistoryList.clear();
-
     super.dispose();
   }
 
-  // Future<void> onSwipeRefresh() async {
-  //   offset = 0;
-  //   getMarketBidsByUserId(lazyLoad: false);
-  // }
   ontapOfBidData() {
     Get.toNamed(AppRoutName.newBidHistorypage);
   }
@@ -297,8 +295,8 @@ class HomePageController extends GetxController {
     }
   }
 
-  Widget getDashBoardPages(
-      index, size, BuildContext context, String walletText) {
+  Widget getDashBoardPages(index, size, BuildContext context,
+      {required String notifictionCount}) {
     switch (index) {
       case 0:
         return SizedBox(
@@ -309,10 +307,11 @@ class HomePageController extends GetxController {
             children: [
               AppUtils().appbar(
                 size,
-                walletText: walletText,
+                walletText: walletBalance.toString(),
                 onTapTranction: () {
                   // Get.toNamed(AppRoutName.transactionPage);
                 },
+                notifictionCount: notifictionCount,
                 onTapNotifiaction: () {
                   Get.toNamed(AppRoutName.notificationPage);
                 },
@@ -374,11 +373,13 @@ class HomePageController extends GetxController {
                                 onTap2: () {
                                   position = 1;
                                   isStarline.value = true;
+                                  callGetStarLineChart();
                                   getDailyStarLineMarkets(
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(startEndDate),
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(startEndDate));
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(startEndDate),
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(startEndDate),
+                                  );
                                   getMarketBidsByUserId(
                                       lazyLoad: false,
                                       endDate: DateFormat('yyyy-MM-dd')
@@ -418,17 +419,35 @@ class HomePageController extends GetxController {
                                           position = 3;
                                           widgetContainer.value = position;
                                           print(widgetContainer.value);
+                                          getMarketBidsByUserId(
+                                            lazyLoad: false,
+                                            endDate: DateFormat('yyyy-MM-dd')
+                                                .format(
+                                                    startEndDateForBidHistory),
+                                            startDate:
+                                                DateFormat('yyyy-MM-dd').format(
+                                              startEndDateForBidHistory,
+                                            ),
+                                          );
                                         },
                                         onTap2: () {
                                           position = 4;
                                           widgetContainer.value = position;
                                           print(widgetContainer.value);
+                                          getDailyStarLineMarkets(
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(startEndDate),
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(startEndDate),
+                                          );
                                         },
                                         onTap3: () {
                                           position = 5;
                                           widgetContainer.value = position;
                                           print(widgetContainer.value);
-                                        })
+                                          callGetStarLineChart();
+                                        },
+                                      )
                                     : Container();
                               }),
                             ],
@@ -681,12 +700,31 @@ class HomePageController extends GetxController {
     ApiService().getStarlineChar().then((value) async {
       debugPrint("Starline chart Api Response :- $value");
       if (value['status']) {
+        // NewStarLineChartModel model = NewStarLineChartModel.fromJson(value);
         StarlineChartModel model = StarlineChartModel.fromJson(value);
         starlineChartDate.value = model.data!;
         for (var i = 0; i < model.data!.length; i++) {
           starlineChartTime.value = model.data![i].time!;
         }
         print(starlineChartTime);
+        if (model.message!.isNotEmpty) {
+          AppUtils.showSuccessSnackBar(
+              bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+        }
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+
+  void getNotificationCount() async {
+    ApiService().getNotificationCount().then((value) async {
+      debugPrint("Notifiaction Count Api ------------- :- $value");
+      if (value['status']) {
+        NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
+        getNotifiactionCount.value = model.data!.notificationCount.toString();
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
@@ -835,5 +873,20 @@ class HomePageController extends GetxController {
         }
       },
     );
+  }
+
+  void getUserBalance() {
+    ApiService().getBalance().then((value) async {
+      debugPrint("((((((((((((((((((((((((((()))))))))))))))))))))))))))");
+      debugPrint("Wallet balance Api Response :- $value");
+      if (value['status']) {
+        var tempBalance = value['data']['Amount'] ?? 00;
+        walletBalance.value = tempBalance.toString();
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
   }
 }

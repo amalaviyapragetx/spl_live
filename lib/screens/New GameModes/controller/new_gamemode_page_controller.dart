@@ -604,6 +604,7 @@ class NewGamemodePageController extends GetxController {
     } else {
       ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
         (value) async {
+          debugPrint("+++++++++++++++++++Dp Motor");
           debugPrint("New Game-Mode Api Response :- $value");
           if (value['status']) {
             spdptpList = value['data'];
@@ -613,22 +614,25 @@ class NewGamemodePageController extends GetxController {
               AppUtils.showErrorSnackBar(
                 bodyText: "Please enter valid points",
               );
+              autoCompleteFieldController.clear();
+              coinController.clear();
+
+              focusNode.previousFocus();
             } else if (int.parse(coinController.text) > 10000) {
               AppUtils.showErrorSnackBar(
                 bodyText: "You can not add more than 10000 points",
               );
+              autoCompleteFieldController.clear();
+              coinController.clear();
+
+              focusNode.previousFocus();
             } else {
               if (spdptpList.isEmpty) {
                 AppUtils.showErrorSnackBar(
                   bodyText:
                       "Please enter valid ${gameMode.value.name!.toLowerCase()}",
                 );
-                autoCompleteFieldController.clear();
-                coinController.clear();
-                selectedBidsList.refresh();
-                focusNode.previousFocus();
               } else {
-                print("======= List not empty =====");
                 for (var i = 0; i < spdptpList.length; i++) {
                   addedNormalBidValue = spdptpList[i].toString();
                   var existingIndex = selectedBidsList.indexWhere(
@@ -655,7 +659,6 @@ class NewGamemodePageController extends GetxController {
                 autoCompleteFieldController.clear();
                 coinController.clear();
                 selectedBidsList.refresh();
-                focusNode.previousFocus();
               }
               _calculateTotalAmount();
             }
@@ -673,294 +676,294 @@ class NewGamemodePageController extends GetxController {
     }
   }
 
-  Future<Map> panelGroupBody() async {
-    final a = {
-      "pana": autoCompleteFieldController.text,
-    };
-    return a;
-  }
+//   Future<Map> panelGroupBody() async {
+//     final a = {
+//       "pana": autoCompleteFieldController.text,
+//     };
+//     return a;
+//   }
 
-  void getpanelData() async {
-    ApiService().newGameModeApi(await panelGroupBody(), apiUrl).then(
-      (value) async {
-        debugPrint("Forgot MPIN Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
-          if (coinController.text.trim().isEmpty ||
-              int.parse(coinController.text.trim()) < 1) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "Please enter valid points",
-            );
-            return;
-          } else if (int.parse(coinController.text) > 10000) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "You can not add more than 10000 points",
-            );
-            return;
-          } else if (autoCompleteFieldController.text.trim().isEmpty) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
-            );
-            return;
-          } else {
-            if (spdptpList.isEmpty) {
-              for (var i = 0; i < spdptpList.length; i++) {
-                selectedBidsList.add(
-                  Bids(
-                    bidNo: spdptpList[i].toString(),
-                    coins: int.parse(coinController.text),
-                    gameId: gameMode.value.id,
-                    subGameId: gameMode.value.id,
-                    gameModeName: gameMode.value.name,
-                    remarks:
-                        "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                  ),
-                );
-              }
-              focusNode.previousFocus();
-              autoCompleteFieldController.clear();
-              coinController.clear();
-              selectedBidsList.refresh();
-            } else {
-              for (var i = 0; i < spdptpList.length; i++) {
-                selectedBidsList.add(
-                  Bids(
-                    bidNo: spdptpList[i].toString(),
-                    coins: int.parse(coinController.text),
-                    gameId: gameMode.value.id,
-                    subGameId: gameMode.value.id,
-                    gameModeName: gameMode.value.name,
-                    remarks:
-                        "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                  ),
-                );
-              }
-            }
-          }
-          _calculateTotalAmount();
-          selectedBidsList.refresh();
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-        autoCompleteFieldController.clear();
-        coinController.clear();
-        selectedBidsList.refresh();
-        focusNode.previousFocus();
-      },
-    );
-  }
+//   void getpanelData() async {
+//     ApiService().newGameModeApi(await panelGroupBody(), apiUrl).then(
+//       (value) async {
+//         debugPrint("Forgot MPIN Api Response :- $value");
+//         if (value['status']) {
+//           spdptpList = value['data'];
+//           if (coinController.text.trim().isEmpty ||
+//               int.parse(coinController.text.trim()) < 1) {
+//             AppUtils.showErrorSnackBar(
+//               bodyText: "Please enter valid points",
+//             );
+//             return;
+//           } else if (int.parse(coinController.text) > 10000) {
+//             AppUtils.showErrorSnackBar(
+//               bodyText: "You can not add more than 10000 points",
+//             );
+//             return;
+//           } else if (autoCompleteFieldController.text.trim().isEmpty) {
+//             AppUtils.showErrorSnackBar(
+//               bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
+//             );
+//             return;
+//           } else {
+//             if (spdptpList.isEmpty) {
+//               for (var i = 0; i < spdptpList.length; i++) {
+//                 selectedBidsList.add(
+//                   Bids(
+//                     bidNo: spdptpList[i].toString(),
+//                     coins: int.parse(coinController.text),
+//                     gameId: gameMode.value.id,
+//                     subGameId: gameMode.value.id,
+//                     gameModeName: gameMode.value.name,
+//                     remarks:
+//                         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+//                   ),
+//                 );
+//               }
+//               focusNode.previousFocus();
+//               autoCompleteFieldController.clear();
+//               coinController.clear();
+//               selectedBidsList.refresh();
+//             } else {
+//               for (var i = 0; i < spdptpList.length; i++) {
+//                 selectedBidsList.add(
+//                   Bids(
+//                     bidNo: spdptpList[i].toString(),
+//                     coins: int.parse(coinController.text),
+//                     gameId: gameMode.value.id,
+//                     subGameId: gameMode.value.id,
+//                     gameModeName: gameMode.value.name,
+//                     remarks:
+//                         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+//                   ),
+//                 );
+//               }
+//             }
+//           }
+//           _calculateTotalAmount();
+//           selectedBidsList.refresh();
+//         } else {
+//           AppUtils.showErrorSnackBar(
+//             bodyText: value['message'] ?? "",
+//           );
+//         }
+//         autoCompleteFieldController.clear();
+//         coinController.clear();
+//         selectedBidsList.refresh();
+//         focusNode.previousFocus();
+//       },
+//     );
+//   }
 
-  Future<Map> spMotorBody() async {
-    final a = {
-      "digit": autoCompleteFieldController.text,
-    };
-    return a;
-  }
+//   Future<Map> spMotorBody() async {
+//     final a = {
+//       "digit": autoCompleteFieldController.text,
+//     };
+//     return a;
+//   }
 
-  void spMotorData() async {
-    ApiService().newGameModeApi(await spMotorBody(), apiUrl).then(
-      (value) async {
-        debugPrint("Forgot MPIN Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
-          if (spdptpList.isEmpty) {
-          } else {
-            for (var i = 0; i < spdptpList.length; i++) {
-              print(spdptpList[i].toString());
-              selectedBidsList.add(
-                Bids(
-                  bidNo: spdptpList[i].toString(),
-                  coins: int.parse(coinController.text),
-                  gameId: gameMode.value.id,
-                  subGameId: gameMode.value.id,
-                  gameModeName: gameMode.value.name,
-                  remarks:
-                      "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                ),
-              );
-            }
-            print("===== selectedBidsList =======");
-            print(selectedBidsList.toJson());
-          }
-          // print(spdptpList);
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-      },
-    );
-  }
+//   void spMotorData() async {
+//     ApiService().newGameModeApi(await spMotorBody(), apiUrl).then(
+//       (value) async {
+//         debugPrint("Forgot MPIN Api Response :- $value");
+//         if (value['status']) {
+//           spdptpList = value['data'];
+//           if (spdptpList.isEmpty) {
+//           } else {
+//             for (var i = 0; i < spdptpList.length; i++) {
+//               print(spdptpList[i].toString());
+//               selectedBidsList.add(
+//                 Bids(
+//                   bidNo: spdptpList[i].toString(),
+//                   coins: int.parse(coinController.text),
+//                   gameId: gameMode.value.id,
+//                   subGameId: gameMode.value.id,
+//                   gameModeName: gameMode.value.name,
+//                   remarks:
+//                       "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+//                 ),
+//               );
+//             }
+//             print("===== selectedBidsList =======");
+//             print(selectedBidsList.toJson());
+//           }
+//           // print(spdptpList);
+//         } else {
+//           AppUtils.showErrorSnackBar(
+//             bodyText: value['message'] ?? "",
+//           );
+//         }
+//       },
+//     );
+//   }
 
-  Future<Map> dpMotorBody() async {
-    final a = {
-      "digit": autoCompleteFieldController.text,
-    };
-    return a;
-  }
+//   Future<Map> dpMotorBody() async {
+//     final a = {
+//       "digit": autoCompleteFieldController.text,
+//     };
+//     return a;
+//   }
 
-  void dpMotorData() async {
-    ApiService().newGameModeApi(await dpMotorBody(), apiUrl).then(
-      (value) async {
-        debugPrint("Forgot MPIN Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
+//   void dpMotorData() async {
+//     ApiService().newGameModeApi(await dpMotorBody(), apiUrl).then(
+//       (value) async {
+//         debugPrint("Forgot MPIN Api Response :- $value");
+//         if (value['status']) {
+//           spdptpList = value['data'];
 
-          if (spdptpList.isEmpty) {
-            print("===== spdptpList empty =================");
-            print(spdptpList);
-          } else {
-            print("======= List not empty =====");
-            // print(spdptpList);
-            for (var i = 0; i < spdptpList.length; i++) {
-// spdptpList[i].toString() pass this value in one fiunction which returm the type of the pana
+//           if (spdptpList.isEmpty) {
+//             print("===== spdptpList empty =================");
+//             print(spdptpList);
+//           } else {
+//             print("======= List not empty =====");
+//             // print(spdptpList);
+//             for (var i = 0; i < spdptpList.length; i++) {
+// // spdptpList[i].toString() pass this value in one fiunction which returm the type of the pana
 
-// gameId
-// Main game modes
-// Single Ank, Jodi, Single Pana, Double Pana, Triple Pana
-// Single Ank, Jodi,  Single Pana, Double Pana, ==> Bulk
-// make once fucntion which takes  child game modes name and will return parent game modes with Id == GameId
-// Panel Group, SDDPTP, Red Brackets, Choice Pana SPDP, SP Moter, DP Moter, Group Jodi, Digit Based Jodi,
-// Odd Even
-// make One function which will take pana as a parameter and will return pana type with parent game
-// mode name ==? Sub game mode Id
-              print(spdptpList[i].toString());
-              selectedBidsList.add(
-                Bids(
-                  bidNo: spdptpList[i].toString(),
-                  coins: int.parse(coinController.text),
-                  gameId: gameMode.value.id,
-                  subGameId: gameMode.value.id,
-                  gameModeName: gameMode.value.name,
-                  remarks:
-                      "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                ),
-              );
-            }
-            print("===== selectedBidsList =======");
-            print(selectedBidsList.toJson());
-          }
-          // print(spdptpList);
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-      },
-    );
-  }
+// // gameId
+// // Main game modes
+// // Single Ank, Jodi, Single Pana, Double Pana, Triple Pana
+// // Single Ank, Jodi,  Single Pana, Double Pana, ==> Bulk
+// // make once fucntion which takes  child game modes name and will return parent game modes with Id == GameId
+// // Panel Group, SDDPTP, Red Brackets, Choice Pana SPDP, SP Moter, DP Moter, Group Jodi, Digit Based Jodi,
+// // Odd Even
+// // make One function which will take pana as a parameter and will return pana type with parent game
+// // mode name ==? Sub game mode Id
+//               print(spdptpList[i].toString());
+//               selectedBidsList.add(
+//                 Bids(
+//                   bidNo: spdptpList[i].toString(),
+//                   coins: int.parse(coinController.text),
+//                   gameId: gameMode.value.id,
+//                   subGameId: gameMode.value.id,
+//                   gameModeName: gameMode.value.name,
+//                   remarks:
+//                       "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+//                 ),
+//               );
+//             }
+//             print("===== selectedBidsList =======");
+//             print(selectedBidsList.toJson());
+//           }
+//           // print(spdptpList);
+//         } else {
+//           AppUtils.showErrorSnackBar(
+//             bodyText: value['message'] ?? "",
+//           );
+//         }
+//       },
+//     );
+//   }
 
-  Future<Map> toDigitBody() async {
-    final a = {
-      "digit": autoCompleteFieldController.text,
-    };
-    return a;
-  }
+//   Future<Map> toDigitBody() async {
+//     final a = {
+//       "digit": autoCompleteFieldController.text,
+//     };
+//     return a;
+//   }
 
-  void twoDigitData() async {
-    ApiService().newGameModeApi(await toDigitBody(), apiUrl).then(
-      (value) async {
-        debugPrint("Forgot MPIN Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
+//   void twoDigitData() async {
+//     ApiService().newGameModeApi(await toDigitBody(), apiUrl).then(
+//       (value) async {
+//         debugPrint("Forgot MPIN Api Response :- $value");
+//         if (value['status']) {
+//           spdptpList = value['data'];
 
-          if (spdptpList.isEmpty) {
-            selectedBidsList.add(
-              Bids(
-                bidNo: addedNormalBidValue,
-                coins: int.parse(coinController.text),
-                gameId: gameMode.value.id,
-                subGameId: gameMode.value.id,
-                gameModeName: gameMode.value.name,
-                remarks:
-                    "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-              ),
-            );
-          } else {
-            print("======= List not empty =====");
-            // print(spdptpList);
-            for (var i = 0; i < spdptpList.length; i++) {
-// spdptpList[i].toString() pass this value in one fiunction which returm the type of the pana
+//           if (spdptpList.isEmpty) {
+//             selectedBidsList.add(
+//               Bids(
+//                 bidNo: addedNormalBidValue,
+//                 coins: int.parse(coinController.text),
+//                 gameId: gameMode.value.id,
+//                 subGameId: gameMode.value.id,
+//                 gameModeName: gameMode.value.name,
+//                 remarks:
+//                     "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+//               ),
+//             );
+//           } else {
+//             print("======= List not empty =====");
+//             // print(spdptpList);
+//             for (var i = 0; i < spdptpList.length; i++) {
+// // spdptpList[i].toString() pass this value in one fiunction which returm the type of the pana
 
-// gameId
-// Main game modes
-// Single Ank, Jodi, Single Pana, Double Pana, Triple Pana
-// Single Ank, Jodi,  Single Pana, Double Pana, ==> Bulk
-// make once fucntion which takes  child game modes name and will return parent game modes with Id == GameId
-// Panel Group, SDDPTP, Red Brackets, Choice Pana SPDP, SP Moter, DP Moter, Group Jodi, Digit Based Jodi,
-// Odd Even
-// make One function which will take pana as a parameter and will return pana type with parent game
-// mode name ==? Sub game mode Id
-              //   print(gameModeList[0].data?.gameMode?[0].id);
-              selectedBidsList.add(
-                Bids(
-                  bidNo: spdptpList[i].toString(),
-                  coins: int.parse(coinController.text),
-                  gameId: gameMode.value.id,
-                  subGameId: gameMode.value.id,
-                  gameModeName: gameMode.value.name,
-                  remarks:
-                      "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                ),
-              );
-            }
-            print("===== selectedBidsList =======");
-            //  print(selectedBidsList.toJson());
-          }
-          // print(spdptpList);
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-      },
-    );
-  }
+// // gameId
+// // Main game modes
+// // Single Ank, Jodi, Single Pana, Double Pana, Triple Pana
+// // Single Ank, Jodi,  Single Pana, Double Pana, ==> Bulk
+// // make once fucntion which takes  child game modes name and will return parent game modes with Id == GameId
+// // Panel Group, SDDPTP, Red Brackets, Choice Pana SPDP, SP Moter, DP Moter, Group Jodi, Digit Based Jodi,
+// // Odd Even
+// // make One function which will take pana as a parameter and will return pana type with parent game
+// // mode name ==? Sub game mode Id
+//               //   print(gameModeList[0].data?.gameMode?[0].id);
+//               selectedBidsList.add(
+//                 Bids(
+//                   bidNo: spdptpList[i].toString(),
+//                   coins: int.parse(coinController.text),
+//                   gameId: gameMode.value.id,
+//                   subGameId: gameMode.value.id,
+//                   gameModeName: gameMode.value.name,
+//                   remarks:
+//                       "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+//                 ),
+//               );
+//             }
+//             print("===== selectedBidsList =======");
+//             //  print(selectedBidsList.toJson());
+//           }
+//           // print(spdptpList);
+//         } else {
+//           AppUtils.showErrorSnackBar(
+//             bodyText: value['message'] ?? "",
+//           );
+//         }
+//       },
+//     );
+//   }
 
-  Future<Map> groupJodiBody() async {
-    final a = {
-      "digit": autoCompleteFieldController.text,
-    };
-    return a;
-  }
+//   Future<Map> groupJodiBody() async {
+//     final a = {
+//       "digit": autoCompleteFieldController.text,
+//     };
+//     return a;
+//   }
 
-  void groupJodiData() async {
-    ApiService().newGameModeApi(await groupJodiBody(), apiUrl).then(
-      (value) async {
-        debugPrint("Forgot MPIN Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
-          if (spdptpList.isEmpty) {
-            print("===== spdptpList empty =================");
-            print(spdptpList);
-          } else {
-            print("======= List not empty =====");
-            // print(spdptpList);
-            for (var i = 0; i < spdptpList.length; i++) {
-              print(spdptpList[i].toString());
-              selectedBidsList.add(
-                Bids(
-                  bidNo: spdptpList[i].toString(),
-                  coins: int.parse(coinController.text),
-                  gameId: gameMode.value.id,
-                  subGameId: gameMode.value.id,
-                  gameModeName: gameMode.value.name,
-                  remarks:
-                      "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                ),
-              );
-            }
-            print("===== selectedBidsList =======");
-          }
-          // print(spdptpList);
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-      },
-    );
-  }
+//   void groupJodiData() async {
+//     ApiService().newGameModeApi(await groupJodiBody(), apiUrl).then(
+//       (value) async {
+//         debugPrint("Forgot MPIN Api Response :- $value");
+//         if (value['status']) {
+//           spdptpList = value['data'];
+//           if (spdptpList.isEmpty) {
+//             print("===== spdptpList empty =================");
+//             print(spdptpList);
+//           } else {
+//             print("======= List not empty =====");
+//             // print(spdptpList);
+//             for (var i = 0; i < spdptpList.length; i++) {
+//               print(spdptpList[i].toString());
+//               selectedBidsList.add(
+//                 Bids(
+//                   bidNo: spdptpList[i].toString(),
+//                   coins: int.parse(coinController.text),
+//                   gameId: gameMode.value.id,
+//                   subGameId: gameMode.value.id,
+//                   gameModeName: gameMode.value.name,
+//                   remarks:
+//                       "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+//                 ),
+//               );
+//             }
+//             print("===== selectedBidsList =======");
+//           }
+//           // print(spdptpList);
+//         } else {
+//           AppUtils.showErrorSnackBar(
+//             bodyText: value['message'] ?? "",
+//           );
+//         }
+//       },
+//     );
+  // }
 }

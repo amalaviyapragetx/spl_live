@@ -1150,8 +1150,13 @@ class HomeScreenUtils {
                                         controller
                                             .starlineChartDate[i].time!.length
                                     ? controller.starlineChartDate[i].time![j]
-                                            .result ??
-                                        "***-*"
+                                                .result ==
+                                            null
+                                        ? "***-*"
+                                        : controller.starlineChartDate[i]
+                                                .time![j].result
+                                                .toString() ??
+                                            "***-*"
                                     : "***-*",
                                 textAlign: TextAlign.center,
                                 // style: CustomTextStyle.textGothamLight.copyWith(

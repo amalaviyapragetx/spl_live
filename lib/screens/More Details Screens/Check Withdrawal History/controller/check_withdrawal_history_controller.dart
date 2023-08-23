@@ -3,6 +3,7 @@ import 'package:spllive/models/commun_models/withdrawal_request_model.dart';
 
 import '../../../../Custom Controllers/wallet_controller.dart';
 import '../../../../api_services/api_service.dart';
+import '../../../../helper_files/app_colors.dart';
 import '../../../../helper_files/constant_variables.dart';
 import '../../../../helper_files/ui_utils.dart';
 import '../../../../models/commun_models/user_details_model.dart';
@@ -60,5 +61,15 @@ class CheckWithdrawalPageController extends GetxController {
         }
       },
     );
+  }
+
+  checkColor(i) {
+    if (withdrawalRequestList[i].status == "Pending") {
+      return AppColors.greyShade.withOpacity(0.4);
+    } else if (withdrawalRequestList[i].status == "Rejected") {
+      return AppColors.redColor;
+    } else {
+      return AppColors.greenShade.withOpacity(0.9);
+    }
   }
 }

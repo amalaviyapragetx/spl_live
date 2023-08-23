@@ -54,7 +54,7 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
-              walletController.walletBalance.refresh();
+              // controller.getUserBalance();
             },
             onTapHome: () {
               controller.pageWidget.value = 0;
@@ -63,7 +63,7 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
-              walletController.walletBalance.refresh();
+              // controller.getUserBalance();
             },
             onTapMore: () {
               controller.pageWidget.value = 4;
@@ -72,7 +72,7 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
-              walletController.walletBalance.refresh();
+              // controller.getUserBalance();
             },
             onTapWallet: () {
               controller.pageWidget.value = 2;
@@ -82,14 +82,12 @@ class DashBoardPage extends StatelessWidget {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.landscapeLeft
               ]);
-              walletController.walletBalance.refresh();
             },
             onTapPassbook: () {
               controller.getPassBookData(
                   lazyLoad: false, offset: controller.offset.value.toString());
               controller.pageWidget.value = 3;
               controller.currentIndex.value = 3;
-              walletController.walletBalance.refresh();
             },
           ),
         ),
@@ -99,6 +97,7 @@ class DashBoardPage extends StatelessWidget {
             if (controller.pageWidget.value == 0 ||
                 controller.pageWidget.value == 2) {
               controller.handleRefresh();
+              walletController.walletBalance.refresh();
             }
           },
           child: Obx(
@@ -106,7 +105,8 @@ class DashBoardPage extends StatelessWidget {
               controller.pageWidget.value,
               size,
               context,
-              walletController.walletBalance.value.toString(),
+              notifictionCount:
+                  controller.getNotifiactionCount.value.toString(),
             ),
           ),
         ),

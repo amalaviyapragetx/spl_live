@@ -941,4 +941,82 @@ class ApiService extends GetConnect {
       return response.body;
     }
   }
+  ///////// Notifications ///////////
+
+  Future<dynamic> getNotificationCount() async {
+    await initApiService();
+    final response = await get(
+      ApiUtils.getNotificationCount,
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      AppUtils.hideProgressDialog();
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getAllNotifications() async {
+    await initApiService();
+    final response = await get(
+      ApiUtils.getAllNotifications,
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      AppUtils.hideProgressDialog();
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> resetNotification() async {
+    await initApiService();
+    final response = await get(
+      ApiUtils.resetNotificationCount,
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      AppUtils.hideProgressDialog();
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> rateApp(body) async {
+    AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await post(
+      ApiUtils.rateAppApi,
+      body,
+      headers: headersWithToken,
+      // contentType: contentType,
+    );
+
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      print(response.status.code.toString() + response.toString());
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
 }

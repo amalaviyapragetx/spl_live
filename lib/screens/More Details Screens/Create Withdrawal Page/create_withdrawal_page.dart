@@ -7,7 +7,7 @@ import 'package:spllive/screens/More%20Details%20Screens/Create%20Withdrawal%20P
 import '../../../components/edit_text_field_with_icon.dart';
 import '../../../components/simple_button_with_corner.dart';
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_image.dart';
+
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
@@ -102,6 +102,43 @@ class CreatewithDrawalPage extends StatelessWidget {
                       height: Dimensions.h35,
                       width: double.infinity,
                     ),
+                  ),
+                  verticalSpace,
+                  verticalSpace,
+                  verticalSpace,
+                  Obx(
+                    () => controller.bankName.value == "" ||
+                            controller.bankName.value == null
+                        ? SizedBox(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "To Add Bank Detaiils ",
+                                  style: CustomTextStyle.textRobotoSansMedium
+                                      .copyWith(
+                                    fontSize: Dimensions.h13,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.offAndToNamed(
+                                        AppRoutName.myAccountPage);
+                                  },
+                                  child: Text(
+                                    "Click Here",
+                                    style: CustomTextStyle.textRobotoSansMedium
+                                        .copyWith(
+                                      fontSize: Dimensions.h13,
+                                      color: AppColors.redColor,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
                   ),
                 ],
               ),

@@ -154,18 +154,18 @@ class GameRatePage extends StatelessWidget {
               Expanded(
                 child: Text(
                   titleText,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     color: AppColors.black,
-                    fontSize: Dimensions.h18,
+                    fontSize: Dimensions.h14,
                   ),
                 ),
               ),
               Expanded(
                 child: Text(
                   trailing,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
+                  style: CustomTextStyle.textRobotoSansLight.copyWith(
                     color: AppColors.black,
-                    fontSize: Dimensions.h15,
+                    fontSize: Dimensions.h14,
                   ),
                 ),
               ),

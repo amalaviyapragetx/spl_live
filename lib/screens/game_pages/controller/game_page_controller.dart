@@ -75,7 +75,7 @@ class GamePageController extends GetxController {
     if (_debounce != null && _debounce!.isActive) {
       _debounce!.cancel();
     }
-    Timer(const Duration(milliseconds: 400), () {
+    Timer(const Duration(milliseconds: 10), () {
       if (int.parse(coinController.text) == 0) {
         AppUtils.showErrorSnackBar(bodyText: "Please enter minimun 1 coin");
       }

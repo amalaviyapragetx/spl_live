@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
@@ -42,27 +41,33 @@ class CheckWithdrawalPage extends StatelessWidget {
               icon: const Icon(Icons.close),
             )
           ],
-          leadingWidht: Dimensions.w110,
+          leadingWidht: Dimensions.w130,
           leading: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                width: Dimensions.w38,
+              SizedBox(
+                width: Dimensions.w36,
                 child: Padding(
                   padding:
-                      const EdgeInsets.only(top: 4.0, left: 8.0, bottom: 4.0),
+                      const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 8.0),
                   child: SvgPicture.asset(
                     ConstantImage.walletAppbar,
                     color: AppColors.white,
                   ),
                 ),
               ),
-              SizedBox(width: Dimensions.w10),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                  walletController.walletBalance.toString(),
-                  style: CustomTextStyle.textRobotoSansMedium
-                      .copyWith(fontSize: Dimensions.h16),
+              SizedBox(
+                width: Dimensions.w5,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    walletController.walletBalance.toString(),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                      fontSize: Dimensions.h16,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -138,22 +143,15 @@ class CheckWithdrawalPage extends StatelessWidget {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return withDrawalHistoryDetails(
+                  remarks: controller.withdrawalRequestList[index].remarks ??
+                      "Request Pending",
                   requestTimeColor: controller
                               .withdrawalRequestList[index].status
                               .toString() ==
                           "Pending"
                       ? AppColors.black
                       : AppColors.white,
-                  onStatusContainerColor: controller
-                              .withdrawalRequestList[index].status
-                              .toString() ==
-                          "Pending"
-                      ? controller.withdrawalRequestList[index].status
-                                  .toString() ==
-                              "Rejected"
-                          ? AppColors.redColor.withOpacity(0.4)
-                          : AppColors.greyShade.withOpacity(0.4)
-                      : AppColors.greenShade.withOpacity(0.9),
+                  onStatusContainerColor: controller.checkColor(index),
                   statusColor: controller.withdrawalRequestList[index].status
                               .toString() ==
                           "Pending"
@@ -180,16 +178,18 @@ class CheckWithdrawalPage extends StatelessWidget {
     );
   }
 
-  Widget withDrawalHistoryDetails(
-      {required String marketName,
-      required String coins,
-      required String requestTime,
-      required String requestId,
-      required String status,
-      required String requestedAmount,
-      required Color statusColor,
-      required Color onStatusContainerColor,
-      required Color requestTimeColor}) {
+  Widget withDrawalHistoryDetails({
+    required String marketName,
+    required String coins,
+    required String requestTime,
+    required String requestId,
+    required String status,
+    required String requestedAmount,
+    required Color statusColor,
+    required Color onStatusContainerColor,
+    required Color requestTimeColor,
+    required String remarks,
+  }) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
       child: InkWell(
@@ -225,12 +225,6 @@ class CheckWithdrawalPage extends StatelessWidget {
                     SizedBox(
                       width: Dimensions.w5,
                     ),
-                    // Text(
-                    //   requestedAmount,
-                    //   style: CustomTextStyle.textRobotoSansBold.copyWith(
-                    //       color: AppColors.appbarColor,
-                    //       fontSize: Dimensions.h13),
-                    // ),
                     const Expanded(child: SizedBox()),
                     Text(
                       requestedAmount,
@@ -251,6 +245,22 @@ class CheckWithdrawalPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
+                      "Remarks",
+                      style: CustomTextStyle.textRobotoSansBold,
+                    ),
+                    Text(
+                      remarks,
+                      style: CustomTextStyle.textRobotoSansMedium,
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(Dimensions.h8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
                       "Status",
                       style: CustomTextStyle.textRobotoSansBold,
                     ),
@@ -258,25 +268,6 @@ class CheckWithdrawalPage extends StatelessWidget {
                       "Request On",
                       style: CustomTextStyle.textRobotoSansBold,
                     ),
-                    // Text(
-                    //   gameMode,
-                    //   style: CustomTextStyle.textRobotoSansLight
-                    //       .copyWith(fontSize: Dimensions.h12),
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     SvgPicture.asset(
-                    //       ConstantImage.walletAppbar,
-                    //       height: Dimensions.h13,
-                    //     ),
-                    //     SizedBox(
-                    //       width: Dimensions.w8,
-                    //     ),
-                    //     Text(ballance,
-                    //         style: CustomTextStyle.textRobotoSansLight
-                    //             .copyWith(fontSize: Dimensions.h12)),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),

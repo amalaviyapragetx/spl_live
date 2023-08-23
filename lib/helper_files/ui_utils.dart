@@ -97,6 +97,7 @@ class AppUtils {
     required Function() shareOntap,
     required Function() onTapTelegram,
     required String walletText,
+    String? notifictionCount,
   }) {
     var math;
     return AppBar(
@@ -138,16 +139,30 @@ class AppUtils {
       ),
       leadingWidth: Dimensions.w150,
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: InkWell(
-            onTap: onTapNotifiaction,
-            child: Icon(
-              Icons.notifications_active,
-              color: AppColors.white,
-            ),
-          ),
-        ),
+        notifictionCount == null || notifictionCount == "0"
+            ? Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: InkWell(
+                  onTap: onTapNotifiaction,
+                  child: Icon(
+                    Icons.notifications_active,
+                    color: AppColors.white,
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(right: 12, top: 17, bottom: 17),
+                child: Badge(
+                  smallSize: Dimensions.h9,
+                  child: InkWell(
+                    onTap: onTapNotifiaction,
+                    child: Icon(
+                      Icons.notifications_active,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 17),
           child: InkWell(

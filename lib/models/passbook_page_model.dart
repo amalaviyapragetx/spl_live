@@ -115,7 +115,7 @@ class Rows {
     dynamic bidType,
     dynamic bidNo,
     String? transactionType,
-    num? debit,
+    dynamic debit,
     dynamic credit,
     num? previousAmount,
     String? remarks,
@@ -171,7 +171,7 @@ class Rows {
   dynamic _bidType;
   dynamic _bidNo;
   String? _transactionType;
-  num? _debit;
+  dynamic _debit;
   dynamic _credit;
   num? _previousAmount;
   String? _remarks;
@@ -189,7 +189,7 @@ class Rows {
     dynamic bidType,
     dynamic bidNo,
     String? transactionType,
-    num? debit,
+    dynamic debit,
     dynamic credit,
     num? previousAmount,
     String? remarks,
@@ -226,7 +226,7 @@ class Rows {
   dynamic get bidType => _bidType;
   dynamic get bidNo => _bidNo;
   String? get transactionType => _transactionType;
-  num? get debit => _debit;
+  dynamic get debit => _debit;
   dynamic get credit => _credit;
   num? get previousAmount => _previousAmount;
   String? get remarks => _remarks;

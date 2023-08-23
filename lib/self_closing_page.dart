@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
@@ -20,7 +19,8 @@ class InactivityController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _resetInactivityTimer();
+    // _resetInactivityTimer();
+    ifUserLogedIn();
   }
 
   void _resetInactivityTimer() {
@@ -34,6 +34,33 @@ class InactivityController extends GetxController {
   void onUserInteraction(PointerEvent event) {
     print("state change");
     _resetInactivityTimer();
+  }
+
+  ifUserLogedIn() async {
+    bool alreadyLoggedIn = await getStoredUserData();
+    bool isActive =
+        await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+    bool isVerified =
+        await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    if (alreadyLoggedIn) {
+      print("alreadyLogged:  $alreadyLoggedIn");
+      if (isActive && isVerified) {
+        _resetInactivityTimer();
+      }
+    }
+  }
+
+  userLogIn(PointerEvent event) async {
+    bool alreadyLoggedIn = await getStoredUserData();
+    bool isActive =
+        await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+    bool isVerified =
+        await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    if (alreadyLoggedIn) {
+      if (isActive && isVerified) {
+        onUserInteraction(event);
+      }
+    }
   }
 
   @override
@@ -88,7 +115,6 @@ class InactivityController extends GetxController {
             bool alreadyLoggedIn = await getStoredUserData();
             bool isActive =
                 await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-            print(isActive);
             bool isVerified =
                 await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
             if (alreadyLoggedIn) {
@@ -99,6 +125,7 @@ class InactivityController extends GetxController {
                 );
               }
             } else {
+              print("alreadyLoggedInWelcomePage:  $alreadyLoggedIn");
               _inactivityTimer?.cancel();
             }
           },

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/gamemode_pages/controller/game_pages_controller.dart';
-import '../../routes/app_routes_name.dart';
 
 class GameModePage extends StatelessWidget {
   GameModePage({super.key});

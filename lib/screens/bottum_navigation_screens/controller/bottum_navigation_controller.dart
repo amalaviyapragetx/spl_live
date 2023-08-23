@@ -120,8 +120,8 @@ class MoreListController extends GetxController {
         if (value['status']) {
           var feedbackModel = GetFeedbackByIdApiResponseModel.fromJson(value);
           if (feedbackModel.data != null) {
-            tempRatings = feedbackModel.data!.rating != null
-                ? feedbackModel.data!.rating!.toDouble()
+            tempRatings = feedbackModel.data!.user!.appRating != null
+                ? feedbackModel.data!.user!.appRating.toDouble()
                 : 0.00;
             tempFeedBack = feedbackModel.data!.feedback.toString();
           } else {
@@ -134,20 +134,55 @@ class MoreListController extends GetxController {
         }
         if (tempRatings > 0.00) {
           AppUtils().showRateUsBoxDailog((rat) {
-            addFeedbackApi(rat, tempFeedBack);
+            addRating(rat);
           }, tempRatings);
         } else {
           AppUtils().showRateUsBoxDailog((rat) {
-            addFeedbackApi(rat, tempFeedBack);
+            addRating(rat);
           }, 0);
         }
       },
     );
   }
 
-  void addFeedbackApi(ratingValue, feedBack) async {
+  // void addFeedbackApi(ratingValue, feedBack) async {
+  //   ApiService()
+  //       .createFeedback(await createFeedbackBody(ratingValue, feedBack))
+  //       .then((value) async {
+  //     debugPrint("Create Feedback Api Response :- $value");
+  //     if (value['status']) {
+  //       Get.back();
+  //       AppUtils.showSuccessSnackBar(
+  //           bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+  //     } else {
+  //       AppUtils.showErrorSnackBar(
+  //         bodyText: value['message'] ?? "",
+  //       );
+  //     }
+  //   });
+  // }
+
+  // Future<Map> createFeedbackBody(rating, String? feedBack) async {
+  //   final createFeedbackBody = {
+  //     "userId": userData.id,
+  //     "feedback": feedBack,
+  //     "rating": rating,
+  //   };
+  //   debugPrint(createFeedbackBody.toString());
+  //   return createFeedbackBody;
+  // }
+  Future<Map> createRatingBody(rating) async {
+    final createFeedbackBody = {
+      "userId": userData.id,
+      "rating": rating,
+    };
+    debugPrint(createFeedbackBody.toString());
+    return createFeedbackBody;
+  }
+
+  void addRating(ratingValue) async {
     ApiService()
-        .createFeedback(await createFeedbackBody(ratingValue, feedBack))
+        .rateApp(await createRatingBody(ratingValue))
         .then((value) async {
       debugPrint("Create Feedback Api Response :- $value");
       if (value['status']) {
@@ -160,15 +195,5 @@ class MoreListController extends GetxController {
         );
       }
     });
-  }
-
-  Future<Map> createFeedbackBody(rating, String? feedBack) async {
-    final createFeedbackBody = {
-      "userId": userData.id,
-      "feedback": feedBack,
-      "rating": rating,
-    };
-    debugPrint(createFeedbackBody.toString());
-    return createFeedbackBody;
   }
 }

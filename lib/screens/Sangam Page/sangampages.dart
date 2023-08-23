@@ -747,16 +747,8 @@ class SangamPages extends StatelessWidget {
                       nameColumn(
                         subText: "",
                         titleText:
-                            controller.gameMode.value.name!.toUpperCase() ==
-                                    "HALF SANGAM A"
-                                ? controller.reverse(
-                                    controller.requestModel.value.bids![index]
-                                            .bidNo ??
-                                        "",
-                                  )
-                                : controller.requestModel.value.bids![index]
-                                        .bidNo ??
-                                    "",
+                            controller.requestModel.value.bids![index].bidNo ??
+                                "",
                         textColor2: AppColors.black.withOpacity(0.5),
                         textColor: AppColors.black,
                       ),

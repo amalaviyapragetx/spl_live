@@ -33,10 +33,10 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       builder: (context, child) {
         return Listener(
-          onPointerSignal: conrroller.onUserInteraction,
-          onPointerDown: conrroller.onUserInteraction,
-          onPointerMove: conrroller.onUserInteraction,
-          onPointerUp: conrroller.onUserInteraction,
+          onPointerSignal: conrroller.userLogIn,
+          onPointerDown: conrroller.userLogIn,
+          onPointerMove: conrroller.userLogIn,
+          onPointerUp: conrroller.userLogIn,
           child: GetMaterialApp(
             title: 'SPL app',
             theme: ThemeData(

@@ -344,6 +344,7 @@ class NormalGamePageController extends GetxController {
                 }
               }
             }
+            Get.closeAllSnackbars();
             _calculateTotalAmount();
             coinFocusNode.nextFocus();
             leftFocusNode.requestFocus();
@@ -353,7 +354,7 @@ class NormalGamePageController extends GetxController {
             bodyText: value['message'] ?? "",
           );
         }
-
+        Get.closeAllSnackbars();
         coinController.clear();
         leftAnkController.clear();
         middleAnkController.clear();

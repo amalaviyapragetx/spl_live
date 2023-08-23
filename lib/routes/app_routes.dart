@@ -40,6 +40,7 @@ import '../screens/More Details Screens/Withdrawal Page/binding/withdrawal_page_
 import '../screens/More Details Screens/Withdrawal Page/withdrawal_page.dart';
 import '../screens/Normal Game Pages/binding/normal_game_page_controller.dart';
 import '../screens/Normal Game Pages/normal_game_pages.dart';
+import '../screens/Notification MSG Page/bindings/notification_binding.dart';
 import '../screens/Reset Password Page/binding/reset_password_binding.dart';
 import '../screens/Reset Password Page/reset_password.dart';
 import '../screens/Sangam Page/sangampages.dart';
@@ -65,7 +66,7 @@ import '../screens/game_pages/bindings/game_mode_page_binding.dart';
 import '../screens/gamemode_pages/bindings/game_mode_page_binding.dart';
 import '../screens/home_screen/binding/home_screen_binding.dart';
 import '../screens/home_screen/home_screen.dart';
-import '../screens/notification_page/notification.dart';
+import '../screens/Notification MSG Page/notification.dart';
 import '../screens/sign_in_screen/sign_in_screen_page.dart';
 import '../screens/transaction_page/binding/transaction_page_binding.dart';
 import '../screens/transaction_page/transaction.dart';
@@ -116,10 +117,10 @@ class AppRoutes {
       name: AppRoutName.notificationPage,
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
-      page: () => const NotificationPage(),
-      // bindings: [
-      //   DashBoardPage(),
-      // ],
+      page: () => NotificationPage(),
+      bindings: [
+        NotificationBinding(),
+      ],
     ),
     GetPage(
       name: AppRoutName.gameModePage,

@@ -63,4 +63,13 @@ class ApiUtils {
   // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
   // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
   static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
+  static String getNotificationCount =
+      "$baseURL/notification/getNotificationCount";
+
+  static String getAllNotifications =
+      "$baseURL/notification/getAll?search=&limit=10&offset=0";
+  static String resetNotificationCount = "$baseURL/notification/resetCount";
+
+  /// new Rating Api
+  static String rateAppApi = "$baseURL/feedback/createRating";
 }

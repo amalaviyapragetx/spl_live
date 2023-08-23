@@ -20,8 +20,10 @@ class GiveFeedbackPageController extends GetxController {
     getArguments();
   }
 
-  void addFeedbackApi() async {
-    ApiService().createFeedback(await createFeedbackBody()).then((value) async {
+  void addFeedbackApi(ratingValue) async {
+    ApiService()
+        .createFeedback(await createFeedbackBody(ratingValue))
+        .then((value) async {
       debugPrint("Create Feedback Api Response :- $value");
       if (value['status']) {
         Get.back();
@@ -35,18 +37,49 @@ class GiveFeedbackPageController extends GetxController {
     });
   }
 
+  // UserDetailsModel userData = UserDetailsModel();
+  // Future<void> getUserData() async {
+  //   var data = await LocalStorage.read(ConstantsVariables.userData);
+  //   userData = UserDetailsModel.fromJson(data);
+  //   // getMarketBidsByUserId(lazyLoad: false);
+  // }
+
+  // Future<Map> createFeedbackBody(rating, String? feedBack) async {
+  //   final createFeedbackBody = {
+  //     "userId": userDetailsModel.id,
+  //     "feedback": feedBack,
+  //     "rating": 4,
+  //   };
+  //   debugPrint(createFeedbackBody.toString());
+  //   return createFeedbackBody;
+  // }
+  // void addFeedbackApi() async {
+  //   ApiService().createFeedback(await createFeedbackBody()).then((value) async {
+  //     debugPrint("Create Feedback Api Response :- $value");
+  //     if (value['status']) {
+  //       Get.back();
+  //       AppUtils.showSuccessSnackBar(
+  //           bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+  //     } else {
+  //       AppUtils.showErrorSnackBar(
+  //         bodyText: value['message'] ?? "",
+  //       );
+  //     }
+  //   });
+  // }
+
   getArguments() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(data);
     print(userDetailsModel.toJson());
-    getFeedbackAndRatingsById();
+    // getFeedbackAndRatingsById();
   }
 
-  Future<Map> createFeedbackBody() async {
+  Future<Map> createFeedbackBody(ratingValue) async {
     final createFeedbackBody = {
       "userId": int.parse(userDetailsModel.id.toString()),
       "feedback": feedbackController.text,
-      "rating": 0
+      "rating": ratingValue
     };
     debugPrint(createFeedbackBody.toString());
     return createFeedbackBody;

@@ -268,7 +268,7 @@ class NormalGamePage extends StatelessWidget {
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 onChanged: (val) {
-                                  if (int.parse(val!) ==
+                                  if (val!.length ==
                                       controller.panaControllerLength.value) {
                                     controller.leftFocusNode.nextFocus();
                                     controller.middleFocusNode.requestFocus();
@@ -336,7 +336,7 @@ class NormalGamePage extends StatelessWidget {
                                       ],
                                       focusNode: controller.middleFocusNode,
                                       onChanged: (val) {
-                                        if (int.parse(val!) ==
+                                        if (val!.length ==
                                             controller
                                                 .panaControllerLength.value) {
                                           controller.middleFocusNode
@@ -398,7 +398,7 @@ class NormalGamePage extends StatelessWidget {
                               ],
                               focusNode: controller.rightFocusNode,
                               onChanged: (val) {
-                                if (int.parse(val!) ==
+                                if (val!.length ==
                                     controller.panaControllerLength.value) {
                                   controller.rightFocusNode.nextFocus();
                                   controller.coinFocusNode.requestFocus();
@@ -560,7 +560,7 @@ class NormalGamePage extends StatelessWidget {
                               } else {
                                 controller.groupJodiData();
                               }
-                              // controller.groupJodiData();
+                              //  controller.groupJodiData();
                             } else {
                               controller.groupJodiData();
                             }
