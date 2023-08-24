@@ -72,7 +72,7 @@ class HomePageController extends GetxController {
   RxList<MarketBidHistoryList> marketBidHistoryList =
       <MarketBidHistoryList>[].obs;
   DateTime startEndDate = DateTime.now();
-  DateTime startEndDateForBidHistory = DateTime.now();
+
   var walletController = Get.put(WalletController());
   RxString walletBalance = "00".obs;
   RxString getNotifiactionCount = "".obs;
@@ -129,8 +129,8 @@ class HomePageController extends GetxController {
     userData = UserDetailsModel.fromJson(data);
     getMarketBidsByUserId(
         lazyLoad: false,
-        startDate: DateFormat('yyyy-MM-dd').format(startEndDateForBidHistory),
-        endDate: DateFormat('yyyy-MM-dd').format(startEndDateForBidHistory));
+        startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+        endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
   }
 
   // onTapOficonButton() {
@@ -383,9 +383,9 @@ class HomePageController extends GetxController {
                                   getMarketBidsByUserId(
                                       lazyLoad: false,
                                       endDate: DateFormat('yyyy-MM-dd')
-                                          .format(startEndDateForBidHistory),
+                                          .format(startEndDate),
                                       startDate: DateFormat('yyyy-MM-dd')
-                                          .format(startEndDateForBidHistory));
+                                          .format(startEndDate));
                                   // HomeScreenUtils().iconsContainer2();
                                   widgetContainer.value = position;
                                   print(
@@ -422,11 +422,10 @@ class HomePageController extends GetxController {
                                           getMarketBidsByUserId(
                                             lazyLoad: false,
                                             endDate: DateFormat('yyyy-MM-dd')
-                                                .format(
-                                                    startEndDateForBidHistory),
+                                                .format(startEndDate),
                                             startDate:
                                                 DateFormat('yyyy-MM-dd').format(
-                                              startEndDateForBidHistory,
+                                              startEndDate,
                                             ),
                                           );
                                         },
@@ -876,17 +875,19 @@ class HomePageController extends GetxController {
   }
 
   void getUserBalance() {
-    ApiService().getBalance().then((value) async {
-      debugPrint("((((((((((((((((((((((((((()))))))))))))))))))))))))))");
-      debugPrint("Wallet balance Api Response :- $value");
-      if (value['status']) {
-        var tempBalance = value['data']['Amount'] ?? 00;
-        walletBalance.value = tempBalance.toString();
-      } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
-      }
-    });
+    ApiService().getBalance().then(
+      (value) async {
+        debugPrint("((((((((((((((((((((((((((()))))))))))))))))))))))))))");
+        debugPrint("Wallet balance Api Response :- $value");
+        if (value['status']) {
+          var tempBalance = value['data']['Amount'] ?? 00;
+          walletBalance.value = tempBalance.toString();
+        } else {
+          AppUtils.showErrorSnackBar(
+            bodyText: value['message'] ?? "",
+          );
+        }
+      },
+    );
   }
 }

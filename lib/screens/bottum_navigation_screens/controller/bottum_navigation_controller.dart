@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -18,6 +19,7 @@ class MoreListController extends GetxController {
   int offset = 0;
   RxString walletBalance = "00".obs;
   double ratingValue = 0.00;
+  RxBool isSharing = false.obs;
   @override
   void onInit() {
     getUserData();
@@ -195,5 +197,12 @@ class MoreListController extends GetxController {
         );
       }
     });
+  }
+
+  void toggleShare() {
+    isSharing.value = !isSharing.value;
+    if (isSharing.value) {
+      Share.share("http://spl.live");
+    }
   }
 }

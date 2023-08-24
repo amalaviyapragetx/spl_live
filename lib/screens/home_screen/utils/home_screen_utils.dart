@@ -47,6 +47,7 @@ class HomeScreenUtils {
     required String ballance,
     required String bidTime,
     required String requestId,
+    required bool isWin,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
@@ -61,7 +62,7 @@ class HomeScreenUtils {
             ),
           ],
           border: Border.all(width: 0.6),
-          color: AppColors.white,
+          color: isWin == true ? AppColors.greenAccent : AppColors.white,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -86,18 +87,6 @@ class HomeScreenUtils {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         "$openTime - $closeTime",
-            //         style: CustomTextStyle.textRobotoSansLight,
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Padding(
               padding: EdgeInsets.all(Dimensions.h8),
               child: Row(
@@ -176,15 +165,7 @@ class HomeScreenUtils {
               child: Padding(
                 padding: EdgeInsets.all(Dimensions.h8),
                 child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // SvgPicture.asset(
-                    //   ConstantImage.clockSvg,
-                    //   height: Dimensions.h14,
-                    // ),
-                    // SizedBox(
-                    //   width: Dimensions.w8,
-                    // ),
                     const Expanded(child: SizedBox()),
                     Text(
                       bidTime,
@@ -746,6 +727,7 @@ class HomeScreenUtils {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return listveiwTransaction(
+                  isWin: controller.marketHistoryList[index].isWin ?? false,
                   requestId:
                       controller.marketHistoryList[index].requestId ?? "",
                   bidTime: CommonUtils()
@@ -768,8 +750,8 @@ class HomeScreenUtils {
   bidHistory(context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 10,
+        SizedBox(
+          height: Dimensions.h11,
         ),
         SizedBox(
           height: 45,
@@ -779,7 +761,7 @@ class HomeScreenUtils {
             controller: controller.dateinput,
             decoration: InputDecoration(
               hintText:
-                  DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+                  DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
               hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
                 color: AppColors.appbarColor,
               ),
@@ -789,7 +771,7 @@ class HomeScreenUtils {
               contentPadding: EdgeInsets.symmetric(
                   horizontal: Dimensions.w8, vertical: Dimensions.h10),
               filled: true,
-              fillColor: Colors.grey.withOpacity(0.1),
+              fillColor: AppColors.grey.withOpacity(0.15),
               prefixIcon: Icon(Icons.calendar_month_sharp,
                   color: AppColors.appbarColor),
             ),
@@ -803,16 +785,16 @@ class HomeScreenUtils {
               if (pickedDate != null) {
                 String formattedDate =
                     DateFormat('yyyy-MM-dd').format(pickedDate);
-                controller.dateinput.text = formattedDate;
+                String formattedDate2 =
+                    DateFormat('dd-MM-yyyy').format(pickedDate);
+                controller.dateinput.text = formattedDate2;
                 print(controller.dateinput.text);
                 controller.getMarketBidsByUserId(
                   lazyLoad: false,
                   startDate: formattedDate,
                   endDate: formattedDate,
                 );
-              } else {
-                controller.dateinput.text =
-                    DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
+                controller.startEndDate = pickedDate;
               }
             },
           ),
@@ -841,17 +823,19 @@ class HomeScreenUtils {
                 style: CustomTextStyle.textRobotoSansLight
                     .copyWith(color: AppColors.appbarColor),
                 decoration: InputDecoration(
-                  hintText: DateFormat('yyyy-MM-dd')
+                  hintText: DateFormat('dd-MM-yyyy')
                       .format(DateTime.now())
                       .toString(),
-                  hintStyle: TextStyle(color: AppColors.appbarColor),
+                  hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+                    color: AppColors.appbarColor,
+                  ),
                   border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
                   contentPadding: EdgeInsets.symmetric(
                       horizontal: Dimensions.w8, vertical: Dimensions.h10),
                   filled: true,
-                  fillColor: Colors.grey[200],
+                  fillColor: AppColors.grey.withOpacity(0.15),
                   prefixIcon: Icon(Icons.calendar_month_sharp,
                       color: AppColors.appbarColor),
                 ),
@@ -867,7 +851,9 @@ class HomeScreenUtils {
                     String formattedDate =
                         // .formatDateStringToDDMMMMMYYYY(pickedDate.toString());
                         DateFormat('yyyy-MM-dd').format(pickedDate);
-                    controller.dateinputForResultHistory.text = formattedDate;
+                    String formattedDate2 =
+                        DateFormat('dd-MM-yyyy').format(pickedDate);
+                    controller.dateinputForResultHistory.text = formattedDate2;
 
                     controller.getDailyStarLineMarkets(
                         formattedDate, formattedDate);

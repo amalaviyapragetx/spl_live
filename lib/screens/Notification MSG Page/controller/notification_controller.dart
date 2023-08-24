@@ -16,6 +16,14 @@ class NotificationController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    print("pageClose -----------");
+    getNotifiactionCount.refresh();
+    print("onpageClose ------$getNotifiactionCount-----");
+    super.onClose();
+  }
+
   void getNotificationsData() async {
     ApiService().getAllNotifications().then((value) async {
       debugPrint("Notifiactions Data Api ------------- :- $value");

@@ -155,6 +155,7 @@ class SelectBidPageController extends GetxController {
               onPressed: () {
                 createMarketBidApi();
                 // requestModel.value.bids!.clear();
+                // requestModel.refresh();
               },
               child: Text(
                 'OKAY',

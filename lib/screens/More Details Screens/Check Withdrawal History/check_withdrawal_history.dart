@@ -143,14 +143,13 @@ class CheckWithdrawalPage extends StatelessWidget {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return withDrawalHistoryDetails(
+                  remarkTitle:
+                      controller.withdrawalRequestList[index].remarks == null
+                          ? "Withdrawal Status"
+                          : "Remarks",
                   remarks: controller.withdrawalRequestList[index].remarks ??
-                      "Request Pending",
-                  requestTimeColor: controller
-                              .withdrawalRequestList[index].status
-                              .toString() ==
-                          "Pending"
-                      ? AppColors.black
-                      : AppColors.white,
+                      "Pending for Approval",
+                  requestTimeColor: AppColors.white,
                   onStatusContainerColor: controller.checkColor(index),
                   statusColor: controller.withdrawalRequestList[index].status
                               .toString() ==
@@ -164,14 +163,19 @@ class CheckWithdrawalPage extends StatelessWidget {
                   // requestProcessedAt: controller
                   //     .withdrawalRequestList[index].requestProcessedAt
                   //     .toString(),
-                  requestTime: CommonUtils().formatStringToDDMMMYYYYHHMMSSA(
-                      controller.withdrawalRequestList[index].requestTime
+                  requestTime: CommonUtils()
+                      .convertUtcToIstFormatStringToDDMMYYYYHHMMA(controller
+                          .withdrawalRequestList[index].requestTime
                           .toString()),
                   requestedAmount: controller
                       .withdrawalRequestList[index].requestedAmount
                       .toString(),
-                  status:
-                      controller.withdrawalRequestList[index].status.toString(),
+                  status: controller.withdrawalRequestList[index].status
+                              .toString() ==
+                          "Pending"
+                      ? ""
+                      : controller.withdrawalRequestList[index].status
+                          .toString(),
                 );
               },
             ),
@@ -189,6 +193,7 @@ class CheckWithdrawalPage extends StatelessWidget {
     required Color onStatusContainerColor,
     required Color requestTimeColor,
     required String remarks,
+    required String remarkTitle,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
@@ -242,31 +247,18 @@ class CheckWithdrawalPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(Dimensions.h8),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Remarks",
+                      "$remarkTitle : ",
                       style: CustomTextStyle.textRobotoSansBold,
                     ),
-                    Text(
-                      remarks,
-                      style: CustomTextStyle.textRobotoSansMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(Dimensions.h8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Status",
-                      style: CustomTextStyle.textRobotoSansBold,
-                    ),
-                    Text(
-                      "Request On",
-                      style: CustomTextStyle.textRobotoSansBold,
+                    Expanded(
+                      child: Text(
+                        remarks.trim(),
+                        style: CustomTextStyle.textRobotoSansLight,
+                      ),
                     ),
                   ],
                 ),
@@ -294,19 +286,20 @@ class CheckWithdrawalPage extends StatelessWidget {
                         width: Dimensions.w8,
                       ),
                       Text(
+                        requestTime,
+                        style: CustomTextStyle.textRobotoSansLight
+                            .copyWith(color: requestTimeColor),
+                      ),
+                      // SizedBox(
+                      //   width: Dimensions.w8,
+                      // ),
+
+                      const Expanded(child: SizedBox()),
+                      Text(
                         status,
                         style: CustomTextStyle.textRobotoSansLight.copyWith(
                           color: statusColor,
                         ),
-                      ),
-                      SizedBox(
-                        width: Dimensions.w8,
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Text(
-                        requestTime,
-                        style: CustomTextStyle.textRobotoSansLight
-                            .copyWith(color: requestTimeColor),
                       ),
                     ],
                   ),

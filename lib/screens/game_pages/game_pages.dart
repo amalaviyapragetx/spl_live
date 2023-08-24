@@ -140,7 +140,6 @@ class SingleAnkPage extends StatelessWidget {
                                   if (val != null) {
                                     if (val.characters.characterAt(0) ==
                                         Characters("0")) {
-                                      print("22222222222222");
                                       // we need to remove the first char
                                       controller.coinController.text =
                                           val.substring(1);
@@ -151,7 +150,6 @@ class SingleAnkPage extends StatelessWidget {
                                             .coinController.text.length,
                                       );
                                     } else if (int.parse(val) >= 1) {
-                                      print("333333333333333   ${val.length}");
                                       controller.validCoinsEntered.value = true;
                                       controller.isEnable.value = true;
                                     } else if (int.parse(val) > 10000) {
@@ -282,173 +280,82 @@ class SingleAnkPage extends StatelessWidget {
               numberLine(controller: controller),
               Obx(
                 () {
-                  return controller.matches.isNotEmpty
-                      ? Expanded(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 50.0),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisExtent: 50,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                              ),
-                              itemCount: controller.matches.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  borderRadius:
-                                      BorderRadius.circular(Dimensions.r10),
-                                  onTap: () => controller.isEnable.value
-                                      ? controller.onTapNumberList(index)
-                                      : null,
-                                  child: Opacity(
-                                    opacity: controller.validCoinsEntered.value
-                                        ? 1
-                                        : 0.5,
-                                    child: numberRedioButton(
-                                      textColor: controller.digitList[index]
-                                                  .isSelected ??
-                                              false
-                                          ? AppColors.green
-                                          : AppColors.appbarColor,
-                                      container: controller.digitList[index]
-                                                  .isSelected ==
-                                              true
-                                          ? Container(
-                                              height: Dimensions.h15,
-                                              width: Dimensions.h15,
-                                              decoration: BoxDecoration(
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisExtent: 50,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        itemCount: controller.digitList.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            borderRadius: BorderRadius.circular(Dimensions.r10),
+                            onTap: () => controller.isEnable.value
+                                ? controller.onTapNumberList(index)
+                                : null,
+                            child: Opacity(
+                              opacity:
+                                  controller.validCoinsEntered.value ? 1 : 0.5,
+                              child: numberRedioButton(
+                                textColor:
+                                    controller.digitList[index].isSelected ??
+                                            false
+                                        ? AppColors.green
+                                        : AppColors.appbarColor,
+                                container:
+                                    controller.digitList[index].isSelected ??
+                                            false
+                                        ? Container(
+                                            height: Dimensions.h15,
+                                            width: Dimensions.h15,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.green,
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              border: Border.all(
                                                 color: AppColors.green,
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                border: Border.all(
-                                                  color: AppColors.green,
-                                                  width: Dimensions.w2,
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: FittedBox(
-                                                  fit: BoxFit.fitWidth,
-                                                  child: Icon(
-                                                    Icons.check,
-                                                    size: 13,
-                                                    color: AppColors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          : Container(
-                                              height: Dimensions.h15,
-                                              width: Dimensions.w15,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.transparent,
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                                border: Border.all(
-                                                  color: AppColors.appbarColor,
-                                                  width: Dimensions.w2,
-                                                ),
+                                                width: Dimensions.w2,
                                               ),
                                             ),
-                                      color: controller.digitList[index]
-                                                  .isSelected ??
-                                              false
-                                          ? AppColors.green
-                                          : AppColors.transparent,
-
-                                      /////// Machis //////
-                                      controller.matches[index].toString(),
-                                      controller: controller,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        )
-                      : Expanded(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 50.0),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisExtent: 50,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                              ),
-                              itemCount: controller.digitList.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  borderRadius:
-                                      BorderRadius.circular(Dimensions.r10),
-                                  onTap: () => controller.isEnable.value
-                                      ? controller.onTapNumberList(index)
-                                      : null,
-                                  child: Opacity(
-                                    opacity: controller.validCoinsEntered.value
-                                        ? 1
-                                        : 0.5,
-                                    child: numberRedioButton(
-                                        textColor: controller.digitList[index]
-                                                    .isSelected ??
-                                                false
-                                            ? AppColors.green
-                                            : AppColors.appbarColor,
-                                        container: controller.digitList[index]
-                                                    .isSelected ??
-                                                false
-                                            ? Container(
-                                                height: Dimensions.h15,
-                                                width: Dimensions.h15,
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                  border: Border.all(
-                                                    color: AppColors.green,
-                                                    width: Dimensions.w2,
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                  child: FittedBox(
-                                                    fit: BoxFit.fitWidth,
-                                                    child: Icon(Icons.check,
-                                                        size: 13,
-                                                        color: AppColors.white),
-                                                  ),
-                                                ),
-                                              )
-                                            : Container(
-                                                height: Dimensions.h15,
-                                                width: Dimensions.w15,
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.transparent,
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                  border: Border.all(
-                                                    color:
-                                                        AppColors.appbarColor,
-                                                    width: Dimensions.w2,
-                                                  ),
-                                                ),
+                                            child: Center(
+                                              child: FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Icon(Icons.check,
+                                                    size: 13,
+                                                    color: AppColors.white),
                                               ),
-                                        color: controller.digitList[index]
-                                                    .isSelected ??
-                                                false
-                                            ? AppColors.green
-                                            : AppColors.transparent,
-                                        controller.digitList[index].value ?? "",
-                                        controller: controller),
-                                  ),
-                                );
-                              },
+                                            ),
+                                          )
+                                        : Container(
+                                            height: Dimensions.h15,
+                                            width: Dimensions.w15,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.transparent,
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              border: Border.all(
+                                                color: AppColors.appbarColor,
+                                                width: Dimensions.w2,
+                                              ),
+                                            ),
+                                          ),
+                                color: controller.digitList[index].isSelected ??
+                                        false
+                                    ? AppColors.green
+                                    : AppColors.transparent,
+                                controller.digitList[index].value ?? "",
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        },
+                      ),
+                    ),
+                  );
                 },
               )
               //  buttonContainer(size),
@@ -609,8 +516,7 @@ class SingleAnkPage extends StatelessWidget {
   }
 
   Widget numberRedioButton(text,
-      {required GamePageController controller,
-      required Color color,
+      {required Color color,
       required Widget container,
       required Color textColor}) {
     return Container(

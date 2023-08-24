@@ -17,6 +17,7 @@ class ProfilePage extends StatelessWidget {
   var homeController = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppUtils().simpleAppbar(appBarTitle: "Profile"),
       backgroundColor: AppColors.white,
@@ -24,44 +25,48 @@ class ProfilePage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: Dimensions.h15),
         child: Column(
           children: [
+            SizedBox(
+              height: Dimensions.h15,
+            ),
+            // Container(
+            //   height: Dimensions.h100,
+            //   width: size.width,
+            //   decoration: BoxDecoration(
+            //     color: AppColors.white,
+            //     boxShadow: [
+            //       BoxShadow(
+            //         spreadRadius: 1,
+            //         blurRadius: 4,
+            //         color: AppColors.grey.withOpacity(0.5),
+            //         offset: const Offset(0, 0),
+            //       )
+            //     ],
+            //     borderRadius: BorderRadius.circular(Dimensions.r4),
+            //   ),
+            //   child: Row(
+            //     children: [],
+            //   ),
+            // ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   height: Dimensions.h15,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 15, top: 20),
-                  child: Container(
-                    height: Dimensions.h70,
-                    width: Dimensions.w70,
-                    decoration: BoxDecoration(
-                      color: AppColors.appbarColor,
-                      borderRadius: BorderRadius.circular(Dimensions.r50),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(Dimensions.r50),
-                      onTap: () {
-                        controller.imageSelection();
-                      },
-                      child: controller.myimagepath != null
-                          ? Image.file(controller.myimagepath!)
-                          : Container(
-                              height: Dimensions.w70,
-                              width: Dimensions.w70,
-                              decoration: BoxDecoration(
-                                color: AppColors.appbarColor,
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.r100),
-                              ),
-                            ),
-                    ),
+                SizedBox(
+                  height: Dimensions.h50,
+                  width: Dimensions.w100,
+                  child: Image.asset(
+                    ConstantImage.splLogo,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Text(
                   // "\nJevin \n8780339513 \n8780339513",
-                  "\n${homeController.userData.userName ?? ""}\n${homeController.userData.phoneNumber ?? ""}\n${homeController.userData.phoneNumber ?? ""}",
+                  "\n    User Name   :   ${homeController.userData.userName ?? ""}\n    Mobile No     :   ${homeController.userData.phoneNumber ?? ""} \n",
                   // style: TextStyle(fontSize: 17, color: AppColors.black),\
-                  style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  textAlign: TextAlign.start,
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     fontSize: Dimensions.h15,
                   ),
                 ),

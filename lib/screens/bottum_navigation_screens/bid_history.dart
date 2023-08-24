@@ -18,9 +18,10 @@ class BidHistory extends StatelessWidget {
   final String appbarTitle;
   var controller = Get.put(MoreListController());
   var homePageController = Get.put(HomePageController());
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         AppUtils().simpleAppbar(
@@ -69,7 +70,7 @@ class BidHistory extends StatelessWidget {
 
                 return listveiwTransactionNew(
                   requestId: "RequestId :  ${data.requestId ?? ""}",
-                  //  isWin: data.isWin ?? false,
+                  isWin: data.isWin ?? false,
                   bidNo: data.bidNo.toString(),
                   ballance: data.balance.toString(),
                   coins: data.coins.toString(),
@@ -270,7 +271,6 @@ class BidHistory extends StatelessWidget {
 
   Widget listveiwTransactionNew({
     required String marketName,
-    // required String openResut,
     required String openTime,
     required String closeTime,
     required String coins,
@@ -281,9 +281,7 @@ class BidHistory extends StatelessWidget {
     required String bidType,
     required String bidNo,
     required String requestId,
-
-    // required String closeResult,
-    // required Function() onTap,
+    required bool isWin,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
@@ -300,7 +298,7 @@ class BidHistory extends StatelessWidget {
               ),
             ],
             border: Border.all(width: 0.2),
-            color: AppColors.white,
+            color: isWin == true ? AppColors.greenAccent : AppColors.white,
             borderRadius: BorderRadius.circular(Dimensions.r8),
           ),
           child: Column(

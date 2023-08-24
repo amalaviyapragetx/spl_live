@@ -65,11 +65,11 @@ class CheckWithdrawalPageController extends GetxController {
 
   checkColor(i) {
     if (withdrawalRequestList[i].status == "Pending") {
-      return AppColors.greyShade.withOpacity(0.4);
+      return AppColors.appbarColor;
     } else if (withdrawalRequestList[i].status == "Rejected") {
       return AppColors.redColor;
     } else {
-      return AppColors.greenShade.withOpacity(0.9);
+      return AppColors.greenShade;
     }
   }
 }

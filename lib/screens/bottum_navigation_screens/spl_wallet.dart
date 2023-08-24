@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
@@ -46,91 +47,186 @@ class SPLWallet extends StatelessWidget {
             ),
           ),
           SizedBox(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: Dimensions.h10,
-                ),
-                Text(
-                  "WALLETBALANCE".tr,
-                  style: CustomTextStyle.textRobotoSansMedium
-                      .copyWith(fontSize: Dimensions.h25),
-                ),
-                SizedBox(
-                  height: Dimensions.h10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      ConstantImage.rupeeImageGreen,
-                      height: Dimensions.h40,
-                      width: Dimensions.w40,
-                      fit: BoxFit.fitWidth,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: Dimensions.h10,
+                  ),
+                  Container(
+                    height: Dimensions.h100,
+                    width: size.width,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          spreadRadius: 1,
+                          blurRadius: 4,
+                          color: AppColors.grey.withOpacity(0.5),
+                          offset: const Offset(0, 0),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(Dimensions.r4),
                     ),
-                    Obx(
-                      () => Text(
-                        controller.walletBalance.toString(),
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          fontSize: Dimensions.h35,
-                          color: AppColors.buttonColorDarkGreen,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "WALLETBALANCE".tr,
+                          style: CustomTextStyle.textRobotoSansBold
+                              .copyWith(fontSize: Dimensions.h22),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: Dimensions.h20,
-                ),
-                Text(
-                  "WALLET_TEXT".tr,
-                  textAlign: TextAlign.center,
-                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                    fontSize: Dimensions.h22,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: Dimensions.w40,
+                              width: Dimensions.w40,
+                              child: SvgPicture.asset(
+                                ConstantImage.walletAppbar,
+                                color: AppColors.appbarColor,
+                              ),
+                            ),
+                            SizedBox(
+                              width: Dimensions.w10,
+                            ),
+                            Text(
+                              controller.walletBalance.toString(),
+                              style: CustomTextStyle.textRobotoSansMedium
+                                  .copyWith(
+                                      fontSize: Dimensions.h28,
+                                      color: AppColors.appbarColor),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: Dimensions.h20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: ButtonWidget(
-                          onTap: () {
-                            launch(
-                              "https://wa.me/+917769826748/?text=hi",
-                            );
-                          },
-                          text: "ADDFUND".tr,
-                          buttonColor: AppColors.buttonColorDarkGreen,
-                          height: Dimensions.h30,
-                          width: size.width / 2,
-                          radius: Dimensions.h25,
-                        ),
-                      ),
-                      SizedBox(
-                        width: Dimensions.w5,
-                      ),
-                      Expanded(
-                        child: ButtonWidget(
-                          onTap: () {
-                            homeController.pageWidget.value = 5;
-                            homeController.currentIndex.value = 5;
-                          },
-                          text: "WITHDRAWAL_TXT".tr,
-                          buttonColor: AppColors.buttonColorOrange,
-                          height: Dimensions.h30,
-                          width: size.width / 2,
-                          radius: Dimensions.h25,
-                        ),
-                      )
-                    ],
+                  SizedBox(
+                    height: Dimensions.h10,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: Dimensions.h10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      launch(
+                        "https://wa.me/+917769826748/?text=hi",
+                      );
+                    },
+                    child: Container(
+                      height: Dimensions.h50,
+                      width: size.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            color: AppColors.grey.withOpacity(0.5),
+                            offset: const Offset(0, 0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(Dimensions.r4),
+                      ),
+                      child: Row(children: [
+                        SizedBox(
+                          width: Dimensions.w10,
+                        ),
+                        SvgPicture.asset(
+                          ConstantImage.addFundIconInWallet,
+                          height: Dimensions.h17,
+                        ),
+                        SizedBox(
+                          width: Dimensions.w15,
+                        ),
+                        Text(
+                          "ADDFUND".tr,
+                          style: CustomTextStyle.textRobotoSansMedium
+                              .copyWith(fontSize: Dimensions.h18),
+                        ),
+                      ]),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Dimensions.h10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      homeController.pageWidget.value = 5;
+                      homeController.currentIndex.value = 5;
+                    },
+                    child: Container(
+                      height: Dimensions.h50,
+                      width: size.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            color: AppColors.grey.withOpacity(0.5),
+                            offset: const Offset(0, 0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(Dimensions.r4),
+                      ),
+                      child: Row(children: [
+                        SizedBox(
+                          width: Dimensions.w10,
+                        ),
+                        SvgPicture.asset(
+                          ConstantImage.withDrawalFundIcon,
+                          height: Dimensions.h17,
+                        ),
+                        SizedBox(
+                          width: Dimensions.w15,
+                        ),
+                        Text(
+                          "Withdrawal Fund",
+                          style: CustomTextStyle.textRobotoSansMedium
+                              .copyWith(fontSize: Dimensions.h18),
+                        ),
+                      ]),
+                    ),
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(10.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Expanded(
+                  //         child: ButtonWidget(
+                  //           onTap: () {},
+                  //           text: "ADDFUND".tr,
+                  //           buttonColor: AppColors.buttonColorDarkGreen,
+                  //           height: Dimensions.h30,
+                  //           width: size.width / 2,
+                  //           radius: Dimensions.h25,
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         width: Dimensions.w5,
+                  //       ),
+                  //       Expanded(
+                  //         child: ButtonWidget(
+                  //           onTap: () {
+                  //             homeController.pageWidget.value = 5;
+                  //             homeController.currentIndex.value = 5;
+                  //           },
+                  //           text: "WITHDRAWAL_TXT".tr,
+                  //           buttonColor: AppColors.buttonColorOrange,
+                  //           height: Dimensions.h30,
+                  //           width: size.width / 2,
+                  //           radius: Dimensions.h25,
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
           ),
         ],

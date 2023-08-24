@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
+import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -14,21 +15,16 @@ import '../../../models/game_modes_api_response_model.dart';
 import '../../Local Storage.dart';
 
 class GameModePagesController extends GetxController {
-  // RxString selectedRadioValue = 'open'.obs;
   RxBool containerChange = false.obs;
+  RxString walletBalance = "00".obs;
   var arguments = Get.arguments;
   Rx<GameModesApiResponseModel> gameModeList = GameModesApiResponseModel().obs;
   var marketValue = MarketData().obs;
   var openBiddingOpen = true.obs;
-  // var openCloseRadioValue = 0.obs;
   var openCloseValue = "OPENBID".tr.obs;
   var closeBiddingOpen = true.obs;
   RxBool isBulkMode = false.obs;
   var playmore;
-  // RxString totalAmount = "00".obs;
-  // var biddingType = "".obs;
-  // var gameName = "".obs;
-  // var marketName = "".obs;
   RxList<Bids> selectedBidsList = <Bids>[].obs;
   RxList<GameMode> gameModesList = <GameMode>[].obs;
   Rx<BidRequestModel> requestModel = BidRequestModel().obs;
@@ -64,6 +60,7 @@ class GameModePagesController extends GetxController {
 
   @override
   void onClose() async {
+    requestModel.value.bids?.clear();
     await LocalStorage.write(ConstantsVariables.playMore, true);
     super.onClose();
   }
@@ -97,10 +94,28 @@ class GameModePagesController extends GetxController {
     }
   }
 
+  // void getUserBalance() {
+  //   ApiService().getBalance().then((value) async {
+  //     debugPrint("((((((((((((((((((((((((((()))))))))))))))))))))))))))");
+  //     debugPrint("Wallet balance Api Response :- $value");
+  //     if (value['status']) {
+  //       var tempBalance = value['data']['Amount'] ?? 00;
+  //       walletBalance.value = tempBalance.toString();
+  //     } else {
+  //       AppUtils.showErrorSnackBar(
+  //         bodyText: value['message'] ?? "",
+  //       );
+  //     }
+  //   });
+  // }
+
   onBackButton() async {
     Get.offNamed(AppRoutName.dashBoardPage);
     selectedBidsList.clear();
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+    final walletController = Get.find<WalletController>();
+    walletController.getUserBalance();
+    walletController.walletBalance.refresh();
   }
 
   void callGetGameModes() async {
@@ -143,7 +158,6 @@ class GameModePagesController extends GetxController {
   }
 
   void onTapOfGameModeTile(int index) {
-    print("================================================================");
     print(gameModesList[index].name);
     bool isBulkMode = false;
     bool digitBasedJodi = false;
@@ -261,11 +275,6 @@ class GameModePagesController extends GetxController {
   RxString totalAmount = "0".obs;
   var marketName = "".obs;
   Future<void> getArguments() async {
-    //biddingType.value = arguments["biddingType"];
-    // marketName.value = arguments["marketName"];
-    // totalAmount.value = arguments["totalAmount"];
-    // requestModel.value.bids = arguments["bidsList"];
-    // checkBidsList();
     var data = await LocalStorage.read(ConstantsVariables.userData);
     playmore = await LocalStorage.read(ConstantsVariables.playMore);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
@@ -273,9 +282,6 @@ class GameModePagesController extends GetxController {
     selectedBidsList.value =
         await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
     print("@#@@#@#@@#$selectedBidsList");
-    // requestModel.value.bidType = arguments["biddingType"];
-    // requestModel.value.dailyMarketId = arguments["marketId"];
     requestModel.refresh();
-    // gameName.value = arguments["gameName"];
   }
 }

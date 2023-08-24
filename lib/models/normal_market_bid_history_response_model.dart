@@ -177,7 +177,7 @@ class ResultArr {
         transactionType = json['TransactionType'] as String?,
         remarks = json['Remarks'] as String?,
         isResultDeclared = json['IsResultDeclared'] as bool?,
-        requestId = json['requestId'] as String?;
+        requestId = json['RequestId'] as String?;
 
   Map<String, dynamic> toJson() => {
         'BidType': bidType,
@@ -193,6 +193,6 @@ class ResultArr {
         'TransactionType': transactionType,
         'Remarks': remarks,
         'IsResultDeclared': isResultDeclared,
-        'requestId': requestId
+        'RequestId': requestId
       };
 }

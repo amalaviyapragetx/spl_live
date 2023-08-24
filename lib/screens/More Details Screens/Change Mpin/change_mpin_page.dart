@@ -188,12 +188,12 @@ class ChangeMpinPage extends StatelessWidget {
                       SizedBox(
                         height: Dimensions.h20,
                       ),
-                      Text(
-                        "DIGITTEXT".tr,
-                        style: CustomTextStyle.textPTsansMedium.copyWith(
-                          color: AppColors.redColor,
-                        ),
-                      )
+                      // Text(
+                      //   "DIGITTEXT".tr,
+                      //   style: CustomTextStyle.textPTsansMedium.copyWith(
+                      //     color: AppColors.redColor,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

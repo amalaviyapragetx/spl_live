@@ -46,7 +46,7 @@ class MoreOptions extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
                 child: InkWell(
                   onTap: () {
-                    Share.share("http://spl.live");
+                    controller.toggleShare();
                   },
                   child: Container(
                     width: Dimensions.w20,
@@ -95,10 +95,10 @@ class MoreOptions extends StatelessWidget {
                     },
                     iconData: ConstantImage.notifiacation,
                     text: "NOTIFICATIONS".tr),
-                listItems(
-                    onTap: () {},
-                    iconData: ConstantImage.playIcon,
-                    text: "HOWTOPLAY".tr),
+                // listItems(
+                //     onTap: () {},
+                //     iconData: ConstantImage.playIcon,
+                //     text: "HOWTOPLAY".tr),
                 listItems(
                     onTap: () {
                       launch(
@@ -111,6 +111,7 @@ class MoreOptions extends StatelessWidget {
                     onTap: () {
                       homeController.pageWidget.value = 1;
                       homeController.currentIndex.value = 1;
+                      homeController.marketBidsByUserId(lazyLoad: false);
                     },
                     iconData: ConstantImage.clockIcon,
                     text: "BIDDINGHISTORY".tr),
@@ -143,13 +144,13 @@ class MoreOptions extends StatelessWidget {
                   iconData: ConstantImage.rateusStartIcon,
                   text: "RATEUS".tr,
                 ),
-                listItems(
-                  onTap: () {
-                    Get.toNamed(AppRoutName.stalineTerms);
-                  },
-                  iconData: ConstantImage.addFundIcon,
-                  text: "STARLINETERMS&CONDITION".tr,
-                ),
+                // listItems(
+                //   onTap: () {
+                //     Get.toNamed(AppRoutName.stalineTerms);
+                //   },
+                //   iconData: ConstantImage.addFundIcon,
+                //   text: "STARLINETERMS&CONDITION".tr,
+                // ),
                 listItems(
                   onTap: () {
                     Get.toNamed(AppRoutName.aboutPage);

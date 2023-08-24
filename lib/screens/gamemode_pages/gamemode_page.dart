@@ -20,6 +20,7 @@ class GameModePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         controller.onBackButton();
+        walletController.walletBalance.refresh();
         return false;
       },
       child: Scaffold(
@@ -303,7 +304,7 @@ Widget cardWidget(GameModePagesController controller, Size size) {
         itemCount: controller.gameModesList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisExtent: Dimensions.h160,
+            mainAxisExtent: Dimensions.h135,
             crossAxisSpacing: 5,
             mainAxisSpacing: 2),
         itemBuilder: (context, index) {
@@ -330,8 +331,8 @@ Widget cardWidget(GameModePagesController controller, Size size) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: Dimensions.w80,
-                      width: Dimensions.w80,
+                      height: Dimensions.w65,
+                      width: Dimensions.w65,
                       decoration: BoxDecoration(
                         color: AppColors.wpColor1,
                         borderRadius: BorderRadius.circular(50),

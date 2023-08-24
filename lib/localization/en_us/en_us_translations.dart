@@ -64,7 +64,7 @@ final Map<String, String> enUs = {
   "LOGINAS": "Login as",
   "DIRECTLOGIN": "Direct Login",
   "MOBILEPINLOGIN": "Mobile pin Login",
-  "WALLETBALANCE": "Wallet Balance",
+  "WALLETBALANCE": "Current Balance",
   "WALLET_TEXT": "Add or Withdraw money to or from SPL to play games.",
   "ENTERPASSWORDTEXT": "Please enter password",
   "NEWPASSWORD": "New password",

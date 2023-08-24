@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -29,7 +28,7 @@ class StarLineGamePageController extends GetxController {
   RxList<StarLineBids> selectedBidsList = <StarLineBids>[].obs;
   JsonFileModel jsonModel = JsonFileModel();
   var digitList = <DigitListModelOffline>[].obs;
-  var searchDigitList = <DigitListModelOffline>[].obs;
+  var panaDigitList = <DigitListModelOffline>[].obs;
   var singleAnkList = <DigitListModelOffline>[];
   var jodiList = <DigitListModelOffline>[];
   var triplePanaList = <DigitListModelOffline>[];
@@ -119,25 +118,21 @@ class StarLineGamePageController extends GetxController {
         digitList.value = singleAnkList;
         //    initializeTextControllers();
         break;
-      // case "Jodi Bulk":
-      //   showNumbersLine.value = false;
-      //   suggestionList.value = jsonModel.jodi!;
-      //   panaControllerLength.value = 2;
-      //   for (var e in jsonModel.jodi!) {
-      //     jodiList.add(DigitListModelOffline.fromJson(e));
-      //   }
-      //   digitList.value = jodiList;
-      //   //   initializeTextControllers();
-      //   break;
       case "Single Pana Bulk":
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
         panaControllerLength.value = 3;
         suggestionList.value = jsonModel.singlePana!.single.l0!;
-        for (var e in jsonModel.singlePana!.single.l0!) {
-          singlePanaList.add(DigitListModelOffline.fromJson(e));
+        // for (var e in jsonModel.singlePana!.single.l0!) {
+        //   singlePanaList.add(DigitListModelOffline.fromJson(e));
+        // }
+        for (var e in jsonModel.allSinglePana!) {
+          panaDigitList.add(DigitListModelOffline.fromJson(e));
         }
-        digitList.value = singlePanaList;
+        List<List<DigitListModelOffline>> chunks =
+            splitListIntoChunks(panaDigitList, 12);
+        // print(panaDigitList);
+        digitList.value = chunks[0];
         //  initializeTextControllers();
         break;
       case "Double Pana Bulk":
@@ -145,10 +140,17 @@ class StarLineGamePageController extends GetxController {
         showNumbersLine.value = true;
         panaControllerLength.value = 3;
         suggestionList.value = jsonModel.doublePana!.single.l0!;
-        for (var e in jsonModel.doublePana!.single.l0!) {
-          doublePanaList.add(DigitListModelOffline.fromJson(e));
+        // for (var e in jsonModel.doublePana!.single.l0!) {
+        //   doublePanaList.add(DigitListModelOffline.fromJson(e));
+        // }
+        // digitList.value = doublePanaList;
+        for (var e in jsonModel.allDoublePana!) {
+          panaDigitList.add(DigitListModelOffline.fromJson(e));
         }
-        digitList.value = doublePanaList;
+        List<List<DigitListModelOffline>> chunks =
+            splitListIntoChunks(panaDigitList, 9);
+        // print(panaDigitList);
+        digitList.value = chunks[0];
         //  initializeTextControllers();
         break;
       case "Tripple Pana":
@@ -221,9 +223,7 @@ class StarLineGamePageController extends GetxController {
     if (validCoinsEntered.value) {
       if (digitList[index].isSelected == false) {
         onTapOfDigitTile(index);
-        digitList[index].isSelected = true;
       } else {
-        // digitList[index].isSelected = false;
         onLongPressDigitTile(index);
       }
     }
@@ -236,9 +236,10 @@ class StarLineGamePageController extends GetxController {
     digitRow[index].isSelected = true;
     digitRow.refresh();
     if (gameMode.value.name!.toUpperCase() == "SINGLE PANA BULK") {
-      panaSwitchCase(jsonModel.singlePana!.single, index);
+      print("--------------");
+      panaSwitchCase(index, 12);
     } else {
-      panaSwitchCase(jsonModel.doublePana!.single, index);
+      panaSwitchCase(index, 9);
     }
     digitList.refresh();
   }
@@ -250,91 +251,166 @@ class StarLineGamePageController extends GetxController {
     jsonModel = JsonFileModel.fromJson(data);
   }
 
-  void panaSwitchCase(ThreePana panaList, int index) {
+  void panaSwitchCase(int index, int chunkSize) {
     List<DigitListModelOffline> tempList = [];
-    List<String> temListFor = [];
+    List<List<DigitListModelOffline>> chunks =
+        splitListIntoChunks(panaDigitList, chunkSize);
     switch (index) {
       case 0:
-        for (var e in panaList.l0!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        // for (var e in panaList.l0!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   // temListFor.add(e);
+        // }
+        tempList = chunks[0];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        //  displayRange(panaDigitList, 0, 12);
         break;
       case 1:
-        for (var e in panaList.l1!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[1];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l1!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   // temListFor.add(e);
+        // }
+        // //  displayRange(panaDigitList, 12, 24);
         break;
       case 2:
-        for (var e in panaList.l2!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[2];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l2!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   //  temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 24, 36);
         break;
       case 3:
-        for (var e in panaList.l3!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[3];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l3!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   // temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 36, 48);
         break;
       case 4:
-        for (var e in panaList.l4!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[4];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l4!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   //   temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 48, 60);
         break;
       case 5:
-        for (var e in panaList.l5!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[5];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l5!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   // temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 60, 72);
         break;
       case 6:
-        for (var e in panaList.l6!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[6];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l6!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   //  temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 72, 84);
         break;
       case 7:
-        for (var e in panaList.l7!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[7];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l7!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   // temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 84, 96);
         break;
       case 8:
-        for (var e in panaList.l8!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[8];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l8!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   //  temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 96, 108);
         break;
       case 9:
-        for (var e in panaList.l9!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-          temListFor.add(e);
+        tempList = chunks[9];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l9!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   // temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 108, 120);
         break;
       default:
-        for (var e in panaList.l0!) {
-          tempList.add(DigitListModelOffline.fromJson(e));
-
-          temListFor.add(e);
+        tempList = chunks[0];
+        for (int j = 0; j < tempList.length; j++) {
+          print(tempList[j].value);
         }
+        // for (var e in panaList.l0!) {
+        //   tempList.add(DigitListModelOffline.fromJson(e));
+        //   //  temListFor.add(e);
+        // }
+        // displayRange(panaDigitList, 0, 12);
         break;
     }
     digitList.value = tempList;
-    suggestionList.value = temListFor;
+  }
+  // displayRange(
+  //   List<DigitListModelOffline> list,
+  //   int start,
+  //   int end,
+  // ) {
+  //   List<DigitListModelOffline> tempDigitlist = [];
+  //   List<String> tempList = [];
+  //   for (int i = start; i < end && i < list.length; i++) {
+  //     tempList.add(list[i].value ?? "");
+  //   }
+  //   for (var element in tempList) {
+  //     tempDigitlist.add(DigitListModelOffline.fromJson(element));
+  //   }
+  //   print(tempDigitlist.length);
+  //   return tempDigitlist;
+  // }
+
+  List<List<DigitListModelOffline>> splitListIntoChunks(
+      List<DigitListModelOffline> tempList, int chunkSize) {
+    List<List<DigitListModelOffline>> chunks = [];
+
+    for (var i = 0; i < tempList.length; i += chunkSize) {
+      int end = i + chunkSize;
+      if (end > tempList.length) {
+        end = tempList.length;
+      }
+      chunks.add(tempList.sublist(i, end));
+    }
+    return chunks;
   }
 
-  // void onTapNumberList(index) {
-  //   if (digitList[index].isSelected == false) {
-  //     onTapOfDigitTile(index);
-  //     digitList[index].isSelected = true;
-  //   } else {
-  //     digitList[index].isSelected = false;
-  //     onLongPressDigitTile(index);
-  //   }
-  // }
   void onTapOfDigitTile(int index) {
     if (coinController.text.isNotEmpty) {
       if (!validCoinsEntered.value) {
@@ -382,6 +458,13 @@ class StarLineGamePageController extends GetxController {
       print("============ ${selectedBidsList.toList()}");
       _calculateTotalAmount();
     } else {
+      validCoinsEntered.value = false;
+      digitList.refresh();
+      digitList[index].isSelected = false;
+      isEnable.value = false;
+      digitList.refresh();
+      // selectedBidsList
+      // .removeWhere((element) => element.bidNo == digitList[index].value);
       AppUtils.showErrorSnackBar(bodyText: "Please enter coins!");
     }
   }
@@ -419,17 +502,18 @@ class StarLineGamePageController extends GetxController {
       searchResultList.toSet().toList();
       digitList.value = searchResultList;
     } else {
-      debugPrint(" ===== Empty search bar =====");
       debugPrint(" ===== ${gameMode.value.id}=====");
       switch (gameMode.value.id) {
         case 5:
           digitList.value = singleAnkList;
           break;
         case 6:
-          panaSwitchCase(jsonModel.singlePana!.single, selectedIndexOfDigitRow);
+          //panaSwitchCase(selectedIndexOfDigitRow, 12);
+          digitList.value = panaDigitList;
           break;
         case 7:
-          panaSwitchCase(jsonModel.doublePana!.single, selectedIndexOfDigitRow);
+          //panaSwitchCase(selectedIndexOfDigitRow, 9);
+          digitList.value = panaDigitList;
           break;
         default:
           AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);

@@ -186,16 +186,16 @@ class ChangePasswordPage extends StatelessWidget {
                     SizedBox(
                       height: Dimensions.h5,
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(Dimensions.r8),
-                      child: Text(
-                        "PASSWORDTEXT".tr,
-                        style: CustomTextStyle.textPTsansMedium.copyWith(
-                          color: AppColors.redColor,
-                          fontSize: Dimensions.h10,
-                        ),
-                      ),
-                    )
+                    // Padding(
+                    //   padding: EdgeInsets.all(Dimensions.r8),
+                    //   child: Text(
+                    //     "PASSWORDTEXT".tr,
+                    //     style: CustomTextStyle.textPTsansMedium.copyWith(
+                    //       color: AppColors.redColor,
+                    //       fontSize: Dimensions.h10,
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),

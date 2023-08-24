@@ -42,4 +42,7 @@ class ConstantImage {
   static String passBookIcon = "assets/images/passbook_icon.svg";
   static String withDrawalPageIcon = "assets/images/bid_History_Icon.svg";
   static String clockSvg = "assets/images/clock.svg";
+  static String withDrawalFundIcon = "assets/images/vaadin_money-withdraw.svg";
+  static String addFundIconInWallet =
+      "assets/images/majesticons_rupee-circle-line.svg";
 }
