@@ -71,25 +71,6 @@ class MPINPageView extends StatelessWidget {
               ),
             ),
           ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
-          //   child: Center(
-          //     child: Text(
-          //       // "MPINPAGETEXT".tr,
-          //       "ENTER MPIN",
-          //       textAlign: TextAlign.center,
-          //       style: CustomTextStyle.textPTsansMedium
-          //           .copyWith(fontSize: Dimensions.h15),
-          //       // style: TextStyle(fontSize: Dimensions.h14),
-          //       // style: CustomTextStyle.textGothamLight.copyWith(
-          //       //   fontSize: Dimensions.sp17,
-          //       //   letterSpacing: 1,
-          //       //   height: 1.5,
-          //       //   color: AppColors.textColorMain,
-          //       // ),
-          //     ),
-          //   ),
-          // ),
           verticalSpace,
           _buildPinCodeField(
             context: context,
@@ -123,7 +104,7 @@ class MPINPageView extends StatelessWidget {
               child: Text(
                 "${"FORGOTYOURMPIN".tr} ?",
                 textAlign: TextAlign.center,
-                style: CustomTextStyle.textPTsansMedium.copyWith(
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(
                   fontWeight: FontWeight.normal,
                   fontSize: Dimensions.h13,
                   decoration: TextDecoration.underline,
@@ -168,9 +149,10 @@ class MPINPageView extends StatelessWidget {
             obscureText: false,
             obscureCharacter: "",
             textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                color: AppColors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,),
+              color: AppColors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
             animationDuration: const Duration(milliseconds: 200),
             onComplete: (val) {
               pinType.value = val;

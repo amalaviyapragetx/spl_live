@@ -26,8 +26,10 @@ class CustomTextStyle {
       const TextStyle(fontFamily: 'Roboto', fontWeight: FontWeight.w500);
   static TextStyle textRobotoSlabLight =
       const TextStyle(fontFamily: 'Roboto', fontWeight: FontWeight.w300);
-  static TextStyle textPTsansBold =
-      const TextStyle(fontFamily: 'PTsans', fontWeight: FontWeight.w700 ,);
+  static TextStyle textPTsansBold = const TextStyle(
+    fontFamily: 'PTsans',
+    fontWeight: FontWeight.w700,
+  );
   static TextStyle textPTsansMedium =
       const TextStyle(fontFamily: 'PTsans', fontWeight: FontWeight.w500);
   static TextStyle textRobotoSansBold =
@@ -36,4 +38,12 @@ class CustomTextStyle {
       const TextStyle(fontFamily: 'RobotoSans', fontWeight: FontWeight.w500);
   static TextStyle textRobotoSansLight =
       const TextStyle(fontFamily: 'RobotoSans', fontWeight: FontWeight.w300);
+  static TextStyle textAllerta =
+      const TextStyle(fontFamily: 'Allerta', fontWeight: FontWeight.w300);
+  static TextStyle textRamblaBold =
+      const TextStyle(fontFamily: 'Rambla', fontWeight: FontWeight.w700);
+  static TextStyle textRamblaMedium =
+      const TextStyle(fontFamily: 'Rambla', fontWeight: FontWeight.w500);
+  static TextStyle textRamblaLight =
+      const TextStyle(fontFamily: 'Rambla', fontWeight: FontWeight.w300);
 }

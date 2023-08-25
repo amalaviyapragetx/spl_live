@@ -109,6 +109,13 @@ flutter:
         - asset: assets/fonts/roboto_sans/Roboto-Bold.ttf
         - asset: assets/fonts/roboto_sans/Roboto-Medium.ttf
         - asset: assets/fonts/roboto_sans/Roboto-Regular.ttf
+    - family: Allerta
+      fonts:
+        - asset: assets/fonts/Allerta/Allerta-Regular.ttf
+    - family: Rambla
+      fonts:
+        - asset: assets/fonts/rambla/Rambla-Bold.ttf
+
   
   #   - family: Trajan Pro
   #     fonts:

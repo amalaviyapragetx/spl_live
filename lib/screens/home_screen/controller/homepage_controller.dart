@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -19,12 +20,14 @@ import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/market_bid_history.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
+import '../../../models/notifiaction_models/get_all_notification_model.dart';
 import '../../../models/notifiaction_models/notification_count_model.dart';
 import '../../../models/passbook_page_model.dart';
 import '../../../models/starline_chart_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
+import '../../Notification MSG Page/controller/notification_controller.dart';
 import '../../bottum_navigation_screens/bid_history.dart';
 import '../../bottum_navigation_screens/moreoptions.dart';
 import '../../bottum_navigation_screens/passbook_page.dart';
@@ -73,19 +76,39 @@ class HomePageController extends GetxController {
       <MarketBidHistoryList>[].obs;
   DateTime startEndDate = DateTime.now();
 
+  RxList<NotificationData> notificationData = <NotificationData>[].obs;
   var walletController = Get.put(WalletController());
   RxString walletBalance = "00".obs;
-  RxString getNotifiactionCount = "".obs;
+  RxInt getNotifiactionCount = 0.obs;
 
   @override
   void onInit() {
-    getNotificationCount();
     setboolData();
     callMarketsApi();
-    // callGetStarLineChart();
+
     getUserData();
     getUserBalance();
+    getNotificationCount();
+    getNotificationsData();
     super.onInit();
+  }
+
+  void getNotificationsData() async {
+    ApiService().getAllNotifications().then((value) async {
+      debugPrint("Notifiactions Data Api ------------- :- $value");
+      if (value['status']) {
+        GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
+        notificationData.value = model.data!.rows as List<NotificationData>;
+        if (model.message!.isNotEmpty) {
+          // AppUtils.showSuccessSnackBar(
+          //     bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+        }
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
   }
 
   void setboolData() async {
@@ -455,9 +478,12 @@ class HomePageController extends GetxController {
                       ),
                       Obx(
                         () => getDashBoardWidget(
-                            widgetContainer.value, size, context),
+                          widgetContainer.value,
+                          size,
+                          context,
+                        ),
                       ),
-                      spaceBeetween
+                      spaceBeetween,
                     ],
                   ),
                 ),
@@ -723,7 +749,7 @@ class HomePageController extends GetxController {
       debugPrint("Notifiaction Count Api ------------- :- $value");
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
-        getNotifiactionCount.value = model.data!.notificationCount.toString();
+        getNotifiactionCount.value = model.data!.notificationCount!.toInt();
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
@@ -889,5 +915,20 @@ class HomePageController extends GetxController {
         }
       },
     );
+  }
+
+  void resetNotificationCount() async {
+    ApiService().resetNotification().then((value) async {
+      debugPrint("Notifiaction Count Api ------------- :- $value");
+      if (value['status']) {
+        NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
+        getNotifiactionCount.value = model.data!.notificationCount!.toInt();
+        if (model.message!.isNotEmpty) {}
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
   }
 }

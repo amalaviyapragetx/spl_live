@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
+import 'package:spllive/screens/home_screen/utils/home_screen_utils.dart';
 import '../../components/bottumnavigation/bottumnavigation.dart';
 import 'controller/homepage_controller.dart';
 import '../../helper_files/app_colors.dart';
@@ -14,6 +15,7 @@ class DashBoardPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     var controller = Get.put(HomePageController());
     var walletController = Get.put(WalletController());
+    print("${controller.getNotifiactionCount.value.toString()}");
     return WillPopScope(
       onWillPop: () async {
         if (controller.pageWidget.value == 1 ||
@@ -42,74 +44,86 @@ class DashBoardPage extends StatelessWidget {
               false;
         }
       },
-      child: Scaffold(
-        bottomNavigationBar: Obx(
-          () => MyNavigationBar(
-            currentIndex: controller.currentIndex.value,
-            onTapBidHistory: () {
-              controller.pageWidget.value = 1;
-              controller.currentIndex.value = 1;
-              controller.marketBidsByUserId(lazyLoad: false);
-              SystemChrome.setPreferredOrientations([
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.landscapeLeft
-              ]);
-              // controller.getUserBalance();
-            },
-            onTapHome: () {
-              controller.pageWidget.value = 0;
-              controller.currentIndex.value = 0;
-              SystemChrome.setPreferredOrientations([
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.landscapeLeft
-              ]);
-              // controller.getUserBalance();
-            },
-            onTapMore: () {
-              controller.pageWidget.value = 4;
-              controller.currentIndex.value = 4;
-              SystemChrome.setPreferredOrientations([
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.landscapeLeft
-              ]);
-              // controller.getUserBalance();
-            },
-            onTapWallet: () {
-              controller.pageWidget.value = 2;
-              controller.currentIndex.value = 2;
-              walletController.walletBalance.refresh();
-              SystemChrome.setPreferredOrientations([
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.landscapeLeft
-              ]);
-            },
-            onTapPassbook: () {
-              controller.getPassBookData(
-                  lazyLoad: false, offset: controller.offset.value.toString());
-              controller.pageWidget.value = 3;
-              controller.currentIndex.value = 3;
-            },
-          ),
-        ),
-        backgroundColor: AppColors.white,
-        body: RefreshIndicator(
-          onRefresh: () async {
-            if (controller.pageWidget.value == 0 ||
-                controller.pageWidget.value == 2) {
-              controller.handleRefresh();
-              walletController.walletBalance.refresh();
-            }
-          },
-          child: Obx(
-            () => controller.getDashBoardPages(
-              controller.pageWidget.value,
-              size,
-              context,
-              notifictionCount:
-                  controller.getNotifiactionCount.value.toString(),
+      child: Stack(
+        children: [
+          Scaffold(
+            bottomNavigationBar: Obx(
+              () => MyNavigationBar(
+                currentIndex: controller.currentIndex.value,
+                onTapBidHistory: () {
+                  controller.pageWidget.value = 1;
+                  controller.currentIndex.value = 1;
+                  controller.marketBidsByUserId(lazyLoad: false);
+                  SystemChrome.setPreferredOrientations([
+                    DeviceOrientation.portraitUp,
+                    DeviceOrientation.landscapeLeft
+                  ]);
+                  // controller.getUserBalance();
+                },
+                onTapHome: () {
+                  controller.pageWidget.value = 0;
+                  controller.currentIndex.value = 0;
+                  SystemChrome.setPreferredOrientations([
+                    DeviceOrientation.portraitUp,
+                    DeviceOrientation.landscapeLeft
+                  ]);
+                  // controller.getUserBalance();
+                },
+                onTapMore: () {
+                  controller.pageWidget.value = 4;
+                  controller.currentIndex.value = 4;
+                  SystemChrome.setPreferredOrientations([
+                    DeviceOrientation.portraitUp,
+                    DeviceOrientation.landscapeLeft
+                  ]);
+                  // controller.getUserBalance();
+                },
+                onTapWallet: () {
+                  controller.pageWidget.value = 2;
+                  controller.currentIndex.value = 2;
+                  walletController.walletBalance.refresh();
+                  SystemChrome.setPreferredOrientations([
+                    DeviceOrientation.portraitUp,
+                    DeviceOrientation.landscapeLeft
+                  ]);
+                },
+                onTapPassbook: () {
+                  controller.getPassBookData(
+                      lazyLoad: false,
+                      offset: controller.offset.value.toString());
+                  controller.pageWidget.value = 3;
+                  controller.currentIndex.value = 3;
+                },
+              ),
+            ),
+            backgroundColor: AppColors.white,
+            body: RefreshIndicator(
+              onRefresh: () async {
+                if (controller.pageWidget.value == 0 ||
+                    controller.pageWidget.value == 2) {
+                  controller.handleRefresh();
+                  walletController.walletBalance.refresh();
+                }
+              },
+              child: Obx(
+                () => controller.getDashBoardPages(
+                  controller.pageWidget.value,
+                  size,
+                  context,
+                  notifictionCount:
+                      controller.getNotifiactionCount.value.toString(),
+                ),
+              ),
             ),
           ),
-        ),
+          Obx(
+            () => controller.getNotifiactionCount.value > 0
+                ? HomeScreenUtils().notificationAbout(
+                    context,
+                  )
+                : Container(),
+          )
+        ],
       ),
     );
   }

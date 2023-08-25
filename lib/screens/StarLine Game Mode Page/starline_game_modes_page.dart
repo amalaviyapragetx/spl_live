@@ -246,12 +246,14 @@ class StarLineGameModesPage extends StatelessWidget {
         itemCount: controller.gameModesList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisExtent: Dimensions.h160,
+            mainAxisExtent: Dimensions.h140,
             crossAxisSpacing: 5,
             mainAxisSpacing: 2),
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
+            padding: index % 2 == 0
+                ? const EdgeInsets.only(left: 25, top: 10, bottom: 5, right: 7)
+                : const EdgeInsets.only(top: 10, bottom: 5, right: 25, left: 7),
             child: InkWell(
               onTap: () {
                 controller.onTapOfGameModeTile(index);
@@ -273,8 +275,8 @@ class StarLineGameModesPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: Dimensions.w80,
-                      width: Dimensions.w80,
+                      height: Dimensions.w65,
+                      width: Dimensions.w65,
                       decoration: BoxDecoration(
                         color: AppColors.wpColor1,
                         borderRadius: BorderRadius.circular(50),

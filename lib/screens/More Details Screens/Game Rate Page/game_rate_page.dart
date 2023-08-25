@@ -154,7 +154,7 @@ class GameRatePage extends StatelessWidget {
               Expanded(
                 child: Text(
                   titleText,
-                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  style: CustomTextStyle.textAllerta.copyWith(
                     color: AppColors.black,
                     fontSize: Dimensions.h14,
                   ),
@@ -163,7 +163,7 @@ class GameRatePage extends StatelessWidget {
               Expanded(
                 child: Text(
                   trailing,
-                  style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  style: CustomTextStyle.textAllerta.copyWith(
                     color: AppColors.black,
                     fontSize: Dimensions.h14,
                   ),

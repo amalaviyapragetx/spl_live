@@ -5,8 +5,6 @@ import '../helper_files/constant_variables.dart';
 import '../screens/Local Storage.dart';
 import 'api_urls.dart';
 import 'network_info.dart';
-import 'package:get/get.dart';
-import 'network_info.dart';
 
 class ApiService extends GetConnect {
   Map<String, String>? headers = {};

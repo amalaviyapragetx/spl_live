@@ -22,6 +22,7 @@ class WithdrawalPage extends StatelessWidget {
     var verticalSpace = SizedBox(
       height: Dimensions.h15,
     );
+
     return WillPopScope(
       onWillPop: () async {
         homeController.pageWidget.value = 4;
@@ -84,46 +85,169 @@ class WithdrawalPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace,
-              Text(
-                "WITHDRAWAL_TEXT".tr,
-                style: CustomTextStyle.textRobotoSansLight.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h14,
+              Container(
+                height: Dimensions.h200,
+                width: size.width,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: 1,
+                      blurRadius: 4,
+                      color: AppColors.grey.withOpacity(0.5),
+                      offset: const Offset(0, 0),
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(Dimensions.r4),
+                ),
+                child: Column(
+                  children: [
+                    verticalSpace,
+                    Text(
+                      "Withdrawal Timing",
+                      style: CustomTextStyle.textRamblaBold.copyWith(
+                        color: AppColors.appbarColor,
+                        fontSize: Dimensions.h20,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "10:00 AM",
+                                  style: CustomTextStyle.textRobotoSansBold
+                                      .copyWith(
+                                    color: AppColors.black,
+                                    fontSize: Dimensions.h14,
+                                  ),
+                                ),
+                                Text(
+                                  "  to ",
+                                  style: CustomTextStyle.textRobotoSansLight
+                                      .copyWith(
+                                    color: AppColors.black,
+                                    fontSize: Dimensions.h14,
+                                  ),
+                                ),
+                                Text(
+                                  "07:00 PM",
+                                  style: CustomTextStyle.textRobotoSansBold
+                                      .copyWith(
+                                    color: AppColors.black,
+                                    fontSize: Dimensions.h14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Dimensions.h5,
+                            ),
+                            Text(
+                              "(Withdrawal Available all days including Sunday & Bank Holidays )",
+                              textAlign: TextAlign.center,
+                              style:
+                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Dimensions.h5,
+                    ),
+                    Text(
+                      "Minimum Withdrawal",
+                      style: CustomTextStyle.textRamblaBold.copyWith(
+                        color: AppColors.appbarColor,
+                        fontSize: Dimensions.h20,
+                      ),
+                    ),
+                    SizedBox(
+                      height: Dimensions.h5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Rs.",
+                          style: CustomTextStyle.textRobotoSansBold.copyWith(
+                            color: AppColors.black,
+                            fontSize: Dimensions.h14,
+                          ),
+                        ),
+                        Text(
+                          " 500",
+                          style: CustomTextStyle.textRobotoSansLight.copyWith(
+                            color: AppColors.black,
+                            fontSize: Dimensions.h14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Note :",
+                            textAlign: TextAlign.start,
+                            style: CustomTextStyle.textRamblaBold.copyWith(
+                              color: AppColors.appbarColor,
+                              fontSize: Dimensions.h18,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Text(
+                                textAlign: TextAlign.start,
+                                "Withdrawal request processing time minimum 60 min to 24 Hrs ",
+                                style: CustomTextStyle.textRobotoSansLight
+                                    .copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
-              Text(
-                "WITHDRAWAL_TEXT2".tr,
-                style: CustomTextStyle.textRobotoSansLight.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h14,
-                ),
-              ),
-              verticalSpace,
-              Text(
-                "WITHDRAWAL_TEXT3".tr,
-                style: CustomTextStyle.textRobotoSansLight.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h14,
-                ),
-              ),
-              SizedBox(
-                height: Dimensions.h15,
-              ),
-              Text(
-                "WITHDRAWAL_TEXT4".tr,
-                style: CustomTextStyle.textRobotoSansLight.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h14,
-                ),
-              ),
-              verticalSpace,
-              Text(
-                "WITHDRAWAL_TEXT5".tr,
-                style: CustomTextStyle.textRobotoSansLight.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h14,
-                ),
-              ),
+              // SizedBox(
+              //   height: Dimensions.h15,
+              // ),
+              // Text(
+              //   "WITHDRAWAL_TEXT4".tr,
+              //   style: CustomTextStyle.textRobotoSansLight.copyWith(
+              //     color: AppColors.black,
+              //     fontSize: Dimensions.h14,
+              //   ),
+              // ),
+              // verticalSpace,
+              // Text(
+              //   "WITHDRAWAL_TEXT5".tr,
+              //   style: CustomTextStyle.textRobotoSansLight.copyWith(
+              //     color: AppColors.black,
+              //     fontSize: Dimensions.h14,
+              //   ),
+              // ),
               verticalSpace,
               Padding(
                 padding: EdgeInsets.only(
@@ -137,19 +261,19 @@ class WithdrawalPage extends StatelessWidget {
                     Expanded(
                       child: RoundedCornerButton(
                         text: "CHECKWITHDRAWAL".tr,
-                        color: AppColors.buttonColorDarkGreen,
-                        borderColor: AppColors.buttonColorDarkGreen,
+                        color: AppColors.appbarColor,
+                        borderColor: AppColors.appbarColor,
                         fontSize: Dimensions.h13,
                         fontWeight: FontWeight.w500,
                         fontColor: AppColors.white,
                         letterSpacing: 0.5,
-                        borderRadius: Dimensions.h50,
+                        borderRadius: Dimensions.r3,
                         borderWidth: 0,
                         textStyle: CustomTextStyle.textRobotoSansLight,
                         onTap: () {
                           Get.toNamed(AppRoutName.createWithDrawalPage);
                         },
-                        height: Dimensions.h30,
+                        height: Dimensions.h40,
                         width: Dimensions.w200,
                       ),
                     ),
@@ -157,14 +281,17 @@ class WithdrawalPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: double.infinity,
-                height: Dimensions.h70,
-                // color: AppColors.appbarColor,
-                child: SvgPicture.asset(
-                  ConstantImage.withDrawalPageIcon,
-                  color: AppColors.withDrawalSvgColor,
-                ),
+                height: Dimensions.h10,
               ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: Dimensions.h70,
+              //   // color: AppColors.appbarColor,
+              //   child: SvgPicture.asset(
+              //     ConstantImage.withDrawalPageIcon,
+              //     color: AppColors.withDrawalSvgColor,
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
                 child: Row(
@@ -173,13 +300,13 @@ class WithdrawalPage extends StatelessWidget {
                     Expanded(
                       child: RoundedCornerButton(
                         text: "CHECKHISTORY".tr,
-                        color: AppColors.blueButton,
-                        borderColor: AppColors.blueButton,
+                        color: AppColors.wpColor1,
+                        borderColor: AppColors.wpColor1,
                         fontSize: Dimensions.h13,
                         fontWeight: FontWeight.w500,
                         fontColor: AppColors.white,
                         letterSpacing: 0.5,
-                        borderRadius: Dimensions.h50,
+                        borderRadius: Dimensions.r3,
                         borderWidth: 0,
                         textStyle: CustomTextStyle.textRobotoSansLight,
                         onTap: () {
@@ -188,7 +315,7 @@ class WithdrawalPage extends StatelessWidget {
                               "====== My Wallet screen ====== Check withdrawalPageController ======");
                           Get.offAndToNamed(AppRoutName.checkWithDrawalPage);
                         },
-                        height: Dimensions.h30,
+                        height: Dimensions.h40,
                         width: Dimensions.w200,
                       ),
                     ),

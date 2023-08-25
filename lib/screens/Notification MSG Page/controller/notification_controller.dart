@@ -7,7 +7,7 @@ import '../../../models/notifiaction_models/get_all_notification_model.dart';
 import '../../../models/notifiaction_models/notification_count_model.dart';
 
 class NotificationController extends GetxController {
-  RxList<Rows> notificationData = <Rows>[].obs;
+  RxList<NotificationData> notificationData = <NotificationData>[].obs;
   RxString getNotifiactionCount = "".obs;
   @override
   void onInit() {
@@ -29,7 +29,7 @@ class NotificationController extends GetxController {
       debugPrint("Notifiactions Data Api ------------- :- $value");
       if (value['status']) {
         GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
-        notificationData.value = model.data!.rows as List<Rows>;
+        notificationData.value = model.data!.rows as List<NotificationData>;
         if (model.message!.isNotEmpty) {
           // AppUtils.showSuccessSnackBar(
           //     bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);

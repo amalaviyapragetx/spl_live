@@ -126,11 +126,15 @@ class AppUtils {
                 ),
               ),
             ),
-            Text(
-              walletText,
-              style: CustomTextStyle.textPTsansBold.copyWith(
-                color: AppColors.white,
-                fontSize: Dimensions.h18,
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(
+                walletText,
+                textAlign: TextAlign.center,
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  color: AppColors.white,
+                  fontSize: Dimensions.h18,
+                ),
               ),
             ),
             const Expanded(child: SizedBox())

@@ -1223,4 +1223,121 @@ class HomeScreenUtils {
       },
     );
   }
+
+  notificationAbout(BuildContext context) {
+    return Stack(
+      children: [
+        Material(
+          color: AppColors.black.withOpacity(0.4),
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+              top: Dimensions.h95,
+              bottom: 60.0,
+            ),
+            child: Container(
+              color: AppColors.white,
+              width: double.infinity,
+              child: Obx(
+                () => ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: controller.notificationData.length,
+                  itemBuilder: (context, index) {
+                    return notificationWidget(
+                      notifiactionHeder:
+                          controller.notificationData[index].title ?? "",
+                      notifiactionSubTitle:
+                          controller.notificationData[index].description ?? "",
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+        Material(
+          color: AppColors.transparent,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: Dimensions.h87,
+              bottom: 8.0,
+            ),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                onTap: () {
+                  controller.resetNotificationCount();
+                  controller.getNotifiactionCount.refresh();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(Dimensions.r10),
+                  ),
+                  child: Icon(
+                    Icons.close,
+                    color: AppColors.redColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget notificationWidget(
+      {required String notifiactionHeder,
+      required String notifiactionSubTitle}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              color: AppColors.grey,
+              blurRadius: 5,
+              offset: const Offset(2, 3),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.h8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: Dimensions.h5,
+              ),
+              Text(
+                notifiactionHeder,
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: AppColors.black,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+              SizedBox(
+                height: Dimensions.h5,
+              ),
+              SizedBox(
+                child: Text(
+                  notifiactionSubTitle,
+                  textAlign: TextAlign.start,
+                  style: CustomTextStyle.textRobotoSansLight.copyWith(
+                    color: AppColors.black,
+                    fontSize: Dimensions.h13,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

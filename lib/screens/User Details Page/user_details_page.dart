@@ -246,7 +246,7 @@ class UserDetailsPage extends StatelessWidget {
           child: Text(
             "ACCOUNTLOGIN".tr,
             // "${"HAVEANACCOUNT".tr}? ${"LOGIN".tr} ${"HERE".tr}.",
-            style: CustomTextStyle.textPTsansMedium.copyWith(
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: Dimensions.h14,
               letterSpacing: 1,

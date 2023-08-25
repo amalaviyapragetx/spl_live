@@ -51,7 +51,7 @@ class GetAllNotificationsData {
 
 class Data {
   Data({
-    List<Rows>? rows,
+    List<NotificationData>? rows,
     num? count,
   }) {
     _rows = rows;
@@ -62,22 +62,22 @@ class Data {
     if (json['rows'] != null) {
       _rows = [];
       json['rows'].forEach((v) {
-        _rows?.add(Rows.fromJson(v));
+        _rows?.add(NotificationData.fromJson(v));
       });
     }
     _count = json['count'];
   }
-  List<Rows>? _rows;
+  List<NotificationData>? _rows;
   num? _count;
   Data copyWith({
-    List<Rows>? rows,
+    List<NotificationData>? rows,
     num? count,
   }) =>
       Data(
         rows: rows ?? _rows,
         count: count ?? _count,
       );
-  List<Rows>? get rows => _rows;
+  List<NotificationData>? get rows => _rows;
   num? get count => _count;
 
   Map<String, dynamic> toJson() {
@@ -100,8 +100,8 @@ class Data {
 /// createdAt : "2023-08-21T10:09:16.605Z"
 /// updatedAt : "2023-08-21T10:09:16.605Z"
 
-class Rows {
-  Rows({
+class NotificationData {
+  NotificationData({
     num? id,
     String? title,
     String? description,
@@ -123,7 +123,7 @@ class Rows {
     _updatedAt = updatedAt;
   }
 
-  Rows.fromJson(dynamic json) {
+  NotificationData.fromJson(dynamic json) {
     _id = json['id'];
     _title = json['Title'];
     _description = json['Description'];
@@ -143,7 +143,7 @@ class Rows {
   bool? _isActive;
   String? _createdAt;
   String? _updatedAt;
-  Rows copyWith({
+  NotificationData copyWith({
     num? id,
     String? title,
     String? description,
@@ -154,7 +154,7 @@ class Rows {
     String? createdAt,
     String? updatedAt,
   }) =>
-      Rows(
+      NotificationData(
         id: id ?? _id,
         title: title ?? _title,
         description: description ?? _description,

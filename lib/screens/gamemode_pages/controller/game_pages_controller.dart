@@ -16,7 +16,6 @@ import '../../Local Storage.dart';
 
 class GameModePagesController extends GetxController {
   RxBool containerChange = false.obs;
-  RxString walletBalance = "00".obs;
   var arguments = Get.arguments;
   Rx<GameModesApiResponseModel> gameModeList = GameModesApiResponseModel().obs;
   var marketValue = MarketData().obs;
@@ -110,12 +109,12 @@ class GameModePagesController extends GetxController {
   // }
 
   onBackButton() async {
-    Get.offNamed(AppRoutName.dashBoardPage);
     selectedBidsList.clear();
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
     final walletController = Get.find<WalletController>();
     walletController.getUserBalance();
     walletController.walletBalance.refresh();
+    Get.offAllNamed(AppRoutName.dashBoardPage);
   }
 
   void callGetGameModes() async {
