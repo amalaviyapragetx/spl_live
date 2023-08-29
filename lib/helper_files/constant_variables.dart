@@ -23,9 +23,19 @@ class ConstantsVariables {
   static const String countryCode = "country_code";
 
   // change Screens
-  static const String boolData = "bool_data";
+  // static const String boolData = "bool_data";
 
   // change Screens
   static const String playMore = "play_data";
   static const String withDrawal = "withdrawal";
+  static const String bidType = "bid_type";
+
+  // set total Ammount and market name for playMore
+  static const String totalAmount = "total_ammount";
+  static const String timeOut = "time_out";
+
+  //Notification
+
+  static const String marketNotification = "market_notification";
+  static const String starlineNotification = "starline_notification";
 }

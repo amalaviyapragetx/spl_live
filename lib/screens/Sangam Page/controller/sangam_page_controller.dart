@@ -157,10 +157,9 @@ class SangamPageController extends GetxController {
   void validateEnteredOpenDigit(String value) {
     // enteredOpenDigitsIsValidate = true;
     //  enteredOpenDigitsIsValidate = true;
-
     addedNormalBidValue = value;
     openValue = value;
-    print("********openValue****************$value");
+    // print("********openValue****************$value");
     // if (enteredOpenDigitsIsValidate) {
     //   print(enteredOpenDigitsIsValidate);
     //   halfSangamPanaSwitchCase(
@@ -169,15 +168,17 @@ class SangamPageController extends GetxController {
   }
 
   void validateEnteredCloseDigit(bool validate, String value) {
-    //  enteredOpenDigitsIsValidate = true;
-    //  enteredCloseDigitsIsValidate = true;
-    // closeValue = value;
-    closeValue = value;
-    // addedNormalBidValue = value;
-    print("***********closeValue***************$value");
+    if (gameMode.value.name!.toUpperCase() != "FULL SANGAM") {
+      closeValue = value;
+    } else {
+      addedNormalBidValue = value;
+      closeValue = value;
+      //  print("***********closeValue***************$value");
+    }
+
     // if (enteredOpenDigitsIsValidate) {
-    //   // halfSangamPanaSwitchCase(
-    //   //     jsonModel.singlePana!.single, int.parse(openValue));
+    //   halfSangamPanaSwitchCase(
+    //       jsonModel.singlePana!.single, int.parse(openValue));
     // }
   }
 
@@ -239,7 +240,8 @@ class SangamPageController extends GetxController {
   }
 
   void onTapOfAddBidButton() {
-    if (int.parse(coinsController.text) > 0) {
+    if (int.parse(coinsController.text) > 0 ||
+        coinsController.text.isNotEmpty) {
       //if (enteredOpenDigitsIsValidate) {
       print("++++++++++++++++++++++++++++++++++++${addedNormalBidValue}");
       print(
@@ -264,15 +266,27 @@ class SangamPageController extends GetxController {
         focusNode.previousFocus();
         focusNode.previousFocus();
       } else {
-        addedSangamList.add(
-          Bids(
-              bidNo: "$openValue-$closeValue",
-              coins: int.parse(coinsController.text),
-              gameId: gameMode.value.id,
-              gameModeName: gameMode.value.name,
-              remarks:
-                  "You invested At ${marketData.value.market} on $openValue-$closeValue (${gameMode.value.name})"),
-        );
+        var existingIndex = addedSangamList
+            .indexWhere((element) => element.bidNo == addedNormalBidValue);
+        print("-----------------------------__$existingIndex");
+        if (existingIndex != -1) {
+          // If the bidNo already exists in selectedBidsList, update coins value.
+          addedSangamList[existingIndex].coins =
+              (addedSangamList[existingIndex].coins! +
+                  int.parse(coinsController.text));
+
+          print("-----------------------------__$existingIndex");
+        } else {
+          addedSangamList.add(
+            Bids(
+                bidNo: "$openValue-$closeValue",
+                coins: int.parse(coinsController.text),
+                gameId: gameMode.value.id,
+                gameModeName: gameMode.value.name,
+                remarks:
+                    "You invested At ${marketData.value.market} on $openValue-$closeValue (${gameMode.value.name})"),
+          );
+        }
         openValueController.clear();
         closeValueController.clear();
         coinsController.clear();
@@ -287,5 +301,17 @@ class SangamPageController extends GetxController {
         bodyText: "Please Enter Valid Points!",
       );
     }
+  }
+
+  /////// String manupiLATION for haldsangam a
+  String manipulateString(String input) {
+    List<String> parts = input.split('-');
+
+    if (parts.length != 2) {
+      return "Invalid input format.";
+    }
+
+    String manipulatedString = "${parts[1]}-${parts[0]}";
+    return manipulatedString;
   }
 }

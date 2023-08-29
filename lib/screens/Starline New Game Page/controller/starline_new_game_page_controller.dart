@@ -82,6 +82,14 @@ class StarlineNewGamePageController extends GetxController {
     super.dispose();
   }
 
+  checkType(index) {
+    if (gameModeName.contains("Ank") || gameModeName.contains("Odd")) {
+      return "Ank";
+    } else {
+      return "Pana";
+    }
+  }
+
   void validateEnteredDigit(bool validate, String value) {
     enteredDigitsIsValidate = validate;
     addedNormalBidValue = value;
@@ -353,15 +361,23 @@ class StarlineNewGamePageController extends GetxController {
         _tempValidationList = jsonModel.singleAnk!;
         break;
       case "Single Pana":
+        print(
+            "################################################################${panaControllerLength.value}");
         panaControllerLength.value = 3;
+        print(
+            "################################################################${panaControllerLength.value}");
         _tempValidationList = jsonModel.allSinglePana!;
         break;
       case "Double Pana":
         panaControllerLength.value = 3;
+        print(
+            "################################################################${panaControllerLength.value}");
         _tempValidationList = jsonModel.allDoublePana!;
         break;
       case "Tripple Pana":
         panaControllerLength.value = 3;
+        print(
+            "################################################################${panaControllerLength.value}");
         _tempValidationList = jsonModel.triplePana!;
         break;
       case "Panel Group":

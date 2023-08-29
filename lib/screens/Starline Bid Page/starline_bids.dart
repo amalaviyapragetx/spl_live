@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../Custom Controllers/wallet_controller.dart';
+import '../../components/bidList_for_market.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/constant_image.dart';
@@ -61,44 +62,55 @@ class StarlineBidsPage extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: controller.requestModel.value.bids?.length,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                  border: Border.all(),
-                                  borderRadius:
-                                      BorderRadius.circular(Dimensions.h5)),
-                              child: ListTile(
-                                dense: true,
-                                visualDensity:
-                                    const VisualDensity(vertical: -2),
-                                title: Text(
-                                  "Single Digit - Open  ",
-                                  style: CustomTextStyle.textRobotoSansLight
-                                      .copyWith(fontSize: Dimensions.h12),
-                                ),
-                                subtitle: Text(
-                                  "Bid no.: ${controller.requestModel.value.bids![index].bidNo}, Coins :${controller.requestModel.value.bids?.elementAt(index).coins}",
-                                  style: CustomTextStyle.textRobotoSansLight
-                                      .copyWith(fontSize: Dimensions.h12),
-                                ),
-                                trailing: InkWell(
-                                  onTap: () {
-                                    controller.onDeleteBids(index);
-                                  },
-                                  child: Container(
-                                    color: AppColors.transparent,
-                                    height: Dimensions.h30,
-                                    width: Dimensions.w30,
-                                    child: SvgPicture.asset(
-                                      ConstantImage.trashIcon,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                          return BidHistoryList(
+                            marketName: controller.checkType(index),
+                            bidType: "",
+                            bidCoin: controller
+                                .requestModel.value.bids![index].coins
+                                .toString(),
+                            bidNo: controller
+                                .requestModel.value.bids![index].bidNo
+                                .toString(),
+                            onDelete: () => controller.onDeleteBids(index),
                           );
+                          // return Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: DecoratedBox(
+                          //     decoration: BoxDecoration(
+                          //         border: Border.all(),
+                          //         borderRadius:
+                          //             BorderRadius.circular(Dimensions.h5)),
+                          //     child: ListTile(
+                          //       dense: true,
+                          //       visualDensity:
+                          //           const VisualDensity(vertical: -2),
+                          //       title: Text(
+                          //         "Single Digit - Open  ",
+                          //         style: CustomTextStyle.textRobotoSansLight
+                          //             .copyWith(fontSize: Dimensions.h12),
+                          //       ),
+                          //       subtitle: Text(
+                          //         "Bid no.: ${controller.requestModel.value.bids![index].bidNo}, Coins :${controller.requestModel.value.bids?.elementAt(index).coins}",
+                          //         style: CustomTextStyle.textRobotoSansLight
+                          //             .copyWith(fontSize: Dimensions.h12),
+                          //       ),
+                          //       trailing: InkWell(
+                          //         onTap: () {
+                          //           controller.onDeleteBids(index);
+                          //         },
+                          //         child: Container(
+                          //           color: AppColors.transparent,
+                          //           height: Dimensions.h30,
+                          //           width: Dimensions.w30,
+                          //           child: SvgPicture.asset(
+                          //             ConstantImage.trashIcon,
+                          //             fit: BoxFit.cover,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // );
                         },
                       ),
                     ),

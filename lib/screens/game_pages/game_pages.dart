@@ -176,6 +176,7 @@ class SingleAnkPage extends StatelessWidget {
                                 controller: controller.coinController,
                                 hintText: "Enter Points",
                                 imagePath: "",
+                                autofocus: true,
                                 textAlign: TextAlign.center,
                                 contentPadding:
                                     const EdgeInsets.only(right: 40),
@@ -395,9 +396,6 @@ class SingleAnkPage extends StatelessWidget {
                   textStyle: CustomTextStyle.textRobotoSansBold,
                   onTap: () {
                     controller.onTapOfSaveButton();
-                    // controller.coinsFocusNode.unfocus();
-                    // controller.openFocusNode.requestFocus();
-                    // controller.onTapOfAddBidButton();
                   },
                   height: Dimensions.h25,
                   width: Dimensions.w100,

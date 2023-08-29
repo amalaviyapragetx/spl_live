@@ -25,11 +25,22 @@ class SelectBidPageController extends GetxController {
   List<Bids> savedBidsList = <Bids>[];
 
   final walletController = Get.find<WalletController>();
+  RxString bidType = "".obs;
 
   @override
   void onInit() {
     super.onInit();
     getArguments();
+  }
+
+  checkType(index) {
+    if (requestModel.value.bids![index].gameModeName!.contains("Ank")) {
+      return "Ank";
+    } else if (requestModel.value.bids![index].gameModeName!.contains("Jodi")) {
+      return "Jodi";
+    } else {
+      return "Pana";
+    }
   }
 
   Future<void> getArguments() async {
@@ -49,6 +60,9 @@ class SelectBidPageController extends GetxController {
     var hh = await LocalStorage.read(ConstantsVariables.playMore);
     print("playMore $hh");
     newBidListreaddata();
+    _calculateTotalAmount();
+    bidType.value = await LocalStorage.read(ConstantsVariables.bidType);
+    print("=================== ${bidType.value}");
   }
 
   newBidListreaddata() async {
@@ -59,8 +73,9 @@ class SelectBidPageController extends GetxController {
   void onDeleteBids(int index) async {
     requestModel.value.bids!.remove(requestModel.value.bids![index]);
     requestModel.refresh();
-    LocalStorage.write(ConstantsVariables.bidsList,
-        requestModel.value.bids!.map((v) => v.toJson()).toList());
+    LocalStorage.write(ConstantsVariables.bidsList, requestModel.value.bids!);
+    // LocalStorage.write(ConstantsVariables.bidsList,
+    //     requestModel.value.bids!.map((v) => v.toJson()).toList());
     _calculateTotalAmount();
     if (requestModel.value.bids!.isEmpty) {
       requestModel.value.bids!.clear();
@@ -71,7 +86,9 @@ class SelectBidPageController extends GetxController {
     }
   }
 
-  void _calculateTotalAmount() {
+  void _calculateTotalAmount() async {
+    // var getTotalAmount =
+    //     await LocalStorage.read(ConstantsVariables.totalAmount);
     int tempTotal = 0;
     for (var element in requestModel.value.bids ?? []) {
       tempTotal += int.parse(element.coins.toString());
@@ -99,6 +116,7 @@ class SelectBidPageController extends GetxController {
           LocalStorage.remove(ConstantsVariables.bidsList);
           LocalStorage.remove(ConstantsVariables.marketName);
           LocalStorage.remove(ConstantsVariables.biddingType);
+          await LocalStorage.write(ConstantsVariables.playMore, true);
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
@@ -113,15 +131,18 @@ class SelectBidPageController extends GetxController {
   }
 
   void playMore() async {
+    _calculateTotalAmount();
+    await LocalStorage.write(ConstantsVariables.totalAmount, totalAmount.value);
+    await LocalStorage.write(ConstantsVariables.marketName, marketName.value);
     Get.offAndToNamed(AppRoutName.gameModePage, arguments: {
       "biddingType": biddingType.value,
-      // "marketName": marketName.value,
-      //  "totalAmount": totalAmount.value,
+      "marketName": marketName.value,
+      "totalAmount": totalAmount.value,
       "bidsList": requestModel.value.bids,
-      //  "gameName": gameName.value,
+      "gameName": gameName.value,
       //  "marketId": requestModel.value.dailyMarketId,
     });
-    //getArguments();
+    // getArguments();
   }
 
   void showConfirmationDialog(BuildContext context) {

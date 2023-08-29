@@ -141,7 +141,7 @@ class PassBook extends StatelessWidget {
         columns: [
           dataColumns(
             text: "Transaction Date",
-            width: Dimensions.w150,
+            width: Dimensions.w170,
           ),
           dataColumns(
             text: "Particulers",
@@ -165,9 +165,9 @@ class PassBook extends StatelessWidget {
             // print("*********27*****************${data.marketTime}");
             return DataRow(cells: [
               dataCells(
-                width: Dimensions.w150,
+                width: Dimensions.w170,
                 textColor: AppColors.black,
-                text: CommonUtils().convertUtcToIst(
+                text: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
                   data.createdAt.toString(),
                 ),
               ),
@@ -183,7 +183,7 @@ class PassBook extends StatelessWidget {
                               data.transactionType == "Revoke" ||
                               data.transactionType == "Refund"
                           ? "${data.remarks}"
-                          : "${data.transactionType ?? ""} ( ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
+                          : "${data.transactionType ?? ""} (STARLINE : ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
                       : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType ?? ""} ) : ${data.bidNo ?? ""}"),
               dataCells(
                 width: Dimensions.w150,

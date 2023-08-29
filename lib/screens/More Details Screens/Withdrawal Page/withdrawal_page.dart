@@ -86,7 +86,7 @@ class WithdrawalPage extends StatelessWidget {
             children: [
               verticalSpace,
               Container(
-                height: Dimensions.h200,
+                height: Dimensions.h220,
                 width: size.width,
                 decoration: BoxDecoration(
                   color: AppColors.white,
@@ -230,24 +230,6 @@ class WithdrawalPage extends StatelessWidget {
                   ],
                 ),
               ),
-              // SizedBox(
-              //   height: Dimensions.h15,
-              // ),
-              // Text(
-              //   "WITHDRAWAL_TEXT4".tr,
-              //   style: CustomTextStyle.textRobotoSansLight.copyWith(
-              //     color: AppColors.black,
-              //     fontSize: Dimensions.h14,
-              //   ),
-              // ),
-              // verticalSpace,
-              // Text(
-              //   "WITHDRAWAL_TEXT5".tr,
-              //   style: CustomTextStyle.textRobotoSansLight.copyWith(
-              //     color: AppColors.black,
-              //     fontSize: Dimensions.h14,
-              //   ),
-              // ),
               verticalSpace,
               Padding(
                 padding: EdgeInsets.only(
@@ -283,15 +265,6 @@ class WithdrawalPage extends StatelessWidget {
               SizedBox(
                 height: Dimensions.h10,
               ),
-              // SizedBox(
-              //   width: double.infinity,
-              //   height: Dimensions.h70,
-              //   // color: AppColors.appbarColor,
-              //   child: SvgPicture.asset(
-              //     ConstantImage.withDrawalPageIcon,
-              //     color: AppColors.withDrawalSvgColor,
-              //   ),
-              // ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
                 child: Row(

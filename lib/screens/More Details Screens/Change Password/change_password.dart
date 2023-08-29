@@ -202,7 +202,7 @@ class ChangePasswordPage extends StatelessWidget {
               SizedBox(
                 height: Dimensions.h5,
               ),
-              !controller.isValidate.value
+              Obx(() => !controller.isValidate.value
                   ? Align(
                       alignment: Alignment.center,
                       child: ButtonWidget(
@@ -228,7 +228,7 @@ class ChangePasswordPage extends StatelessWidget {
                         width: size.width / 1.2,
                         radius: Dimensions.h20,
                       ),
-                    )
+                    ))
             ],
           ),
         ),

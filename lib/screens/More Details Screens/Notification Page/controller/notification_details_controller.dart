@@ -1,3 +1,58 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
+import 'package:spllive/screens/Local%20Storage.dart';
 
-class NotificationDetailsPageController extends GetxController {}
+import '../../../../api_services/api_service.dart';
+import '../../../../helper_files/ui_utils.dart';
+
+class NotificationDetailsPageController extends GetxController {
+  // RxBool marketNotification = true.obs;
+  // RxBool starlineNotification = true.obs;
+  RxBool marketNotificationFromLocal = true.obs;
+  RxBool starlineNotificationFromLocal = true.obs;
+
+  @override
+  void onInit() async {
+    marketNotificationFromLocal.value =
+        await LocalStorage.read(ConstantsVariables.marketNotification);
+    starlineNotificationFromLocal.value =
+        await LocalStorage.read(ConstantsVariables.starlineNotification);
+    print(
+        "++++initState++++++${marketNotificationFromLocal.value} ${starlineNotificationFromLocal.value}");
+    if (marketNotificationFromLocal.value == null) {
+      await LocalStorage.write(ConstantsVariables.marketNotification, true);
+      await LocalStorage.write(ConstantsVariables.starlineNotification, true);
+      addRating();
+    }
+    super.onInit();
+  }
+
+  void addRating() async {
+    ApiService().marketNotifications(await marketBody()).then((value) async {
+      debugPrint("Notification Response :- $value");
+      if (value['status']) {
+        await LocalStorage.write(ConstantsVariables.marketNotification,
+            marketNotificationFromLocal.value);
+        await LocalStorage.write(ConstantsVariables.starlineNotification,
+            starlineNotificationFromLocal.value);
+        print(
+            "++++++++++++++++${marketNotificationFromLocal.value} ${starlineNotificationFromLocal.value}");
+        // AppUtils.showSuccessSnackBar(
+        //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+
+  marketBody() {
+    var data = {
+      "isMarketNotification": "$marketNotificationFromLocal",
+      "isStarlineMarketNotification": "$starlineNotificationFromLocal"
+    };
+    return data;
+  }
+}

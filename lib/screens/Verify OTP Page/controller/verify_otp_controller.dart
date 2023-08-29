@@ -142,7 +142,7 @@ class VerifyOTPController extends GetxController {
     return resendOtpBody;
   }
 
-  var secondsRemaining = 90.obs;
+  var secondsRemaining = 60.obs;
   late Timer _timer;
 
   void _startTimer() {

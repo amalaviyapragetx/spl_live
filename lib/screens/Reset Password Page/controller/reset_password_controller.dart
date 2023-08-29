@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -24,6 +26,7 @@ class ResetPasswordController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _startTimer();
     getArguments();
   }
 
@@ -103,5 +106,46 @@ class ResetPasswordController extends GetxController {
     } else {
       callResetPasswordApi();
     }
+  }
+
+  var secondsRemaining = 60.obs;
+  late Timer _timer;
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (secondsRemaining.value > 0) {
+        secondsRemaining.value--;
+      } else {
+        _timer.cancel(); // Stop the timer when it reaches 0
+      }
+    });
+  }
+
+  String get formattedTime {
+    int minutes = (secondsRemaining.value ~/ 60);
+    int seconds = (secondsRemaining.value % 60);
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  void callResendOtpApi() async {
+    ApiService().resendOTP(await resendOtpBody()).then((value) async {
+      debugPrint("Resend otp Api Response :- $value");
+      if (value['status']) {
+        AppUtils.showSuccessSnackBar(
+            bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+
+  Future<Map> resendOtpBody() async {
+    final resendOtpBody = {
+      "phoneNumber": phoneNumber,
+      "countryCode": "+91",
+    };
+    return resendOtpBody;
   }
 }

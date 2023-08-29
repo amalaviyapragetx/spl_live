@@ -25,191 +25,350 @@ class StarLineNewGamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppUtils().simpleAppbar(
-        appBarTitle: "${controller.marketData.value.time}",
-        actions: [
-          InkWell(
-            onTap: () {
-              //  Get.offAndToNamed(AppRoutName.transactionPage);
-            },
-            child: Row(
-              children: [
-                SizedBox(
-                  height: Dimensions.w22,
-                  width: Dimensions.w25,
-                  child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    color: AppColors.white,
-                    fit: BoxFit.fill,
+    return Obx(
+      () => Scaffold(
+        appBar: AppUtils().simpleAppbar(
+          appBarTitle: "${controller.marketData.value.time}",
+          actions: [
+            InkWell(
+              onTap: () {
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: Dimensions.w22,
+                    width: Dimensions.w25,
+                    child: SvgPicture.asset(
+                      ConstantImage.walletAppbar,
+                      color: AppColors.white,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: Dimensions.r8,
-                      bottom: Dimensions.r10,
-                      left: Dimensions.r15,
-                      right: Dimensions.r10),
-                  child: Obx(
-                    () => Text(
-                      walletController.walletBalance.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: Dimensions.r8,
+                        bottom: Dimensions.r10,
+                        left: Dimensions.r15,
+                        right: Dimensions.r10),
+                    child: Obx(
+                      () => Text(
+                        walletController.walletBalance.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: Container(
-        height: size.height,
-        width: size.width,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: Dimensions.h10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "${controller.gameModeName}".toUpperCase(),
-                    style: CustomTextStyle.textRobotoSansBold.copyWith(
-                        color: AppColors.appbarColor, fontSize: Dimensions.h18),
-                  ),
                 ],
               ),
-              verticalSpace,
-              controller.gameMode.value.name!.toUpperCase().contains("SPDP")
-                  ? Obx(
-                      () => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          spDpTp(
-                            controller.spValue1.value
-                                ? AppColors.wpColor1
-                                : AppColors.white,
-                            controller.spValue,
-                            controller.spValue1.value
-                                ? AppColors.white
-                                : AppColors.grey,
-                            onTap: () {
-                              controller.spValue1.value =
-                                  !controller.spValue1.value;
-                              if (controller.spValue1.value) {
-                                controller.selectedValues.add("SP");
-                              } else {
-                                controller.selectedValues.remove("SP");
-                              }
-                            },
-                          ),
-                          spDpTp(
-                            controller.dpValue2.value
-                                ? AppColors.wpColor1
-                                : AppColors.white,
-                            controller.dpValue,
-                            controller.dpValue2.value
-                                ? AppColors.white
-                                : AppColors.grey,
-                            onTap: () {
-                              controller.dpValue2.value =
-                                  !controller.dpValue2.value;
-                              if (controller.dpValue2.value) {
-                                controller.selectedValues.add("DP");
-                              } else {
-                                controller.selectedValues.remove("DP");
-                              }
-                            },
-                          ),
-                          spDpTp(
-                            controller.tpValue3.value
-                                ? AppColors.wpColor1
-                                : AppColors.white,
-                            controller.tpValue,
-                            controller.tpValue3.value
-                                ? AppColors.white
-                                : AppColors.grey,
-                            onTap: () {
-                              controller.tpValue3.value =
-                                  !controller.tpValue3.value;
-                              if (controller.tpValue3.value) {
-                                controller.selectedValues.add("TP");
-                              } else {
-                                controller.selectedValues.remove("TP");
-                              }
-                            },
-                          )
-                        ],
-                      ),
-                    )
-                  : Container(),
-              controller.gameMode.value.name! == "Choice Pana SPDP"
-                  ? verticalSpace
-                  : Container(),
-              controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        children: [
-                          Obx(
-                            () => oddEvenContainer(
-                              buttonColor: controller.oddbool.value
+            ),
+          ],
+        ),
+        body: Container(
+          height: size.height,
+          width: size.width,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Dimensions.h10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${controller.gameModeName}".toUpperCase(),
+                      style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          color: AppColors.appbarColor,
+                          fontSize: Dimensions.h18),
+                    ),
+                  ],
+                ),
+                verticalSpace,
+                controller.gameMode.value.name!.toUpperCase().contains("SPDP")
+                    ? Obx(
+                        () => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            spDpTp(
+                              controller.spValue1.value
                                   ? AppColors.wpColor1
                                   : AppColors.white,
-                              textColor: controller.oddbool.value
+                              controller.spValue,
+                              controller.spValue1.value
                                   ? AppColors.white
-                                  : AppColors.black,
-                              text: "odd",
+                                  : AppColors.grey,
                               onTap: () {
-                                controller.oddbool.value =
-                                    !controller.oddbool.value;
-                                if (controller.oddbool.value) {
-                                  controller.evenbool.value = false;
+                                controller.spValue1.value =
+                                    !controller.spValue1.value;
+                                if (controller.spValue1.value) {
+                                  controller.selectedValues.add("SP");
                                 } else {
-                                  controller.evenbool.value = true;
+                                  controller.selectedValues.remove("SP");
                                 }
                               },
                             ),
-                          ),
-                          SizedBox(
-                            width: Dimensions.w10,
-                          ),
-                          Obx(
-                            () => oddEvenContainer(
-                              buttonColor: controller.evenbool.value
+                            spDpTp(
+                              controller.dpValue2.value
                                   ? AppColors.wpColor1
                                   : AppColors.white,
-                              textColor: controller.evenbool.value
+                              controller.dpValue,
+                              controller.dpValue2.value
                                   ? AppColors.white
-                                  : AppColors.black,
-                              text: "Even",
+                                  : AppColors.grey,
                               onTap: () {
-                                controller.evenbool.value =
-                                    !controller.evenbool.value;
-                                if (controller.evenbool.value) {
-                                  controller.oddbool.value = false;
+                                controller.dpValue2.value =
+                                    !controller.dpValue2.value;
+                                if (controller.dpValue2.value) {
+                                  controller.selectedValues.add("DP");
                                 } else {
-                                  controller.oddbool.value = true;
+                                  controller.selectedValues.remove("DP");
                                 }
                               },
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : controller.gameMode.value.name! == "Choice Pana SPDP"
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
+                            spDpTp(
+                              controller.tpValue3.value
+                                  ? AppColors.wpColor1
+                                  : AppColors.white,
+                              controller.tpValue,
+                              controller.tpValue3.value
+                                  ? AppColors.white
+                                  : AppColors.grey,
+                              onTap: () {
+                                controller.tpValue3.value =
+                                    !controller.tpValue3.value;
+                                if (controller.tpValue3.value) {
+                                  controller.selectedValues.add("TP");
+                                } else {
+                                  controller.selectedValues.remove("TP");
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                      )
+                    : Container(),
+                controller.gameMode.value.name! == "Choice Pana SPDP"
+                    ? verticalSpace
+                    : Container(),
+                controller.gameMode.value.name!
+                        .toUpperCase()
+                        .contains("ODD EVEN")
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          children: [
+                            Obx(
+                              () => oddEvenContainer(
+                                buttonColor: controller.oddbool.value
+                                    ? AppColors.wpColor1
+                                    : AppColors.white,
+                                textColor: controller.oddbool.value
+                                    ? AppColors.white
+                                    : AppColors.black,
+                                text: "odd",
+                                onTap: () {
+                                  controller.oddbool.value =
+                                      !controller.oddbool.value;
+                                  if (controller.oddbool.value) {
+                                    controller.evenbool.value = false;
+                                  } else {
+                                    controller.evenbool.value = true;
+                                  }
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: Dimensions.w10,
+                            ),
+                            Obx(
+                              () => oddEvenContainer(
+                                buttonColor: controller.evenbool.value
+                                    ? AppColors.wpColor1
+                                    : AppColors.white,
+                                textColor: controller.evenbool.value
+                                    ? AppColors.white
+                                    : AppColors.black,
+                                text: "Even",
+                                onTap: () {
+                                  controller.evenbool.value =
+                                      !controller.evenbool.value;
+                                  if (controller.evenbool.value) {
+                                    controller.oddbool.value = false;
+                                  } else {
+                                    controller.oddbool.value = true;
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : controller.gameMode.value.name! == "Choice Pana SPDP"
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(Dimensions.r10)),
+                                        color: AppColors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: const Offset(0, 4),
+                                            blurRadius: 3,
+                                            spreadRadius: 0.2,
+                                            color:
+                                                AppColors.grey.withOpacity(0.7),
+                                          ),
+                                        ],
+                                      ),
+                                      child: RoundedCornerEditTextWithIcon(
+                                        tapTextStyle: AppColors.appbarColor,
+                                        hintTextColor: AppColors.appbarColor
+                                            .withOpacity(0.5),
+                                        width: size.width / 2,
+                                        textAlign: TextAlign.center,
+                                        controller:
+                                            controller.leftAnkController,
+                                        textStyle: CustomTextStyle
+                                            .textPTsansMedium
+                                            .copyWith(
+                                          color:
+                                              AppColors.black.withOpacity(0.7),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Dimensions.h15,
+                                        ),
+                                        hintTextStyle: CustomTextStyle
+                                            .textRobotoSansMedium
+                                            .copyWith(
+                                          color:
+                                              AppColors.black.withOpacity(0.7),
+                                          fontSize: Dimensions.h13,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        formatter: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        onChanged: (val) {
+                                          if (int.parse(val!) ==
+                                              controller
+                                                  .panaControllerLength.value) {
+                                            controller.leftFocusNode
+                                                .nextFocus();
+                                            controller.middleFocusNode
+                                                .requestFocus();
+                                          }
+                                        },
+                                        focusNode: controller.leftFocusNode,
+                                        maxLength: controller
+                                            .panaControllerLength.value,
+                                        hintText: "Left Ank",
+                                        autofocus: true,
+                                        contentPadding:
+                                            const EdgeInsets.only(right: 30),
+                                        imagePath: "",
+                                        containerBackColor: AppColors.black,
+                                        iconColor: AppColors.white,
+                                        height: Dimensions.h35,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                controller.gameMode.value.name!
+                                        .toUpperCase()
+                                        .contains("DIGITS BASED JODI")
+                                    ? Container()
+                                    : Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      Dimensions.r10)),
+                                              color: AppColors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  offset: const Offset(0, 4),
+                                                  blurRadius: 3,
+                                                  spreadRadius: 0.2,
+                                                  color: AppColors.grey
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ],
+                                            ),
+                                            child:
+                                                RoundedCornerEditTextWithIcon(
+                                              tapTextStyle:
+                                                  AppColors.appbarColor,
+                                              hintTextColor: AppColors
+                                                  .appbarColor
+                                                  .withOpacity(0.5),
+                                              width: size.width / 2,
+                                              textAlign: TextAlign.center,
+                                              controller: controller
+                                                  .middleAnkController,
+                                              textStyle: CustomTextStyle
+                                                  .textPTsansMedium
+                                                  .copyWith(
+                                                color: AppColors.black
+                                                    .withOpacity(0.7),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: Dimensions.h15,
+                                              ),
+                                              hintTextStyle: CustomTextStyle
+                                                  .textRobotoSansMedium
+                                                  .copyWith(
+                                                color: AppColors.black
+                                                    .withOpacity(0.7),
+                                                fontSize: Dimensions.h13,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              formatter: [
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly
+                                              ],
+                                              focusNode:
+                                                  controller.middleFocusNode,
+                                              onChanged: (val) {
+                                                if (int.parse(val!) ==
+                                                    controller
+                                                        .panaControllerLength
+                                                        .value) {
+                                                  controller.middleFocusNode
+                                                      .nextFocus();
+                                                  controller.rightFocusNode
+                                                      .requestFocus();
+                                                }
+                                              },
+                                              maxLength: controller
+                                                  .panaControllerLength.value,
+                                              hintText: "Middle Ank",
+                                              contentPadding:
+                                                  const EdgeInsets.only(
+                                                      right: 30),
+                                              imagePath: "",
+                                              containerBackColor:
+                                                  AppColors.black,
+                                              iconColor: AppColors.white,
+                                              height: Dimensions.h35,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                Expanded(
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(
@@ -231,7 +390,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                           .withOpacity(0.5),
                                       width: size.width / 2,
                                       textAlign: TextAlign.center,
-                                      controller: controller.leftAnkController,
+                                      controller: controller.rightAnkController,
                                       textStyle: CustomTextStyle
                                           .textPTsansMedium
                                           .copyWith(
@@ -253,18 +412,17 @@ class StarLineNewGamePage extends StatelessWidget {
                                         if (int.parse(val!) ==
                                             controller
                                                 .panaControllerLength.value) {
-                                          controller.leftFocusNode.nextFocus();
-                                          controller.middleFocusNode
+                                          controller.rightFocusNode.nextFocus();
+                                          controller.coinFocusNode
                                               .requestFocus();
                                         }
                                       },
-                                      focusNode: controller.leftFocusNode,
+                                      focusNode: controller.rightFocusNode,
                                       maxLength:
                                           controller.panaControllerLength.value,
-                                      hintText: "Left Ank",
-                                      autofocus: true,
+                                      hintText: "Right Ank",
                                       contentPadding:
-                                          const EdgeInsets.only(right: 30),
+                                          const EdgeInsets.only(right: 40),
                                       imagePath: "",
                                       containerBackColor: AppColors.black,
                                       iconColor: AppColors.white,
@@ -273,478 +431,86 @@ class StarLineNewGamePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              ),
-                              controller.gameMode.value.name!
-                                      .toUpperCase()
-                                      .contains("DIGITS BASED JODI")
-                                  ? Container()
-                                  : Expanded(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10.0),
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(
-                                                    Dimensions.r10)),
-                                            color: AppColors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                offset: const Offset(0, 4),
-                                                blurRadius: 3,
-                                                spreadRadius: 0.2,
-                                                color: AppColors.grey
-                                                    .withOpacity(0.7),
-                                              ),
-                                            ],
-                                          ),
-                                          child: RoundedCornerEditTextWithIcon(
-                                            tapTextStyle: AppColors.appbarColor,
-                                            hintTextColor: AppColors.appbarColor
-                                                .withOpacity(0.5),
-                                            width: size.width / 2,
-                                            textAlign: TextAlign.center,
-                                            controller:
-                                                controller.middleAnkController,
-                                            textStyle: CustomTextStyle
-                                                .textPTsansMedium
-                                                .copyWith(
-                                              color: AppColors.black
-                                                  .withOpacity(0.7),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: Dimensions.h15,
-                                            ),
-                                            hintTextStyle: CustomTextStyle
-                                                .textRobotoSansMedium
-                                                .copyWith(
-                                              color: AppColors.black
-                                                  .withOpacity(0.7),
-                                              fontSize: Dimensions.h13,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            formatter: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly
-                                            ],
-                                            focusNode:
-                                                controller.middleFocusNode,
-                                            onChanged: (val) {
-                                              if (int.parse(val!) ==
-                                                  controller
-                                                      .panaControllerLength
-                                                      .value) {
-                                                controller.middleFocusNode
-                                                    .nextFocus();
-                                                controller.rightFocusNode
-                                                    .requestFocus();
-                                              }
-                                            },
-                                            maxLength: controller
-                                                .panaControllerLength.value,
-                                            hintText: "Middle Ank",
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                                    right: 30),
-                                            imagePath: "",
-                                            containerBackColor: AppColors.black,
-                                            iconColor: AppColors.white,
-                                            height: Dimensions.h35,
-                                            keyboardType: TextInputType.number,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                              Expanded(
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.r10)),
-                                    color: AppColors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 3,
-                                        spreadRadius: 0.2,
-                                        color: AppColors.grey.withOpacity(0.7),
-                                      ),
-                                    ],
-                                  ),
-                                  child: RoundedCornerEditTextWithIcon(
-                                    tapTextStyle: AppColors.appbarColor,
-                                    hintTextColor:
-                                        AppColors.appbarColor.withOpacity(0.5),
-                                    width: size.width / 2,
-                                    textAlign: TextAlign.center,
-                                    controller: controller.rightAnkController,
-                                    textStyle: CustomTextStyle.textPTsansMedium
-                                        .copyWith(
-                                      color: AppColors.black.withOpacity(0.7),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Dimensions.h15,
-                                    ),
-                                    hintTextStyle: CustomTextStyle
-                                        .textRobotoSansMedium
-                                        .copyWith(
-                                      color: AppColors.black.withOpacity(0.7),
-                                      fontSize: Dimensions.h13,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    formatter: [
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                    onChanged: (val) {
-                                      if (int.parse(val!) ==
-                                          controller
-                                              .panaControllerLength.value) {
-                                        controller.rightFocusNode.nextFocus();
-                                        controller.coinFocusNode.requestFocus();
-                                      }
-                                    },
-                                    focusNode: controller.rightFocusNode,
-                                    maxLength:
-                                        controller.panaControllerLength.value,
-                                    hintText: "Right Ank",
-                                    contentPadding:
-                                        const EdgeInsets.only(right: 40),
-                                    imagePath: "",
-                                    containerBackColor: AppColors.black,
-                                    iconColor: AppColors.white,
-                                    height: Dimensions.h35,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(),
-              verticalSpace,
-              controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                      controller.gameMode.value.name!.toUpperCase() ==
-                          "ODD EVEN"
-                  ? Container()
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: AutoCompleteTextField(
-                              controller:
-                                  controller.autoCompleteFieldController,
-                              isBulkMode: false,
-                              autoFocus: true,
-                              height: Dimensions.w37,
-                              width: Dimensions.w200,
-                              suggestionWidth: Dimensions.w200,
-                              hintTextColor: AppColors.black.withOpacity(0.65),
-                              hintText:
-                                  "${"ENTER".tr} ${controller.gameMode.value.name}",
-                              focusNode: controller.gameMode.value.name!
-                                          .toUpperCase() ==
-                                      "CHOICE PANA SPDP"
-                                  ? controller.coinFocusNode
-                                  : controller.focusNode,
-                              maxLength: controller.panaControllerLength.value,
-                              formatter: [
-                                FilteringTextInputFormatter.digitsOnly
                               ],
-                              keyboardType: TextInputType.number,
-                              validateValue: (validate, value) {
-                                validate = false;
-                                if (controller.gameMode.value.name!
-                                            .toUpperCase() ==
-                                        "SINGLE ANK" ||
-                                    controller.gameMode.value.name! == "Jodi" ||
-                                    controller.gameMode.value.name!
-                                            .toUpperCase() ==
-                                        "SINGLE PANA" ||
-                                    controller.gameMode.value.name!
-                                            .toUpperCase() ==
-                                        "DOUBLE PANA" ||
-                                    controller.gameMode.value.name!
-                                            .toUpperCase() ==
-                                        "TRIPPLE PANA") {
-                                  controller.validateEnteredDigit(false, value);
-                                } else {
-                                  controller.ondebounce(false, value);
-                                }
-                              },
-                              optionsBuilder:
-                                  (TextEditingValue textEditingValue) {
-                                // if (textEditingValue.text == '') {
-                                //   return const Iterable<String>.empty();
-                                // }
-                                // } else {
-                                //   List<String> matches = <String>[];
-                                //   // matches.addAll(controller.suggestionList);
-                                //   matches.retainWhere((s) {
-                                //     return s.toLowerCase().contains(
-                                //           textEditingValue.text.toLowerCase(),
-                                //         );
-                                //   });
-                                return [];
-                                // }
-                              },
                             ),
-                          ),
-                          SizedBox(
-                            width: Dimensions.w15,
-                          ),
-                          Expanded(
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.r10)),
-                                color: AppColors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 4),
-                                    blurRadius: 3,
-                                    spreadRadius: 0.2,
-                                    color: AppColors.grey.withOpacity(0.7),
-                                  ),
-                                ],
-                              ),
-                              child: RoundedCornerEditTextWithIcon(
-                                tapTextStyle: AppColors.appbarColor,
-                                hintTextColor:
-                                    AppColors.appbarColor.withOpacity(0.5),
-                                width: size.width / 2,
-                                textAlign: TextAlign.center,
-                                controller: controller.coinController,
-                                textStyle: CustomTextStyle.textRobotoSansMedium
-                                    .copyWith(
-                                  color: AppColors.black.withOpacity(0.7),
-                                  // fontWeight: FontWeight.bold,
-                                  fontSize: Dimensions.h15,
-                                ),
-                                hintTextStyle: CustomTextStyle
-                                    .textRobotoSansMedium
-                                    .copyWith(
-                                  color: AppColors.black.withOpacity(0.65),
-                                  fontSize: Dimensions.h15,
-                                ),
-                                formatter: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                // onEditingComplete: () {
-                                //   if (controller.coinController.text.length <
-                                //       2) {
-                                //
-                                //   }
-                                // },
-                                onChanged: (val) {
-                                  if (val != null) {
-                                    print("111111111111");
-                                    if (val.characters.characterAt(0) ==
-                                        Characters("0")) {
-                                      print("22222222222222");
-                                      // we need to remove the first char
-                                      controller.coinController.text =
-                                          val.substring(1);
-                                      // we need to move the cursor
-                                      controller.coinController.selection =
-                                          TextSelection.collapsed(
-                                        offset: controller
-                                            .coinController.text.length,
-                                      );
-                                    } else if (int.parse(val) > 10000) {
-                                      AppUtils.showErrorSnackBar(
-                                          bodyText:
-                                              "You can not add more than 10000 points");
-                                    } else {
-                                      // if (int.parse(val) >= 1) {
-                                      //   print("333333333333333   ${val.length}");
-                                      //   // controller.validCoinsEntered.value = true;
-                                      //   // controller.isEnable.value = true;
-                                      // } else {
-                                      //   print("444444444444444444   ${val.length}");
-                                      //   // controller.ondebounce();
-
-                                      //   // controller.validCoinsEntered.value = false;
-                                      //   // controller.isEnable.value = false;
-                                      // }
-                                    }
-                                  }
-                                },
-                                maxLength: 5,
-                                focusNode: controller.coinFocusNode,
-                                hintText: "Enter Points",
-                                contentPadding:
-                                    const EdgeInsets.only(right: 40),
-                                imagePath: "",
-                                containerBackColor: AppColors.black,
-                                iconColor: AppColors.white,
-                                height: Dimensions.h35,
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-              controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                      controller.gameMode.value.name!.toUpperCase() ==
-                          "ODD EVEN"
-                  ? Container()
-                  : verticalSpace,
-              controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                      controller.gameMode.value.name!.toUpperCase() ==
-                          "ODD EVEN"
-                  ? Container()
-                  : verticalSpace,
-              controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                      controller.gameMode.value.name!.toUpperCase() ==
-                          "ODD EVEN"
-                  ? Container()
-                  : RoundedCornerButton(
-                      text: "PLUSADD".tr,
-                      color: AppColors.appbarColor,
-                      borderColor: AppColors.appbarColor,
-                      fontSize: Dimensions.h13,
-                      fontWeight: FontWeight.w600,
-                      fontColor: AppColors.white,
-                      letterSpacing: 1,
-                      borderRadius: Dimensions.r5,
-                      borderWidth: 0.2,
-                      textStyle: CustomTextStyle.textRobotoSansBold,
-                      onTap: () {
-                        if (controller.gameMode.value.name!.toUpperCase() ==
-                            "PANEL GROUP") {
-                          if (controller
-                              .autoCompleteFieldController.text.isEmpty) {
-                            AppUtils.showErrorSnackBar(
-                              bodyText:
-                                  "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
-                            );
-                          } else if (controller.coinController.text.isEmpty ||
-                              int.parse(controller.coinController.text) >
-                                  10000) {
-                            AppUtils.showErrorSnackBar(
-                              bodyText: "Please enter valid points",
-                            );
-                          } else if (controller
-                                      .autoCompleteFieldController.text.length <
-                                  3 ==
-                              true) {
-                            AppUtils.showErrorSnackBar(
-                              bodyText:
-                                  "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
-                            );
-                          } else {
-                            controller.getspdptp();
-                          }
-                        } else if (controller.gameMode.value.name!
-                                .toUpperCase() ==
-                            "SPDPTP") {
-                          if (controller.spValue1.value == false &&
-                              controller.dpValue2.value == false &&
-                              controller.tpValue3.value == false) {
-                            AppUtils.showErrorSnackBar(
-                              bodyText: "Please select SP,DP or TP",
-                            );
-                          } else {
-                            controller.getspdptp();
-                          }
-                        } else if (controller.gameMode.value.name!
-                                .toUpperCase() ==
-                            "GROUP JODI") {
-                          if (controller
-                                  .autoCompleteFieldController.text.length <=
-                              1) {
-                            print("@@@@@@@@@@@");
-                            AppUtils.showErrorSnackBar(
-                              bodyText:
-                                  "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
-                            );
-                          } else {
-                            print("@@@@@@@@@@@");
-                            controller.getspdptp();
-                          }
-                        } else if (controller.gameMode.value.name!
-                                    .toUpperCase() ==
-                                "SINGLE ANK" ||
-                            controller.gameMode.value.name! == "Jodi" ||
-                            controller.gameMode.value.name!.toUpperCase() ==
-                                "SINGLE PANA" ||
-                            controller.gameMode.value.name!.toUpperCase() ==
-                                "DOUBLE PANA" ||
-                            controller.gameMode.value.name!.toUpperCase() ==
-                                "TRIPPLE PANA" ||
-                            controller.gameMode.value.name!.toUpperCase() ==
-                                "DOUBLE PANA" ||
-                            controller.gameMode.value.name!.toUpperCase() ==
-                                "RED BRACKETS") {
-                          controller.onTapOfAddButton();
-                        } else {
-                          if (controller.autoCompleteFieldController.text
-                                  .isNotEmpty ||
-                              controller.coinController.text.isNotEmpty) {
-                            if (controller.gameMode.value.name!.toUpperCase() ==
-                                    "DP MOTOR" ||
-                                controller.gameMode.value.name!.toUpperCase() ==
-                                    "SP MOTOR") {
-                              if (controller.autoCompleteFieldController.text
-                                          .length <=
-                                      3 ==
-                                  true) {
-                                print("@@@@@@@@@@@@@@@@@@@@");
-                                AppUtils.showErrorSnackBar(
-                                  bodyText:
-                                      "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
-                                );
-                              } else if (controller
-                                  .coinController.text.isEmpty) {
-                                AppUtils.showErrorSnackBar(
-                                  bodyText: "Please enter valid points",
-                                );
-                              } else {
-                                controller.getspdptp();
-                              }
-                            } else if (controller.gameMode.value.name!
-                                    .toUpperCase() ==
-                                "TWO DIGITS PANEL") {
-                              if (controller.autoCompleteFieldController.text
-                                      .length ==
-                                  2) {
-                                controller.getspdptp();
-                              } else {
-                                AppUtils.showErrorSnackBar(
-                                  bodyText:
-                                      "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
-                                );
-                              }
-                            } else {
-                              controller.getspdptp();
-                            }
-                          } else if (controller
-                              .autoCompleteFieldController.text.isEmpty) {
-                            AppUtils.showErrorSnackBar(
-                              bodyText:
-                                  "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
-                            );
-                          } else if (controller.coinController.text.isEmpty) {
-                            AppUtils.showErrorSnackBar(
-                              bodyText: "Please enter valid points",
-                            );
-                          }
-                        }
-                        // Timer(const Duration(seconds: 2), () {
-                        //
-                        // });
-                      },
-                      height: Dimensions.h30,
-                      width: Dimensions.w150,
-                    ),
-              controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                      controller.gameMode.value.name!.toUpperCase() ==
-                          "ODD EVEN"
-                  ? SizedBox(
-                      height: 50,
-                      child: Padding(
+                          )
+                        : Container(),
+                verticalSpace,
+                controller.gameMode.value.name! == "Choice Pana SPDP" ||
+                        controller.gameMode.value.name!.toUpperCase() ==
+                            "ODD EVEN"
+                    ? Container()
+                    : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
                           children: [
+                            Expanded(
+                              child: AutoCompleteTextField(
+                                controller:
+                                    controller.autoCompleteFieldController,
+                                isBulkMode: false,
+                                autoFocus: true,
+                                height: Dimensions.w37,
+                                width: Dimensions.w200,
+                                suggestionWidth: Dimensions.w200,
+                                hintTextColor:
+                                    AppColors.black.withOpacity(0.65),
+                                hintText:
+                                    "${"ENTER".tr} ${controller.gameMode.value.name}",
+                                focusNode: controller.gameMode.value.name!
+                                            .toUpperCase() ==
+                                        "CHOICE PANA SPDP"
+                                    ? controller.coinFocusNode
+                                    : controller.focusNode,
+                                maxLength:
+                                    controller.panaControllerLength.value,
+                                formatter: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                keyboardType: TextInputType.number,
+                                validateValue: (validate, value) {
+                                  validate = false;
+                                  if (controller.gameMode.value.name!
+                                              .toUpperCase() ==
+                                          "SINGLE ANK" ||
+                                      controller.gameMode.value.name! ==
+                                          "Jodi" ||
+                                      controller.gameMode.value.name!
+                                              .toUpperCase() ==
+                                          "SINGLE PANA" ||
+                                      controller.gameMode.value.name!
+                                              .toUpperCase() ==
+                                          "DOUBLE PANA" ||
+                                      controller.gameMode.value.name!
+                                              .toUpperCase() ==
+                                          "TRIPPLE PANA") {
+                                    controller.validateEnteredDigit(
+                                        false, value);
+                                  } else {
+                                    controller.ondebounce(false, value);
+                                  }
+                                },
+                                optionsBuilder:
+                                    (TextEditingValue textEditingValue) {
+                                  // if (textEditingValue.text == '') {
+                                  //   return const Iterable<String>.empty();
+                                  // }
+                                  // } else {
+                                  //   List<String> matches = <String>[];
+                                  //   // matches.addAll(controller.suggestionList);
+                                  //   matches.retainWhere((s) {
+                                  //     return s.toLowerCase().contains(
+                                  //           textEditingValue.text.toLowerCase(),
+                                  //         );
+                                  //   });
+                                  return [];
+                                  // }
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: Dimensions.w15,
+                            ),
                             Expanded(
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
@@ -767,18 +533,18 @@ class StarLineNewGamePage extends StatelessWidget {
                                   width: size.width / 2,
                                   textAlign: TextAlign.center,
                                   controller: controller.coinController,
-                                  textStyle:
-                                      CustomTextStyle.textPTsansMedium.copyWith(
+                                  textStyle: CustomTextStyle
+                                      .textRobotoSansMedium
+                                      .copyWith(
                                     color: AppColors.black.withOpacity(0.7),
-                                    fontWeight: FontWeight.bold,
+                                    // fontWeight: FontWeight.bold,
                                     fontSize: Dimensions.h15,
                                   ),
                                   hintTextStyle: CustomTextStyle
                                       .textRobotoSansMedium
                                       .copyWith(
-                                    color: AppColors.black.withOpacity(0.7),
+                                    color: AppColors.black.withOpacity(0.65),
                                     fontSize: Dimensions.h15,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                   formatter: [
                                     FilteringTextInputFormatter.digitsOnly
@@ -823,13 +589,8 @@ class StarLineNewGamePage extends StatelessWidget {
                                       }
                                     }
                                   },
-                                  focusNode: controller.coinFocusNode,
-                                  autofocus: controller.gameMode.value.name!
-                                          .toUpperCase()
-                                          .contains("ODD EVEN")
-                                      ? true
-                                      : false,
                                   maxLength: 5,
+                                  focusNode: controller.coinFocusNode,
                                   hintText: "Enter Points",
                                   contentPadding:
                                       const EdgeInsets.only(right: 40),
@@ -841,69 +602,341 @@ class StarLineNewGamePage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: Dimensions.w10,
-                            ),
-                            Expanded(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(Dimensions.r10)),
-                                  color: AppColors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0, 4),
-                                      blurRadius: 3,
-                                      spreadRadius: 0.2,
-                                      color: AppColors.grey.withOpacity(0.7),
-                                    ),
-                                  ],
-                                ),
-                                child: RoundedCornerButton(
-                                  text: "PLUSADD".tr,
-                                  color: AppColors.appbarColor,
-                                  borderColor: AppColors.appbarColor,
-                                  fontSize: Dimensions.h12,
-                                  fontWeight: FontWeight.w600,
-                                  fontColor: AppColors.white,
-                                  letterSpacing: 1,
-                                  borderRadius: Dimensions.r7,
-                                  borderWidth: 0.2,
-                                  textStyle: CustomTextStyle.textRobotoSansBold,
-                                  onTap: () {
-                                    // controller.coinsFocusNode.unfocus();
-                                    // controller.openFocusNode.requestFocus();
-                                    //  controller.onTapOfAddButton();
-                                    if (controller.gameMode.value.name!
-                                        .toUpperCase()
-                                        .contains("ODD EVEN")) {
-                                      controller.onTapAddOddEven();
-                                    } else {
-                                      controller.getspdptp();
-                                    }
-                                  },
-                                  height: Dimensions.h35,
-                                  width: Dimensions.w150,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
-                    )
-                  : Container(),
-              bidList(size),
-              verticalSpace,
-              verticalSpace,
-              verticalSpace,
-              verticalSpace,
-              verticalSpace
-            ],
+                controller.gameMode.value.name! == "Choice Pana SPDP" ||
+                        controller.gameMode.value.name!.toUpperCase() ==
+                            "ODD EVEN"
+                    ? Container()
+                    : verticalSpace,
+                controller.gameMode.value.name! == "Choice Pana SPDP" ||
+                        controller.gameMode.value.name!.toUpperCase() ==
+                            "ODD EVEN"
+                    ? Container()
+                    : verticalSpace,
+                controller.gameMode.value.name! == "Choice Pana SPDP" ||
+                        controller.gameMode.value.name!.toUpperCase() ==
+                            "ODD EVEN"
+                    ? Container()
+                    : RoundedCornerButton(
+                        text: "PLUSADD".tr,
+                        color: AppColors.appbarColor,
+                        borderColor: AppColors.appbarColor,
+                        fontSize: Dimensions.h13,
+                        fontWeight: FontWeight.w600,
+                        fontColor: AppColors.white,
+                        letterSpacing: 1,
+                        borderRadius: Dimensions.r5,
+                        borderWidth: 0.2,
+                        textStyle: CustomTextStyle.textRobotoSansBold,
+                        onTap: () {
+                          if (controller.gameMode.value.name!.toUpperCase() ==
+                              "PANEL GROUP") {
+                            if (controller
+                                .autoCompleteFieldController.text.isEmpty) {
+                              AppUtils.showErrorSnackBar(
+                                bodyText:
+                                    "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                              );
+                            } else if (controller.coinController.text.isEmpty ||
+                                int.parse(controller.coinController.text) >
+                                    10000) {
+                              AppUtils.showErrorSnackBar(
+                                bodyText: "Please enter valid points",
+                              );
+                            } else if (controller.autoCompleteFieldController
+                                        .text.length <
+                                    3 ==
+                                true) {
+                              AppUtils.showErrorSnackBar(
+                                bodyText:
+                                    "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                              );
+                            } else {
+                              controller.getspdptp();
+                            }
+                          } else if (controller
+                                  .gameMode.value.name!
+                                  .toUpperCase() ==
+                              "SPDPTP") {
+                            if (controller.spValue1.value == false &&
+                                controller.dpValue2.value == false &&
+                                controller.tpValue3.value == false) {
+                              AppUtils.showErrorSnackBar(
+                                bodyText: "Please select SP,DP or TP",
+                              );
+                            } else {
+                              controller.getspdptp();
+                            }
+                          } else if (controller
+                                  .gameMode.value.name!
+                                  .toUpperCase() ==
+                              "GROUP JODI") {
+                            if (controller
+                                    .autoCompleteFieldController.text.length <=
+                                1) {
+                              print("@@@@@@@@@@@");
+                              AppUtils.showErrorSnackBar(
+                                bodyText:
+                                    "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                              );
+                            } else {
+                              print("@@@@@@@@@@@");
+                              controller.getspdptp();
+                            }
+                          } else if (controller
+                                      .gameMode.value.name!
+                                      .toUpperCase() ==
+                                  "SINGLE ANK" ||
+                              controller.gameMode.value.name! == "Jodi" ||
+                              controller
+                                      .gameMode.value.name!
+                                      .toUpperCase() ==
+                                  "SINGLE PANA" ||
+                              controller
+                                      .gameMode.value.name!
+                                      .toUpperCase() ==
+                                  "DOUBLE PANA" ||
+                              controller.gameMode.value.name!.toUpperCase() ==
+                                  "TRIPPLE PANA" ||
+                              controller.gameMode.value.name!.toUpperCase() ==
+                                  "DOUBLE PANA" ||
+                              controller.gameMode.value.name!.toUpperCase() ==
+                                  "RED BRACKETS") {
+                            controller.onTapOfAddButton();
+                          } else {
+                            if (controller.autoCompleteFieldController.text
+                                    .isNotEmpty ||
+                                controller.coinController.text.isNotEmpty) {
+                              if (controller.gameMode.value.name!
+                                          .toUpperCase() ==
+                                      "DP MOTOR" ||
+                                  controller.gameMode.value.name!
+                                          .toUpperCase() ==
+                                      "SP MOTOR") {
+                                if (controller.autoCompleteFieldController.text
+                                            .length <=
+                                        3 ==
+                                    true) {
+                                  print("@@@@@@@@@@@@@@@@@@@@");
+                                  AppUtils.showErrorSnackBar(
+                                    bodyText:
+                                        "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                  );
+                                } else if (controller
+                                    .coinController.text.isEmpty) {
+                                  AppUtils.showErrorSnackBar(
+                                    bodyText: "Please enter valid points",
+                                  );
+                                } else {
+                                  controller.getspdptp();
+                                }
+                              } else if (controller.gameMode.value.name!
+                                      .toUpperCase() ==
+                                  "TWO DIGITS PANEL") {
+                                if (controller.autoCompleteFieldController.text
+                                        .length ==
+                                    2) {
+                                  controller.getspdptp();
+                                } else {
+                                  AppUtils.showErrorSnackBar(
+                                    bodyText:
+                                        "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                  );
+                                }
+                              } else {
+                                controller.getspdptp();
+                              }
+                            } else if (controller
+                                .autoCompleteFieldController.text.isEmpty) {
+                              AppUtils.showErrorSnackBar(
+                                bodyText:
+                                    "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
+                              );
+                            } else if (controller.coinController.text.isEmpty) {
+                              AppUtils.showErrorSnackBar(
+                                bodyText: "Please enter valid points",
+                              );
+                            }
+                          }
+                          // Timer(const Duration(seconds: 2), () {
+                          //
+                          // });
+                        },
+                        height: Dimensions.h30,
+                        width: Dimensions.w150,
+                      ),
+                controller.gameMode.value.name! == "Choice Pana SPDP" ||
+                        controller.gameMode.value.name!.toUpperCase() ==
+                            "ODD EVEN"
+                    ? SizedBox(
+                        height: 50,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(Dimensions.r10)),
+                                    color: AppColors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 4),
+                                        blurRadius: 3,
+                                        spreadRadius: 0.2,
+                                        color: AppColors.grey.withOpacity(0.7),
+                                      ),
+                                    ],
+                                  ),
+                                  child: RoundedCornerEditTextWithIcon(
+                                    tapTextStyle: AppColors.appbarColor,
+                                    hintTextColor:
+                                        AppColors.appbarColor.withOpacity(0.5),
+                                    width: size.width / 2,
+                                    textAlign: TextAlign.center,
+                                    controller: controller.coinController,
+                                    textStyle: CustomTextStyle.textPTsansMedium
+                                        .copyWith(
+                                      color: AppColors.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Dimensions.h15,
+                                    ),
+                                    hintTextStyle: CustomTextStyle
+                                        .textRobotoSansMedium
+                                        .copyWith(
+                                      color: AppColors.black.withOpacity(0.7),
+                                      fontSize: Dimensions.h15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    formatter: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    // onEditingComplete: () {
+                                    //   if (controller.coinController.text.length <
+                                    //       2) {
+                                    //
+                                    //   }
+                                    // },
+                                    onChanged: (val) {
+                                      if (val != null) {
+                                        print("111111111111");
+                                        if (val.characters.characterAt(0) ==
+                                            Characters("0")) {
+                                          print("22222222222222");
+                                          // we need to remove the first char
+                                          controller.coinController.text =
+                                              val.substring(1);
+                                          // we need to move the cursor
+                                          controller.coinController.selection =
+                                              TextSelection.collapsed(
+                                            offset: controller
+                                                .coinController.text.length,
+                                          );
+                                        } else if (int.parse(val) > 10000) {
+                                          AppUtils.showErrorSnackBar(
+                                              bodyText:
+                                                  "You can not add more than 10000 points");
+                                        } else {
+                                          // if (int.parse(val) >= 1) {
+                                          //   print("333333333333333   ${val.length}");
+                                          //   // controller.validCoinsEntered.value = true;
+                                          //   // controller.isEnable.value = true;
+                                          // } else {
+                                          //   print("444444444444444444   ${val.length}");
+                                          //   // controller.ondebounce();
+
+                                          //   // controller.validCoinsEntered.value = false;
+                                          //   // controller.isEnable.value = false;
+                                          // }
+                                        }
+                                      }
+                                    },
+                                    focusNode: controller.coinFocusNode,
+                                    autofocus: controller.gameMode.value.name!
+                                            .toUpperCase()
+                                            .contains("ODD EVEN")
+                                        ? true
+                                        : false,
+                                    maxLength: 5,
+                                    hintText: "Enter Points",
+                                    contentPadding:
+                                        const EdgeInsets.only(right: 40),
+                                    imagePath: "",
+                                    containerBackColor: AppColors.black,
+                                    iconColor: AppColors.white,
+                                    height: Dimensions.h35,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.w10,
+                              ),
+                              Expanded(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(Dimensions.r10)),
+                                    color: AppColors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 4),
+                                        blurRadius: 3,
+                                        spreadRadius: 0.2,
+                                        color: AppColors.grey.withOpacity(0.7),
+                                      ),
+                                    ],
+                                  ),
+                                  child: RoundedCornerButton(
+                                    text: "PLUSADD".tr,
+                                    color: AppColors.appbarColor,
+                                    borderColor: AppColors.appbarColor,
+                                    fontSize: Dimensions.h12,
+                                    fontWeight: FontWeight.w600,
+                                    fontColor: AppColors.white,
+                                    letterSpacing: 1,
+                                    borderRadius: Dimensions.r7,
+                                    borderWidth: 0.2,
+                                    textStyle:
+                                        CustomTextStyle.textRobotoSansBold,
+                                    onTap: () {
+                                      // controller.coinsFocusNode.unfocus();
+                                      // controller.openFocusNode.requestFocus();
+                                      //  controller.onTapOfAddButton();
+                                      if (controller.gameMode.value.name!
+                                          .toUpperCase()
+                                          .contains("ODD EVEN")) {
+                                        controller.onTapAddOddEven();
+                                      } else {
+                                        controller.getspdptp();
+                                      }
+                                    },
+                                    height: Dimensions.h35,
+                                    width: Dimensions.w150,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(),
+                bidList(size),
+                verticalSpace,
+                verticalSpace,
+                verticalSpace,
+                verticalSpace,
+                verticalSpace
+              ],
+            ),
           ),
         ),
+        resizeToAvoidBottomInset: false,
+        bottomSheet: bottombar(size, context),
       ),
-      resizeToAvoidBottomInset: false,
-      bottomSheet: bottombar(size, context),
     );
   }
 
@@ -968,7 +1001,7 @@ class StarLineNewGamePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: RoundedCornerButton(
-                text: "SAVE".tr.toUpperCase(),
+                text: "SUBMIT".tr.toUpperCase(),
                 color: AppColors.white,
                 borderColor: AppColors.white,
                 fontSize: Dimensions.h11,
@@ -979,10 +1012,6 @@ class StarLineNewGamePage extends StatelessWidget {
                 borderWidth: 0.2,
                 textStyle: CustomTextStyle.textRobotoSansBold,
                 onTap: () {
-                  // controller.coinsFocusNode.unfocus();
-                  // controller.openFocusNode.requestFocus();
-                  // controller.onTapOfAddBidButton();
-
                   controller.onTapOfSaveButton(context);
                 },
                 height: Dimensions.h25,
@@ -1005,9 +1034,9 @@ class StarLineNewGamePage extends StatelessWidget {
                 itemBuilder: (context, item) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10),
+                        horizontal: 10.0, vertical: 7),
                     child: Container(
-                      height: Dimensions.h50,
+                      height: Dimensions.h40,
                       width: size.width,
                       decoration: BoxDecoration(
                         color: AppColors.white,
@@ -1026,28 +1055,104 @@ class StarLineNewGamePage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              nameColumn(
-                                  subText: "",
-                                  titleText: controller.marketData.value.time
-                                      .toString(),
-                                  textColor2: AppColors.black.withOpacity(0.5),
-                                  textColor: AppColors.black),
-                              nameColumn(
-                                  subText: "",
-                                  titleText: controller.selectedBidsList
-                                      .elementAt(item)
-                                      .bidNo
-                                      .toString(),
-                                  textColor2: AppColors.black.withOpacity(0.5),
-                                  textColor: AppColors.black),
-                              nameColumn(
-                                  subText: "",
-                                  titleText: controller.selectedBidsList
-                                      .elementAt(item)
-                                      .coins
-                                      .toString(),
-                                  textColor2: AppColors.black.withOpacity(0.5),
-                                  textColor: AppColors.black),
+                              SizedBox(
+                                width: Dimensions.w95,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${controller.checkType(item)} : ",
+                                      style: CustomTextStyle.textRobotoSansBold
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h14,
+                                      ),
+                                    ),
+                                    Text(
+                                      controller.selectedBidsList
+                                          .elementAt(item)
+                                          .bidNo
+                                          .toString(),
+                                      style: CustomTextStyle.textRobotoSansLight
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h15,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.w80,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // SizedBox(
+                                    //   height: Dimensions.w15,
+                                    //   width: Dimensions.w15,
+                                    //   child: SvgPicture.asset(
+                                    //     ConstantImage.rupeeImage,
+                                    //     color: AppColors.black,
+                                    //   ),
+                                    // ),
+                                    Text(
+                                      "₹ ${controller.selectedBidsList.elementAt(item).coins.toString()}",
+                                      style: CustomTextStyle.textRobotoSansLight
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h15,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.w110,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 25),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color:
+                                            AppColors.white.withOpacity(0.25),
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    child: Text(
+                                      textAlign: TextAlign.center,
+                                      "",
+                                      // controller.marketData.value.time
+                                      //     .toString(),
+                                      style: CustomTextStyle.textRobotoSansBold
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h13,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // nameColumn(
+                              //     subText: "",
+                              //     titleText: controller.marketData.value.time
+                              //         .toString(),
+                              //     textColor2: AppColors.black.withOpacity(0.5),
+                              //     textColor: AppColors.black),
+                              // nameColumn(
+                              //     subText: "",
+                              //     titleText: controller.selectedBidsList
+                              //         .elementAt(item)
+                              //         .bidNo
+                              //         .toString(),
+                              //     textColor2: AppColors.black.withOpacity(0.5),
+                              //     textColor: AppColors.black),
+                              // nameColumn(
+                              //     subText: "",
+                              //     titleText: controller.selectedBidsList
+                              //         .elementAt(item)
+                              //         .coins
+                              //         .toString(),
+                              //     textColor2: AppColors.black.withOpacity(0.5),
+                              //     textColor: AppColors.black),
                             ],
                           ),
                           Padding(

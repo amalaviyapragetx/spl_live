@@ -453,7 +453,7 @@ class NewGameModePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: RoundedCornerButton(
-                text: "SAVE".tr.toUpperCase(),
+                text: "SUBMIT".tr.toUpperCase(),
                 color: AppColors.white,
                 borderColor: AppColors.white,
                 fontSize: Dimensions.h11,
@@ -482,76 +482,161 @@ class NewGameModePage extends StatelessWidget {
           ? Container()
           : Expanded(
               child: ListView.builder(
-                  itemCount: controller.selectedBidsList.length,
-                  itemBuilder: (context, item) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10),
-                      child: Container(
-                        height: Dimensions.h50,
-                        width: size.width,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 1,
-                                spreadRadius: 3,
-                                color: AppColors.grey.withOpacity(0.2),
-                                offset: const Offset(0, 1)),
-                          ],
-                        ),
-                        child: Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                nameColumn(
-                                    subText: "",
-                                    titleText:
-                                        controller.biddingType.value.toString(),
-                                    textColor2:
-                                        AppColors.black.withOpacity(0.5),
-                                    textColor: AppColors.black),
-                                nameColumn(
-                                    subText: "",
-                                    titleText: controller.selectedBidsList
-                                        .elementAt(item)
-                                        .bidNo
-                                        .toString(),
-                                    textColor2:
-                                        AppColors.black.withOpacity(0.5),
-                                    textColor: AppColors.black),
-                                nameColumn(
-                                    subText: "",
-                                    titleText: controller.selectedBidsList
-                                        .elementAt(item)
-                                        .coins
-                                        .toString(),
-                                    textColor2:
-                                        AppColors.black.withOpacity(0.5),
-                                    textColor: AppColors.black),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 10.0, left: 0),
-                              child: InkWell(
-                                onTap: () {
-                                  controller.onDeleteBids(item);
-                                },
-                                child: Icon(
-                                  Icons.delete,
-                                  color: AppColors.redColor,
+                itemCount: controller.selectedBidsList.length,
+                itemBuilder: (context, item) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 5),
+                    child: Container(
+                      height: Dimensions.h40,
+                      width: size.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              spreadRadius: 3,
+                              color: AppColors.grey.withOpacity(0.2),
+                              offset: const Offset(0, 1)),
+                        ],
+                      ),
+                      child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              // nameColumn(
+                              //     subText: "",
+                              //     titleText: controller.selectedBidsList
+                              //         .elementAt(item)
+                              //         .bidNo
+                              //         .toString(),
+                              //     textColor2:
+                              //         AppColors.black.withOpacity(0.5),
+                              //     textColor: AppColors.black),
+                              // nameColumn(
+                              //     subText: "",
+                              //     titleText: controller.selectedBidsList
+                              //         .elementAt(item)
+                              //         .coins
+                              //         .toString(),
+                              //     textColor2:
+                              //         AppColors.black.withOpacity(0.5),
+                              //     textColor: AppColors.black),
+                              SizedBox(
+                                width: Dimensions.w95,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${controller.checkType(item)} : ",
+                                      style: CustomTextStyle.textRobotoSansBold
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h14,
+                                      ),
+                                    ),
+                                    Text(
+                                      controller.selectedBidsList
+                                          .elementAt(item)
+                                          .bidNo
+                                          .toString(),
+                                      style: CustomTextStyle.textRobotoSansLight
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h15,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                            )
-                          ],
-                        ),
+                              SizedBox(
+                                width: Dimensions.w80,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "₹",
+                                      style: CustomTextStyle
+                                          .textRobotoSansMedium
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h15,
+                                      ),
+                                    ),
+                                    Text(
+                                      controller.selectedBidsList
+                                          .elementAt(item)
+                                          .coins
+                                          .toString(),
+                                      style: CustomTextStyle.textRobotoSansLight
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h15,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.w110,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 25),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: AppColors.appbarColor
+                                            .withOpacity(0.25),
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 3.0,
+                                      ),
+                                      child: Text(
+                                        textAlign: TextAlign.center,
+                                        controller.biddingType.value.toString(),
+                                        style: CustomTextStyle
+                                            .textRobotoSansBold
+                                            .copyWith(
+                                          color: AppColors.black,
+                                          fontSize: Dimensions.h13,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // nameColumn(
+                              //     subText: "",
+                              //     titleText:
+                              //         controller.biddingType.value.toString(),
+                              //     textColor2:
+                              //         AppColors.black.withOpacity(0.5),
+                              //     textColor: AppColors.black),
+                            ],
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 10.0, left: 0),
+                            child: InkWell(
+                              onTap: () {
+                                controller.onDeleteBids(item);
+                              },
+                              child: Icon(
+                                Icons.delete,
+                                color: AppColors.redColor,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    );
-                  }),
+                    ),
+                  );
+                },
+              ),
             ),
     );
   }

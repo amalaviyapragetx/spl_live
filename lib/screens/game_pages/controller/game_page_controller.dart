@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -95,6 +94,8 @@ class GamePageController extends GetxController {
   // var marketList = MarketData().obs;
   // List<MarketData> tempMarketList = <MarketData>[];
   Future<void> getArguments() async {
+    //totalAmount.value = await LocalStorage.read(ConstantsVariables.totalAmount);
+    //print(totalAmount.value);
     bidsList.value = await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
     gameMode = argument['gameMode'];
     biddingType.value = argument['biddingType'];
@@ -379,75 +380,41 @@ class GamePageController extends GetxController {
 
   void panaSwitchCase(int index, chunkSize) {
     List<DigitListModelOffline> tempList = [];
-
     List<List<DigitListModelOffline>> chunks =
         splitListIntoChunks(panaDigitList, chunkSize);
     switch (index) {
       case 0:
         tempList = chunks[0];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 1:
         tempList = chunks[1];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 2:
         tempList = chunks[2];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 3:
         tempList = chunks[3];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 4:
         tempList = chunks[4];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 5:
         tempList = chunks[5];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 6:
         tempList = chunks[6];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 7:
         tempList = chunks[7];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 8:
         tempList = chunks[8];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       case 9:
         tempList = chunks[9];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
       default:
         tempList = chunks[0];
-        for (int j = 0; j < tempList.length; j++) {
-          print(tempList[j].value);
-        }
         break;
     }
     digitList.value = tempList;
@@ -472,12 +439,16 @@ class GamePageController extends GetxController {
         digitList.clear();
         searchController.clear();
         coinController.clear();
-        totalAmount.value = "0";
-        totalBid.value == "0";
+        // totalAmount.value = "0";
+        //  totalBid.value == "0";
         getArguments();
       } else {
         print("********************* ${selectedBidsList.length}");
         await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+        await LocalStorage.write(
+            ConstantsVariables.totalAmount, totalAmount.value);
+        await LocalStorage.write(ConstantsVariables.bidType, biddingType.value);
+
         Get.offAndToNamed(AppRoutName.selectedBidsPage, arguments: {
           "bidsList": selectedBidsList,
           "biddingType": biddingType.value,
@@ -490,8 +461,8 @@ class GamePageController extends GetxController {
         digitList.clear();
         searchController.clear();
         coinController.clear();
-        totalAmount.value = "0";
-        totalBid.value == "0";
+        // totalAmount.value = "0";
+        //   totalBid.value == "0";
         getArguments();
       }
     } else {

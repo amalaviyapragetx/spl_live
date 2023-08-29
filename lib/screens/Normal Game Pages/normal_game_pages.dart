@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../Custom Controllers/wallet_controller.dart';
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
@@ -11,7 +10,6 @@ import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
-import '../../routes/app_routes_name.dart';
 import 'controller/normal_game_page_controller.dart';
 
 ///////// ODD Even Page DIGITBASEDJODI
@@ -648,7 +646,7 @@ class NormalGamePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: RoundedCornerButton(
-                text: "SAVE".tr.toUpperCase(),
+                text: "SUBMIT".tr.toUpperCase(),
                 color: AppColors.white,
                 borderColor: AppColors.white,
                 fontSize: Dimensions.h11,
@@ -685,54 +683,133 @@ class NormalGamePage extends StatelessWidget {
                   itemBuilder: (context, item) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10),
+                          horizontal: 20.0, vertical: 5),
                       child: Container(
-                        height: Dimensions.h50,
+                        height: Dimensions.h40,
                         width: size.width,
                         decoration: BoxDecoration(
                           color: AppColors.white,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                                blurRadius: 1,
-                                spreadRadius: 3,
-                                color: AppColors.grey.withOpacity(0.2),
-                                offset: const Offset(0, 1)),
+                              blurRadius: 1,
+                              spreadRadius: 3,
+                              color: AppColors.grey.withOpacity(0.2),
+                              offset: const Offset(0, 1),
+                            ),
                           ],
                         ),
                         child: Row(
                           //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                nameColumn(
-                                    subText: "",
-                                    titleText:
-                                        controller.biddingType.value.toString(),
-                                    textColor2:
-                                        AppColors.black.withOpacity(0.5),
-                                    textColor: AppColors.black),
-                                nameColumn(
-                                    subText: "",
-                                    titleText: controller.selectedBidsList
+                            SizedBox(
+                              width: Dimensions.w95,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${controller.checkType(item)} : ",
+                                    style: CustomTextStyle.textRobotoSansBold
+                                        .copyWith(
+                                      color: AppColors.black,
+                                      fontSize: Dimensions.h14,
+                                    ),
+                                  ),
+                                  Text(
+                                    controller.selectedBidsList
                                         .elementAt(item)
                                         .bidNo
                                         .toString(),
-                                    textColor2:
-                                        AppColors.black.withOpacity(0.5),
-                                    textColor: AppColors.black),
-                                nameColumn(
-                                    subText: "",
-                                    titleText: controller.selectedBidsList
-                                        .elementAt(item)
-                                        .coins
-                                        .toString(),
-                                    textColor2:
-                                        AppColors.black.withOpacity(0.5),
-                                    textColor: AppColors.black),
-                              ],
+                                    style: CustomTextStyle.textRobotoSansLight
+                                        .copyWith(
+                                      color: AppColors.black,
+                                      fontSize: Dimensions.h15,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
+                            SizedBox(
+                              width: Dimensions.w80,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // SizedBox(
+                                  //   height: Dimensions.w15,
+                                  //   width: Dimensions.w15,
+                                  //   child: SvgPicture.asset(
+                                  //     ConstantImage.rupeeImage,
+                                  //     color: AppColors.black,
+                                  //   ),
+                                  // ),
+                                  Text(
+                                    "₹ ${controller.selectedBidsList.elementAt(item).coins.toString()}",
+                                    style: CustomTextStyle.textRobotoSansLight
+                                        .copyWith(
+                                      color: AppColors.black,
+                                      fontSize: Dimensions.h15,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: Dimensions.w110,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 25),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.appbarColor
+                                          .withOpacity(0.25),
+                                      borderRadius: BorderRadius.circular(25)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 3.0,
+                                    ),
+                                    child: Text(
+                                      textAlign: TextAlign.center,
+                                      controller.biddingType.value.toString(),
+                                      style: CustomTextStyle.textRobotoSansBold
+                                          .copyWith(
+                                        color: AppColors.black,
+                                        fontSize: Dimensions.h13,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //   children: [
+                            //     nameColumn(
+                            //         subText: "",
+                            //         titleText:
+                            //             controller.biddingType.value.toString(),
+                            //         textColor2:
+                            //             AppColors.black.withOpacity(0.5),
+                            //         textColor: AppColors.black),
+                            //     nameColumn(
+                            //         subText: "",
+                            //         titleText: controller.selectedBidsList
+                            //             .elementAt(item)
+                            //             .bidNo
+                            //             .toString(),
+                            //         textColor2:
+                            //             AppColors.black.withOpacity(0.5),
+                            //         textColor: AppColors.black),
+                            //     nameColumn(
+                            //         subText: "",
+                            //         titleText: controller.selectedBidsList
+                            //             .elementAt(item)
+                            //             .coins
+                            //             .toString(),
+                            //         textColor2:
+                            //             AppColors.black.withOpacity(0.5),
+                            //         textColor: AppColors.black),
+                            //   ],
+                            // ),
                             Padding(
                               padding:
                                   const EdgeInsets.only(right: 10.0, left: 0),

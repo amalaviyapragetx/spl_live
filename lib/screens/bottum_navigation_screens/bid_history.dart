@@ -67,7 +67,7 @@ class BidHistory extends StatelessWidget {
               itemCount: homePageController.marketBidHistoryList.length,
               itemBuilder: (context, index) {
                 var data = homePageController.marketBidHistoryList[index];
-
+                print(homePageController.marketBidHistoryList.length);
                 return listveiwTransactionNew(
                   requestId: "RequestId :  ${data.requestId ?? ""}",
                   isWin: data.isWin ?? false,
@@ -91,183 +91,183 @@ class BidHistory extends StatelessWidget {
     );
   }
 
-  Widget listveiwTransaction({
-    required String marketName,
-    required String bidNo,
-    required String openTime,
-    required String closeTime,
-    required String coins,
-    required String ballance,
-    required String transactiontype,
-    required String timeDate,
-    required String gameMode,
-    required String bidType,
-    required bool isWin,
-    // required Function() onTap,
-  }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
-      child: InkWell(
-        // onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              isWin == true
-                  ? BoxShadow()
-                  : BoxShadow(
-                      spreadRadius: 1,
-                      color: AppColors.grey,
-                      blurRadius: 10,
-                      offset: const Offset(7, 4),
-                    ),
-            ],
-            border: Border.all(width: 0.6),
-            color: isWin == true ? AppColors.greenAccent : AppColors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          " $marketName",
-                          style: CustomTextStyle.textRobotoSansBold
-                              .copyWith(fontSize: Dimensions.h14),
-                        ),
-                        SizedBox(
-                          width: Dimensions.w8,
-                        ),
-                        Text(
-                          bidNo.toString(),
-                          style: CustomTextStyle.textRobotoSansLight.copyWith(
-                            fontSize: Dimensions.h14,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Row(
-                        children: [
-                          Text(
-                            transactiontype,
-                            style: CustomTextStyle.textRobotoSansLight,
-                          ),
-                          // openResut != ""
-                          //     ? Text(
-                          //         // "446-47-359",
-                          //         openResut,
-                          //         style: CustomTextStyle.textRobotoSansBold,
-                          //       )
-                          //     : SvgPicture.asset(
-                          //         ConstantImage.openStarsSvg,
-                          //         height: Dimensions.h13,
-                          //       ),
-                          // closeResult != ""
-                          //     ? Text(
-                          //         // "446-47-359",
-                          //         closeResult,
-                          //         style: CustomTextStyle.textRobotoSansBold,
-                          //       )
-                          //     : SvgPicture.asset(
-                          //         ConstantImage.closeStarsSvg,
-                          //         height: Dimensions.h13,
-                          //       ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "$openTime - $closeTime",
-                      style: CustomTextStyle.textRobotoSansLight,
-                    ),
-                    Text(
-                      "$gameMode - $bidType",
-                      style: CustomTextStyle.textRobotoSansLight,
-                    ),
-                    // Text(
-                    //   bidType,
-                    //   style: CustomTextStyle.textRobotoSansLight,
-                    // ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text(
-                      "Points",
-                      style: CustomTextStyle.textRobotoSansLight,
-                    ),
-                    SizedBox(
-                      width: Dimensions.w5,
-                    ),
-                    // SizedBox(
-                    //   width: Dimensions.w5,
-                    // ),
-                    Text(
-                      coins,
-                      style: CustomTextStyle.textRobotoSansLight.copyWith(
-                        fontSize: Dimensions.h14,
-                        color: AppColors.balanceCoinsColor,
-                      ),
-                    ),
-                    const Expanded(child: SizedBox()),
-                    SizedBox(
-                      width: Dimensions.w5,
-                    ),
-                    SizedBox(
-                      width: Dimensions.w5,
-                    ),
-                    Text(
-                      ballance,
-                      style: CustomTextStyle.textRobotoSansLight.copyWith(
-                        fontSize: Dimensions.h14,
-                        color: AppColors.balanceCoinsColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: Dimensions.h30,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.greywhite,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(Dimensions.r8),
-                    bottomRight: Radius.circular(Dimensions.r8),
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    "Time : $timeDate",
-                    style: CustomTextStyle.textRobotoSansLight,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget listveiwTransaction({
+  //   required String marketName,
+  //   required String bidNo,
+  //   required String openTime,
+  //   required String closeTime,
+  //   required String coins,
+  //   required String ballance,
+  //   required String transactiontype,
+  //   required String timeDate,
+  //   required String gameMode,
+  //   required String bidType,
+  //   required bool isWin,
+  //   // required Function() onTap,
+  // }) {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+  //     child: InkWell(
+  //       // onTap: onTap,
+  //       child: Container(
+  //         decoration: BoxDecoration(
+  //           boxShadow: [
+  //             isWin == true
+  //                 ? BoxShadow()
+  //                 : BoxShadow(
+  //                     spreadRadius: 1,
+  //                     color: AppColors.grey,
+  //                     blurRadius: 10,
+  //                     offset: const Offset(7, 4),
+  //                   ),
+  //           ],
+  //           border: Border.all(width: 0.6),
+  //           color: isWin == true ? AppColors.greenAccent : AppColors.white,
+  //           borderRadius: BorderRadius.circular(8),
+  //         ),
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.start,
+  //           children: [
+  //             Padding(
+  //               padding:
+  //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+  //               child: Row(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 children: [
+  //                   Row(
+  //                     children: [
+  //                       Text(
+  //                         " $marketName",
+  //                         style: CustomTextStyle.textRobotoSansBold
+  //                             .copyWith(fontSize: Dimensions.h14),
+  //                       ),
+  //                       SizedBox(
+  //                         width: Dimensions.w8,
+  //                       ),
+  //                       Text(
+  //                         bidNo.toString(),
+  //                         style: CustomTextStyle.textRobotoSansLight.copyWith(
+  //                           fontSize: Dimensions.h14,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   Padding(
+  //                     padding: const EdgeInsets.only(top: 2),
+  //                     child: Row(
+  //                       children: [
+  //                         Text(
+  //                           transactiontype,
+  //                           style: CustomTextStyle.textRobotoSansLight,
+  //                         ),
+  //                         // openResut != ""
+  //                         //     ? Text(
+  //                         //         // "446-47-359",
+  //                         //         openResut,
+  //                         //         style: CustomTextStyle.textRobotoSansBold,
+  //                         //       )
+  //                         //     : SvgPicture.asset(
+  //                         //         ConstantImage.openStarsSvg,
+  //                         //         height: Dimensions.h13,
+  //                         //       ),
+  //                         // closeResult != ""
+  //                         //     ? Text(
+  //                         //         // "446-47-359",
+  //                         //         closeResult,
+  //                         //         style: CustomTextStyle.textRobotoSansBold,
+  //                         //       )
+  //                         //     : SvgPicture.asset(
+  //                         //         ConstantImage.closeStarsSvg,
+  //                         //         height: Dimensions.h13,
+  //                         //       ),
+  //                       ],
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 children: [
+  //                   Text(
+  //                     "$openTime - $closeTime",
+  //                     style: CustomTextStyle.textRobotoSansLight,
+  //                   ),
+  //                   Text(
+  //                     "$gameMode - $bidType",
+  //                     style: CustomTextStyle.textRobotoSansLight,
+  //                   ),
+  //                   // Text(
+  //                   //   bidType,
+  //                   //   style: CustomTextStyle.textRobotoSansLight,
+  //                   // ),
+  //                 ],
+  //               ),
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: Row(
+  //                 children: [
+  //                   Text(
+  //                     "Points",
+  //                     style: CustomTextStyle.textRobotoSansLight,
+  //                   ),
+  //                   SizedBox(
+  //                     width: Dimensions.w5,
+  //                   ),
+  //                   // SizedBox(
+  //                   //   width: Dimensions.w5,
+  //                   // ),
+  //                   Text(
+  //                     coins,
+  //                     style: CustomTextStyle.textRobotoSansLight.copyWith(
+  //                       fontSize: Dimensions.h14,
+  //                       color: AppColors.balanceCoinsColor,
+  //                     ),
+  //                   ),
+  //                   const Expanded(child: SizedBox()),
+  //                   SizedBox(
+  //                     width: Dimensions.w5,
+  //                   ),
+  //                   SizedBox(
+  //                     width: Dimensions.w5,
+  //                   ),
+  //                   Text(
+  //                     ballance,
+  //                     style: CustomTextStyle.textRobotoSansLight.copyWith(
+  //                       fontSize: Dimensions.h14,
+  //                       color: AppColors.balanceCoinsColor,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             Container(
+  //               height: Dimensions.h30,
+  //               width: double.infinity,
+  //               decoration: BoxDecoration(
+  //                 color: AppColors.greywhite,
+  //                 borderRadius: BorderRadius.only(
+  //                   bottomLeft: Radius.circular(Dimensions.r8),
+  //                   bottomRight: Radius.circular(Dimensions.r8),
+  //                 ),
+  //               ),
+  //               child: Center(
+  //                 child: Text(
+  //                   "Time : $timeDate",
+  //                   style: CustomTextStyle.textRobotoSansLight,
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget listveiwTransactionNew({
     required String marketName,

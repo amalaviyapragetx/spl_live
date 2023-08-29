@@ -15,7 +15,7 @@ class DashBoardPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     var controller = Get.put(HomePageController());
     var walletController = Get.put(WalletController());
-    print("${controller.getNotifiactionCount.value.toString()}");
+    // print("${controller.getNotifiactionCount.value.toString()}");
     return WillPopScope(
       onWillPop: () async {
         if (controller.pageWidget.value == 1 ||
@@ -32,16 +32,21 @@ class DashBoardPage extends StatelessWidget {
           controller.currentIndex.value = 4;
           return false;
         } else {
-          return await showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) => onExitAlert(context, onCancel: () {
-                  Navigator.of(context).pop(false);
-                }, onExit: () {
-                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                }),
-              ) ??
-              false;
+          if (controller.widgetContainer.value != 0) {
+            controller.widgetContainer.value = 0;
+            return false;
+          } else {
+            return await showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) => onExitAlert(context, onCancel: () {
+                    Navigator.of(context).pop(false);
+                  }, onExit: () {
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  }),
+                ) ??
+                false;
+          }
         }
       },
       child: Stack(
@@ -86,6 +91,7 @@ class DashBoardPage extends StatelessWidget {
                     DeviceOrientation.portraitUp,
                     DeviceOrientation.landscapeLeft
                   ]);
+                  controller.getUserBalance();
                 },
                 onTapPassbook: () {
                   controller.getPassBookData(

@@ -1,8 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:spllive/Custom%20Controllers/doubletap_exitcontroller.dart';
+import 'Push Notification/notificationservices.dart';
+import 'Push Notification/push_notification_services.dart';
 import 'helper_files/constant_variables.dart';
 import 'localization/app_localization.dart';
 import 'routes/app_routes.dart';
@@ -11,22 +16,46 @@ import 'screens/Local Storage.dart';
 import 'screens/initial_bindings.dart';
 import 'self_closing_page.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessegingBackgroundHendler(RemoteMessage msg) async {
+  await Firebase.initializeApp();
+}
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessegingBackgroundHendler);
+  // Get.put(PushNotificationService()).initialize();
   await GetStorage.init();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp, // Allow only portrait orientation
-    DeviceOrientation.portraitDown,
-  ]);
-//  Get.put(AppLifecycleController());
+  // Get.put(AppLifecycleController());
   runApp(MyApp());
 }
 
 final GlobalKey<NavigatorState> navigatorKey =
     GlobalKey(debugLabel: "Main Navigator");
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   var conrroller = Get.put(InactivityController());
+  var exitondoubleTap = Get.put(DoubleTapExitController());
+  @override
+  void initState() {
+    NotificationServices().requestNotificationPermission();
+    //  notificationServices.isTokenRefresh();
+    NotificationServices().firebaseInit(context);
+    NotificationServices().setuoIntrectMessege(context);
+    NotificationServices().getDeviceToken().then((value) {
+      print("Device Token : $value");
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

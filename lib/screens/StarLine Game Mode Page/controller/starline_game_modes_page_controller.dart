@@ -41,35 +41,35 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   onBackButton() async {
-    Get.offNamed(AppRoutName.dashBoardPage);
-    requestModel.value.bids?.clear();
-    await LocalStorage.write(
-        ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    var playmore = await LocalStorage.read(ConstantsVariables.playMore);
+    var bidList = await LocalStorage.read(ConstantsVariables.starlineBidsList);
+    if (!playmore) {
+      if (bidList.length != 0) {
+        Get.toNamed(AppRoutName.starlineBidpage, arguments: {
+          "bidsList": bidList,
+          "gameMode": gameMode.value,
+          "marketData": marketData.value,
+        });
+      } else {
+        Get.offAllNamed(AppRoutName.dashBoardPage);
+        requestModel.value.bids?.clear();
+        await LocalStorage.write(
+            ConstantsVariables.starlineBidsList, requestModel.value.bids);
+      }
+    } else {
+      Get.offAllNamed(AppRoutName.dashBoardPage);
+      requestModel.value.bids?.clear();
+      await LocalStorage.write(
+          ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    }
   }
-  // Future<void> getArguments() async {
-  //   gameMode.value = arguments['gameMode'];
-  //   marketData.value = arguments['marketData'];
-  //   // requestModel.value.bids = arguments['bidsList'];
-  //   // requestModel.refresh();
-  //   //  _calculateTotalAmount();
-  //   // requestModel.value.dailyStarlineMarketId = marketData.value.id;
-  //   var data = await LocalStorage.read(ConstantsVariables.userData);
-  //   UserDetailsModel userData = UserDetailsModel.fromJson(data);
-  //   //requestModel.value.userId = userData.id;
-  // }
 
-  // Future<void> getBool() async {
-  //   getBidData = await LocalStorage.read(ConstantsVariables.boolData);
-  //   print(count++);
-  //   print(getBidData);
-  //   if (getBidData) {
-  //     getArguments();
-  //   }
-  //   update();
-  // }
   @override
-  void onClose() {
+  void onClose() async {
     requestModel.value.bids?.clear();
+    await LocalStorage.write(ConstantsVariables.playMore, true);
+    await LocalStorage.write(ConstantsVariables.totalAmount, "");
+    await LocalStorage.write(ConstantsVariables.marketName, "");
     super.onClose();
   }
 
@@ -174,7 +174,7 @@ class StarLineGameModesPageController extends GetxController {
 
       default:
     }
-    //await LocalStorage.write(ConstantsVariables.boolData, getBidData);
+
     print("==== From Main data ===== $isBulkMode");
     if (isBulkMode) {
       Get.toNamed(AppRoutName.starLineGamePage, arguments: {

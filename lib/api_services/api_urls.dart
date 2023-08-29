@@ -5,7 +5,7 @@ class ApiUtils {
   // Spl Production
   static String baseURL = "http://35.154.94.107:9869";
   // local url
-  // static String baseURL = "http://192.168.1.30:8080";
+  //static String baseURL = "http://192.168.1.30:8080";
 
   // endpoints
   static String signUP = '$baseURL/auth/signup';
@@ -72,4 +72,10 @@ class ApiUtils {
 
   /// new Rating Api
   static String rateAppApi = "$baseURL/feedback/createRating";
+
+  // Notifiaction Api
+  static String marketNotification =
+      "$baseURL/notification/updateNotificationStatus";
+
+  static String bennerApi = "$baseURL/banner/getAll";
 }

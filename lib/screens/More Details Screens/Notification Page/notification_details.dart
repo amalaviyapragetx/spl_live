@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
+import 'controller/notification_details_controller.dart';
 
 class NotificationDetailsPage extends StatelessWidget {
-  const NotificationDetailsPage({super.key});
+  NotificationDetailsPage({super.key});
+  var controller = Get.put(NotificationDetailsPageController());
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +57,18 @@ class NotificationDetailsPage extends StatelessWidget {
                         fontSize: Dimensions.h15,
                       ),
                     ),
-                    Switch(
-                      activeColor: AppColors.appbarColor,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      value: true,
-                      onChanged: (value) {},
-                    ),
+                    Obx(
+                      () => Switch.adaptive(
+                        activeColor: AppColors.appbarColor,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        value: controller.marketNotificationFromLocal.value,
+                        onChanged: (value) {
+                          controller.marketNotificationFromLocal.value = value;
+
+                          controller.addRating();
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -96,12 +103,19 @@ class NotificationDetailsPage extends StatelessWidget {
                         fontSize: Dimensions.h15,
                       ),
                     ),
-                    Switch.adaptive(
-                      activeColor: AppColors.appbarColor,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      value: true,
-                      onChanged: (value) {},
-                    ),
+                    Obx(
+                      () => Switch.adaptive(
+                        activeColor: AppColors.appbarColor,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        value: controller.starlineNotificationFromLocal.value,
+                        onChanged: (value) {
+                          controller.starlineNotificationFromLocal.value =
+                              value;
+
+                          controller.addRating();
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),

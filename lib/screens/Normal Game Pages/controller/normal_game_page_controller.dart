@@ -37,7 +37,7 @@ class NormalGamePageController extends GetxController {
   RxBool dpValue2 = false.obs;
   String addedNormalBidValue = "";
   RxBool tpValue3 = false.obs;
-  RxString totalAmount = "00".obs;
+  RxString totalAmount = "0".obs;
   RxInt panaControllerLength = 2.obs;
   JsonFileModel jsonModel = JsonFileModel();
   Rx<BidRequestModel> requestModel = BidRequestModel().obs;
@@ -71,6 +71,19 @@ class NormalGamePageController extends GetxController {
     super.onInit();
     getArguments();
     // focusNode = FocusNode();
+  }
+
+  checkType(index) {
+    if (selectedBidsList.elementAt(index).gameModeName! == "Odd Even") {
+      return "Ank";
+    } else if (selectedBidsList
+        .elementAt(index)
+        .gameModeName!
+        .contains("Jodi")) {
+      return "Jodi";
+    } else {
+      return "Pana";
+    }
   }
 
   void getArguments() async {
@@ -344,7 +357,7 @@ class NormalGamePageController extends GetxController {
                 }
               }
             }
-            Get.closeAllSnackbars();
+            // Get.closeAllSnackbars();
             _calculateTotalAmount();
             coinFocusNode.nextFocus();
             leftFocusNode.requestFocus();

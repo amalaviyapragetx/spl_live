@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/components/bidList_for_market.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
-
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/constant_image.dart';
@@ -46,7 +45,7 @@ class SelectedBidsPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(Dimensions.h10),
+            padding: EdgeInsets.zero,
             child: Column(
               children: [
                 SizedBox(
@@ -55,46 +54,56 @@ class SelectedBidsPage extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: controller.requestModel.value.bids!.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.h5)),
-                          child: ListTile(
-                            dense: true,
-                            visualDensity: const VisualDensity(vertical: -2),
-                            title: Text(
-                              "${controller.requestModel.value.bids![index].gameModeName} - ",
-                              style: CustomTextStyle.textRobotoSansLight
-                                  .copyWith(fontSize: Dimensions.h12),
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 2.0),
-                              child: Text(
-                                "Bid no. : ${controller.requestModel.value.bids![index].bidNo} , Coins : ${controller.requestModel.value.bids![index].coins}",
-                                style: CustomTextStyle.textRobotoSansLight
-                                    .copyWith(fontSize: Dimensions.h12),
-                              ),
-                            ),
-                            trailing: InkWell(
-                              onTap: () {
-                                controller.onDeleteBids(index);
-                              },
-                              child: Container(
-                                color: AppColors.transparent,
-                                height: Dimensions.h30,
-                                width: Dimensions.w30,
-                                child: SvgPicture.asset(
-                                  ConstantImage.trashIcon,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                      return BidHistoryList(
+                        marketName: controller.checkType(index),
+                        bidType: controller.bidType.toString(),
+                        bidCoin: controller
+                            .requestModel.value.bids![index].coins
+                            .toString(),
+                        bidNo: controller.requestModel.value.bids![index].bidNo
+                            .toString(),
+                        onDelete: () => controller.onDeleteBids(index),
                       );
+                      // return Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: DecoratedBox(
+                      //     decoration: BoxDecoration(
+                      //         border: Border.all(),
+                      //         borderRadius:
+                      //             BorderRadius.circular(Dimensions.h5)),
+                      //     child: ListTile(
+                      //       dense: true,
+                      //       visualDensity: const VisualDensity(vertical: -2),
+                      //       title: Text(
+                      //         "${controller.requestModel.value.bids![index].gameModeName} - ",
+                      //         style: CustomTextStyle.textRobotoSansLight
+                      //             .copyWith(fontSize: Dimensions.h12),
+                      //       ),
+                      //       subtitle: Padding(
+                      //         padding: const EdgeInsets.only(top: 2.0),
+                      //         child: Text(
+                      //           "Bid no. : ${controller.requestModel.value.bids![index].bidNo} , Coins : ${controller.requestModel.value.bids![index].coins}",
+                      //           style: CustomTextStyle.textRobotoSansLight
+                      //               .copyWith(fontSize: Dimensions.h12),
+                      //         ),
+                      //       ),
+                      //       trailing: InkWell(
+                      //         onTap: () {
+                      //           controller.onDeleteBids(index);
+                      //         },
+                      //         child: Container(
+                      //           color: AppColors.transparent,
+                      //           height: Dimensions.h30,
+                      //           width: Dimensions.w30,
+                      //           child: SvgPicture.asset(
+                      //             ConstantImage.trashIcon,
+                      //             fit: BoxFit.cover,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // );
                     },
                   ),
                 ),

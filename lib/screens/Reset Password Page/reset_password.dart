@@ -93,6 +93,80 @@ class ResetPasswordPage extends StatelessWidget {
               }
             },
           ),
+          SizedBox(
+            height: Dimensions.h10,
+          ),
+          Obx(
+            () => Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.h12),
+                child: GestureDetector(
+                  onTap: () => controller.formattedTime.toString() != "0:00"
+                      ? null
+                      : controller.callResendOtpApi(),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: "DIDOTP".tr,
+                      style: CustomTextStyle.textRobotoSansLight.copyWith(
+                        color: AppColors.appbarColor,
+                        fontWeight: FontWeight.normal,
+                        fontSize: Dimensions.h14,
+                      ),
+                      children: [
+                        controller.formattedTime.toString() != "0:00"
+                            ? TextSpan(
+                                text: controller.formattedTime.toString(),
+                                style: CustomTextStyle.textRobotoSansLight
+                                    .copyWith(
+                                  color: AppColors.appbarColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: Dimensions.h14,
+                                ),
+                              )
+                            : TextSpan(
+                                text: "RESENDOTP".tr,
+                                style: CustomTextStyle.textRobotoSansLight
+                                    .copyWith(
+                                  color: AppColors.appbarColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: Dimensions.h14,
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Obx(
+          //   () => Align(
+          //     alignment: Alignment.bottomRight,
+          //     child: Padding(
+          //       padding: const EdgeInsets.only(right: 20.0, top: 10),
+          //       child: GestureDetector(
+          //         onTap: () {
+          //           controller.formattedTime.toString() != "0:00"
+          //               ? null
+          //               : controller.callResendOtpApi();
+          //         },
+          //         child: Text(
+          //           controller.formattedTime.toString(),
+          //           style: CustomTextStyle.textRobotoSansMedium.copyWith(
+          //             fontWeight: FontWeight.bold,
+          //             fontSize: Dimensions.h15,
+          //             decoration: TextDecoration.underline,
+          //             letterSpacing: 1,
+          //             color: AppColors.appbarColor,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           verticalSpace,
           _buildPasswordField(
               focusNode: controller.focusNode2,

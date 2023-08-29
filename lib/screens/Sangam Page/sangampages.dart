@@ -63,127 +63,134 @@ class SangamPages extends StatelessWidget {
           )
         ],
       ),
-      body: SizedBox(
-        height: size.height,
-        width: size.width,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                verticalSpace,
-                Text(
-                  controller.gameMode.value.name!.toUpperCase(),
-                  style: CustomTextStyle.textRobotoSansBold.copyWith(
-                    color: AppColors.appbarColor,
-                    fontSize: Dimensions.h18,
-                  ),
-                ),
-                verticalSpace,
-                openCloseWidget(size),
-                verticalSpace,
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 10),
-                        child: AutoTextFieldWithSuggetion(
-                          imagePath: "",
-                          maxLength: 5,
-                          enable: true,
-                          focusNode: controller.focusNode,
-                          onChanged: (val) {
-                            if (val != null) {
-                              if (val.characters.characterAt(0) ==
-                                      Characters("0") &&
-                                  val.length > 1) {
-                                // we need to remove the first char
-                                controller.coinsController.text =
-                                    val.substring(1);
-                                // we need to move the cursor
-                                controller.coinsController.selection =
-                                    TextSelection.collapsed(
-                                  offset:
-                                      controller.coinsController.text.length,
-                                );
-                              } else if (int.parse(val) == 0) {
-                                print("value == 0");
-                                AppUtils.showErrorSnackBar(
-                                  bodyText: "Please enter valid points",
-                                );
-                              } else if (int.parse(val) > 10000) {
-                                print("value > 10000");
-                                AppUtils.showErrorSnackBar(
-                                  bodyText:
-                                      "You can not add more than 10000 points",
-                                );
-                              }
-                            }
-                          },
-                          height: Dimensions.h35,
-                          controller: controller.coinsController,
-                          hintText: "Enter Points".tr,
-                          containerWidth: double.infinity,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          keyboardType: TextInputType.number,
-                          validateValue: (validate, value) {},
-                          isBulkMode: false,
-                          optionsBuilder: (TextEditingValue textEditingValue) {
-                            if (textEditingValue.text == '') {
-                              return const Iterable<String>.empty();
-                            } else {
-                              return matches;
-                            }
-                          },
-                        ),
-                      ),
+      body: Obx(
+        () => SizedBox(
+          height: size.height,
+          width: size.width,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  verticalSpace,
+                  Text(
+                    controller.gameMode.value.name!.toUpperCase(),
+                    style: CustomTextStyle.textRobotoSansBold.copyWith(
+                      color: AppColors.appbarColor,
+                      fontSize: Dimensions.h18,
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 4),
-                                blurRadius: 3,
-                                spreadRadius: 0.2,
-                                color: AppColors.grey.withOpacity(0.7),
-                              ),
-                            ],
-                          ),
-                          child: RoundedCornerButton(
-                            text: "PLUSADD".tr,
-                            color: AppColors.appbarColor,
-                            borderColor: AppColors.appbarColor,
-                            fontSize: Dimensions.h13,
-                            fontWeight: FontWeight.w600,
-                            fontColor: AppColors.white,
-                            letterSpacing: 1,
-                            borderRadius: Dimensions.r5,
-                            borderWidth: 0.2,
-                            textStyle: CustomTextStyle.textRobotoSansBold,
-                            onTap: () {
-                              controller.onTapOfAddBidButton();
+                  ),
+                  verticalSpace,
+                  openCloseWidget(size),
+                  verticalSpace,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 10),
+                          child: AutoTextFieldWithSuggetion(
+                            imagePath: "",
+                            maxLength: 5,
+                            enable: true,
+                            focusNode: controller.focusNode,
+                            onChanged: (val) {
+                              if (val != null) {
+                                if (val.characters.characterAt(0) ==
+                                        Characters("0") &&
+                                    val.length > 1) {
+                                  // we need to remove the first char
+                                  controller.coinsController.text =
+                                      val.substring(1);
+                                  // we need to move the cursor
+                                  controller.coinsController.selection =
+                                      TextSelection.collapsed(
+                                    offset:
+                                        controller.coinsController.text.length,
+                                  );
+                                } else if (int.parse(val) == 0) {
+                                  print("value == 0");
+                                  AppUtils.showErrorSnackBar(
+                                    bodyText: "Please enter valid points",
+                                  );
+                                } else if (int.parse(val) > 10000) {
+                                  print("value > 10000");
+                                  AppUtils.showErrorSnackBar(
+                                    bodyText:
+                                        "You can not add more than 10000 points",
+                                  );
+                                }
+                              }
                             },
                             height: Dimensions.h35,
-                            width: size.width / 1.8,
+                            controller: controller.coinsController,
+                            hintText: "Enter Points".tr,
+                            containerWidth: double.infinity,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            keyboardType: TextInputType.number,
+                            validateValue: (validate, value) {},
+                            isBulkMode: false,
+                            optionsBuilder:
+                                (TextEditingValue textEditingValue) {
+                              if (textEditingValue.text == '') {
+                                // AppUtils.showErrorSnackBar(
+                                //   bodyText: "Please enter valid points",
+                                // );
+                                return Iterable<String>.empty();
+                                //return const Iterable<String>.empty();
+                              } else {
+                                return matches;
+                              }
+                            },
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                verticalSpace,
-                verticalSpace,
-                verticalSpace,
-                // listview(),
-                bidList(size)
-              ],
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 3,
+                                  spreadRadius: 0.2,
+                                  color: AppColors.grey.withOpacity(0.7),
+                                ),
+                              ],
+                            ),
+                            child: RoundedCornerButton(
+                              text: "PLUSADD".tr,
+                              color: AppColors.appbarColor,
+                              borderColor: AppColors.appbarColor,
+                              fontSize: Dimensions.h13,
+                              fontWeight: FontWeight.w600,
+                              fontColor: AppColors.white,
+                              letterSpacing: 1,
+                              borderRadius: Dimensions.r5,
+                              borderWidth: 0.2,
+                              textStyle: CustomTextStyle.textRobotoSansBold,
+                              onTap: () {
+                                controller.onTapOfAddBidButton();
+                              },
+                              height: Dimensions.h35,
+                              width: size.width / 1.8,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  verticalSpace,
+                  verticalSpace,
+                  verticalSpace,
+                  // listview(),
+                  bidList(size)
+                ],
+              ),
             ),
           ),
         ),
@@ -322,18 +329,21 @@ class SangamPages extends StatelessWidget {
                           "HALF SANGAM B") {
                         if (value.length == 3) {
                           controller.addedNormalBidValue = value;
-                          print("++++++++++${controller.addedNormalBidValue}");
+                          //    print("++++++++++${controller.addedNormalBidValue}");
                           controller.focusNode.nextFocus();
                           // controller.openFocusNode.unfocus();
                           // controller.closeFocusNode.requestFocus();
                           controller.validateEnteredOpenDigit(value);
                         }
                       } else {
-                        if (value.length == 1) {
-                          controller.validateEnteredCloseDigit(false, value);
-                          controller.focusNode.nextFocus();
-                          // controller.openFocusNode.unfocus();
-                          // controller.closeFocusNode.requestFocus();
+                        if (controller.gameMode.value.name!.toUpperCase() !=
+                            "FULL SANGAM") {
+                          if (value.length == 1) {
+                            controller.validateEnteredCloseDigit(false, value);
+                            controller.focusNode.nextFocus();
+                            // controller.openFocusNode.unfocus();
+                            // controller.closeFocusNode.requestFocus();
+                          }
                         }
                       }
                     },
@@ -440,7 +450,7 @@ class SangamPages extends StatelessWidget {
                                 // controller.coinsFocusNode.requestFocus();
                                 controller.validateEnteredCloseDigit(false,
                                     controller.closeValueController.text);
-                                controller.validateEnteredOpenDigit(value);
+                                //controller.validateEnteredOpenDigit(value);
                               }
                             } else if (controller.gameMode.value.name!
                                     .toUpperCase() ==
@@ -739,26 +749,108 @@ class SangamPages extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      nameColumn(
-                          subText: "",
-                          titleText: controller.bidType,
-                          textColor2: AppColors.black.withOpacity(0.5),
-                          textColor: AppColors.black),
-                      nameColumn(
-                        subText: "",
-                        titleText:
-                            controller.requestModel.value.bids![index].bidNo ??
-                                "",
-                        textColor2: AppColors.black.withOpacity(0.5),
-                        textColor: AppColors.black,
+                      // nameColumn(
+                      //     subText: "",
+                      //     titleText: controller.bidType,
+                      //     textColor2: AppColors.black.withOpacity(0.5),
+                      //     textColor: AppColors.black),
+                      // nameColumn(
+                      //   subText: "",
+                      //   titleText: (controller.gameMode.value.name!
+                      //               .toUpperCase() ==
+                      //           "HALF SANGAM A")
+                      //       ? controller.manipulateString(controller
+                      //               .requestModel.value.bids![index].bidNo ??
+                      //           "")
+                      //       : controller
+                      //               .requestModel.value.bids![index].bidNo ??
+                      //           "",
+                      //   textColor2: AppColors.black.withOpacity(0.5),
+                      //   textColor: AppColors.black,
+                      // ),
+                      // nameColumn(
+                      //   subText: "",
+                      //   titleText: controller
+                      //       .requestModel.value.bids![index].coins
+                      //       .toString(),
+                      //   textColor2: AppColors.black.withOpacity(0.5),
+                      //   textColor: AppColors.black,
+                      // ),
+                      SizedBox(
+                        width: Dimensions.w150,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                " Sangam :",
+                                style:
+                                    CustomTextStyle.textRobotoSansBold.copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              " ${(controller.gameMode.value.name!.toUpperCase() == "HALF SANGAM A") ? controller.manipulateString(controller.requestModel.value.bids![index].bidNo ?? "") : controller.requestModel.value.bids![index].bidNo ?? ""}",
+                              style:
+                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h14,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      nameColumn(
-                        subText: "",
-                        titleText: controller
-                            .requestModel.value.bids![index].coins
-                            .toString(),
-                        textColor2: AppColors.black.withOpacity(0.5),
-                        textColor: AppColors.black,
+                      SizedBox(
+                        width: Dimensions.w40,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "₹",
+                              style:
+                                  CustomTextStyle.textRobotoSansMedium.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h15,
+                              ),
+                            ),
+                            Text(
+                              controller.requestModel.value.bids![index].coins
+                                  .toString(),
+                              style:
+                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h15,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: Dimensions.w110,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.appbarColor.withOpacity(0.25),
+                                borderRadius: BorderRadius.circular(25)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 3.0),
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                controller.bidType.toString(),
+                                style:
+                                    CustomTextStyle.textRobotoSansBold.copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h13,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

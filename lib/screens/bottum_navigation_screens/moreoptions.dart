@@ -159,8 +159,9 @@ class MoreOptions extends StatelessWidget {
                   text: "ABOUTUS".tr,
                 ),
                 listItems(
-                  onTap: () {
+                  onTap: () async {
                     controller.callLogout();
+                    await LocalStorage.write(ConstantsVariables.timeOut, false);
                   },
                   iconData: ConstantImage.signOutIcon,
                   text: "SIGNOUT".tr,

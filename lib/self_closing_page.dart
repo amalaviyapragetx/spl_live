@@ -17,10 +17,10 @@ class InactivityController extends GetxController {
   final Duration _inactivityDuration = const Duration(seconds: 180);
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    // _resetInactivityTimer();
     ifUserLogedIn();
+    userLogIn;
   }
 
   void _resetInactivityTimer() {
@@ -38,13 +38,19 @@ class InactivityController extends GetxController {
 
   ifUserLogedIn() async {
     bool alreadyLoggedIn = await getStoredUserData();
+
     bool isActive =
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut);
+    print("-------------------------------==========$userLogin");
+    if (userLogin == null) {
+      await LocalStorage.write(ConstantsVariables.timeOut, false);
+    }
     if (alreadyLoggedIn) {
       print("alreadyLogged:  $alreadyLoggedIn");
-      if (isActive && isVerified) {
+      if (isActive && isVerified && userLogin) {
         _resetInactivityTimer();
       }
     }
@@ -56,6 +62,12 @@ class InactivityController extends GetxController {
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    // bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut);
+    // if (userLogin == null) {
+    //   await LocalStorage.write(ConstantsVariables.timeOut, false);
+    // }
+    // print("-------------------------------==========$userLogin");
+    // print("$isActive $isVerified $userLogin");
     if (alreadyLoggedIn) {
       if (isActive && isVerified) {
         onUserInteraction(event);
@@ -117,16 +129,22 @@ class InactivityController extends GetxController {
                 await LocalStorage.read(ConstantsVariables.isActive) ?? false;
             bool isVerified =
                 await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-            if (alreadyLoggedIn) {
-              if (isActive && isVerified) {
-                Get.offAllNamed(
-                  AppRoutName.mPINPage,
-                  arguments: {"id": _userDetailsModel.id},
-                );
+            await LocalStorage.write(ConstantsVariables.timeOut, false);
+            var timeOut = await LocalStorage.read(ConstantsVariables.timeOut);
+            print("=============+++++$timeOut");
+            if (timeOut == false) {
+              if (alreadyLoggedIn) {
+                if (isActive && isVerified) {
+                  Get.offAllNamed(
+                    AppRoutName.mPINPage,
+                    arguments: {"id": _userDetailsModel.id},
+                  );
+                  _inactivityTimer?.cancel();
+                }
+              } else {
+                print("alreadyLoggedInWelcomePage:  $alreadyLoggedIn");
+                _inactivityTimer?.cancel();
               }
-            } else {
-              print("alreadyLoggedInWelcomePage:  $alreadyLoggedIn");
-              _inactivityTimer?.cancel();
             }
           },
           child: Container(

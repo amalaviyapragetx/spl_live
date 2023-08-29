@@ -56,7 +56,7 @@ class NotificationPage extends StatelessWidget {
       {required String notifiactionHeder,
       required String notifiactionSubTitle}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
       child: Container(
         width: size.width,
         decoration: BoxDecoration(
@@ -64,53 +64,42 @@ class NotificationPage extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               spreadRadius: 1,
-              color: AppColors.grey,
+              color: AppColors.grey.withOpacity(0.5),
               blurRadius: 5,
-              offset: const Offset(2, 3),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.h8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                //mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: Dimensions.h5,
-                  ),
-                  Text(
-                    notifiactionHeder,
-                    style: CustomTextStyle.textRobotoSansBold.copyWith(
+              SizedBox(
+                height: Dimensions.h5,
+              ),
+              Text(
+                notifiactionHeder,
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: AppColors.black,
+                  fontSize: Dimensions.h14,
+                ),
+              ),
+              SizedBox(
+                height: Dimensions.h5,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  child: Text(
+                    notifiactionSubTitle,
+                    textAlign: TextAlign.start,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
                       color: AppColors.black,
                       fontSize: Dimensions.h13,
                     ),
                   ),
-                  SizedBox(
-                    height: Dimensions.h5,
-                  ),
-                  SizedBox(
-                    width: Dimensions.w200,
-                    child: Text(
-                      notifiactionSubTitle,
-                      textAlign: TextAlign.start,
-                      style: CustomTextStyle.textRobotoSansLight.copyWith(
-                        color: AppColors.black,
-                        fontSize: Dimensions.h13,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: Dimensions.h50,
-                width: Dimensions.w100,
-                child: Image.asset(
-                  ConstantImage.splLogo,
-                  fit: BoxFit.contain,
                 ),
               ),
             ],

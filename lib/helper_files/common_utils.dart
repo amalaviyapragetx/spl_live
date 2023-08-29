@@ -137,7 +137,7 @@ class CommonUtils {
     DateTime istDateTime =
         utcDateTime.add(const Duration(hours: 5, minutes: 30));
     String formattedDateTimeString =
-        DateFormat('dd-MM-yyyy hh:mm a').format(istDateTime);
+        DateFormat('dd/MM/yyyy hh:mm:ss a').format(istDateTime);
     return formattedDateTimeString;
   }
 }

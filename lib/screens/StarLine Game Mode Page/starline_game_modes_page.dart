@@ -31,7 +31,6 @@ class StarLineGameModesPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppUtils().simpleAppbar(
-          // appBarTitle: "STARLINEGAME".tr,
           appBarTitle: controller.marketData.value.time.toString(),
           leading: IconButton(
             onPressed: () => controller.onBackButton(),

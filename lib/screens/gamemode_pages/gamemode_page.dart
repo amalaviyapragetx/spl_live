@@ -9,6 +9,9 @@ import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/gamemode_pages/controller/game_pages_controller.dart';
 
+import '../../helper_files/constant_variables.dart';
+import '../Local Storage.dart';
+
 class GameModePage extends StatelessWidget {
   GameModePage({super.key});
   var controller = Get.put(GameModePagesController());
@@ -165,13 +168,18 @@ class GameModePage extends StatelessWidget {
                                   ? AppColors.white
                                   : AppColors.black,
                           "${"OPENBID".tr.toUpperCase()} : ${controller.marketValue.value.openTime.toString()}",
-                          onTap: () {
+                          onTap: () async {
                             if (controller.openBiddingOpen.value &&
                                 controller.openCloseValue.value !=
                                     "OPENBID".tr) {
                               controller.openCloseValue.value = "OPENBID".tr;
                               controller.callGetGameModes();
                             }
+                            // await LocalStorage.write(
+                            //     ConstantsVariables.bidType, "Open");
+                            // var bidType = await LocalStorage.read(
+                            //     ConstantsVariables.bidType);
+                            // print("---------$bidType");
                             //                      controller.onTapOpenClose;
                           },
                           // if (controller.openBiddingOpen.value &&
@@ -188,7 +196,7 @@ class GameModePage extends StatelessWidget {
                         ),
                         openCloseMarket(
                           "${"CLOSEBID".tr.toUpperCase()} : ${controller.marketValue.value.closeTime.toString()}",
-                          onTap: () {
+                          onTap: () async {
                             print("sfdasdsa");
                             if (controller.openCloseValue.value !=
                                 "CLOSEBID".tr) {
@@ -196,6 +204,11 @@ class GameModePage extends StatelessWidget {
                               controller.callGetGameModes();
                             }
                             controller.onTapOpenClose;
+                            // await LocalStorage.write(
+                            //     ConstantsVariables.bidType, "Close");
+                            // var bidType = await LocalStorage.read(
+                            //     ConstantsVariables.bidType);
+                            // print("---------$bidType");
                           },
                           containerColor:
                               controller.openCloseValue.value == "CLOSEBID".tr

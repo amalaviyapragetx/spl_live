@@ -66,6 +66,7 @@ class ChangepasswordPageController extends GetxController {
       confirmPasswordMessage.value = "";
     } else if (value != newPassword.text) {
       isValidate.value = false;
+      confirmPasswordMessage.value = "Password does Not Matched";
     } else {
       confirmPasswordMessage.value = "";
     }

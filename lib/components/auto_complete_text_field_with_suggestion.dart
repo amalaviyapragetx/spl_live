@@ -94,6 +94,7 @@ class AutoCompleteTextField extends StatelessWidget {
             autofocus: autoFocus!,
             inputFormatters: formatter,
             maxLength: maxLength,
+            
             onFieldSubmitted: (String value) {
               if (isBulkMode ?? false) {
                 textEditingController.clear();

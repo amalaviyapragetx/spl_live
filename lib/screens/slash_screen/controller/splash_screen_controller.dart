@@ -17,6 +17,7 @@ class SplashController extends GetxController {
   }
 
   Future<void> checkLogin() async {
+    await LocalStorage.write(ConstantsVariables.timeOut, false);
     bool alreadyLoggedIn = await getStoredUserData();
     bool isActive =
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;

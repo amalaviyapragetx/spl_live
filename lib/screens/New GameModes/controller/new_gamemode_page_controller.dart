@@ -108,6 +108,20 @@ class NewGamemodePageController extends GetxController {
     });
   }
 
+  checkType(index) {
+    if (selectedBidsList.elementAt(index).gameModeName!.contains("Ank")) {
+      return "Ank";
+    } else if (selectedBidsList
+            .elementAt(index)
+            .gameModeName!
+            .contains("Jodi") ||
+        selectedBidsList.elementAt(index).gameModeName! == "Red Brackets") {
+      return "Jodi";
+    } else {
+      return "Pana";
+    }
+  }
+
   void validateEnteredDigit(bool validate, String value) {
     enteredDigitsIsValidate = validate;
     addedNormalBidValue = value;

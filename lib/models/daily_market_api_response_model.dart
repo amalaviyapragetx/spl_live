@@ -41,21 +41,23 @@ class MarketData {
   bool? isCloseResultDeclared;
   bool? isCoinDistributedForOpen;
   bool? isCoinDistributedForClose;
+  bool? isActive;
 
   MarketData(
       {this.id,
-        this.market,
-        this.openTime,
-        this.closeTime,
-        this.date,
-        this.openResult,
-        this.closeResult,
-        this.isBidOpenForOpen,
-        this.isBidOpenForClose,
-        this.isOpenResultDeclared,
-        this.isCloseResultDeclared,
-        this.isCoinDistributedForOpen,
-        this.isCoinDistributedForClose});
+      this.market,
+      this.openTime,
+      this.closeTime,
+      this.date,
+      this.openResult,
+      this.closeResult,
+      this.isBidOpenForOpen,
+      this.isBidOpenForClose,
+      this.isOpenResultDeclared,
+      this.isCloseResultDeclared,
+      this.isCoinDistributedForOpen,
+      this.isCoinDistributedForClose,
+      this.isActive});
 
   MarketData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -71,6 +73,7 @@ class MarketData {
     isCloseResultDeclared = json['IsCloseResultDeclared'];
     isCoinDistributedForOpen = json['IsCoinDistributedForOpen'];
     isCoinDistributedForClose = json['IsCoinDistributedForClose'];
+    isActive = json['IsActive'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +91,7 @@ class MarketData {
     data['IsCloseResultDeclared'] = isCloseResultDeclared;
     data['IsCoinDistributedForOpen'] = isCoinDistributedForOpen;
     data['IsCoinDistributedForClose'] = isCoinDistributedForClose;
+    data['IsActive'] = isActive;
     return data;
   }
 }

@@ -1017,4 +1017,47 @@ class ApiService extends GetConnect {
       return response.body;
     }
   }
+
+  Future<dynamic> marketNotifications(body) async {
+    AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await put(
+      ApiUtils.marketNotification,
+      body,
+      headers: headersWithToken,
+      // contentType: contentType,
+    );
+
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      print(response.status.code.toString() + response.toString());
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getBennerData() async {
+    // print(ApiUtils.bennerApi);
+    AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await get(
+      ApiUtils.bennerApi,
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
 }

@@ -27,7 +27,12 @@ class GameModePagesController extends GetxController {
   RxList<Bids> selectedBidsList = <Bids>[].obs;
   RxList<GameMode> gameModesList = <GameMode>[].obs;
   Rx<BidRequestModel> requestModel = BidRequestModel().obs;
-
+  var biddingType = "".obs;
+  RxString totalAmount = "0".obs;
+  RxString totalBidsAmount = "0".obs;
+  RxString marketNameForPlayMore = "".obs;
+  var marketName = "".obs;
+  RxString gameName = "".obs;
   var digitRow = [
     DigitListModelOffline(value: "0", isSelected: false),
     DigitListModelOffline(value: "1", isSelected: false),
@@ -61,6 +66,8 @@ class GameModePagesController extends GetxController {
   void onClose() async {
     requestModel.value.bids?.clear();
     await LocalStorage.write(ConstantsVariables.playMore, true);
+    await LocalStorage.write(ConstantsVariables.totalAmount, "");
+    await LocalStorage.write(ConstantsVariables.marketName, "");
     super.onClose();
   }
 
@@ -85,36 +92,48 @@ class GameModePagesController extends GetxController {
         .getDifferenceBetweenGivenTimeFromNow(
             marketValue.value.closeTime ?? "00:00 AM");
     timeDiffForOpenBidding < 2 ? openBiddingOpen.value = false : true;
-
     timeDiffForCloseBidding < 2 ? closeBiddingOpen.value = false : true;
-
     if (!openBiddingOpen.value) {
       openCloseValue.value = "CLOSEBID".tr;
     }
   }
 
-  // void getUserBalance() {
-  //   ApiService().getBalance().then((value) async {
-  //     debugPrint("((((((((((((((((((((((((((()))))))))))))))))))))))))))");
-  //     debugPrint("Wallet balance Api Response :- $value");
-  //     if (value['status']) {
-  //       var tempBalance = value['data']['Amount'] ?? 00;
-  //       walletBalance.value = tempBalance.toString();
-  //     } else {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: value['message'] ?? "",
-  //       );
-  //     }
-  //   });
-  // }
-
   onBackButton() async {
-    selectedBidsList.clear();
-    await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
-    final walletController = Get.find<WalletController>();
-    walletController.getUserBalance();
-    walletController.walletBalance.refresh();
-    Get.offAllNamed(AppRoutName.dashBoardPage);
+    var hh = await LocalStorage.read(ConstantsVariables.playMore);
+    if (!hh) {
+      var bidList = await LocalStorage.read(ConstantsVariables.bidsList);
+      totalBidsAmount.value =
+          await LocalStorage.read(ConstantsVariables.totalAmount);
+      marketNameForPlayMore.value =
+          await LocalStorage.read(ConstantsVariables.marketName);
+      // arguments['totalAmount'] = totalAmount.value;
+      // arguments['marketName'] = marketName.value;
+      // arguments['gameName'] = gameName.value;
+      if (bidList.length != 0) {
+        Get.toNamed(AppRoutName.selectedBidsPage, arguments: {
+          "bidsList": bidList,
+          "biddingType": biddingType.value,
+          "gameName": gameName.value,
+          "marketName": marketNameForPlayMore.value,
+          "marketId": requestModel.value.dailyMarketId,
+          "totalAmount": totalBidsAmount.value,
+        });
+      } else {
+        selectedBidsList.clear();
+        await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+        final walletController = Get.find<WalletController>();
+        walletController.getUserBalance();
+        walletController.walletBalance.refresh();
+        Get.offAllNamed(AppRoutName.dashBoardPage);
+      }
+    } else {
+      selectedBidsList.clear();
+      await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+      final walletController = Get.find<WalletController>();
+      walletController.getUserBalance();
+      walletController.walletBalance.refresh();
+      Get.offAllNamed(AppRoutName.dashBoardPage);
+    }
   }
 
   void callGetGameModes() async {
@@ -150,6 +169,9 @@ class GameModePagesController extends GetxController {
 
     if (!hh) {
       var bidList = await LocalStorage.read(ConstantsVariables.bidsList);
+
+      // biddingType.value = arguments["biddingType"];
+      // marketName.value = arguments["marketName"];
       // selectedBidsList.value = bidList as List<Bids>;
     } else {}
     // requestModel.refresh();
@@ -270,9 +292,6 @@ class GameModePagesController extends GetxController {
     }
   }
 
-  var biddingType = "".obs;
-  RxString totalAmount = "0".obs;
-  var marketName = "".obs;
   Future<void> getArguments() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     playmore = await LocalStorage.read(ConstantsVariables.playMore);
