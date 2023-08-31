@@ -114,6 +114,36 @@ class SetMPINPageController extends GetxController {
     });
   }
 
+ callFcmApi(userId) async {
+    var token = await LocalStorage.read(ConstantsVariables.fcmToken);
+    print("===========$token");
+    Timer(const Duration(milliseconds: 500), () {
+      fsmApiCall(userId, token);
+    });
+  }
+
+  fcmBody(userId, fcmToken) {
+    var a = {
+      "id": userId,
+      "fcmToken": fcmToken,
+    };
+    return a;
+  }
+
+  void fsmApiCall(userId, fcmToken) async {
+    ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
+      debugPrint("Create Feedback Api Response :- $value");
+      if (value['status']) {
+        // AppUtils.showSuccessSnackBar(
+        //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+
   Future<Map> userDetailsBody() async {
     final userDetailsBody = {
       "userName": userDetails.userName,

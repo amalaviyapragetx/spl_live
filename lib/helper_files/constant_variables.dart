@@ -38,4 +38,7 @@ class ConstantsVariables {
 
   static const String marketNotification = "market_notification";
   static const String starlineNotification = "starline_notification";
+
+  /// fcm Token
+  static const String fcmToken = "fcm_token";
 }

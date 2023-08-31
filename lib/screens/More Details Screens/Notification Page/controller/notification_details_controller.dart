@@ -23,12 +23,12 @@ class NotificationDetailsPageController extends GetxController {
     if (marketNotificationFromLocal.value == null) {
       await LocalStorage.write(ConstantsVariables.marketNotification, true);
       await LocalStorage.write(ConstantsVariables.starlineNotification, true);
-      addRating();
+      callNotification();
     }
     super.onInit();
   }
 
-  void addRating() async {
+  void callNotification() async {
     ApiService().marketNotifications(await marketBody()).then((value) async {
       debugPrint("Notification Response :- $value");
       if (value['status']) {

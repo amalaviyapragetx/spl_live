@@ -52,7 +52,9 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) {
       print("Device Token : $value");
+      LocalStorage.write(ConstantsVariables.fcmToken, value);
     });
+
     super.initState();
   }
 

@@ -122,6 +122,8 @@ class HomePageController extends GetxController {
     await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
     await LocalStorage.write(ConstantsVariables.totalAmount, "0");
     await LocalStorage.write(ConstantsVariables.marketName, "");
+    await LocalStorage.write(ConstantsVariables.marketNotification, true);
+    await LocalStorage.write(ConstantsVariables.starlineNotification, true);
     getBennerData();
   }
 

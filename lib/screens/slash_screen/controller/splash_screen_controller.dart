@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
+import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
+import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../Local Storage.dart';
 
@@ -14,6 +19,36 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
     checkLogin();
+  }
+
+  callFcmApi(userId) async {
+    var token = await LocalStorage.read(ConstantsVariables.fcmToken);
+    print("===========$token");
+    Timer(const Duration(milliseconds: 500), () {
+      fsmApiCall(userId, token);
+    });
+  }
+
+  fcmBody(userId, fcmToken) {
+    var a = {
+      "id": userId,
+      "fcmToken": fcmToken,
+    };
+    return a;
+  }
+
+  void fsmApiCall(userId, fcmToken) async {
+    ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
+      debugPrint("Create Feedback Api Response :- $value");
+      if (value['status']) {
+        // AppUtils.showSuccessSnackBar(
+        //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
   }
 
   Future<void> checkLogin() async {
@@ -38,11 +73,13 @@ class SplashController extends GetxController {
         });
       } else {
         if (hasMPIN) {
+          callFcmApi(_userDetailsModel.id);
           Future.delayed(const Duration(seconds: 2), () {
             Get.offAllNamed(AppRoutName.mPINPage,
                 arguments: {"id": _userDetailsModel.id});
           });
         } else {
+          callFcmApi(_userDetailsModel.id);
           Future.delayed(const Duration(seconds: 2), () {
             Get.offAllNamed(AppRoutName.signInPage,
                 arguments: {"id": _userDetailsModel.id});

@@ -71,10 +71,3 @@ class UserDetailsPageController extends GetxController {
     }
   }
 }
-
-// bool isPasswordValid(String password) {
-//   // Regular expression for password validation
-//   // This example requires at least 1 uppercase letter, 1 lowercase letter, and 1 digit
-//   RegExp passwordRegExp = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)');
-//   return passwordRegExp.hasMatch(password);
-// }

@@ -75,4 +75,6 @@ class ApiUtils {
       "$baseURL/notification/updateNotificationStatus";
 
   static String bennerApi = "$baseURL/banner/getAll";
+
+  static String fcmToken = "$baseURL/auth/setFCMToken";
 }

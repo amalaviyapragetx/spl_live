@@ -688,6 +688,10 @@ class StarlineNewGamePageController extends GetxController {
         }
       }
       _calculateTotalAmount();
+      autoCompleteFieldController.clear();
+      coinController.clear();
+      selectedBidsList.refresh();
+      focusNode.previousFocus();
     }
   }
 

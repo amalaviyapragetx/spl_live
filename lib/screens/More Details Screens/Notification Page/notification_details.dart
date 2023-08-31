@@ -65,7 +65,7 @@ class NotificationDetailsPage extends StatelessWidget {
                         onChanged: (value) {
                           controller.marketNotificationFromLocal.value = value;
 
-                          controller.addRating();
+                          controller.callNotification();
                         },
                       ),
                     )
@@ -112,7 +112,7 @@ class NotificationDetailsPage extends StatelessWidget {
                           controller.starlineNotificationFromLocal.value =
                               value;
 
-                          controller.addRating();
+                          controller.callNotification();
                         },
                       ),
                     )

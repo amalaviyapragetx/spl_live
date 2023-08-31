@@ -86,12 +86,13 @@ class DashBoardPage extends StatelessWidget {
                 onTapWallet: () {
                   controller.pageWidget.value = 2;
                   controller.currentIndex.value = 2;
-                  walletController.walletBalance.refresh();
                   SystemChrome.setPreferredOrientations([
                     DeviceOrientation.portraitUp,
                     DeviceOrientation.landscapeLeft
                   ]);
+                  walletController.walletBalance.refresh();
                   controller.getUserBalance();
+                  walletController.walletBalance.refresh();
                 },
                 onTapPassbook: () {
                   controller.getPassBookData(

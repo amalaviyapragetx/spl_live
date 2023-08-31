@@ -1060,4 +1060,29 @@ class ApiService extends GetConnect {
       return response.body;
     }
   }
+
+  Future<dynamic> fcmToken(body) async {
+    AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await post(
+      ApiUtils.fcmToken,
+      body,
+      headers: headersWithToken,
+    );
+
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      print(
+          "FCM Token : ${response.status.code.toString() + response.body.toString()}");
+      return response.body;
+    } else {
+      AppUtils.hideProgressDialog();
+      print("response2 ${response.body}");
+      print("change pass2 ${response.status.code}");
+      return response.body;
+    }
+  }
 }
