@@ -73,12 +73,17 @@ class CheckWithdrawalPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: withdrawalHistoryList2(),
-            ),
-          ],
+        body: RefreshIndicator(
+          onRefresh: () async {
+            controller.getUserData();
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: withdrawalHistoryList2(),
+              ),
+            ],
+          ),
         ),
       ),
     );

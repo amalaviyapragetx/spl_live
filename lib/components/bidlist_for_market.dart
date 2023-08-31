@@ -99,16 +99,13 @@ class BidHistoryList extends StatelessWidget {
                               ? AppColors.white
                               : AppColors.appbarColor.withOpacity(0.25),
                           borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 3.0,
-                        ),
+                      child: Center(
                         child: Text(
                           textAlign: TextAlign.center,
                           bidType,
-                          style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          style: CustomTextStyle.textGothamBold.copyWith(
                             color: AppColors.black,
-                            fontSize: Dimensions.h13,
+                            fontSize: Dimensions.h12,
                           ),
                         ),
                       ),

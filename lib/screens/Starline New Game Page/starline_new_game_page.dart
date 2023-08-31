@@ -574,18 +574,6 @@ class StarLineNewGamePage extends StatelessWidget {
                                         AppUtils.showErrorSnackBar(
                                             bodyText:
                                                 "You can not add more than 10000 points");
-                                      } else {
-                                        // if (int.parse(val) >= 1) {
-                                        //   print("333333333333333   ${val.length}");
-                                        //   // controller.validCoinsEntered.value = true;
-                                        //   // controller.isEnable.value = true;
-                                        // } else {
-                                        //   print("444444444444444444   ${val.length}");
-                                        //   // controller.ondebounce();
-
-                                        //   // controller.validCoinsEntered.value = false;
-                                        //   // controller.isEnable.value = false;
-                                        // }
                                       }
                                     }
                                   },
@@ -654,7 +642,8 @@ class StarLineNewGamePage extends StatelessWidget {
                                     "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                               );
                             } else {
-                              controller.getspdptp();
+                              controller.panelGroup();
+                              // controller.getspdptp();
                             }
                           } else if (controller
                                   .gameMode.value.name!
@@ -903,9 +892,6 @@ class StarLineNewGamePage extends StatelessWidget {
                                     textStyle:
                                         CustomTextStyle.textRobotoSansBold,
                                     onTap: () {
-                                      // controller.coinsFocusNode.unfocus();
-                                      // controller.openFocusNode.requestFocus();
-                                      //  controller.onTapOfAddButton();
                                       if (controller.gameMode.value.name!
                                           .toUpperCase()
                                           .contains("ODD EVEN")) {

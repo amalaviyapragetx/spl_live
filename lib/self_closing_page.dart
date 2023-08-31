@@ -43,14 +43,16 @@ class InactivityController extends GetxController {
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut);
-    print("-------------------------------==========$userLogin");
-    if (userLogin == null) {
-      await LocalStorage.write(ConstantsVariables.timeOut, false);
-    }
+    // bool userLogin = false;
+    // print("-------------------------------==========$userLogin");
+    // if (userLogin == false) {
+    //   await LocalStorage.write(ConstantsVariables.timeOut, false);
+    // } else {
+    //   await LocalStorage.read(ConstantsVariables.timeOut);
+    // }
     if (alreadyLoggedIn) {
       print("alreadyLogged:  $alreadyLoggedIn");
-      if (isActive && isVerified && userLogin) {
+      if (isActive && isVerified) {
         _resetInactivityTimer();
       }
     }
@@ -62,10 +64,10 @@ class InactivityController extends GetxController {
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    // bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut);
-    // if (userLogin == null) {
-    //   await LocalStorage.write(ConstantsVariables.timeOut, false);
-    // }
+    //  bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut);
+    //  if (userLogin == null) {
+    //    await LocalStorage.write(ConstantsVariables.timeOut, false);
+    //  }
     // print("-------------------------------==========$userLogin");
     // print("$isActive $isVerified $userLogin");
     if (alreadyLoggedIn) {

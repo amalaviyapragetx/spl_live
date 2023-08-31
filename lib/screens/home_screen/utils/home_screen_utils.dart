@@ -426,8 +426,7 @@ class HomeScreenUtils {
                         padding:
                             EdgeInsets.symmetric(horizontal: Dimensions.h5),
                         child: GestureDetector(
-                          onTap: () => marketData.isBidOpenForClose == true &&
-                                  marketData.isActive == true
+                          onTap: () => marketData.isBidOpenForClose == true
                               ? controller.onTapOfNormalMarket(
                                   controller.normalMarketList[index],
                                 )
@@ -503,23 +502,21 @@ class HomeScreenUtils {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      marketData.isBidOpenForClose == true &&
-                                              marketData.isActive == true
+                                      marketData.isBidOpenForClose == true
                                           ? "Bidding is Open"
                                           : "Bidding is Closed",
-                                      style: marketData.isBidOpenForClose ==
-                                                  true &&
-                                              marketData.isActive == true
-                                          ? CustomTextStyle.textPTsansMedium
-                                              .copyWith(
-                                              color: AppColors.greenShade,
-                                              fontWeight: FontWeight.w500,
-                                            )
-                                          : CustomTextStyle.textPTsansMedium
-                                              .copyWith(
-                                              color: AppColors.redColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                      style:
+                                          marketData.isBidOpenForClose == true
+                                              ? CustomTextStyle.textPTsansMedium
+                                                  .copyWith(
+                                                  color: AppColors.greenShade,
+                                                  fontWeight: FontWeight.w500,
+                                                )
+                                              : CustomTextStyle.textPTsansMedium
+                                                  .copyWith(
+                                                  color: AppColors.redColor,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                     ),
                                   ),
                                 ),
@@ -628,8 +625,7 @@ class HomeScreenUtils {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              controller.starLineMarketList[index].isBidOpen == false &&
-                      controller.starLineMarketList[index].isActive == false
+              controller.starLineMarketList[index].isBidOpen == true
                   ? controller.onTapOfStarlineMarket(
                       controller.starLineMarketList[index])
                   : null;
@@ -684,16 +680,11 @@ class HomeScreenUtils {
                     ),
                     child: Center(
                       child: Text(
-                        controller.starLineMarketList[index].isBidOpen ==
-                                    false &&
-                                controller.starLineMarketList[index].isActive ==
-                                    false
+                        controller.starLineMarketList[index].isBidOpen == true
                             ? "Bidding is Open"
                             : "Bidding is Closed",
                         style: controller.starLineMarketList[index].isBidOpen ==
-                                    false &&
-                                controller.starLineMarketList[index].isActive ==
-                                    false
+                                true
                             ? CustomTextStyle.textPTsansMedium
                                 .copyWith(color: AppColors.greenShade)
                             : CustomTextStyle.textPTsansMedium
@@ -1128,7 +1119,7 @@ class HomeScreenUtils {
                           child: Center(
                             child: Text(
                               timeData!.result != null
-                                  ? timeData.result.toString()
+                                  ? controller.getResult(true, timeData.result)
                                   : "***-*",
                               textAlign: TextAlign.center,
                             ),

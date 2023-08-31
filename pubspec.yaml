@@ -119,6 +119,11 @@ flutter:
     - family: Rambla
       fonts:
         - asset: assets/fonts/rambla/Rambla-Bold.ttf
+    - family: Gotham
+      fonts:
+        - asset: assets/fonts/Gotham/GothamBold.ttf
+        - asset: assets/fonts/Gotham/GothamMedium.ttf
+        - asset: assets/fonts/Gotham/GothamLight.ttf
 
   
   #   - family: Trajan Pro

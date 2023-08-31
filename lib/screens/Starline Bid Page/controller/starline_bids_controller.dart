@@ -65,9 +65,9 @@ class StarlineBidsController extends GetxController {
     requestModel.value.userId = userData.id;
     print(requestModel.value.userId);
     print(requestModel.value.toJson());
-    await LocalStorage.write(ConstantsVariables.playMore, false);
-    var hh = await LocalStorage.read(ConstantsVariables.playMore);
-    print("playMore $hh");
+    // await LocalStorage.write(ConstantsVariables.playMore, false);
+    // var hh = await LocalStorage.read(ConstantsVariables.playMore);
+    // print("playMore $hh");
   }
 
   void showConfirmationDialog(BuildContext context) {

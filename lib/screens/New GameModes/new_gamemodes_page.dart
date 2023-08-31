@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/components/bidlist_for_market.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/screens/New%20GameModes/controller/new_gamemode_page_controller.dart';
 import '../../Custom Controllers/wallet_controller.dart';
@@ -272,17 +273,6 @@ class NewGameModePage extends StatelessWidget {
                                 AppUtils.showErrorSnackBar(
                                     bodyText:
                                         "You can not add more than 10000 points");
-                              } else {
-                                // if (int.parse(val) >= 1) {
-                                //   print("333333333333333   ${val.length}");
-                                //   // controller.validCoinsEntered.value = true;
-                                //   // controller.isEnable.value = true;
-                                // } else {
-                                //   print("444444444444444444   ${val.length}");
-                                //   // controller.ondebounce();
-                                //   // controller.validCoinsEntered.value = false;
-                                //   // controller.isEnable.value = false;
-                                // }
                               }
                             }
                           },
@@ -339,7 +329,9 @@ class NewGameModePage extends StatelessWidget {
                             "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                       );
                     } else {
-                      controller.getspdptp();
+                      controller.getPanelGroupPana(int.parse(
+                          controller.autoCompleteFieldController.text));
+                      controller.pennleDataOnTapSave();
                     }
                   } else if (controller.gameMode.value.name!.toUpperCase() ==
                       "GROUP JODI") {
@@ -484,156 +476,16 @@ class NewGameModePage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: controller.selectedBidsList.length,
                 itemBuilder: (context, item) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 5),
-                    child: Container(
-                      height: Dimensions.h40,
-                      width: size.width,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 1,
-                              spreadRadius: 3,
-                              color: AppColors.grey.withOpacity(0.2),
-                              offset: const Offset(0, 1)),
-                        ],
-                      ),
-                      child: Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              // nameColumn(
-                              //     subText: "",
-                              //     titleText: controller.selectedBidsList
-                              //         .elementAt(item)
-                              //         .bidNo
-                              //         .toString(),
-                              //     textColor2:
-                              //         AppColors.black.withOpacity(0.5),
-                              //     textColor: AppColors.black),
-                              // nameColumn(
-                              //     subText: "",
-                              //     titleText: controller.selectedBidsList
-                              //         .elementAt(item)
-                              //         .coins
-                              //         .toString(),
-                              //     textColor2:
-                              //         AppColors.black.withOpacity(0.5),
-                              //     textColor: AppColors.black),
-                              SizedBox(
-                                width: Dimensions.w95,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "${controller.checkType(item)} : ",
-                                      style: CustomTextStyle.textRobotoSansBold
-                                          .copyWith(
-                                        color: AppColors.black,
-                                        fontSize: Dimensions.h14,
-                                      ),
-                                    ),
-                                    Text(
-                                      controller.selectedBidsList
-                                          .elementAt(item)
-                                          .bidNo
-                                          .toString(),
-                                      style: CustomTextStyle.textRobotoSansLight
-                                          .copyWith(
-                                        color: AppColors.black,
-                                        fontSize: Dimensions.h15,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: Dimensions.w80,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "₹",
-                                      style: CustomTextStyle
-                                          .textRobotoSansMedium
-                                          .copyWith(
-                                        color: AppColors.black,
-                                        fontSize: Dimensions.h15,
-                                      ),
-                                    ),
-                                    Text(
-                                      controller.selectedBidsList
-                                          .elementAt(item)
-                                          .coins
-                                          .toString(),
-                                      style: CustomTextStyle.textRobotoSansLight
-                                          .copyWith(
-                                        color: AppColors.black,
-                                        fontSize: Dimensions.h15,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: Dimensions.w110,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 25),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: AppColors.appbarColor
-                                            .withOpacity(0.25),
-                                        borderRadius:
-                                            BorderRadius.circular(25)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 3.0,
-                                      ),
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        controller.biddingType.value.toString(),
-                                        style: CustomTextStyle
-                                            .textRobotoSansBold
-                                            .copyWith(
-                                          color: AppColors.black,
-                                          fontSize: Dimensions.h13,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // nameColumn(
-                              //     subText: "",
-                              //     titleText:
-                              //         controller.biddingType.value.toString(),
-                              //     textColor2:
-                              //         AppColors.black.withOpacity(0.5),
-                              //     textColor: AppColors.black),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 10.0, left: 0),
-                            child: InkWell(
-                              onTap: () {
-                                controller.onDeleteBids(item);
-                              },
-                              child: Icon(
-                                Icons.delete,
-                                color: AppColors.redColor,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                  return BidHistoryList(
+                    bidType: controller.biddingType.value.toString(),
+                    bidCoin: controller.selectedBidsList
+                        .elementAt(item)
+                        .coins
+                        .toString(),
+                    bidNo:
+                        controller.selectedBidsList.elementAt(item).bidNo ?? "",
+                    onDelete: () => controller.onDeleteBids(item),
+                    marketName: controller.checkType(item),
                   );
                 },
               ),

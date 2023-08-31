@@ -56,9 +56,9 @@ class SelectBidPageController extends GetxController {
     print("remodelDailyMarketId: ${requestModel.value.toJson()}");
     requestModel.refresh();
     gameName.value = arguments["gameName"];
-    await LocalStorage.write(ConstantsVariables.playMore, false);
-    var hh = await LocalStorage.read(ConstantsVariables.playMore);
-    print("playMore $hh");
+    // await LocalStorage.write(ConstantsVariables.playMore, false);
+    // var hh = await LocalStorage.read(ConstantsVariables.playMore);
+    // print("playMore $hh");
     newBidListreaddata();
     _calculateTotalAmount();
     bidType.value = await LocalStorage.read(ConstantsVariables.bidType);
@@ -116,7 +116,7 @@ class SelectBidPageController extends GetxController {
           LocalStorage.remove(ConstantsVariables.bidsList);
           LocalStorage.remove(ConstantsVariables.marketName);
           LocalStorage.remove(ConstantsVariables.biddingType);
-          await LocalStorage.write(ConstantsVariables.playMore, true);
+          //   await LocalStorage.write(ConstantsVariables.playMore, true);
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
@@ -133,13 +133,13 @@ class SelectBidPageController extends GetxController {
   void playMore() async {
     _calculateTotalAmount();
     await LocalStorage.write(ConstantsVariables.totalAmount, totalAmount.value);
-    await LocalStorage.write(ConstantsVariables.marketName, marketName.value);
+    // await LocalStorage.write(ConstantsVariables.marketName, marketName.value);
     Get.offAndToNamed(AppRoutName.gameModePage, arguments: {
       "biddingType": biddingType.value,
-      "marketName": marketName.value,
+      //    "marketName": marketName.value,
       "totalAmount": totalAmount.value,
       "bidsList": requestModel.value.bids,
-      "gameName": gameName.value,
+//      "gameName": gameName.value,
       //  "marketId": requestModel.value.dailyMarketId,
     });
     // getArguments();

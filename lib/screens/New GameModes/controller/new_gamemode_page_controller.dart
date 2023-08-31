@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -88,13 +89,197 @@ class NewGamemodePageController extends GetxController {
     "99",
     "00"
   ];
+  var digitsPanel = {
+    0: "fiveZero",
+    1: "oneSix",
+    2: "twoSeven",
+    3: "threeEight",
+    4: "fourNine",
+    5: "fiveZero",
+    6: "oneSix",
+    7: "twoSeven",
+    8: "threeEight",
+    9: "fourNine",
+  };
+  Map<String, List<List<String>>> panelGroupChart = {};
+  var marketValue = MarketData().obs;
 
   @override
   void onInit() {
     super.onInit();
-
     getArguments();
     focusNode = FocusNode();
+  }
+
+  void getArguments() async {
+    gameModeList = argument['gameModeList'];
+    marketValue.value = argument['marketValue'];
+    // marketValue.value = argument['marketValue'];ððð
+    print("gameModeList : ${gameModeList.value.toJson()}");
+    gameMode.value = argument['gameMode'];
+    biddingType.value = argument['biddingType'];
+    marketName.value = argument['marketName'];
+    marketId = argument['marketId'];
+    isBulkMode.value = argument['isBulkMode'];
+    // marketData.value = argument['marketData'];
+    // requestModel.value.dailyMarketId = marketData.value.id;
+    requestModel.value.bidType = bidType;
+    var data = await LocalStorage.read(ConstantsVariables.userData);
+    UserDetailsModel userData = UserDetailsModel.fromJson(data);
+    requestModel.value.userId = userData.id;
+    requestModel.value.bidType = biddingType.value;
+    requestModel.value.dailyMarketId = marketId;
+
+    await loadJsonFile();
+    RxBool showNumbersLine = false.obs;
+    RxList<String> suggestionList = <String>[].obs;
+    List<String> _tempValidationList = [];
+    var _panaGroupList;
+
+    switch (gameMode.value.name) {
+      case "Single Ank":
+        showNumbersLine.value = false;
+        panaControllerLength.value = 1;
+        _tempValidationList = jsonModel.singleAnk!;
+        suggestionList.value = jsonModel.singleAnk!;
+        enteredDigitsIsValidate = true;
+        panaControllerLength.value = 1;
+        for (var e in jsonModel.singleAnk!) {
+          singleAnkList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = singleAnkList;
+        break;
+      case "Jodi":
+        showNumbersLine.value = false;
+        _tempValidationList = jsonModel.jodi!;
+        suggestionList.value = jsonModel.jodi!;
+        panaControllerLength.value = 2;
+        for (var e in jsonModel.jodi!) {
+          jodiList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = jodiList;
+        break;
+      case "Single Pana":
+        digitRow.first.isSelected = true;
+        showNumbersLine.value = true;
+        panaControllerLength.value = 3;
+        _tempValidationList = jsonModel.allSinglePana!;
+        suggestionList.value = jsonModel.singlePana!.single.l0!;
+        for (var e in jsonModel.singlePana!.single.l0!) {
+          singlePanaList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = singlePanaList;
+        break;
+      case "Double Pana":
+        digitRow.first.isSelected = true;
+        showNumbersLine.value = true;
+        panaControllerLength.value = 3;
+        _tempValidationList = jsonModel.allDoublePana!;
+        suggestionList.value = jsonModel.doublePana!.single.l0!;
+        for (var e in jsonModel.doublePana!.single.l0!) {
+          doublePanaList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = doublePanaList;
+        break;
+      case "Tripple Pana":
+        showNumbersLine.value = false;
+        _tempValidationList = jsonModel.triplePana!;
+        suggestionList.value = jsonModel.triplePana!;
+        panaControllerLength.value = 3;
+        for (var e in jsonModel.triplePana!) {
+          triplePanaList.add(DigitListModelOffline.fromJson(e));
+        }
+        digitList.value = triplePanaList;
+        break;
+      case "SPDPTP":
+        apiUrl = ApiUtils.spdptp;
+        showNumbersLine.value = false;
+        // _tempValidationList = jsonModel.triplePana!;
+        // suggestionList.value = jsonModel.triplePana!;
+        for (var e in spdptpList) {
+          _tempValidationList = e;
+        }
+        panaControllerLength.value = 1;
+
+        // digitList.value = triplePanaList;
+        break;
+      case "Panel Group":
+        showNumbersLine.value = false;
+        apiUrl = ApiUtils.panelGroup;
+        panaControllerLength.value = 3;
+        // Map<String, List<List<String>>>? _panaGroupList;
+        _panaGroupList = jsonModel.panelGroupChart!;
+        panelGroupChart = _panaGroupList;
+        // for (var e in spdptpList) {
+        // _panaGroupList = panelGroupChart;
+        print("-----------------${_panaGroupList}");
+        //   _tempValidationList == jsonModel.allSinglePana;
+        break;
+      case "SP Motor":
+        showNumbersLine.value = false;
+        apiUrl = ApiUtils.spMotor;
+        panaControllerLength.value = 10;
+        break;
+      case "DP Motor":
+        showNumbersLine.value = false;
+        apiUrl = ApiUtils.dpMotor;
+        panaControllerLength.value = 10;
+        break;
+      case "Two Digits Panel":
+        showNumbersLine.value = false;
+        apiUrl = ApiUtils.towDigitJodi;
+        panaControllerLength.value = 2;
+        break;
+      case "Red Brackets":
+        showNumbersLine.value = false;
+        _tempValidationList = redBrackelist;
+        suggestionList.value = redBrackelist;
+        panaControllerLength.value = 2;
+        break;
+      case "Group Jodi":
+        showNumbersLine.value = false;
+        apiUrl = ApiUtils.groupJody;
+        panaControllerLength.value = 2;
+        break;
+    }
+    _validationListForNormalMode.addAll(_tempValidationList);
+  }
+
+  String getSingleDigit(int pana) {
+    String digit = pana.toString();
+    int sum = 0;
+    String singleAnk = '0';
+
+    for (int i = 0; i < digit.length; i++) {
+      sum += int.parse(digit[i]);
+    }
+    String newResult = sum.toString();
+
+    if (newResult.length > 1) {
+      singleAnk = newResult[1];
+    } else {
+      singleAnk = newResult;
+    }
+
+    return singleAnk;
+  }
+
+  List<String> getPanelGroupPana(int pana) {
+    List<String> bids = [];
+    String? digit = digitsPanel[int.parse(getSingleDigit(pana))];
+    List<List<String>>? values = panelGroupChart[digit];
+    if (values != null) {
+      for (int i = 0; i < values.length; i++) {
+        List<String> temp = values[i];
+        for (int j = 0; j < temp.length; j++) {
+          if (temp.contains(pana.toString())) {
+            bids = temp;
+            break;
+          }
+        }
+      }
+    }
+    return bids;
   }
 
   ondebounce(bool validate, String value) {
@@ -243,7 +428,6 @@ class NewGamemodePageController extends GetxController {
             ),
           );
         }
-
         autoCompleteFieldController.clear();
         coinController.clear();
         selectedBidsList.refresh();
@@ -360,135 +544,6 @@ class NewGamemodePageController extends GetxController {
     );
   }
 
-  var marketValue = MarketData().obs;
-  void getArguments() async {
-    gameModeList = argument['gameModeList'];
-    marketValue.value = argument['marketValue'];
-    // marketValue.value = argument['marketValue'];ððð
-    print("gameModeList : ${gameModeList.value.toJson()}");
-    gameMode.value = argument['gameMode'];
-    biddingType.value = argument['biddingType'];
-    marketName.value = argument['marketName'];
-    marketId = argument['marketId'];
-    isBulkMode.value = argument['isBulkMode'];
-    // marketData.value = argument['marketData'];
-    // requestModel.value.dailyMarketId = marketData.value.id;
-    requestModel.value.bidType = bidType;
-    var data = await LocalStorage.read(ConstantsVariables.userData);
-    UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    requestModel.value.userId = userData.id;
-    requestModel.value.bidType = biddingType.value;
-    requestModel.value.dailyMarketId = marketId;
-
-    await loadJsonFile();
-    RxBool showNumbersLine = false.obs;
-    RxList<String> suggestionList = <String>[].obs;
-    List<String> _tempValidationList = [];
-
-    switch (gameMode.value.name) {
-      case "Single Ank":
-        showNumbersLine.value = false;
-        panaControllerLength.value = 1;
-        _tempValidationList = jsonModel.singleAnk!;
-        suggestionList.value = jsonModel.singleAnk!;
-        enteredDigitsIsValidate = true;
-        panaControllerLength.value = 1;
-        for (var e in jsonModel.singleAnk!) {
-          singleAnkList.add(DigitListModelOffline.fromJson(e));
-        }
-        digitList.value = singleAnkList;
-        break;
-      case "Jodi":
-        showNumbersLine.value = false;
-        _tempValidationList = jsonModel.jodi!;
-        suggestionList.value = jsonModel.jodi!;
-        panaControllerLength.value = 2;
-        for (var e in jsonModel.jodi!) {
-          jodiList.add(DigitListModelOffline.fromJson(e));
-        }
-        digitList.value = jodiList;
-        break;
-      case "Single Pana":
-        digitRow.first.isSelected = true;
-        showNumbersLine.value = true;
-        panaControllerLength.value = 3;
-        _tempValidationList = jsonModel.allSinglePana!;
-        suggestionList.value = jsonModel.singlePana!.single.l0!;
-        for (var e in jsonModel.singlePana!.single.l0!) {
-          singlePanaList.add(DigitListModelOffline.fromJson(e));
-        }
-        digitList.value = singlePanaList;
-        break;
-      case "Double Pana":
-        digitRow.first.isSelected = true;
-        showNumbersLine.value = true;
-        panaControllerLength.value = 3;
-        _tempValidationList = jsonModel.allDoublePana!;
-        suggestionList.value = jsonModel.doublePana!.single.l0!;
-        for (var e in jsonModel.doublePana!.single.l0!) {
-          doublePanaList.add(DigitListModelOffline.fromJson(e));
-        }
-        digitList.value = doublePanaList;
-        break;
-      case "Tripple Pana":
-        showNumbersLine.value = false;
-        _tempValidationList = jsonModel.triplePana!;
-        suggestionList.value = jsonModel.triplePana!;
-        panaControllerLength.value = 3;
-        for (var e in jsonModel.triplePana!) {
-          triplePanaList.add(DigitListModelOffline.fromJson(e));
-        }
-        digitList.value = triplePanaList;
-        break;
-      case "SPDPTP":
-        apiUrl = ApiUtils.spdptp;
-        showNumbersLine.value = false;
-        // _tempValidationList = jsonModel.triplePana!;
-        // suggestionList.value = jsonModel.triplePana!;
-        for (var e in spdptpList) {
-          _tempValidationList = e;
-        }
-        panaControllerLength.value = 1;
-
-        // digitList.value = triplePanaList;
-        break;
-      case "Panel Group":
-        showNumbersLine.value = false;
-        apiUrl = ApiUtils.panelGroup;
-        panaControllerLength.value = 3;
-        //   _tempValidationList == jsonModel.allSinglePana;
-        break;
-
-      case "SP Motor":
-        showNumbersLine.value = false;
-        apiUrl = ApiUtils.spMotor;
-        panaControllerLength.value = 10;
-        break;
-      case "DP Motor":
-        showNumbersLine.value = false;
-        apiUrl = ApiUtils.dpMotor;
-        panaControllerLength.value = 10;
-        break;
-      case "Two Digits Panel":
-        showNumbersLine.value = false;
-        apiUrl = ApiUtils.towDigitJodi;
-        panaControllerLength.value = 2;
-        break;
-      case "Red Brackets":
-        showNumbersLine.value = false;
-        _tempValidationList = redBrackelist;
-        suggestionList.value = redBrackelist;
-        panaControllerLength.value = 2;
-        break;
-      case "Group Jodi":
-        showNumbersLine.value = false;
-        apiUrl = ApiUtils.groupJody;
-        panaControllerLength.value = 2;
-        break;
-    }
-    _validationListForNormalMode.addAll(_tempValidationList);
-  }
-
   Future<void> loadJsonFile() async {
     final String response =
         await rootBundle.loadString('assets/JSON File/digit_file.json');
@@ -511,17 +566,6 @@ class NewGamemodePageController extends GetxController {
   newGamemodeValidation(bool validate, String value) {
     if (value.length == panaControllerLength.value) {
       focusNode.nextFocus();
-    }
-    if (autoCompleteFieldController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
-      );
-    } else if (gameMode.value.name == "Red Brackets") {
-      if (autoCompleteFieldController.text.length < 2) {
-        AppUtils.showErrorSnackBar(
-          bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
-        );
-      }
     } else if (gameMode.value.name == "SPDPTP") {
       if (spValue1.value == false &&
           dpValue2.value == false &&
@@ -529,13 +573,69 @@ class NewGamemodePageController extends GetxController {
         AppUtils.showErrorSnackBar(
           bodyText: "Please select SP,DP or TP",
         );
-      } else if (autoCompleteFieldController.text.isEmpty) {
-        AppUtils.showErrorSnackBar(
-          bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
-        );
       }
     }
     enteredDigitsIsValidate = validate;
+  }
+
+  void pennleDataOnTapSave() async {
+    if (coinController.text.trim().isEmpty ||
+        int.parse(coinController.text.trim()) < 1) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Please enter valid points",
+      );
+      autoCompleteFieldController.clear();
+      coinController.clear();
+      focusNode.previousFocus();
+    } else if (int.parse(coinController.text) > 10000) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "You can not add more than 10000 points",
+      );
+      autoCompleteFieldController.clear();
+      coinController.clear();
+      focusNode.previousFocus();
+    } else {
+      spdptpList =
+          getPanelGroupPana(int.parse(autoCompleteFieldController.text));
+
+      if (spdptpList.isEmpty) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+        );
+      } else {
+        for (var i = 0; i < spdptpList.length; i++) {
+          addedNormalBidValue = spdptpList[i].toString();
+          var existingIndex = selectedBidsList
+              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          if (existingIndex != -1) {
+            // If the bidNo already exists in selectedBidsList, update coins value.
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! +
+                    int.parse(coinController.text));
+          } else {
+            selectedBidsList.add(
+              Bids(
+                bidNo: addedNormalBidValue,
+                coins: int.parse(coinController.text),
+                gameId: gameMode.value.id,
+                subGameId: gameMode.value.id,
+                gameModeName: gameMode.value.name,
+                remarks:
+                    "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+              ),
+            );
+          }
+        }
+        autoCompleteFieldController.clear();
+        coinController.clear();
+        selectedBidsList.refresh();
+      }
+      _calculateTotalAmount();
+    }
+    autoCompleteFieldController.clear();
+    coinController.clear();
+    selectedBidsList.refresh();
+    focusNode.previousFocus();
   }
 
   void getspdptp() async {
@@ -630,7 +730,6 @@ class NewGamemodePageController extends GetxController {
               );
               autoCompleteFieldController.clear();
               coinController.clear();
-
               focusNode.previousFocus();
             } else if (int.parse(coinController.text) > 10000) {
               AppUtils.showErrorSnackBar(
@@ -638,7 +737,6 @@ class NewGamemodePageController extends GetxController {
               );
               autoCompleteFieldController.clear();
               coinController.clear();
-
               focusNode.previousFocus();
             } else {
               if (spdptpList.isEmpty) {

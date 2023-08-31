@@ -41,27 +41,27 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   onBackButton() async {
-    var playmore = await LocalStorage.read(ConstantsVariables.playMore);
-    var bidList = await LocalStorage.read(ConstantsVariables.starlineBidsList);
-    if (!playmore) {
-      if (bidList.length != 0) {
-        Get.toNamed(AppRoutName.starlineBidpage, arguments: {
-          "bidsList": bidList,
-          "gameMode": gameMode.value,
-          "marketData": marketData.value,
-        });
-      } else {
-        Get.offAllNamed(AppRoutName.dashBoardPage);
-        requestModel.value.bids?.clear();
-        await LocalStorage.write(
-            ConstantsVariables.starlineBidsList, requestModel.value.bids);
-      }
-    } else {
-      Get.offAllNamed(AppRoutName.dashBoardPage);
-      requestModel.value.bids?.clear();
-      await LocalStorage.write(
-          ConstantsVariables.starlineBidsList, requestModel.value.bids);
-    }
+    // var playmore = await LocalStorage.read(ConstantsVariables.playMore);
+    // var bidList = await LocalStorage.read(ConstantsVariables.starlineBidsList);
+    // if (!playmore) {
+    // if (bidList.length != 0) {
+    //   Get.toNamed(AppRoutName.starlineBidpage, arguments: {
+    //     "bidsList": bidList,
+    //     "gameMode": gameMode.value,
+    //     "marketData": marketData.value,
+    //   });
+    // } else {
+    Get.offAllNamed(AppRoutName.dashBoardPage);
+    requestModel.value.bids?.clear();
+    await LocalStorage.write(
+        ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    // }
+    // } else {
+    //   Get.offAllNamed(AppRoutName.dashBoardPage);
+    //   requestModel.value.bids?.clear();
+    //   await LocalStorage.write(
+    //       ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    // }
   }
 
   @override

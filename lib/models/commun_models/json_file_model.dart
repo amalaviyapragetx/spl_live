@@ -7,6 +7,8 @@ class JsonFileModel {
   List<String>? allThreePana;
   List<String>? allDoublePana;
   List<String>? allSinglePana;
+  Map<String, List<List<String>>>? panelGroupChart;
+  // Map<String, List<List<String>>>? spdptp;
 
   JsonFileModel({
     this.singleAnk,
@@ -17,6 +19,7 @@ class JsonFileModel {
     this.allDoublePana,
     this.allSinglePana,
     this.allThreePana,
+    this.panelGroupChart,
   });
 
   JsonFileModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +41,15 @@ class JsonFileModel {
     allSinglePana = json['all_single_pana'].cast<String>();
     allDoublePana = json['all_double_pana'].cast<String>();
     allThreePana = json['all_three_pana'].cast<String>();
+    if (json['panelGroupChart'] != null) {
+      panelGroupChart = {};
+      (json['panelGroupChart'] as Map<String, dynamic>).forEach((key, value) {
+        panelGroupChart![key] = List<List<String>>.from((value as List)
+            .map((e) => List<String>.from(e.map((x) => x.toString()))));
+      });
+    } else {
+      panelGroupChart = {};
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +63,8 @@ class JsonFileModel {
       data['double_pana'] = doublePana!.map((v) => v.toJson()).toList();
     }
     data['triple_pana'] = triplePana;
+    data['panelGroupChart'] = panelGroupChart; // Convert panelGroupChart to map
+
     return data;
   }
 }
@@ -108,3 +122,54 @@ class ThreePana {
     return data;
   }
 }
+
+// class PanelGroupChart {
+//   PanelGroupChart({
+//     List<List<String>>? oneSix,
+//     List<List<String>>? twoSeven,
+//     List<List<String>>? threeEight,
+//     List<List<String>>? fiveZero,
+//   }) {
+//     _oneSix = oneSix;
+//     _twoSeven = twoSeven;
+//     _threeEight = threeEight;
+//     _fiveZero = fiveZero;
+//   }
+
+//   PanelGroupChart.fromJson(dynamic json) {
+//     _oneSix = json['oneSix'] != null ? json['oneSix'].cast<String>() : [];
+//     _twoSeven = json['twoSeven'] != null ? json['twoSeven'].cast<String>() : [];
+//     _threeEight =
+//         json['threeEight'] != null ? json['threeEight'].cast<String>() : [];
+//     _fiveZero = json['fiveZero'] != null ? json['fiveZero'].cast<String>() : [];
+//   }
+//   List<List<String>>? _oneSix;
+//   List<List<String>>? _twoSeven;
+//   List<List<String>>? _threeEight;
+//   List<List<String>>? _fiveZero;
+//   PanelGroupChart copyWith({
+//     List<List<String>>? oneSix,
+//     List<List<String>>? twoSeven,
+//     List<List<String>>? threeEight,
+//     List<List<String>>? fiveZero,
+//   }) =>
+//       PanelGroupChart(
+//         oneSix: oneSix ?? _oneSix,
+//         twoSeven: twoSeven ?? _twoSeven,
+//         threeEight: threeEight ?? _threeEight,
+//         fiveZero: fiveZero ?? _fiveZero,
+//       );
+//   List<List<String>>? get oneSix => _oneSix;
+//   List<List<String>>? get twoSeven => _twoSeven;
+//   List<List<String>>? get threeEight => _threeEight;
+//   List<List<String>>? get fiveZero => _fiveZero;
+
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['oneSix'] = _oneSix;
+//     map['twoSeven'] = _twoSeven;
+//     map['threeEight'] = _threeEight;
+//     map['fiveZero'] = _fiveZero;
+//     return map;
+//   }
+// }

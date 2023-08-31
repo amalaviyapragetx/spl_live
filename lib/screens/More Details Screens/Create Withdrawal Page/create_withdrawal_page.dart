@@ -97,7 +97,6 @@ class CreatewithDrawalPage extends StatelessWidget {
                       textStyle: CustomTextStyle.textRobotoSlabBold,
                       onTap: () {
                         controller.createWithdrawalRequest();
-                        Get.toNamed(AppRoutName.withdrawalpage);
                       },
                       height: Dimensions.h35,
                       width: double.infinity,

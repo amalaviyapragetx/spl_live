@@ -46,4 +46,11 @@ class CustomTextStyle {
       const TextStyle(fontFamily: 'Rambla', fontWeight: FontWeight.w500);
   static TextStyle textRamblaLight =
       const TextStyle(fontFamily: 'Rambla', fontWeight: FontWeight.w300);
+
+  static TextStyle textGothamBold =
+      const TextStyle(fontFamily: 'Gotham', fontWeight: FontWeight.w700);
+  static TextStyle textGothamMedium =
+      const TextStyle(fontFamily: 'Gotham', fontWeight: FontWeight.w500);
+  static TextStyle textGothamLight =
+      const TextStyle(fontFamily: 'Gotham', fontWeight: FontWeight.w300);
 }

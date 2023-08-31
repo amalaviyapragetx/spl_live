@@ -9,6 +9,7 @@ import '../../../../helper_files/ui_utils.dart';
 import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/response_model.dart';
 import '../../../../models/commun_models/user_details_model.dart';
+import '../../../../routes/app_routes_name.dart';
 import '../../../Local Storage.dart';
 
 class CreateWithDrawalPageController extends GetxController {
@@ -69,8 +70,14 @@ class CreateWithDrawalPageController extends GetxController {
     });
   }
 
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  String getRandomString(int length) => String.fromCharCodes(
+        Iterable.generate(
+          length,
+          (_) => _chars.codeUnitAt(
+            _rnd.nextInt(_chars.length),
+          ),
+        ),
+      );
 
   void createWithdrawalRequest() async {
     ApiService()
@@ -78,6 +85,8 @@ class CreateWithDrawalPageController extends GetxController {
         .then((value) async {
       if (value['status']) {
         ResponseModel model = ResponseModel.fromJson(value);
+        amountTextController.clear();
+        Get.offAndToNamed(AppRoutName.withdrawalpage);
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);

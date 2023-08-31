@@ -117,7 +117,7 @@ class HomePageController extends GetxController {
     await LocalStorage.write(ConstantsVariables.timeOut, true);
     var a = await LocalStorage.read(ConstantsVariables.timeOut);
     print("=====================$a=========================");
-    await LocalStorage.write(ConstantsVariables.playMore, true);
+    // await LocalStorage.write(ConstantsVariables.playMore, true);
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
     await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
     await LocalStorage.write(ConstantsVariables.totalAmount, "0");
