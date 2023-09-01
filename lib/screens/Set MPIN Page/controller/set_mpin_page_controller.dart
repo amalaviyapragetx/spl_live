@@ -1,14 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/models/starline_chart_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/user_details_model.dart';
-import '../../../routes/app_routes.dart';
 import '../../Local Storage.dart';
 import '../model/user_details_model.dart';
 
@@ -114,7 +111,7 @@ class SetMPINPageController extends GetxController {
     });
   }
 
- callFcmApi(userId) async {
+  callFcmApi(userId) async {
     var token = await LocalStorage.read(ConstantsVariables.fcmToken);
     print("===========$token");
     Timer(const Duration(milliseconds: 500), () {

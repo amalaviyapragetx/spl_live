@@ -6,11 +6,12 @@ import '../screens/Local Storage.dart';
 import 'api_urls.dart';
 import 'network_info.dart';
 
-class ApiService extends GetConnect {
+class ApiService extends GetConnect implements GetxService {
   Map<String, String>? headers = {};
   Map<String, String>? headersWithToken = {};
   String contentType = "";
   String authToken = '';
+  final allowAutoSignedCert = true;
 
   Future<void> initApiService() async {
     authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
@@ -21,7 +22,6 @@ class ApiService extends GetConnect {
         "Accept": "application/json",
         "Authorization": "Bearer $authToken"
       };
-      // contentType = "multipart/form-data";
     });
   }
 
@@ -911,34 +911,34 @@ class ApiService extends GetConnect {
     }
   }
 
-  Future<dynamic> getNewMarketBidlistData({
-    required String dailyMarketId,
-    required String limit,
-    required String offset,
-    required String bidType,
-  }) async {
-    print(
-        "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType");
-    // AppUtils.showProgressDialog(isCancellable: false);
-    await initApiService();
+  // Future<dynamic> getNewMarketBidlistData({
+  //   required String dailyMarketId,
+  //   required String limit,
+  //   required String offset,
+  //   required String bidType,
+  // }) async {
+  //   print(
+  //       "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType");
+  //   // AppUtils.showProgressDialog(isCancellable: false);
+  //   await initApiService();
 
-    final response = await get(
-      "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType",
-      //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
-      headers: headersWithToken,
-    );
-    if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
-      AppUtils.hideProgressDialog();
+  //   final response = await get(
+  //     "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType",
+  //     //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
+  //     headers: headersWithToken,
+  //   );
+  //   if (response.status.hasError) {
+  //     if (response.status.code != null && response.status.code == 401) {
+  //       tokenExpired();
+  //     }
+  //     AppUtils.hideProgressDialog();
 
-      return Future.error(response.statusText!);
-    } else {
-      AppUtils.hideProgressDialog();
-      return response.body;
-    }
-  }
+  //     return Future.error(response.statusText!);
+  //   } else {
+  //     AppUtils.hideProgressDialog();
+  //     return response.body;
+  //   }
+  // }
   ///////// Notifications ///////////
 
   Future<dynamic> getNotificationCount() async {

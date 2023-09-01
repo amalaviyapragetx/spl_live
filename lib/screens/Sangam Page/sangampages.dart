@@ -256,8 +256,6 @@ class SangamPages extends StatelessWidget {
                         if (value.length == 3) {
                           controller.addedNormalBidValue = value;
                           controller.focusNode.nextFocus();
-                          // controller.openFocusNode.unfocus();
-                          // controller.closeFocusNode.requestFocus();
                           controller.validateEnteredOpenDigit(value);
                         }
                       } else if (controller.gameMode.value.name!
@@ -265,10 +263,7 @@ class SangamPages extends StatelessWidget {
                           "HALF SANGAM B") {
                         if (value.length == 3) {
                           controller.addedNormalBidValue = value;
-                          //    print("++++++++++${controller.addedNormalBidValue}");
                           controller.focusNode.nextFocus();
-                          // controller.openFocusNode.unfocus();
-                          // controller.closeFocusNode.requestFocus();
                           controller.validateEnteredOpenDigit(value);
                         }
                       } else {
@@ -277,8 +272,6 @@ class SangamPages extends StatelessWidget {
                           if (value.length == 1) {
                             controller.validateEnteredCloseDigit(false, value);
                             controller.focusNode.nextFocus();
-                            // controller.openFocusNode.unfocus();
-                            // controller.closeFocusNode.requestFocus();
                           }
                         }
                       }

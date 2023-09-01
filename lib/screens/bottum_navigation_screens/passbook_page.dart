@@ -145,7 +145,7 @@ class PassBook extends StatelessWidget {
           ),
           dataColumns(
             text: "Particulers",
-            width: 370,
+            width: 420,
           ),
           dataColumns(
             text: "Previous Amount",
@@ -162,7 +162,7 @@ class PassBook extends StatelessWidget {
             var data = homeController.passBookModelData.elementAt(index);
             // print(
             //     "***********20***************${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")}");
-            // print("*********27*****************${data.marketTime}");
+            print("*********27*****************${data.marketName}");
             return DataRow(cells: [
               dataCells(
                 width: Dimensions.w170,
@@ -172,19 +172,13 @@ class PassBook extends StatelessWidget {
                 ),
               ),
               dataCells(
-                  width: 370,
+                  width: 420,
                   textColor: AppColors.black,
-                  text: data.marketName == null
-                      ? data.transactionType == "Withdraw" ||
-                              data.transactionType == "Deposit" ||
-                              data.transactionType == "Debit" ||
-                              data.transactionType == "DebitToCredit" ||
-                              data.transactionType == "Win" ||
-                              data.transactionType == "Revoke" ||
-                              data.transactionType == "Refund"
-                          ? "${data.remarks}"
-                          : "${data.transactionType ?? ""} (STARLINE : ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
-                      : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType ?? ""} ) : ${data.bidNo ?? ""}"),
+                  text: data.transactionType != "Bid"
+                      ? "${data.remarks}"
+                      : data.marketName == null
+                          ? "${data.transactionType ?? ""} (STARLINE : ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
+                          : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType ?? ""} ) : ${data.bidNo ?? ""}"),
               dataCells(
                 width: Dimensions.w150,
                 textColor: AppColors.black,

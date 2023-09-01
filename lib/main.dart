@@ -1,13 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/Custom%20Controllers/doubletap_exitcontroller.dart';
 import 'Push Notification/notificationservices.dart';
-import 'Push Notification/push_notification_services.dart';
 import 'helper_files/constant_variables.dart';
 import 'localization/app_localization.dart';
 import 'routes/app_routes.dart';
@@ -25,9 +27,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessegingBackgroundHendler);
-  // Get.put(PushNotificationService()).initialize();
   await GetStorage.init();
-  // Get.put(AppLifecycleController());
   runApp(MyApp());
 }
 

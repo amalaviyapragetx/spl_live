@@ -215,33 +215,6 @@ class AppUtils {
     );
   }
 
-  flottingActionButton({required Function() onTap}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: Dimensions.w50,
-        width: Dimensions.w50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: AppColors.white.withOpacity(0.25),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              spreadRadius: 2,
-              color: AppColors.greyShade.withOpacity(0.3),
-            )
-          ],
-        ),
-        child: const Image(
-          image: AssetImage(
-            ConstantImage.whatsaapIcon,
-          ),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-
 //common method for showing progress dialog
   static void showProgressDialog({isCancellable = false}) async {
     if (!isProgressVisible) {
@@ -488,25 +461,6 @@ class AppUtils {
                             ),
                           ),
                         ),
-                        // TextButton(
-                        //   onPressed: () {
-                        //     if (givenRatings != null && givenRatings.toDouble() != 0.00) {
-                        //       AppUtils.showErrorSnackBar(bodyText: "You can not add ratings multiple times!!!");
-                        //     } else {
-                        //       if (tempRatings < 1.00) {
-                        //         AppUtils.showErrorSnackBar(bodyText: "Please Add Ratings");
-                        //       } else {
-                        //         callCreateRatingApi(tempRatings);
-                        //       }
-                        //     }
-                        //   },
-                        //   child: Text(
-                        //     "Submit",
-                        //     style: TextStyle(
-                        //         color: givenRatings != null && givenRatings.toDouble() != 0.00 ? Colors.green[100] : Colors.green,
-                        //         fontSize: Dimensions.sp18),
-                        //   ),
-                        // ),
                       ],
                     )
                   ],

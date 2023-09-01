@@ -1,9 +1,11 @@
 class ApiUtils {
   // Spl Production
   // static String baseURL = "http://35.154.94.107:9869";
-  static String baseURL = "http://3.7.221.0:9869";
+
+  //  static String baseURL = "http://3.7.221.0:9869";
+  static String baseURL = "https://vishnulive.in:9869";
   // local url
-  // static String baseURL = "http://192.168.1.30:8080";
+  //static String baseURL = "http://192.168.1.30:8080";
   // endpoints
   static String signUP = '$baseURL/auth/signup';
   static String signIN = '$baseURL/auth/signin';
@@ -57,8 +59,6 @@ class ApiUtils {
   static String passBookApi = "$baseURL/user/getUserPassbookDetails";
   static String marketbidHistory = "$baseURL/bid/getBidHistory";
   static String bidHistory = "$baseURL/bid/getByUserId";
-  // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
-  // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByDailyMarketId";
   static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
   static String getNotificationCount =
       "$baseURL/notification/getNotificationCount";

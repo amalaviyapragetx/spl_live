@@ -23,9 +23,7 @@ import '../../../models/normal_market_bid_history_response_model.dart';
 import '../../../models/notifiaction_models/get_all_notification_model.dart';
 import '../../../models/notifiaction_models/notification_count_model.dart';
 import '../../../models/passbook_page_model.dart';
-import '../../../models/starline_chart_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
-import '../../../models/starlinechar_model/new_date_time.dart';
 import '../../../models/starlinechar_model/new_starlinechart_model.dart';
 import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
@@ -44,10 +42,8 @@ class HomePageController extends GetxController {
   RxBool bidHistory = false.obs;
   RxBool resultHistory = false.obs;
   RxBool chart = false.obs;
-  RxBool addFund = false.obs;
   RxInt widgetContainer = 0.obs;
   RxInt pageWidget = 0.obs;
-  RxInt appBarWidget = 0.obs;
   RxInt currentIndex = 0.obs;
   var position = 0;
   var spaceBeetween = const SizedBox(height: 10);
@@ -115,9 +111,7 @@ class HomePageController extends GetxController {
 
   void setboolData() async {
     await LocalStorage.write(ConstantsVariables.timeOut, true);
-    var a = await LocalStorage.read(ConstantsVariables.timeOut);
-    print("=====================$a=========================");
-    // await LocalStorage.write(ConstantsVariables.playMore, true);
+    // var a = await LocalStorage.read(ConstantsVariables.timeOut);
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
     await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
     await LocalStorage.write(ConstantsVariables.totalAmount, "0");
@@ -140,7 +134,6 @@ class HomePageController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     setboolData();
     callMarketsApi();
-    // callGetStarLineChart();
     getUserData();
     getNotificationCount();
     getUserBalance();
@@ -200,7 +193,7 @@ class HomePageController extends GetxController {
           });
           tempFinalMarketList.addAll(biddingClosedMarketList);
           starLineMarketList.value = tempFinalMarketList;
-          print("Star ********************* ${starLineMarketList.toJson()}");
+          // print("Star ********************* ${starLineMarketList.toJson()}");
         }
       } else {
         AppUtils.showErrorSnackBar(
@@ -219,7 +212,6 @@ class HomePageController extends GetxController {
         if (marketModel.data != null && marketModel.data!.isNotEmpty) {
           normalMarketList.value = marketModel.data!;
           noMarketFound.value = false;
-
           var biddingOpenMarketList = normalMarketList
               .where((element) =>
                   element.isBidOpenForClose == true ||
@@ -266,7 +258,6 @@ class HomePageController extends GetxController {
           size,
         );
       case 1:
-        // Get.lazyPut(() => BidHistoryPageController());
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
             child: HomeScreenUtils().gridColumnForStarLine(size));
@@ -324,7 +315,6 @@ class HomePageController extends GetxController {
     switch (index) {
       case 0:
         return SizedBox(
-          // color: AppColors.grey,
           height: size.height,
           width: double.infinity,
           child: Column(
@@ -374,7 +364,6 @@ class HomePageController extends GetxController {
                             border:
                                 Border.all(color: AppColors.redColor, width: 1),
                           ),
-                          //padding: const EdgeInsets.symmetric(horizontal: 60),
                           child: Column(
                             children: [
                               spaceBeetween,
@@ -392,7 +381,6 @@ class HomePageController extends GetxController {
                                   position = 0;
                                   widgetContainer.value = position;
                                   isStarline.value = false;
-                                  print(widgetContainer.value);
                                 },
                                 onTap2: () {
                                   position = 1;
@@ -410,12 +398,9 @@ class HomePageController extends GetxController {
                                           .format(startEndDate),
                                       startDate: DateFormat('yyyy-MM-dd')
                                           .format(startEndDate));
-                                  // HomeScreenUtils().iconsContainer2();
                                   widgetContainer.value = position;
                                   print(
                                       "marketHistoryList :  ${marketHistoryList.toJson()}");
-                                  // print(
-                                  //     "${widgetContainer.value} ${isStarline.value}");
                                 },
                                 onTap3: () {
                                   position = 2;
@@ -617,10 +602,6 @@ class HomePageController extends GetxController {
     }
   }
 
-  // onTapMarketContaioner() {
-  //   Get.toNamed(AppRoutName.gameModePage);
-  // }
-
   onTapOfNormalMarket(MarketData market) {
     if (market.isBidOpenForClose ?? false) {
       Get.toNamed(AppRoutName.gameModePage, arguments: market);
@@ -718,9 +699,6 @@ class HomePageController extends GetxController {
     return reversedString;
   }
 
-  Future<void> onSwipeRefresh() async {
-    // getDailyStarLineMarkets();
-  }
   var cellValue;
   void callGetStarLineChart() async {
     ApiService().getStarlineChar().then((value) async {

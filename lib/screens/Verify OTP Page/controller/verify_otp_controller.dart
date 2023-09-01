@@ -17,7 +17,6 @@ class VerifyOTPController extends GetxController {
   RxString mpin = "".obs;
   RxString confirmMpin = "".obs;
   String phoneNumber = "";
-  // String countryCode = "";
 
   @override
   void onInit() {
@@ -83,8 +82,6 @@ class VerifyOTPController extends GetxController {
       "countryCode": "+91",
       "phoneNumber": phoneNumber,
       "otp": otp.value,
-      // "mPin": mpin.value,
-      // "deviceId": userDataModel.deviceId
     };
     debugPrint(verifyUserBody.toString());
     return verifyUserBody;
