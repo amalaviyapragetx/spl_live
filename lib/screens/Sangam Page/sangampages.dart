@@ -187,7 +187,6 @@ class SangamPages extends StatelessWidget {
                   verticalSpace,
                   verticalSpace,
                   verticalSpace,
-                  // listview(),
                   bidList(size)
                 ],
               ),
@@ -204,69 +203,6 @@ class SangamPages extends StatelessWidget {
       ),
       // bottomNavigationBar:
       //     Obx(() => bottomNavigationBar(controller.totalBiddingAmount.value)),
-    );
-  }
-
-  listview() {
-    return Obx(
-      () => ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: controller.addedSangamList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: Dimensions.h10),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(Dimensions.h5),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 5,
-                    color: AppColors.grey,
-                    spreadRadius: 2,
-                    offset: const Offset(1, 2),
-                  )
-                ],
-              ),
-              child: ListTile(
-                visualDensity: const VisualDensity(vertical: -3),
-                trailing: InkWell(
-                  onTap: () {
-                    // controller.totalBiddingAmount.value = controller
-                    //     .requestModel.value.bids![index].coins
-                    //     .toString();
-                    //  controller.onDeleteSangamBid(index);
-                  },
-                  child: Container(
-                    color: AppColors.transparent,
-                    height: Dimensions.w25,
-                    width: Dimensions.w25,
-                    child: SvgPicture.asset(
-                      ConstantImage.trashIcon,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                title: Text(
-                  "${controller.requestModel.value.bids![index].gameModeName} - ${controller.bidType}",
-                  style: CustomTextStyle.textRobotoSansBold.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: Dimensions.h14,
-                    color: AppColors.black,
-                  ),
-                ),
-                subtitle: Text(
-                  "Bid No. : ${controller.requestModel.value.bids![index].bidNo}, Coins : ${controller.requestModel.value.bids![index].coins}",
-                  style: CustomTextStyle.textRobotoSansBold.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 
