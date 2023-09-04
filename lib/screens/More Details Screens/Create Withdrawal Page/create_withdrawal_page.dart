@@ -82,32 +82,34 @@ class CreatewithDrawalPage extends StatelessWidget {
                   ),
                   verticalSpace,
                   verticalSpace,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                    child: RoundedCornerButton(
-                      text: "CONTINUE".tr,
-                      color: AppColors.appbarColor,
-                      borderColor: AppColors.appbarColor,
-                      fontSize: Dimensions.h15,
-                      fontWeight: FontWeight.w500,
-                      fontColor: AppColors.white,
-                      letterSpacing: 0,
-                      borderRadius: Dimensions.r25,
-                      borderWidth: 1,
-                      textStyle: CustomTextStyle.textRobotoSlabBold,
-                      onTap: () {
-                        controller.createWithdrawalRequest();
-                      },
-                      height: Dimensions.h35,
-                      width: double.infinity,
-                    ),
-                  ),
+                  controller.bankName.value != ""
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                          child: RoundedCornerButton(
+                            text: "CONTINUE".tr,
+                            color: AppColors.appbarColor,
+                            borderColor: AppColors.appbarColor,
+                            fontSize: Dimensions.h15,
+                            fontWeight: FontWeight.w500,
+                            fontColor: AppColors.white,
+                            letterSpacing: 0,
+                            borderRadius: Dimensions.r25,
+                            borderWidth: 1,
+                            textStyle: CustomTextStyle.textRobotoSlabBold,
+                            onTap: () {
+                              controller.createWithdrawalRequest();
+                            },
+                            height: Dimensions.h35,
+                            width: double.infinity,
+                          ),
+                        )
+                      : Container(),
                   verticalSpace,
                   verticalSpace,
                   verticalSpace,
                   Obx(
                     () => controller.bankName.value == "" ||
-                            controller.bankName.value == null
+                            controller.bankName.value.isEmpty
                         ? SizedBox(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

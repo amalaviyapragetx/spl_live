@@ -12,6 +12,11 @@ class ApiService extends GetConnect implements GetxService {
   String contentType = "";
   String authToken = '';
   final allowAutoSignedCert = true;
+  @override
+  void onInit() {
+    allowAutoSignedCert = true;
+    super.onInit();
+  }
 
   Future<void> initApiService() async {
     authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
@@ -1062,7 +1067,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> fcmToken(body) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
       ApiUtils.fcmToken,
@@ -1071,7 +1076,7 @@ class ApiService extends GetConnect implements GetxService {
     );
 
     if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
+      //  AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
@@ -1079,9 +1084,27 @@ class ApiService extends GetConnect implements GetxService {
           "FCM Token : ${response.status.code.toString() + response.body.toString()}");
       return response.body;
     } else {
-      AppUtils.hideProgressDialog();
+      //  AppUtils.hideProgressDialog();
       print("response2 ${response.body}");
       print("change pass2 ${response.status.code}");
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getAppVersion() async {
+    //AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await get(
+      ApiUtils.getVersion,
+    );
+
+    if (response.status.hasError) {
+      // AppUtils.hideProgressDialog();s
+      return response.body;
+    } else {
+      // AppUtils.hideProgressDialog();
+      // print("response2 ${response.body}");
+      // print("change pass2 ${response.status.code}");
       return response.body;
     }
   }

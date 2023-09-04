@@ -1,8 +1,6 @@
 class ApiUtils {
   // Spl Production
   // static String baseURL = "http://35.154.94.107:9869";
-
-  //  static String baseURL = "http://3.7.221.0:9869";
   static String baseURL = "https://vishnulive.in:9869";
   // local url
   //static String baseURL = "http://192.168.1.30:8080";
@@ -77,4 +75,5 @@ class ApiUtils {
   static String bennerApi = "$baseURL/banner/getAll";
 
   static String fcmToken = "$baseURL/auth/setFCMToken";
+  static String getVersion = "$baseURL/auth/appVersion";
 }

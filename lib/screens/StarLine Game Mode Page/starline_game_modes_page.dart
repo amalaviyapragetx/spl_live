@@ -97,109 +97,109 @@ class StarLineGameModesPage extends StatelessWidget {
     );
   }
 
-  Widget textListWidget({
-    required String text,
-    Widget? widget,
-    required double fontSize,
-  }) {
-    return ListTile(
-      visualDensity: const VisualDensity(
-        vertical: -2,
-      ),
-      tileColor: AppColors.grey.withOpacity(0.1),
-      title: Row(
-        children: [
-          widget ?? Container(),
-          widget != null
-              ? SizedBox(
-                  width: Dimensions.w10,
-                )
-              : const SizedBox(),
-          Text(
-            text,
-            style: CustomTextStyle.textRobotoSansBold
-                .copyWith(color: AppColors.appbarColor, fontSize: fontSize),
-          )
-        ],
-      ),
-    );
-  }
+  // Widget textListWidget({
+  //   required String text,
+  //   Widget? widget,
+  //   required double fontSize,
+  // }) {
+  //   return ListTile(
+  //     visualDensity: const VisualDensity(
+  //       vertical: -2,
+  //     ),
+  //     tileColor: AppColors.grey.withOpacity(0.1),
+  //     title: Row(
+  //       children: [
+  //         widget ?? Container(),
+  //         widget != null
+  //             ? SizedBox(
+  //                 width: Dimensions.w10,
+  //               )
+  //             : const SizedBox(),
+  //         Text(
+  //           text,
+  //           style: CustomTextStyle.textRobotoSansBold
+  //               .copyWith(color: AppColors.appbarColor, fontSize: fontSize),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget gameTile(String listText, {required Function() onTap}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          boxShadow: [
-            BoxShadow(
-                color: AppColors.grey.withOpacity(0.7),
-                offset: const Offset(0, 0),
-                blurRadius: 5,
-                spreadRadius: 3.5),
-          ],
-          border: Border.all(width: 0.8),
-        ),
-        child: Center(
-          child: Text(
-            listText,
-            style: CustomTextStyle.textPTsansBold.copyWith(
-              color: AppColors.appbarColor,
-              fontSize: Dimensions.h15,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget gameTile(String listText, {required Function() onTap}) {
+  //   return InkWell(
+  //     onTap: onTap,
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         color: AppColors.white,
+  //         boxShadow: [
+  //           BoxShadow(
+  //               color: AppColors.grey.withOpacity(0.7),
+  //               offset: const Offset(0, 0),
+  //               blurRadius: 5,
+  //               spreadRadius: 3.5),
+  //         ],
+  //         border: Border.all(width: 0.8),
+  //       ),
+  //       child: Center(
+  //         child: Text(
+  //           listText,
+  //           style: CustomTextStyle.textPTsansBold.copyWith(
+  //             color: AppColors.appbarColor,
+  //             fontSize: Dimensions.h15,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  gamelist(Size size) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: () {
-          Get.toNamed(AppRoutName.newGameModePage);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 2,
-                blurRadius: 5,
-                color: AppColors.grey.withOpacity(0.5),
-                offset: const Offset(2, 2),
-              )
-            ],
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                backgroundColor: AppColors.wpColor1,
-                maxRadius: Dimensions.r35,
-              ),
-              verticalSpace,
-              SizedBox(
-                width: size.width - 5,
-                child: Center(
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      "Single Ank",
-                      style: CustomTextStyle.textRobotoSansBold
-                          .copyWith(fontSize: Dimensions.h15),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // gamelist(Size size) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: InkWell(
+  //       onTap: () {
+  //         Get.toNamed(AppRoutName.newGameModePage);
+  //       },
+  //       child: Container(
+  //         decoration: BoxDecoration(
+  //           color: AppColors.white,
+  //           boxShadow: [
+  //             BoxShadow(
+  //               spreadRadius: 2,
+  //               blurRadius: 5,
+  //               color: AppColors.grey.withOpacity(0.5),
+  //               offset: const Offset(2, 2),
+  //             )
+  //           ],
+  //           borderRadius: BorderRadius.circular(15),
+  //         ),
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             CircleAvatar(
+  //               backgroundColor: AppColors.wpColor1,
+  //               maxRadius: Dimensions.r35,
+  //             ),
+  //             verticalSpace,
+  //             SizedBox(
+  //               width: size.width - 5,
+  //               child: Center(
+  //                 child: FittedBox(
+  //                   fit: BoxFit.fitWidth,
+  //                   child: Text(
+  //                     "Single Ank",
+  //                     style: CustomTextStyle.textRobotoSansBold
+  //                         .copyWith(fontSize: Dimensions.h15),
+  //                   ),
+  //                 ),
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   void showCustomAboutBoxDialog(BuildContext context) {
     showDialog(

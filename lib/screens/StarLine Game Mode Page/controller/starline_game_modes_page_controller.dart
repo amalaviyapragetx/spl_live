@@ -1,14 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/models/daily_market_api_response_model.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -41,27 +38,11 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   onBackButton() async {
-    // var playmore = await LocalStorage.read(ConstantsVariables.playMore);
-    // var bidList = await LocalStorage.read(ConstantsVariables.starlineBidsList);
-    // if (!playmore) {
-    // if (bidList.length != 0) {
-    //   Get.toNamed(AppRoutName.starlineBidpage, arguments: {
-    //     "bidsList": bidList,
-    //     "gameMode": gameMode.value,
-    //     "marketData": marketData.value,
-    //   });
-    // } else {
+    print("+++++++++++++++++++++++++++++++");
     Get.offAllNamed(AppRoutName.dashBoardPage);
     requestModel.value.bids?.clear();
     await LocalStorage.write(
         ConstantsVariables.starlineBidsList, requestModel.value.bids);
-    // }
-    // } else {
-    //   Get.offAllNamed(AppRoutName.dashBoardPage);
-    //   requestModel.value.bids?.clear();
-    //   await LocalStorage.write(
-    //       ConstantsVariables.starlineBidsList, requestModel.value.bids);
-    // }
   }
 
   @override

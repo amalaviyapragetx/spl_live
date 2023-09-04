@@ -585,6 +585,15 @@ class HomeScreenUtils {
             },
             child: Container(
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 0.2,
+                    color: AppColors.grey,
+                    blurRadius: 2.5,
+                    offset: const Offset(2, 3),
+                  )
+                ],
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(Dimensions.h10),
                 border: Border.all(color: Colors.red, width: 1),
               ),

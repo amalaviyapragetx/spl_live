@@ -5,6 +5,8 @@ import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
+import '../../../components/DeviceInfo/device_info.dart';
+import '../../../components/DeviceInfo/device_information_model.dart';
 
 class SignUpPageController extends GetxController {
   var mobileNumberController = TextEditingController();
@@ -39,27 +41,17 @@ class SignUpPageController extends GetxController {
   }
 
   Future<Map<String, dynamic>> signUpBody() async {
-    // DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
+    DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
     final signUpBody = {
-      // "userName": userNameController.text,
-      // "fullName": nameController.text,
-      // "countryCode": countryCode.value,
-      // "phoneNumber": mobileNumberController.text,
-      // "whatsappNumber": whatsappNumberController.text,
-      // "password": passwordController.text,
-      // "deviceId": deviceInfo.deviceId,
-      // "appVersion": deviceInfo.appVersion,
-      // "brandName": deviceInfo.brandName,
-      // "model": deviceInfo.model,
-      // "os": deviceInfo.deviceOs,
-      // "manufacturer": deviceInfo.manufacturer,
-      // "osVersion": deviceInfo.osVersion,
-
-      //
+      "appVersion": deviceInfo.appVersion,
+      "brandName": deviceInfo.brandName,
+      "model": deviceInfo.model,
+      "os": deviceInfo.deviceOs,
+      "manufacturer": deviceInfo.manufacturer,
+      "oSVersion": deviceInfo.osVersion,
       "countryCode": countryCode.value,
       "phoneNumber": mobileNumberController.text,
-      // "deviceId": deviceInfo.deviceId,
-      "deviceId": mobileNumberController.text,
+      "deviceId": deviceInfo.deviceId,
     };
     if (kDebugMode) {
       print(signUpBody.toString());

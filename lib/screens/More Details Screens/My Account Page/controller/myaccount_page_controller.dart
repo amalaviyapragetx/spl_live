@@ -44,6 +44,29 @@ class MyAccountPageController extends GetxController {
     }
   }
 
+  void validationFied() {
+    if (bankNameController.text.isEmpty) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Enter name of the bank",
+      );
+    } else if (accHolderNameController.text.isEmpty) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Enter Account Holder Name",
+      );
+    } else if (accNoController.text.isEmpty) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Enter Account Number",
+      );
+    } else if (ifscCodeController.text.isEmpty) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Enter Ifsc Code",
+      );
+    } else {
+      onTapOfEditDetails();
+      Get.back();
+    }
+  }
+
   void onTapOfEditDetails() async {
     if (isEditDetails.value) {
       callEditBankDetailsApi();

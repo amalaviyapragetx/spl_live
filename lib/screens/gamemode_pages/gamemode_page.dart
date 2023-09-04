@@ -9,9 +9,6 @@ import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/gamemode_pages/controller/game_pages_controller.dart';
 
-import '../../helper_files/constant_variables.dart';
-import '../Local Storage.dart';
-
 class GameModePage extends StatelessWidget {
   GameModePage({super.key});
   var controller = Get.put(GameModePagesController());
@@ -29,7 +26,7 @@ class GameModePage extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppUtils().simpleAppbar(
-          appBarTitle: "GAMEMODES_TEXT".tr,
+          appBarTitle: controller.marketValue.value.market ?? "",
           leading: IconButton(
             onPressed: () => controller.onBackButton(),
             icon: const Icon(Icons.arrow_back),

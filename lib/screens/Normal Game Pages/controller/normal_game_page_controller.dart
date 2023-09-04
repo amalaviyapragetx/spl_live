@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../api_services/api_urls.dart';
@@ -65,7 +66,8 @@ class NormalGamePageController extends GetxController {
   var argument = Get.arguments;
   bool enteredDigitsIsValidate = false;
   var apiUrl = "";
-
+  List<String> digitBasedJodi = [];
+  Map<String, List<String>> choisePanaSPDPTP = {};
   @override
   void onInit() {
     super.onInit();
@@ -111,11 +113,13 @@ class NormalGamePageController extends GetxController {
         apiUrl = ApiUtils.choicePanaSPDP;
         panaControllerLength.value = 1;
         _tempValidationList = jsonModel.singleAnk!;
+        choisePanaSPDPTP = jsonModel.spdptp!;
         break;
       case "Digits Based Jodi":
         showNumbersLine.value = false;
         panaControllerLength.value = 1;
         apiUrl = ApiUtils.digitsBasedJodi;
+        digitBasedJodi = jsonModel.jodi!;
         _tempValidationList = jsonModel.singleAnk!;
         break;
       case "Odd Even":
@@ -125,6 +129,129 @@ class NormalGamePageController extends GetxController {
         break;
     }
     _validationListForNormalMode.addAll(_tempValidationList);
+  }
+
+// Function to filter elements that match the provided digits
+  List<String> getChoicePanaSPDPTP() {
+    String? middle = middleAnkController.text;
+    String? left = leftAnkController.text;
+    String? last = rightAnkController.text;
+    List<String> panaType = selectedValues;
+
+    List<String> panaArray = [];
+    print(panaType);
+    for (int i = 0; i < panaType.length; i++) {
+      List<String>? data = choisePanaSPDPTP[panaType[i]];
+      if (data != null) {
+        panaArray.addAll(data);
+      } else {
+        print("Error");
+      }
+    }
+    print("=================$panaArray");
+    print(panaArray
+        .where((num1) => matchesDigits(num1, left, middle, last))
+        .toList());
+    return panaArray
+        .where((num1) => matchesDigits(num1, left, middle, last))
+        .toList();
+  }
+
+  bool matchesDigits(String num1, String? left, String? middle, String? last) {
+    // print(num1);
+    // String numStr = num1.toString();
+    return ((left == null || num1[0] == left) &&
+        (middle == null || num1[num1.length ~/ 2] == middle) &&
+        (last == null || num1[num1.length - 1] == last));
+  }
+
+  /// add Button DigitBasedJodi
+  List<String> digitBasedJodiFilter() {
+    String? left = leftAnkController.text;
+    String? right = rightAnkController.text;
+    List<String> result = [];
+    List<String> jodiArray = digitBasedJodi;
+
+    bool startsWithLeft(String num) => left == null || num.startsWith(left);
+
+    bool endsWithRight(String num) => right == null || num.endsWith(right);
+
+    if (left != null && right == null) {
+      result = jodiArray.where((num) => startsWithLeft(num)).toList();
+      result.sort(
+          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
+    } else if (right != null && left == null) {
+      result = jodiArray.where((num) => endsWithRight(num)).toList();
+      result.sort(
+          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
+    } else if (left != null && right != null) {
+      List<String> leftList =
+          jodiArray.where((num) => endsWithRight(num)).toList();
+      leftList.sort(
+          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
+      List<String> rightList =
+          jodiArray.where((num) => startsWithLeft(num)).toList();
+      rightList.sort(
+          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
+
+      result = [...leftList, ...rightList];
+    }
+    print(result);
+    return result;
+  }
+
+  newDigitBasedData() {
+    if (coinController.text.trim().isEmpty ||
+        int.parse(coinController.text.trim()) < 1) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Please enter valid points",
+      );
+      coinFocusNode.nextFocus();
+      leftFocusNode.requestFocus();
+      return;
+    } else if (int.parse(coinController.text) > 10000) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "You can not add more than 10000 points",
+      );
+      coinFocusNode.nextFocus();
+      leftFocusNode.requestFocus();
+      return;
+    } else {
+      spdptpList = digitBasedJodiFilter();
+      if (spdptpList.isEmpty) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+        );
+        coinFocusNode.nextFocus();
+        leftFocusNode.requestFocus();
+      } else {
+        for (var i = 0; i < spdptpList.length; i++) {
+          addedNormalBidValue = spdptpList[i].toString();
+          selectedBidsList.add(
+            Bids(
+              bidNo: spdptpList[i].toString(),
+              coins: int.parse(coinController.text),
+              gameId: gameMode.value.id,
+              // subGameId: ,
+              gameModeName: gameMode.value.name,
+              remarks:
+                  "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+            ),
+          );
+        }
+      }
+      coinFocusNode.nextFocus();
+      leftFocusNode.requestFocus();
+    }
+
+    leftAnkController.clear();
+    rightAnkController.clear();
+    middleAnkController.clear();
+    coinController.clear();
+    selectedBidsList.refresh();
+    coinFocusNode.nextFocus();
+    leftFocusNode.requestFocus();
+    _calculateTotalAmount();
   }
 
   onTapAddOddEven() {
@@ -305,135 +432,52 @@ class NormalGamePageController extends GetxController {
   }
 
   void groupJodiData() async {
-    ApiService().newGameModeApi(await groupJodiBody(), apiUrl).then(
-      (value) async {
-        debugPrint("Forgot MPIN Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
-          if (coinController.text.trim().isEmpty ||
-              int.parse(coinController.text.trim()) < 1) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "Please enter valid points",
-            );
-            coinFocusNode.nextFocus();
-            leftFocusNode.requestFocus();
-            return;
-          } else if (int.parse(coinController.text) > 10000) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "You can not add more than 10000 points",
-            );
-            coinFocusNode.nextFocus();
-            leftFocusNode.requestFocus();
-            return;
-          } else {
-            if (spdptpList.isEmpty) {
-              AppUtils.showErrorSnackBar(
-                bodyText:
-                    "Please enter valid ${gameMode.value.name!.toLowerCase()}",
-              );
-              coinFocusNode.nextFocus();
-              leftFocusNode.requestFocus();
-            } else {
-              for (var i = 0; i < spdptpList.length; i++) {
-                addedNormalBidValue = spdptpList[i].toString();
-                var existingIndex = selectedBidsList.indexWhere(
-                    (element) => element.bidNo == addedNormalBidValue);
-                if (existingIndex != -1) {
-                  selectedBidsList[existingIndex].coins =
-                      (selectedBidsList[existingIndex].coins! +
-                          int.parse(coinController.text));
-                } else {
-                  selectedBidsList.add(
-                    Bids(
-                      bidNo: addedNormalBidValue,
-                      coins: int.parse(coinController.text),
-                      gameId: gameMode.value.id,
-                      subGameId: gameMode.value.id,
-                      gameModeName: gameMode.value.name,
-                      remarks:
-                          "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
-                    ),
-                  );
-                }
-              }
-            }
-            // Get.closeAllSnackbars();
-            _calculateTotalAmount();
-            coinFocusNode.nextFocus();
-            leftFocusNode.requestFocus();
-          }
-        } else {
+    //spdptpList = getChoicePanaSPDPTP();
+    ApiService()
+        .newGameModeApi(await groupJodiBody(), apiUrl)
+        .then((value) async {
+      debugPrint("Forgot MPIN Api Response :- $value");
+      if (value['status']) {
+        spdptpList = value['data'];
+        if (coinController.text.trim().isEmpty ||
+            int.parse(coinController.text.trim()) < 1) {
           AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
+            bodyText: "Please enter valid points",
           );
-        }
-        Get.closeAllSnackbars();
-        coinController.clear();
-        leftAnkController.clear();
-        middleAnkController.clear();
-        rightAnkController.clear();
-        coinFocusNode.nextFocus();
-        leftFocusNode.requestFocus();
-        selectedBidsList.refresh();
-      },
-    );
-  }
-
-  Future<Map> digitBasedJodiJodiBody() async {
-    final a = {
-      "leftDigit": leftAnkController.text,
-      "rightDigit": rightAnkController.text,
-    };
-    return a;
-  }
-
-  void digitsBasedJodiData() async {
-    ApiService().newGameModeApi(await digitBasedJodiJodiBody(), apiUrl).then(
-      (value) async {
-        debugPrint("Forgot MPIN Api Response :- $value");
-        if (value['status']) {
-          spdptpList = value['data'];
-          if (coinController.text.trim().isEmpty ||
-              int.parse(coinController.text.trim()) < 1) {
+          coinFocusNode.nextFocus();
+          leftFocusNode.requestFocus();
+          return;
+        } else if (int.parse(coinController.text) > 10000) {
+          AppUtils.showErrorSnackBar(
+            bodyText: "You can not add more than 10000 points",
+          );
+          coinFocusNode.nextFocus();
+          leftFocusNode.requestFocus();
+          return;
+        } else {
+          if (spdptpList.isEmpty) {
             AppUtils.showErrorSnackBar(
-              bodyText: "Please enter valid points",
+              bodyText:
+                  "Please enter valid ${gameMode.value.name!.toLowerCase()}",
             );
             coinFocusNode.nextFocus();
             leftFocusNode.requestFocus();
-            return;
-          } else if (int.parse(coinController.text) > 10000) {
-            AppUtils.showErrorSnackBar(
-              bodyText: "You can not add more than 10000 points",
-            );
-            coinFocusNode.nextFocus();
-            leftFocusNode.requestFocus();
-            return;
           } else {
-            if (spdptpList.isEmpty) {
-              AppUtils.showErrorSnackBar(
-                bodyText:
-                    "Please enter valid ${gameMode.value.name!.toLowerCase()}",
-              );
-              coinFocusNode.nextFocus();
-              leftFocusNode.requestFocus();
-            } else {
-              for (var i = 0; i < spdptpList.length; i++) {
-                addedNormalBidValue = spdptpList[i].toString();
-                //   var existingIndex = selectedBidsList.indexWhere(
-                //       (element) => element.bidNo == addedNormalBidValue);
-                //   if (existingIndex != -1) {
-                //     // If the bidNo already exists in selectedBidsList, update coins value.
-                //     selectedBidsList[existingIndex].coins =
-                //         (selectedBidsList[existingIndex].coins! +
-                //             int.parse(coinController.text));
-                //   } else {
-                //     print(spdptpList[i].toString());
+            for (var i = 0; i < spdptpList.length; i++) {
+              addedNormalBidValue = spdptpList[i].toString();
+              var existingIndex = selectedBidsList.indexWhere(
+                  (element) => element.bidNo == addedNormalBidValue);
+              if (existingIndex != -1) {
+                selectedBidsList[existingIndex].coins =
+                    (selectedBidsList[existingIndex].coins! +
+                        int.parse(coinController.text));
+              } else {
                 selectedBidsList.add(
                   Bids(
-                    bidNo: spdptpList[i].toString(),
+                    bidNo: addedNormalBidValue,
                     coins: int.parse(coinController.text),
                     gameId: gameMode.value.id,
-                    // subGameId: ,
+                    subGameId: gameMode.value.id,
                     gameModeName: gameMode.value.name,
                     remarks:
                         "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
@@ -441,24 +485,108 @@ class NormalGamePageController extends GetxController {
                 );
               }
             }
-            coinFocusNode.nextFocus();
-            leftFocusNode.requestFocus();
           }
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          // Get.closeAllSnackbars();
+          _calculateTotalAmount();
+          coinFocusNode.nextFocus();
+          leftFocusNode.requestFocus();
         }
-
-        leftAnkController.clear();
-        rightAnkController.clear();
-        middleAnkController.clear();
-        coinController.clear();
-        selectedBidsList.refresh();
-        coinFocusNode.nextFocus();
-        leftFocusNode.requestFocus();
-        _calculateTotalAmount();
-      },
-    );
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+      Get.closeAllSnackbars();
+      coinController.clear();
+      leftAnkController.clear();
+      middleAnkController.clear();
+      rightAnkController.clear();
+      coinFocusNode.nextFocus();
+      leftFocusNode.requestFocus();
+      selectedBidsList.refresh();
+    });
   }
+
+  // Future<Map> digitBasedJodiJodiBody() async {
+  //   final a = {
+  //     "leftDigit": leftAnkController.text,
+  //     "rightDigit": rightAnkController.text,
+  //   };
+  //   return a;
+  // }
+
+  // void digitsBasedJodiData() async {
+  //   // ApiService().newGameModeApi(await digitBasedJodiJodiBody(), apiUrl).then(
+  //   //   (value) async {
+  //   //     debugPrint("Forgot MPIN Api Response :- $value");
+  //   //     if (value['status']) {
+  //   spdptpList = getChoicePanaSPDPTP();
+  //   print("$spdptpList");
+  //   if (coinController.text.trim().isEmpty ||
+  //       int.parse(coinController.text.trim()) < 1) {
+  //     AppUtils.showErrorSnackBar(
+  //       bodyText: "Please enter valid points",
+  //     );
+  //     coinFocusNode.nextFocus();
+  //     leftFocusNode.requestFocus();
+  //     return;
+  //   } else if (int.parse(coinController.text) > 10000) {
+  //     AppUtils.showErrorSnackBar(
+  //       bodyText: "You can not add more than 10000 points",
+  //     );
+  //     coinFocusNode.nextFocus();
+  //     leftFocusNode.requestFocus();
+  //     return;
+  //   } else {
+  //     if (spdptpList.isEmpty) {
+  //       AppUtils.showErrorSnackBar(
+  //         bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+  //       );
+  //       coinFocusNode.nextFocus();
+  //       leftFocusNode.requestFocus();
+  //     } else {
+  //       for (var i = 0; i < spdptpList.length; i++) {
+  //         addedNormalBidValue = spdptpList[i].toString();
+  //         //   var existingIndex = selectedBidsList.indexWhere(
+  //         //       (element) => element.bidNo == addedNormalBidValue);
+  //         //   if (existingIndex != -1) {
+  //         //     // If the bidNo already exists in selectedBidsList, update coins value.
+  //         //     selectedBidsList[existingIndex].coins =
+  //         //         (selectedBidsList[existingIndex].coins! +
+  //         //             int.parse(coinController.text));
+  //         //   } else {
+  //         //     print(spdptpList[i].toString());
+  //         selectedBidsList.add(
+  //           Bids(
+  //             bidNo: spdptpList[i].toString(),
+  //             coins: int.parse(coinController.text),
+  //             gameId: gameMode.value.id,
+  //             // subGameId: ,
+  //             gameModeName: gameMode.value.name,
+  //             remarks:
+  //                 "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+  //           ),
+  //         );
+  //       }
+  //     }
+  //     coinFocusNode.nextFocus();
+  //     leftFocusNode.requestFocus();
+  //   }
+  //   //   } else {
+  //   //     AppUtils.showErrorSnackBar(
+  //   //       bodyText: value['message'] ?? "",
+  //   //     );
+  //   // }
+
+  //   leftAnkController.clear();
+  //   rightAnkController.clear();
+  //   middleAnkController.clear();
+  //   coinController.clear();
+  //   selectedBidsList.refresh();
+  //   coinFocusNode.nextFocus();
+  //   leftFocusNode.requestFocus();
+  //   _calculateTotalAmount();
+  //   //  },
+  //   //   );
+  // }
 }

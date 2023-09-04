@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/edit_text_field_with_icon.dart';
 
@@ -75,10 +76,7 @@ class MyAccountPage extends StatelessWidget {
                         borderRadius: 5,
                         borderWidth: 0,
                         textStyle: CustomTextStyle.textPTsansMedium,
-                        onTap: () {
-                          controller.onTapOfEditDetails();
-                          Get.back();
-                        },
+                        onTap: () => controller.validationFied(),
                         height: 40,
                         width: 200,
                       )
@@ -163,7 +161,10 @@ class MyAccountPage extends StatelessWidget {
       imagePath: "",
       height: Dimensions.h42,
       keyboardType: TextInputType.text,
+      textStyle: CustomTextStyle.textRobotoSansMedium
+          .copyWith(fontSize: Dimensions.h15, fontWeight: FontWeight.w500),
       autofocus: autofocus,
+      formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]+$'))],
     );
   }
 }

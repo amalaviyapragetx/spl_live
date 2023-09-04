@@ -102,6 +102,7 @@ class InactivityController extends GetxController {
     Get.defaultDialog(
       barrierDismissible: false,
       title: "",
+      onWillPop: () async => false,
       content: Column(
         children: [
           SizedBox(

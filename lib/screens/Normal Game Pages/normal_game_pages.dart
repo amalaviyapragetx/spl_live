@@ -317,7 +317,7 @@ class NormalGamePage extends StatelessWidget {
                                       controller:
                                           controller.middleAnkController,
                                       textStyle: CustomTextStyle
-                                          .textPTsansMedium
+                                          .textRobotoSansMedium
                                           .copyWith(
                                         color: AppColors.black.withOpacity(0.7),
                                         fontWeight: FontWeight.bold,
@@ -445,10 +445,11 @@ class NormalGamePage extends StatelessWidget {
                           width: size.width / 2,
                           textAlign: TextAlign.center,
                           controller: controller.coinController,
-                          textStyle: CustomTextStyle.textPTsansMedium.copyWith(
+                          textStyle:
+                              CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.black.withOpacity(0.7),
                             fontWeight: FontWeight.bold,
-                            fontSize: Dimensions.h13,
+                            fontSize: Dimensions.h15,
                           ),
                           hintTextStyle:
                               CustomTextStyle.textRobotoSansMedium.copyWith(
@@ -547,7 +548,8 @@ class NormalGamePage extends StatelessWidget {
                             } else if (controller.gameMode.value.name!
                                     .toUpperCase() ==
                                 "DIGITS BASED JODI") {
-                              controller.digitsBasedJodiData();
+                              controller.newDigitBasedData();
+                              // controller.digitsBasedJodiData();
                             } else if (controller.gameMode.value.name ==
                                 "Choice Pana SPDP") {
                               if (controller.spValue1.value == false &&
@@ -555,8 +557,10 @@ class NormalGamePage extends StatelessWidget {
                                   controller.tpValue3.value == false) {
                                 AppUtils.showErrorSnackBar(
                                   bodyText: "Please select SP,DP or TP",
+                                  duration: const Duration(milliseconds: 900),
                                 );
                               } else {
+                                // controller.groupJodiData();
                                 controller.groupJodiData();
                               }
                               //  controller.groupJodiData();
