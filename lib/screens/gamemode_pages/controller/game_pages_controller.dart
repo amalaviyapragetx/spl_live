@@ -292,7 +292,6 @@ class GameModePagesController extends GetxController {
   }
 
   Future<void> getArguments() async {
-    
     var data = await LocalStorage.read(ConstantsVariables.userData);
     // playmore = await LocalStorage.read(ConstantsVariables.playMore);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);

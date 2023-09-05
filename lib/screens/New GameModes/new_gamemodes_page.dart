@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:spllive/components/bidlist_for_market.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/screens/New%20GameModes/controller/new_gamemode_page_controller.dart';
@@ -359,9 +358,8 @@ class NewGameModePage extends StatelessWidget {
                       controller.gameMode.value.name!.toUpperCase() ==
                           "TRIPPLE PANA" ||
                       controller.gameMode.value.name!.toUpperCase() ==
-                          "DOUBLE PANA" ||
-                      controller.gameMode.value.name!.toUpperCase() ==
                           "RED BRACKETS") {
+                    controller.onTapOfAddButton();
                   } else {
                     if (controller
                             .autoCompleteFieldController.text.isNotEmpty ||
@@ -392,9 +390,18 @@ class NewGameModePage extends StatelessWidget {
                         if (controller
                                 .autoCompleteFieldController.text.length ==
                             2) {
-                          // controller.filterList(
-                          //     controller.autoCompleteFieldController.text);
-                          controller.getspdptp();
+                          // controller.getTwoDigitPanelPana(int.parse(
+                          //     controller.autoCompleteFieldController.text));
+                          // controller.getspdptp();
+                          controller.pennleDataOnTapSave();
+                        } else {
+                          controller.autoCompleteFieldController.clear();
+                          controller.coinController.clear();
+                          controller.focusNode.previousFocus();
+                          AppUtils.showErrorSnackBar(
+                            bodyText:
+                                "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                          );
                         }
                       }
                     }

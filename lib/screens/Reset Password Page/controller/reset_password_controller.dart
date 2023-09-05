@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -108,7 +107,7 @@ class ResetPasswordController extends GetxController {
     }
   }
 
-  var secondsRemaining = 60.obs;
+  RxInt secondsRemaining = 60.obs;
   late Timer _timer;
 
   void _startTimer() {
@@ -131,6 +130,8 @@ class ResetPasswordController extends GetxController {
     ApiService().resendOTP(await resendOtpBody()).then((value) async {
       debugPrint("Resend otp Api Response :- $value");
       if (value['status']) {
+        secondsRemaining.value = 60;
+        _startTimer();
         AppUtils.showSuccessSnackBar(
             bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
       } else {

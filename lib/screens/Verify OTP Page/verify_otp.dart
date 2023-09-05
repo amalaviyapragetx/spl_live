@@ -58,6 +58,9 @@ class VerifyOTPPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildPinCodeField(
+          onChange: (v) {
+            controller.onTapOfContinue();
+          },
           context: context,
           title: "OTP",
           pinType: controller.otp,
@@ -138,6 +141,7 @@ class VerifyOTPPage extends StatelessWidget {
     required String title,
     required RxString pinType,
     required int pinCodeLength,
+    required onChange,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Dimensions.w18),
@@ -169,6 +173,7 @@ class VerifyOTPPage extends StatelessWidget {
             animationDuration: const Duration(milliseconds: 200),
             onComplete: (val) {
               pinType.value = val;
+              onChange(val);
             },
             keyboardType: TextInputType.number,
             animation: Animations.fade,

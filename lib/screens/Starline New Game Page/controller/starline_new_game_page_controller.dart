@@ -72,7 +72,21 @@ class StarlineNewGamePageController extends GetxController {
     9: "fourNine",
   };
   Map<String, List<List<String>>> panelGroupChart = {};
-
+  List<String> spdpMotor = [];
+  Map<String, dynamic>? spdptplistFromModel = {};
+  var digitsForSPDPTP = {
+    0: "zero",
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+    7: "seven",
+    8: "eight",
+    9: "nine",
+  };
+  Map<String, List<String>> choisePanaSPDPTP = {};
   @override
   void onInit() {
     getArguments();
@@ -369,33 +383,25 @@ class StarlineNewGamePageController extends GetxController {
         _tempValidationList = jsonModel.singleAnk!;
         break;
       case "Single Pana":
-        print(
-            "################################################################${panaControllerLength.value}");
         panaControllerLength.value = 3;
-        print(
-            "################################################################${panaControllerLength.value}");
         _tempValidationList = jsonModel.allSinglePana!;
         break;
       case "Double Pana":
         panaControllerLength.value = 3;
-        print(
-            "################################################################${panaControllerLength.value}");
         _tempValidationList = jsonModel.allDoublePana!;
         break;
       case "Tripple Pana":
         panaControllerLength.value = 3;
-        print(
-            "################################################################${panaControllerLength.value}");
         _tempValidationList = jsonModel.triplePana!;
         break;
       case "Panel Group":
         panaControllerLength.value = 3;
         panelGroupChart = jsonModel.panelGroupChart!;
-        // _tempValidationList = jsonModel.allThreePana!;
         apiUrl = ApiUtils.panelGroup;
         break;
       case "SPDPTP":
         panaControllerLength.value = 1;
+        spdptplistFromModel = jsonModel.spdptpChart!;
         _tempValidationList = jsonModel.singleAnk!;
         apiUrl = ApiUtils.spdptp;
         break;
@@ -403,15 +409,17 @@ class StarlineNewGamePageController extends GetxController {
         panaControllerLength.value = 1;
         apiUrl = ApiUtils.choicePanaSPDP;
         _tempValidationList = jsonModel.singleAnk!;
+        choisePanaSPDPTP = jsonModel.spdptp!;
         break;
       case "SP Motor":
         panaControllerLength.value = 10;
-        print("==============================spdptp");
         apiUrl = ApiUtils.spMotor;
+        spdpMotor = jsonModel.spdptp!['SP'] as List<String>;
         break;
       case "DP Motor":
         panaControllerLength.value = 10;
         apiUrl = ApiUtils.dpMotor;
+        spdpMotor = jsonModel.spdptp!['DP'] as List<String>;
         break;
       case "Odd Even":
         panaControllerLength.value = 1;
@@ -419,11 +427,56 @@ class StarlineNewGamePageController extends GetxController {
         break;
       case "Two Digits Panel":
         apiUrl = ApiUtils.towDigitJodi;
-
+        spdpMotor = jsonModel.allThreePana!;
         panaControllerLength.value = 2;
         break;
     }
     _validationListForNormalMode.addAll(_tempValidationList);
+  }
+
+  // Function to filter elements that match the provided digits
+  List<String> getChoicePanaSPDPTP() {
+    String? middle = middleAnkController.text;
+    String? left = leftAnkController.text;
+    String? last = rightAnkController.text;
+    List<String> panaType = selectedValues;
+
+    List<String> panaArray = [];
+    print(panaType);
+    for (int i = 0; i < panaType.length; i++) {
+      List<String>? data = choisePanaSPDPTP[panaType[i]];
+      if (data != null) {
+        panaArray.addAll(data);
+      } else {
+        print("Error");
+      }
+    }
+    var a = panaArray.where((num1) {
+      // if ((left.isNotEmpty && num1[0] != left)) {
+      //   print("+============");
+      //   return false;
+      // } else if (((middle.isNotEmpty && num1[num1.length ~/ 2] != middle))) {
+      //   return false;
+      // } else if ((last.isNotEmpty && num1[num1.length - 1] != last)) {
+      //   return false;
+      // }
+      // return true;
+      return matchesDigits(num1, left: left, middle: middle, last: last);
+    }).toList();
+    print("$a  ${a.length}");
+    return a;
+  }
+
+  bool matchesDigits(String num, {String? left, String? middle, String? last}) {
+    if ((left!.isNotEmpty && num[0] != left)) {
+      print("+============");
+      return false;
+    } else if (((middle!.isNotEmpty && num[num.length ~/ 2] != middle))) {
+      return false;
+    } else if ((last!.isNotEmpty && num[num.length - 1] != last)) {
+      return false;
+    }
+    return true;
   }
 
   String getSingleDigit(int pana) {
@@ -461,6 +514,19 @@ class StarlineNewGamePageController extends GetxController {
       }
     }
     return bids;
+  }
+
+  List<String> getSPDPTPPana(int singleAnk) {
+    List<String> pana = [];
+    var result = spdptplistFromModel![digitsForSPDPTP[singleAnk]];
+    for (int i = 0; i < selectedValues.length; i++) {
+      List<String> data = result[selectedValues[i]];
+      for (int j = 0; j < data.length; j++) {
+        pana.add(data[j]);
+      }
+    }
+    // print("--------------------------$pana");
+    return pana;
   }
 
   void _calculateTotalAmount() {
@@ -634,7 +700,68 @@ class StarlineNewGamePageController extends GetxController {
     }
   }
 
-  void panelGroup() {
+  List<String> getSPMotorPana(int inputNum) {
+    List<String> panaArray = spdpMotor;
+    // Convert the input number to a string to extract individual digits
+    List<String> inputDigits = inputNum.toString().split('');
+    // Initialize an empty list to store matching elements
+    List<String> matchingElements = [];
+
+    // Loop through the elements in the array
+    for (String element in panaArray) {
+      // Convert each element to a string to extract individual digits
+      List<String> elementDigits = element.toString().split('');
+      // Check if all the input digits are present in the element digits
+      bool tempBool = true;
+      for (int i = 0; i < elementDigits.length; i++) {
+        if (!inputDigits.contains(elementDigits[i])) {
+          // print("=========== not match");
+          tempBool = false;
+        }
+      }
+      if (tempBool) {
+        matchingElements.add(element);
+      }
+    }
+    print("))))))))))))((((((((((((((((($matchingElements");
+    return matchingElements;
+  }
+
+  gmaemodeNames() {
+    switch (gameMode.value.name!) {
+      case "SP Motor":
+        return getSPMotorPana(int.parse(autoCompleteFieldController.text));
+      case "DP Motor":
+        return getSPMotorPana(int.parse(autoCompleteFieldController.text));
+      case "Panel Group":
+        return getPanelGroupPana(int.parse(autoCompleteFieldController.text));
+      case "SPDPTP":
+        return getSPDPTPPana(
+            int.parse(autoCompleteFieldController.text.removeAllWhitespace));
+      // case "Choice Pana SPDP":
+      //   return groupJodi(autoCompleteFieldController.text.removeAllWhitespace);
+      case "Two Digits Panel":
+        return getTwoDigitPanelPana(
+            int.parse(autoCompleteFieldController.text.removeAllWhitespace));
+      default:
+    }
+  }
+
+  List<String> getTwoDigitPanelPana(int inputNumber) {
+    List<int> inputDigits =
+        inputNumber.toString().split('').map(int.parse).toList();
+
+    bool containsBothInputDigits(String num) {
+      String numStr = num.toString();
+      return inputDigits.every((digit) => numStr.contains(digit.toString()));
+    }
+
+    print(
+        "${spdpMotor.where(containsBothInputDigits).toList()} ${spdpMotor.where(containsBothInputDigits).toList().length}");
+    return spdpMotor.where(containsBothInputDigits).toList();
+  }
+
+  void newCallOnAddButton() {
     if (coinController.text.trim().isEmpty ||
         int.parse(coinController.text.trim()) < 1) {
       AppUtils.showErrorSnackBar(
@@ -653,8 +780,7 @@ class StarlineNewGamePageController extends GetxController {
       selectedBidsList.refresh();
       focusNode.previousFocus();
     } else {
-      spdptpList =
-          getPanelGroupPana(int.parse(autoCompleteFieldController.text));
+      spdptpList = gmaemodeNames();
       if (spdptpList.isEmpty) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
@@ -704,82 +830,83 @@ class StarlineNewGamePageController extends GetxController {
           bodyText: "Please select SP,DP or TP",
         );
       } else {
-        ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
-          (value) async {
-            debugPrint("New Game-Mode Api Response :- $value");
-            if (value['status']) {
-              spdptpList = value['data'];
-              if (coinController.text.trim().isEmpty ||
-                  int.parse(coinController.text.trim()) < 1) {
-                AppUtils.showErrorSnackBar(
-                  bodyText: "Please enter valid points",
-                );
-                autoCompleteFieldController.clear();
-                coinController.clear();
-                selectedBidsList.refresh();
-                coinFocusNode.nextFocus();
-                leftFocusNode.requestFocus();
-              } else if (int.parse(coinController.text) > 10000) {
-                AppUtils.showErrorSnackBar(
-                  bodyText: "You can not add more than 10000 points",
-                );
-                autoCompleteFieldController.clear();
-                coinController.clear();
-                selectedBidsList.refresh();
-                coinFocusNode.nextFocus();
-                leftFocusNode.requestFocus();
-              } else {
-                if (spdptpList.isEmpty) {
-                  AppUtils.showErrorSnackBar(
-                    bodyText:
-                        "Please enter valid ${gameMode.value.name!.toLowerCase()}",
-                  );
-                  autoCompleteFieldController.clear();
-                  coinController.clear();
-                  selectedBidsList.refresh();
-                  coinFocusNode.nextFocus();
-                  leftFocusNode.requestFocus();
-                } else {
-                  for (var i = 0; i < spdptpList.length; i++) {
-                    addedNormalBidValue = spdptpList[i].toString();
-                    var existingIndex = selectedBidsList.indexWhere(
-                        (element) => element.bidNo == addedNormalBidValue);
-                    if (existingIndex != -1) {
-                      // If the bidNo already exists in selectedBidsList, update coins value.
-                      selectedBidsList[existingIndex].coins =
-                          (selectedBidsList[existingIndex].coins! +
-                              int.parse(coinController.text));
-                    } else {
-                      // If bidNo doesn't exist in selectedBidsList, add a new entry.
-                      selectedBidsList.add(
-                        StarLineBids(
-                          bidNo: addedNormalBidValue,
-                          coins: int.parse(coinController.text),
-                          starlineGameId: gameMode.value.id,
-                          remarks:
-                              "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
-                        ),
-                      );
-                    }
-                  }
-                }
-                _calculateTotalAmount();
-              }
-            } else {
-              AppUtils.showErrorSnackBar(
-                bodyText: value['message'] ?? "",
-              );
-            }
+        spdptpList = getChoicePanaSPDPTP();
+        // ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
+        //   (value) async {
+        //     debugPrint("New Game-Mode Api Response :- $value");
+        //     if (value['status']) {
+        //       spdptpList = value['data'];
+        if (coinController.text.trim().isEmpty ||
+            int.parse(coinController.text.trim()) < 1) {
+          AppUtils.showErrorSnackBar(
+            bodyText: "Please enter valid points",
+          );
+          autoCompleteFieldController.clear();
+          coinController.clear();
+          selectedBidsList.refresh();
+          coinFocusNode.nextFocus();
+          leftFocusNode.requestFocus();
+        } else if (int.parse(coinController.text) > 10000) {
+          AppUtils.showErrorSnackBar(
+            bodyText: "You can not add more than 10000 points",
+          );
+          autoCompleteFieldController.clear();
+          coinController.clear();
+          selectedBidsList.refresh();
+          coinFocusNode.nextFocus();
+          leftFocusNode.requestFocus();
+        } else {
+          if (spdptpList.isEmpty) {
+            AppUtils.showErrorSnackBar(
+              bodyText:
+                  "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+            );
             autoCompleteFieldController.clear();
-            leftAnkController.clear();
-            rightAnkController.clear();
-            middleAnkController.clear();
             coinController.clear();
             selectedBidsList.refresh();
             coinFocusNode.nextFocus();
             leftFocusNode.requestFocus();
-          },
-        );
+          } else {
+            for (var i = 0; i < spdptpList.length; i++) {
+              addedNormalBidValue = spdptpList[i].toString();
+              var existingIndex = selectedBidsList.indexWhere(
+                  (element) => element.bidNo == addedNormalBidValue);
+              if (existingIndex != -1) {
+                // If the bidNo already exists in selectedBidsList, update coins value.
+                selectedBidsList[existingIndex].coins =
+                    (selectedBidsList[existingIndex].coins! +
+                        int.parse(coinController.text));
+              } else {
+                // If bidNo doesn't exist in selectedBidsList, add a new entry.
+                selectedBidsList.add(
+                  StarLineBids(
+                    bidNo: addedNormalBidValue,
+                    coins: int.parse(coinController.text),
+                    starlineGameId: gameMode.value.id,
+                    remarks:
+                        "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
+                  ),
+                );
+              }
+            }
+          }
+          _calculateTotalAmount();
+        }
+        // } else {
+        //   AppUtils.showErrorSnackBar(
+        //     bodyText: value['message'] ?? "",
+        //   );
+        // }
+        autoCompleteFieldController.clear();
+        leftAnkController.clear();
+        rightAnkController.clear();
+        middleAnkController.clear();
+        coinController.clear();
+        selectedBidsList.refresh();
+        coinFocusNode.nextFocus();
+        leftFocusNode.requestFocus();
+        // },
+        // );
       }
     } else {
       ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
@@ -855,5 +982,84 @@ class StarlineNewGamePageController extends GetxController {
         },
       );
     }
+  }
+
+  void choicePanaSPDPAddButton() {
+    spdptpList = getChoicePanaSPDPTP();
+    if (spdptpList.isEmpty) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+      );
+    }
+    // ApiService()
+    //     .newGameModeApi(await groupJodiBody(), apiUrl)
+    //     .then((value) async {
+    //   debugPrint("Forgot MPIN Api Response :- $value");
+    //   if (value['status']) {
+    //     spdptpList = value['data'];
+    if (coinController.text.trim().isEmpty ||
+        int.parse(coinController.text.trim()) < 1) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "Please enter valid points",
+      );
+      coinFocusNode.nextFocus();
+      leftFocusNode.requestFocus();
+      return;
+    } else if (int.parse(coinController.text) > 10000) {
+      AppUtils.showErrorSnackBar(
+        bodyText: "You can not add more than 10000 points",
+      );
+      coinFocusNode.nextFocus();
+      leftFocusNode.requestFocus();
+      return;
+    } else {
+      if (spdptpList.isEmpty) {
+        AppUtils.showErrorSnackBar(
+          bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+        );
+        coinFocusNode.nextFocus();
+        leftFocusNode.requestFocus();
+      } else {
+        for (var i = 0; i < spdptpList.length; i++) {
+          addedNormalBidValue = spdptpList[i].toString();
+          var existingIndex = selectedBidsList
+              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          if (existingIndex != -1) {
+            selectedBidsList[existingIndex].coins =
+                (selectedBidsList[existingIndex].coins! +
+                    int.parse(coinController.text));
+          } else {
+            selectedBidsList.add(
+              StarLineBids(
+                bidNo: addedNormalBidValue,
+                coins: int.parse(coinController.text),
+                starlineGameId: gameMode.value.id,
+                remarks:
+                    "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
+              ),
+            );
+          }
+        }
+      }
+      // Get.closeAllSnackbars();
+      _calculateTotalAmount();
+      coinFocusNode.nextFocus();
+      leftFocusNode.requestFocus();
+    }
+    // } else {
+    //   AppUtils.showErrorSnackBar(
+    //     bodyText: value['message'] ?? "",
+    //   );
+    // }
+    // Get.closeAllSnackbars();
+    coinController.clear();
+    leftAnkController.clear();
+    middleAnkController.clear();
+    rightAnkController.clear();
+    coinFocusNode.nextFocus();
+    leftFocusNode.requestFocus();
+    selectedBidsList.refresh();
+    // }
+    // );
   }
 }

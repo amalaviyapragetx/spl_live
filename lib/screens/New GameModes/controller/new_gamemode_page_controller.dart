@@ -243,6 +243,8 @@ class NewGamemodePageController extends GetxController {
         showNumbersLine.value = false;
         apiUrl = ApiUtils.towDigitJodi;
         panaControllerLength.value = 2;
+        spdpMotor = jsonModel.allThreePana!;
+        print("===============================$spdpMotor");
         break;
       case "Red Brackets":
         showNumbersLine.value = false;
@@ -265,6 +267,20 @@ class NewGamemodePageController extends GetxController {
         break;
     }
     _validationListForNormalMode.addAll(_tempValidationList);
+  }
+
+  List<String> getTwoDigitPanelPana(int inputNumber) {
+    List<int> inputDigits =
+        inputNumber.toString().split('').map(int.parse).toList();
+
+    bool containsBothInputDigits(String num) {
+      String numStr = num.toString();
+      return inputDigits.every((digit) => numStr.contains(digit.toString()));
+    }
+
+    print(
+        "${spdpMotor.where(containsBothInputDigits).toList()} ${spdpMotor.where(containsBothInputDigits).toList().length}");
+    return spdpMotor.where(containsBothInputDigits).toList();
   }
 
   List<String> groupJodi(String stringToFind) {
@@ -683,6 +699,9 @@ class NewGamemodePageController extends GetxController {
             int.parse(autoCompleteFieldController.text.removeAllWhitespace));
       case "Group Jodi":
         return groupJodi(autoCompleteFieldController.text.removeAllWhitespace);
+      case "Two Digits Panel":
+        return getTwoDigitPanelPana(
+            int.parse(autoCompleteFieldController.text.removeAllWhitespace));
       default:
     }
   }

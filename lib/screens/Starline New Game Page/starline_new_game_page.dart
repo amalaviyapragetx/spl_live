@@ -642,11 +642,10 @@ class StarLineNewGamePage extends StatelessWidget {
                                     "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                               );
                             } else {
-                              controller.panelGroup();
+                              controller.newCallOnAddButton();
                               // controller.getspdptp();
                             }
-                          } else if (controller
-                                  .gameMode.value.name!
+                          } else if (controller.gameMode.value.name!
                                   .toUpperCase() ==
                               "SPDPTP") {
                             if (controller.spValue1.value == false &&
@@ -656,43 +655,43 @@ class StarLineNewGamePage extends StatelessWidget {
                                 bodyText: "Please select SP,DP or TP",
                               );
                             } else {
-                              controller.getspdptp();
+                              controller.newCallOnAddButton();
+                              // controller.getspdptp();
                             }
-                          } else if (controller
-                                  .gameMode.value.name!
-                                  .toUpperCase() ==
-                              "GROUP JODI") {
-                            if (controller
-                                    .autoCompleteFieldController.text.length <=
-                                1) {
-                              print("@@@@@@@@@@@");
-                              AppUtils.showErrorSnackBar(
-                                bodyText:
-                                    "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
-                              );
-                            } else {
-                              print("@@@@@@@@@@@");
-                              controller.getspdptp();
-                            }
-                          } else if (controller
-                                      .gameMode.value.name!
-                                      .toUpperCase() ==
-                                  "SINGLE ANK" ||
-                              controller.gameMode.value.name! == "Jodi" ||
-                              controller
-                                      .gameMode.value.name!
-                                      .toUpperCase() ==
-                                  "SINGLE PANA" ||
-                              controller
-                                      .gameMode.value.name!
-                                      .toUpperCase() ==
-                                  "DOUBLE PANA" ||
-                              controller.gameMode.value.name!.toUpperCase() ==
-                                  "TRIPPLE PANA" ||
-                              controller.gameMode.value.name!.toUpperCase() ==
-                                  "DOUBLE PANA" ||
-                              controller.gameMode.value.name!.toUpperCase() ==
-                                  "RED BRACKETS") {
+                          }
+                          // else if (controller
+                          //         .gameMode.value.name!
+                          //         .toUpperCase() ==
+                          //     "GROUP JODI") {
+                          //   if (controller
+                          //           .autoCompleteFieldController.text.length <=
+                          //       1) {
+                          //     print("@@@@@@@@@@@");
+                          //     AppUtils.showErrorSnackBar(
+                          //       bodyText:
+                          //           "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                          //     );
+                          //   } else {
+                          //     print("@@@@@@@@@@@");
+                          //     controller.getspdptp();
+                          //   }
+                          // }
+                          else if (controller.gameMode.value.name!.toUpperCase() ==
+                                      "SINGLE ANK" ||
+                                  controller.gameMode.value.name! == "Jodi" ||
+                                  controller.gameMode.value.name!
+                                          .toUpperCase() ==
+                                      "SINGLE PANA" ||
+                                  controller.gameMode.value.name!
+                                          .toUpperCase() ==
+                                      "DOUBLE PANA" ||
+                                  controller.gameMode.value.name!
+                                          .toUpperCase() ==
+                                      "TRIPPLE PANA"
+                              // ||
+                              // controller.gameMode.value.name!.toUpperCase() ==
+                              //     "RED BRACKETS"
+                              ) {
                             controller.onTapOfAddButton();
                           } else {
                             if (controller.autoCompleteFieldController.text
@@ -708,7 +707,6 @@ class StarLineNewGamePage extends StatelessWidget {
                                             .length <=
                                         3 ==
                                     true) {
-                                  print("@@@@@@@@@@@@@@@@@@@@");
                                   AppUtils.showErrorSnackBar(
                                     bodyText:
                                         "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
@@ -719,7 +717,8 @@ class StarLineNewGamePage extends StatelessWidget {
                                     bodyText: "Please enter valid points",
                                   );
                                 } else {
-                                  controller.getspdptp();
+                                  controller.newCallOnAddButton();
+                                  // controller.getspdptp();
                                 }
                               } else if (controller.gameMode.value.name!
                                       .toUpperCase() ==
@@ -727,7 +726,8 @@ class StarLineNewGamePage extends StatelessWidget {
                                 if (controller.autoCompleteFieldController.text
                                         .length ==
                                     2) {
-                                  controller.getspdptp();
+                                  controller.newCallOnAddButton();
+                                  // controller.getspdptp();
                                 } else {
                                   AppUtils.showErrorSnackBar(
                                     bodyText:
@@ -735,6 +735,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                   );
                                 }
                               } else {
+                                //controller.newCallOnAddButton();
                                 controller.getspdptp();
                               }
                             } else if (controller

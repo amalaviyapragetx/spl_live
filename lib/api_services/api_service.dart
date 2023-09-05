@@ -77,6 +77,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> verifyUser(body) async {
+    print("=====================${ApiUtils.verifyUSER}");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
@@ -654,7 +655,6 @@ class ApiService extends GetConnect implements GetxService {
       body,
       headers: headersWithToken,
     );
-
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -675,6 +675,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> verifyOTP(body) async {
+    print(ApiUtils.verifyOTP);
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
@@ -742,7 +743,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> changePassword(body) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
       ApiUtils.changePassword,
@@ -751,14 +752,14 @@ class ApiService extends GetConnect implements GetxService {
     );
 
     if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
       print(response.status.code.toString() + response.body.toString());
       return response.body;
     } else {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       print("response2 ${response.body}");
       print("change pass2 ${response.status.code}");
       return response.body;

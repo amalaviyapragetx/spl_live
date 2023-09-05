@@ -560,7 +560,7 @@ class NormalGamePage extends StatelessWidget {
                                   duration: const Duration(milliseconds: 900),
                                 );
                               } else {
-                                // controller.groupJodiData();
+                                controller.getChoicePanaSPDPTP();
                                 controller.groupJodiData();
                               }
                               //  controller.groupJodiData();

@@ -43,12 +43,12 @@ class SignUpPageController extends GetxController {
   Future<Map<String, dynamic>> signUpBody() async {
     DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
     final signUpBody = {
-      "appVersion": deviceInfo.appVersion,
-      "brandName": deviceInfo.brandName,
-      "model": deviceInfo.model,
-      "os": deviceInfo.deviceOs,
-      "manufacturer": deviceInfo.manufacturer,
-      "oSVersion": deviceInfo.osVersion,
+      // "appVersion": deviceInfo.appVersion,
+      // "brandName": deviceInfo.brandName,
+      // "model": deviceInfo.model,
+      // "deviceOs": deviceInfo.deviceOs,
+      // "manufacturer": deviceInfo.manufacturer,
+      // "osVersion": deviceInfo.osVersion,
       "countryCode": countryCode.value,
       "phoneNumber": mobileNumberController.text,
       "deviceId": deviceInfo.deviceId,

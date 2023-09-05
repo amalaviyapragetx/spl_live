@@ -25,6 +25,7 @@ class VerifyOTPController extends GetxController {
     _startTimer();
   }
 
+  var userData;
   Future<void> getStoredUserData() async {
     print(verifyOTP);
     if (argument != null) {
@@ -32,6 +33,8 @@ class VerifyOTPController extends GetxController {
       // countryCode = argument['countryCode'];
       verifyOTP = false;
     } else {
+      // var data = await LocalStorage.read(ConstantsVariables.userData);
+      // userData = UserDetailsModel.fromJson(data);
       verifyOTP = true;
     }
   }
@@ -83,7 +86,7 @@ class VerifyOTPController extends GetxController {
       "phoneNumber": phoneNumber,
       "otp": otp.value,
     };
-    debugPrint(verifyUserBody.toString());
+    debugPrint("==============================${verifyUserBody.toString()}");
     return verifyUserBody;
   }
 
@@ -94,6 +97,8 @@ class VerifyOTPController extends GetxController {
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
+        String authToken = userData['Token'] ?? "Null From API";
+        await LocalStorage.write(ConstantsVariables.authToken, authToken);
         if (userData != null) {
           Get.toNamed(
             AppRoutName.setMPINPage,
