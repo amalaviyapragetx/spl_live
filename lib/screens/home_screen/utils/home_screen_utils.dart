@@ -26,7 +26,7 @@ class HomeScreenUtils {
       }
       return Text(
         isOpenResult ? "$result - ${sum % 10}" : "${sum % 10} - $result",
-        style: CustomTextStyle.textPTsansBold.copyWith(
+        style: CustomTextStyle.textRobotoSansMedium.copyWith(
           fontSize: Dimensions.h13,
           fontWeight: FontWeight.bold,
           color: AppColors.redColor,
@@ -414,8 +414,8 @@ class HomeScreenUtils {
                                 ),
                                 Text(
                                   "${marketData.openTime ?? " "} | ${marketData.closeTime ?? ""}",
-                                  style: CustomTextStyle.textPTsansMedium
-                                      .copyWith(fontWeight: FontWeight.w500),
+                                  style: CustomTextStyle.textRobotoSansLight
+                                      .copyWith(fontWeight: FontWeight.w300),
                                 ),
                                 Text(
                                   controller.normalMarketList[index].market ??
@@ -608,7 +608,7 @@ class HomeScreenUtils {
                   ),
                   Text(
                     controller.starLineMarketList.elementAt(index).time ?? "",
-                    style: CustomTextStyle.textPTsansBold.copyWith(
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
                       color: AppColors.black,
                       fontSize: Dimensions.h15,
                     ),
@@ -617,11 +617,12 @@ class HomeScreenUtils {
                     height: Dimensions.h5,
                   ),
                   buildResult(
-                      isOpenResult: true,
-                      resultDeclared: controller
-                              .starLineMarketList[index].isResultDeclared ??
-                          false,
-                      result: controller.starLineMarketList[index].result ?? 0),
+                    isOpenResult: true,
+                    resultDeclared:
+                        controller.starLineMarketList[index].isResultDeclared ??
+                            false,
+                    result: controller.starLineMarketList[index].result ?? 0,
+                  ),
                   SizedBox(
                     height: Dimensions.h5,
                   ),
@@ -728,13 +729,13 @@ class HomeScreenUtils {
         SizedBox(
           height: 45,
           child: TextField(
-            style: CustomTextStyle.textRobotoSansLight
+            style: CustomTextStyle.textRobotoSansMedium
                 .copyWith(color: AppColors.appbarColor),
             controller: controller.dateinput,
             decoration: InputDecoration(
               hintText:
                   DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-              hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+              hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                 color: AppColors.appbarColor,
               ),
               border: const OutlineInputBorder(
@@ -790,12 +791,12 @@ class HomeScreenUtils {
             height: 45,
             child: TextField(
               controller: controller.dateinputForResultHistory,
-              style: CustomTextStyle.textRobotoSansLight
+              style: CustomTextStyle.textRobotoSansMedium
                   .copyWith(color: AppColors.appbarColor),
               decoration: InputDecoration(
                 hintText:
                     DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-                hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+                hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                   color: AppColors.appbarColor,
                 ),
                 border: const OutlineInputBorder(
@@ -991,6 +992,7 @@ class HomeScreenUtils {
                         controller.starlineChartDateAndTime[index].date ?? "",
                         //"2023-08-13",
                         textAlign: TextAlign.center,
+                        style: CustomTextStyle.textRobotoSansMedium,
                       ),
                     ),
                   ),
@@ -1044,6 +1046,7 @@ class HomeScreenUtils {
                                   ? controller.getResult(true, timeData.result)
                                   : "***-*",
                               textAlign: TextAlign.center,
+                              style: CustomTextStyle.textRobotoSansMedium,
                             ),
                           ),
                         ),
@@ -1069,7 +1072,8 @@ class HomeScreenUtils {
                       controller.starlineChartTime[index].marketName ?? "",
                       // "11:00 AM",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: AppColors.white),
+                      style: CustomTextStyle.textRobotoSansMedium
+                          .copyWith(color: AppColors.white),
                     ),
                   ),
                 ),

@@ -37,8 +37,8 @@ class StarLineGamePage extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  height: Dimensions.w20,
-                  width: Dimensions.w20,
+                  height: Dimensions.h20,
+                  width: Dimensions.w25,
                   child: SvgPicture.asset(
                     ConstantImage.walletAppbar,
                     color: AppColors.white,
@@ -48,15 +48,16 @@ class StarLineGamePage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(
                     top: Dimensions.r8,
-                    bottom: Dimensions.r10,
-                    left: Dimensions.r15,
+                    bottom: Dimensions.r5,
+                    left: Dimensions.r10,
                     right: Dimensions.r10,
                   ),
                   child: Obx(
                     () => Text(
                       walletController.walletBalance.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        color: AppColors.white,
+                        fontSize: Dimensions.h17,
                       ),
                     ),
                   ),

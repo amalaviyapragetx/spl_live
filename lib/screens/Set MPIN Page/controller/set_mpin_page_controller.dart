@@ -43,7 +43,8 @@ class SetMPINPageController extends GetxController {
   //   print("userDetails :---$data");
   // }
 
-  void getArguments() {
+  void getArguments() async {
+    await LocalStorage.write(ConstantsVariables.starlineConnect, false);
     print("000000000000000000000$arguments");
     if (arguments != null) {
       userDetails = arguments;

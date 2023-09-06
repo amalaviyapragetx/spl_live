@@ -48,14 +48,15 @@ class NewGameModePage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         top: Dimensions.r8,
-                        bottom: Dimensions.r10,
-                        left: Dimensions.r15,
+                        bottom: Dimensions.r8,
+                        left: Dimensions.r10,
                         right: Dimensions.r10),
                     child: Obx(
                       () => Text(
                         walletController.walletBalance.toString(),
-                        style: const TextStyle(
-                          fontSize: 20,
+                        style: CustomTextStyle.textRamblaMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h20,
                         ),
                       ),
                     ),

@@ -320,7 +320,7 @@ class BidHistory extends StatelessWidget {
                     ),
                     Text(
                       bidNo,
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.appbarColor,
                           fontSize: Dimensions.h13),
                     ),
@@ -334,7 +334,7 @@ class BidHistory extends StatelessWidget {
                         ),
                         Text(
                           " $coins",
-                          style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
                               fontSize: Dimensions.h14,
                               color: AppColors.appbarColor),
                         ),

@@ -473,7 +473,8 @@ class NewGamemodePageController extends GetxController {
                 (selectedBidsList[existingIndex].coins! +
                     int.parse(coinController.text));
           } else {
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               Bids(
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
@@ -744,7 +745,8 @@ class NewGamemodePageController extends GetxController {
                 digitList.clear();
                 coinController.clear();
               } else {
-                selectedBidsList.add(
+                selectedBidsList.insert(
+                  0,
                   Bids(
                     bidNo: addedNormalBidValue,
                     coins: int.parse(coinController.text),
@@ -800,7 +802,8 @@ class NewGamemodePageController extends GetxController {
                   (selectedBidsList[existingIndex].coins! +
                       int.parse(coinController.text));
             } else {
-              selectedBidsList.add(
+              selectedBidsList.insert(
+                0,
                 Bids(
                   bidNo: addedNormalBidValue,
                   coins: int.parse(coinController.text),
@@ -944,7 +947,8 @@ class NewGamemodePageController extends GetxController {
                       (selectedBidsList[existingIndex].coins! +
                           int.parse(coinController.text));
                 } else {
-                  selectedBidsList.add(
+                  selectedBidsList.insert(
+                    0,
                     Bids(
                       bidNo: addedNormalBidValue,
                       coins: int.parse(coinController.text),

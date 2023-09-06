@@ -34,13 +34,15 @@ class SingleAnkPage extends StatelessWidget {
                   color: AppColors.white,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w11),
+                  padding: EdgeInsets.only(
+                      left: Dimensions.w8,
+                      right: Dimensions.w8,
+                      top: Dimensions.w4,
+                      bottom: Dimensions.w4),
                   child: Text(
                     walletController.walletBalance.value,
-                    style: CustomTextStyle.textPTsansMedium.copyWith(
-                      color: AppColors.white,
-                      fontSize: Dimensions.h18,
-                    ),
+                    style: CustomTextStyle.textRobotoSansMedium
+                        .copyWith(fontSize: Dimensions.h18),
                   ),
                 )
               ],

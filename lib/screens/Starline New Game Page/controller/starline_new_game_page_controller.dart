@@ -238,7 +238,8 @@ class StarlineNewGamePageController extends GetxController {
                 (selectedBidsList[existingIndex].coins! + coins);
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               StarLineBids(
                 bidNo: bidNo,
                 coins: coins,
@@ -268,7 +269,8 @@ class StarlineNewGamePageController extends GetxController {
                 (selectedBidsList[existingIndex].coins! + coins);
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               StarLineBids(
                 bidNo: bidNo,
                 coins: coins,
@@ -586,7 +588,8 @@ class StarlineNewGamePageController extends GetxController {
                     int.parse(coinController.text));
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               StarLineBids(
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
@@ -606,7 +609,8 @@ class StarlineNewGamePageController extends GetxController {
                     int.parse(coinController.text));
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               StarLineBids(
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
@@ -662,7 +666,8 @@ class StarlineNewGamePageController extends GetxController {
                   int.parse(coinController.text));
         } else {
           // If bidNo doesn't exist in selectedBidsList, add a new entry.
-          selectedBidsList.add(
+          selectedBidsList.insert(
+            0,
             StarLineBids(
               bidNo: addedNormalBidValue,
               coins: int.parse(coinController.text),
@@ -801,7 +806,8 @@ class StarlineNewGamePageController extends GetxController {
                     int.parse(coinController.text));
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               StarLineBids(
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
@@ -878,7 +884,8 @@ class StarlineNewGamePageController extends GetxController {
                         int.parse(coinController.text));
               } else {
                 // If bidNo doesn't exist in selectedBidsList, add a new entry.
-                selectedBidsList.add(
+                selectedBidsList.insert(
+                  0,
                   StarLineBids(
                     bidNo: addedNormalBidValue,
                     coins: int.parse(coinController.text),
@@ -953,7 +960,8 @@ class StarlineNewGamePageController extends GetxController {
                             int.parse(coinController.text));
                   } else {
                     // If bidNo doesn't exist in selectedBidsList, add a new entry.
-                    selectedBidsList.add(
+                    selectedBidsList.insert(
+                      0,
                       StarLineBids(
                         bidNo: addedNormalBidValue,
                         coins: int.parse(coinController.text),
@@ -1029,7 +1037,8 @@ class StarlineNewGamePageController extends GetxController {
                 (selectedBidsList[existingIndex].coins! +
                     int.parse(coinController.text));
           } else {
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               StarLineBids(
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),

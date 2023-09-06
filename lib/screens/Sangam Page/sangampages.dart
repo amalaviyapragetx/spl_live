@@ -50,10 +50,10 @@ class SangamPages extends StatelessWidget {
                 color: AppColors.white,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.w11),
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.w8),
                 child: Text(
                   walletController.walletBalance.value,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     color: AppColors.white,
                     fontSize: Dimensions.h17,
                   ),

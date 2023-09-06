@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
@@ -78,7 +81,7 @@ class HomePageController extends GetxController {
   RxString walletBalance = "00".obs;
   RxInt getNotifiactionCount = 0.obs;
   RxList<BennerData> bennerData = <BennerData>[].obs;
-
+  RxBool starlineCheck = false.obs;
   @override
   void onInit() {
     setboolData();
@@ -87,7 +90,6 @@ class HomePageController extends GetxController {
     getUserBalance();
     getNotificationCount();
     getNotificationsData();
-
     super.onInit();
   }
 
@@ -111,13 +113,21 @@ class HomePageController extends GetxController {
 
   void setboolData() async {
     await LocalStorage.write(ConstantsVariables.timeOut, true);
-    // var a = await LocalStorage.read(ConstantsVariables.timeOut);
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
     await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
     await LocalStorage.write(ConstantsVariables.totalAmount, "0");
     await LocalStorage.write(ConstantsVariables.marketName, "");
     await LocalStorage.write(ConstantsVariables.marketNotification, true);
     await LocalStorage.write(ConstantsVariables.starlineNotification, true);
+    starlineCheck.value =
+        await LocalStorage.read(ConstantsVariables.starlineConnect);
+    print(starlineCheck.value);
+    starlineCheck.value == true
+        ? widgetContainer.value = 1
+        : widgetContainer.value;
+    Timer(const Duration(seconds: 1), () async {
+      await LocalStorage.write(ConstantsVariables.starlineConnect, false);
+    });
     getBennerData();
   }
 
@@ -722,7 +732,9 @@ class HomePageController extends GetxController {
       debugPrint("Notifiaction Count Api ------------- :- $value");
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
-        getNotifiactionCount.value = model.data!.notificationCount!.toInt();
+        getNotifiactionCount.value = model.data!.notificationCount == null
+            ? 0
+            : model.data!.notificationCount!.toInt();
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);

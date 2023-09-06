@@ -237,7 +237,8 @@ class NormalGamePageController extends GetxController {
       } else {
         for (var i = 0; i < spdptpList.length; i++) {
           addedNormalBidValue = spdptpList[i].toString();
-          selectedBidsList.add(
+          selectedBidsList.insert(
+            0,
             Bids(
               bidNo: spdptpList[i].toString(),
               coins: int.parse(coinController.text),
@@ -278,7 +279,8 @@ class NormalGamePageController extends GetxController {
                 (selectedBidsList[existingIndex].coins! + coins);
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               Bids(
                 bidNo: bidNo,
                 coins: coins,
@@ -298,7 +300,8 @@ class NormalGamePageController extends GetxController {
             selectedBidsList[existingIndex].coins =
                 (selectedBidsList[existingIndex].coins! + coins);
           } else {
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               Bids(
                 bidNo: i.toString(),
                 coins: int.parse(coinController.text),
@@ -486,7 +489,8 @@ class NormalGamePageController extends GetxController {
                 (selectedBidsList[existingIndex].coins! +
                     int.parse(coinController.text));
           } else {
-            selectedBidsList.add(
+            selectedBidsList.insert(
+              0,
               Bids(
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
