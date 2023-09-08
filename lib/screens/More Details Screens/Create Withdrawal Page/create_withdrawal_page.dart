@@ -29,7 +29,15 @@ class CreatewithDrawalPage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: InkWell(
               onTap: () {
-                AppUtils.showErrorSnackBar(bodyText: "SNACKMSG_TEXT".tr);
+                _showExitDialog();
+                // await showDialog(
+                //   barrierDismissible: false,
+                //   context: context,
+                //   builder: (context) => onExitAlert(context, onCancel: () {
+                //     Navigator.of(context).pop(false);
+                //   }),
+                // );
+                //  AppUtils.showErrorSnackBar(bodyText: "SNACKMSG_TEXT".tr);
               },
               child: Icon(
                 Icons.note_alt_rounded,
@@ -153,6 +161,68 @@ class CreatewithDrawalPage extends StatelessWidget {
     );
   }
 
+  void _showExitDialog() {
+    Get.defaultDialog(
+      barrierDismissible: false,
+      title: "Contact Admin",
+      onWillPop: () async => false,
+      titleStyle: CustomTextStyle.textRobotoSansMedium,
+      content: Column(
+        children: [
+          Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)
+        ],
+      ),
+      actions: [
+        InkWell(
+          onTap: () async {
+            Get.back();
+          },
+          child: Container(
+            color: AppColors.appbarColor,
+            height: Dimensions.h40,
+            width: Dimensions.w150,
+            child: Center(
+              child: Text(
+                'OK',
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // AlertDialog onExitAlert(BuildContext context,
+  //     {required Function() onCancel}) {
+  //   return AlertDialog(
+  //     content:
+  //         Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium),
+  //     actions: [
+  //       Center(
+  //         child: InkWell(
+  //           onTap: onCancel,
+  //           child: Container(
+  //             height: Dimensions.h40,
+  //             width: Dimensions.w150,
+  //             color: AppColors.appbarColor,
+  //             child: Center(
+  //               child: Text(
+  //                 'Ok',
+  //                 style: CustomTextStyle.textRobotoSansBold.copyWith(
+  //                   color: AppColors.white,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
   Padding listTileDetails({required String text, required String value}) {
     return Padding(
       padding: EdgeInsets.all(Dimensions.w8),
@@ -179,7 +249,7 @@ class CreatewithDrawalPage extends StatelessWidget {
               Expanded(
                 child: Text(
                   value,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     fontSize: Dimensions.h14,
                   ),
                 ),

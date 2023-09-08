@@ -26,27 +26,41 @@ class SingleAnkPage extends StatelessWidget {
           appBarTitle: controller.marketName.toString(),
           // appBarTitle: "TIMEBAZAAR".tr,
           actions: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  ConstantImage.walletAppbar,
-                  height: Dimensions.h18,
-                  color: AppColors.white,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: Dimensions.w8,
-                      right: Dimensions.w8,
-                      top: Dimensions.w4,
-                      bottom: Dimensions.w4),
-                  child: Text(
-                    walletController.walletBalance.value,
-                    style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(fontSize: Dimensions.h18),
+            InkWell(
+              onTap: () {
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: Dimensions.h20,
+                    width: Dimensions.w25,
+                    child: SvgPicture.asset(
+                      ConstantImage.walletAppbar,
+                      color: AppColors.white,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                )
-              ],
-            )
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r5,
+                      left: Dimensions.r10,
+                      right: Dimensions.r10,
+                    ),
+                    child: Obx(
+                      () => Text(
+                        walletController.walletBalance.toString(),
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h17,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         backgroundColor: AppColors.white,
@@ -542,7 +556,7 @@ class SingleAnkPage extends StatelessWidget {
           ),
           Text(
             text,
-            style: CustomTextStyle.textPTsansMedium.copyWith(
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
               fontSize: Dimensions.h15,
               color: textColor,
             ),

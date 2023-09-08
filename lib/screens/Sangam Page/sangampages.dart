@@ -678,62 +678,38 @@ class SangamPages extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      // nameColumn(
-                      //     subText: "",
-                      //     titleText: controller.bidType,
-                      //     textColor2: AppColors.black.withOpacity(0.5),
-                      //     textColor: AppColors.black),
-                      // nameColumn(
-                      //   subText: "",
-                      //   titleText: (controller.gameMode.value.name!
-                      //               .toUpperCase() ==
-                      //           "HALF SANGAM A")
-                      //       ? controller.manipulateString(controller
-                      //               .requestModel.value.bids![index].bidNo ??
-                      //           "")
-                      //       : controller
-                      //               .requestModel.value.bids![index].bidNo ??
-                      //           "",
-                      //   textColor2: AppColors.black.withOpacity(0.5),
-                      //   textColor: AppColors.black,
-                      // ),
-                      // nameColumn(
-                      //   subText: "",
-                      //   titleText: controller
-                      //       .requestModel.value.bids![index].coins
-                      //       .toString(),
-                      //   textColor2: AppColors.black.withOpacity(0.5),
-                      //   textColor: AppColors.black,
-                      // ),
                       SizedBox(
-                        width: Dimensions.w150,
+                        width: Dimensions.w130,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Text(
+                              " Sangam :",
+                              style:
+                                  CustomTextStyle.textRobotoSansBold.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h14,
+                              ),
+                            ),
                             FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text(
-                                " Sangam :",
-                                style:
-                                    CustomTextStyle.textRobotoSansBold.copyWith(
+                                // " ${controller.manipulateString(controller.requestModel.value.bids![index].bidNo ?? "", controller.gameMode.value.name!.toString())}",
+                                controller.requestModel.value.bids![index]
+                                        .bidNo ??
+                                    "",
+                                style: CustomTextStyle.textRobotoSansLight
+                                    .copyWith(
                                   color: AppColors.black,
-                                  fontSize: Dimensions.h14,
+                                  fontSize: Dimensions.h13,
                                 ),
-                              ),
-                            ),
-                            Text(
-                              " ${(controller.gameMode.value.name!.toUpperCase() == "HALF SANGAM A") ? controller.manipulateString(controller.requestModel.value.bids![index].bidNo ?? "") : controller.requestModel.value.bids![index].bidNo ?? ""}",
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
-                                color: AppColors.black,
-                                fontSize: Dimensions.h14,
                               ),
                             )
                           ],
                         ),
                       ),
                       SizedBox(
-                        width: Dimensions.w40,
+                        width: Dimensions.w60,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -745,13 +721,16 @@ class SangamPages extends StatelessWidget {
                                 fontSize: Dimensions.h15,
                               ),
                             ),
-                            Text(
-                              controller.requestModel.value.bids![index].coins
-                                  .toString(),
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
-                                color: AppColors.black,
-                                fontSize: Dimensions.h15,
+                            FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                controller.requestModel.value.bids![index].coins
+                                    .toString(),
+                                style: CustomTextStyle.textRobotoSansLight
+                                    .copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
+                                ),
                               ),
                             )
                           ],

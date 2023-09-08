@@ -93,6 +93,35 @@ class HomePageController extends GetxController {
     super.onInit();
   }
 
+  callFcmApi(userId) async {
+    var token = await LocalStorage.read(ConstantsVariables.fcmToken);
+    Timer(const Duration(milliseconds: 200), () {
+      fsmApiCall(userId, token);
+    });
+  }
+
+  fcmBody(userId, fcmToken) {
+    var a = {
+      "id": userId,
+      "fcmToken": fcmToken,
+    };
+    return a;
+  }
+
+  void fsmApiCall(userId, fcmToken) async {
+    ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
+      debugPrint("Create Feedback Api Response :- $value");
+      if (value['status']) {
+        // AppUtils.showSuccessSnackBar(
+        //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+
   void getNotificationsData() async {
     ApiService().getAllNotifications().then((value) async {
       debugPrint("Notifiactions Data Api ------------- :- $value");
@@ -125,6 +154,7 @@ class HomePageController extends GetxController {
     starlineCheck.value == true
         ? widgetContainer.value = 1
         : widgetContainer.value;
+    starlineCheck.value == true ? isStarline.value = true : isStarline.value;
     Timer(const Duration(seconds: 1), () async {
       await LocalStorage.write(ConstantsVariables.starlineConnect, false);
     });
@@ -167,6 +197,7 @@ class HomePageController extends GetxController {
         lazyLoad: false,
         startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
         endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
+    callFcmApi(userData.id);
   }
 
   void getStarLineMarkets(String startDate, String endDate) async {

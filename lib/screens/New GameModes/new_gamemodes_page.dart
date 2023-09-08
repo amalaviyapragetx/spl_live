@@ -32,12 +32,12 @@ class NewGameModePage extends StatelessWidget {
           actions: [
             InkWell(
               onTap: () {
-                // Get.offAndToNamed(AppRoutName.transactionPage);
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
               },
               child: Row(
                 children: [
                   SizedBox(
-                    height: Dimensions.w22,
+                    height: Dimensions.h20,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
                       ConstantImage.walletAppbar,
@@ -47,16 +47,17 @@ class NewGameModePage extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: Dimensions.r8,
-                        bottom: Dimensions.r8,
-                        left: Dimensions.r10,
-                        right: Dimensions.r10),
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r5,
+                      left: Dimensions.r10,
+                      right: Dimensions.r10,
+                    ),
                     child: Obx(
                       () => Text(
                         walletController.walletBalance.toString(),
-                        style: CustomTextStyle.textRamblaMedium.copyWith(
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.white,
-                          fontSize: Dimensions.h20,
+                          fontSize: Dimensions.h17,
                         ),
                       ),
                     ),
@@ -201,8 +202,6 @@ class NewGameModePage extends StatelessWidget {
                               controller.gameMode.value.name!.toUpperCase() ==
                                   "TRIPPLE PANA" ||
                               controller.gameMode.value.name!.toUpperCase() ==
-                                  "DOUBLE PANA" ||
-                              controller.gameMode.value.name!.toUpperCase() ==
                                   "RED BRACKETS") {
                             controller.validateEnteredDigit(false, value);
                           } else {
@@ -246,7 +245,7 @@ class NewGameModePage extends StatelessWidget {
                           ),
                           hintTextStyle:
                               CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.black.withOpacity(0.65),
+                            color: AppColors.black.withOpacity(0.65),     
                             fontSize: Dimensions.h15,
                           ),
                           formatter: [FilteringTextInputFormatter.digitsOnly],

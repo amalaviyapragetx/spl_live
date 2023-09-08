@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -104,6 +105,8 @@ class SetMPINPageController extends GetxController {
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
           await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
+          print("${userData["Id"]}");
+          callFcmApi(userData["Id"]);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
@@ -120,8 +123,7 @@ class SetMPINPageController extends GetxController {
 
   callFcmApi(userId) async {
     var token = await LocalStorage.read(ConstantsVariables.fcmToken);
-    print("===========$token");
-    Timer(const Duration(milliseconds: 500), () {
+    Timer(const Duration(seconds: 2), () {
       fsmApiCall(userId, token);
     });
   }

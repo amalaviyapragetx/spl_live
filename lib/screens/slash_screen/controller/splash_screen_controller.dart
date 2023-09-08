@@ -100,6 +100,7 @@ class SplashController extends GetxController {
     //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
       if (!isActive && !isVerified) {
+        //   callFcmApi(_userDetailsModel.id);
         Future.delayed(const Duration(seconds: 2), () {
           Get.offAllNamed(AppRoutName.verifyOTPPage);
           Timer(const Duration(milliseconds: 500), () {
@@ -107,6 +108,7 @@ class SplashController extends GetxController {
           });
         });
       } else if (isVerified && !isActive) {
+        //   callFcmApi(_userDetailsModel.id);
         Future.delayed(const Duration(seconds: 2), () {
           Get.offAllNamed(AppRoutName.userDetailsPage);
           Timer(const Duration(milliseconds: 500), () {
@@ -124,7 +126,6 @@ class SplashController extends GetxController {
             });
           });
         } else {
-          callFcmApi(_userDetailsModel.id);
           Future.delayed(const Duration(seconds: 2), () {
             Get.offAllNamed(AppRoutName.signInPage,
                 arguments: {"id": _userDetailsModel.id});

@@ -50,15 +50,17 @@ class GameModePage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                       top: Dimensions.r8,
-                      bottom: Dimensions.r8,
+                      bottom: Dimensions.r5,
                       left: Dimensions.r10,
                       right: Dimensions.r10,
                     ),
                     child: Obx(
                       () => Text(
                         walletController.walletBalance.toString(),
-                        style: CustomTextStyle.textRobotoSansMedium
-                            .copyWith(fontSize: Dimensions.h18),
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h17,
+                        ),
                       ),
                     ),
                   ),

@@ -126,6 +126,8 @@ class VerifyOTPController extends GetxController {
     ApiService().resendOTP(await resendOtpBody()).then((value) async {
       debugPrint("Resend otp Api Response :- $value");
       if (value['status']) {
+        secondsRemaining.value = 60;
+        _startTimer();
         AppUtils.showSuccessSnackBar(
             bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
       } else {

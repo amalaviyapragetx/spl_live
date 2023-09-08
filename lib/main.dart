@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -56,9 +57,19 @@ class _MyAppState extends State<MyApp> {
       print("Device Token : $value");
       LocalStorage.write(ConstantsVariables.fcmToken, value);
     });
+    // statusCheck();
     getLocation();
     super.initState();
   }
+
+  // statusCheck() async {
+  //   final status = await Permission.location.status;
+  //   if (status.isDenied) {
+  //     SystemNavigator.pop();
+  //   } else {
+  //     await Permission.location.request();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
