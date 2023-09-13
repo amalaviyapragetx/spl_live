@@ -6,11 +6,17 @@ import '../screens/Local Storage.dart';
 import 'api_urls.dart';
 import 'network_info.dart';
 
-class ApiService extends GetConnect {
+class ApiService extends GetConnect implements GetxService {
   Map<String, String>? headers = {};
   Map<String, String>? headersWithToken = {};
   String contentType = "";
   String authToken = '';
+  final allowAutoSignedCert = true;
+  @override
+  void onInit() {
+    allowAutoSignedCert = true;
+    super.onInit();
+  }
 
   Future<void> initApiService() async {
     authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
@@ -21,7 +27,6 @@ class ApiService extends GetConnect {
         "Accept": "application/json",
         "Authorization": "Bearer $authToken"
       };
-      // contentType = "multipart/form-data";
     });
   }
 
@@ -72,6 +77,7 @@ class ApiService extends GetConnect {
   }
 
   Future<dynamic> verifyUser(body) async {
+    print("=====================${ApiUtils.verifyUSER}");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
@@ -649,7 +655,6 @@ class ApiService extends GetConnect {
       body,
       headers: headersWithToken,
     );
-
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -670,6 +675,7 @@ class ApiService extends GetConnect {
   }
 
   Future<dynamic> verifyOTP(body) async {
+    print(ApiUtils.verifyOTP);
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
@@ -737,7 +743,7 @@ class ApiService extends GetConnect {
   }
 
   Future<dynamic> changePassword(body) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
       ApiUtils.changePassword,
@@ -746,14 +752,14 @@ class ApiService extends GetConnect {
     );
 
     if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
       print(response.status.code.toString() + response.body.toString());
       return response.body;
     } else {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       print("response2 ${response.body}");
       print("change pass2 ${response.status.code}");
       return response.body;
@@ -891,7 +897,7 @@ class ApiService extends GetConnect {
     //   headers: headersWithToken,
     // );
     final response = await get(
-      "${ApiUtils.bidHistory}?id=$userId&limit=100&offset=0",
+      "${ApiUtils.bidHistory}?id=$userId&limit=5000&offset=0",
       headers: headersWithToken,
     );
 
@@ -1062,7 +1068,7 @@ class ApiService extends GetConnect {
   }
 
   Future<dynamic> fcmToken(body) async {
-    //AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
       ApiUtils.fcmToken,
@@ -1071,7 +1077,7 @@ class ApiService extends GetConnect {
     );
 
     if (response.status.hasError) {
-      // AppUtils.hideProgressDialog();
+      //  AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
@@ -1079,9 +1085,27 @@ class ApiService extends GetConnect {
           "FCM Token : ${response.status.code.toString() + response.body.toString()}");
       return response.body;
     } else {
-      // AppUtils.hideProgressDialog();
+      //  AppUtils.hideProgressDialog();
       print("response2 ${response.body}");
       print("change pass2 ${response.status.code}");
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getAppVersion() async {
+    //AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await get(
+      ApiUtils.getVersion,
+    );
+
+    if (response.status.hasError) {
+      // AppUtils.hideProgressDialog();s
+      return response.body;
+    } else {
+      // AppUtils.hideProgressDialog();
+      // print("response2 ${response.body}");
+      // print("change pass2 ${response.status.code}");
       return response.body;
     }
   }

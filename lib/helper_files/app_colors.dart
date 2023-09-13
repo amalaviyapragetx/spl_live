@@ -19,11 +19,10 @@ class AppColors {
   static Color balanceCoinsColor = const Color(0xFFb47e25);
   static Color iconColorMain = const Color(0xff0b0b0b);
   static Color numberListContainer = const Color(0xff9b8083);
-  static Color numberListgreen = Color(0xFF2AF330);
+  static Color numberListgreen = const Color(0xFF2AF330);
   static Color wpColor1 = const Color(0xffFFA71E);
   static Color wpColor2 = const Color(0xffD82700);
   static Color textFieldFillColor = const Color(0xffF1F1F1);
-
   static Color openclose = const Color(0xffE8E8E8);
   static Color withDrawalSvgColor = const Color(0xFF377dd2);
 }

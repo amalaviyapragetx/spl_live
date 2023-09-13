@@ -41,4 +41,7 @@ class ConstantsVariables {
 
   /// fcm Token
   static const String fcmToken = "fcm_token";
+
+  /// on back starLine
+  static const String starlineConnect = "starline_connect";
 }

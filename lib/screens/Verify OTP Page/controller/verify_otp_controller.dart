@@ -17,7 +17,6 @@ class VerifyOTPController extends GetxController {
   RxString mpin = "".obs;
   RxString confirmMpin = "".obs;
   String phoneNumber = "";
-  // String countryCode = "";
 
   @override
   void onInit() {
@@ -26,6 +25,7 @@ class VerifyOTPController extends GetxController {
     _startTimer();
   }
 
+  var userData;
   Future<void> getStoredUserData() async {
     print(verifyOTP);
     if (argument != null) {
@@ -33,6 +33,8 @@ class VerifyOTPController extends GetxController {
       // countryCode = argument['countryCode'];
       verifyOTP = false;
     } else {
+      // var data = await LocalStorage.read(ConstantsVariables.userData);
+      // userData = UserDetailsModel.fromJson(data);
       verifyOTP = true;
     }
   }
@@ -83,10 +85,8 @@ class VerifyOTPController extends GetxController {
       "countryCode": "+91",
       "phoneNumber": phoneNumber,
       "otp": otp.value,
-      // "mPin": mpin.value,
-      // "deviceId": userDataModel.deviceId
     };
-    debugPrint(verifyUserBody.toString());
+    debugPrint("==============================${verifyUserBody.toString()}");
     return verifyUserBody;
   }
 
@@ -97,6 +97,8 @@ class VerifyOTPController extends GetxController {
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
+        String authToken = userData['Token'] ?? "Null From API";
+        await LocalStorage.write(ConstantsVariables.authToken, authToken);
         if (userData != null) {
           Get.toNamed(
             AppRoutName.setMPINPage,
@@ -124,6 +126,8 @@ class VerifyOTPController extends GetxController {
     ApiService().resendOTP(await resendOtpBody()).then((value) async {
       debugPrint("Resend otp Api Response :- $value");
       if (value['status']) {
+        secondsRemaining.value = 60;
+        _startTimer();
         AppUtils.showSuccessSnackBar(
             bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
       } else {

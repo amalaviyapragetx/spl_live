@@ -291,11 +291,11 @@ class BidHistory extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                spreadRadius: 1,
-                color: AppColors.white,
-                blurRadius: 10,
-                offset: const Offset(7, 4),
-              ),
+                spreadRadius: 0.5,
+                color: AppColors.grey,
+                blurRadius: 2,
+                offset: const Offset(2, 4),
+              )
             ],
             border: Border.all(width: 0.2),
             color: isWin == true ? AppColors.greenAccent : AppColors.white,
@@ -320,7 +320,7 @@ class BidHistory extends StatelessWidget {
                     ),
                     Text(
                       bidNo,
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.appbarColor,
                           fontSize: Dimensions.h13),
                     ),
@@ -334,7 +334,7 @@ class BidHistory extends StatelessWidget {
                         ),
                         Text(
                           " $coins",
-                          style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
                               fontSize: Dimensions.h14,
                               color: AppColors.appbarColor),
                         ),

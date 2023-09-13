@@ -32,12 +32,12 @@ class NewGameModePage extends StatelessWidget {
           actions: [
             InkWell(
               onTap: () {
-                // Get.offAndToNamed(AppRoutName.transactionPage);
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
               },
               child: Row(
                 children: [
                   SizedBox(
-                    height: Dimensions.w22,
+                    height: Dimensions.h20,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
                       ConstantImage.walletAppbar,
@@ -47,15 +47,17 @@ class NewGameModePage extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: Dimensions.r8,
-                        bottom: Dimensions.r10,
-                        left: Dimensions.r15,
-                        right: Dimensions.r10),
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r5,
+                      left: Dimensions.r10,
+                      right: Dimensions.r10,
+                    ),
                     child: Obx(
                       () => Text(
                         walletController.walletBalance.toString(),
-                        style: const TextStyle(
-                          fontSize: 20,
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h17,
                         ),
                       ),
                     ),
@@ -200,8 +202,6 @@ class NewGameModePage extends StatelessWidget {
                               controller.gameMode.value.name!.toUpperCase() ==
                                   "TRIPPLE PANA" ||
                               controller.gameMode.value.name!.toUpperCase() ==
-                                  "DOUBLE PANA" ||
-                              controller.gameMode.value.name!.toUpperCase() ==
                                   "RED BRACKETS") {
                             controller.validateEnteredDigit(false, value);
                           } else {
@@ -245,7 +245,7 @@ class NewGameModePage extends StatelessWidget {
                           ),
                           hintTextStyle:
                               CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.black.withOpacity(0.65),
+                            color: AppColors.black.withOpacity(0.65),     
                             fontSize: Dimensions.h15,
                           ),
                           formatter: [FilteringTextInputFormatter.digitsOnly],
@@ -307,21 +307,34 @@ class NewGameModePage extends StatelessWidget {
                   // controller.coinsFocusNode.unfocus();
                   // controller.openFocusNode.requestFocus();
                   if (controller.gameMode.value.name!.toUpperCase() ==
-                      "PANEL GROUP") {
+                      "SPDPTP") {
                     if (controller.autoCompleteFieldController.text.isEmpty) {
                       AppUtils.showErrorSnackBar(
-                        duration: const Duration(seconds: 1),
+                        duration: const Duration(milliseconds: 900),
                         bodyText:
                             "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                       );
                     } else if (controller.coinController.text.isEmpty ||
                         int.parse(controller.coinController.text) > 10000) {
                       AppUtils.showErrorSnackBar(
-                        duration: const Duration(seconds: 1),
+                        duration: const Duration(milliseconds: 900),
                         bodyText: "Please enter valid points",
                       );
                     } else if (controller
-                            .autoCompleteFieldController.text.length <=
+                            .autoCompleteFieldController.text.length !=
+                        1) {
+                      AppUtils.showErrorSnackBar(
+                        duration: const Duration(milliseconds: 900),
+                        bodyText:
+                            "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                      );
+                    } else {
+                      controller.pennleDataOnTapSave();
+                    }
+                  }
+                  if (controller.gameMode.value.name!.toUpperCase() ==
+                      "PANEL GROUP") {
+                    if (controller.autoCompleteFieldController.text.length <=
                         2) {
                       AppUtils.showErrorSnackBar(
                         duration: const Duration(seconds: 1),
@@ -329,21 +342,12 @@ class NewGameModePage extends StatelessWidget {
                             "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                       );
                     } else {
-                      controller.getPanelGroupPana(int.parse(
-                          controller.autoCompleteFieldController.text));
                       controller.pennleDataOnTapSave();
                     }
                   } else if (controller.gameMode.value.name!.toUpperCase() ==
                       "GROUP JODI") {
-                    if (controller.autoCompleteFieldController.text.length <=
-                        1) {
-                      AppUtils.showErrorSnackBar(
-                        bodyText:
-                            "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
-                      );
-                    } else {
-                      controller.getspdptp();
-                    }
+                    controller.pennleDataOnTapSave();
+                    // controller.getspdptp();
                   } else if (controller.gameMode.value.name!.toUpperCase() ==
                           "SINGLE ANK" ||
                       controller.gameMode.value.name! == "Jodi" ||
@@ -353,8 +357,6 @@ class NewGameModePage extends StatelessWidget {
                           "DOUBLE PANA" ||
                       controller.gameMode.value.name!.toUpperCase() ==
                           "TRIPPLE PANA" ||
-                      controller.gameMode.value.name!.toUpperCase() ==
-                          "DOUBLE PANA" ||
                       controller.gameMode.value.name!.toUpperCase() ==
                           "RED BRACKETS") {
                     controller.onTapOfAddButton();
@@ -366,7 +368,8 @@ class NewGameModePage extends StatelessWidget {
                               "DP MOTOR" ||
                           controller.gameMode.value.name!.toUpperCase() ==
                               "SP MOTOR") {
-                        if (controller.autoCompleteFieldController.text.length <
+                        if (controller
+                                    .autoCompleteFieldController.text.length <=
                                 3 ==
                             true) {
                           AppUtils.showErrorSnackBar(
@@ -378,7 +381,8 @@ class NewGameModePage extends StatelessWidget {
                             bodyText: "Please enter valid points",
                           );
                         } else {
-                          controller.getspdptp();
+                          print("999999999999999999999999999");
+                          controller.pennleDataOnTapSave();
                         }
                       } else if (controller.gameMode.value.name!
                               .toUpperCase() ==
@@ -386,26 +390,20 @@ class NewGameModePage extends StatelessWidget {
                         if (controller
                                 .autoCompleteFieldController.text.length ==
                             2) {
-                          controller.getspdptp();
+                          // controller.getTwoDigitPanelPana(int.parse(
+                          //     controller.autoCompleteFieldController.text));
+                          // controller.getspdptp();
+                          controller.pennleDataOnTapSave();
                         } else {
+                          controller.autoCompleteFieldController.clear();
+                          controller.coinController.clear();
+                          controller.focusNode.previousFocus();
                           AppUtils.showErrorSnackBar(
                             bodyText:
                                 "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                           );
                         }
-                      } else {
-                        controller.getspdptp();
                       }
-                    } else if (controller
-                        .autoCompleteFieldController.text.isEmpty) {
-                      AppUtils.showErrorSnackBar(
-                        bodyText:
-                            "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
-                      );
-                    } else if (controller.coinController.text.isEmpty) {
-                      AppUtils.showErrorSnackBar(
-                        bodyText: "Please enter valid points",
-                      );
                     }
                   }
                 },

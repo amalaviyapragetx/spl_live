@@ -25,282 +25,290 @@ class StarLineGamePage extends StatelessWidget {
     var verticalSpace = SizedBox(
       height: Dimensions.h10,
     );
-    return Scaffold(
-      appBar: AppUtils().simpleAppbar(
-        //appBarTitle: controller.getBIdType.toString(),
-        appBarTitle: "STARLINEGAME".tr,
-        actions: [
-          InkWell(
-            onTap: () {
-              //  Get.offAndToNamed(AppRoutName.transactionPage);
-            },
-            child: Row(
-              children: [
-                SizedBox(
-                  height: Dimensions.w20,
-                  width: Dimensions.w20,
-                  child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    color: AppColors.white,
-                    fit: BoxFit.fill,
+    return Obx(
+      () => Scaffold(
+        appBar: AppUtils().simpleAppbar(
+          //appBarTitle: controller.getBIdType.toString(),
+          appBarTitle: "${controller.marketData.value.time}",
+          actions: [
+            InkWell(
+              onTap: () {
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: Dimensions.h20,
+                    width: Dimensions.w25,
+                    child: SvgPicture.asset(
+                      ConstantImage.walletAppbar,
+                      color: AppColors.white,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: Dimensions.r8,
-                    bottom: Dimensions.r10,
-                    left: Dimensions.r15,
-                    right: Dimensions.r10,
-                  ),
-                  child: Obx(
-                    () => Text(
-                      walletController.walletBalance.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r5,
+                      left: Dimensions.r10,
+                      right: Dimensions.r10,
+                    ),
+                    child: Obx(
+                      () => Text(
+                        walletController.walletBalance.toString(),
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h17,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
-          child: Column(
-            children: [
-              SizedBox(
-                height: Dimensions.h10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "${controller.gameMode.value.name}".toUpperCase(),
-                    style: CustomTextStyle.textRobotoSansBold.copyWith(
-                        color: AppColors.appbarColor, fontSize: Dimensions.h18),
-                  ),
                 ],
               ),
-              verticalSpace,
-              Row(
-                children: [
-                  Expanded(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(Dimensions.r10)),
-                        color: AppColors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 4),
-                            blurRadius: 3,
-                            spreadRadius: 0.2,
-                            color: AppColors.grey.withOpacity(0.7),
+            ),
+          ],
+        ),
+        body: Container(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Dimensions.h10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${controller.gameMode.value.name}".toUpperCase(),
+                      style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          color: AppColors.appbarColor,
+                          fontSize: Dimensions.h18),
+                    ),
+                  ],
+                ),
+                verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(Dimensions.r10)),
+                          color: AppColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 4),
+                              blurRadius: 3,
+                              spreadRadius: 0.2,
+                              color: AppColors.grey.withOpacity(0.7),
+                            ),
+                          ],
+                        ),
+                        child: RoundedCornerEditTextWithIcon2(
+                          formatter: [FilteringTextInputFormatter.digitsOnly],
+                          tapTextStyle: AppColors.black,
+                          hintTextColor: AppColors.black.withOpacity(0.5),
+                          //textAlign: TextAlign.center,
+                          hintTextStyle:
+                              CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.black.withOpacity(0.5),
+                            fontSize: Dimensions.h15,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      child: RoundedCornerEditTextWithIcon2(
-                        formatter: [FilteringTextInputFormatter.digitsOnly],
-                        tapTextStyle: AppColors.black,
-                        hintTextColor: AppColors.black.withOpacity(0.5),
-                        //textAlign: TextAlign.center,
-                        hintTextStyle:
-                            CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.black.withOpacity(0.5),
-                          fontSize: Dimensions.h15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        autofocus: true,
-                        textStyle:
-                            CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.black.withOpacity(0.8),
-                          fontSize: Dimensions.h15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLength: 5,
-                        width: size.width / 2,
-                        onChanged: (val) {
-                          if (val != null) {
-                            if (val.characters.characterAt(0) ==
-                                Characters("0")) {
-                              // we need to remove the first char
-                              controller.coinController.text = val.substring(1);
-                              // we need to move the cursor
-                              controller.coinController.selection =
-                                  TextSelection.collapsed(
-                                offset: controller.coinController.text.length,
-                              );
-                            } else if (int.parse(val) >= 1) {
-                              controller.validCoinsEntered.value = true;
-                              controller.isEnable.value = true;
-                            } else if (int.parse(val) > 10000) {
-                              AppUtils.showErrorSnackBar(
-                                  bodyText:
-                                      "You can not add more than 10000 points");
-                              controller.validCoinsEntered.value = false;
-                              controller.isEnable.value = false;
+                          autofocus: true,
+                          textStyle:
+                              CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.black.withOpacity(0.8),
+                            fontSize: Dimensions.h15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLength: 5,
+                          width: size.width / 2,
+                          onChanged: (val) {
+                            if (val != null) {
+                              if (val.characters.characterAt(0) ==
+                                  Characters("0")) {
+                                // we need to remove the first char
+                                controller.coinController.text =
+                                    val.substring(1);
+                                // we need to move the cursor
+                                controller.coinController.selection =
+                                    TextSelection.collapsed(
+                                  offset: controller.coinController.text.length,
+                                );
+                              } else if (int.parse(val) >= 1) {
+                                controller.validCoinsEntered.value = true;
+                                controller.isEnable.value = true;
+                              } else if (int.parse(val) > 10000) {
+                                AppUtils.showErrorSnackBar(
+                                    bodyText:
+                                        "You can not add more than 10000 points");
+                                controller.validCoinsEntered.value = false;
+                                controller.isEnable.value = false;
+                              } else {
+                                print("444444444444444444   ${val.length}");
+                                controller.ondebounce();
+                                controller.validCoinsEntered.value = false;
+                                controller.isEnable.value = false;
+                              }
                             } else {
-                              print("444444444444444444   ${val.length}");
-                              controller.ondebounce();
                               controller.validCoinsEntered.value = false;
                               controller.isEnable.value = false;
                             }
-                          } else {
-                            controller.validCoinsEntered.value = false;
-                            controller.isEnable.value = false;
-                          }
-                          controller.update();
-                        },
-                        controller: controller.coinController,
-                        hintText: "Enter Points",
-                        imagePath: "",
-                        textAlign: TextAlign.center,
-                        contentPadding: const EdgeInsets.only(right: 40),
-                        containerBackColor: AppColors.transparent,
-                        height: Dimensions.h35,
-                        keyboardType: TextInputType.number,
+                            controller.update();
+                          },
+                          controller: controller.coinController,
+                          hintText: "Enter Points",
+                          imagePath: "",
+                          textAlign: TextAlign.center,
+                          contentPadding: const EdgeInsets.only(right: 40),
+                          containerBackColor: AppColors.transparent,
+                          height: Dimensions.h35,
+                          keyboardType: TextInputType.number,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: Dimensions.w10,
-                  ),
-                  Expanded(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(Dimensions.r10)),
-                        color: AppColors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 4),
-                            blurRadius: 3,
-                            spreadRadius: 0.2,
-                            color: AppColors.grey.withOpacity(0.7),
-                          ),
-                        ],
-                      ),
-                      child: RoundedCornerEditTextWithIcon2(
-                        formatter: [FilteringTextInputFormatter.digitsOnly],
-                        tapTextStyle: AppColors.black,
-                        hintTextColor: AppColors.black.withOpacity(0.5),
-                        //textAlign: TextAlign.center,
-                        hintTextStyle:
-                            CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.black.withOpacity(0.5),
-                          fontSize: Dimensions.h15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textStyle:
-                            CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.black.withOpacity(0.8),
-                          fontSize: Dimensions.h15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        width: size.width / 2,
-                        onChanged: (value) => controller.onSearch(value),
-                        controller: controller.searchController,
-                        hintText: "SEARCH_TEXT".tr,
-                        imagePath: ConstantImage.serchZoomIcon,
-                        containerBackColor: AppColors.transparent,
-                        height: Dimensions.h35,
-                        keyboardType: TextInputType.number,
-                      ),
+                    SizedBox(
+                      width: Dimensions.w10,
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: Dimensions.h10,
-              ),
-              numberLine(
-                controller: controller,
-              ),
-              Obx(
-                () => Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisExtent: 50,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: controller.digitList.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          borderRadius: BorderRadius.circular(Dimensions.r10),
-                          onTap: () => controller.isEnable.value
-                              ? controller.onTapNumberList(index)
-                              : null,
-                          child: Opacity(
-                            opacity:
-                                controller.validCoinsEntered.value ? 1 : 0.5,
-                            child: numberRedioButton(
-                              textColor:
-                                  controller.digitList[index].isSelected ??
-                                          false
-                                      ? AppColors.green
-                                      : AppColors.appbarColor,
-                              container: controller
-                                          .digitList[index].isSelected ??
-                                      false
-                                  ? Container(
-                                      height: Dimensions.h15,
-                                      width: Dimensions.h15,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.green,
-                                        borderRadius: BorderRadius.circular(50),
-                                        border: Border.all(
-                                          color: AppColors.green,
-                                          width: Dimensions.w2,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: FittedBox(
-                                          fit: BoxFit.fitWidth,
-                                          child: Icon(Icons.check,
-                                              size: 13, color: AppColors.white),
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      height: Dimensions.h15,
-                                      width: Dimensions.w15,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.transparent,
-                                        borderRadius: BorderRadius.circular(25),
-                                        border: Border.all(
-                                          color: AppColors.appbarColor,
-                                          width: Dimensions.w2,
-                                        ),
-                                      ),
-                                    ),
-                              color: controller.digitList[index].isSelected ??
-                                      false
-                                  ? AppColors.green
-                                  : AppColors.transparent,
-                              controller.digitList[index].value ?? "",
+                    Expanded(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(Dimensions.r10)),
+                          color: AppColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 4),
+                              blurRadius: 3,
+                              spreadRadius: 0.2,
+                              color: AppColors.grey.withOpacity(0.7),
                             ),
+                          ],
+                        ),
+                        child: RoundedCornerEditTextWithIcon2(
+                          formatter: [FilteringTextInputFormatter.digitsOnly],
+                          tapTextStyle: AppColors.black,
+                          hintTextColor: AppColors.black.withOpacity(0.5),
+                          //textAlign: TextAlign.center,
+                          hintTextStyle:
+                              CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.black.withOpacity(0.5),
+                            fontSize: Dimensions.h15,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      },
+                          textStyle:
+                              CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.black.withOpacity(0.8),
+                            fontSize: Dimensions.h15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          width: size.width / 2,
+                          onChanged: (value) => controller.onSearch(value),
+                          controller: controller.searchController,
+                          hintText: "SEARCH_TEXT".tr,
+                          imagePath: ConstantImage.serchZoomIcon,
+                          containerBackColor: AppColors.transparent,
+                          height: Dimensions.h35,
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Dimensions.h10,
+                ),
+                numberLine(
+                  controller: controller,
+                ),
+                Obx(
+                  () => Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisExtent: 50,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        itemCount: controller.digitList.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            borderRadius: BorderRadius.circular(Dimensions.r10),
+                            onTap: () => controller.isEnable.value
+                                ? controller.onTapNumberList(index)
+                                : null,
+                            child: Opacity(
+                              opacity:
+                                  controller.validCoinsEntered.value ? 1 : 0.5,
+                              child: numberRedioButton(
+                                textColor:
+                                    controller.digitList[index].isSelected ??
+                                            false
+                                        ? AppColors.green
+                                        : AppColors.appbarColor,
+                                container:
+                                    controller.digitList[index].isSelected ??
+                                            false
+                                        ? Container(
+                                            height: Dimensions.h15,
+                                            width: Dimensions.h15,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.green,
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              border: Border.all(
+                                                color: AppColors.green,
+                                                width: Dimensions.w2,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Icon(Icons.check,
+                                                    size: 13,
+                                                    color: AppColors.white),
+                                              ),
+                                            ),
+                                          )
+                                        : Container(
+                                            height: Dimensions.h15,
+                                            width: Dimensions.w15,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.transparent,
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              border: Border.all(
+                                                color: AppColors.appbarColor,
+                                                width: Dimensions.w2,
+                                              ),
+                                            ),
+                                          ),
+                                color: controller.digitList[index].isSelected ??
+                                        false
+                                    ? AppColors.green
+                                    : AppColors.transparent,
+                                controller.digitList[index].value ?? "",
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar:
+            //   Obx(() => bottomNavigationBar(controller.totalAmount.value)),
+            bottombar(size),
       ),
-      bottomNavigationBar:
-          //   Obx(() => bottomNavigationBar(controller.totalAmount.value)),
-          bottombar(size),
     );
   }
 
@@ -331,7 +339,7 @@ class StarLineGamePage extends StatelessWidget {
           ),
           Text(
             text,
-            style: CustomTextStyle.textPTsansMedium.copyWith(
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
               fontSize: Dimensions.h15,
               color: textColor,
             ),

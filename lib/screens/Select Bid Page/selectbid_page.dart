@@ -16,31 +16,48 @@ class SelectedBidsPage extends StatelessWidget {
   // var controller = Get.put(SelectBidPageController());
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     // controller.newBidListreaddata();
     return Obx(
       () => Scaffold(
         appBar: AppUtils().simpleAppbar(
           appBarTitle: controller.marketName.value,
           actions: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  ConstantImage.walletAppbar,
-                  height: Dimensions.h25,
-                  color: AppColors.white,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w11),
-                  child: Text(
-                    controller.walletController.walletBalance.toString(),
-                    style: CustomTextStyle.textPTsansMedium.copyWith(
+            InkWell(
+              onTap: () {
+                //  Get.offAndToNamed(AppRoutName.transactionPage);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: Dimensions.h20,
+                    width: Dimensions.w25,
+                    child: SvgPicture.asset(
+                      ConstantImage.walletAppbar,
                       color: AppColors.white,
-                      fontSize: Dimensions.h18,
+                      fit: BoxFit.fill,
                     ),
                   ),
-                )
-              ],
-            )
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: Dimensions.r8,
+                      bottom: Dimensions.r5,
+                      left: Dimensions.r10,
+                      right: Dimensions.r10,
+                    ),
+                    child: Obx(
+                      () => Text(
+                        controller.walletController.walletBalance.toString(),
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h17,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         body: SingleChildScrollView(
@@ -158,7 +175,8 @@ class SelectedBidsPage extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: bottomNavigationBar(controller.totalAmount.value),
+        bottomNavigationBar: bottombar(size, context),
+        // bottomNavigationBar: bottomNavigationBar(controller.totalAmount.value),
       ),
     );
   }
@@ -217,6 +235,75 @@ class SelectedBidsPage extends StatelessWidget {
               ],
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  bottombar(Size size, context) {
+    return Obx(
+      () => Container(
+        width: size.width,
+        height: Dimensions.h45,
+        color: AppColors.appbarColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            nameColumn(
+                titleText: "Bids",
+                subText: controller.requestModel.value.bids!.length.toString(),
+                textColor: AppColors.white,
+                textColor2: AppColors.white),
+            nameColumn(
+                titleText: "Points",
+                subText: controller.totalAmount.toString(),
+                textColor: AppColors.white,
+                textColor2: AppColors.white),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget nameColumn(
+      {required String titleText,
+      required String subText,
+      required Color textColor,
+      required Color textColor2}) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 5,
+        bottom: 2,
+      ),
+      child: SizedBox(
+        // color: AppColors.balanceCoinsColor,
+
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0.0),
+          child: Column(
+            children: [
+              Text(
+                textAlign: TextAlign.center,
+                titleText,
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: textColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  subText,
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
+                    color: textColor2,
+                    fontSize: Dimensions.h13,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -101,11 +101,10 @@ class GameModePagesController extends GetxController {
   onBackButton() async {
     // var hh = await LocalStorage.read(ConstantsVariables.playMore);
     // if (!hh) {
-    var bidList = await LocalStorage.read(ConstantsVariables.bidsList);
-    totalBidsAmount.value =
-        await LocalStorage.read(ConstantsVariables.totalAmount);
-    marketNameForPlayMore.value =
-        await LocalStorage.read(ConstantsVariables.marketName);
+    // var bidList = await LocalStorage.read(ConstantsVariables.bidsList);
+    // totalBidsAmount.value =
+    //     await LocalStorage.read(ConstantsVariables.totalAmount);
+
     // arguments['totalAmount'] = totalAmount.value;
     // arguments['marketName'] = marketName.value;
     // arguments['gameName'] = gameName.value;

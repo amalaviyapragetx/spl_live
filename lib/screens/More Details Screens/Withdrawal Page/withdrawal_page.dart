@@ -49,8 +49,8 @@ class WithdrawalPage extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(
-                    height: Dimensions.w20,
-                    width: Dimensions.w20,
+                    height: Dimensions.h20,
+                    width: Dimensions.w25,
                     child: SvgPicture.asset(
                       ConstantImage.walletAppbar,
                       color: AppColors.white,
@@ -59,16 +59,15 @@ class WithdrawalPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: Dimensions.r8,
-                        bottom: Dimensions.r10,
-                        left: Dimensions.r15,
+                        top: Dimensions.r10,
+                        bottom: Dimensions.r8,
+                        left: Dimensions.r10,
                         right: Dimensions.r10),
                     child: Obx(
                       () => Text(
                         walletController.walletBalance.toString(),
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
+                        style: CustomTextStyle.textRobotoSansMedium
+                            .copyWith(fontSize: Dimensions.h18),
                       ),
                     ),
                   ),
@@ -100,134 +99,136 @@ class WithdrawalPage extends StatelessWidget {
                   ],
                   borderRadius: BorderRadius.circular(Dimensions.r4),
                 ),
-                child: Column(
-                  children: [
-                    verticalSpace,
-                    Text(
-                      "Withdrawal Timing",
-                      style: CustomTextStyle.textRamblaBold.copyWith(
-                        color: AppColors.appbarColor,
-                        fontSize: Dimensions.h20,
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      verticalSpace,
+                      Text(
+                        "Withdrawal Timing",
+                        style: CustomTextStyle.textRamblaBold.copyWith(
+                          color: AppColors.appbarColor,
+                          fontSize: Dimensions.h20,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "10:00 AM",
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(
-                                    color: AppColors.black,
-                                    fontSize: Dimensions.h14,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "10:00 AM",
+                                    style: CustomTextStyle.textRobotoSansBold
+                                        .copyWith(
+                                      color: AppColors.black,
+                                      fontSize: Dimensions.h14,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  "  to ",
-                                  style: CustomTextStyle.textRobotoSansLight
-                                      .copyWith(
-                                    color: AppColors.black,
-                                    fontSize: Dimensions.h14,
+                                  Text(
+                                    "  to ",
+                                    style: CustomTextStyle.textRobotoSansLight
+                                        .copyWith(
+                                      color: AppColors.black,
+                                      fontSize: Dimensions.h14,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  "07:00 PM",
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(
-                                    color: AppColors.black,
-                                    fontSize: Dimensions.h14,
+                                  Text(
+                                    "07:00 PM",
+                                    style: CustomTextStyle.textRobotoSansBold
+                                        .copyWith(
+                                      color: AppColors.black,
+                                      fontSize: Dimensions.h14,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: Dimensions.h5,
-                            ),
-                            Text(
-                              "(Withdrawal Available all days including Sunday & Bank Holidays )",
-                              textAlign: TextAlign.center,
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
-                                color: AppColors.black,
-                                fontSize: Dimensions.h14,
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Dimensions.h5,
-                    ),
-                    Text(
-                      "Minimum Withdrawal",
-                      style: CustomTextStyle.textRamblaBold.copyWith(
-                        color: AppColors.appbarColor,
-                        fontSize: Dimensions.h20,
-                      ),
-                    ),
-                    SizedBox(
-                      height: Dimensions.h5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Rs.",
-                          style: CustomTextStyle.textRobotoSansBold.copyWith(
-                            color: AppColors.black,
-                            fontSize: Dimensions.h14,
-                          ),
-                        ),
-                        Text(
-                          " 500",
-                          style: CustomTextStyle.textRobotoSansLight.copyWith(
-                            color: AppColors.black,
-                            fontSize: Dimensions.h14,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Note :",
-                            textAlign: TextAlign.start,
-                            style: CustomTextStyle.textRamblaBold.copyWith(
-                              color: AppColors.appbarColor,
-                              fontSize: Dimensions.h18,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Text(
-                                textAlign: TextAlign.start,
-                                "Withdrawal request processing time minimum 60 min to 24 Hrs ",
+                              SizedBox(
+                                height: Dimensions.h5,
+                              ),
+                              Text(
+                                "(Withdrawal Available all days including Sunday & Bank Holidays )",
+                                textAlign: TextAlign.center,
                                 style: CustomTextStyle.textRobotoSansLight
                                     .copyWith(
                                   color: AppColors.black,
                                   fontSize: Dimensions.h14,
                                 ),
                               ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Dimensions.h5,
+                      ),
+                      Text(
+                        "Minimum Withdrawal",
+                        style: CustomTextStyle.textRamblaBold.copyWith(
+                          color: AppColors.appbarColor,
+                          fontSize: Dimensions.h20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: Dimensions.h5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Rs.",
+                            style: CustomTextStyle.textRobotoSansBold.copyWith(
+                              color: AppColors.black,
+                              fontSize: Dimensions.h14,
+                            ),
+                          ),
+                          Text(
+                            " 500",
+                            style: CustomTextStyle.textRobotoSansLight.copyWith(
+                              color: AppColors.black,
+                              fontSize: Dimensions.h14,
                             ),
                           ),
                         ],
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Note :",
+                              textAlign: TextAlign.start,
+                              style: CustomTextStyle.textRamblaBold.copyWith(
+                                color: AppColors.appbarColor,
+                                fontSize: Dimensions.h18,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 6.0),
+                                child: Text(
+                                  textAlign: TextAlign.start,
+                                  "Withdrawal request processing time minimum 60 min to 24 Hrs ",
+                                  style: CustomTextStyle.textRobotoSansLight
+                                      .copyWith(
+                                    color: AppColors.black,
+                                    fontSize: Dimensions.h14,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               verticalSpace,

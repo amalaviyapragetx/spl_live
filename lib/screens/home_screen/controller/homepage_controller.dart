@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
@@ -23,9 +26,7 @@ import '../../../models/normal_market_bid_history_response_model.dart';
 import '../../../models/notifiaction_models/get_all_notification_model.dart';
 import '../../../models/notifiaction_models/notification_count_model.dart';
 import '../../../models/passbook_page_model.dart';
-import '../../../models/starline_chart_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
-import '../../../models/starlinechar_model/new_date_time.dart';
 import '../../../models/starlinechar_model/new_starlinechart_model.dart';
 import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
@@ -44,10 +45,8 @@ class HomePageController extends GetxController {
   RxBool bidHistory = false.obs;
   RxBool resultHistory = false.obs;
   RxBool chart = false.obs;
-  RxBool addFund = false.obs;
   RxInt widgetContainer = 0.obs;
   RxInt pageWidget = 0.obs;
-  RxInt appBarWidget = 0.obs;
   RxInt currentIndex = 0.obs;
   var position = 0;
   var spaceBeetween = const SizedBox(height: 10);
@@ -72,7 +71,7 @@ class HomePageController extends GetxController {
   RxList<MarketBidHistory> marketbidhistory1 = <MarketBidHistory>[].obs;
   RxList<dynamic> result = [].obs;
   Rx<Bidhistorymodel> bidMarketModel = Bidhistorymodel().obs;
-  Rx<MarketBidHistory> marketBidHistory = MarketBidHistory().obs;
+  // Rx<MarketBidHistory> marketBidHistory = MarketBidHistory().obs;
   RxList<MarketBidHistoryList> marketBidHistoryList =
       <MarketBidHistoryList>[].obs;
   DateTime startEndDate = DateTime.now();
@@ -82,7 +81,7 @@ class HomePageController extends GetxController {
   RxString walletBalance = "00".obs;
   RxInt getNotifiactionCount = 0.obs;
   RxList<BennerData> bennerData = <BennerData>[].obs;
-
+  RxBool starlineCheck = false.obs;
   @override
   void onInit() {
     setboolData();
@@ -91,8 +90,36 @@ class HomePageController extends GetxController {
     getUserBalance();
     getNotificationCount();
     getNotificationsData();
-
     super.onInit();
+  }
+
+  callFcmApi(userId) async {
+    var token = await LocalStorage.read(ConstantsVariables.fcmToken);
+    Timer(const Duration(milliseconds: 200), () {
+      fsmApiCall(userId, token);
+    });
+  }
+
+  fcmBody(userId, fcmToken) {
+    var a = {
+      "id": userId,
+      "fcmToken": fcmToken,
+    };
+    return a;
+  }
+
+  void fsmApiCall(userId, fcmToken) async {
+    ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
+      debugPrint("Create Feedback Api Response :- $value");
+      if (value['status']) {
+        // AppUtils.showSuccessSnackBar(
+        //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
   }
 
   void getNotificationsData() async {
@@ -115,15 +142,22 @@ class HomePageController extends GetxController {
 
   void setboolData() async {
     await LocalStorage.write(ConstantsVariables.timeOut, true);
-    var a = await LocalStorage.read(ConstantsVariables.timeOut);
-    print("=====================$a=========================");
-    // await LocalStorage.write(ConstantsVariables.playMore, true);
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
     await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
     await LocalStorage.write(ConstantsVariables.totalAmount, "0");
     await LocalStorage.write(ConstantsVariables.marketName, "");
     await LocalStorage.write(ConstantsVariables.marketNotification, true);
     await LocalStorage.write(ConstantsVariables.starlineNotification, true);
+    starlineCheck.value =
+        await LocalStorage.read(ConstantsVariables.starlineConnect);
+    print(starlineCheck.value);
+    starlineCheck.value == true
+        ? widgetContainer.value = 1
+        : widgetContainer.value;
+    starlineCheck.value == true ? isStarline.value = true : isStarline.value;
+    Timer(const Duration(seconds: 1), () async {
+      await LocalStorage.write(ConstantsVariables.starlineConnect, false);
+    });
     getBennerData();
   }
 
@@ -140,7 +174,6 @@ class HomePageController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     setboolData();
     callMarketsApi();
-    // callGetStarLineChart();
     getUserData();
     getNotificationCount();
     getUserBalance();
@@ -164,6 +197,7 @@ class HomePageController extends GetxController {
         lazyLoad: false,
         startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
         endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
+    callFcmApi(userData.id);
   }
 
   void getStarLineMarkets(String startDate, String endDate) async {
@@ -200,7 +234,7 @@ class HomePageController extends GetxController {
           });
           tempFinalMarketList.addAll(biddingClosedMarketList);
           starLineMarketList.value = tempFinalMarketList;
-          print("Star ********************* ${starLineMarketList.toJson()}");
+          // print("Star ********************* ${starLineMarketList.toJson()}");
         }
       } else {
         AppUtils.showErrorSnackBar(
@@ -219,7 +253,6 @@ class HomePageController extends GetxController {
         if (marketModel.data != null && marketModel.data!.isNotEmpty) {
           normalMarketList.value = marketModel.data!;
           noMarketFound.value = false;
-
           var biddingOpenMarketList = normalMarketList
               .where((element) =>
                   element.isBidOpenForClose == true ||
@@ -266,7 +299,6 @@ class HomePageController extends GetxController {
           size,
         );
       case 1:
-        // Get.lazyPut(() => BidHistoryPageController());
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
             child: HomeScreenUtils().gridColumnForStarLine(size));
@@ -324,7 +356,6 @@ class HomePageController extends GetxController {
     switch (index) {
       case 0:
         return SizedBox(
-          // color: AppColors.grey,
           height: size.height,
           width: double.infinity,
           child: Column(
@@ -374,7 +405,6 @@ class HomePageController extends GetxController {
                             border:
                                 Border.all(color: AppColors.redColor, width: 1),
                           ),
-                          //padding: const EdgeInsets.symmetric(horizontal: 60),
                           child: Column(
                             children: [
                               spaceBeetween,
@@ -392,7 +422,6 @@ class HomePageController extends GetxController {
                                   position = 0;
                                   widgetContainer.value = position;
                                   isStarline.value = false;
-                                  print(widgetContainer.value);
                                 },
                                 onTap2: () {
                                   position = 1;
@@ -410,12 +439,9 @@ class HomePageController extends GetxController {
                                           .format(startEndDate),
                                       startDate: DateFormat('yyyy-MM-dd')
                                           .format(startEndDate));
-                                  // HomeScreenUtils().iconsContainer2();
                                   widgetContainer.value = position;
                                   print(
                                       "marketHistoryList :  ${marketHistoryList.toJson()}");
-                                  // print(
-                                  //     "${widgetContainer.value} ${isStarline.value}");
                                 },
                                 onTap3: () {
                                   position = 2;
@@ -617,10 +643,6 @@ class HomePageController extends GetxController {
     }
   }
 
-  // onTapMarketContaioner() {
-  //   Get.toNamed(AppRoutName.gameModePage);
-  // }
-
   onTapOfNormalMarket(MarketData market) {
     if (market.isBidOpenForClose ?? false) {
       Get.toNamed(AppRoutName.gameModePage, arguments: market);
@@ -709,6 +731,19 @@ class HomePageController extends GetxController {
     }
   }
 
+  String getResult2(bool resultDeclared, int result) {
+    if (resultDeclared != null && resultDeclared) {
+      int sum = 0;
+      for (int i = result; i > 0; i = (i / 10).floor()) {
+        sum += (i % 10);
+      }
+      print("$result \n ${sum % 10}");
+      return "$result \n ${sum % 10}";
+    } else {
+      return "***-*";
+    }
+  }
+
   reverse(String originalString) {
     String reversedString = '';
 
@@ -718,9 +753,6 @@ class HomePageController extends GetxController {
     return reversedString;
   }
 
-  Future<void> onSwipeRefresh() async {
-    // getDailyStarLineMarkets();
-  }
   var cellValue;
   void callGetStarLineChart() async {
     ApiService().getStarlineChar().then((value) async {
@@ -744,7 +776,9 @@ class HomePageController extends GetxController {
       debugPrint("Notifiaction Count Api ------------- :- $value");
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
-        getNotifiactionCount.value = model.data!.notificationCount!.toInt();
+        getNotifiactionCount.value = model.data!.notificationCount == null
+            ? 0
+            : model.data!.notificationCount!.toInt();
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(
               bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/edit_text_field_with_icon.dart';
 
@@ -30,7 +31,8 @@ class MyAccountPage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: InkWell(
                 onTap: () {
-                  AppUtils.showErrorSnackBar(bodyText: "SNACKMSG_TEXT".tr);
+                  _showExitDialog();
+                  // AppUtils.showErrorSnackBar(bodyText: "SNACKMSG_TEXT".tr);
                 },
                 child: Icon(
                   Icons.note_alt_rounded,
@@ -75,10 +77,7 @@ class MyAccountPage extends StatelessWidget {
                         borderRadius: 5,
                         borderWidth: 0,
                         textStyle: CustomTextStyle.textPTsansMedium,
-                        onTap: () {
-                          controller.onTapOfEditDetails();
-                          Get.back();
-                        },
+                        onTap: () => controller.validationFied(),
                         height: 40,
                         width: 200,
                       )
@@ -163,7 +162,44 @@ class MyAccountPage extends StatelessWidget {
       imagePath: "",
       height: Dimensions.h42,
       keyboardType: TextInputType.text,
+      textStyle: CustomTextStyle.textRobotoSansMedium
+          .copyWith(fontSize: Dimensions.h15, fontWeight: FontWeight.w500),
       autofocus: autofocus,
+      formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]+$'))],
+    );
+  }
+
+  void _showExitDialog() {
+    Get.defaultDialog(
+      barrierDismissible: false,
+      title: "Contact Admin",
+      onWillPop: () async => false,
+      titleStyle: CustomTextStyle.textRobotoSansMedium,
+      content: Column(
+        children: [
+          Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)
+        ],
+      ),
+      actions: [
+        InkWell(
+          onTap: () async {
+            Get.back();
+          },
+          child: Container(
+            color: AppColors.appbarColor,
+            height: Dimensions.h40,
+            width: Dimensions.w150,
+            child: Center(
+              child: Text(
+                'OK',
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

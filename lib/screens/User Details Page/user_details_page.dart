@@ -81,8 +81,12 @@ class UserDetailsPage extends StatelessWidget {
                     hintText: "Enter Full Name".tr,
                     textController: controller.fullNameController,
                     maxLength: 100,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
                     autofocus: true,
+                    formatter: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^[a-zA-Z0-9]+$'))
+                    ],
                     //focusNode: controller.fullNameFocusNode,
                   ),
                   verticalSpace,
@@ -90,7 +94,11 @@ class UserDetailsPage extends StatelessWidget {
                     hintText: "Enter User Name".tr,
                     textController: controller.userNameController,
                     maxLength: 100,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
+                    formatter: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^[a-zA-Z0-9]+$'))
+                    ],
                     //  focusNode: controller.userNameFocusNode,
                   ),
                   verticalSpace,

@@ -57,22 +57,10 @@ class VerifyOTPPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // verticalSpace,
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
-        //   child: Text(
-        //     "OTPTEXT".tr,
-        //     textAlign: TextAlign.center,
-        //     style: CustomTextStyle.textRobotoSansLight.copyWith(
-        //       fontSize: Dimensions.h14,
-        //       letterSpacing: 1,
-        //       height: 1.5,
-        //       color: AppColors.black,
-        //     ),
-        //   ),
-        // ),
-        // verticalSpace,
         _buildPinCodeField(
+          onChange: (v) {
+            controller.onTapOfContinue();
+          },
           context: context,
           title: "OTP",
           pinType: controller.otp,
@@ -153,6 +141,7 @@ class VerifyOTPPage extends StatelessWidget {
     required String title,
     required RxString pinType,
     required int pinCodeLength,
+    required onChange,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Dimensions.w18),
@@ -184,6 +173,7 @@ class VerifyOTPPage extends StatelessWidget {
             animationDuration: const Duration(milliseconds: 200),
             onComplete: (val) {
               pinType.value = val;
+              onChange(val);
             },
             keyboardType: TextInputType.number,
             animation: Animations.fade,
@@ -196,41 +186,6 @@ class VerifyOTPPage extends StatelessWidget {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             responsive: true,
           ),
-          // PinCodeTextField(
-          //   autoFocus: true,
-          //   length: pinCodeLength,
-          //   appContext: context,
-          //   cursorColor: AppColors.black,
-          //   obscureText: false,
-          //   animationType: AnimationType.fade,
-          //   keyboardType: TextInputType.number,
-          //   enableActiveFill: true,
-          //   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          //   pinTheme: PinTheme(
-          //       shape: PinCodeFieldShape.box,
-          //       activeFillColor: AppColors.grey.withOpacity(0.2),
-          //       inactiveFillColor: AppColors.grey.withOpacity(0.2),
-          //       selectedFillColor: AppColors.grey.withOpacity(0.2),
-          //       inactiveColor: Colors.transparent,
-          //       activeColor: Colors.transparent,
-          //       selectedColor: Colors.transparent,
-          //       errorBorderColor: Colors.transparent,
-          //       borderWidth: 0,
-          //       borderRadius: BorderRadius.all(Radius.circular(Dimensions.r5))),
-          //   textStyle: CustomTextStyle.textRobotoSlabMedium.copyWith(
-          //       color: AppColors.appbarColor, fontWeight: FontWeight.bold),
-          //   animationDuration: const Duration(milliseconds: 200),
-          //   // controller: controller.otpController,
-          //   onCompleted: (val) {
-          //     pinType.value = val;
-          //   },
-          //   onChanged: (val) {
-          //     pinType.value = val;
-          //   },
-          //   beforeTextPaste: (text) {
-          //     return false;
-          //   },
-          // ),
         ],
       ),
     );

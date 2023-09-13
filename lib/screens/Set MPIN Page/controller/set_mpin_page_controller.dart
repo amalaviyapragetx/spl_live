@@ -1,14 +1,14 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/models/starline_chart_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../../api_services/api_service.dart';
+import '../../../components/DeviceInfo/device_info.dart';
+import '../../../components/DeviceInfo/device_information_model.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/user_details_model.dart';
-import '../../../routes/app_routes.dart';
 import '../../Local Storage.dart';
 import '../model/user_details_model.dart';
 
@@ -44,13 +44,15 @@ class SetMPINPageController extends GetxController {
   //   print("userDetails :---$data");
   // }
 
-  void getArguments() {
+  void getArguments() async {
+    await LocalStorage.write(ConstantsVariables.starlineConnect, false);
     print("000000000000000000000$arguments");
     if (arguments != null) {
       userDetails = arguments;
       print("userDetails when condition false : $userDetails");
       _fromLoginPage = false;
     } else {
+      callSetUserDetailsApi();
       _fromLoginPage = true;
       print("userDetails when condition true : $userDetails");
     }
@@ -84,13 +86,14 @@ class SetMPINPageController extends GetxController {
   }
 
   void callSetUserDetailsApi() async {
-    ApiService().setUserDetails(await userDetailsBody()).then((value) async {
+    print(userDetailsBody());
+    ApiService()
+        .setUserDetails(userDetails.userName == null
+            ? await userDetailsBody2()
+            : await userDetailsBody())
+        .then((value) async {
       debugPrint("Set User Details Api Response :- $value");
       if (value != null && value['status']) {
-        // AppUtils.showSuccessSnackBar(
-        //   bodyText: "${value['message']}",
-        //   headerText: "SUCCESSMESSAGE".tr,
-        // );
         var userData = value['data'];
         if (userData != null) {
           String authToken = userData['Token'] ?? "Null From API";
@@ -102,10 +105,14 @@ class SetMPINPageController extends GetxController {
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
           await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
+          print("${userData["Id"]}");
+          callFcmApi(userData["Id"]);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
-        Get.offAllNamed(AppRoutName.dashBoardPage);
+        userDetails.userName == null
+            ? null
+            : Get.offAllNamed(AppRoutName.dashBoardPage);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
@@ -114,10 +121,9 @@ class SetMPINPageController extends GetxController {
     });
   }
 
- callFcmApi(userId) async {
+  callFcmApi(userId) async {
     var token = await LocalStorage.read(ConstantsVariables.fcmToken);
-    print("===========$token");
-    Timer(const Duration(milliseconds: 500), () {
+    Timer(const Duration(seconds: 2), () {
       fsmApiCall(userId, token);
     });
   }
@@ -145,11 +151,31 @@ class SetMPINPageController extends GetxController {
   }
 
   Future<Map> userDetailsBody() async {
+    DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
     final userDetailsBody = {
       "userName": userDetails.userName,
       "fullName": userDetails.fullName,
-      "password": userDetails.password,
       "mPin": mpin.value,
+      "password": userDetails.password,
+      "oSVersion": deviceInfo.osVersion,
+      "appVersion": deviceInfo.appVersion,
+      "brandName": deviceInfo.brandName,
+      "model": deviceInfo.model,
+      "os": deviceInfo.deviceOs,
+      "manufacturer": deviceInfo.manufacturer,
+    };
+    return userDetailsBody;
+  }
+
+  userDetailsBody2() async {
+    DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
+    final userDetailsBody = {
+      "oSVersion": deviceInfo.osVersion,
+      "appVersion": deviceInfo.appVersion,
+      "brandName": deviceInfo.brandName,
+      "model": deviceInfo.model,
+      "os": deviceInfo.deviceOs,
+      "manufacturer": deviceInfo.manufacturer,
     };
     return userDetailsBody;
   }

@@ -37,7 +37,7 @@ class NormalGamePage extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  height: Dimensions.w22,
+                  height: Dimensions.h20,
                   width: Dimensions.w25,
                   child: SvgPicture.asset(
                     ConstantImage.walletAppbar,
@@ -47,15 +47,17 @@ class NormalGamePage extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Dimensions.r8,
-                      bottom: Dimensions.r10,
-                      left: Dimensions.r15,
-                      right: Dimensions.r10),
+                    top: Dimensions.r8,
+                    bottom: Dimensions.r5,
+                    left: Dimensions.r10,
+                    right: Dimensions.r10,
+                  ),
                   child: Obx(
                     () => Text(
                       walletController.walletBalance.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        color: AppColors.white,
+                        fontSize: Dimensions.h17,
                       ),
                     ),
                   ),
@@ -317,7 +319,7 @@ class NormalGamePage extends StatelessWidget {
                                       controller:
                                           controller.middleAnkController,
                                       textStyle: CustomTextStyle
-                                          .textPTsansMedium
+                                          .textRobotoSansMedium
                                           .copyWith(
                                         color: AppColors.black.withOpacity(0.7),
                                         fontWeight: FontWeight.bold,
@@ -445,10 +447,11 @@ class NormalGamePage extends StatelessWidget {
                           width: size.width / 2,
                           textAlign: TextAlign.center,
                           controller: controller.coinController,
-                          textStyle: CustomTextStyle.textPTsansMedium.copyWith(
+                          textStyle:
+                              CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.black.withOpacity(0.7),
                             fontWeight: FontWeight.bold,
-                            fontSize: Dimensions.h13,
+                            fontSize: Dimensions.h15,
                           ),
                           hintTextStyle:
                               CustomTextStyle.textRobotoSansMedium.copyWith(
@@ -547,7 +550,8 @@ class NormalGamePage extends StatelessWidget {
                             } else if (controller.gameMode.value.name!
                                     .toUpperCase() ==
                                 "DIGITS BASED JODI") {
-                              controller.digitsBasedJodiData();
+                              controller.newDigitBasedData();
+                              // controller.digitsBasedJodiData();
                             } else if (controller.gameMode.value.name ==
                                 "Choice Pana SPDP") {
                               if (controller.spValue1.value == false &&
@@ -555,8 +559,10 @@ class NormalGamePage extends StatelessWidget {
                                   controller.tpValue3.value == false) {
                                 AppUtils.showErrorSnackBar(
                                   bodyText: "Please select SP,DP or TP",
+                                  duration: const Duration(milliseconds: 900),
                                 );
                               } else {
+                                controller.getChoicePanaSPDPTP();
                                 controller.groupJodiData();
                               }
                               //  controller.groupJodiData();

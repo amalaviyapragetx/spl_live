@@ -109,9 +109,9 @@ class ChangepasswordPageController extends GetxController {
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.offAndToNamed(AppRoutName.profilePage);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
       }
     });
   }

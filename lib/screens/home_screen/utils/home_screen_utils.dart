@@ -26,7 +26,7 @@ class HomeScreenUtils {
       }
       return Text(
         isOpenResult ? "$result - ${sum % 10}" : "${sum % 10} - $result",
-        style: CustomTextStyle.textPTsansBold.copyWith(
+        style: CustomTextStyle.textRobotoSansMedium.copyWith(
           fontSize: Dimensions.h13,
           fontWeight: FontWeight.bold,
           color: AppColors.redColor,
@@ -112,11 +112,6 @@ class HomeScreenUtils {
                   SizedBox(
                     width: Dimensions.w5,
                   ),
-                  // Image.asset(
-                  //   ConstantImage.ruppeeBlueIcon,
-                  //   height: Dimensions.h25,
-                  //   width: Dimensions.w25,
-                  // ),
                   SizedBox(
                     width: Dimensions.w5,
                   ),
@@ -177,19 +172,6 @@ class HomeScreenUtils {
                 ),
               ),
             ),
-
-            // Container(
-            //   height: 40,
-            //   width: double.infinity,
-            //   decoration: const BoxDecoration(
-            //     color: Color.fromARGB(255, 188, 185, 185),
-            //     borderRadius: BorderRadius.only(
-            //       bottomLeft: Radius.circular(8),
-            //       bottomRight: Radius.circular(8),
-            //     ),
-            //   ),
-            //   child: Center(child: Text("Time: 29 June,2023, 5:26:11 PM")),
-            // ),
           ],
         ),
       ),
@@ -333,28 +315,6 @@ class HomeScreenUtils {
               ),
             ),
           ),
-          // Expanded(
-          //     child: InkWell(
-          //         onTap: onTap2,
-          //         child: Container(
-          //           // color: Colors.amber,
-          //           width: Dimensions.w100,
-          //           child: marketIcon(
-          //               onTap: () {},
-          //               text: "RESULT HISTORY",
-          //               iconData: Icons.network_wifi),
-          //         ))),
-          // Expanded(
-          //   child: InkWell(
-          //     onTap: onTap3,
-          //     child: Container(
-          //       // color: Colors.amber,
-          //       width: Dimensions.w100,
-          //       child: marketIcon(
-          //           onTap: () {}, text: "CHART", iconData: Icons.currency_rupee),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );
@@ -454,8 +414,8 @@ class HomeScreenUtils {
                                 ),
                                 Text(
                                   "${marketData.openTime ?? " "} | ${marketData.closeTime ?? ""}",
-                                  style: CustomTextStyle.textPTsansMedium
-                                      .copyWith(fontWeight: FontWeight.w500),
+                                  style: CustomTextStyle.textRobotoSansLight
+                                      .copyWith(fontWeight: FontWeight.w300),
                                 ),
                                 Text(
                                   controller.normalMarketList[index].market ??
@@ -545,21 +505,25 @@ class HomeScreenUtils {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: EdgeInsets.only(left: Dimensions.w15, bottom: 2),
-            child: Text(
-              "PLAY2".tr,
-              style: TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
+          FittedBox(
+            child: Padding(
+              padding: EdgeInsets.only(left: Dimensions.w15, bottom: 2),
+              child: Text(
+                "PLAY2".tr,
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 3.0),
-            child: Icon(
-              Icons.play_circle_fill,
-              color: AppColors.white,
+          FittedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 3.0),
+              child: Icon(
+                Icons.play_circle_fill,
+                color: AppColors.white,
+              ),
             ),
           ),
         ],
@@ -569,13 +533,6 @@ class HomeScreenUtils {
 
   banner() {
     return Obx(() => CarouselSlider(
-          // items: [
-          //   // for (var i = 0; i < controller.bennerData.length; i++)
-          //   imagewidget("${bannerData}"),
-          //   imagewidget("${bannerData}"),
-          //   imagewidget("$bannerData"),
-          //   imagewidget("$bannerData"),
-          // ],
           items: controller.bennerData.map((element) {
             return Builder(
               builder: (context) {
@@ -632,6 +589,15 @@ class HomeScreenUtils {
             },
             child: Container(
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 0.2,
+                    color: AppColors.grey,
+                    blurRadius: 2.5,
+                    offset: const Offset(2, 3),
+                  )
+                ],
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(Dimensions.h10),
                 border: Border.all(color: Colors.red, width: 1),
               ),
@@ -646,7 +612,7 @@ class HomeScreenUtils {
                   ),
                   Text(
                     controller.starLineMarketList.elementAt(index).time ?? "",
-                    style: CustomTextStyle.textPTsansBold.copyWith(
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
                       color: AppColors.black,
                       fontSize: Dimensions.h15,
                     ),
@@ -655,11 +621,12 @@ class HomeScreenUtils {
                     height: Dimensions.h5,
                   ),
                   buildResult(
-                      isOpenResult: true,
-                      resultDeclared: controller
-                              .starLineMarketList[index].isResultDeclared ??
-                          false,
-                      result: controller.starLineMarketList[index].result ?? 0),
+                    isOpenResult: true,
+                    resultDeclared:
+                        controller.starLineMarketList[index].isResultDeclared ??
+                            false,
+                    result: controller.starLineMarketList[index].result ?? 0,
+                  ),
                   SizedBox(
                     height: Dimensions.h5,
                   ),
@@ -736,8 +703,6 @@ class HomeScreenUtils {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                // var data = controller.marketHistoryList.elementAt(index);
-                // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return listveiwTransaction(
                   isWin: controller.marketHistoryList[index].isWin ?? false,
                   requestId:
@@ -768,13 +733,13 @@ class HomeScreenUtils {
         SizedBox(
           height: 45,
           child: TextField(
-            style: CustomTextStyle.textRobotoSansLight
+            style: CustomTextStyle.textRobotoSansMedium
                 .copyWith(color: AppColors.appbarColor),
             controller: controller.dateinput,
             decoration: InputDecoration(
               hintText:
                   DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-              hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+              hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                 color: AppColors.appbarColor,
               ),
               border: const OutlineInputBorder(
@@ -820,136 +785,121 @@ class HomeScreenUtils {
   }
 
   resultHistory(context) {
-    return RefreshIndicator(
-      onRefresh: controller.onSwipeRefresh,
-      child: Obx(
-        () => Column(
-          children: [
-            SizedBox(
-              height: Dimensions.h11,
-            ),
-            SizedBox(
-              height: 45,
-              child: TextField(
-                controller: controller.dateinputForResultHistory,
-                style: CustomTextStyle.textRobotoSansLight
-                    .copyWith(color: AppColors.appbarColor),
-                decoration: InputDecoration(
-                  hintText: DateFormat('dd-MM-yyyy')
-                      .format(DateTime.now())
-                      .toString(),
-                  hintStyle: CustomTextStyle.textRobotoSansLight.copyWith(
-                    color: AppColors.appbarColor,
-                  ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.w8, vertical: Dimensions.h10),
-                  filled: true,
-                  fillColor: AppColors.grey.withOpacity(0.15),
-                  prefixIcon: Icon(Icons.calendar_month_sharp,
-                      color: AppColors.appbarColor),
+    return Obx(
+      () => Column(
+        children: [
+          SizedBox(
+            height: Dimensions.h11,
+          ),
+          SizedBox(
+            height: 45,
+            child: TextField(
+              controller: controller.dateinputForResultHistory,
+              style: CustomTextStyle.textRobotoSansMedium
+                  .copyWith(color: AppColors.appbarColor),
+              decoration: InputDecoration(
+                hintText:
+                    DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  color: AppColors.appbarColor,
                 ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: controller.bidHistotyDate,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101));
-
-                  if (pickedDate != null) {
-                    String formattedDate =
-                        // .formatDateStringToDDMMMMMYYYY(pickedDate.toString());
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                    String formattedDate2 =
-                        DateFormat('dd-MM-yyyy').format(pickedDate);
-                    controller.dateinputForResultHistory.text = formattedDate2;
-
-                    controller.getDailyStarLineMarkets(
-                        formattedDate, formattedDate);
-                    controller.bidHistotyDate = pickedDate;
-                  }
-                },
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.w8, vertical: Dimensions.h10),
+                filled: true,
+                fillColor: AppColors.grey.withOpacity(0.15),
+                prefixIcon: Icon(Icons.calendar_month_sharp,
+                    color: AppColors.appbarColor),
               ),
+              readOnly: true,
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: controller.bidHistotyDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101));
+
+                if (pickedDate != null) {
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                  String formattedDate2 =
+                      DateFormat('dd-MM-yyyy').format(pickedDate);
+                  controller.dateinputForResultHistory.text = formattedDate2;
+
+                  controller.getDailyStarLineMarkets(
+                      formattedDate, formattedDate);
+                  controller.bidHistotyDate = pickedDate;
+                }
+              },
             ),
-            // Container(
-            //   height: Dimensions.h35,
-            //   color: Colors.grey.withOpacity(0.1),
-            //   child: Row(
-            //     children: [
-            //       const SizedBox(
-            //         width: 10,
-            //       ),
-            //       Icon(
-            //         Icons.calendar_month,
-            //         color: AppColors.appbarColor,
-            //       ),
-            //       const SizedBox(
-            //         width: 10,
-            //       ),
-            //       Text(
-            //         "03-07-2023",
-            //         style: TextStyle(
-            //           color: AppColors.appbarColor,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            SizedBox(
-              height: Dimensions.h11,
-            ),
-            controller.marketListForResult.isNotEmpty
-                ? ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.marketListForResult.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Container(
-                          height: Dimensions.h50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: AppColors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                spreadRadius: 0.2,
-                                color: AppColors.grey,
-                                blurRadius: 1,
-                                offset: const Offset(0, 2),
-                              )
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: Dimensions.w20,
-                              ),
-                              SizedBox(
-                                  width: Dimensions.w35,
-                                  child: SvgPicture.asset(
-                                      ConstantImage.stopWatchIcon)),
-                              // Icon(Icons.watch, color: AppColors.black),
-                              SizedBox(
+          ),
+          SizedBox(
+            height: Dimensions.h11,
+          ),
+          controller.marketListForResult.isNotEmpty
+              ? ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.marketListForResult.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Container(
+                        height: Dimensions.h50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              spreadRadius: 0.2,
+                              color: AppColors.grey,
+                              blurRadius: 1,
+                              offset: const Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: Dimensions.w20,
+                            ),
+                            SizedBox(
+                                width: Dimensions.w35,
+                                child: SvgPicture.asset(
+                                    ConstantImage.stopWatchIcon)),
+                            // Icon(Icons.watch, color: AppColors.black),
+                            SizedBox(
+                              width: Dimensions.w10,
+                            ),
+                            Text(
+                              controller
+                                      .marketListForResult.value[index].time ??
+                                  "00:00 AM",
+                              style: CustomTextStyle.textRobotoSansBold
+                                  .copyWith(fontSize: Dimensions.h15),
+                            ),
+                            Expanded(
+                              child: SizedBox(
                                 width: Dimensions.w10,
                               ),
-                              Text(
-                                controller.marketListForResult.value[index]
-                                        .time ??
-                                    "00:00 AM",
-                                style: CustomTextStyle.textRobotoSansBold
-                                    .copyWith(fontSize: Dimensions.h15),
-                              ),
-                              Expanded(
-                                child: SizedBox(
-                                  width: Dimensions.w10,
-                                ),
-                              ),
-                              controller.getResult(
+                            ),
+                            controller.getResult(
+                                      controller.marketListForResult
+                                              .value[index].isResultDeclared ??
+                                          false,
+                                      controller.marketListForResult[index]
+                                              .result ??
+                                          0,
+                                    ) !=
+                                    "***-*"
+                                ? Padding(
+                                    padding:
+                                        EdgeInsets.only(right: Dimensions.h50),
+                                    child: Text(
+                                      controller.getResult(
                                         controller
                                                 .marketListForResult
                                                 .value[index]
@@ -958,73 +908,51 @@ class HomeScreenUtils {
                                         controller.marketListForResult[index]
                                                 .result ??
                                             0,
-                                      ) !=
-                                      "***-*"
-                                  ? Padding(
-                                      padding: EdgeInsets.only(
-                                          right: Dimensions.h50),
-                                      child: Text(
-                                        controller.getResult(
-                                          controller
-                                                  .marketListForResult
-                                                  .value[index]
-                                                  .isResultDeclared ??
-                                              false,
-                                          controller.marketListForResult[index]
-                                                  .result ??
-                                              0,
-                                        ),
-                                        style: CustomTextStyle
-                                            .textRobotoSansBold
-                                            .copyWith(fontSize: Dimensions.h15),
                                       ),
-                                    )
-                                  : Padding(
-                                      padding: EdgeInsets.only(
-                                          right: Dimensions.h50),
-                                      child: SvgPicture.asset(
-                                        ConstantImage.openStarsSvg,
-                                        width: Dimensions.w60,
-                                      ),
-                                    )
-                            ],
-                          ),
+                                      style: CustomTextStyle.textRobotoSansBold
+                                          .copyWith(fontSize: Dimensions.h15),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding:
+                                        EdgeInsets.only(right: Dimensions.h50),
+                                    child: SvgPicture.asset(
+                                      ConstantImage.openStarsSvg,
+                                      width: Dimensions.w60,
+                                    ),
+                                  )
+                          ],
                         ),
-                      );
-                    },
-                  )
-                : Container(
-                    height: Dimensions.h35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.grey.shade300,
-                      boxShadow: [
-                        BoxShadow(
-                          spreadRadius: 0.2,
-                          color: AppColors.grey,
-                          blurRadius: 1,
-                          offset: const Offset(0, 2),
-                        )
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        "NORESULTHISTORY".tr,
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          fontSize: Dimensions.h16,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.grey.shade600,
-                        ),
-                        // style: TextStyle(
-                        //   fontSize: Dimensions.h16,
-                        //   fontWeight: FontWeight.normal,
-                        //   color: Colors.grey.shade600,
-                        // ),
+                      ),
+                    );
+                  },
+                )
+              : Container(
+                  height: Dimensions.h35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.grey.shade300,
+                    boxShadow: [
+                      BoxShadow(
+                        spreadRadius: 0.2,
+                        color: AppColors.grey,
+                        blurRadius: 1,
+                        offset: const Offset(0, 2),
+                      )
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      "NORESULTHISTORY".tr,
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        fontSize: Dimensions.h16,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey.shade600,
                       ),
                     ),
                   ),
-          ],
-        ),
+                ),
+        ],
       ),
     );
   }
@@ -1035,7 +963,7 @@ class HomeScreenUtils {
           columnSpacing: 0,
           showBottomBorder: false,
           headingRowHeight: Dimensions.h30,
-          dataRowHeight: Dimensions.h30,
+          dataRowHeight: Dimensions.h40,
           columns: [
             DataColumn(
               label: SingleChildScrollView(
@@ -1068,6 +996,7 @@ class HomeScreenUtils {
                         controller.starlineChartDateAndTime[index].date ?? "",
                         //"2023-08-13",
                         textAlign: TextAlign.center,
+                        style: CustomTextStyle.textRobotoSansMedium,
                       ),
                     ),
                   ),
@@ -1084,14 +1013,13 @@ class HomeScreenUtils {
       child: Obx(
         () => DataTable(
           headingRowHeight: Dimensions.h30,
-          dataRowHeight: Dimensions.h30,
+          dataRowHeight: Dimensions.h40,
           horizontalMargin: 0,
           headingRowColor: MaterialStateColor.resolveWith(
             (states) => Colors.white,
           ),
           rows: List<DataRow>.generate(
             controller.starlineChartDateAndTime.length,
-            // 10,
             (i) {
               return DataRow(
                   color: MaterialStateColor.resolveWith(
@@ -1110,7 +1038,7 @@ class HomeScreenUtils {
                       );
                       return DataCell(
                         Container(
-                          height: Dimensions.h30,
+                          height: Dimensions.h40,
                           width: Dimensions.w100,
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -1119,9 +1047,10 @@ class HomeScreenUtils {
                           child: Center(
                             child: Text(
                               timeData!.result != null
-                                  ? controller.getResult(true, timeData.result)
+                                  ? controller.getResult2(true, timeData.result)
                                   : "***-*",
                               textAlign: TextAlign.center,
+                              style: CustomTextStyle.textRobotoSansMedium,
                             ),
                           ),
                         ),
@@ -1147,7 +1076,8 @@ class HomeScreenUtils {
                       controller.starlineChartTime[index].marketName ?? "",
                       // "11:00 AM",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: AppColors.white),
+                      style: CustomTextStyle.textRobotoSansMedium
+                          .copyWith(color: AppColors.white),
                     ),
                   ),
                 ),
@@ -1279,57 +1209,4 @@ class HomeScreenUtils {
       ),
     );
   }
-
-  // Widget notificationWidget(
-  //     {required String notifiactionHeder,
-  //     required String notifiactionSubTitle}) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 4.0),
-  //     child: Container(
-  //       width: double.infinity,
-  //       decoration: BoxDecoration(
-  //         color: AppColors.white,
-  //         boxShadow: [
-  //           BoxShadow(
-  //             spreadRadius: 1,
-  //             color: AppColors.grey,
-  //             blurRadius: 5,
-  //             offset: const Offset(2, 3),
-  //           ),
-  //         ],
-  //       ),
-  //       child: Padding(
-  //         padding: EdgeInsets.symmetric(horizontal: Dimensions.h8),
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             SizedBox(
-  //               height: Dimensions.h5,
-  //             ),
-  //             Text(
-  //               notifiactionHeder,
-  //               style: CustomTextStyle.textRobotoSansBold.copyWith(
-  //                 color: AppColors.black,
-  //                 fontSize: Dimensions.h13,
-  //               ),
-  //             ),
-  //             SizedBox(
-  //               height: Dimensions.h5,
-  //             ),
-  //             SizedBox(
-  //               child: Text(
-  //                 notifiactionSubTitle,
-  //                 textAlign: TextAlign.start,
-  //                 style: CustomTextStyle.textRobotoSansLight.copyWith(
-  //                   color: AppColors.black,
-  //                   fontSize: Dimensions.h13,
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

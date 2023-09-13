@@ -50,10 +50,10 @@ class SangamPages extends StatelessWidget {
                 color: AppColors.white,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.w11),
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.w8),
                 child: Text(
                   walletController.walletBalance.value,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     color: AppColors.white,
                     fontSize: Dimensions.h17,
                   ),
@@ -187,7 +187,6 @@ class SangamPages extends StatelessWidget {
                   verticalSpace,
                   verticalSpace,
                   verticalSpace,
-                  // listview(),
                   bidList(size)
                 ],
               ),
@@ -196,77 +195,11 @@ class SangamPages extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Obx(
-        () => bottumNav(
-          size,
-          controller.totalBiddingAmount.toString(),
-          controller.addedSangamList.length.toString(),
-        ),
+        () => bottumNav(size, controller.totalBiddingAmount.toString(),
+            controller.addedSangamList.length.toString(), context),
       ),
       // bottomNavigationBar:
       //     Obx(() => bottomNavigationBar(controller.totalBiddingAmount.value)),
-    );
-  }
-
-  listview() {
-    return Obx(
-      () => ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: controller.addedSangamList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: Dimensions.h10),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(Dimensions.h5),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 5,
-                    color: AppColors.grey,
-                    spreadRadius: 2,
-                    offset: const Offset(1, 2),
-                  )
-                ],
-              ),
-              child: ListTile(
-                visualDensity: const VisualDensity(vertical: -3),
-                trailing: InkWell(
-                  onTap: () {
-                    // controller.totalBiddingAmount.value = controller
-                    //     .requestModel.value.bids![index].coins
-                    //     .toString();
-                    //  controller.onDeleteSangamBid(index);
-                  },
-                  child: Container(
-                    color: AppColors.transparent,
-                    height: Dimensions.w25,
-                    width: Dimensions.w25,
-                    child: SvgPicture.asset(
-                      ConstantImage.trashIcon,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                title: Text(
-                  "${controller.requestModel.value.bids![index].gameModeName} - ${controller.bidType}",
-                  style: CustomTextStyle.textRobotoSansBold.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: Dimensions.h14,
-                    color: AppColors.black,
-                  ),
-                ),
-                subtitle: Text(
-                  "Bid No. : ${controller.requestModel.value.bids![index].bidNo}, Coins : ${controller.requestModel.value.bids![index].coins}",
-                  style: CustomTextStyle.textRobotoSansBold.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 
@@ -320,8 +253,6 @@ class SangamPages extends StatelessWidget {
                         if (value.length == 3) {
                           controller.addedNormalBidValue = value;
                           controller.focusNode.nextFocus();
-                          // controller.openFocusNode.unfocus();
-                          // controller.closeFocusNode.requestFocus();
                           controller.validateEnteredOpenDigit(value);
                         }
                       } else if (controller.gameMode.value.name!
@@ -329,10 +260,7 @@ class SangamPages extends StatelessWidget {
                           "HALF SANGAM B") {
                         if (value.length == 3) {
                           controller.addedNormalBidValue = value;
-                          //    print("++++++++++${controller.addedNormalBidValue}");
                           controller.focusNode.nextFocus();
-                          // controller.openFocusNode.unfocus();
-                          // controller.closeFocusNode.requestFocus();
                           controller.validateEnteredOpenDigit(value);
                         }
                       } else {
@@ -341,8 +269,6 @@ class SangamPages extends StatelessWidget {
                           if (value.length == 1) {
                             controller.validateEnteredCloseDigit(false, value);
                             controller.focusNode.nextFocus();
-                            // controller.openFocusNode.unfocus();
-                            // controller.closeFocusNode.requestFocus();
                           }
                         }
                       }
@@ -624,7 +550,7 @@ class SangamPages extends StatelessWidget {
     );
   }
 
-  bottumNav(Size size, String totalAmount, String bids) {
+  bottumNav(Size size, String totalAmount, String bids, context) {
     return Container(
       width: size.width,
       height: Dimensions.h45,
@@ -646,7 +572,7 @@ class SangamPages extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
             child: RoundedCornerButton(
-              text: "SAVE".tr.toUpperCase(),
+              text: "SUBMIT".tr.toUpperCase(),
               color: AppColors.white,
               borderColor: AppColors.white,
               fontSize: Dimensions.h11,
@@ -657,7 +583,7 @@ class SangamPages extends StatelessWidget {
               borderWidth: 0.2,
               textStyle: CustomTextStyle.textRobotoSansBold,
               onTap: () {
-                controller.onTapOfSaveButton();
+                controller.onTapOfSaveButton(context);
                 // controller.coinsFocusNode.unfocus();
                 // controller.openFocusNode.requestFocus();
                 // controller.onTapOfAddBidButton();
@@ -749,62 +675,38 @@ class SangamPages extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      // nameColumn(
-                      //     subText: "",
-                      //     titleText: controller.bidType,
-                      //     textColor2: AppColors.black.withOpacity(0.5),
-                      //     textColor: AppColors.black),
-                      // nameColumn(
-                      //   subText: "",
-                      //   titleText: (controller.gameMode.value.name!
-                      //               .toUpperCase() ==
-                      //           "HALF SANGAM A")
-                      //       ? controller.manipulateString(controller
-                      //               .requestModel.value.bids![index].bidNo ??
-                      //           "")
-                      //       : controller
-                      //               .requestModel.value.bids![index].bidNo ??
-                      //           "",
-                      //   textColor2: AppColors.black.withOpacity(0.5),
-                      //   textColor: AppColors.black,
-                      // ),
-                      // nameColumn(
-                      //   subText: "",
-                      //   titleText: controller
-                      //       .requestModel.value.bids![index].coins
-                      //       .toString(),
-                      //   textColor2: AppColors.black.withOpacity(0.5),
-                      //   textColor: AppColors.black,
-                      // ),
                       SizedBox(
-                        width: Dimensions.w150,
+                        width: Dimensions.w130,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Text(
+                              " Sangam :",
+                              style:
+                                  CustomTextStyle.textRobotoSansBold.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h14,
+                              ),
+                            ),
                             FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text(
-                                " Sangam :",
-                                style:
-                                    CustomTextStyle.textRobotoSansBold.copyWith(
+                                // " ${controller.manipulateString(controller.requestModel.value.bids![index].bidNo ?? "", controller.gameMode.value.name!.toString())}",
+                                controller.requestModel.value.bids![index]
+                                        .bidNo ??
+                                    "",
+                                style: CustomTextStyle.textRobotoSansLight
+                                    .copyWith(
                                   color: AppColors.black,
-                                  fontSize: Dimensions.h14,
+                                  fontSize: Dimensions.h13,
                                 ),
-                              ),
-                            ),
-                            Text(
-                              " ${(controller.gameMode.value.name!.toUpperCase() == "HALF SANGAM A") ? controller.manipulateString(controller.requestModel.value.bids![index].bidNo ?? "") : controller.requestModel.value.bids![index].bidNo ?? ""}",
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
-                                color: AppColors.black,
-                                fontSize: Dimensions.h14,
                               ),
                             )
                           ],
                         ),
                       ),
                       SizedBox(
-                        width: Dimensions.w40,
+                        width: Dimensions.w60,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -816,13 +718,16 @@ class SangamPages extends StatelessWidget {
                                 fontSize: Dimensions.h15,
                               ),
                             ),
-                            Text(
-                              controller.requestModel.value.bids![index].coins
-                                  .toString(),
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
-                                color: AppColors.black,
-                                fontSize: Dimensions.h15,
+                            FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                controller.requestModel.value.bids![index].coins
+                                    .toString(),
+                                style: CustomTextStyle.textRobotoSansLight
+                                    .copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
+                                ),
                               ),
                             )
                           ],

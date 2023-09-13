@@ -21,8 +21,9 @@ class MPINPageController extends GetxController {
   var userId = "";
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await LocalStorage.write(ConstantsVariables.starlineConnect, false);
     userId = arguments['id'].toString();
   }
 

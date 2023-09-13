@@ -49,7 +49,10 @@ class MoreListController extends GetxController {
       if (value['status']) {
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        var deviceToken = await LocalStorage.read(ConstantsVariables.fcmToken);
         await LocalStorage.eraseBox();
+        await LocalStorage.write(ConstantsVariables.fcmToken, deviceToken);
+        print("Device Token : $deviceToken");
         Get.offAllNamed(AppRoutName.walcomeScreen);
       } else {
         AppUtils.showErrorSnackBar(

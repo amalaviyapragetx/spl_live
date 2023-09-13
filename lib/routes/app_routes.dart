@@ -60,8 +60,6 @@ import '../screens/User Details Page/binding/user_details_page_binding.dart';
 import '../screens/User Details Page/user_details_page.dart';
 import '../screens/Verify OTP Page/binding/verify_otp_binding.dart';
 import '../screens/Verify OTP Page/verify_otp.dart';
-import '../screens/bid History Page Details/bid_history_page_details.dart';
-import '../screens/bid History Page Details/bindings/bid_history_page_details_binding.dart';
 import '../screens/game_pages/bindings/game_mode_page_binding.dart';
 import '../screens/gamemode_pages/bindings/game_mode_page_binding.dart';
 import '../screens/home_screen/binding/home_screen_binding.dart';
@@ -415,12 +413,12 @@ class AppRoutes {
       page: () => StarLineNewGamePage(),
       bindings: [StarlineNewGamePageBinding()],
     ),
-    GetPage(
-      name: AppRoutName.newBidHistorypage,
-      transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 300),
-      page: () => BidHistoryDetailsNewPage(),
-      bindings: [BidHistoryPageDetailsBinding()],
-    )
+    // GetPage(
+    //   name: AppRoutName.newBidHistorypage,
+    //   transition: Transition.fadeIn,
+    //   transitionDuration: const Duration(milliseconds: 300),
+    //   page: () => BidHistoryDetailsNewPage(),
+    //   bindings: [BidHistoryPageDetailsBinding()],
+    // )
   ];
 }

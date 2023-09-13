@@ -38,17 +38,6 @@ class WelcomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            // SizedBox(
-            //   height: Dimensions.h10,
-            // ),
-            // SizedBox(
-            //   height: Dimensions.h10,
-            // ),
-            // Text("WELCOMETEXT".tr,
-            //     textAlign: TextAlign.center,
-            //     style: CustomTextStyle.textRobotoSansLight.copyWith(
-            //       fontSize: Dimensions.h14,
-            //     )),
             verticalSpace,
             verticalSpace,
             RoundedCornerButton(
@@ -121,32 +110,4 @@ class WelcomeScreen extends StatelessWidget {
       ],
     );
   }
-//   Row orView() {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: [
-//         Expanded(
-//           child: Divider(
-//             color: Colors.grey,
-//             indent: Dimensions.w20,
-//             endIndent: Dimensions.w20,
-//             thickness: 2,
-//           ),
-//         ),
-//         Text(
-//           "OR",
-//           style: CustomTextStyle.textRobotoSlabMedium
-//               .copyWith(fontSize: Dimensions.h25),
-//         ),
-//         Expanded(
-//           child: Divider(
-//             color: Colors.grey,
-//             indent: Dimensions.w20,
-//             endIndent: Dimensions.w20,
-//             thickness: 2,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
 }

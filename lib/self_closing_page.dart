@@ -133,7 +133,6 @@ class InactivityController extends GetxController {
                 await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
             await LocalStorage.write(ConstantsVariables.timeOut, false);
             var timeOut = await LocalStorage.read(ConstantsVariables.timeOut);
-            print("=============+++++$timeOut");
             if (timeOut == false) {
               if (alreadyLoggedIn) {
                 if (isActive && isVerified) {

@@ -34,6 +34,8 @@ class DashBoardPage extends StatelessWidget {
         } else {
           if (controller.widgetContainer.value != 0) {
             controller.widgetContainer.value = 0;
+            print(
+                "==========================${controller.widgetContainer.value}");
             return false;
           } else {
             return await showDialog(
@@ -58,6 +60,7 @@ class DashBoardPage extends StatelessWidget {
                 onTapBidHistory: () {
                   controller.pageWidget.value = 1;
                   controller.currentIndex.value = 1;
+
                   controller.marketBidsByUserId(lazyLoad: false);
                   SystemChrome.setPreferredOrientations([
                     DeviceOrientation.portraitUp,

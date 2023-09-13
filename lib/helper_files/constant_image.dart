@@ -1,12 +1,8 @@
 class ConstantImage {
   static const splashScreen = "assets/images/splash.png";
-  static const rupeeImageGreen = "assets/images/rupee.png";
   static const whatsaapIcon = "assets/images/icons8-whatsapp-48.png";
-  static const ruppeeBlueIcon = "assets/images/rupeeBlue.png";
-  static const diceImage = "assets/images/red_dice-40.png";
   static const rupeeImage = "assets/images/rupee-icon.svg";
   static const splLogo = 'assets/images/Spl.png';
-  static const dropDownArrowSVG = "assets/images/drop_down_arrow.svg";
   static const String phoneSVG = "assets/images/phone_svg.svg";
   static String profileIconSVG = "assets/images/profile_icon.svg";
   static String lockSVG = "assets/images/lock_svg.svg";
@@ -34,7 +30,6 @@ class ConstantImage {
   static String infoIcon = "assets/images/information_sharp_icon.svg";
   static String signOutIcon = "assets/images/log out_icon.svg";
   static String serchZoomIcon = "assets/images/search_zoom_icon.svg";
-  static String trashIcon = "assets/images/trash_sharp_icon.svg";
   static String profileImage = "assets/images/myProfileImage.svg";
   static String aboutUsImage =
       "assets/images/8219552_communication_support_talk_conversation_folder_icon.svg";

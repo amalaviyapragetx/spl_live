@@ -2,9 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import '../../../api_services/api_service.dart';
+import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
+import '../../../helper_files/custom_text_style.dart';
+import '../../../helper_files/dimentions.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
@@ -34,7 +38,7 @@ class SangamPageController extends GetxController {
   RxBool isHalfSangam = false.obs;
   RxBool isOpenBid = true.obs;
   JsonFileModel jsonModel = JsonFileModel();
-  var addedSangamList = <Bids>[].obs;
+  RxList<Bids> addedSangamList = <Bids>[].obs;
   var coinsController = TextEditingController();
   var openValueController = TextEditingController();
   var closeValueController = TextEditingController();
@@ -61,6 +65,7 @@ class SangamPageController extends GetxController {
   }
 
   String addedNormalBidValue = "";
+  String checkBidValue = "";
   List<String> _validationListForNormalMode = [];
   var allThreePanaList = <DigitListModelOffline>[].obs;
   List<String> _tempValidationList = [];
@@ -133,6 +138,7 @@ class SangamPageController extends GetxController {
           );
         } else {
           Get.back();
+          Get.back();
           AppUtils.showSuccessSnackBar(
               bodyText: value['message'] ?? "",
               headerText: "SUCCESSMESSAGE".tr);
@@ -155,16 +161,9 @@ class SangamPageController extends GetxController {
   }
 
   void validateEnteredOpenDigit(String value) {
-    // enteredOpenDigitsIsValidate = true;
-    //  enteredOpenDigitsIsValidate = true;
     addedNormalBidValue = value;
     openValue = value;
-    // print("********openValue****************$value");
-    // if (enteredOpenDigitsIsValidate) {
-    //   print(enteredOpenDigitsIsValidate);
-    //   halfSangamPanaSwitchCase(
-    //       jsonModel.singlePana!.single, int.parse(openValue));
-    // }
+    // checkBidValue = "$openValue-$closeValue";
   }
 
   void validateEnteredCloseDigit(bool validate, String value) {
@@ -173,19 +172,16 @@ class SangamPageController extends GetxController {
     } else {
       addedNormalBidValue = value;
       closeValue = value;
-      //  print("***********closeValue***************$value");
+      // checkBidValue = "$openValue-$closeValue";
+      print("***********closeValue***************$value");
     }
-
-    // if (enteredOpenDigitsIsValidate) {
-    //   halfSangamPanaSwitchCase(
-    //       jsonModel.singlePana!.single, int.parse(openValue));
-    // }
   }
 
-  void onTapOfSaveButton() {
+  void onTapOfSaveButton(context) {
     if (requestModel.value.bids != null &&
         requestModel.value.bids!.isNotEmpty) {
-      createMarketBidApi();
+      //  createMarketBidApi();
+      showConfirmationDialog(context);
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Please Add Some Bids!",
@@ -242,10 +238,6 @@ class SangamPageController extends GetxController {
   void onTapOfAddBidButton() {
     if (int.parse(coinsController.text) > 0 ||
         coinsController.text.isNotEmpty) {
-      //if (enteredOpenDigitsIsValidate) {
-      print("++++++++++++++++++++++++++++++++++++${addedNormalBidValue}");
-      print(
-          "++++++++++++++++++++++++++++++++++++${_validationListForNormalMode.contains(addedNormalBidValue)}");
       if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
@@ -266,20 +258,25 @@ class SangamPageController extends GetxController {
         focusNode.previousFocus();
         focusNode.previousFocus();
       } else {
-        var existingIndex = addedSangamList
-            .indexWhere((element) => element.bidNo == addedNormalBidValue);
-        print("-----------------------------__$existingIndex");
+        // print("==============${addedSangamList}");
+        var existingIndex = addedSangamList.indexWhere((element) {
+          print("${element.bidNo}  =  $openValue-$closeValue");
+          return element.bidNo ==
+              manipulateString("$openValue-$closeValue", gameMode.value.name!);
+        });
+        print("---------5165544-------------__$existingIndex");
         if (existingIndex != -1) {
           // If the bidNo already exists in selectedBidsList, update coins value.
           addedSangamList[existingIndex].coins =
               (addedSangamList[existingIndex].coins! +
                   int.parse(coinsController.text));
-
-          print("-----------------------------__$existingIndex");
+          addedSangamList.refresh();
+          requestModel.refresh();
         } else {
           addedSangamList.add(
             Bids(
-                bidNo: "$openValue-$closeValue",
+                bidNo: manipulateString(
+                    "$openValue-$closeValue", gameMode.value.name!),
                 coins: int.parse(coinsController.text),
                 gameId: gameMode.value.id,
                 gameModeName: gameMode.value.name,
@@ -294,6 +291,7 @@ class SangamPageController extends GetxController {
         focusNode.previousFocus();
         _calculateTotalAmount();
         requestModel.value.bids = addedSangamList;
+        requestModel.refresh();
       }
     } else {
       Get.closeCurrentSnackbar();
@@ -304,14 +302,64 @@ class SangamPageController extends GetxController {
   }
 
   /////// String manupiLATION for haldsangam a
-  String manipulateString(String input) {
+  String manipulateString(String input, String gameMode) {
     List<String> parts = input.split('-');
-
     if (parts.length != 2) {
       return "Invalid input format.";
     }
+    Rx<String> manipulatedString = "".obs;
+    manipulatedString.value = "${parts[1]}-${parts[0]}";
+    print("========input===========++$input");
+    if (gameMode == "Half Sangam A") {
+      print("===================++$manipulatedString input: $input");
+      return manipulatedString.value;
+    } else {
+      return input;
+    }
+  }
 
-    String manipulatedString = "${parts[1]}-${parts[0]}";
-    return manipulatedString;
+  void showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm!'),
+          content: Text(
+            'Do you really wish to submit?',
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
+              color: AppColors.grey,
+              fontSize: Dimensions.h14,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Handle cancel button press
+                Get.back();
+              },
+              child: Text(
+                'CANCLE',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                createMarketBidApi();
+              },
+              child: Text(
+                'OKAY',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
