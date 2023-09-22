@@ -100,7 +100,7 @@ class SplashController extends GetxController {
     bool isUserDetailSet =
         await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
     print(
-        "================================================$isUserDetailSet $isVerified $isActive");
+        "================================================$isUserDetailSet $hasMPIN ");
     //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
       if (!isActive && !isVerified) {

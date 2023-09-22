@@ -16,7 +16,8 @@ class MPINPageController extends GetxController {
   StreamController<ErrorAnimationType> mpinErrorController =
       StreamController<ErrorAnimationType>();
   RxString mpin = "".obs;
-
+  RxString street = ''.obs;
+  RxString postalCode = ''.obs;
   var arguments = Get.arguments;
 
   var userId = "";
@@ -77,7 +78,9 @@ class MPINPageController extends GetxController {
       "deviceId": DeviceInfo.deviceId,
       "city": city.value,
       "country": country.value,
-      "state": state.value
+      "state": state.value,
+      "street": street.value,
+      "postalCode": postalCode.value
     };
     return verifyMPINBody;
   }
@@ -104,13 +107,14 @@ class MPINPageController extends GetxController {
 
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
-
         city.value = placemark.locality ?? 'Unknown';
         country.value = placemark.country ?? 'Unknown';
         state.value = placemark.administrativeArea ?? 'Unknown';
-
+        street.value =
+            "${placemark.street ?? 'Unknown'},${placemark.subLocality ?? 'Unknown'}";
+        postalCode.value = placemark.postalCode ?? 'Unknown';
         print(
-            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value} ");
+            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}");
       }
     } catch (e) {
       print('Error getting location: $e');

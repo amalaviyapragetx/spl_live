@@ -44,7 +44,7 @@ class SignInPageController extends GetxController {
           // bool isMpinSet = value['data']['IsMPinSet'] ?? false;
           bool isActive = value['data']['IsActive'] ?? false;
           bool isVerified = value['data']['IsVerified'] ?? false;
-          bool isUserDetailSet = value['data'][' `-`'] ?? false;
+          bool isUserDetailSet = value['data']['IsUserDetailSet'] ?? false;
           await LocalStorage.write(ConstantsVariables.authToken, authToken);
           // await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.isActive, isActive);

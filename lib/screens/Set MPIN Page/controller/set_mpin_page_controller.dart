@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -26,6 +27,8 @@ class SetMPINPageController extends GetxController {
   RxString city = ''.obs;
   RxString country = ''.obs;
   RxString state = ''.obs;
+  RxString street = ''.obs;
+  RxString postalCode = ''.obs;
 
   @override
   void onInit() {
@@ -116,11 +119,14 @@ class SetMPINPageController extends GetxController {
           bool isActive = userData['IsActive'] ?? false;
           bool isVerified = userData['IsVerified'] ?? false;
           bool isMpinSet = userData['IsMPinSet'] ?? false;
+          bool isUserDetailSet = userData['IsUserDetailSet'] ?? false;
           await LocalStorage.write(ConstantsVariables.authToken, authToken);
           await LocalStorage.write(ConstantsVariables.isActive, isActive);
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
           await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
+          await LocalStorage.write(
+              ConstantsVariables.isUserDetailSet, isUserDetailSet);
           print("${userData["Id"]}");
           callFcmApi(userData["Id"]);
         } else {
@@ -181,7 +187,9 @@ class SetMPINPageController extends GetxController {
       "manufacturer": deviceInfo.manufacturer,
       "city": city.value,
       "country": country.value,
-      "state": state.value
+      "state": state.value,
+      "street": street.value,
+      "postalCode": postalCode.value
     };
     print(userDetailsBody);
     return userDetailsBody;
@@ -198,7 +206,9 @@ class SetMPINPageController extends GetxController {
       "manufacturer": deviceInfo.manufacturer,
       "city": city.value,
       "country": country.value,
-      "state": state.value
+      "state": state.value,
+      "street": street.value,
+      "postalCode": postalCode.value
     };
     print(userDetailsBody);
     return userDetailsBody;
@@ -213,10 +223,15 @@ class SetMPINPageController extends GetxController {
 
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
-
         city.value = placemark.locality ?? 'Unknown';
         country.value = placemark.country ?? 'Unknown';
         state.value = placemark.administrativeArea ?? 'Unknown';
+        street.value =
+            "${placemark.street ?? 'Unknown'},${placemark.subLocality ?? 'Unknown'}";
+        postalCode.value = placemark.postalCode ?? 'Unknown';
+        print(
+            "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${placemark.subAdministrativeArea}");
+        inspect(placemarks[0]);
 
         getArguments();
         print(
