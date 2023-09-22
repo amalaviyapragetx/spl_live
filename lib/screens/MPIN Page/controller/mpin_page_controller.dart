@@ -111,7 +111,7 @@ class MPINPageController extends GetxController {
         country.value = placemark.country ?? 'Unknown';
         state.value = placemark.administrativeArea ?? 'Unknown';
         street.value =
-            "${placemark.street ?? 'Unknown'},${placemark.subLocality ?? 'Unknown'}";
+            "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
         postalCode.value = placemark.postalCode ?? 'Unknown';
         print(
             "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}");

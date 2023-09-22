@@ -227,7 +227,7 @@ class SetMPINPageController extends GetxController {
         country.value = placemark.country ?? 'Unknown';
         state.value = placemark.administrativeArea ?? 'Unknown';
         street.value =
-            "${placemark.street ?? 'Unknown'},${placemark.subLocality ?? 'Unknown'}";
+            "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
         postalCode.value = placemark.postalCode ?? 'Unknown';
         print(
             "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${placemark.subAdministrativeArea}");
@@ -235,7 +235,7 @@ class SetMPINPageController extends GetxController {
 
         getArguments();
         print(
-            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value} ");
+            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   State:  ${street.value}");
       }
     } catch (e) {
       print('Error getting location: $e');
