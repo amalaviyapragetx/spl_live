@@ -85,7 +85,7 @@ class UserDetailsPage extends StatelessWidget {
                     autofocus: true,
                     formatter: [
                       FilteringTextInputFormatter.allow(
-                          RegExp(r'^[a-zA-Z0-9]+$'))
+                          RegExp(r'^[a-zA-Z\s]+$'))
                     ],
                     //focusNode: controller.fullNameFocusNode,
                   ),
@@ -97,7 +97,7 @@ class UserDetailsPage extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     formatter: [
                       FilteringTextInputFormatter.allow(
-                          RegExp(r'^[a-zA-Z0-9]+$'))
+                          RegExp(r'^[a-zA-Z0-9\s]+$'))
                     ],
                     //  focusNode: controller.userNameFocusNode,
                   ),

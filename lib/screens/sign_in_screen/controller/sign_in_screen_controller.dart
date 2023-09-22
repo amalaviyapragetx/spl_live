@@ -44,12 +44,20 @@ class SignInPageController extends GetxController {
           // bool isMpinSet = value['data']['IsMPinSet'] ?? false;
           bool isActive = value['data']['IsActive'] ?? false;
           bool isVerified = value['data']['IsVerified'] ?? false;
+          bool isUserDetailSet = value['data'][' `-`'] ?? false;
           await LocalStorage.write(ConstantsVariables.authToken, authToken);
           // await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.isActive, isActive);
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
           await LocalStorage.write(ConstantsVariables.userData, value['data']);
-          Get.toNamed(AppRoutName.setMPINPage);
+          await LocalStorage.write(
+              ConstantsVariables.isUserDetailSet, isUserDetailSet);
+
+          if (isUserDetailSet) {
+            Get.toNamed(AppRoutName.setMPINPage);
+          } else {
+            Get.toNamed(AppRoutName.userDetailsPage);
+          }
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
@@ -70,6 +78,7 @@ class SignInPageController extends GetxController {
       "password": passwordController.text,
       "countryCode": "+92",
       "deviceId": DeviceInfo.deviceId,
+      // "deviceId": "954f4d94fdsa94fdsf",
       // "fcmToken": fcmToken,
     };
     debugPrint(signInBody.toString());

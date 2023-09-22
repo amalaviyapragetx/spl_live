@@ -71,7 +71,7 @@ class HomePageController extends GetxController {
   RxList<MarketBidHistory> marketbidhistory1 = <MarketBidHistory>[].obs;
   RxList<dynamic> result = [].obs;
   Rx<Bidhistorymodel> bidMarketModel = Bidhistorymodel().obs;
-  Rx<MarketBidHistory> marketBidHistory = MarketBidHistory().obs;
+  // Rx<MarketBidHistory> marketBidHistory = MarketBidHistory().obs;
   RxList<MarketBidHistoryList> marketBidHistoryList =
       <MarketBidHistoryList>[].obs;
   DateTime startEndDate = DateTime.now();
@@ -728,6 +728,32 @@ class HomePageController extends GetxController {
       return "$result - ${sum % 10}";
     } else {
       return "***-*";
+    }
+  }
+
+  String getResult2(bool resultDeclared, int result) {
+    if (resultDeclared != null && resultDeclared) {
+      int sum = 0;
+      for (int i = result; i > 0; i = (i / 10).floor()) {
+        sum += (i % 10);
+      }
+      print("$result");
+      return "$result";
+    } else {
+      return "***";
+    }
+  }
+
+  String getResult3(bool resultDeclared, int result) {
+    if (resultDeclared != null && resultDeclared) {
+      int sum = 0;
+      for (int i = result; i > 0; i = (i / 10).floor()) {
+        sum += (i % 10);
+      }
+      print("$result \n ${sum % 10}");
+      return "${sum % 10}";
+    } else {
+      return "*";
     }
   }
 

@@ -604,7 +604,7 @@ class ApiService extends GetConnect implements GetxService {
   // new api functions
 
   Future<dynamic> setUserDetails(body) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    //  AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
       ApiUtils.setUserDetails,
@@ -613,14 +613,14 @@ class ApiService extends GetConnect implements GetxService {
     );
 
     if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
+      //  AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
       print(response.status.code.toString() + response.toString());
       return response.body;
     } else {
-      AppUtils.hideProgressDialog();
+      //   AppUtils.hideProgressDialog();
       return response.body;
     }
   }
@@ -897,7 +897,7 @@ class ApiService extends GetConnect implements GetxService {
     //   headers: headersWithToken,
     // );
     final response = await get(
-      "${ApiUtils.bidHistory}?id=$userId&limit=100&offset=0",
+      "${ApiUtils.bidHistory}?id=$userId&limit=5000&offset=0",
       headers: headersWithToken,
     );
 
@@ -1088,6 +1088,24 @@ class ApiService extends GetConnect implements GetxService {
       //  AppUtils.hideProgressDialog();
       print("response2 ${response.body}");
       print("change pass2 ${response.status.code}");
+      return response.body;
+    }
+  }
+
+  Future<dynamic> appKilledStateApi() async {
+    //AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await get(
+      ApiUtils.appKillApi,
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      // AppUtils.hideProgressDialog();s
+      return response.body;
+    } else {
+      // AppUtils.hideProgressDialog();
+      // print("response2 ${response.body}");
+      // print("change pass2 ${response.status.code}");
       return response.body;
     }
   }

@@ -4,7 +4,10 @@ import 'dart:typed_data';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../self_closing_page.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -108,6 +111,9 @@ class NotificationServices {
         message.notification?.title.toString() ?? "dsadas",
         message.notification?.body.toString() ?? "sdasd",
         notificationDetails);
+
+
+        
   }
 
   Future<String> getDeviceToken() async {
@@ -123,6 +129,7 @@ class NotificationServices {
 
   void hendleMessege(BuildContext context, RemoteMessage msg) {
     if (msg.data['send'] == 'msg') {
+      print("======================");
       launchUrl(
         Uri.parse(
           "${msg.data['url']}",
@@ -135,9 +142,11 @@ class NotificationServices {
   Future<void> setuoIntrectMessege(BuildContext context) async {
     RemoteMessage? initialMessege =
         await FirebaseMessaging.instance.getInitialMessage();
+    // var conrroller = Get.put(InactivityController());
     if (initialMessege != null) {
       // ignore: use_build_context_synchronously
       hendleMessege(context, initialMessege);
+      // conrroller.appKilledStateApi();
     }
     // When app Is in Background/////
     FirebaseMessaging.onMessageOpenedApp.listen((event) {

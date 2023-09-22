@@ -25,12 +25,19 @@ class ForgotPasswordController extends GetxController {
     ApiService().forgotPassword(await forgotPasswordBody()).then((value) async {
       debugPrint("Forgot Password Api Response :- $value");
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        Get.toNamed(AppRoutName.resetPasswordPage, arguments: {
-          ConstantsVariables.phoneNumber: mobileNumberController.text,
-          ConstantsVariables.countryCode: countryCode.value
-        });
+        print(
+            "============================${value['data']['IsUserDetailSet']}");
+        if (value['data']['IsUserDetailSet'] == true) {
+          AppUtils.showSuccessSnackBar(
+              bodyText: value['message'] ?? "",
+              headerText: "SUCCESSMESSAGE".tr);
+          Get.toNamed(AppRoutName.resetPasswordPage, arguments: {
+            ConstantsVariables.phoneNumber: mobileNumberController.text,
+            ConstantsVariables.countryCode: countryCode.value
+          });
+        } else {
+          Get.toNamed(AppRoutName.userDetailsPage);
+        }
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

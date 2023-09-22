@@ -9,6 +9,7 @@ class ConstantsVariables {
   static const String isActive = "is_active";
   static const String isVerified = "is_verified";
   static const String isMpinSet = "is_mpin_set";
+  static const String isUserDetailSet = "is_user_detail_set";
 
   //api variables
   static const String authToken = "auth_token";

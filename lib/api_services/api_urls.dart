@@ -55,7 +55,7 @@ class ApiUtils {
   static String choicePanaSPDP = "$baseURL/gameMode/getChoicePanaSPDPTP";
   static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
   static String passBookApi = "$baseURL/user/getUserPassbookDetails";
-  static String marketbidHistory = "$baseURL/bid/getBidHistory";
+  // static String marketbidHistory = "$baseURL/bid/getBidHistory";
   static String bidHistory = "$baseURL/bid/getByUserId";
   static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
   static String getNotificationCount =
@@ -76,4 +76,5 @@ class ApiUtils {
 
   static String fcmToken = "$baseURL/auth/setFCMToken";
   static String getVersion = "$baseURL/auth/appVersion";
+  static String appKillApi = "$baseURL/user/log/out";
 }

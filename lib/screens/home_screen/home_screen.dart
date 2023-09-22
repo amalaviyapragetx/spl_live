@@ -60,6 +60,7 @@ class DashBoardPage extends StatelessWidget {
                 onTapBidHistory: () {
                   controller.pageWidget.value = 1;
                   controller.currentIndex.value = 1;
+
                   controller.marketBidsByUserId(lazyLoad: false);
                   SystemChrome.setPreferredOrientations([
                     DeviceOrientation.portraitUp,

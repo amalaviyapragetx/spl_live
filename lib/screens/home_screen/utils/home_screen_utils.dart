@@ -505,21 +505,25 @@ class HomeScreenUtils {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: EdgeInsets.only(left: Dimensions.w15, bottom: 2),
-            child: Text(
-              "PLAY2".tr,
-              style: TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
+          FittedBox(
+            child: Padding(
+              padding: EdgeInsets.only(left: Dimensions.w15, bottom: 2),
+              child: Text(
+                "PLAY2".tr,
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 3.0),
-            child: Icon(
-              Icons.play_circle_fill,
-              color: AppColors.white,
+          FittedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 3.0),
+              child: Icon(
+                Icons.play_circle_fill,
+                color: AppColors.white,
+              ),
             ),
           ),
         ],
@@ -959,7 +963,7 @@ class HomeScreenUtils {
           columnSpacing: 0,
           showBottomBorder: false,
           headingRowHeight: Dimensions.h30,
-          dataRowHeight: Dimensions.h30,
+          dataRowHeight: Dimensions.h40,
           columns: [
             DataColumn(
               label: SingleChildScrollView(
@@ -1009,7 +1013,7 @@ class HomeScreenUtils {
       child: Obx(
         () => DataTable(
           headingRowHeight: Dimensions.h30,
-          dataRowHeight: Dimensions.h30,
+          dataRowHeight: Dimensions.h40,
           horizontalMargin: 0,
           headingRowColor: MaterialStateColor.resolveWith(
             (states) => Colors.white,
@@ -1034,19 +1038,52 @@ class HomeScreenUtils {
                       );
                       return DataCell(
                         Container(
-                          height: Dimensions.h30,
+                          height: Dimensions.h40,
                           width: Dimensions.w100,
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: AppColors.grey.withOpacity(0.2)),
                           ),
-                          child: Center(
-                            child: Text(
-                              timeData!.result != null
-                                  ? controller.getResult(true, timeData.result)
-                                  : "***-*",
-                              textAlign: TextAlign.center,
-                              style: CustomTextStyle.textRobotoSansMedium,
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: Dimensions.h13,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitHeight,
+                                    child: Text(
+                                      timeData!.result != null
+                                          ? controller.getResult2(
+                                              true, timeData.result)
+                                          : "***",
+                                      textAlign: TextAlign.center,
+                                      style:
+                                          CustomTextStyle.textRobotoSansMedium,
+                                    ),
+                                  ),
+                                ),
+                                timeData.result != null
+                                    ? SizedBox(
+                                        height: Dimensions.h2,
+                                      )
+                                    : const SizedBox(),
+                                Expanded(
+                                  child: Text(
+                                    timeData.result != null
+                                        ? controller.getResult3(
+                                            true, timeData.result)
+                                        : "*",
+                                    textAlign: TextAlign.center,
+                                    style: CustomTextStyle.textRobotoSansMedium
+                                        .copyWith(
+                                      fontSize: Dimensions.h14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),

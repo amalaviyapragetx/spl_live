@@ -165,7 +165,9 @@ class MyAccountPage extends StatelessWidget {
       textStyle: CustomTextStyle.textRobotoSansMedium
           .copyWith(fontSize: Dimensions.h15, fontWeight: FontWeight.w500),
       autofocus: autofocus,
-      formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]+$'))],
+      formatter: [
+        FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))
+      ],
     );
   }
 

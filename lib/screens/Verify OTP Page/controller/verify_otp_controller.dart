@@ -65,9 +65,12 @@ class VerifyOTPController extends GetxController {
           String authToken = userData['Token'] ?? "Null From API";
           bool isActive = userData['IsActive'] ?? false;
           bool isVerified = userData['IsVerified'] ?? false;
+          bool isUserDetailSet = value['data']['IsUserDetailSet'] ?? false;
           await LocalStorage.write(ConstantsVariables.authToken, authToken);
           await LocalStorage.write(ConstantsVariables.isActive, isActive);
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
+          await LocalStorage.write(
+              ConstantsVariables.isUserDetailSet, isUserDetailSet);
           Get.toNamed(AppRoutName.userDetailsPage);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");

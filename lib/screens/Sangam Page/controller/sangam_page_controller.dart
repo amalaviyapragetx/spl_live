@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import '../../../api_services/api_service.dart';
+import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
+import '../../../helper_files/custom_text_style.dart';
+import '../../../helper_files/dimentions.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
@@ -135,6 +138,7 @@ class SangamPageController extends GetxController {
           );
         } else {
           Get.back();
+          Get.back();
           AppUtils.showSuccessSnackBar(
               bodyText: value['message'] ?? "",
               headerText: "SUCCESSMESSAGE".tr);
@@ -173,10 +177,11 @@ class SangamPageController extends GetxController {
     }
   }
 
-  void onTapOfSaveButton() {
+  void onTapOfSaveButton(context) {
     if (requestModel.value.bids != null &&
         requestModel.value.bids!.isNotEmpty) {
-      createMarketBidApi();
+      //  createMarketBidApi();
+      showConfirmationDialog(context);
     } else {
       AppUtils.showErrorSnackBar(
         bodyText: "Please Add Some Bids!",
@@ -231,8 +236,7 @@ class SangamPageController extends GetxController {
   }
 
   void onTapOfAddBidButton() {
-    if (int.parse(coinsController.text) > 0 ||
-        coinsController.text.isNotEmpty) {
+    if (coinsController.text.isNotEmpty) {
       if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
@@ -257,7 +261,7 @@ class SangamPageController extends GetxController {
         var existingIndex = addedSangamList.indexWhere((element) {
           print("${element.bidNo}  =  $openValue-$closeValue");
           return element.bidNo ==
-              manipulateString("$openValue-$closeValue", "Half Sangam A");
+              manipulateString("$openValue-$closeValue", gameMode.value.name!);
         });
         print("---------5165544-------------__$existingIndex");
         if (existingIndex != -1) {
@@ -270,8 +274,8 @@ class SangamPageController extends GetxController {
         } else {
           addedSangamList.add(
             Bids(
-                bidNo:
-                    manipulateString("$openValue-$closeValue", "Half Sangam A"),
+                bidNo: manipulateString(
+                    "$openValue-$closeValue", gameMode.value.name!),
                 coins: int.parse(coinsController.text),
                 gameId: gameMode.value.id,
                 gameModeName: gameMode.value.name,
@@ -293,6 +297,12 @@ class SangamPageController extends GetxController {
       AppUtils.showErrorSnackBar(
         bodyText: "Please Enter Valid Points!",
       );
+      if (closeValueController.value.text.isEmpty) {
+        focusNode.previousFocus();
+      } else {
+        focusNode.previousFocus();
+        focusNode.previousFocus();
+      }
     }
   }
 
@@ -306,10 +316,55 @@ class SangamPageController extends GetxController {
     manipulatedString.value = "${parts[1]}-${parts[0]}";
     print("========input===========++$input");
     if (gameMode == "Half Sangam A") {
-      print("===================++$manipulatedString");
+      print("===================++$manipulatedString input: $input");
       return manipulatedString.value;
     } else {
       return input;
     }
+  }
+
+  void showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm!'),
+          content: Text(
+            'Do you really wish to submit?',
+            style: CustomTextStyle.textRobotoSansLight.copyWith(
+              color: AppColors.grey,
+              fontSize: Dimensions.h14,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Handle cancel button press
+                Get.back();
+              },
+              child: Text(
+                'CANCLE',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                createMarketBidApi();
+              },
+              child: Text(
+                'OKAY',
+                style: CustomTextStyle.textPTsansBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: Dimensions.h13,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

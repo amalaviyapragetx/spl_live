@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -11,6 +10,8 @@ import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../Local Storage.dart';
 import '../model/user_details_model.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class SetMPINPageController extends GetxController {
   var arguments = Get.arguments;
@@ -22,11 +23,16 @@ class SetMPINPageController extends GetxController {
   UserDetailsModel userData = UserDetailsModel();
   Timer? cursorTimer;
   bool _fromLoginPage = false;
+  RxString city = ''.obs;
+  RxString country = ''.obs;
+  RxString state = ''.obs;
 
   @override
   void onInit() {
-    getArguments();
+    getLocation();
+    //  getArguments();
     //getUserData();
+    // getLocation();
     super.onInit();
   }
 
@@ -36,6 +42,14 @@ class SetMPINPageController extends GetxController {
     focusNode2.dispose();
     super.dispose();
   }
+
+  // Future<void> getLocation() async {
+  //   final locationData = await location.getLocation();
+  //   latitude = locationData.latitude;
+  //   longitude = locationData.longitude;
+  //   print(
+  //       'Latitude: ${locationData.latitude}, Longitude: ${locationData.longitude}');
+  // }
 
   // Future<void> getUserData() async {
   //   var data = await LocalStorage.read(ConstantsVariables.userData);
@@ -52,7 +66,9 @@ class SetMPINPageController extends GetxController {
       print("userDetails when condition false : $userDetails");
       _fromLoginPage = false;
     } else {
-      callSetUserDetailsApi();
+      Timer(const Duration(seconds: 1), () {
+        callSetUserDetailsApi();
+      });
       _fromLoginPage = true;
       print("userDetails when condition true : $userDetails");
     }
@@ -163,7 +179,11 @@ class SetMPINPageController extends GetxController {
       "model": deviceInfo.model,
       "os": deviceInfo.deviceOs,
       "manufacturer": deviceInfo.manufacturer,
+      "city": city.value,
+      "country": country.value,
+      "state": state.value
     };
+    print(userDetailsBody);
     return userDetailsBody;
   }
 
@@ -176,8 +196,35 @@ class SetMPINPageController extends GetxController {
       "model": deviceInfo.model,
       "os": deviceInfo.deviceOs,
       "manufacturer": deviceInfo.manufacturer,
+      "city": city.value,
+      "country": country.value,
+      "state": state.value
     };
+    print(userDetailsBody);
     return userDetailsBody;
+  }
+
+  Future<void> getLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      if (placemarks.isNotEmpty) {
+        Placemark placemark = placemarks[0];
+
+        city.value = placemark.locality ?? 'Unknown';
+        country.value = placemark.country ?? 'Unknown';
+        state.value = placemark.administrativeArea ?? 'Unknown';
+
+        getArguments();
+        print(
+            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value} ");
+      }
+    } catch (e) {
+      print('Error getting location: $e');
+    }
   }
 
   Future<void> callSetMpinApi() async {

@@ -54,7 +54,6 @@ import '../screens/Starline Bid Page/starline_bids.dart';
 import '../screens/Starline Game Page/binding/starline_game_page_binding.dart';
 import '../screens/Starline Game Page/starline_game_page.dart';
 import '../screens/Starline New Game Page/bindings/starline_new_game_page_binding.dart';
-import '../screens/Starline New Game Page/controller/starline_new_game_page_controller.dart';
 import '../screens/Starline New Game Page/starline_new_game_page.dart';
 import '../screens/User Details Page/binding/user_details_page_binding.dart';
 import '../screens/User Details Page/user_details_page.dart';

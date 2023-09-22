@@ -39,13 +39,16 @@ class RoundedCornerButton extends StatelessWidget {
         height: height,
         width: width,
         child: Center(
-          child: Text(
-            text,
-            style: textStyle.copyWith(
-              color: fontColor,
-              fontWeight: fontWeight,
-              fontSize: fontSize,
-              letterSpacing: letterSpacing,
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              text,
+              style: textStyle.copyWith(
+                color: fontColor,
+                fontWeight: fontWeight,
+                fontSize: fontSize,
+                letterSpacing: letterSpacing,
+              ),
             ),
           ),
         ),

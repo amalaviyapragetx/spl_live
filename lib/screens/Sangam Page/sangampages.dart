@@ -195,11 +195,8 @@ class SangamPages extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Obx(
-        () => bottumNav(
-          size,
-          controller.totalBiddingAmount.toString(),
-          controller.addedSangamList.length.toString(),
-        ),
+        () => bottumNav(size, controller.totalBiddingAmount.toString(),
+            controller.addedSangamList.length.toString(), context),
       ),
       // bottomNavigationBar:
       //     Obx(() => bottomNavigationBar(controller.totalBiddingAmount.value)),
@@ -553,7 +550,7 @@ class SangamPages extends StatelessWidget {
     );
   }
 
-  bottumNav(Size size, String totalAmount, String bids) {
+  bottumNav(Size size, String totalAmount, String bids, context) {
     return Container(
       width: size.width,
       height: Dimensions.h45,
@@ -575,7 +572,7 @@ class SangamPages extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
             child: RoundedCornerButton(
-              text: "SAVE".tr.toUpperCase(),
+              text: "SUBMIT".tr.toUpperCase(),
               color: AppColors.white,
               borderColor: AppColors.white,
               fontSize: Dimensions.h11,
@@ -586,7 +583,7 @@ class SangamPages extends StatelessWidget {
               borderWidth: 0.2,
               textStyle: CustomTextStyle.textRobotoSansBold,
               onTap: () {
-                controller.onTapOfSaveButton();
+                controller.onTapOfSaveButton(context);
                 // controller.coinsFocusNode.unfocus();
                 // controller.openFocusNode.requestFocus();
                 // controller.onTapOfAddBidButton();

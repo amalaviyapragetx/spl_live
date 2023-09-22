@@ -10,7 +10,7 @@ class UserDetailsPageController extends GetxController {
   var userNameController = TextEditingController();
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
-
+  final pattern = RegExp(r'^[a-zA-Z\s]+$');
   RxBool pVisibility = false.obs;
   RxBool cpVisibility = false.obs;
 
@@ -22,6 +22,12 @@ class UserDetailsPageController extends GetxController {
     if (fullNameController.text.isEmpty) {
       AppUtils.showErrorSnackBar(
         bodyText: "ENTERFULLNAME".tr,
+      );
+    } else if (fullNameController.text.length < 6 &&
+        pattern.hasMatch(fullNameController.text.toString())) {
+      AppUtils.showErrorSnackBar(
+        bodyText:
+            "Full name must be at least 6 characters long and \nshould not contain any numbers",
       );
     } else if (userNameController.text.isEmpty) {
       AppUtils.showErrorSnackBar(

@@ -169,6 +169,9 @@ class SignInScreen extends StatelessWidget {
               color: AppColors.grey,
               fontSize: Dimensions.h14,
             ),
+            textStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+              fontSize: Dimensions.h16,
+            ),
             maxLines: 1,
             focusNode: controller.focusNode1,
             minLines: 1,

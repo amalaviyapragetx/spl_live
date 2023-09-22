@@ -97,6 +97,10 @@ class SplashController extends GetxController {
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
     bool hasMPIN =
         await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
+    bool isUserDetailSet =
+        await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
+    print(
+        "================================================$isUserDetailSet $isVerified $isActive");
     //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
       if (!isActive && !isVerified) {
@@ -107,7 +111,7 @@ class SplashController extends GetxController {
             appVesionCheck();
           });
         });
-      } else if (isVerified && !isActive) {
+      } else if (!hasMPIN && !isUserDetailSet) {
         //   callFcmApi(_userDetailsModel.id);
         Future.delayed(const Duration(seconds: 2), () {
           Get.offAllNamed(AppRoutName.userDetailsPage);
@@ -162,16 +166,17 @@ class SplashController extends GetxController {
   void _showExitDialog() {
     Get.defaultDialog(
       barrierDismissible: false,
-      title: "Update App Version",
+      title: "Update App",
       onWillPop: () async => false,
       titleStyle: CustomTextStyle.textRobotoSansMedium,
       content: Column(
         children: [
           Text(
-            "",
-            // style: CustomTextStyle.textRobotoSansMedium.copyWith(
-            //   fontSize: Dimensions.h16,
-            // ),
+            "An update is available! Click here to upgrade.",
+            textAlign: TextAlign.center,
+            style: CustomTextStyle.textRobotoSansMedium.copyWith(
+              fontSize: Dimensions.h14,
+            ),
           )
         ],
       ),
