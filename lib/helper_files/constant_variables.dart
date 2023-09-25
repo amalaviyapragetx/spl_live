@@ -45,4 +45,7 @@ class ConstantsVariables {
 
   /// on back starLine
   static const String starlineConnect = "starline_connect";
+
+  // locationData
+  static const String locationData = "location_data";
 }

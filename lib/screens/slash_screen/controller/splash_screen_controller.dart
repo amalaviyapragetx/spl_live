@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
@@ -19,6 +21,8 @@ import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/user_details_model.dart';
+import '../../../models/location_models/location_model.dart';
+import '../../../models/location_models/placemark.dart';
 import '../../Local Storage.dart';
 
 class SplashController extends GetxController {
@@ -26,12 +30,67 @@ class SplashController extends GetxController {
   UserDetailsModel _userDetailsModel = UserDetailsModel();
   DeviceInformationModel? deviceInfo;
   String appVersion = "";
+  RxString city = ''.obs;
+  RxString country = ''.obs;
+  RxString state = ''.obs;
+  RxString street = ''.obs;
+  RxString postalCode = ''.obs;
   @override
   void onInit() {
     super.onInit();
+    getLocation();
     checkLogin();
     getDeviceInfo();
+
     // Timer(Duration(milliseconds: 700), () {});
+  }
+
+  Future<void> getLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      if (placemarks.isNotEmpty) {
+        Placemark placemark = placemarks[0];
+        city.value = placemark.locality ?? 'Unknown';
+        country.value = placemark.country ?? 'Unknown';
+        state.value = placemark.administrativeArea ?? 'Unknown';
+        street.value =
+            "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
+        postalCode.value = placemark.postalCode ?? 'Unknown';
+        print(
+            "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${placemark.subAdministrativeArea}");
+
+        print(
+            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   street:  ${street.value}");
+        List<PlaceMark> letestLocation = [
+          PlaceMark(
+            name: 'Place 1',
+            location: LocationModel(
+                city: city.value,
+                country: country.value,
+                state: state.value,
+                street: street.value,
+                postalCode: postalCode.value),
+          ),
+        ];
+        List<Map<String, dynamic>> placeMarkJsonList = letestLocation
+            .map((placeMark) => {
+                  'name': placeMark.name,
+                  'location': placeMark.location?.toJson(),
+                })
+            .toList();
+        await LocalStorage.write(
+            ConstantsVariables.locationData, placeMarkJsonList);
+        var storedPlaceMarkJsonList =
+            await LocalStorage.read(ConstantsVariables.locationData) ?? [];
+        print("=================${storedPlaceMarkJsonList}");
+      }
+    } catch (e) {
+      print('Error getting location: $e');
+    }
   }
 
   callFcmApi(userId) async {

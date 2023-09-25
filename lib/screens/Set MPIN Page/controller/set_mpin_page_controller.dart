@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -9,10 +8,9 @@ import '../../../components/DeviceInfo/device_info.dart';
 import '../../../components/DeviceInfo/device_information_model.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/user_details_model.dart';
+import '../../../models/location_models/location_model.dart';
 import '../../Local Storage.dart';
 import '../model/user_details_model.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 
 class SetMPINPageController extends GetxController {
   var arguments = Get.arguments;
@@ -32,8 +30,8 @@ class SetMPINPageController extends GetxController {
 
   @override
   void onInit() {
-    getLocation();
-    //  getArguments();
+    getLocationsData();
+    getArguments();
     //getUserData();
     // getLocation();
     super.onInit();
@@ -46,14 +44,22 @@ class SetMPINPageController extends GetxController {
     super.dispose();
   }
 
-  // Future<void> getLocation() async {
-  //   final locationData = await location.getLocation();
-  //   latitude = locationData.latitude;
-  //   longitude = locationData.longitude;
-  //   print(
-  //       'Latitude: ${locationData.latitude}, Longitude: ${locationData.longitude}');
-  // }
-
+  getLocationsData() async {
+    var locationData =
+        await LocalStorage.read(ConstantsVariables.locationData) ?? [];
+    // getMarketBidsByUserId(lazyLoad: false);
+    List list = [];
+    list.add(locationData[0]['location']);
+    List<LocationModel> data = LocationModel.fromJsonList(list);
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@${data[0].city}");
+    city.value = data[0].city ?? 'Unknown';
+    country.value = data[0].country ?? 'Unknown';
+    state.value = data[0].state ?? 'Unknown';
+    street.value = data[0].street ?? 'Unknown';
+    postalCode.value = data[0].postalCode ?? 'Unknown';
+    print(
+        "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   street:  ${street.value}");
+  }
   // Future<void> getUserData() async {
   //   var data = await LocalStorage.read(ConstantsVariables.userData);
   //   userData = UserDetailsModel.fromJson(data);
@@ -69,9 +75,7 @@ class SetMPINPageController extends GetxController {
       print("userDetails when condition false : $userDetails");
       _fromLoginPage = false;
     } else {
-      Timer(const Duration(seconds: 1), () {
-        callSetUserDetailsApi();
-      });
+      callSetUserDetailsApi();
       _fromLoginPage = true;
       print("userDetails when condition true : $userDetails");
     }
@@ -214,33 +218,33 @@ class SetMPINPageController extends GetxController {
     return userDetailsBody;
   }
 
-  Future<void> getLocation() async {
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
+  // Future<void> getLocation() async {
+  //   try {
+  //     Position position = await Geolocator.getCurrentPosition(
+  //         desiredAccuracy: LocationAccuracy.high);
+  //     List<Placemark> placemarks =
+  //         await placemarkFromCoordinates(position.latitude, position.longitude);
 
-      if (placemarks.isNotEmpty) {
-        Placemark placemark = placemarks[0];
-        city.value = placemark.locality ?? 'Unknown';
-        country.value = placemark.country ?? 'Unknown';
-        state.value = placemark.administrativeArea ?? 'Unknown';
-        street.value =
-            "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
-        postalCode.value = placemark.postalCode ?? 'Unknown';
-        print(
-            "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${placemark.subAdministrativeArea}");
-        inspect(placemarks[0]);
+  //     if (placemarks.isNotEmpty) {
+  //       Placemark placemark = placemarks[0];
+  //       city.value = placemark.locality ?? 'Unknown';
+  //       country.value = placemark.country ?? 'Unknown';
+  //       state.value = placemark.administrativeArea ?? 'Unknown';
+  //       street.value =
+  //           "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
+  //       postalCode.value = placemark.postalCode ?? 'Unknown';
+  //       print(
+  //           "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${placemark.subAdministrativeArea}");
+  //       inspect(placemarks[0]);
 
-        getArguments();
-        print(
-            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   State:  ${street.value}");
-      }
-    } catch (e) {
-      print('Error getting location: $e');
-    }
-  }
+  //       getArguments();
+  //       print(
+  //           "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   State:  ${street.value}");
+  //     }
+  //   } catch (e) {
+  //     print('Error getting location: $e');
+  //   }
+  // }
 
   Future<void> callSetMpinApi() async {
     ApiService().setMPIN(await setMpinBody()).then((value) async {

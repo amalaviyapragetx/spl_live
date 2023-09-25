@@ -10,6 +10,7 @@ import 'package:spllive/routes/app_routes_name.dart';
 import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_info.dart';
 import '../../../helper_files/constant_variables.dart';
+import '../../../models/location_models/location_model.dart';
 import '../../Local Storage.dart';
 
 class MPINPageController extends GetxController {
@@ -29,7 +30,7 @@ class MPINPageController extends GetxController {
     super.onInit();
     await LocalStorage.write(ConstantsVariables.starlineConnect, false);
     userId = arguments['id'].toString();
-    getLocation();
+    getLocationsData();
   }
 
   void onCompleteMPIN() {
@@ -37,9 +38,7 @@ class MPINPageController extends GetxController {
       mpinErrorController.add(ErrorAnimationType.shake);
     } else {
       if (city.isEmpty && country.isEmpty && state.isEmpty) {
-        Timer(const Duration(milliseconds: 200), () {
-          verifyMPIN();
-        });
+        verifyMPIN();
       } else {
         verifyMPIN();
       }
@@ -98,26 +97,20 @@ class MPINPageController extends GetxController {
     });
   }
 
-  Future<void> getLocation() async {
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-
-      if (placemarks.isNotEmpty) {
-        Placemark placemark = placemarks[0];
-        city.value = placemark.locality ?? 'Unknown';
-        country.value = placemark.country ?? 'Unknown';
-        state.value = placemark.administrativeArea ?? 'Unknown';
-        street.value =
-            "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
-        postalCode.value = placemark.postalCode ?? 'Unknown';
-        print(
-            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}");
-      }
-    } catch (e) {
-      print('Error getting location: $e');
-    }
+  getLocationsData() async {
+    var locationData =
+        await LocalStorage.read(ConstantsVariables.locationData) ?? [];
+    // getMarketBidsByUserId(lazyLoad: false);
+    List list = [];
+    list.add(locationData[0]['location']);
+    List<LocationModel> data = LocationModel.fromJsonList(list);
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@${data[0].city}");
+    city.value = data[0].city ?? 'Unknown';
+    country.value = data[0].country ?? 'Unknown';
+    state.value = data[0].state ?? 'Unknown';
+    street.value = data[0].street ?? 'Unknown';
+    postalCode.value = data[0].postalCode ?? 'Unknown';
+    print(
+        "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   street:  ${street.value}");
   }
 }
