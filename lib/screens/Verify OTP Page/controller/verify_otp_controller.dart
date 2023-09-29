@@ -6,9 +6,7 @@ import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
-import '../../../models/commun_models/user_details_model.dart';
 import '../../Local Storage.dart';
-import '../../Set MPIN Page/model/user_details_model.dart';
 
 class VerifyOTPController extends GetxController {
   var argument = Get.arguments;

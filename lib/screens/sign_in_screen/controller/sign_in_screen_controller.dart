@@ -35,7 +35,6 @@ class SignInPageController extends GetxController {
 
   void callSignInApi() async {
     ApiService().signInAPI(await signInBody()).then((value) async {
-      debugPrint("SignIn Api Response :- $value");
       if (value['status']) {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -70,9 +69,6 @@ class SignInPageController extends GetxController {
   }
 
   Future<Map> signInBody() async {
-    // final fcmToken = await FirebaseMessaging.instance.getToken();
-    // print("User's FCM token is :- $fcmToken");
-
     final signInBody = {
       "phoneNumber": mobileNumberController.text,
       "password": passwordController.text,
@@ -81,7 +77,7 @@ class SignInPageController extends GetxController {
       // "deviceId": "954f4d94fdsa94fdsf",
       // "fcmToken": fcmToken,
     };
-    debugPrint(signInBody.toString());
+
     return signInBody;
   }
 
@@ -104,8 +100,4 @@ class SignInPageController extends GetxController {
       callSignInApi();
     }
   }
-
-  // void onChangeCountryCode(String code) {
-  //   countryCode.value = code;
-  // }
 }

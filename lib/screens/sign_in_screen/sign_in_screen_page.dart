@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
@@ -156,7 +154,7 @@ class SignInScreen extends StatelessWidget {
                 controller.focusNode1.unfocus();
                 controller.focusNode2.requestFocus();
                 controller.cursorTimer?.cancel();
-                controller.cursorTimer = Timer(Duration(milliseconds: 50), () {
+                controller.cursorTimer = Timer(const Duration(milliseconds: 50), () {
                   controller.mobileNumberController.selection =
                       TextSelection.fromPosition(
                     TextPosition(

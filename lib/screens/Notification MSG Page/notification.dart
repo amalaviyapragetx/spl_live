@@ -5,7 +5,6 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
-import '../../helper_files/constant_image.dart';
 import 'controller/notification_controller.dart';
 
 class NotificationPage extends StatelessWidget {

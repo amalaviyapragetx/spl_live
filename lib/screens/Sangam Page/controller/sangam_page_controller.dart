@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/app_colors.dart';
@@ -66,7 +65,7 @@ class SangamPageController extends GetxController {
 
   String addedNormalBidValue = "";
   String checkBidValue = "";
-  List<String> _validationListForNormalMode = [];
+  final List<String> _validationListForNormalMode = [];
   var allThreePanaList = <DigitListModelOffline>[].obs;
   List<String> _tempValidationList = [];
 

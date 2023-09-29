@@ -45,7 +45,6 @@ class ApiService extends GetConnect implements GetxService {
       AppUtils.showErrorSnackBar(
         bodyText: response.status.code.toString() + response.toString(),
       );
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -68,7 +67,6 @@ class ApiService extends GetConnect implements GetxService {
       AppUtils.showErrorSnackBar(
         bodyText: response.status.code.toString() + response.toString(),
       );
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -77,7 +75,6 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> verifyUser(body) async {
-    print("=====================${ApiUtils.verifyUSER}");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
@@ -92,7 +89,6 @@ class ApiService extends GetConnect implements GetxService {
       AppUtils.showErrorSnackBar(
         bodyText: response.status.code.toString() + response.toString(),
       );
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -115,7 +111,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -138,7 +133,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -161,7 +155,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -170,7 +163,6 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getBankDetails(String userId) async {
-    print("${ApiUtils.getBankDetails}/$userId");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await get(
@@ -203,7 +195,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -271,7 +262,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -282,7 +272,6 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> createStarLineMarketBid(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    print("Starline body $body");
     final response = await post(
       ApiUtils.createStarLineMarketBid,
       body,
@@ -298,7 +287,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -321,7 +309,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -334,9 +321,7 @@ class ApiService extends GetConnect implements GetxService {
     Future.delayed(const Duration(milliseconds: 2), () {
       AppUtils.showProgressDialog(isCancellable: false);
     });
-    print(
-      "##starline###${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
-    );
+
     await initApiService();
     final response = await get(
       "${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
@@ -406,7 +391,6 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    print("${ApiUtils.getFeedbackAndRatingsById}$userId");
     final response = await get(
       "${ApiUtils.getFeedbackAndRatingsById}$userId",
       headers: headersWithToken,
@@ -429,9 +413,6 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    print("================================");
-    print("${ApiUtils.getWithdrawalHistoryByUserId}$userId");
-    print(headersWithToken);
     final response = await get(
       "${ApiUtils.getWithdrawalHistoryByUserId}$userId",
       headers: headersWithToken,
@@ -530,7 +511,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -552,7 +532,7 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
+
       return response.body;
     } else {
       AppUtils.hideProgressDialog();
@@ -574,7 +554,7 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
+
       return response.body;
     } else {
       AppUtils.hideProgressDialog();
@@ -617,7 +597,7 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
+
       return response.body;
     } else {
       //   AppUtils.hideProgressDialog();
@@ -639,7 +619,7 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
+
       return response.body;
     } else {
       AppUtils.hideProgressDialog();
@@ -660,7 +640,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return response.body;
     } else {
       AppUtils.hideProgressDialog();
@@ -675,7 +654,6 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> verifyOTP(body) async {
-    print(ApiUtils.verifyOTP);
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await post(
@@ -690,7 +668,6 @@ class ApiService extends GetConnect implements GetxService {
       AppUtils.showErrorSnackBar(
         bodyText: response.status.code.toString() + response.toString(),
       );
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -722,8 +699,6 @@ class ApiService extends GetConnect implements GetxService {
     required String? startDate,
     required String? endDate,
   }) async {
-    print(
-        "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await get(
@@ -756,12 +731,9 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.body.toString());
+
       return response.body;
     } else {
-      // AppUtils.hideProgressDialog();
-      print("response2 ${response.body}");
-      print("change pass2 ${response.status.code}");
       return response.body;
     }
   }
@@ -780,7 +752,7 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
+
       return response.body;
     } else {
       AppUtils.hideProgressDialog();
@@ -810,30 +782,30 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getStarLineBidHistoryByUserId({
-    required String userId,
-    required String limit,
-    required String offset,
-  }) async {
-    AppUtils.showProgressDialog(isCancellable: false);
-    await initApiService();
-    final response = await get(
-      "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
-      headers: headersWithToken,
-    );
-    if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
-      AppUtils.hideProgressDialog();
+  // Future<dynamic> starlineMarketBidHistory({
+  //   required String userId,
+  //   required String limit,
+  //   required String offset,
+  // }) async {
+  //   AppUtils.showProgressDialog(isCancellable: false);
+  //   await initApiService();
+  //   final response = await get(
+  //     "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
+  //     headers: headersWithToken,
+  //   );
+  //   if (response.status.hasError) {
+  //     if (response.status.code != null && response.status.code == 401) {
+  //       tokenExpired();
+  //     }
+  //     AppUtils.hideProgressDialog();
 
-      return Future.error(response.statusText!);
-    } else {
-      AppUtils.hideProgressDialog();
+  //     return Future.error(response.statusText!);
+  //   } else {
+  //     AppUtils.hideProgressDialog();
 
-      return response.body;
-    }
-  }
+  //     return response.body;
+  //   }
+  // }
 
   Future<dynamic> newGameModeApi(body, url) async {
     AppUtils.showProgressDialog(isCancellable: false);
@@ -849,7 +821,7 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
+
       return response.body;
     } else {
       AppUtils.hideProgressDialog();
@@ -863,8 +835,6 @@ class ApiService extends GetConnect implements GetxService {
     required String limit,
     required String offset,
   }) async {
-    print(
-        "${ApiUtils.passBookApi}/$userId?isAll=$isAll&limit=$limit&offset=$offset");
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await get(
@@ -888,8 +858,6 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> bidHistoryByUserId({
     required String userId,
   }) async {
-    print(
-        "==== Jevin  bhai from service =======================================");
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     // final response = await get(
@@ -910,9 +878,6 @@ class ApiService extends GetConnect implements GetxService {
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
-      print(
-          "================================ API Call Response =================================");
-      print(response.body);
       return response.body;
     }
   }
@@ -1016,7 +981,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -1039,7 +1003,6 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(response.status.code.toString() + response.toString());
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -1075,19 +1038,13 @@ class ApiService extends GetConnect implements GetxService {
       body,
       headers: headersWithToken,
     );
-
     if (response.status.hasError) {
       //  AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      print(
-          "FCM Token : ${response.status.code.toString() + response.body.toString()}");
       return response.body;
     } else {
-      //  AppUtils.hideProgressDialog();
-      print("response2 ${response.body}");
-      print("change pass2 ${response.status.code}");
       return response.body;
     }
   }

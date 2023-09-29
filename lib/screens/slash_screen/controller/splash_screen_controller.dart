@@ -2,20 +2,16 @@ import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
-import 'package:spllive/models/starlinechar_model/new_starlinechart_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_information_model.dart';
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
@@ -35,13 +31,13 @@ class SplashController extends GetxController {
   RxString state = ''.obs;
   RxString street = ''.obs;
   RxString postalCode = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
     getLocation();
     checkLogin();
     getDeviceInfo();
-
     // Timer(Duration(milliseconds: 700), () {});
   }
 
@@ -62,7 +58,6 @@ class SplashController extends GetxController {
         postalCode.value = placemark.postalCode ?? 'Unknown';
         print(
             "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${placemark.subAdministrativeArea}");
-
         print(
             "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   street:  ${street.value}");
         List<PlaceMark> letestLocation = [
@@ -86,7 +81,7 @@ class SplashController extends GetxController {
             ConstantsVariables.locationData, placeMarkJsonList);
         var storedPlaceMarkJsonList =
             await LocalStorage.read(ConstantsVariables.locationData) ?? [];
-        print("=================${storedPlaceMarkJsonList}");
+        print("=================$storedPlaceMarkJsonList");
       }
     } catch (e) {
       print('Error getting location: $e');

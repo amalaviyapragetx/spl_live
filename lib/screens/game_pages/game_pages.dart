@@ -612,7 +612,7 @@ class SingleAnkPage extends StatelessWidget {
     return controller.showNumbersLine.value
         ? Column(
             children: [
-              Container(
+              SizedBox(
                 //color: Colors.amberAccent,
                 height: Dimensions.h33,
                 child: ListView.builder(

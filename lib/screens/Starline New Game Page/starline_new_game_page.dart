@@ -67,7 +67,7 @@ class StarLineNewGamePage extends StatelessWidget {
             ),
           ],
         ),
-        body: Container(
+        body: SizedBox(
           height: size.height,
           width: size.width,
           child: Padding(
@@ -81,7 +81,7 @@ class StarLineNewGamePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "${controller.gameModeName}".toUpperCase(),
+                      controller.gameModeName.toUpperCase(),
                       style: CustomTextStyle.textRobotoSansBold.copyWith(
                           color: AppColors.appbarColor,
                           fontSize: Dimensions.h18),

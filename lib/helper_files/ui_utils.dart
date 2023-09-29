@@ -359,9 +359,7 @@ class AppUtils {
                       itemCount: 5,
                       itemSize: Dimensions.h37,
                       ignoreGestures:
-                          givenRatings != null && givenRatings.toDouble() != 0.0
-                              ? true
-                              : false,
+                          givenRatings.toDouble() != 0.0 ? true : false,
                       glowColor: AppColors.appbarColor,
                       unratedColor: AppColors.grey,
 
@@ -428,8 +426,7 @@ class AppUtils {
                         ),
                         InkWell(
                           onTap: () {
-                            if (givenRatings != null &&
-                                givenRatings.toDouble() != 0.00) {
+                            if (givenRatings.toDouble() != 0.00) {
                               AppUtils.showErrorSnackBar(
                                   bodyText:
                                       "You can not add ratings multiple times!!!");

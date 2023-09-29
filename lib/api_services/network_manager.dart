@@ -31,7 +31,6 @@ class GetXNetworkManager extends GetxController {
     try {
       connectivityResult = await (_connectivity.checkConnectivity());
     } on PlatformException catch (e) {
-      ;
       print(e);
     }
     return _updateState(connectivityResult);

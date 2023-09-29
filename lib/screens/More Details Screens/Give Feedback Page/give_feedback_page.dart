@@ -112,6 +112,7 @@ class RoundedCornerEditText2 extends StatelessWidget {
       controller: controller,
       validator: (value) {
         validateValue!(false, value.toString());
+        return null;
       },
       maxLength: maxLength,
       maxLines: maxLines,

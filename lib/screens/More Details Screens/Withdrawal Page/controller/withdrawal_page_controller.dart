@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 
 import '../../../../Custom Controllers/wallet_controller.dart';
 import '../../../../api_services/api_service.dart';

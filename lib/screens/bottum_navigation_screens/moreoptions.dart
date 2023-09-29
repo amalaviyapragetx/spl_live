@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';

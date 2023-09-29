@@ -43,7 +43,7 @@ class NormalGamePageController extends GetxController {
   Rx<BidRequestModel> requestModel = BidRequestModel().obs;
   List<String> selectedValues = [];
   var selectedBidsList = <Bids>[].obs;
-  List<String> _validationListForNormalMode = [];
+  final List<String> _validationListForNormalMode = [];
   Rx<GameMode> gameMode = GameMode().obs;
   RxBool oddbool = true.obs;
   RxBool evenbool = false.obs;
@@ -182,15 +182,15 @@ class NormalGamePageController extends GetxController {
     List<String> result = [];
     List<String> jodiArray = digitBasedJodi;
 
-    bool startsWithLeft(String num) => left == null || num.startsWith(left);
+    bool startsWithLeft(String num) => num.startsWith(left);
 
-    bool endsWithRight(String num) => right == null || num.endsWith(right);
+    bool endsWithRight(String num) => num.endsWith(right);
 
-    if (left != null && right == null) {
+    if (right == null) {
       result = jodiArray.where((num) => startsWithLeft(num)).toList();
       result.sort(
           (a, b) => b.compareTo(a)); // Sort in descending order for strings.
-    } else if (right != null && left == null) {
+    } else if (left == null) {
       result = jodiArray.where((num) => endsWithRight(num)).toList();
       result.sort(
           (a, b) => b.compareTo(a)); // Sort in descending order for strings.

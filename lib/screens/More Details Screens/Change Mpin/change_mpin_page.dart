@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../../../components/button_widget.dart';
 import '../../../components/edit_text_password.dart';

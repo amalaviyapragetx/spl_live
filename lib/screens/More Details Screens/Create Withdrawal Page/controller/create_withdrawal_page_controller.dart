@@ -22,8 +22,8 @@ class CreateWithDrawalPageController extends GetxController {
   RxString ifcsCode = "".obs;
   var userId = "";
 
-  var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
+  final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
 
   @override
   void onInit() {

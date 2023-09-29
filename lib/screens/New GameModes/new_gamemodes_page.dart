@@ -67,7 +67,7 @@ class NewGameModePage extends StatelessWidget {
             ),
           ],
         ),
-        body: Container(
+        body: SizedBox(
           height: size.height,
           width: size.width,
           child: Column(

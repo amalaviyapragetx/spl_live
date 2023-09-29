@@ -75,7 +75,6 @@ class SetMPINPageController extends GetxController {
       print("userDetails when condition false : $userDetails");
       _fromLoginPage = false;
     } else {
-      callSetUserDetailsApi();
       _fromLoginPage = true;
       print("userDetails when condition true : $userDetails");
     }
@@ -109,7 +108,6 @@ class SetMPINPageController extends GetxController {
   }
 
   void callSetUserDetailsApi() async {
-    print(userDetailsBody());
     ApiService()
         .setUserDetails(userDetails.userName == null
             ? await userDetailsBody2()
@@ -131,7 +129,6 @@ class SetMPINPageController extends GetxController {
           await LocalStorage.write(ConstantsVariables.userData, userData);
           await LocalStorage.write(
               ConstantsVariables.isUserDetailSet, isUserDetailSet);
-          print("${userData["Id"]}");
           callFcmApi(userData["Id"]);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
@@ -266,6 +263,7 @@ class SetMPINPageController extends GetxController {
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
           await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
+          callSetUserDetailsApi();
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
@@ -719,7 +718,7 @@ class HomePageController extends GetxController {
   }
 
   String getResult(bool resultDeclared, int result) {
-    if (resultDeclared != null && resultDeclared) {
+    if (resultDeclared) {
       int sum = 0;
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
@@ -732,7 +731,7 @@ class HomePageController extends GetxController {
   }
 
   String getResult2(bool resultDeclared, int result) {
-    if (resultDeclared != null && resultDeclared) {
+    if (resultDeclared) {
       int sum = 0;
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
@@ -745,7 +744,7 @@ class HomePageController extends GetxController {
   }
 
   String getResult3(bool resultDeclared, int result) {
-    if (resultDeclared != null && resultDeclared) {
+    if (resultDeclared) {
       int sum = 0;
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
@@ -945,8 +944,6 @@ class HomePageController extends GetxController {
   void getUserBalance() {
     ApiService().getBalance().then(
       (value) async {
-        debugPrint("((((((((((((((((((((((((((()))))))))))))))))))))))))))");
-        debugPrint("Wallet balance Api Response :- $value");
         if (value['status']) {
           var tempBalance = value['data']['Amount'] ?? 00;
           walletBalance.value = tempBalance.toString();

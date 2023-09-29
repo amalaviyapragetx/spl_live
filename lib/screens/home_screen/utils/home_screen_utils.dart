@@ -765,7 +765,7 @@ class HomeScreenUtils {
                 String formattedDate2 =
                     DateFormat('dd-MM-yyyy').format(pickedDate);
                 controller.dateinput.text = formattedDate2;
-                print(controller.dateinput.text);
+
                 controller.getMarketBidsByUserId(
                   lazyLoad: false,
                   startDate: formattedDate,

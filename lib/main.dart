@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -31,14 +32,14 @@ void main() async {
   await Permission.location.request();
   final appStateListener = AppStateListener();
   WidgetsBinding.instance.addObserver(appStateListener);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 final GlobalKey<NavigatorState> navigatorKey =
     GlobalKey(debugLabel: "Main Navigator");
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -46,7 +47,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // final Location location = Location();
- 
 
   var conrroller = Get.put(InactivityController());
   var exitondoubleTap = Get.put(DoubleTapExitController());
@@ -81,6 +81,7 @@ class _MyAppState extends State<MyApp> {
     //   }
     // });
     // _getLocation();
+    // checkUserGrantPermission();
     super.initState();
   }
 
@@ -203,6 +204,13 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
+checkUserGrantPermission() async {
+  if (await Permission.location.isDenied) {
+    Permission.location.request();
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  } else if (await Permission.location.isLimited) {}
+}
+
 class AppStateListener extends WidgetsBindingObserver {
   var conrroller = Get.put(InactivityController());
   @override
@@ -211,7 +219,6 @@ class AppStateListener extends WidgetsBindingObserver {
     if (state == AppLifecycleState.detached) {
       // App is going to be terminated
       // Call the API
-      print("chala ja");
       // conrroller.appKilledStateApi();
     } else {
       print("================================================================");
@@ -238,9 +245,3 @@ class AppStateListener extends WidgetsBindingObserver {
   //   }
   // }
 }
-        // Timer(Duration(minutes: 1), () {
-        //   // conrroller.appKilledStateApi();
-        //   // Timer(Duration(seconds: 2), () {
-        //   //   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        //   // });
-        // });

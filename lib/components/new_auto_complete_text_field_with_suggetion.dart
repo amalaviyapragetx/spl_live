@@ -146,7 +146,7 @@ class AutoTextFieldWithSuggetion extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Material(
               elevation: 4.0,
-              child: Container(
+              child: SizedBox(
                 width: containerWidth,
                 child: ListView.builder(
                   padding: const EdgeInsets.all(15),

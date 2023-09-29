@@ -1,11 +1,8 @@
-import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
-import 'package:spllive/routes/app_routes_name.dart';
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/custom_text_style.dart';
@@ -38,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: Dimensions.w35,
         ),
-        child: Container(
+        child: SizedBox(
           height: size.height,
           width: size.width,
           child: Column(

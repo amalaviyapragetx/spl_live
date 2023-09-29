@@ -47,7 +47,7 @@ class StarlineNewGamePageController extends GetxController {
   var spdptpList = [];
   var selectedBidsList = <StarLineBids>[].obs;
   var marketName = "".obs;
-  List<String> _validationListForNormalMode = [];
+  final List<String> _validationListForNormalMode = [];
   var apiUrl = "";
   RxBool oddbool = true.obs;
   RxBool evenbool = false.obs;
@@ -377,24 +377,24 @@ class StarlineNewGamePageController extends GetxController {
     print(requestModel.value.toJson());
     print(getBIdType);
     await loadJsonFile();
-    List<String> _tempValidationList = [];
+    List<String> tempValidationList = [];
     switch (gameMode.value.name) {
       case "Single Ank":
         enteredDigitsIsValidate = true;
         panaControllerLength.value = 1;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         break;
       case "Single Pana":
         panaControllerLength.value = 3;
-        _tempValidationList = jsonModel.allSinglePana!;
+        tempValidationList = jsonModel.allSinglePana!;
         break;
       case "Double Pana":
         panaControllerLength.value = 3;
-        _tempValidationList = jsonModel.allDoublePana!;
+        tempValidationList = jsonModel.allDoublePana!;
         break;
       case "Tripple Pana":
         panaControllerLength.value = 3;
-        _tempValidationList = jsonModel.triplePana!;
+        tempValidationList = jsonModel.triplePana!;
         break;
       case "Panel Group":
         panaControllerLength.value = 3;
@@ -404,13 +404,13 @@ class StarlineNewGamePageController extends GetxController {
       case "SPDPTP":
         panaControllerLength.value = 1;
         spdptplistFromModel = jsonModel.spdptpChart!;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         apiUrl = ApiUtils.spdptp;
         break;
       case "Choice Pana SPDP":
         panaControllerLength.value = 1;
         apiUrl = ApiUtils.choicePanaSPDP;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         choisePanaSPDPTP = jsonModel.spdptp!;
         break;
       case "SP Motor":
@@ -425,7 +425,7 @@ class StarlineNewGamePageController extends GetxController {
         break;
       case "Odd Even":
         panaControllerLength.value = 1;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         break;
       case "Two Digits Panel":
         apiUrl = ApiUtils.towDigitJodi;
@@ -433,7 +433,7 @@ class StarlineNewGamePageController extends GetxController {
         panaControllerLength.value = 2;
         break;
     }
-    _validationListForNormalMode.addAll(_tempValidationList);
+    _validationListForNormalMode.addAll(tempValidationList);
   }
 
   // Function to filter elements that match the provided digits

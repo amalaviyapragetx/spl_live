@@ -51,7 +51,7 @@ class NewGamemodePageController extends GetxController {
   ].obs;
 
   Rx<GameMode> gameMode = GameMode().obs;
-  List<String> _validationListForNormalMode = [];
+  final List<String> _validationListForNormalMode = [];
   TextEditingController autoCompleteFieldController = TextEditingController();
   Model2 newgameModel = Model2();
   String bidType = "Open";
@@ -147,14 +147,14 @@ class NewGamemodePageController extends GetxController {
     await loadJsonFile();
     RxBool showNumbersLine = false.obs;
     RxList<String> suggestionList = <String>[].obs;
-    List<String> _tempValidationList = [];
-    var _panaGroupList;
+    List<String> tempValidationList = [];
+    Map<String, List<List<String>>> panaGroupList;
 
     switch (gameMode.value.name) {
       case "Single Ank":
         showNumbersLine.value = false;
         panaControllerLength.value = 1;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         suggestionList.value = jsonModel.singleAnk!;
         enteredDigitsIsValidate = true;
         panaControllerLength.value = 1;
@@ -165,7 +165,7 @@ class NewGamemodePageController extends GetxController {
         break;
       case "Jodi":
         showNumbersLine.value = false;
-        _tempValidationList = jsonModel.jodi!;
+        tempValidationList = jsonModel.jodi!;
         suggestionList.value = jsonModel.jodi!;
         panaControllerLength.value = 2;
         for (var e in jsonModel.jodi!) {
@@ -177,7 +177,7 @@ class NewGamemodePageController extends GetxController {
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
         panaControllerLength.value = 3;
-        _tempValidationList = jsonModel.allSinglePana!;
+        tempValidationList = jsonModel.allSinglePana!;
         suggestionList.value = jsonModel.singlePana!.single.l0!;
         for (var e in jsonModel.singlePana!.single.l0!) {
           singlePanaList.add(DigitListModelOffline.fromJson(e));
@@ -188,7 +188,7 @@ class NewGamemodePageController extends GetxController {
         digitRow.first.isSelected = true;
         showNumbersLine.value = true;
         panaControllerLength.value = 3;
-        _tempValidationList = jsonModel.allDoublePana!;
+        tempValidationList = jsonModel.allDoublePana!;
         suggestionList.value = jsonModel.doublePana!.single.l0!;
         for (var e in jsonModel.doublePana!.single.l0!) {
           doublePanaList.add(DigitListModelOffline.fromJson(e));
@@ -197,7 +197,7 @@ class NewGamemodePageController extends GetxController {
         break;
       case "Tripple Pana":
         showNumbersLine.value = false;
-        _tempValidationList = jsonModel.triplePana!;
+        tempValidationList = jsonModel.triplePana!;
         suggestionList.value = jsonModel.triplePana!;
         panaControllerLength.value = 3;
         for (var e in jsonModel.triplePana!) {
@@ -212,7 +212,7 @@ class NewGamemodePageController extends GetxController {
         // suggestionList.value = jsonModel.triplePana!;
         spdptplistFromModel = jsonModel.spdptpChart!;
         for (var e in spdptpList) {
-          _tempValidationList = e;
+          tempValidationList = e;
         }
         panaControllerLength.value = 1;
         print("----------------$spdptplistFromModel");
@@ -222,9 +222,9 @@ class NewGamemodePageController extends GetxController {
         showNumbersLine.value = false;
         apiUrl = ApiUtils.panelGroup;
         panaControllerLength.value = 3;
-        _panaGroupList = jsonModel.panelGroupChart!;
-        panelGroupChart = _panaGroupList;
-        print("-----------------${_panaGroupList}");
+        panaGroupList = jsonModel.panelGroupChart!;
+        panelGroupChart = panaGroupList;
+        print("-----------------$panaGroupList");
         break;
       case "SP Motor":
         showNumbersLine.value = false;
@@ -248,7 +248,7 @@ class NewGamemodePageController extends GetxController {
         break;
       case "Red Brackets":
         showNumbersLine.value = false;
-        _tempValidationList = redBrackelist;
+        tempValidationList = redBrackelist;
         suggestionList.value = redBrackelist;
         panaControllerLength.value = 2;
         break;
@@ -266,7 +266,7 @@ class NewGamemodePageController extends GetxController {
         // print(_tempValidationList);
         break;
     }
-    _validationListForNormalMode.addAll(_tempValidationList);
+    _validationListForNormalMode.addAll(tempValidationList);
   }
 
   List<String> getTwoDigitPanelPana(int inputNumber) {

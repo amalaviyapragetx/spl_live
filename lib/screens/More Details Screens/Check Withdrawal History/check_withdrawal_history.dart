@@ -337,7 +337,7 @@ class CheckWithdrawalPage extends StatelessWidget {
                 spreadRadius: 1,
                 color: AppColors.grey,
                 blurRadius: 10,
-                offset: Offset(7, 4),
+                offset: const Offset(7, 4),
               ),
             ],
             border: Border.all(width: 0.2),

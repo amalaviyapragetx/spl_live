@@ -65,7 +65,7 @@ class SelectBidPageController extends GetxController {
 
   newBidListreaddata() async {
     var newBidList = await LocalStorage.read(ConstantsVariables.bidsList);
-    print("Bid List : ${newBidList}");
+    print("Bid List : $newBidList");
   }
 
   void onDeleteBids(int index) async {

@@ -11,15 +11,15 @@ class WithdrawalRequestResponseModel {
     if (json['data'] != null) {
       data = <WithdrawalRequestList>[];
       json['data'].forEach((v) {
-        data!.add(new WithdrawalRequestList.fromJson(v));
+        data!.add(WithdrawalRequestList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -56,14 +56,14 @@ class WithdrawalRequestList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['RequestedAmount'] = this.requestedAmount;
-    data['Remarks'] = this.remarks;
-    data['RequestId'] = this.requestId;
-    data['Status'] = this.status;
-    data['RequestProcessedAt'] = this.requestProcessedAt;
-    data['RequestTime'] = this.requestTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['RequestedAmount'] = requestedAmount;
+    data['Remarks'] = remarks;
+    data['RequestId'] = requestId;
+    data['Status'] = status;
+    data['RequestProcessedAt'] = requestProcessedAt;
+    data['RequestTime'] = requestTime;
     return data;
   }
 }

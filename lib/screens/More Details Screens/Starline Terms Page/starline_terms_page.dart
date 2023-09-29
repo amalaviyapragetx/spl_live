@@ -72,7 +72,7 @@ class StarlineTermsPage extends StatelessWidget {
   Widget starlineGameWinRatio() {
     return Obx(
       () => controller.starlineMarketModel.value.data == null
-          ? Container(
+          ? SizedBox(
               height: 250,
               child: Center(
                 child: Text(

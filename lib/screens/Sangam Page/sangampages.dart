@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/Sangam%20Page/controller/sangam_page_controller.dart';
 import '../../Custom Controllers/wallet_controller.dart';
-import '../../components/auto_complete_text_field_with_suggestion.dart';
 import '../../components/new_auto_complete_text_field_with_suggetion.dart';
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/constant_image.dart';
@@ -22,7 +20,7 @@ class SangamPages extends StatelessWidget {
   List<String> matches = <String>[];
   var border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
-    borderSide: BorderSide(
+    borderSide: const BorderSide(
       color: Colors.transparent,
     ),
   );
@@ -96,31 +94,29 @@ class SangamPages extends StatelessWidget {
                             enable: true,
                             focusNode: controller.focusNode,
                             onChanged: (val) {
-                              if (val != null) {
-                                if (val.characters.characterAt(0) ==
-                                        Characters("0") &&
-                                    val.length > 1) {
-                                  // we need to remove the first char
-                                  controller.coinsController.text =
-                                      val.substring(1);
-                                  // we need to move the cursor
-                                  controller.coinsController.selection =
-                                      TextSelection.collapsed(
-                                    offset:
-                                        controller.coinsController.text.length,
-                                  );
-                                } else if (int.parse(val) == 0) {
-                                  print("value == 0");
-                                  AppUtils.showErrorSnackBar(
-                                    bodyText: "Please enter valid points",
-                                  );
-                                } else if (int.parse(val) > 10000) {
-                                  print("value > 10000");
-                                  AppUtils.showErrorSnackBar(
-                                    bodyText:
-                                        "You can not add more than 10000 points",
-                                  );
-                                }
+                              if (val.characters.characterAt(0) ==
+                                      Characters("0") &&
+                                  val.length > 1) {
+                                // we need to remove the first char
+                                controller.coinsController.text =
+                                    val.substring(1);
+                                // we need to move the cursor
+                                controller.coinsController.selection =
+                                    TextSelection.collapsed(
+                                  offset:
+                                      controller.coinsController.text.length,
+                                );
+                              } else if (int.parse(val) == 0) {
+                                print("value == 0");
+                                AppUtils.showErrorSnackBar(
+                                  bodyText: "Please enter valid points",
+                                );
+                              } else if (int.parse(val) > 10000) {
+                                print("value > 10000");
+                                AppUtils.showErrorSnackBar(
+                                  bodyText:
+                                      "You can not add more than 10000 points",
+                                );
                               }
                             },
                             height: Dimensions.h35,
@@ -139,7 +135,7 @@ class SangamPages extends StatelessWidget {
                                 // AppUtils.showErrorSnackBar(
                                 //   bodyText: "Please enter valid points",
                                 // );
-                                return Iterable<String>.empty();
+                                return const Iterable<String>.empty();
                                 //return const Iterable<String>.empty();
                               } else {
                                 return matches;
