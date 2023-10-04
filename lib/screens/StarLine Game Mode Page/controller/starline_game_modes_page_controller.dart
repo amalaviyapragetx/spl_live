@@ -32,14 +32,13 @@ class StarLineGameModesPageController extends GetxController {
   void onInit() async {
     super.onInit();
     marketData.value = arguments;
-    print("********* ${marketData.value.toJson()}");
+
     checkBiddingStatus();
     await LocalStorage.write(ConstantsVariables.starlineConnect, true);
     callGetGameModes();
   }
 
   onBackButton() async {
-    print("+++++++++++++++++++++++++++++++");
     Get.offAllNamed(AppRoutName.dashBoardPage);
     requestModel.value.bids?.clear();
     await LocalStorage.write(
@@ -70,7 +69,6 @@ class StarLineGameModesPageController extends GetxController {
   void callGetGameModes() async {
     ApiService().getStarLineGameModes(marketID: marketData.value.id ?? 0).then(
       (value) async {
-        print("Get StarLine Game Modes Api Response :- $value");
         if (value['status']) {
           StarLineGameModesApiResponseModel gameModeModel =
               StarLineGameModesApiResponseModel.fromJson(value);
@@ -96,8 +94,6 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   void onTapOfGameModeTile(int index) async {
-    print("================================================================");
-    print(gameModesList[index].name);
     bool isBulkMode = false;
     bool normalMode = false;
 
@@ -155,7 +151,6 @@ class StarLineGameModesPageController extends GetxController {
       default:
     }
 
-    print("==== From Main data ===== $isBulkMode");
     if (isBulkMode) {
       Get.toNamed(AppRoutName.starLineGamePage, arguments: {
         "gameMode": gameModesList[index],
@@ -165,8 +160,6 @@ class StarLineGameModesPageController extends GetxController {
         "getBIdType": gameModesList[index].name,
       });
     } else {
-      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-      print(gameModesList[index].name);
       Get.toNamed(AppRoutName.newStarlineGames, arguments: {
         "gameMode": gameModesList[index],
         "gameModeName": gameModesList[index].name,
@@ -191,7 +184,6 @@ class StarLineGameModesPageController extends GetxController {
     ApiService()
         .createStarLineMarketBid(requestModel.value.toJson())
         .then((value) async {
-      debugPrint("create starline bid api response :- $value");
       if (value['status']) {
         Get.back();
         Get.back();

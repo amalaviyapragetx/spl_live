@@ -20,7 +20,6 @@ class CheckWithdrawalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("====== Page called =================");
     var verticalSpace = SizedBox(
       height: Dimensions.h10,
     );

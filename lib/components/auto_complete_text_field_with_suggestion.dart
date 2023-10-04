@@ -169,8 +169,7 @@ class AutoCompleteTextField extends StatelessWidget {
           // );
         },
         onSelected: (String selection) {
-          debugPrint(
-              'Selected Suggestion of auto complete text field is $selection');
+          
         },
       ),
     );

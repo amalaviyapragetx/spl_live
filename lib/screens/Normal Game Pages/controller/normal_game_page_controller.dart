@@ -138,13 +138,13 @@ class NormalGamePageController extends GetxController {
     List<String> panaType = selectedValues;
 
     List<String> panaArray = [];
-    print(panaType);
+
     for (int i = 0; i < panaType.length; i++) {
       List<String>? data = choisePanaSPDPTP[panaType[i]];
       if (data != null) {
         panaArray.addAll(data);
       } else {
-        print("Error");
+        debugPrint("Error");
       }
     }
     var a = panaArray.where((num1) {
@@ -159,13 +159,13 @@ class NormalGamePageController extends GetxController {
       // return true;
       return matchesDigits(num1, left: left, middle: middle, last: last);
     }).toList();
-    print("$a  ${a.length}");
+
     return a;
   }
 
   bool matchesDigits(String num, {String? left, String? middle, String? last}) {
     if ((left!.isNotEmpty && num[0] != left)) {
-      print("+============");
+ 
       return false;
     } else if (((middle!.isNotEmpty && num[num.length ~/ 2] != middle))) {
       return false;
@@ -206,7 +206,7 @@ class NormalGamePageController extends GetxController {
 
       result = [...leftList, ...rightList];
     }
-    print(result);
+   
     return result;
   }
 
@@ -324,7 +324,7 @@ class NormalGamePageController extends GetxController {
   var marketValue = MarketData().obs;
   void createMarketBidApi() async {
     ApiService().createMarketBid(requestModel.toJson()).then((value) async {
-      debugPrint("create bid api response :- $value");
+     
       if (value['status']) {
         // Get.back();
         // Get.back();

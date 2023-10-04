@@ -70,8 +70,7 @@ class AutoTextFieldWithSuggetion extends StatelessWidget {
       child: RawAutocomplete<String>(
         optionsBuilder: optionsBuilder,
         onSelected: (String selection) {
-          debugPrint(
-              'Selected Suggestion of auto complete text field is $selection');
+         
         },
         fieldViewBuilder: (BuildContext context,
             TextEditingController textEditingController,

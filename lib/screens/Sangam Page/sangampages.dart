@@ -107,12 +107,10 @@ class SangamPages extends StatelessWidget {
                                       controller.coinsController.text.length,
                                 );
                               } else if (int.parse(val) == 0) {
-                                print("value == 0");
                                 AppUtils.showErrorSnackBar(
                                   bodyText: "Please enter valid points",
                                 );
                               } else if (int.parse(val) > 10000) {
-                                print("value > 10000");
                                 AppUtils.showErrorSnackBar(
                                   bodyText:
                                       "You can not add more than 10000 points",

@@ -18,8 +18,6 @@ class NotificationDetailsPageController extends GetxController {
         await LocalStorage.read(ConstantsVariables.marketNotification);
     starlineNotificationFromLocal.value =
         await LocalStorage.read(ConstantsVariables.starlineNotification);
-    print(
-        "++++initState++++++${marketNotificationFromLocal.value} ${starlineNotificationFromLocal.value}");
     if (marketNotificationFromLocal.value == null) {
       await LocalStorage.write(ConstantsVariables.marketNotification, true);
       await LocalStorage.write(ConstantsVariables.starlineNotification, true);
@@ -30,14 +28,13 @@ class NotificationDetailsPageController extends GetxController {
 
   void callNotification() async {
     ApiService().marketNotifications(await marketBody()).then((value) async {
-      debugPrint("Notification Response :- $value");
+      
       if (value['status']) {
         await LocalStorage.write(ConstantsVariables.marketNotification,
             marketNotificationFromLocal.value);
         await LocalStorage.write(ConstantsVariables.starlineNotification,
             starlineNotificationFromLocal.value);
-        print(
-            "++++++++++++++++${marketNotificationFromLocal.value} ${starlineNotificationFromLocal.value}");
+        
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {

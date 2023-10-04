@@ -559,10 +559,10 @@ class StarLineNewGamePage extends StatelessWidget {
                                   // },
                                   onChanged: (val) {
                                     if (val != null) {
-                                      print("111111111111");
+                                 
                                       if (val.characters.characterAt(0) ==
                                           Characters("0")) {
-                                        print("22222222222222");
+                                       
                                         // we need to remove the first char
                                         controller.coinController.text =
                                             val.substring(1);
@@ -814,10 +814,10 @@ class StarLineNewGamePage extends StatelessWidget {
                                     // },
                                     onChanged: (val) {
                                       if (val != null) {
-                                        print("111111111111");
+                                        
                                         if (val.characters.characterAt(0) ==
                                             Characters("0")) {
-                                          print("22222222222222");
+                                         
                                           // we need to remove the first char
                                           controller.coinController.text =
                                               val.substring(1);

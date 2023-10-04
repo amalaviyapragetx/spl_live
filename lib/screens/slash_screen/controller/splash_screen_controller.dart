@@ -56,10 +56,6 @@ class SplashController extends GetxController {
         street.value =
             "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
         postalCode.value = placemark.postalCode ?? 'Unknown';
-        print(
-            "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${placemark.subAdministrativeArea}");
-        print(
-            "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   street:  ${street.value}");
         List<PlaceMark> letestLocation = [
           PlaceMark(
             name: 'Place 1',
@@ -81,7 +77,7 @@ class SplashController extends GetxController {
             ConstantsVariables.locationData, placeMarkJsonList);
         var storedPlaceMarkJsonList =
             await LocalStorage.read(ConstantsVariables.locationData) ?? [];
-        print("=================$storedPlaceMarkJsonList");
+     
       }
     } catch (e) {
       print('Error getting location: $e');
@@ -90,7 +86,7 @@ class SplashController extends GetxController {
 
   callFcmApi(userId) async {
     var token = await LocalStorage.read(ConstantsVariables.fcmToken);
-    print("===========$token");
+
     Timer(const Duration(milliseconds: 500), () {
       fsmApiCall(userId, token);
     });
@@ -106,7 +102,7 @@ class SplashController extends GetxController {
 
   void fsmApiCall(userId, fcmToken) async {
     ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
-      debugPrint("Create Feedback Api Response :- $value");
+      
       if (value['status']) {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -125,9 +121,9 @@ class SplashController extends GetxController {
 
   void appVesionCheck() async {
     ApiService().getAppVersion().then((value) async {
-      debugPrint("get App Version:- $value");
+      
       if (value['status']) {
-        print(value['data']);
+        
         if (value['data'] != appVersion) {
           _showExitDialog();
         }
@@ -142,19 +138,17 @@ class SplashController extends GetxController {
   }
 
   Future<void> checkLogin() async {
-    await LocalStorage.write(ConstantsVariables.timeOut, false);
     bool alreadyLoggedIn = await getStoredUserData();
     bool isActive =
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    print(isActive);
+   
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
     bool hasMPIN =
         await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
     bool isUserDetailSet =
         await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
-    print(
-        "================================================$isUserDetailSet $hasMPIN ");
+   
     //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
       if (!isActive && !isVerified) {

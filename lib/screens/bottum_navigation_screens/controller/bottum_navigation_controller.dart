@@ -44,7 +44,7 @@ class MoreListController extends GetxController {
 
   void callLogout() async {
     ApiService().logout().then((value) async {
-      debugPrint("Logout Api Response :- $value");
+    
       if (value['status']) {
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -55,7 +55,7 @@ class MoreListController extends GetxController {
         await LocalStorage.write(ConstantsVariables.fcmToken, deviceToken);
         await LocalStorage.write(
             ConstantsVariables.locationData, locationData1);
-        print("Device Token : $deviceToken");
+     
         Get.offAllNamed(AppRoutName.walcomeScreen);
       } else {
         AppUtils.showErrorSnackBar(
@@ -77,7 +77,6 @@ class MoreListController extends GetxController {
             isStarline: isStarline.value)
         .then(
       (value) async {
-        debugPrint("Get Market Api Response :- $value");
         if (value['status']) {
           if (value['data'] != null) {
             NormalMarketBidHistoryResponseModel model =
@@ -99,7 +98,7 @@ class MoreListController extends GetxController {
 
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
-      debugPrint("Forgot MPIN Api Response :- $value");
+   
       if (value['status']) {
         var tempBalance = value['data']['Amount'] ?? 00;
         walletBalance.value = tempBalance.toString();
@@ -124,7 +123,6 @@ class MoreListController extends GetxController {
         .getFeedbackAndRatingsById(userId: userData.id)
         .then(
       (value) async {
-        debugPrint("Get Feed back and Ratings Api Response :- $value");
         if (value['status']) {
           var feedbackModel = GetFeedbackByIdApiResponseModel.fromJson(value);
           if (feedbackModel.data != null) {
@@ -184,7 +182,6 @@ class MoreListController extends GetxController {
       "userId": userData.id,
       "rating": rating,
     };
-    debugPrint(createFeedbackBody.toString());
     return createFeedbackBody;
   }
 
@@ -192,7 +189,6 @@ class MoreListController extends GetxController {
     ApiService()
         .rateApp(await createRatingBody(ratingValue))
         .then((value) async {
-      debugPrint("Create Feedback Api Response :- $value");
       if (value['status']) {
         Get.back();
         AppUtils.showSuccessSnackBar(

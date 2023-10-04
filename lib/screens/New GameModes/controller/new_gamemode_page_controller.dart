@@ -128,8 +128,7 @@ class NewGamemodePageController extends GetxController {
   void getArguments() async {
     gameModeList = argument['gameModeList'];
     marketValue.value = argument['marketValue'];
-    // marketValue.value = argument['marketValue'];ððð
-    print("gameModeList : ${gameModeList.value.toJson()}");
+    // marketValue.value = argument['marketValue'];
     gameMode.value = argument['gameMode'];
     biddingType.value = argument['biddingType'];
     marketName.value = argument['marketName'];
@@ -215,7 +214,7 @@ class NewGamemodePageController extends GetxController {
           tempValidationList = e;
         }
         panaControllerLength.value = 1;
-        print("----------------$spdptplistFromModel");
+    
         // digitList.value = triplePanaList;
         break;
       case "Panel Group":
@@ -224,7 +223,7 @@ class NewGamemodePageController extends GetxController {
         panaControllerLength.value = 3;
         panaGroupList = jsonModel.panelGroupChart!;
         panelGroupChart = panaGroupList;
-        print("-----------------$panaGroupList");
+        
         break;
       case "SP Motor":
         showNumbersLine.value = false;
@@ -237,14 +236,14 @@ class NewGamemodePageController extends GetxController {
         apiUrl = ApiUtils.dpMotor;
         panaControllerLength.value = 10;
         spdpMotor = jsonModel.spdptp!['DP'] as List<String>;
-        print(spdpMotor);
+    
         break;
       case "Two Digits Panel":
         showNumbersLine.value = false;
         apiUrl = ApiUtils.towDigitJodi;
         panaControllerLength.value = 2;
         spdpMotor = jsonModel.allThreePana!;
-        print("===============================$spdpMotor");
+     
         break;
       case "Red Brackets":
         showNumbersLine.value = false;
@@ -257,13 +256,7 @@ class NewGamemodePageController extends GetxController {
         apiUrl = ApiUtils.groupJody;
         panaControllerLength.value = 2;
         groupJodiData = jsonModel.groupJodi!;
-        // List<List<String>> newList =
-        //     List<List<String>>.from(jsonModel.groupJodi!.map((String list) {
-        //   return List<String>.from(list as Iterable<String>);
-        // }));
-        // print(newList);
-        // _tempValidationList = jsonModel.groupJodi!;
-        // print(_tempValidationList);
+       
         break;
     }
     _validationListForNormalMode.addAll(tempValidationList);
@@ -277,15 +270,12 @@ class NewGamemodePageController extends GetxController {
       String numStr = num.toString();
       return inputDigits.every((digit) => numStr.contains(digit.toString()));
     }
-
-    print(
-        "${spdpMotor.where(containsBothInputDigits).toList()} ${spdpMotor.where(containsBothInputDigits).toList().length}");
     return spdpMotor.where(containsBothInputDigits).toList();
   }
 
   List<String> groupJodi(String stringToFind) {
     List<String> groupList = groupJodiData;
-    print(groupList);
+   
     List<String>? result;
     bool toStop = false;
     for (var element in groupList) {
@@ -306,7 +296,7 @@ class NewGamemodePageController extends GetxController {
     }
 
     if (result != null) {
-      print(result);
+   
       return result;
     } else {
       return [];
@@ -349,7 +339,7 @@ class NewGamemodePageController extends GetxController {
         matchingElements.add(element);
       }
     }
-    print("))))))))))))((((((((((((((((($matchingElements");
+  
     return matchingElements;
   }
 
@@ -440,7 +430,7 @@ class NewGamemodePageController extends GetxController {
   void onTapOfAddButton() {
     // FocusManager.instance.primaryFocus?.unfocus();
     isBulkMode.value = false;
-    print(requestModel.value.dailyMarketId);
+ 
     if (!isBulkMode.value) {
       if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
         AppUtils.showErrorSnackBar(
@@ -487,7 +477,7 @@ class NewGamemodePageController extends GetxController {
             );
           }
         }
-        print("===== selectedBidsList =======");
+      
         _calculateTotalAmount();
         autoCompleteFieldController.clear();
         coinController.clear();
@@ -606,7 +596,7 @@ class NewGamemodePageController extends GetxController {
   void createMarketBidApi() async {
     ApiService().createMarketBid(requestModel.toJson()).then(
       (value) async {
-        debugPrint("create bid api response :- $value");
+        
         if (value['status']) {
           if (value['data'] == false) {
             selectedBidsList.clear();
@@ -662,7 +652,7 @@ class NewGamemodePageController extends GetxController {
 
   Future<Map> spdptpbody() async {
     String panaType = selectedValues.join(',');
-    print(panaType);
+    
     final a = {"digit": autoCompleteFieldController.text, "panaType": panaType};
     final b = {"pana": autoCompleteFieldController.text};
     if (gameMode.value.name == "Panel Group") {
@@ -730,10 +720,9 @@ class NewGamemodePageController extends GetxController {
           );
         } else {
           spdptpList = gmaemodeNames();
-          print("=========================466556656565=======================");
+     
           if (spdptpList.isNotEmpty) {
-            // print(
-            //     "==========================dsdsdsdsdsds======================");
+         
             for (var i = 0; i < spdptpList.length; i++) {
               addedNormalBidValue = spdptpList[i].toString();
               var existingIndex = selectedBidsList.indexWhere(
@@ -910,8 +899,7 @@ class NewGamemodePageController extends GetxController {
     // } else {
     ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
       (value) async {
-        debugPrint("+++++++++++++++++++Dp Motor");
-        debugPrint("New Game-Mode Api Response :- $value");
+   
         if (value['status']) {
           spdptpList = value['data'];
           //_validationListForNormalMode = newarrr;

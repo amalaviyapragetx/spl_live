@@ -176,8 +176,7 @@ class SingleAnkPage extends StatelessWidget {
                                           false;
                                       controller.isEnable.value = false;
                                     } else {
-                                      print(
-                                          "444444444444444444   ${val.length}");
+                                
                                       controller.ondebounce();
                                       controller.validCoinsEntered.value =
                                           false;

@@ -283,8 +283,7 @@ class WithdrawalPage extends StatelessWidget {
                         textStyle: CustomTextStyle.textRobotoSansLight,
                         onTap: () {
                           // checkWithdrawalPageController.get(lazyLoad: false);
-                          print(
-                              "====== My Wallet screen ====== Check withdrawalPageController ======");
+                        
                           Get.offAndToNamed(AppRoutName.checkWithDrawalPage);
                         },
                         height: Dimensions.h40,

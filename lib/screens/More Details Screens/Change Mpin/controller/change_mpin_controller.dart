@@ -34,15 +34,13 @@ class ChangeMpinPageController extends GetxController {
       "confirmMPin": newMPIN.text,
       "mPin": reEnterMPIN.text,
     };
-    debugPrint(verifyUserBody.toString());
+
     return verifyUserBody;
   }
 
   void changePasswordApi() async {
     ApiService().changeMPIN(await changePassBody()).then((value) async {
-      debugPrint("Verify OTP Api Response :- $value");
       if (value['status']) {
-        print(value['status']);
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.offAndToNamed(AppRoutName.profilePage);

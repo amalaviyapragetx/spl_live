@@ -140,14 +140,13 @@ class GameModePagesController extends GetxController {
         .getGameModes(
             openCloseValue: openCloseValue.value != "CLOSEBID".tr ? "0" : "1",
             marketID: marketValue.value.id ?? 0)
-        .then((value) async {
-      debugPrint("Get Game modes Api Response :- $value");
+        .then((value) async {;
 
       if (value['status']) {
         GameModesApiResponseModel gameModeModel =
             GameModesApiResponseModel.fromJson(value);
         gameModeList.value = gameModeModel;
-        print("Game modes Api Response $gameModeList ");
+      
         if (gameModeModel.data != null) {
           openBiddingOpen.value = gameModeModel.data!.isBidOpenForOpen ?? false;
           closeBiddingOpen.value =
@@ -160,7 +159,7 @@ class GameModePagesController extends GetxController {
         );
       }
     });
-    print(playmore);
+   
   }
 
   void checkBids() async {
@@ -178,7 +177,7 @@ class GameModePagesController extends GetxController {
   }
 
   void onTapOfGameModeTile(int index) {
-    print(gameModesList[index].name);
+   
     bool isBulkMode = false;
     bool digitBasedJodi = false;
     bool choicePanaSpDp = false;
@@ -236,9 +235,9 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-      print(marketValue.value.market);
+    
     } else if (isBulkMode) {
-      print(selectedBidsList);
+    
       Get.toNamed(AppRoutName.singleAnkPage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
@@ -254,7 +253,7 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-      print(marketValue.value.market);
+    
     } else if (choicePanaSpDp || digitsBasedJodi || oddEven) {
       Get.toNamed(AppRoutName.newOddEvenPage, arguments: {
         "gameMode": gameModesList[index],
@@ -287,7 +286,7 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-      print(marketValue.value.market);
+    
     }
   }
 
@@ -298,7 +297,7 @@ class GameModePagesController extends GetxController {
     requestModel.value.userId = userData.id;
     selectedBidsList.value =
         await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
-    print("@#@@#@#@@#$selectedBidsList");
+   
     requestModel.refresh();
   }
 }

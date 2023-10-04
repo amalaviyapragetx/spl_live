@@ -25,7 +25,7 @@ class VerifyOTPController extends GetxController {
 
   var userData;
   Future<void> getStoredUserData() async {
-    print(verifyOTP);
+  
     if (argument != null) {
       phoneNumber = argument['phoneNumber'];
       // countryCode = argument['countryCode'];
@@ -38,8 +38,7 @@ class VerifyOTPController extends GetxController {
   }
 
   void onTapOfContinue() {
-    print(verifyOTP);
-    if (otp.isEmpty) {
+      if (otp.isEmpty) {
       AppUtils.showErrorSnackBar(
         bodyText: "ENTEROTP".tr,
       );
@@ -54,7 +53,7 @@ class VerifyOTPController extends GetxController {
 
   void callVerifyUserApi() async {
     ApiService().verifyUser(await verifyUserBody()).then((value) async {
-      debugPrint("Verify OTP Api Response :- $value");
+  
       if (value['status']) {
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -87,13 +86,12 @@ class VerifyOTPController extends GetxController {
       "phoneNumber": phoneNumber,
       "otp": otp.value,
     };
-    debugPrint("==============================${verifyUserBody.toString()}");
     return verifyUserBody;
   }
 
   void callVerifyOTPApi() async {
     ApiService().verifyOTP(await verifyOTPBody()).then((value) async {
-      debugPrint("Verify OTP Api Response :- $value");
+    
       if (value['status']) {
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -119,13 +117,13 @@ class VerifyOTPController extends GetxController {
     final verifyOTPBody = {
       "otp": otp.value,
     };
-    debugPrint(verifyOTPBody.toString());
+    
     return verifyOTPBody;
   }
 
   void callResendOtpApi() async {
     ApiService().resendOTP(await resendOtpBody()).then((value) async {
-      debugPrint("Resend otp Api Response :- $value");
+      
       if (value['status']) {
         secondsRemaining.value = 60;
         _startTimer();

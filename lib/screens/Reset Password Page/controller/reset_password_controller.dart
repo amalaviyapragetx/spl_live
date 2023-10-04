@@ -55,7 +55,6 @@ class ResetPasswordController extends GetxController {
 
   void callResetPasswordApi() async {
     ApiService().resetPassword(await resetPasswordBody()).then((value) async {
-      debugPrint("Reset password Api Response :- $value");
       if (value['status']) {
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -76,7 +75,7 @@ class ResetPasswordController extends GetxController {
       "password": passwordController.text,
       "confirmPassword": confirmPasswordController.text,
     };
-    debugPrint(resetPasswordBody.toString());
+
     return resetPasswordBody;
   }
 
@@ -128,7 +127,6 @@ class ResetPasswordController extends GetxController {
 
   void callResendOtpApi() async {
     ApiService().resendOTP(await resendOtpBody()).then((value) async {
-      debugPrint("Resend otp Api Response :- $value");
       if (value['status']) {
         secondsRemaining.value = 60;
         _startTimer();

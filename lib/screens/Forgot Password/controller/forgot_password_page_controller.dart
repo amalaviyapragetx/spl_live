@@ -6,6 +6,7 @@ import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
+import '../../Local Storage.dart';
 
 class ForgotPasswordController extends GetxController {
   var mobileNumberController = TextEditingController();
@@ -23,10 +24,11 @@ class ForgotPasswordController extends GetxController {
 
   void callForgotPasswordApi() async {
     ApiService().forgotPassword(await forgotPasswordBody()).then((value) async {
-      debugPrint("Forgot Password Api Response :- $value");
+   
       if (value['status']) {
-        print(
-            "============================${value['data']['IsUserDetailSet']}");
+   
+        String authToken = value['data']['Token'] ?? "Null From API";
+        await LocalStorage.write(ConstantsVariables.authToken, authToken);
         if (value['data']['IsUserDetailSet'] == true) {
           AppUtils.showSuccessSnackBar(
               bodyText: value['message'] ?? "",
@@ -51,7 +53,6 @@ class ForgotPasswordController extends GetxController {
       "phoneNumber": mobileNumberController.text,
       "countryCode": "+91",
     };
-    debugPrint(forgotPasswordBody.toString());
     return forgotPasswordBody;
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +32,7 @@ class GetXNetworkManager extends GetxController {
     try {
       connectivityResult = await (_connectivity.checkConnectivity());
     } on PlatformException catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
     return _updateState(connectivityResult);
   }

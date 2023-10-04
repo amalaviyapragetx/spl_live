@@ -1,8 +1,8 @@
 class ApiUtils {
   // Spl Production
-  // static String baseURL = "https://vishnulive.in:9869";
+  static String baseURL = "https://vishnulive.in:9869";
   // local url
-  static String baseURL = "http://192.168.1.23:8080";
+  // static String baseURL = "http://192.168.1.23:8080";
   // endpoints
   static String signUP = '$baseURL/auth/signup';
   static String signIN = '$baseURL/auth/signin';
@@ -25,7 +25,7 @@ class ApiUtils {
   static String getDailyStarLineMarkets =
       '$baseURL/starline/getDailyStarlineMarket';
   static String createWithdrawalRequest = '$baseURL/withdraw/createRequest';
-  static String getWithdrawalRequestTime = '$baseURL/withdraw/getRequestTime';
+  // static String getWithdrawalRequestTime = '$baseURL/withdraw/getRequestTime';
   static String getWithdrawalHistoryByUserId =
       '$baseURL/withdraw/getRequestByUserId/';
   static String getStarlineGameRates = '$baseURL/game/getAll/';

@@ -14,8 +14,7 @@ class WalletController extends GetxController {
 
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
-      debugPrint("((((((((((((((((((((((((((()))))))))))))))))))))))))))");
-      debugPrint("Wallet balance Api Response :- $value");
+    
       if (value['status']) {
         var tempBalance = value['data']['Amount'] ?? 00;
         walletBalance.value = tempBalance.toString();

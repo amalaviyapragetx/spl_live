@@ -430,27 +430,27 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getWithdrawalRequestTime() async {
-    Future.delayed(const Duration(milliseconds: 2), () {
-      AppUtils.showProgressDialog(isCancellable: false);
-    });
+  // Future<dynamic> getWithdrawalRequestTime() async {
+  //   Future.delayed(const Duration(milliseconds: 2), () {
+  //     AppUtils.showProgressDialog(isCancellable: false);
+  //   });
 
-    await initApiService();
-    final response = await get(
-      ApiUtils.getWithdrawalRequestTime,
-      headers: headersWithToken,
-    );
-    if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
-      return Future.error(response.statusText!);
-    } else {
-      AppUtils.hideProgressDialog();
-      return response.body;
-    }
-  }
+  //   await initApiService();
+  //   final response = await get(
+  //     ApiUtils.getWithdrawalRequestTime,
+  //     headers: headersWithToken,
+  //   );
+  //   if (response.status.hasError) {
+  //     AppUtils.hideProgressDialog();
+  //     if (response.status.code != null && response.status.code == 401) {
+  //       tokenExpired();
+  //     }
+  //     return Future.error(response.statusText!);
+  //   } else {
+  //     AppUtils.hideProgressDialog();
+  //     return response.body;
+  //   }
+  // }
 
   Future<dynamic> getStarlineGameRates() async {
     Future.delayed(const Duration(milliseconds: 2), () {

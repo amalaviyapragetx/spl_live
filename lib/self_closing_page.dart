@@ -31,7 +31,6 @@ class InactivityController extends GetxController {
   }
 
   void onUserInteraction(PointerEvent event) {
-    print("state change");
     _resetInactivityTimer();
   }
 
@@ -42,17 +41,16 @@ class InactivityController extends GetxController {
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    // bool userLogin = false;
+    bool userLogin =
+        await LocalStorage.read(ConstantsVariables.timeOut) == "" ||
+                await LocalStorage.read(ConstantsVariables.timeOut) == null ??
+            false;
     // print("-------------------------------==========$userLogin");
-    // if (userLogin == false) {
-    //   await LocalStorage.write(ConstantsVariables.timeOut, false);
-    // } else {
-    //   await LocalStorage.read(ConstantsVariables.timeOut);
-    // }
-    if (alreadyLoggedIn) {
-      print("alreadyLogged:  $alreadyLoggedIn");
-      if (isActive && isVerified) {
-        _resetInactivityTimer();
+    if (userLogin) {
+      if (alreadyLoggedIn) {
+        if (isActive && isVerified) {
+          _resetInactivityTimer();
+        }
       }
     }
   }
@@ -63,15 +61,14 @@ class InactivityController extends GetxController {
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    //  bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut);
-    //  if (userLogin == null) {
-    //    await LocalStorage.write(ConstantsVariables.timeOut, false);
-    //  }
-    // print("-------------------------------==========$userLogin");
-    // print("$isActive $isVerified $userLogin");
-    if (alreadyLoggedIn) {
-      if (isActive && isVerified) {
-        onUserInteraction(event);
+    bool userLogin =
+        await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
+
+    if (userLogin) {
+      if (alreadyLoggedIn) {
+        if (isActive && isVerified) {
+          onUserInteraction(event);
+        }
       }
     }
   }
@@ -100,6 +97,7 @@ class InactivityController extends GetxController {
   void _showExitDialog() {
     Get.defaultDialog(
       barrierDismissible: false,
+      onWillPop: () async => false,
       title: "",
       content: Column(
         children: [
@@ -132,7 +130,7 @@ class InactivityController extends GetxController {
                 await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
             await LocalStorage.write(ConstantsVariables.timeOut, false);
             var timeOut = await LocalStorage.read(ConstantsVariables.timeOut);
-            if (timeOut == false) {
+            if (timeOut) {
               if (alreadyLoggedIn) {
                 if (isActive && isVerified) {
                   Get.offAllNamed(
@@ -142,9 +140,14 @@ class InactivityController extends GetxController {
                   _inactivityTimer?.cancel();
                 }
               } else {
-                print("alreadyLoggedInWelcomePage:  $alreadyLoggedIn");
                 _inactivityTimer?.cancel();
               }
+            } else {
+              Get.offAllNamed(
+                AppRoutName.mPINPage,
+                arguments: {"id": _userDetailsModel.id},
+              );
+              _inactivityTimer?.cancel();
             }
           },
           child: Container(

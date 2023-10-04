@@ -24,7 +24,6 @@ class GiveFeedbackPageController extends GetxController {
     ApiService()
         .createFeedback(await createFeedbackBody(ratingValue))
         .then((value) async {
-      debugPrint("Create Feedback Api Response :- $value");
       if (value['status']) {
         Get.back();
         AppUtils.showSuccessSnackBar(
@@ -71,7 +70,7 @@ class GiveFeedbackPageController extends GetxController {
   getArguments() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(data);
-    print(userDetailsModel.toJson());
+  
     // getFeedbackAndRatingsById();
   }
 
@@ -81,7 +80,6 @@ class GiveFeedbackPageController extends GetxController {
       "feedback": feedbackController.text,
       "rating": ratingValue
     };
-    debugPrint(createFeedbackBody.toString());
     return createFeedbackBody;
   }
 
@@ -91,7 +89,7 @@ class GiveFeedbackPageController extends GetxController {
         .getFeedbackAndRatingsById(userId: userDetailsModel.id)
         .then(
       (value) async {
-        debugPrint("Get StarLine Daily Markets Api Response :- $value");
+      
         if (value['status']) {
           feedbackModel.value = GetFeedbackByIdApiResponseModel.fromJson(value);
           feedbackController.text = feedbackModel.value.data!.feedback ?? "";

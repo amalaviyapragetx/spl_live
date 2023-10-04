@@ -27,6 +27,8 @@ class MPINPageController extends GetxController {
   void onInit() async {
     super.onInit();
     await LocalStorage.write(ConstantsVariables.starlineConnect, false);
+    await LocalStorage.write(ConstantsVariables.timeOut, false);
+    await LocalStorage.write(ConstantsVariables.mPinTimeOut, true);
     userId = arguments['id'].toString();
     getLocationsData();
   }
@@ -45,7 +47,7 @@ class MPINPageController extends GetxController {
 
   void verifyMPIN() async {
     ApiService().verifyMPIN(await verifyMPINBody()).then((value) async {
-      debugPrint("Verify MPIN Api Response :- $value");
+    
       if (value != null && value['status']) {
         // AppUtils.showSuccessSnackBar(
         //   bodyText: "${value['message']}",
@@ -84,7 +86,7 @@ class MPINPageController extends GetxController {
 
   void forgotMPINApi() async {
     ApiService().forgotMPIN().then((value) async {
-      debugPrint("Forgot MPIN Api Response :- $value");
+      
       if (value['status']) {
         Get.toNamed(AppRoutName.verifyOTPPage);
       } else {
@@ -102,13 +104,12 @@ class MPINPageController extends GetxController {
     List list = [];
     list.add(locationData[0]['location']);
     List<LocationModel> data = LocationModel.fromJsonList(list);
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@${data[0].city}");
+   
     city.value = data[0].city ?? 'Unknown';
     country.value = data[0].country ?? 'Unknown';
     state.value = data[0].state ?? 'Unknown';
     street.value = data[0].street ?? 'Unknown';
     postalCode.value = data[0].postalCode ?? 'Unknown';
-    print(
-        "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   street:  ${street.value}");
+   
   }
 }

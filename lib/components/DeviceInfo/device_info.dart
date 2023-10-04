@@ -1,10 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'device_information_model.dart';
-import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 
 class DeviceInfo {
   final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
@@ -28,17 +27,17 @@ class DeviceInfo {
         deviceData = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
         var androidInfo = await deviceInfoPlugin.androidInfo;
         deviceId = androidInfo.id.toString();
-        print("device ID :---$deviceId");
+
         deviceModelNo = deviceData["model"] ?? "getting Null";
         manufacturer = deviceData["manufacturer"] ?? "getting Null";
         brandName = deviceData["brand"] ?? "getting Null";
         osVersion = deviceData["version.release"] ?? "getting Null";
         bool isRooted = androidInfo.isPhysicalDevice;
-        print("device isRooted :---$isRooted");
-        // bool jailbroken = await FlutterJailbreakDetection.jailbroken;
-        // if (jailbroken || isRooted) {
-        //   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        // }
+
+        bool jailbroken = await FlutterJailbreakDetection.jailbroken;
+        if (jailbroken || isRooted) {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        }
       } else if (Platform.isIOS) {
         deviceType = "Ios";
         deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
@@ -62,8 +61,7 @@ class DeviceInfo {
       manufacturer: manufacturer,
       osVersion: osVersion,
     );
-    print(
-        "User's device info :-\nappversion:-$appVersion\ndeviceId :- $deviceId\nmodel :- $deviceModelNo\ndeviceOs :- $deviceType\n brandName :- $brandName\n manufacturer :- $manufacturer\n osVersion :- $osVersion ");
+
     return model;
   }
 

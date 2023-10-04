@@ -315,7 +315,7 @@ class AppUtils {
       Function callCreateRatingApi, double? givenRatings) async {
     double tempRatings = 0.00;
     IconData? selectedIcon;
-    print(givenRatings);
+   
     return Get.dialog(
       Padding(
         padding: EdgeInsets.symmetric(

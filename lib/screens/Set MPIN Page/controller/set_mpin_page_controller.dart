@@ -51,14 +51,11 @@ class SetMPINPageController extends GetxController {
     List list = [];
     list.add(locationData[0]['location']);
     List<LocationModel> data = LocationModel.fromJsonList(list);
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@${data[0].city}");
     city.value = data[0].city ?? 'Unknown';
     country.value = data[0].country ?? 'Unknown';
     state.value = data[0].state ?? 'Unknown';
     street.value = data[0].street ?? 'Unknown';
     postalCode.value = data[0].postalCode ?? 'Unknown';
-    print(
-        "city : ${city.value} +++  Contry: ${country.value}  +++ State:  ${state.value}   street:  ${street.value}");
   }
   // Future<void> getUserData() async {
   //   var data = await LocalStorage.read(ConstantsVariables.userData);
@@ -69,14 +66,13 @@ class SetMPINPageController extends GetxController {
 
   void getArguments() async {
     await LocalStorage.write(ConstantsVariables.starlineConnect, false);
-    print("000000000000000000000$arguments");
+
     if (arguments != null) {
       userDetails = arguments;
-      print("userDetails when condition false : $userDetails");
+
       _fromLoginPage = false;
     } else {
       _fromLoginPage = true;
-      print("userDetails when condition true : $userDetails");
     }
   }
 
@@ -102,7 +98,6 @@ class SetMPINPageController extends GetxController {
         bodyText: "MPINDOWSNTMATCHED".tr,
       );
     } else {
-      print("fromloginpage $_fromLoginPage");
       _fromLoginPage ? callSetMpinApi() : callSetUserDetailsApi();
     }
   }
@@ -113,7 +108,6 @@ class SetMPINPageController extends GetxController {
             ? await userDetailsBody2()
             : await userDetailsBody())
         .then((value) async {
-      debugPrint("Set User Details Api Response :- $value");
       if (value != null && value['status']) {
         var userData = value['data'];
         if (userData != null) {
@@ -161,7 +155,6 @@ class SetMPINPageController extends GetxController {
 
   void fsmApiCall(userId, fcmToken) async {
     ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
-      debugPrint("Create Feedback Api Response :- $value");
       if (value['status']) {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -192,7 +185,7 @@ class SetMPINPageController extends GetxController {
       "street": street.value,
       "postalCode": postalCode.value
     };
-    print(userDetailsBody);
+
     return userDetailsBody;
   }
 
@@ -211,7 +204,7 @@ class SetMPINPageController extends GetxController {
       "street": street.value,
       "postalCode": postalCode.value
     };
-    print(userDetailsBody);
+
     return userDetailsBody;
   }
 
@@ -245,14 +238,12 @@ class SetMPINPageController extends GetxController {
 
   Future<void> callSetMpinApi() async {
     ApiService().setMPIN(await setMpinBody()).then((value) async {
-      debugPrint("Set MPIN Api Response :- $value");
       if (value != null && value['status']) {
         // AppUtils.showSuccessSnackBar(
         //   bodyText: "${value['message']}",
         //   headerText: "SUCCESSMESSAGE".tr,
         // );
         var userData = value['data'];
-        print("userData&&&&&&&&&&&&&&&&&&&&&&&& : $userData");
         if (userData != null) {
           String authToken = userData['Token'] ?? "Null From API";
           bool isActive = userData['IsActive'] ?? false;

@@ -116,9 +116,6 @@ class GamePageController extends GetxController {
           singleAnkList.add(DigitListModelOffline.fromJson(e));
         }
         digitList.value = singleAnkList;
-        for (var e in digitList) {
-          print(e.value);
-        }
         break;
       case "Jodi Bulk":
         showNumbersLine.value = false;
@@ -223,7 +220,7 @@ class GamePageController extends GetxController {
         var tempBid = selectedBidsList
             .where((element) => element.bidNo == digitList[index].value)
             .toList();
-        print("***********$tempBid");
+    
         if (tempBid.isNotEmpty) {
           for (var element in selectedBidsList) {
             if (element.bidNo == digitList[index].value) {
@@ -260,7 +257,7 @@ class GamePageController extends GetxController {
       validCoinsEntered.value = false;
       digitList.refresh();
       digitList[index].isSelected = false;
-      print(digitList[index].isSelected);
+   
       isEnable.value = false;
       digitList.refresh();
       selectedBidsList
@@ -295,7 +292,7 @@ class GamePageController extends GetxController {
     digitRow[index].isSelected = true;
     digitRow.refresh();
     if (gameMode.name!.toUpperCase() == "SINGLE PANA BULK") {
-      print(jsonModel.singlePana!.single.l0);
+     
       panaSwitchCase(index, 12);
     } else {
       panaSwitchCase(index, 9);
@@ -443,7 +440,7 @@ class GamePageController extends GetxController {
         //  totalBid.value == "0";
         getArguments();
       } else {
-        print("********************* ${selectedBidsList.length}");
+     
         await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
         await LocalStorage.write(
             ConstantsVariables.totalAmount, totalAmount.value);
@@ -457,7 +454,6 @@ class GamePageController extends GetxController {
           "marketId": marketId,
           "totalAmount": totalAmount.value,
         });
-        print(selectedBidsList.runtimeType);
         digitList.clear();
         searchController.clear();
         coinController.clear();
@@ -473,8 +469,8 @@ class GamePageController extends GetxController {
   }
 
   void onSearch(val) {
-    debugPrint(val);
-    debugPrint(gameMode.id.toString());
+   
+    
     List<DigitListModelOffline> tempList = digitList;
     if (val.toString().isNotEmpty) {
       var searchResultList = tempList
@@ -487,7 +483,7 @@ class GamePageController extends GetxController {
       searchResultList.toSet().toList();
       digitList.value = searchResultList;
     } else {
-      debugPrint(" ===== Empty search bar =====");
+  
       switch (gameMode.id) {
         case 19:
           digitList.value = singleAnkList;

@@ -114,7 +114,6 @@ class MyAccountPageController extends GetxController {
     ApiService()
         .editBankDetails(await ediBankDetailsBody())
         .then((value) async {
-      debugPrint("Edi bank details Api Response :- $value");
       if (value['status']) {
         BankDetailsResponseModel model =
             BankDetailsResponseModel.fromJson(value);
@@ -154,7 +153,7 @@ class MyAccountPageController extends GetxController {
     }
     // ediBankDetailsBody.addIf(bankId != 0, "id", bankId);
     //  debugPrint(ediBankDetailsBody.toString());
-    print(ediBankDetailsBody);
+   
     return ediBankDetailsBody;
   }
 }

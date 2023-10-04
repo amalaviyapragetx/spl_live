@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -94,15 +93,13 @@ class ChangepasswordPageController extends GetxController {
       "password": newPassword.text,
       "confirmPassword": confirmPassword.text,
     };
-    debugPrint(verifyUserBody.toString());
+
     return verifyUserBody;
   }
 
   void changePasswordApi() async {
     ApiService().changePassword(await changePassBody()).then((value) async {
-      debugPrint("Verify OTP Api Response :- $value");
       if (value['status']) {
-        print(value['status']);
         AppUtils.showSuccessSnackBar(
             bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.offAndToNamed(AppRoutName.profilePage);
@@ -141,7 +138,6 @@ class ChangepasswordPageController extends GetxController {
   Future<dynamic> fetchSavedData() async {
     var userData = await LocalStorage.read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(userData);
-    print("Get User Data ***********************${userDetailsModel.toJson()}");
   }
 }
 

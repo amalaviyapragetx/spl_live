@@ -34,10 +34,9 @@ class CreateWithDrawalPageController extends GetxController {
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    print(userData);
+    
     userId = userData.id == null ? "" : userData.id.toString();
-    // print("========= from first method =======================");
-    // print(userId);
+    
     if (userId.isNotEmpty) {
       callGetBankDetails(userId);
     } else {
@@ -49,8 +48,7 @@ class CreateWithDrawalPageController extends GetxController {
 
   void callGetBankDetails(String userId) async {
     ApiService().getBankDetails(userId).then((value) async {
-      print("========= from first method =======================");
-      print(value);
+     
       if (value['status']) {
         BankDetailsResponseModel model =
             BankDetailsResponseModel.fromJson(value);
@@ -106,8 +104,7 @@ class CreateWithDrawalPageController extends GetxController {
       "amount": amountTextController.text
     };
 
-    debugPrint(createWithdrawalRequestBody.toString());
-    print(createWithdrawalRequestBody);
+
     return createWithdrawalRequestBody;
   }
 }

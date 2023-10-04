@@ -129,7 +129,7 @@ class SangamPageController extends GetxController {
     ApiService()
         .createMarketBid(requestModel.value.toJson())
         .then((value) async {
-      debugPrint("create bid api response :- $value");
+    
       if (value['status']) {
         if (value['data'] == null) {
           AppUtils.showErrorSnackBar(
@@ -172,7 +172,7 @@ class SangamPageController extends GetxController {
       addedNormalBidValue = value;
       closeValue = value;
       // checkBidValue = "$openValue-$closeValue";
-      print("***********closeValue***************$value");
+      
     }
   }
 
@@ -256,13 +256,13 @@ class SangamPageController extends GetxController {
         focusNode.previousFocus();
         focusNode.previousFocus();
       } else {
-        // print("==============${addedSangamList}");
+       
         var existingIndex = addedSangamList.indexWhere((element) {
-          print("${element.bidNo}  =  $openValue-$closeValue");
+       
           return element.bidNo ==
               manipulateString("$openValue-$closeValue", gameMode.value.name!);
         });
-        print("---------5165544-------------__$existingIndex");
+       
         if (existingIndex != -1) {
           // If the bidNo already exists in selectedBidsList, update coins value.
           addedSangamList[existingIndex].coins =
@@ -313,9 +313,9 @@ class SangamPageController extends GetxController {
     }
     Rx<String> manipulatedString = "".obs;
     manipulatedString.value = "${parts[1]}-${parts[0]}";
-    print("========input===========++$input");
+
     if (gameMode == "Half Sangam A") {
-      print("===================++$manipulatedString input: $input");
+
       return manipulatedString.value;
     } else {
       return input;

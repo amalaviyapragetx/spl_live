@@ -31,7 +31,7 @@ class TransactionHistoryPageController extends GetxController {
     var userData = await LocalStorage.read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(userData);
     if (userDetailsModel.id != null) {
-      print("_______________________");
+     
       getTransactionHistory(offset: offset);
     } else {
       AppUtils.showErrorSnackBar(
@@ -46,7 +46,7 @@ class TransactionHistoryPageController extends GetxController {
             userId: userDetailsModel.id ?? 0, offset: offset)
         .then(
       (value) async {
-        print("Get transaction history Api Response :- $value");
+     
         if (value['status']) {
           TransactionHistoryApiResponseModel transactionModel =
               TransactionHistoryApiResponseModel.fromJson(value);
@@ -57,7 +57,7 @@ class TransactionHistoryPageController extends GetxController {
                 transactionModel.data!.resultArr as List<ResultArr>;
           } else {
             transactionList.value = <ResultArr>[];
-            print(transactionList.value);
+           
           }
         } else {
           AppUtils.showErrorSnackBar(

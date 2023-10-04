@@ -109,7 +109,6 @@ class HomePageController extends GetxController {
 
   void fsmApiCall(userId, fcmToken) async {
     ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
-      debugPrint("Create Feedback Api Response :- $value");
       if (value['status']) {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -123,7 +122,6 @@ class HomePageController extends GetxController {
 
   void getNotificationsData() async {
     ApiService().getAllNotifications().then((value) async {
-      debugPrint("Notifiactions Data Api ------------- :- $value");
       if (value['status']) {
         GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
         notificationData.value = model.data!.rows as List<NotificationData>;
@@ -141,6 +139,7 @@ class HomePageController extends GetxController {
 
   void setboolData() async {
     await LocalStorage.write(ConstantsVariables.timeOut, true);
+    await LocalStorage.write(ConstantsVariables.mPinTimeOut, false);
     await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
     await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
     await LocalStorage.write(ConstantsVariables.totalAmount, "0");
@@ -149,7 +148,7 @@ class HomePageController extends GetxController {
     await LocalStorage.write(ConstantsVariables.starlineNotification, true);
     starlineCheck.value =
         await LocalStorage.read(ConstantsVariables.starlineConnect);
-    print(starlineCheck.value);
+
     starlineCheck.value == true
         ? widgetContainer.value = 1
         : widgetContainer.value;
@@ -181,7 +180,7 @@ class HomePageController extends GetxController {
   @override
   void dispose() async {
     marketHistoryList.clear();
-    await LocalStorage.write(ConstantsVariables.timeOut, false);
+
     super.dispose();
   }
 
@@ -203,7 +202,6 @@ class HomePageController extends GetxController {
     ApiService()
         .getDailyStarLineMarkets(startDate: startDate, endDate: endDate)
         .then((value) async {
-      debugPrint("Get Daily Starline Markets Api Response :- $value");
       if (value['status']) {
         StarLineDailyMarketApiResponseModel responseModel =
             StarLineDailyMarketApiResponseModel.fromJson(value);
@@ -245,7 +243,6 @@ class HomePageController extends GetxController {
 
   void getDailyMarkets() async {
     ApiService().getDailyMarkets().then((value) async {
-      debugPrint("Get Daily Markets Api Response :- $value");
       if (value['status']) {
         DailyMarketApiResponseModel marketModel =
             DailyMarketApiResponseModel.fromJson(value);
@@ -439,8 +436,6 @@ class HomePageController extends GetxController {
                                       startDate: DateFormat('yyyy-MM-dd')
                                           .format(startEndDate));
                                   widgetContainer.value = position;
-                                  print(
-                                      "marketHistoryList :  ${marketHistoryList.toJson()}");
                                 },
                                 onTap3: () {
                                   position = 2;
@@ -467,7 +462,7 @@ class HomePageController extends GetxController {
                                         onTap1: () {
                                           position = 3;
                                           widgetContainer.value = position;
-                                          print(widgetContainer.value);
+
                                           getMarketBidsByUserId(
                                             lazyLoad: false,
                                             endDate: DateFormat('yyyy-MM-dd')
@@ -481,7 +476,7 @@ class HomePageController extends GetxController {
                                         onTap2: () {
                                           position = 4;
                                           widgetContainer.value = position;
-                                          print(widgetContainer.value);
+
                                           getDailyStarLineMarkets(
                                             DateFormat('yyyy-MM-dd')
                                                 .format(startEndDate),
@@ -492,7 +487,7 @@ class HomePageController extends GetxController {
                                         onTap3: () {
                                           position = 5;
                                           widgetContainer.value = position;
-                                          print(widgetContainer.value);
+
                                           callGetStarLineChart();
                                         },
                                       )
@@ -611,8 +606,6 @@ class HomePageController extends GetxController {
                                     onTap2: () {
                                       position = 4;
                                       widgetContainer.value = position;
-                                      print(
-                                          " ************ ${widgetContainer.value}");
                                     },
                                     onTap3: () {
                                       position = 5;
@@ -669,7 +662,6 @@ class HomePageController extends GetxController {
     ApiService()
         .getDailyStarLineMarkets(startDate: startDate, endDate: endDate)
         .then((value) async {
-      print("Get Daily Starline Markets Result Api Response :- $value");
       if (value['status']) {
         StarLineDailyMarketApiResponseModel responseModel =
             StarLineDailyMarketApiResponseModel.fromJson(value);
@@ -723,7 +715,7 @@ class HomePageController extends GetxController {
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
       }
-      print("$result - ${sum % 10}");
+
       return "$result - ${sum % 10}";
     } else {
       return "***-*";
@@ -736,7 +728,7 @@ class HomePageController extends GetxController {
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
       }
-      print("$result");
+
       return "$result";
     } else {
       return "***";
@@ -749,7 +741,6 @@ class HomePageController extends GetxController {
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
       }
-      print("$result \n ${sum % 10}");
       return "${sum % 10}";
     } else {
       return "*";
@@ -768,7 +759,6 @@ class HomePageController extends GetxController {
   var cellValue;
   void callGetStarLineChart() async {
     ApiService().getStarlineChar().then((value) async {
-      debugPrint("Starline chart Api Response :- $value");
       if (value['status']) {
         NewStarLineChartModel model = NewStarLineChartModel.fromJson(value);
         starlineChartDateAndTime.value = model.data!.data!;
@@ -785,7 +775,6 @@ class HomePageController extends GetxController {
 
   void getNotificationCount() async {
     ApiService().getNotificationCount().then((value) async {
-      debugPrint("Notifiaction Count Api ------------- :- $value");
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
         getNotifiactionCount.value = model.data!.notificationCount == null
@@ -819,7 +808,6 @@ class HomePageController extends GetxController {
     )
         .then(
       (value) async {
-        debugPrint("Get Market Api Response :- $value");
         if (value['status']) {
           if (value['data'] != null) {
             NormalMarketBidHistoryResponseModel model =
@@ -850,10 +838,7 @@ class HomePageController extends GetxController {
       offset: offset.toString(),
     )
         .then((value) async {
-      debugPrint(" Get passBook Data @@@@@@@@@@@@@@@@:- $value");
-
       if (value['status']) {
-        print(value['status']);
         if (value['data'] != null) {
           PassbookModel model = PassbookModel.fromJson(value);
           passbookCount.value = int.parse(model.data!.count!.toString());
@@ -887,7 +872,7 @@ class HomePageController extends GetxController {
       offset.value++;
 
       num = num + itemLimit;
-      print("nextpage $num");
+
       //  print("offset.value ${offset.value}");
       getPassBookData(lazyLoad: false, offset: num.toString());
       //  print("offset.value ${offset.value}");
@@ -901,14 +886,13 @@ class HomePageController extends GetxController {
       passBookModelData.clear();
       offset.value--;
       num = num - itemLimit;
-      print("prevPage : $num");
+
       //print("offset.value ${offset.value}");
       getPassBookData(lazyLoad: false, offset: num.toString());
       // print("offset.value ${offset.value}");
       passBookModelData.refresh();
       update();
     }
-    print("prevPage : $num");
   }
 
   void marketBidsByUserId({required bool lazyLoad}) {
@@ -918,13 +902,10 @@ class HomePageController extends GetxController {
     )
         .then(
       (value) async {
-        print("Get Bid History New List  :- $value");
         if (value['status']) {
           if (value['data'] != null) {
             MarketBidHistory model = MarketBidHistory.fromJson(value['data']);
-            print(
-                "================================  model data =================================");
-            print(model.toJson());
+
             lazyLoad
                 ? marketBidHistoryList
                     .addAll(model.rows ?? <MarketBidHistoryList>[])

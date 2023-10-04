@@ -31,7 +31,7 @@ class CheckWithdrawalPageController extends GetxController {
   }
 
   void getWithdrawalHistoryByUserId({required bool lazyLoad}) async {
-    print("============== On init ==============  $userId");
+  
     await ApiService()
         .getWithdrawalHistoryByUserId(
       userId: userId,
@@ -47,8 +47,7 @@ class CheckWithdrawalPageController extends GetxController {
                     .addAll(model.data ?? <WithdrawalRequestList>[])
                 : withdrawalRequestList.value =
                     model.data ?? <WithdrawalRequestList>[];
-            print(
-                "============== Get withdrawal history ==============  :- ${withdrawalRequestList.toJson()}");
+       
           } else {
             // AppUtils.showErrorSnackBar(
             //   bodyText: value['message'] ?? "",

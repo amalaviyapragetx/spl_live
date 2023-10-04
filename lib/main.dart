@@ -60,7 +60,6 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().firebaseInit(context);
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) {
-      print("Device Token : $value");
       LocalStorage.write(ConstantsVariables.fcmToken, value);
     });
 
@@ -208,40 +207,39 @@ checkUserGrantPermission() async {
   if (await Permission.location.isDenied) {
     Permission.location.request();
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-  } else if (await Permission.location.isLimited) {}
+  }
 }
 
 class AppStateListener extends WidgetsBindingObserver {
   var conrroller = Get.put(InactivityController());
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.detached) {
-      // App is going to be terminated
-      // Call the API
-      // conrroller.appKilledStateApi();
-    } else {
-      print("================================================================");
+    switch (state) {
+      case AppLifecycleState.resumed:
+        bool alreadyLoggedIn = await conrroller.getStoredUserData();
+        var mPinTimeOut =
+            await LocalStorage.read(ConstantsVariables.mPinTimeOut) ?? true;
+        if (alreadyLoggedIn && !mPinTimeOut) {
+          await LocalStorage.write(ConstantsVariables.timeOut, true);
+        } else {
+          await LocalStorage.write(ConstantsVariables.timeOut, false);
+        }
+        break;
+      case AppLifecycleState.inactive:
+        await LocalStorage.write(ConstantsVariables.timeOut, false);
+
+        break;
+      case AppLifecycleState.paused:
+        await LocalStorage.write(ConstantsVariables.timeOut, false);
+        // App is in the background
+
+        break;
+      case AppLifecycleState.detached:
+        await LocalStorage.write(ConstantsVariables.timeOut, false);
+
+        break;
     }
   }
-  //   switch (state) {
-  //     case AppLifecycleState.resumed:
-  //       // App is in the foreground
-  //       print("App is in the foreground");
-  //       break;
-  //     case AppLifecycleState.inactive:
-  //       // App is in an inactive state, possibly transitioning between foreground and background
-
-  //       print("App is in an inactive state");
-  //       break;
-  //     case AppLifecycleState.paused:
-
-  //       // App is in the background
-  //       print("App is in the background");
-  //       break;
-  //     case AppLifecycleState.detached:
-  //       print("App is terminated");
-  //       break;
-  //   }
-  // }
 }
+

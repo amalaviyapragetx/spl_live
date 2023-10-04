@@ -67,7 +67,6 @@ class BidHistory extends StatelessWidget {
               itemCount: homePageController.marketBidHistoryList.length,
               itemBuilder: (context, index) {
                 var data = homePageController.marketBidHistoryList[index];
-                print(homePageController.marketBidHistoryList.length);
                 return listveiwTransactionNew(
                   requestId: "RequestId :  ${data.requestId ?? ""}",
                   isWin: data.isWin ?? false,

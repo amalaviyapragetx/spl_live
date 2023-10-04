@@ -40,7 +40,7 @@ class StarlineBidsController extends GetxController {
   showData() async {
     bidList.value =
         await LocalStorage.read(ConstantsVariables.starlineBidsList);
-    print("====in Bids List Page = $bidList =========================");
+
   }
 
   void playMore() async {
@@ -53,7 +53,7 @@ class StarlineBidsController extends GetxController {
 
   Future<void> getArguments() async {
     showData();
-    print("======================== $bidList =========================");
+    
     gameMode.value = arguments['gameMode'];
     marketData.value = arguments['marketData'];
     requestModel.value.bids = arguments['bidsList'];
@@ -63,8 +63,7 @@ class StarlineBidsController extends GetxController {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    print(requestModel.value.userId);
-    print(requestModel.value.toJson());
+    
     // await LocalStorage.write(ConstantsVariables.playMore, false);
     // var hh = await LocalStorage.read(ConstantsVariables.playMore);
     // print("playMore $hh");
@@ -139,8 +138,7 @@ class StarlineBidsController extends GetxController {
     ApiService()
         .createStarLineMarketBid(requestModel.value.toJson())
         .then((value) async {
-      debugPrint("create starline bid api response :- $value");
-      print(requestModel.value.toJson());
+
       if (value['status']) {
         Get.offAllNamed(
           AppRoutName.starLineGameModesPage,

@@ -303,17 +303,11 @@ class StarlineNewGamePageController extends GetxController {
 
   RxList<StarLineGameMod> gameModesList = <StarLineGameMod>[].obs;
   void createMarketBidApi() async {
-    print(marketData.value);
     ApiService()
         .createStarLineMarketBid(requestModel.value.toJson())
         .then((value) async {
-      debugPrint("create starline bid api response :- $value");
       if (value['status']) {
         selectedBidsList.clear();
-        print(
-            "== From Starline ===================================$gameModeName");
-        print(marketData.value.toJson());
-        print(gameMode.value.toJson());
         Get.offAllNamed(
           AppRoutName.starLineGameModesPage, arguments: marketData.value,
           // "gameMode": gameMode.value,
@@ -360,22 +354,19 @@ class StarlineNewGamePageController extends GetxController {
   }
 
   Future<void> getArguments() async {
-    print("****************************************************************");
     gameModeName = argument['gameModeName'];
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
     requestModel.value.bids = argument['bidsList'];
-    print("req model : ${requestModel.value.toJson()}");
+
     requestModel.refresh();
-    print(
-        "****************************************************************${marketData.value}");
+
     _calculateTotalAmount();
     requestModel.value.dailyStarlineMarketId = marketData.value.id;
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    print(requestModel.value.toJson());
-    print(getBIdType);
+
     await loadJsonFile();
     List<String> tempValidationList = [];
     switch (gameMode.value.name) {
@@ -444,18 +435,18 @@ class StarlineNewGamePageController extends GetxController {
     List<String> panaType = selectedValues;
 
     List<String> panaArray = [];
-    print(panaType);
+
     for (int i = 0; i < panaType.length; i++) {
       List<String>? data = choisePanaSPDPTP[panaType[i]];
       if (data != null) {
         panaArray.addAll(data);
       } else {
-        print("Error");
+        debugPrint("Error");
       }
     }
     var a = panaArray.where((num1) {
       // if ((left.isNotEmpty && num1[0] != left)) {
-      //   print("+============");
+
       //   return false;
       // } else if (((middle.isNotEmpty && num1[num1.length ~/ 2] != middle))) {
       //   return false;
@@ -465,13 +456,12 @@ class StarlineNewGamePageController extends GetxController {
       // return true;
       return matchesDigits(num1, left: left, middle: middle, last: last);
     }).toList();
-    print("$a  ${a.length}");
+
     return a;
   }
 
   bool matchesDigits(String num, {String? left, String? middle, String? last}) {
     if ((left!.isNotEmpty && num[0] != left)) {
-      print("+============");
       return false;
     } else if (((middle!.isNotEmpty && num[num.length ~/ 2] != middle))) {
       return false;
@@ -527,7 +517,7 @@ class StarlineNewGamePageController extends GetxController {
         pana.add(data[j]);
       }
     }
-    // print("--------------------------$pana");
+
     return pana;
   }
 
@@ -550,7 +540,7 @@ class StarlineNewGamePageController extends GetxController {
   void onTapOfAddButton() {
     // FocusManager.instance.primaryFocus?.unfocus();
     isBulkMode.value = false;
-    print(requestModel.value.dailyStarlineMarketId);
+
     if (!isBulkMode.value) {
       if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
         AppUtils.showErrorSnackBar(
@@ -621,8 +611,7 @@ class StarlineNewGamePageController extends GetxController {
             );
           }
         }
-        print("===== selectedBidsList =======");
-        // print(selectedBidsList.toList());
+
         _calculateTotalAmount();
         autoCompleteFieldController.clear();
         coinController.clear();
@@ -677,7 +666,7 @@ class StarlineNewGamePageController extends GetxController {
             ),
           );
         }
-        print("selectebidlist : $selectedBidsList");
+
         autoCompleteFieldController.clear();
         coinController.clear();
         selectedBidsList.refresh();
@@ -687,7 +676,7 @@ class StarlineNewGamePageController extends GetxController {
 
   Future<Map> spdptpbody() async {
     String panaType = selectedValues.join(',');
-    print(panaType);
+
     final a = {"digit": autoCompleteFieldController.text, "panaType": panaType};
     final b = {"pana": autoCompleteFieldController.text};
     final c = {
@@ -720,7 +709,6 @@ class StarlineNewGamePageController extends GetxController {
       bool tempBool = true;
       for (int i = 0; i < elementDigits.length; i++) {
         if (!inputDigits.contains(elementDigits[i])) {
-          // print("=========== not match");
           tempBool = false;
         }
       }
@@ -728,7 +716,6 @@ class StarlineNewGamePageController extends GetxController {
         matchingElements.add(element);
       }
     }
-    print("))))))))))))((((((((((((((((($matchingElements");
     return matchingElements;
   }
 
@@ -761,8 +748,6 @@ class StarlineNewGamePageController extends GetxController {
       return inputDigits.every((digit) => numStr.contains(digit.toString()));
     }
 
-    print(
-        "${spdpMotor.where(containsBothInputDigits).toList()} ${spdpMotor.where(containsBothInputDigits).toList().length}");
     return spdpMotor.where(containsBothInputDigits).toList();
   }
 
@@ -839,7 +824,7 @@ class StarlineNewGamePageController extends GetxController {
         spdptpList = getChoicePanaSPDPTP();
         // ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
         //   (value) async {
-        //     debugPrint("New Game-Mode Api Response :- $value");
+
         //     if (value['status']) {
         //       spdptpList = value['data'];
         if (coinController.text.trim().isEmpty ||
@@ -918,7 +903,6 @@ class StarlineNewGamePageController extends GetxController {
     } else {
       ApiService().newGameModeApi(await spdptpbody(), apiUrl).then(
         (value) async {
-          debugPrint("New Game-Mode Api Response :- $value");
           if (value['status']) {
             spdptpList = value['data'];
             if (coinController.text.trim().isEmpty ||
@@ -1002,7 +986,7 @@ class StarlineNewGamePageController extends GetxController {
     // ApiService()
     //     .newGameModeApi(await groupJodiBody(), apiUrl)
     //     .then((value) async {
-    //   debugPrint("Forgot MPIN Api Response :- $value");
+
     //   if (value['status']) {
     //     spdptpList = value['data'];
     if (coinController.text.trim().isEmpty ||

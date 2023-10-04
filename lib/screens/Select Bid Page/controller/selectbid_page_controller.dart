@@ -51,21 +51,21 @@ class SelectBidPageController extends GetxController {
     requestModel.value.userId = userData.id;
     requestModel.value.bidType = arguments["biddingType"];
     requestModel.value.dailyMarketId = arguments["marketId"];
-    print("remodelDailyMarketId: ${requestModel.value.toJson()}");
+
     requestModel.refresh();
     gameName.value = arguments["gameName"];
     // await LocalStorage.write(ConstantsVariables.playMore, false);
     // var hh = await LocalStorage.read(ConstantsVariables.playMore);
-    // print("playMore $hh");
+   
     newBidListreaddata();
     _calculateTotalAmount();
     bidType.value = await LocalStorage.read(ConstantsVariables.bidType);
-    print("=================== ${bidType.value}");
+  
   }
 
   newBidListreaddata() async {
     var newBidList = await LocalStorage.read(ConstantsVariables.bidsList);
-    print("Bid List : $newBidList");
+   
   }
 
   void onDeleteBids(int index) async {
@@ -97,7 +97,7 @@ class SelectBidPageController extends GetxController {
   void createMarketBidApi() async {
     ApiService().createMarketBid(requestModel.value.toJson()).then(
       (value) async {
-        debugPrint("create bid api response :- $value");
+        
         if (value['status']) {
           Get.back();
           Get.back();

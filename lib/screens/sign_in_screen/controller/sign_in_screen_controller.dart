@@ -30,7 +30,6 @@ class SignInPageController extends GetxController {
 
   void onTapOfVisibilityIcon() {
     visiblePassword.value = !visiblePassword.value;
-    debugPrint("password visibility is ${visiblePassword.value}");
   }
 
   void callSignInApi() async {

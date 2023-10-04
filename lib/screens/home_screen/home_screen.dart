@@ -34,8 +34,7 @@ class DashBoardPage extends StatelessWidget {
         } else {
           if (controller.widgetContainer.value != 0) {
             controller.widgetContainer.value = 0;
-            print(
-                "==========================${controller.widgetContainer.value}");
+      
             return false;
           } else {
             return await showDialog(

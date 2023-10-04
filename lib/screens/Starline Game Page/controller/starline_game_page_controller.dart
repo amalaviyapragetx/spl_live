@@ -104,7 +104,7 @@ class StarLineGamePageController extends GetxController {
     marketData.value = argument['marketData'];
     getBidData = argument['getBidData'];
     getBIdType = argument['getBIdType'];
-    print(getBIdType);
+
     await loadJsonFile();
     switch (gameMode.value.name) {
       case "Single Ank Bulk":
@@ -131,7 +131,7 @@ class StarLineGamePageController extends GetxController {
         }
         List<List<DigitListModelOffline>> chunks =
             splitListIntoChunks(panaDigitList, 12);
-        // print(panaDigitList);
+
         digitList.value = chunks[0];
         //  initializeTextControllers();
         break;
@@ -149,7 +149,7 @@ class StarLineGamePageController extends GetxController {
         }
         List<List<DigitListModelOffline>> chunks =
             splitListIntoChunks(panaDigitList, 9);
-        // print(panaDigitList);
+
         digitList.value = chunks[0];
         //  initializeTextControllers();
         break;
@@ -236,7 +236,6 @@ class StarLineGamePageController extends GetxController {
     digitRow[index].isSelected = true;
     digitRow.refresh();
     if (gameMode.value.name!.toUpperCase() == "SINGLE PANA BULK") {
-      print("--------------");
       panaSwitchCase(index, 12);
     } else {
       panaSwitchCase(index, 9);
@@ -354,7 +353,7 @@ class StarLineGamePageController extends GetxController {
           ),
         );
       }
-      print("============ ${selectedBidsList.toList()}");
+
       _calculateTotalAmount();
     } else {
       validCoinsEntered.value = false;
@@ -386,9 +385,8 @@ class StarLineGamePageController extends GetxController {
   }
 
   void onSearch(val) {
-    debugPrint(val);
     digitList.refresh();
-    debugPrint(" ===== ${gameMode.value.id}=====");
+
     List<DigitListModelOffline> tempList = digitList;
     if (val.toString().isNotEmpty) {
       var searchResultList = tempList
@@ -401,7 +399,6 @@ class StarLineGamePageController extends GetxController {
       searchResultList.toSet().toList();
       digitList.value = searchResultList;
     } else {
-      debugPrint(" ===== ${gameMode.value.id}=====");
       switch (gameMode.value.id) {
         case 5:
           digitList.value = singleAnkList;

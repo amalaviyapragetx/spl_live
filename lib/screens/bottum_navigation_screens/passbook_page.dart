@@ -160,9 +160,7 @@ class PassBook extends StatelessWidget {
           homeController.passBookModelData.length,
           (index) {
             var data = homeController.passBookModelData.elementAt(index);
-            // print(
-            //     "***********20***************${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")}");
-            print("*********27*****************${data.marketName}");
+  
             return DataRow(cells: [
               dataCells(
                 width: Dimensions.w170,

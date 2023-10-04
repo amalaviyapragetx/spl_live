@@ -102,7 +102,7 @@ class GameModePage extends StatelessWidget {
                         openCloseMarket(
                           "${"CLOSEBID".tr.toUpperCase()} : ${controller.marketValue.value.closeTime.toString()}",
                           onTap: () async {
-                            print("sfdasdsa");
+                           
                             if (controller.openCloseValue.value !=
                                 "CLOSEBID".tr) {
                               controller.openCloseValue.value = "CLOSEBID".tr;
