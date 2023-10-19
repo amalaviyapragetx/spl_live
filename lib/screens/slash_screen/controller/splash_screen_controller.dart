@@ -1,16 +1,20 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_information_model.dart';
+import '../../../components/simple_button_with_corner.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
@@ -38,6 +42,7 @@ class SplashController extends GetxController {
     getLocation();
     checkLogin();
     getDeviceInfo();
+    getIpAddress();
     // Timer(Duration(milliseconds: 700), () {});
   }
 
@@ -77,7 +82,6 @@ class SplashController extends GetxController {
             ConstantsVariables.locationData, placeMarkJsonList);
         var storedPlaceMarkJsonList =
             await LocalStorage.read(ConstantsVariables.locationData) ?? [];
-     
       }
     } catch (e) {
       print('Error getting location: $e');
@@ -102,7 +106,6 @@ class SplashController extends GetxController {
 
   void fsmApiCall(userId, fcmToken) async {
     ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
-      
       if (value['status']) {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
@@ -121,9 +124,8 @@ class SplashController extends GetxController {
 
   void appVesionCheck() async {
     ApiService().getAppVersion().then((value) async {
-      
+      print(value);
       if (value['status']) {
-        
         if (value['data'] != appVersion) {
           _showExitDialog();
         }
@@ -141,14 +143,14 @@ class SplashController extends GetxController {
     bool alreadyLoggedIn = await getStoredUserData();
     bool isActive =
         await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-   
+
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
     bool hasMPIN =
         await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
     bool isUserDetailSet =
         await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
-   
+
     //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
       if (!isActive && !isVerified) {
@@ -157,6 +159,7 @@ class SplashController extends GetxController {
           Get.offAllNamed(AppRoutName.verifyOTPPage);
           Timer(const Duration(milliseconds: 500), () {
             appVesionCheck();
+            requestLocationPermission();
           });
         });
       } else if (!hasMPIN && !isUserDetailSet) {
@@ -165,6 +168,7 @@ class SplashController extends GetxController {
           Get.offAllNamed(AppRoutName.userDetailsPage);
           Timer(const Duration(milliseconds: 500), () {
             appVesionCheck();
+            requestLocationPermission();
           });
         });
       } else {
@@ -175,6 +179,7 @@ class SplashController extends GetxController {
                 arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVesionCheck();
+              requestLocationPermission();
             });
           });
         } else {
@@ -183,6 +188,7 @@ class SplashController extends GetxController {
                 arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVesionCheck();
+              requestLocationPermission();
             });
           });
         }
@@ -193,6 +199,7 @@ class SplashController extends GetxController {
         Get.offAllNamed(AppRoutName.walcomeScreen);
         Timer(const Duration(milliseconds: 500), () {
           appVesionCheck();
+          requestLocationPermission();
         });
       });
     }
@@ -251,5 +258,107 @@ class SplashController extends GetxController {
         ),
       ],
     );
+  }
+
+  Future<void> requestLocationPermission() async {
+    var status = await Permission.location.request();
+    print("ooooooooooooooooo$status");
+    if (status.isGranted) {
+      // Permission granted, proceed with your flow.
+      print('Location permission granted');
+    } else if (status.isDenied) {
+      // Permission denied.
+      Get.defaultDialog(
+        titlePadding: EdgeInsets.only(top: Dimensions.h10),
+        title: 'Permission Denied',
+        middleText: 'Please grant location permission to use this feature.',
+        confirm: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimensions.w50, vertical: Dimensions.h5),
+          child: RoundedCornerButton(
+            text: 'Open Settings',
+            color: AppColors.appbarColor,
+            borderColor: AppColors.appbarColor,
+            fontSize: Dimensions.h12,
+            fontWeight: FontWeight.w500,
+            fontColor: AppColors.white,
+            letterSpacing: 0,
+            borderRadius: Dimensions.r5,
+            borderWidth: 1,
+            textStyle: CustomTextStyle.textRobotoSansLight,
+            onTap: () {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              openAppSettings(); // Open app settings if permission is permanently denied.
+            },
+            height: Dimensions.h30,
+            width: double.infinity,
+          ),
+        ),
+      );
+    } else if (status.isPermanentlyDenied) {
+      // Permission permanently denied.
+
+      Get.defaultDialog(
+        titlePadding: EdgeInsets.only(top: Dimensions.h10),
+        radius: Dimensions.r10,
+        title: 'Permission Denied',
+        onWillPop: () async => false,
+        middleText: 'Please enable location permission in your app settings.',
+        confirm: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimensions.w50, vertical: Dimensions.h5),
+          child: RoundedCornerButton(
+            text: 'Open Settings',
+            color: AppColors.appbarColor,
+            borderColor: AppColors.appbarColor,
+            fontSize: Dimensions.h12,
+            fontWeight: FontWeight.w500,
+            fontColor: AppColors.white,
+            letterSpacing: 0,
+            borderRadius: Dimensions.r5,
+            borderWidth: 1,
+            textStyle: CustomTextStyle.textRobotoSansLight,
+            onTap: () {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              openAppSettings(); // Open app settings if permission is permanently denied.
+            },
+            height: Dimensions.h30,
+            width: double.infinity,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<String> getIpAddress() async {
+    print("================================================================");
+    try {
+      // Get a list of the network interfaces (e.g., Wi-Fi, mobile network, etc.)
+      List<NetworkInterface> interfaces = await NetworkInterface.list(
+          includeLoopback: false, type: InternetAddressType.IPv4);
+
+      // Iterate over the network interfaces and find the first non-loopback and non-link-local interface
+      for (NetworkInterface interface in interfaces) {
+        print(
+            "===========${interface.name.toLowerCase()}================================");
+        if (interface.name.toLowerCase().contains("wlan") ||
+            interface.name.toLowerCase().contains("eth")) {
+          print(
+              "================================================================");
+          for (InternetAddress address in interface.addresses) {
+            // Check if the address is not a loopback address and is not a link-local address
+            print(address.address);
+            if (!address.isLoopback && !address.isLinkLocal) {
+              print(address.host);
+              return address
+                  .address; // Return the first non-loopback and non-link-local IP address found
+            }
+          }
+        }
+      }
+    } on SocketException catch (e) {
+      print("Error getting IP address: $e");
+    }
+    return "Could not determine IP address"; // Return a default message if no suitable address is found
   }
 }

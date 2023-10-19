@@ -87,7 +87,7 @@ class AppRoutes {
       name: AppRoutName.walcomeScreen,
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
-      page: () => const WelcomeScreen(),
+      page: () => WelcomeScreen(),
       bindings: [
         WelcomeScreenBinding(),
       ],

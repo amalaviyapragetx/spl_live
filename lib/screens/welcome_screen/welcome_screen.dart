@@ -6,10 +6,11 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import '../../components/simple_button_with_corner.dart';
+import 'controller/welcome_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
-
+  WelcomeScreen({super.key});
+  var controller = Get.put(WelcomeScreenController());
   @override
   Widget build(BuildContext context) {
     var verticalSpace = SizedBox(

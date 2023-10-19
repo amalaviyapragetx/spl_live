@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
@@ -32,7 +31,8 @@ class NotificationServices {
         AuthorizationStatus.provisional) {
       print("user Granted Provisinal Permission");
     } else {
-      //AppSettings.openNotificationSettings();
+      // openAppSettings();
+      // openAppSettings();
       print("user Denied Permission");
     }
   }
@@ -109,9 +109,6 @@ class NotificationServices {
         message.notification?.title.toString() ?? "dsadas",
         message.notification?.body.toString() ?? "sdasd",
         notificationDetails);
-
-
-        
   }
 
   Future<String> getDeviceToken() async {

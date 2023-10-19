@@ -42,9 +42,7 @@ class InactivityController extends GetxController {
     bool isVerified =
         await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
     bool userLogin =
-        await LocalStorage.read(ConstantsVariables.timeOut) == "" ||
-                await LocalStorage.read(ConstantsVariables.timeOut) == null ??
-            false;
+        await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
     // print("-------------------------------==========$userLogin");
     if (userLogin) {
       if (alreadyLoggedIn) {
@@ -82,7 +80,8 @@ class InactivityController extends GetxController {
   UserDetailsModel _userDetailsModel = UserDetailsModel();
 
   Future<bool> getStoredUserData() async {
-    String? authToken = await LocalStorage.read(ConstantsVariables.authToken);
+    String? authToken =
+        await LocalStorage.read(ConstantsVariables.authToken) ?? "";
     var userData = await LocalStorage.read(ConstantsVariables.userData);
     if (authToken != null && authToken.isNotEmpty) {
       if (userData != null) {

@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/Custom%20Controllers/doubletap_exitcontroller.dart';
@@ -17,7 +15,6 @@ import 'routes/app_routes_name.dart';
 import 'screens/Local Storage.dart';
 import 'screens/initial_bindings.dart';
 import 'self_closing_page.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessegingBackgroundHendler(RemoteMessage msg) async {
@@ -29,7 +26,7 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessegingBackgroundHendler);
   await GetStorage.init();
-  await Permission.location.request();
+  // await Permission.location.request();
   final appStateListener = AppStateListener();
   WidgetsBinding.instance.addObserver(appStateListener);
   runApp(const MyApp());
@@ -53,6 +50,7 @@ class _MyAppState extends State<MyApp> {
   // bool apiCalled = false;
   @override
   void initState() {
+    // showPermissionDialog(checkUserGrantPermission());
     // BackgroundServices().initializeService();
     NotificationServices().requestNotificationPermission();
     //  notificationServices.isTokenRefresh();
@@ -73,7 +71,7 @@ class _MyAppState extends State<MyApp> {
     // SystemChannels.lifecycle.setMessageHandler((message) async {
     //   if (message == 'appWillTerminate') {
     //     if (apiCalled) {
-    //       print("call hoja bhai ap kya paisa lega");
+    //
     //       // Call your API again here.
     //       // Make sure to check the return value of the API call, and handle any errors accordingly.
     //     }
@@ -203,12 +201,31 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-checkUserGrantPermission() async {
-  if (await Permission.location.isDenied) {
-    Permission.location.request();
-    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-  }
-}
+// checkUserGrantPermission() async {
+//   if (await Permission.location.isDenied) {
+//     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+//     Permission.location.request();
+//     // AppSettings.openAppSettings();
+//   }
+// }
+
+// void showPermissionDialog() {
+//   Get.defaultDialog(
+//     title: 'Permission Required',
+//     content: Text('Please grant notification permission to proceed.'),
+//     actions: <Widget>[
+//       ElevatedButton(
+//         child: Text('OK'),
+//         onPressed: () async {
+//           Get.back();
+//           await Permission.location.request();
+//           // AppSettings.openAppSettings();
+//           // Callback to handle permission request
+//         },
+//       ),
+//     ],
+//   );
+// }
 
 class AppStateListener extends WidgetsBindingObserver {
   var conrroller = Get.put(InactivityController());
@@ -225,21 +242,63 @@ class AppStateListener extends WidgetsBindingObserver {
         } else {
           await LocalStorage.write(ConstantsVariables.timeOut, false);
         }
+        //    splashConrroller.requestLocationPermission();
         break;
       case AppLifecycleState.inactive:
         await LocalStorage.write(ConstantsVariables.timeOut, false);
 
+        ///   splashConrroller.requestLocationPermission();
         break;
       case AppLifecycleState.paused:
         await LocalStorage.write(ConstantsVariables.timeOut, false);
         // App is in the background
-
+        //  splashConrroller.requestLocationPermission();
         break;
       case AppLifecycleState.detached:
         await LocalStorage.write(ConstantsVariables.timeOut, false);
-
         break;
     }
   }
 }
 
+// class PermissionScreen extends StatelessWidget {
+//   Future<void> _requestLocationPermission() async {
+//     var status = await Permission.location.request();
+//     if (status.isGranted) {
+//       // Permission granted, proceed with your flow.
+//       print('Location permission granted');
+//     } else if (status.isDenied) {
+//       // Permission denied.
+//       Get.defaultDialog(
+//         title: 'Permission Denied',
+//         middleText: 'Please grant location permission to use this feature.',
+//         confirm: ElevatedButton(
+//           onPressed: () {
+//             Get.back();
+//             openAppSettings(); // Open app settings if permission is denied.
+//           },
+//           child: Text('Open Settings'),
+//         ),
+//       );
+//     } else if (status.isPermanentlyDenied) {
+//       // Permission permanently denied.
+//       Get.defaultDialog(
+//         title: 'Permission Permanently Denied',
+//         middleText: 'Please enable location permission in your app settings.',
+//         confirm: ElevatedButton(
+//           onPressed: () {
+//             Get.back();
+//             openAppSettings(); // Open app settings if permission is permanently denied.
+//           },
+//           child: Text('Open Settings'),
+//         ),
+//       );
+//     }
+//   }
+  
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+// }

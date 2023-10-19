@@ -21,7 +21,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<void> initApiService() async {
     authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
     await NetworkInfo.checkNetwork().whenComplete(() async {
-      print("Auth Token from API service is :- $authToken");
+      //    print("Auth Token from API service is :- $authToken");
       headers = {"Accept": "application/json"};
       headersWithToken = {
         "Accept": "application/json",

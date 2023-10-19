@@ -32,12 +32,12 @@ class DeviceInfo {
         manufacturer = deviceData["manufacturer"] ?? "getting Null";
         brandName = deviceData["brand"] ?? "getting Null";
         osVersion = deviceData["version.release"] ?? "getting Null";
-        bool isRooted = androidInfo.isPhysicalDevice;
+        // bool isRooted = androidInfo.isPhysicalDevice;
 
-        bool jailbroken = await FlutterJailbreakDetection.jailbroken;
-        if (jailbroken || isRooted) {
-          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        }
+        // bool jailbroken = await FlutterJailbreakDetection.jailbroken;
+        // if (jailbroken || isRooted) {
+        //   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        // }
       } else if (Platform.isIOS) {
         deviceType = "Ios";
         deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);

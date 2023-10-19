@@ -6,16 +6,17 @@ class LocalStorage {
   static write(String key, dynamic value) {
     box.write(key, value);
   }
-  static read (String key) async {
+
+  static read(String key) async {
     var val = await box.read(key);
     return val;
   }
 
-  static remove (String key){
+  static remove(String key) {
     box.remove(key);
   }
 
-  static eraseBox (){
-     box.erase();
+  static eraseBox() {
+    box.erase();
   }
 }
