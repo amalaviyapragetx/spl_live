@@ -162,11 +162,12 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getBankDetails(String userId) async {
+  Future<dynamic> getBankDetails(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await get(
-      "${ApiUtils.getBankDetails}/$userId",
+    final response = await post(
+      ApiUtils.getBankDetails,
+      body,
       headers: headersWithToken,
     );
     if (response.status.hasError) {

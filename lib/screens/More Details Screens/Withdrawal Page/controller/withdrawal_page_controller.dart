@@ -32,7 +32,7 @@ class WithdrawalPageController extends GetxController {
   }
 
   void callGetBankDetails(String userId) async {
-    ApiService().getBankDetails(userId).then((value) async {
+    ApiService().getBankDetails({"id": userId}).then((value) async {
       if (value['status']) {
         BankDetailsResponseModel model =
             BankDetailsResponseModel.fromJson(value);

@@ -22,7 +22,8 @@ class CreateWithDrawalPageController extends GetxController {
   RxString ifcsCode = "".obs;
   var userId = "";
 
-  final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
 
   @override
@@ -34,9 +35,9 @@ class CreateWithDrawalPageController extends GetxController {
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    
+
     userId = userData.id == null ? "" : userData.id.toString();
-    
+    print("===============-=-=-=-$userId");
     if (userId.isNotEmpty) {
       callGetBankDetails(userId);
     } else {
@@ -47,8 +48,8 @@ class CreateWithDrawalPageController extends GetxController {
   }
 
   void callGetBankDetails(String userId) async {
-    ApiService().getBankDetails(userId).then((value) async {
-     
+    print(userId);
+    ApiService().getBankDetails({"id": userId}).then((value) async {
       if (value['status']) {
         BankDetailsResponseModel model =
             BankDetailsResponseModel.fromJson(value);
@@ -103,7 +104,6 @@ class CreateWithDrawalPageController extends GetxController {
       "requestId": getRandomString(10),
       "amount": amountTextController.text
     };
-
 
     return createWithdrawalRequestBody;
   }

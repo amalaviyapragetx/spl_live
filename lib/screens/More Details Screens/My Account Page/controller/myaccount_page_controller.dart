@@ -79,7 +79,7 @@ class MyAccountPageController extends GetxController {
   }
 
   void callGetBankDetails(String userId) async {
-    ApiService().getBankDetails(userId).then((value) async {
+    ApiService().getBankDetails({"id": userId}).then((value) async {
       if (value['status']) {
         BankDetailsResponseModel model =
             BankDetailsResponseModel.fromJson(value);
@@ -153,7 +153,7 @@ class MyAccountPageController extends GetxController {
     }
     // ediBankDetailsBody.addIf(bankId != 0, "id", bankId);
     //  debugPrint(ediBankDetailsBody.toString());
-   
+
     return ediBankDetailsBody;
   }
 }

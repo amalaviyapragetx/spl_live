@@ -2,7 +2,7 @@ class ApiUtils {
   // Spl Production
   static String baseURL = "https://vishnulive.in:9869";
   // local url
-  // static String baseURL = "http://192.168.1.23:8080";
+  // static String baseURL = "http://192.168.29.143:8080";
   // endpoints
   static String signUP = '$baseURL/auth/signup';
   static String signIN = '$baseURL/auth/signin';
@@ -22,12 +22,10 @@ class ApiUtils {
       '$baseURL/starline/getGameModeForStarlineMarket/'; //pass 0 for open 1 for close then pass market id like 0/4
   static String createMarketBid = '$baseURL/bid/marketBidcreate';
   static String createStarLineMarketBid = '$baseURL/bid/starlineBidCreate';
-  static String getDailyStarLineMarkets =
-      '$baseURL/starline/getDailyStarlineMarket';
+  static String getDailyStarLineMarkets = '$baseURL/starline/getDailyStarlineMarket';
   static String createWithdrawalRequest = '$baseURL/withdraw/createRequest';
   // static String getWithdrawalRequestTime = '$baseURL/withdraw/getRequestTime';
-  static String getWithdrawalHistoryByUserId =
-      '$baseURL/withdraw/getRequestByUserId/';
+  static String getWithdrawalHistoryByUserId = '$baseURL/withdraw/getRequestByUserId/';
   static String getStarlineGameRates = '$baseURL/game/getAll/';
   static String createFeedback = '$baseURL/feedback/create';
   static String getFeedbackAndRatingsById = '$baseURL/feedback/getById/';
@@ -43,8 +41,7 @@ class ApiUtils {
   static String starlineMarketBidHistory = '$baseURL/bid/starline/getByUserId';
   static String changeMPIN = "$baseURL/auth/mPin/change";
   static String webStarLinechar = "$baseURL/web/starlineChart";
-  static String dailyStarlineMarketBidHistory =
-      "$baseURL/bid/getAllBidByDailyStarlineMarketId";
+  static String dailyStarlineMarketBidHistory = "$baseURL/bid/getAllBidByDailyStarlineMarketId";
   static String spdptp = "$baseURL/gameMode/getSPDPTPPana";
   static String panelGroup = "$baseURL/gameMode/getPanelGroupPana";
   static String spMotor = "$baseURL/gameMode/getSPMotorPana";
@@ -57,19 +54,16 @@ class ApiUtils {
   // static String marketbidHistory = "$baseURL/bid/getBidHistory";
   static String bidHistory = "$baseURL/bid/getByUserId";
   static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
-  static String getNotificationCount =
-      "$baseURL/notification/getNotificationCount";
+  static String getNotificationCount = "$baseURL/notification/getNotificationCount";
 
-  static String getAllNotifications =
-      "$baseURL/notification/getAll?search=&limit=10&offset=0";
+  static String getAllNotifications = "$baseURL/notification/getAll?search=&limit=10&offset=0";
   static String resetNotificationCount = "$baseURL/notification/resetCount";
 
   /// new Rating Api
   static String rateAppApi = "$baseURL/feedback/createRating";
 
   // Notifiaction Api
-  static String marketNotification =
-      "$baseURL/notification/updateNotificationStatus";
+  static String marketNotification = "$baseURL/notification/updateNotificationStatus";
 
   static String bennerApi = "$baseURL/banner/getAll";
 
