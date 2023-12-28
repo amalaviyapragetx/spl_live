@@ -1,7 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../api_services/api_urls.dart';
@@ -49,8 +51,7 @@ class NormalGamePageController extends GetxController {
   RxBool evenbool = false.obs;
 
   Future<void> loadJsonFile() async {
-    final String response =
-        await rootBundle.loadString('assets/JSON File/digit_file.json');
+    final String response = await rootBundle.loadString('assets/JSON File/digit_file.json');
     final data = await json.decode(response);
     jsonModel = JsonFileModel.fromJson(data);
   }
@@ -77,10 +78,7 @@ class NormalGamePageController extends GetxController {
   checkType(index) {
     if (selectedBidsList.elementAt(index).gameModeName! == "Odd Even") {
       return "Ank";
-    } else if (selectedBidsList
-        .elementAt(index)
-        .gameModeName!
-        .contains("Jodi")) {
+    } else if (selectedBidsList.elementAt(index).gameModeName!.contains("Jodi")) {
       return "Jodi";
     } else {
       return "Pana";
@@ -165,7 +163,6 @@ class NormalGamePageController extends GetxController {
 
   bool matchesDigits(String num, {String? left, String? middle, String? last}) {
     if ((left!.isNotEmpty && num[0] != left)) {
- 
       return false;
     } else if (((middle!.isNotEmpty && num[num.length ~/ 2] != middle))) {
       return false;
@@ -188,31 +185,24 @@ class NormalGamePageController extends GetxController {
 
     if (right == null) {
       result = jodiArray.where((num) => startsWithLeft(num)).toList();
-      result.sort(
-          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
+      result.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
     } else if (left == null) {
       result = jodiArray.where((num) => endsWithRight(num)).toList();
-      result.sort(
-          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
+      result.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
     } else if (left != null && right != null) {
-      List<String> leftList =
-          jodiArray.where((num) => endsWithRight(num)).toList();
-      leftList.sort(
-          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
-      List<String> rightList =
-          jodiArray.where((num) => startsWithLeft(num)).toList();
-      rightList.sort(
-          (a, b) => b.compareTo(a)); // Sort in descending order for strings.
+      List<String> leftList = jodiArray.where((num) => endsWithRight(num)).toList();
+      leftList.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
+      List<String> rightList = jodiArray.where((num) => startsWithLeft(num)).toList();
+      rightList.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
 
       result = [...leftList, ...rightList];
     }
-   
+
     return result;
   }
 
   newDigitBasedData() {
-    if (coinController.text.trim().isEmpty ||
-        int.parse(coinController.text.trim()) < 1) {
+    if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
       AppUtils.showErrorSnackBar(
         bodyText: "Please enter valid points",
       );
@@ -245,8 +235,7 @@ class NormalGamePageController extends GetxController {
               gameId: gameMode.value.id,
               // subGameId: ,
               gameModeName: gameMode.value.name,
-              remarks:
-                  "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+              remarks: "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
             ),
           );
         }
@@ -268,15 +257,13 @@ class NormalGamePageController extends GetxController {
   onTapAddOddEven() {
     for (var i = 0; i < 10; i++) {
       var bidNo = i.toString();
-      var existingIndex =
-          selectedBidsList.indexWhere((element) => element.bidNo == bidNo);
+      var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == bidNo);
       var coins = int.parse(coinController.text);
       if (oddbool.value) {
         if (i % 2 != 0) {
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
-            selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! + coins);
+            selectedBidsList[existingIndex].coins = (selectedBidsList[existingIndex].coins! + coins);
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
             selectedBidsList.insert(
@@ -287,8 +274,7 @@ class NormalGamePageController extends GetxController {
                 gameId: gameMode.value.id,
                 gameModeName: gameMode.value.name,
                 subGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketName.value} on $bidNo (${gameMode.value.name})",
+                remarks: "You invested At ${marketName.value} on $bidNo (${gameMode.value.name})",
               ),
             );
           }
@@ -297,8 +283,7 @@ class NormalGamePageController extends GetxController {
         if (i % 2 == 0) {
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
-            selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! + coins);
+            selectedBidsList[existingIndex].coins = (selectedBidsList[existingIndex].coins! + coins);
           } else {
             selectedBidsList.insert(
               0,
@@ -308,8 +293,7 @@ class NormalGamePageController extends GetxController {
                 gameId: gameMode.value.id,
                 gameModeName: gameMode.value.name,
                 subGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketName.value} on $i (${gameMode.value.name})",
+                remarks: "You invested At ${marketName.value} on $i (${gameMode.value.name})",
               ),
             );
           }
@@ -324,7 +308,6 @@ class NormalGamePageController extends GetxController {
   var marketValue = MarketData().obs;
   void createMarketBidApi() async {
     ApiService().createMarketBid(requestModel.toJson()).then((value) async {
-     
       if (value['status']) {
         // Get.back();
         // Get.back();
@@ -342,9 +325,7 @@ class NormalGamePageController extends GetxController {
             AppRoutName.gameModePage,
             arguments: marketValue.value,
           );
-          AppUtils.showSuccessSnackBar(
-              bodyText: value['message'] ?? "",
-              headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
           final walletController = Get.find<WalletController>();
           walletController.getUserBalance();
           walletController.walletBalance.refresh();
@@ -457,8 +438,7 @@ class NormalGamePageController extends GetxController {
     //   debugPrint("Forgot MPIN Api Response :- $value");
     //   if (value['status']) {
     //     spdptpList = value['data'];
-    if (coinController.text.trim().isEmpty ||
-        int.parse(coinController.text.trim()) < 1) {
+    if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
       AppUtils.showErrorSnackBar(
         bodyText: "Please enter valid points",
       );
@@ -482,12 +462,10 @@ class NormalGamePageController extends GetxController {
       } else {
         for (var i = 0; i < spdptpList.length; i++) {
           addedNormalBidValue = spdptpList[i].toString();
-          var existingIndex = selectedBidsList
-              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
           if (existingIndex != -1) {
             selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! +
-                    int.parse(coinController.text));
+                (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
           } else {
             selectedBidsList.insert(
               0,
@@ -497,8 +475,7 @@ class NormalGamePageController extends GetxController {
                 gameId: gameMode.value.id,
                 subGameId: gameMode.value.id,
                 gameModeName: gameMode.value.name,
-                remarks:
-                    "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
+                remarks: "You invested At ${marketName.value} on $addedNormalBidValue (${gameMode.value.name})",
               ),
             );
           }

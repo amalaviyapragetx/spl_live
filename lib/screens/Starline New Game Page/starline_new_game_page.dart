@@ -82,9 +82,8 @@ class StarLineNewGamePage extends StatelessWidget {
                   children: [
                     Text(
                       controller.gameModeName.toUpperCase(),
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(
-                          color: AppColors.appbarColor,
-                          fontSize: Dimensions.h18),
+                      style: CustomTextStyle.textRobotoSansBold
+                          .copyWith(color: AppColors.appbarColor, fontSize: Dimensions.h18),
                     ),
                   ],
                 ),
@@ -95,16 +94,11 @@ class StarLineNewGamePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             spDpTp(
-                              controller.spValue1.value
-                                  ? AppColors.wpColor1
-                                  : AppColors.white,
+                              controller.spValue1.value ? AppColors.wpColor1 : AppColors.white,
                               controller.spValue,
-                              controller.spValue1.value
-                                  ? AppColors.white
-                                  : AppColors.grey,
+                              controller.spValue1.value ? AppColors.white : AppColors.grey,
                               onTap: () {
-                                controller.spValue1.value =
-                                    !controller.spValue1.value;
+                                controller.spValue1.value = !controller.spValue1.value;
                                 if (controller.spValue1.value) {
                                   controller.selectedValues.add("SP");
                                 } else {
@@ -113,16 +107,11 @@ class StarLineNewGamePage extends StatelessWidget {
                               },
                             ),
                             spDpTp(
-                              controller.dpValue2.value
-                                  ? AppColors.wpColor1
-                                  : AppColors.white,
+                              controller.dpValue2.value ? AppColors.wpColor1 : AppColors.white,
                               controller.dpValue,
-                              controller.dpValue2.value
-                                  ? AppColors.white
-                                  : AppColors.grey,
+                              controller.dpValue2.value ? AppColors.white : AppColors.grey,
                               onTap: () {
-                                controller.dpValue2.value =
-                                    !controller.dpValue2.value;
+                                controller.dpValue2.value = !controller.dpValue2.value;
                                 if (controller.dpValue2.value) {
                                   controller.selectedValues.add("DP");
                                 } else {
@@ -131,16 +120,11 @@ class StarLineNewGamePage extends StatelessWidget {
                               },
                             ),
                             spDpTp(
-                              controller.tpValue3.value
-                                  ? AppColors.wpColor1
-                                  : AppColors.white,
+                              controller.tpValue3.value ? AppColors.wpColor1 : AppColors.white,
                               controller.tpValue,
-                              controller.tpValue3.value
-                                  ? AppColors.white
-                                  : AppColors.grey,
+                              controller.tpValue3.value ? AppColors.white : AppColors.grey,
                               onTap: () {
-                                controller.tpValue3.value =
-                                    !controller.tpValue3.value;
+                                controller.tpValue3.value = !controller.tpValue3.value;
                                 if (controller.tpValue3.value) {
                                   controller.selectedValues.add("TP");
                                 } else {
@@ -152,28 +136,19 @@ class StarLineNewGamePage extends StatelessWidget {
                         ),
                       )
                     : Container(),
-                controller.gameMode.value.name! == "Choice Pana SPDP"
-                    ? verticalSpace
-                    : Container(),
-                controller.gameMode.value.name!
-                        .toUpperCase()
-                        .contains("ODD EVEN")
+                controller.gameMode.value.name! == "Choice Pana SPDP" ? verticalSpace : Container(),
+                controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
                           children: [
                             Obx(
                               () => oddEvenContainer(
-                                buttonColor: controller.oddbool.value
-                                    ? AppColors.wpColor1
-                                    : AppColors.white,
-                                textColor: controller.oddbool.value
-                                    ? AppColors.white
-                                    : AppColors.black,
+                                buttonColor: controller.oddbool.value ? AppColors.wpColor1 : AppColors.white,
+                                textColor: controller.oddbool.value ? AppColors.white : AppColors.black,
                                 text: "odd",
                                 onTap: () {
-                                  controller.oddbool.value =
-                                      !controller.oddbool.value;
+                                  controller.oddbool.value = !controller.oddbool.value;
                                   if (controller.oddbool.value) {
                                     controller.evenbool.value = false;
                                   } else {
@@ -187,16 +162,11 @@ class StarLineNewGamePage extends StatelessWidget {
                             ),
                             Obx(
                               () => oddEvenContainer(
-                                buttonColor: controller.evenbool.value
-                                    ? AppColors.wpColor1
-                                    : AppColors.white,
-                                textColor: controller.evenbool.value
-                                    ? AppColors.white
-                                    : AppColors.black,
+                                buttonColor: controller.evenbool.value ? AppColors.wpColor1 : AppColors.white,
+                                textColor: controller.evenbool.value ? AppColors.white : AppColors.black,
                                 text: "Even",
                                 onTap: () {
-                                  controller.evenbool.value =
-                                      !controller.evenbool.value;
+                                  controller.evenbool.value = !controller.evenbool.value;
                                   if (controller.evenbool.value) {
                                     controller.oddbool.value = false;
                                   } else {
@@ -210,8 +180,7 @@ class StarLineNewGamePage extends StatelessWidget {
                       )
                     : controller.gameMode.value.name! == "Choice Pana SPDP"
                         ? Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Row(
                               children: [
                                 Expanded(
@@ -219,63 +188,45 @@ class StarLineNewGamePage extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 10.0),
                                     child: DecoratedBox(
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(Dimensions.r10)),
+                                        borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                         color: AppColors.white,
                                         boxShadow: [
                                           BoxShadow(
                                             offset: const Offset(0, 4),
                                             blurRadius: 3,
                                             spreadRadius: 0.2,
-                                            color:
-                                                AppColors.grey.withOpacity(0.7),
+                                            color: AppColors.grey.withOpacity(0.7),
                                           ),
                                         ],
                                       ),
                                       child: RoundedCornerEditTextWithIcon(
                                         tapTextStyle: AppColors.appbarColor,
-                                        hintTextColor: AppColors.appbarColor
-                                            .withOpacity(0.5),
+                                        hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                                         width: size.width / 2,
                                         textAlign: TextAlign.center,
-                                        controller:
-                                            controller.leftAnkController,
-                                        textStyle: CustomTextStyle
-                                            .textPTsansMedium
-                                            .copyWith(
-                                          color:
-                                              AppColors.black.withOpacity(0.7),
+                                        controller: controller.leftAnkController,
+                                        textStyle: CustomTextStyle.textPTsansMedium.copyWith(
+                                          color: AppColors.black.withOpacity(0.7),
                                           fontWeight: FontWeight.bold,
                                           fontSize: Dimensions.h15,
                                         ),
-                                        hintTextStyle: CustomTextStyle
-                                            .textRobotoSansMedium
-                                            .copyWith(
-                                          color:
-                                              AppColors.black.withOpacity(0.7),
+                                        hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                          color: AppColors.black.withOpacity(0.7),
                                           fontSize: Dimensions.h13,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        formatter: [
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
+                                        formatter: [FilteringTextInputFormatter.digitsOnly],
                                         onChanged: (val) {
-                                          if (int.parse(val!) ==
-                                              controller
-                                                  .panaControllerLength.value) {
-                                            controller.leftFocusNode
-                                                .nextFocus();
-                                            controller.middleFocusNode
-                                                .requestFocus();
+                                          if (int.parse(val!) == controller.panaControllerLength.value) {
+                                            controller.leftFocusNode.nextFocus();
+                                            controller.middleFocusNode.requestFocus();
                                           }
                                         },
                                         focusNode: controller.leftFocusNode,
-                                        maxLength: controller
-                                            .panaControllerLength.value,
+                                        maxLength: controller.panaControllerLength.value,
                                         hintText: "Left Ank",
                                         autofocus: true,
-                                        contentPadding:
-                                            const EdgeInsets.only(right: 30),
+                                        contentPadding: const EdgeInsets.only(right: 30),
                                         imagePath: "",
                                         containerBackColor: AppColors.black,
                                         iconColor: AppColors.white,
@@ -285,87 +236,56 @@ class StarLineNewGamePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                controller.gameMode.value.name!
-                                        .toUpperCase()
-                                        .contains("DIGITS BASED JODI")
+                                controller.gameMode.value.name!.toUpperCase().contains("DIGITS BASED JODI")
                                     ? Container()
                                     : Expanded(
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10.0),
+                                          padding: const EdgeInsets.only(right: 10.0),
                                           child: DecoratedBox(
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      Dimensions.r10)),
+                                              borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                               color: AppColors.white,
                                               boxShadow: [
                                                 BoxShadow(
                                                   offset: const Offset(0, 4),
                                                   blurRadius: 3,
                                                   spreadRadius: 0.2,
-                                                  color: AppColors.grey
-                                                      .withOpacity(0.7),
+                                                  color: AppColors.grey.withOpacity(0.7),
                                                 ),
                                               ],
                                             ),
-                                            child:
-                                                RoundedCornerEditTextWithIcon(
-                                              tapTextStyle:
-                                                  AppColors.appbarColor,
-                                              hintTextColor: AppColors
-                                                  .appbarColor
-                                                  .withOpacity(0.5),
+                                            child: RoundedCornerEditTextWithIcon(
+                                              tapTextStyle: AppColors.appbarColor,
+                                              hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                                               width: size.width / 2,
                                               textAlign: TextAlign.center,
-                                              controller: controller
-                                                  .middleAnkController,
-                                              textStyle: CustomTextStyle
-                                                  .textPTsansMedium
-                                                  .copyWith(
-                                                color: AppColors.black
-                                                    .withOpacity(0.7),
+                                              controller: controller.middleAnkController,
+                                              textStyle: CustomTextStyle.textPTsansMedium.copyWith(
+                                                color: AppColors.black.withOpacity(0.7),
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: Dimensions.h15,
                                               ),
-                                              hintTextStyle: CustomTextStyle
-                                                  .textRobotoSansMedium
-                                                  .copyWith(
-                                                color: AppColors.black
-                                                    .withOpacity(0.7),
+                                              hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                color: AppColors.black.withOpacity(0.7),
                                                 fontSize: Dimensions.h13,
                                                 fontWeight: FontWeight.bold,
                                               ),
-                                              formatter: [
-                                                FilteringTextInputFormatter
-                                                    .digitsOnly
-                                              ],
-                                              focusNode:
-                                                  controller.middleFocusNode,
+                                              formatter: [FilteringTextInputFormatter.digitsOnly],
+                                              focusNode: controller.middleFocusNode,
                                               onChanged: (val) {
-                                                if (int.parse(val!) ==
-                                                    controller
-                                                        .panaControllerLength
-                                                        .value) {
-                                                  controller.middleFocusNode
-                                                      .nextFocus();
-                                                  controller.rightFocusNode
-                                                      .requestFocus();
+                                                if (int.parse(val!) == controller.panaControllerLength.value) {
+                                                  controller.middleFocusNode.nextFocus();
+                                                  controller.rightFocusNode.requestFocus();
                                                 }
                                               },
-                                              maxLength: controller
-                                                  .panaControllerLength.value,
+                                              maxLength: controller.panaControllerLength.value,
                                               hintText: "Middle Ank",
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      right: 30),
+                                              contentPadding: const EdgeInsets.only(right: 30),
                                               imagePath: "",
-                                              containerBackColor:
-                                                  AppColors.black,
+                                              containerBackColor: AppColors.black,
                                               iconColor: AppColors.white,
                                               height: Dimensions.h35,
-                                              keyboardType:
-                                                  TextInputType.number,
+                                              keyboardType: TextInputType.number,
                                             ),
                                           ),
                                         ),
@@ -373,58 +293,44 @@ class StarLineNewGamePage extends StatelessWidget {
                                 Expanded(
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(Dimensions.r10)),
+                                      borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                       color: AppColors.white,
                                       boxShadow: [
                                         BoxShadow(
                                           offset: const Offset(0, 4),
                                           blurRadius: 3,
                                           spreadRadius: 0.2,
-                                          color:
-                                              AppColors.grey.withOpacity(0.7),
+                                          color: AppColors.grey.withOpacity(0.7),
                                         ),
                                       ],
                                     ),
                                     child: RoundedCornerEditTextWithIcon(
                                       tapTextStyle: AppColors.appbarColor,
-                                      hintTextColor: AppColors.appbarColor
-                                          .withOpacity(0.5),
+                                      hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                                       width: size.width / 2,
                                       textAlign: TextAlign.center,
                                       controller: controller.rightAnkController,
-                                      textStyle: CustomTextStyle
-                                          .textPTsansMedium
-                                          .copyWith(
+                                      textStyle: CustomTextStyle.textPTsansMedium.copyWith(
                                         color: AppColors.black.withOpacity(0.7),
                                         fontWeight: FontWeight.bold,
                                         fontSize: Dimensions.h15,
                                       ),
-                                      hintTextStyle: CustomTextStyle
-                                          .textRobotoSansMedium
-                                          .copyWith(
+                                      hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                         color: AppColors.black.withOpacity(0.7),
                                         fontSize: Dimensions.h13,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      formatter: [
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
+                                      formatter: [FilteringTextInputFormatter.digitsOnly],
                                       onChanged: (val) {
-                                        if (int.parse(val!) ==
-                                            controller
-                                                .panaControllerLength.value) {
+                                        if (int.parse(val!) == controller.panaControllerLength.value) {
                                           controller.rightFocusNode.nextFocus();
-                                          controller.coinFocusNode
-                                              .requestFocus();
+                                          controller.coinFocusNode.requestFocus();
                                         }
                                       },
                                       focusNode: controller.rightFocusNode,
-                                      maxLength:
-                                          controller.panaControllerLength.value,
+                                      maxLength: controller.panaControllerLength.value,
                                       hintText: "Right Ank",
-                                      contentPadding:
-                                          const EdgeInsets.only(right: 40),
+                                      contentPadding: const EdgeInsets.only(right: 40),
                                       imagePath: "",
                                       containerBackColor: AppColors.black,
                                       iconColor: AppColors.white,
@@ -439,8 +345,7 @@ class StarLineNewGamePage extends StatelessWidget {
                         : Container(),
                 verticalSpace,
                 controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                        controller.gameMode.value.name!.toUpperCase() ==
-                            "ODD EVEN"
+                        controller.gameMode.value.name!.toUpperCase() == "ODD EVEN"
                     ? Container()
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -448,52 +353,33 @@ class StarLineNewGamePage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: AutoCompleteTextField(
-                                controller:
-                                    controller.autoCompleteFieldController,
+                                controller: controller.autoCompleteFieldController,
                                 isBulkMode: false,
                                 autoFocus: true,
                                 height: Dimensions.w37,
                                 width: Dimensions.w200,
                                 suggestionWidth: Dimensions.w200,
-                                hintTextColor:
-                                    AppColors.black.withOpacity(0.65),
-                                hintText:
-                                    "${"ENTER".tr} ${controller.gameMode.value.name}",
-                                focusNode: controller.gameMode.value.name!
-                                            .toUpperCase() ==
-                                        "CHOICE PANA SPDP"
+                                hintTextColor: AppColors.black.withOpacity(0.65),
+                                hintText: "${"ENTER".tr} ${controller.gameMode.value.name}",
+                                focusNode: controller.gameMode.value.name!.toUpperCase() == "CHOICE PANA SPDP"
                                     ? controller.coinFocusNode
                                     : controller.focusNode,
-                                maxLength:
-                                    controller.panaControllerLength.value,
-                                formatter: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
+                                maxLength: controller.panaControllerLength.value,
+                                formatter: [FilteringTextInputFormatter.digitsOnly],
                                 keyboardType: TextInputType.number,
                                 validateValue: (validate, value) {
                                   validate = false;
-                                  if (controller.gameMode.value.name!
-                                              .toUpperCase() ==
-                                          "SINGLE ANK" ||
-                                      controller.gameMode.value.name! ==
-                                          "Jodi" ||
-                                      controller.gameMode.value.name!
-                                              .toUpperCase() ==
-                                          "SINGLE PANA" ||
-                                      controller.gameMode.value.name!
-                                              .toUpperCase() ==
-                                          "DOUBLE PANA" ||
-                                      controller.gameMode.value.name!
-                                              .toUpperCase() ==
-                                          "TRIPPLE PANA") {
-                                    controller.validateEnteredDigit(
-                                        false, value);
+                                  if (controller.gameMode.value.name!.toUpperCase() == "SINGLE ANK" ||
+                                      controller.gameMode.value.name! == "Jodi" ||
+                                      controller.gameMode.value.name!.toUpperCase() == "SINGLE PANA" ||
+                                      controller.gameMode.value.name!.toUpperCase() == "DOUBLE PANA" ||
+                                      controller.gameMode.value.name!.toUpperCase() == "TRIPPLE PANA") {
+                                    controller.validateEnteredDigit(false, value);
                                   } else {
                                     controller.ondebounce(false, value);
                                   }
                                 },
-                                optionsBuilder:
-                                    (TextEditingValue textEditingValue) {
+                                optionsBuilder: (TextEditingValue textEditingValue) {
                                   // if (textEditingValue.text == '') {
                                   //   return const Iterable<String>.empty();
                                   // }
@@ -516,8 +402,7 @@ class StarLineNewGamePage extends StatelessWidget {
                             Expanded(
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(Dimensions.r10)),
+                                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                   color: AppColors.white,
                                   boxShadow: [
                                     BoxShadow(
@@ -530,27 +415,20 @@ class StarLineNewGamePage extends StatelessWidget {
                                 ),
                                 child: RoundedCornerEditTextWithIcon(
                                   tapTextStyle: AppColors.appbarColor,
-                                  hintTextColor:
-                                      AppColors.appbarColor.withOpacity(0.5),
+                                  hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                                   width: size.width / 2,
                                   textAlign: TextAlign.center,
                                   controller: controller.coinController,
-                                  textStyle: CustomTextStyle
-                                      .textRobotoSansMedium
-                                      .copyWith(
+                                  textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                     color: AppColors.black.withOpacity(0.7),
                                     // fontWeight: FontWeight.bold,
                                     fontSize: Dimensions.h15,
                                   ),
-                                  hintTextStyle: CustomTextStyle
-                                      .textRobotoSansMedium
-                                      .copyWith(
+                                  hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                     color: AppColors.black.withOpacity(0.65),
                                     fontSize: Dimensions.h15,
                                   ),
-                                  formatter: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
+                                  formatter: [FilteringTextInputFormatter.digitsOnly],
                                   // onEditingComplete: () {
                                   //   if (controller.coinController.text.length <
                                   //       2) {
@@ -559,31 +437,22 @@ class StarLineNewGamePage extends StatelessWidget {
                                   // },
                                   onChanged: (val) {
                                     if (val != null) {
-                                 
-                                      if (val.characters.characterAt(0) ==
-                                          Characters("0")) {
-                                       
+                                      if (val.characters.characterAt(0) == Characters("0")) {
                                         // we need to remove the first char
-                                        controller.coinController.text =
-                                            val.substring(1);
+                                        controller.coinController.text = val.substring(1);
                                         // we need to move the cursor
-                                        controller.coinController.selection =
-                                            TextSelection.collapsed(
-                                          offset: controller
-                                              .coinController.text.length,
+                                        controller.coinController.selection = TextSelection.collapsed(
+                                          offset: controller.coinController.text.length,
                                         );
                                       } else if (int.parse(val) > 10000) {
-                                        AppUtils.showErrorSnackBar(
-                                            bodyText:
-                                                "You can not add more than 10000 points");
+                                        AppUtils.showErrorSnackBar(bodyText: "You can not add more than 10000 points");
                                       }
                                     }
                                   },
                                   maxLength: 5,
                                   focusNode: controller.coinFocusNode,
                                   hintText: "Enter Points",
-                                  contentPadding:
-                                      const EdgeInsets.only(right: 40),
+                                  contentPadding: const EdgeInsets.only(right: 40),
                                   imagePath: "",
                                   containerBackColor: AppColors.black,
                                   iconColor: AppColors.white,
@@ -596,18 +465,15 @@ class StarLineNewGamePage extends StatelessWidget {
                         ),
                       ),
                 controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                        controller.gameMode.value.name!.toUpperCase() ==
-                            "ODD EVEN"
+                        controller.gameMode.value.name!.toUpperCase() == "ODD EVEN"
                     ? Container()
                     : verticalSpace,
                 controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                        controller.gameMode.value.name!.toUpperCase() ==
-                            "ODD EVEN"
+                        controller.gameMode.value.name!.toUpperCase() == "ODD EVEN"
                     ? Container()
                     : verticalSpace,
                 controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                        controller.gameMode.value.name!.toUpperCase() ==
-                            "ODD EVEN"
+                        controller.gameMode.value.name!.toUpperCase() == "ODD EVEN"
                     ? Container()
                     : RoundedCornerButton(
                         text: "PLUSADD".tr,
@@ -621,35 +487,25 @@ class StarLineNewGamePage extends StatelessWidget {
                         borderWidth: 0.2,
                         textStyle: CustomTextStyle.textRobotoSansBold,
                         onTap: () {
-                          if (controller.gameMode.value.name!.toUpperCase() ==
-                              "PANEL GROUP") {
-                            if (controller
-                                .autoCompleteFieldController.text.isEmpty) {
+                          if (controller.gameMode.value.name!.toUpperCase() == "PANEL GROUP") {
+                            if (controller.autoCompleteFieldController.text.isEmpty) {
                               AppUtils.showErrorSnackBar(
-                                bodyText:
-                                    "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                bodyText: "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                               );
                             } else if (controller.coinController.text.isEmpty ||
-                                int.parse(controller.coinController.text) >
-                                    10000) {
+                                int.parse(controller.coinController.text) > 10000) {
                               AppUtils.showErrorSnackBar(
                                 bodyText: "Please enter valid points",
                               );
-                            } else if (controller.autoCompleteFieldController
-                                        .text.length <
-                                    3 ==
-                                true) {
+                            } else if (controller.autoCompleteFieldController.text.length < 3 == true) {
                               AppUtils.showErrorSnackBar(
-                                bodyText:
-                                    "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                bodyText: "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                               );
                             } else {
                               controller.newCallOnAddButton();
                               // controller.getspdptp();
                             }
-                          } else if (controller.gameMode.value.name!
-                                  .toUpperCase() ==
-                              "SPDPTP") {
+                          } else if (controller.gameMode.value.name!.toUpperCase() == "SPDPTP") {
                             if (controller.spValue1.value == false &&
                                 controller.dpValue2.value == false &&
                                 controller.tpValue3.value == false) {
@@ -678,43 +534,26 @@ class StarLineNewGamePage extends StatelessWidget {
                           //     controller.getspdptp();
                           //   }
                           // }
-                          else if (controller.gameMode.value.name!.toUpperCase() ==
-                                      "SINGLE ANK" ||
+                          else if (controller.gameMode.value.name!.toUpperCase() == "SINGLE ANK" ||
                                   controller.gameMode.value.name! == "Jodi" ||
-                                  controller.gameMode.value.name!
-                                          .toUpperCase() ==
-                                      "SINGLE PANA" ||
-                                  controller.gameMode.value.name!
-                                          .toUpperCase() ==
-                                      "DOUBLE PANA" ||
-                                  controller.gameMode.value.name!
-                                          .toUpperCase() ==
-                                      "TRIPPLE PANA"
+                                  controller.gameMode.value.name!.toUpperCase() == "SINGLE PANA" ||
+                                  controller.gameMode.value.name!.toUpperCase() == "DOUBLE PANA" ||
+                                  controller.gameMode.value.name!.toUpperCase() == "TRIPPLE PANA"
                               // ||
                               // controller.gameMode.value.name!.toUpperCase() ==
                               //     "RED BRACKETS"
                               ) {
                             controller.onTapOfAddButton();
                           } else {
-                            if (controller.autoCompleteFieldController.text
-                                    .isNotEmpty ||
+                            if (controller.autoCompleteFieldController.text.isNotEmpty ||
                                 controller.coinController.text.isNotEmpty) {
-                              if (controller.gameMode.value.name!
-                                          .toUpperCase() ==
-                                      "DP MOTOR" ||
-                                  controller.gameMode.value.name!
-                                          .toUpperCase() ==
-                                      "SP MOTOR") {
-                                if (controller.autoCompleteFieldController.text
-                                            .length <=
-                                        3 ==
-                                    true) {
+                              if (controller.gameMode.value.name!.toUpperCase() == "DP MOTOR" ||
+                                  controller.gameMode.value.name!.toUpperCase() == "SP MOTOR") {
+                                if (controller.autoCompleteFieldController.text.length <= 3 == true) {
                                   AppUtils.showErrorSnackBar(
-                                    bodyText:
-                                        "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                    bodyText: "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                                   );
-                                } else if (controller
-                                    .coinController.text.isEmpty) {
+                                } else if (controller.coinController.text.isEmpty) {
                                   AppUtils.showErrorSnackBar(
                                     bodyText: "Please enter valid points",
                                   );
@@ -722,29 +561,22 @@ class StarLineNewGamePage extends StatelessWidget {
                                   controller.newCallOnAddButton();
                                   // controller.getspdptp();
                                 }
-                              } else if (controller.gameMode.value.name!
-                                      .toUpperCase() ==
-                                  "TWO DIGITS PANEL") {
-                                if (controller.autoCompleteFieldController.text
-                                        .length ==
-                                    2) {
+                              } else if (controller.gameMode.value.name!.toUpperCase() == "TWO DIGITS PANEL") {
+                                if (controller.autoCompleteFieldController.text.length == 2) {
                                   controller.newCallOnAddButton();
                                   // controller.getspdptp();
                                 } else {
                                   AppUtils.showErrorSnackBar(
-                                    bodyText:
-                                        "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
+                                    bodyText: "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                                   );
                                 }
                               } else {
                                 //controller.newCallOnAddButton();
                                 controller.getspdptp();
                               }
-                            } else if (controller
-                                .autoCompleteFieldController.text.isEmpty) {
+                            } else if (controller.autoCompleteFieldController.text.isEmpty) {
                               AppUtils.showErrorSnackBar(
-                                bodyText:
-                                    "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
+                                bodyText: "Please enter ${controller.gameMode.value.name!.toLowerCase()}",
                               );
                             } else if (controller.coinController.text.isEmpty) {
                               AppUtils.showErrorSnackBar(
@@ -760,8 +592,7 @@ class StarLineNewGamePage extends StatelessWidget {
                         width: Dimensions.w150,
                       ),
                 controller.gameMode.value.name! == "Choice Pana SPDP" ||
-                        controller.gameMode.value.name!.toUpperCase() ==
-                            "ODD EVEN"
+                        controller.gameMode.value.name!.toUpperCase() == "ODD EVEN"
                     ? SizedBox(
                         height: 50,
                         child: Padding(
@@ -771,8 +602,7 @@ class StarLineNewGamePage extends StatelessWidget {
                               Expanded(
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.r10)),
+                                    borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                     color: AppColors.white,
                                     boxShadow: [
                                       BoxShadow(
@@ -785,27 +615,21 @@ class StarLineNewGamePage extends StatelessWidget {
                                   ),
                                   child: RoundedCornerEditTextWithIcon(
                                     tapTextStyle: AppColors.appbarColor,
-                                    hintTextColor:
-                                        AppColors.appbarColor.withOpacity(0.5),
+                                    hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                                     width: size.width / 2,
                                     textAlign: TextAlign.center,
                                     controller: controller.coinController,
-                                    textStyle: CustomTextStyle.textPTsansMedium
-                                        .copyWith(
+                                    textStyle: CustomTextStyle.textPTsansMedium.copyWith(
                                       color: AppColors.black.withOpacity(0.7),
                                       fontWeight: FontWeight.bold,
                                       fontSize: Dimensions.h15,
                                     ),
-                                    hintTextStyle: CustomTextStyle
-                                        .textRobotoSansMedium
-                                        .copyWith(
+                                    hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                       color: AppColors.black.withOpacity(0.7),
                                       fontSize: Dimensions.h15,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                    formatter: [
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
+                                    formatter: [FilteringTextInputFormatter.digitsOnly],
                                     // onEditingComplete: () {
                                     //   if (controller.coinController.text.length <
                                     //       2) {
@@ -814,23 +638,16 @@ class StarLineNewGamePage extends StatelessWidget {
                                     // },
                                     onChanged: (val) {
                                       if (val != null) {
-                                        
-                                        if (val.characters.characterAt(0) ==
-                                            Characters("0")) {
-                                         
+                                        if (val.characters.characterAt(0) == Characters("0")) {
                                           // we need to remove the first char
-                                          controller.coinController.text =
-                                              val.substring(1);
+                                          controller.coinController.text = val.substring(1);
                                           // we need to move the cursor
-                                          controller.coinController.selection =
-                                              TextSelection.collapsed(
-                                            offset: controller
-                                                .coinController.text.length,
+                                          controller.coinController.selection = TextSelection.collapsed(
+                                            offset: controller.coinController.text.length,
                                           );
                                         } else if (int.parse(val) > 10000) {
                                           AppUtils.showErrorSnackBar(
-                                              bodyText:
-                                                  "You can not add more than 10000 points");
+                                              bodyText: "You can not add more than 10000 points");
                                         } else {
                                           // if (int.parse(val) >= 1) {
                                           //   print("333333333333333   ${val.length}");
@@ -847,15 +664,12 @@ class StarLineNewGamePage extends StatelessWidget {
                                       }
                                     },
                                     focusNode: controller.coinFocusNode,
-                                    autofocus: controller.gameMode.value.name!
-                                            .toUpperCase()
-                                            .contains("ODD EVEN")
+                                    autofocus: controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")
                                         ? true
                                         : false,
                                     maxLength: 5,
                                     hintText: "Enter Points",
-                                    contentPadding:
-                                        const EdgeInsets.only(right: 40),
+                                    contentPadding: const EdgeInsets.only(right: 40),
                                     imagePath: "",
                                     containerBackColor: AppColors.black,
                                     iconColor: AppColors.white,
@@ -870,8 +684,7 @@ class StarLineNewGamePage extends StatelessWidget {
                               Expanded(
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.r10)),
+                                    borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                     color: AppColors.white,
                                     boxShadow: [
                                       BoxShadow(
@@ -892,12 +705,9 @@ class StarLineNewGamePage extends StatelessWidget {
                                     letterSpacing: 1,
                                     borderRadius: Dimensions.r7,
                                     borderWidth: 0.2,
-                                    textStyle:
-                                        CustomTextStyle.textRobotoSansBold,
+                                    textStyle: CustomTextStyle.textRobotoSansBold,
                                     onTap: () {
-                                      if (controller.gameMode.value.name!
-                                          .toUpperCase()
-                                          .contains("ODD EVEN")) {
+                                      if (controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")) {
                                         controller.onTapAddOddEven();
                                       } else {
                                         controller.getspdptp();
@@ -1022,8 +832,7 @@ class StarLineNewGamePage extends StatelessWidget {
                 itemCount: controller.selectedBidsList.length,
                 itemBuilder: (context, item) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 7),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 7),
                     child: Container(
                       height: Dimensions.h40,
                       width: size.width,
@@ -1051,19 +860,14 @@ class StarLineNewGamePage extends StatelessWidget {
                                   children: [
                                     Text(
                                       "${controller.checkType(item)} : ",
-                                      style: CustomTextStyle.textRobotoSansBold
-                                          .copyWith(
+                                      style: CustomTextStyle.textRobotoSansBold.copyWith(
                                         color: AppColors.black,
                                         fontSize: Dimensions.h14,
                                       ),
                                     ),
                                     Text(
-                                      controller.selectedBidsList
-                                          .elementAt(item)
-                                          .bidNo
-                                          .toString(),
-                                      style: CustomTextStyle.textRobotoSansLight
-                                          .copyWith(
+                                      controller.selectedBidsList.elementAt(item).bidNo.toString(),
+                                      style: CustomTextStyle.textRobotoSansLight.copyWith(
                                         color: AppColors.black,
                                         fontSize: Dimensions.h15,
                                       ),
@@ -1086,8 +890,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                     // ),
                                     Text(
                                       "₹ ${controller.selectedBidsList.elementAt(item).coins.toString()}",
-                                      style: CustomTextStyle.textRobotoSansLight
-                                          .copyWith(
+                                      style: CustomTextStyle.textRobotoSansLight.copyWith(
                                         color: AppColors.black,
                                         fontSize: Dimensions.h15,
                                       ),
@@ -1098,21 +901,17 @@ class StarLineNewGamePage extends StatelessWidget {
                               SizedBox(
                                 width: Dimensions.w110,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 25),
+                                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 25),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        color:
-                                            AppColors.white.withOpacity(0.25),
-                                        borderRadius:
-                                            BorderRadius.circular(25)),
+                                        color: AppColors.white.withOpacity(0.25),
+                                        borderRadius: BorderRadius.circular(25)),
                                     child: Text(
                                       textAlign: TextAlign.center,
                                       "",
                                       // controller.marketData.value.time
                                       //     .toString(),
-                                      style: CustomTextStyle.textRobotoSansBold
-                                          .copyWith(
+                                      style: CustomTextStyle.textRobotoSansBold.copyWith(
                                         color: AppColors.black,
                                         fontSize: Dimensions.h13,
                                       ),
@@ -1145,8 +944,7 @@ class StarLineNewGamePage extends StatelessWidget {
                             ],
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(right: 10.0, left: 0),
+                            padding: const EdgeInsets.only(right: 10.0, left: 0),
                             child: InkWell(
                               onTap: () {
                                 controller.onDeleteBids(item);
@@ -1168,10 +966,7 @@ class StarLineNewGamePage extends StatelessWidget {
   }
 
   Widget nameColumn(
-      {required String? titleText,
-      required String subText,
-      required Color textColor,
-      required Color textColor2}) {
+      {required String? titleText, required String subText, required Color textColor, required Color textColor2}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 3.0,
@@ -1214,8 +1009,7 @@ class StarLineNewGamePage extends StatelessWidget {
     );
   }
 
-  Widget spDpTp(Color containerColor, String text, Color textColor,
-      {required Function() onTap}) {
+  Widget spDpTp(Color containerColor, String text, Color textColor, {required Function() onTap}) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(25),
@@ -1238,8 +1032,7 @@ class StarLineNewGamePage extends StatelessWidget {
           children: [
             Text(
               text,
-              style: CustomTextStyle.textRobotoSansMedium
-                  .copyWith(color: textColor),
+              style: CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 4.0),

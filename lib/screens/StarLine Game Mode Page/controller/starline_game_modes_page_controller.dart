@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +7,7 @@ import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -32,7 +34,6 @@ class StarLineGameModesPageController extends GetxController {
   void onInit() async {
     super.onInit();
     marketData.value = arguments;
-
     checkBiddingStatus();
     await LocalStorage.write(ConstantsVariables.starlineConnect, true);
     callGetGameModes();
@@ -41,8 +42,7 @@ class StarLineGameModesPageController extends GetxController {
   onBackButton() async {
     Get.offAllNamed(AppRoutName.dashBoardPage);
     requestModel.value.bids?.clear();
-    await LocalStorage.write(
-        ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    await LocalStorage.write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
   }
 
   @override
@@ -70,12 +70,10 @@ class StarLineGameModesPageController extends GetxController {
     ApiService().getStarLineGameModes(marketID: marketData.value.id ?? 0).then(
       (value) async {
         if (value['status']) {
-          StarLineGameModesApiResponseModel gameModeModel =
-              StarLineGameModesApiResponseModel.fromJson(value);
+          StarLineGameModesApiResponseModel gameModeModel = StarLineGameModesApiResponseModel.fromJson(value);
           if (gameModeModel.data != null) {
             biddingOpen.value = gameModeModel.data!.isBidOpen ?? false;
-            gameModesList.value =
-                gameModeModel.data!.gameMode ?? <StarLineGameMod>[];
+            gameModesList.value = gameModeModel.data!.gameMode ?? <StarLineGameMod>[];
           }
         } else {
           AppUtils.showErrorSnackBar(
@@ -87,9 +85,8 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   void checkBiddingStatus() {
-    var timeDiffForOpenBidding = CommonUtils()
-        .getDifferenceBetweenGivenTimeFromNow(
-            marketData.value.time ?? "00:00 AM");
+    var timeDiffForOpenBidding =
+        CommonUtils().getDifferenceBetweenGivenTimeFromNow(marketData.value.time ?? "00:00 AM");
     timeDiffForOpenBidding < 15 ? biddingOpen.value = false : true;
   }
 
@@ -181,9 +178,7 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   void createMarketBidApi() async {
-    ApiService()
-        .createStarLineMarketBid(requestModel.value.toJson())
-        .then((value) async {
+    ApiService().createStarLineMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
         Get.back();
         Get.back();
@@ -193,9 +188,7 @@ class StarLineGameModesPageController extends GetxController {
             bodyText: value['message'] ?? "",
           );
         } else {
-          AppUtils.showSuccessSnackBar(
-              bodyText: value['message'] ?? "",
-              headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }
         LocalStorage.remove(ConstantsVariables.bidsList);
         LocalStorage.remove(ConstantsVariables.marketName);
