@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'package:flutter/services.dart';
+
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import 'device_information_model.dart';
 
 class DeviceInfo {
@@ -33,8 +35,8 @@ class DeviceInfo {
         brandName = deviceData["brand"] ?? "getting Null";
         osVersion = deviceData["version.release"] ?? "getting Null";
         // bool isRooted = androidInfo.isPhysicalDevice;
-
         // bool jailbroken = await FlutterJailbreakDetection.jailbroken;
+        // print(jailbroken);
         // if (jailbroken || isRooted) {
         //   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         // }
@@ -48,9 +50,7 @@ class DeviceInfo {
         osVersion = deviceData["systemVersion"] ?? "getting Null";
       }
     } on PlatformException {
-      deviceData = <String, dynamic>{
-        'Error:': 'Failed to get platform version.'
-      };
+      deviceData = <String, dynamic>{'Error:': 'Failed to get platform version.'};
     }
     DeviceInformationModel model = DeviceInformationModel(
       appVersion: appVersion,

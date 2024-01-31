@@ -25,20 +25,16 @@ class WithdrawalPageController extends GetxController {
       callGetBankDetails(userId);
       walletbalance.refresh();
     } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "SOMETHINGWENTWRONG".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);
     }
   }
 
   void callGetBankDetails(String userId) async {
     ApiService().getBankDetails({"id": userId}).then((value) async {
       if (value['status']) {
-        BankDetailsResponseModel model =
-            BankDetailsResponseModel.fromJson(value);
+        BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         if (model.message!.isNotEmpty) {
-          AppUtils.showSuccessSnackBar(
-              bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
         // isEditDetails.value = model.data!.isEditPermission ?? false;
         // accountName.value = model.data!.accountHolderName ?? "";

@@ -1,8 +1,9 @@
 class ApiUtils {
   // Spl Production
-  static String baseURL = "https://vishnulive.in:9869";
+  // static String baseURL = "https://vishnulive.in:9869";
+  // static String baseURL = "http://10.0.0.201:8080";
   // local url
-  // static String baseURL = "http://192.168.29.143:8080";
+  static String baseURL = "http://192.168.29.143:8080";
   // endpoints
   static String signUP = '$baseURL/auth/signup';
   static String signIN = '$baseURL/auth/signin';
@@ -55,7 +56,6 @@ class ApiUtils {
   static String bidHistory = "$baseURL/bid/getByUserId";
   static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
   static String getNotificationCount = "$baseURL/notification/getNotificationCount";
-
   static String getAllNotifications = "$baseURL/notification/getAll?search=&limit=10&offset=0";
   static String resetNotificationCount = "$baseURL/notification/resetCount";
 
@@ -64,9 +64,7 @@ class ApiUtils {
 
   // Notifiaction Api
   static String marketNotification = "$baseURL/notification/updateNotificationStatus";
-
   static String bennerApi = "$baseURL/banner/getAll";
-
   static String fcmToken = "$baseURL/auth/setFCMToken";
   static String getVersion = "$baseURL/auth/appVersion";
   static String appKillApi = "$baseURL/user/log/out";

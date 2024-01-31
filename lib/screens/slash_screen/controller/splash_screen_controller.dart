@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/routes/app_routes_name.dart';
@@ -48,18 +49,15 @@ class SplashController extends GetxController {
 
   Future<void> getLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
 
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
         city.value = placemark.locality ?? 'Unknown';
         country.value = placemark.country ?? 'Unknown';
         state.value = placemark.administrativeArea ?? 'Unknown';
-        street.value =
-            "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
+        street.value = "${placemark.street ?? 'Unknown'} ${placemark.subLocality ?? 'Unknown'}";
         postalCode.value = placemark.postalCode ?? 'Unknown';
         List<PlaceMark> letestLocation = [
           PlaceMark(
@@ -78,19 +76,16 @@ class SplashController extends GetxController {
                   'location': placeMark.location?.toJson(),
                 })
             .toList();
-        await LocalStorage.write(
-            ConstantsVariables.locationData, placeMarkJsonList);
-        var storedPlaceMarkJsonList =
-            await LocalStorage.read(ConstantsVariables.locationData) ?? [];
+        await LocalStorage.write(ConstantsVariables.locationData, placeMarkJsonList);
+        var storedPlaceMarkJsonList = await LocalStorage.read(ConstantsVariables.locationData) ?? [];
       }
     } catch (e) {
       print('Error getting location: $e');
     }
   }
 
-  callFcmApi(userId) async {
-    var token = await LocalStorage.read(ConstantsVariables.fcmToken);
-
+  callFcmApi(userId) {
+    var token = GetStorage().read(ConstantsVariables.fcmToken);
     Timer(const Duration(milliseconds: 500), () {
       fsmApiCall(userId, token);
     });
@@ -141,15 +136,11 @@ class SplashController extends GetxController {
 
   Future<void> checkLogin() async {
     bool alreadyLoggedIn = await getStoredUserData();
-    bool isActive =
-        await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
 
-    bool isVerified =
-        await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool hasMPIN =
-        await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
-    bool isUserDetailSet =
-        await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
+    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    bool hasMPIN = await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
+    bool isUserDetailSet = await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
 
     //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
@@ -175,8 +166,7 @@ class SplashController extends GetxController {
         if (hasMPIN) {
           callFcmApi(_userDetailsModel.id);
           Future.delayed(const Duration(seconds: 2), () {
-            Get.offAllNamed(AppRoutName.mPINPage,
-                arguments: {"id": _userDetailsModel.id});
+            Get.offAllNamed(AppRoutName.mPINPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVesionCheck();
               requestLocationPermission();
@@ -184,8 +174,7 @@ class SplashController extends GetxController {
           });
         } else {
           Future.delayed(const Duration(seconds: 2), () {
-            Get.offAllNamed(AppRoutName.signInPage,
-                arguments: {"id": _userDetailsModel.id});
+            Get.offAllNamed(AppRoutName.signInPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVesionCheck();
               requestLocationPermission();
@@ -273,8 +262,7 @@ class SplashController extends GetxController {
         title: 'Permission Denied',
         middleText: 'Please grant location permission to use this feature.',
         confirm: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: Dimensions.w50, vertical: Dimensions.h5),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
           child: RoundedCornerButton(
             text: 'Open Settings',
             color: AppColors.appbarColor,
@@ -305,8 +293,7 @@ class SplashController extends GetxController {
         onWillPop: () async => false,
         middleText: 'Please enable location permission in your app settings.',
         confirm: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: Dimensions.w50, vertical: Dimensions.h5),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
           child: RoundedCornerButton(
             text: 'Open Settings',
             color: AppColors.appbarColor,
@@ -334,24 +321,20 @@ class SplashController extends GetxController {
     print("================================================================");
     try {
       // Get a list of the network interfaces (e.g., Wi-Fi, mobile network, etc.)
-      List<NetworkInterface> interfaces = await NetworkInterface.list(
-          includeLoopback: false, type: InternetAddressType.IPv4);
+      List<NetworkInterface> interfaces =
+          await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
 
       // Iterate over the network interfaces and find the first non-loopback and non-link-local interface
       for (NetworkInterface interface in interfaces) {
-        print(
-            "===========${interface.name.toLowerCase()}================================");
-        if (interface.name.toLowerCase().contains("wlan") ||
-            interface.name.toLowerCase().contains("eth")) {
-          print(
-              "================================================================");
+        print("===========${interface.name.toLowerCase()}================================");
+        if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
+          print("================================================================");
           for (InternetAddress address in interface.addresses) {
             // Check if the address is not a loopback address and is not a link-local address
             print(address.address);
             if (!address.isLoopback && !address.isLinkLocal) {
               print(address.host);
-              return address
-                  .address; // Return the first non-loopback and non-link-local IP address found
+              return address.address; // Return the first non-loopback and non-link-local IP address found
             }
           }
         }

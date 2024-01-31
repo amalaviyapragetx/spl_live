@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,8 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   void requestNotificationPermission() async {
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
@@ -27,8 +27,7 @@ class NotificationServices {
     });
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print("user Granted Permission");
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       print("user Granted Provisinal Permission");
     } else {
       // openAppSettings();
@@ -38,8 +37,7 @@ class NotificationServices {
   }
 
   void initialLocalNotification(BuildContext context, RemoteMessage msg) async {
-    var androidInitializationSettings =
-        const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var androidInitializationSettings = const AndroidInitializationSettings("@mipmap/ic_launcher");
     // var iosInitializationSettings = const IOSInitializationSettings();
     var initializationSetting = InitializationSettings(
       android: androidInitializationSettings,
@@ -80,8 +78,7 @@ class NotificationServices {
     //   icon: "@mipmap/ic_launcher",
     //   ticker: 'ticker',
     // );
-    AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
       chennel.id.toString(),
       chennel.name.toString(),
       channelDescription: chennel.description.toString(),
@@ -104,11 +101,8 @@ class NotificationServices {
       android: androidNotificationDetails,
       //  iOS: iosNotificationDetails,
     );
-    _flutterLocalNotificationsPlugin.show(
-        1,
-        message.notification?.title.toString() ?? "dsadas",
-        message.notification?.body.toString() ?? "sdasd",
-        notificationDetails);
+    _flutterLocalNotificationsPlugin.show(1, message.notification?.title.toString() ?? "dsadas",
+        message.notification?.body.toString() ?? "sdasd", notificationDetails);
   }
 
   Future<String> getDeviceToken() async {
@@ -124,19 +118,15 @@ class NotificationServices {
 
   void hendleMessege(BuildContext context, RemoteMessage msg) {
     if (msg.data['send'] == 'msg') {
-      print("======================");
       launchUrl(
-        Uri.parse(
-          "${msg.data['url']}",
-        ),
+        Uri.parse("${msg.data['url']}"),
       );
     }
   }
 
 ////When App is In terminated
   Future<void> setuoIntrectMessege(BuildContext context) async {
-    RemoteMessage? initialMessege =
-        await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessege = await FirebaseMessaging.instance.getInitialMessage();
     // var conrroller = Get.put(InactivityController());
     if (initialMessege != null) {
       // ignore: use_build_context_synchronously

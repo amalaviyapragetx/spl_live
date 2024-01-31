@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/Custom%20Controllers/doubletap_exitcontroller.dart';
+
 import 'Push Notification/notificationservices.dart';
 import 'helper_files/constant_variables.dart';
 import 'localization/app_localization.dart';
@@ -32,8 +34,7 @@ void main() async {
   runApp(const MyApp());
 }
 
-final GlobalKey<NavigatorState> navigatorKey =
-    GlobalKey(debugLabel: "Main Navigator");
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -59,6 +60,7 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) {
       LocalStorage.write(ConstantsVariables.fcmToken, value);
+      print("deviceToken: $value");
     });
 
     // if (!apiCalled) {
@@ -196,8 +198,7 @@ class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -235,8 +236,7 @@ class AppStateListener extends WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.resumed:
         bool alreadyLoggedIn = await conrroller.getStoredUserData();
-        var mPinTimeOut =
-            await LocalStorage.read(ConstantsVariables.mPinTimeOut) ?? true;
+        var mPinTimeOut = await LocalStorage.read(ConstantsVariables.mPinTimeOut) ?? true;
         if (alreadyLoggedIn && !mPinTimeOut) {
           await LocalStorage.write(ConstantsVariables.timeOut, true);
         } else {
@@ -295,7 +295,7 @@ class AppStateListener extends WidgetsBindingObserver {
 //       );
 //     }
 //   }
-  
+
 //   @override
 //   Widget build(BuildContext context) {
 //     // TODO: implement build

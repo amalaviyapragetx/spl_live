@@ -1,8 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
+
 import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_info.dart';
 import '../../../components/DeviceInfo/device_information_model.dart';
@@ -30,10 +33,7 @@ class SetMPINPageController extends GetxController {
 
   @override
   void onInit() {
-    getLocationsData();
     getArguments();
-    //getUserData();
-    // getLocation();
     super.onInit();
   }
 
@@ -44,10 +44,8 @@ class SetMPINPageController extends GetxController {
     super.dispose();
   }
 
-  getLocationsData() async {
-    var locationData =
-        await LocalStorage.read(ConstantsVariables.locationData) ?? [];
-    // getMarketBidsByUserId(lazyLoad: false);
+  getLocationsData({bool? isLogin, UserDetails? userDetail}) {
+    final locationData = GetStorage().read(ConstantsVariables.locationData) ?? [];
     List list = [];
     list.add(locationData[0]['location']);
     List<LocationModel> data = LocationModel.fromJsonList(list);
@@ -57,6 +55,20 @@ class SetMPINPageController extends GetxController {
     street.value = data[0].street ?? 'Unknown';
     postalCode.value = data[0].postalCode ?? 'Unknown';
   }
+  // getLocationsData() async {
+  //   List locationData = await LocalStorage.read(ConstantsVariables.locationData);
+  //   // getMarketBidsByUserId(lazyLoad: false);
+  //   List list = [];
+  //   if (locationData.isNotEmpty) {
+  //     list.add(locationData[0]['location']);
+  //     List<LocationModel> data = LocationModel.fromJsonList(list);
+  //     city.value = data[0].city ?? 'Unknown';
+  //     country.value = data[0].country ?? 'Unknown';
+  //     state.value = data[0].state ?? 'Unknown';
+  //     street.value = data[0].street ?? 'Unknown';
+  //     postalCode.value = data[0].postalCode ?? 'Unknown';
+  //   }
+  // }
   // Future<void> getUserData() async {
   //   var data = await LocalStorage.read(ConstantsVariables.userData);
   //   userData = UserDetailsModel.fromJson(data);
@@ -66,10 +78,8 @@ class SetMPINPageController extends GetxController {
 
   void getArguments() async {
     await LocalStorage.write(ConstantsVariables.starlineConnect, false);
-
     if (arguments != null) {
       userDetails = arguments;
-
       _fromLoginPage = false;
     } else {
       _fromLoginPage = true;
@@ -103,39 +113,37 @@ class SetMPINPageController extends GetxController {
   }
 
   void callSetUserDetailsApi() async {
-    ApiService()
-        .setUserDetails(userDetails.userName == null
-            ? await userDetailsBody2()
-            : await userDetailsBody())
-        .then((value) async {
-      if (value != null && value['status']) {
-        var userData = value['data'];
-        if (userData != null) {
-          String authToken = userData['Token'] ?? "Null From API";
-          bool isActive = userData['IsActive'] ?? false;
-          bool isVerified = userData['IsVerified'] ?? false;
-          bool isMpinSet = userData['IsMPinSet'] ?? false;
-          bool isUserDetailSet = userData['IsUserDetailSet'] ?? false;
-          await LocalStorage.write(ConstantsVariables.authToken, authToken);
-          await LocalStorage.write(ConstantsVariables.isActive, isActive);
-          await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
-          await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
-          await LocalStorage.write(ConstantsVariables.userData, userData);
-          await LocalStorage.write(
-              ConstantsVariables.isUserDetailSet, isUserDetailSet);
-          callFcmApi(userData["Id"]);
+    try {
+      print(userDetails.userName);
+      ApiService()
+          .setUserDetails(userDetails.userName == null ? await userDetailsBody2() : await userDetailsBody())
+          .then((value) async {
+        if (value != null && value['status']) {
+          var userData = value['data'];
+          if (userData != null) {
+            String authToken = userData['Token'] ?? "Null From API";
+            bool isActive = userData['IsActive'] ?? false;
+            bool isVerified = userData['IsVerified'] ?? false;
+            bool isMpinSet = userData['IsMPinSet'] ?? false;
+            bool isUserDetailSet = userData['IsUserDetailSet'] ?? false;
+            await LocalStorage.write(ConstantsVariables.authToken, authToken);
+            await LocalStorage.write(ConstantsVariables.isActive, isActive);
+            await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
+            await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
+            await LocalStorage.write(ConstantsVariables.userData, userData);
+            await LocalStorage.write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
+            callFcmApi(userData["Id"]);
+          } else {
+            AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
+          }
+          userDetails.userName == null ? null : Get.offAllNamed(AppRoutName.dashBoardPage);
         } else {
-          AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
-        userDetails.userName == null
-            ? null
-            : Get.offAllNamed(AppRoutName.dashBoardPage);
-      } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
-      }
-    });
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   callFcmApi(userId) async {
@@ -239,10 +247,6 @@ class SetMPINPageController extends GetxController {
   Future<void> callSetMpinApi() async {
     ApiService().setMPIN(await setMpinBody()).then((value) async {
       if (value != null && value['status']) {
-        // AppUtils.showSuccessSnackBar(
-        //   bodyText: "${value['message']}",
-        //   headerText: "SUCCESSMESSAGE".tr,
-        // );
         var userData = value['data'];
         if (userData != null) {
           String authToken = userData['Token'] ?? "Null From API";

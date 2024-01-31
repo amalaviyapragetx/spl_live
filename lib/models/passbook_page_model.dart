@@ -109,7 +109,7 @@ class Data3 {
 
 class Rows {
   Rows({
-    String? id,
+    int? id,
     num? userId,
     String? processedBy,
     dynamic bidType,
@@ -165,7 +165,7 @@ class Rows {
     _createdAt = json['createdAt'];
     _marketTime = json['MarketTime'];
   }
-  String? _id;
+  int? _id;
   num? _userId;
   String? _processedBy;
   dynamic _bidType;
@@ -183,7 +183,7 @@ class Rows {
   String? _createdAt;
   String? _marketTime;
   Rows copyWith({
-    String? id,
+    int? id,
     num? userId,
     String? processedBy,
     dynamic bidType,
@@ -220,7 +220,7 @@ class Rows {
         createdAt: createdAt ?? _createdAt,
         marketTime: marketTime ?? _marketTime,
       );
-  String? get id => _id;
+  int? get id => _id;
   num? get userId => _userId;
   String? get processedBy => _processedBy;
   dynamic get bidType => _bidType;

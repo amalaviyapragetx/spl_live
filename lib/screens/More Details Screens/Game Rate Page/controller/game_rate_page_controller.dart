@@ -22,18 +22,12 @@ class GameRatePageController extends GetxController {
   void onReady() {}
 
   void getGameRates({required bool forStarlineGameModes}) {
-    ApiService()
-        .getGameRates(forStarlineGameModes: forStarlineGameModes)
-        .then((value) async {
-  
+    ApiService().getGameRates(forStarlineGameModes: forStarlineGameModes).then((value) async {
       if (value['status']) {
         if (forStarlineGameModes) {
-          starlineMarketModel.value =
-              MarketRatesApiResponseModel.fromJson(value);
-       
+          starlineMarketModel.value = MarketRatesApiResponseModel.fromJson(value);
         } else {
           normalMarketModel.value = MarketRatesApiResponseModel.fromJson(value);
-          
         }
       } else {
         AppUtils.showErrorSnackBar(

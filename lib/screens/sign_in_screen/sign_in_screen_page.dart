@@ -155,10 +155,8 @@ class SignInScreen extends StatelessWidget {
                 controller.focusNode2.requestFocus();
                 controller.cursorTimer?.cancel();
                 controller.cursorTimer = Timer(const Duration(milliseconds: 50), () {
-                  controller.mobileNumberController.selection =
-                      TextSelection.fromPosition(
-                    TextPosition(
-                        offset: controller.mobileNumberController.text.length),
+                  controller.mobileNumberController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: controller.mobileNumberController.text.length),
                   );
                 });
               }
@@ -297,9 +295,7 @@ class SignInScreen extends StatelessWidget {
         Text(
           "OR",
           style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-              fontSize: Dimensions.h20,
-              color: AppColors.greyShade.withOpacity(0.6),
-              fontWeight: FontWeight.w300),
+              fontSize: Dimensions.h20, color: AppColors.greyShade.withOpacity(0.6), fontWeight: FontWeight.w300),
         ),
         Expanded(
           child: Divider(
@@ -328,9 +324,7 @@ class SignInScreen extends StatelessWidget {
         child: Icon(
           Icons.visibility,
           size: Dimensions.h15,
-          color: controller.visiblePassword.value
-              ? AppColors.appbarColor
-              : AppColors.grey,
+          color: controller.visiblePassword.value ? AppColors.appbarColor : AppColors.grey,
         ),
       ),
       suffixIconColor: AppColors.appbarColor,

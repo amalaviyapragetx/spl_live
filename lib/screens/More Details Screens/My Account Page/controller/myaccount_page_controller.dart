@@ -79,13 +79,11 @@ class MyAccountPageController extends GetxController {
   }
 
   void callGetBankDetails(String userId) async {
-    ApiService().getBankDetails({"id": userId}).then((value) async {
+    ApiService().getBankDetails({"id": userId, "userId": userId}).then((value) async {
       if (value['status']) {
-        BankDetailsResponseModel model =
-            BankDetailsResponseModel.fromJson(value);
+        BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         if (model.message!.isNotEmpty) {
-          AppUtils.showSuccessSnackBar(
-              bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
         isEditDetails.value = model.data!.isEditPermission ?? false;
         accountName.value = model.data!.accountHolderName ?? "";
@@ -93,8 +91,7 @@ class MyAccountPageController extends GetxController {
         accountNumber.value = model.data!.accountNumber ?? "";
         ifcsCode.value = model.data!.iFSCCode ?? "";
         bankNameController.text = model.data!.bankName ?? "Null From API";
-        accHolderNameController.text =
-            model.data!.accountHolderName ?? "Null From API";
+        accHolderNameController.text = model.data!.accountHolderName ?? "Null From API";
         accNoController.text = model.data!.accountNumber ?? "Null From API";
         ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
         // gPayNumberController.text = model.data!.gpayNumber ?? "Null From API";
@@ -111,22 +108,17 @@ class MyAccountPageController extends GetxController {
   }
 
   void callEditBankDetailsApi() async {
-    ApiService()
-        .editBankDetails(await ediBankDetailsBody())
-        .then((value) async {
+    ApiService().editBankDetails(await ediBankDetailsBody()).then((value) async {
       if (value['status']) {
-        BankDetailsResponseModel model =
-            BankDetailsResponseModel.fromJson(value);
+        BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         isEditDetails.value = false;
         bankNameController.text = model.data!.bankName ?? "Null From API";
-        accHolderNameController.text =
-            model.data!.accountHolderName ?? "Null From API";
+        accHolderNameController.text = model.data!.accountHolderName ?? "Null From API";
         accNoController.text = model.data!.accountNumber ?? "Null From API";
         ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
         bankId = model.data!.id ?? 0;
 
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
         isEditDetails.value = true;
         AppUtils.showErrorSnackBar(

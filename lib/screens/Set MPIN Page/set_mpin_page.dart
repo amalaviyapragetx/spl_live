@@ -3,20 +3,29 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import 'controller/set_mpin_page_controller.dart';
 
-class SetMPINPage extends StatelessWidget {
+class SetMPINPage extends StatefulWidget {
   SetMPINPage({Key? key}) : super(key: key);
 
+  @override
+  State<SetMPINPage> createState() => _SetMPINPageState();
+}
+
+class _SetMPINPageState extends State<SetMPINPage> {
   final controller = Get.find<SetMPINPageController>();
 
-  final verticalSpace = SizedBox(
-    height: Dimensions.h20,
-  );
+  final verticalSpace = SizedBox(height: Dimensions.h20);
+  @override
+  void initState() {
+    super.initState();
+    controller.getLocationsData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,10 +166,8 @@ class SetMPINPage extends StatelessWidget {
           obscureText: false,
           focusNode: focusNode,
           obscureCharacter: "",
-          textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-              color: AppColors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20),
+          textStyle: CustomTextStyle.textRobotoSansMedium
+              .copyWith(color: AppColors.black, fontWeight: FontWeight.bold, fontSize: 20),
           animationDuration: const Duration(milliseconds: 200),
           onComplete: (val) {
             pinType.value = val;

@@ -56,8 +56,7 @@ class ChangepasswordPageController extends GetxController {
     if (value.isEmpty) {
       confirmPasswordMessage.value = "";
     } else if (value.length < 6) {
-      confirmPasswordMessage.value =
-          "Password cannot be less than 6 characters";
+      confirmPasswordMessage.value = "Password cannot be less than 6 characters";
     } else if (value == newPassword.text) {
       isValidate.value = true;
       confirmPasswordMessage.value = "";
@@ -77,8 +76,7 @@ class ChangepasswordPageController extends GetxController {
     super.dispose();
   }
 
-  Future<Map<String, dynamic>> changebody(
-      {required String password, required String confirmpassword}) async {
+  Future<Map<String, dynamic>> changebody({required String password, required String confirmpassword}) async {
     var veriftybody = {
       "oldPassword": "123456",
       "password": password,
@@ -100,8 +98,7 @@ class ChangepasswordPageController extends GetxController {
   void changePasswordApi() async {
     ApiService().changePassword(await changePassBody()).then((value) async {
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.offAndToNamed(AppRoutName.profilePage);
       } else {
         // AppUtils.showErrorSnackBar(
@@ -189,7 +186,7 @@ class ChangepasswordPageController extends GetxController {
 //     loading.value = true;
 
 //     try {
-//       final response = await post(
+//       final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
 //           Uri.parse('http://43.205.145.101:9867/auth/changePassword'),
 //           headers: {"Authorization": "Bearer ${userDetailsModel.token}"},
 //           body: changebody());

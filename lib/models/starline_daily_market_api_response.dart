@@ -37,17 +37,20 @@ class StarlineMarketData {
   bool? isResultDeclared;
   bool? isCoinDistributed;
   bool? isActive;
+  bool? isBlocked;
 
-  StarlineMarketData(
-      {this.id,
-        this.market,
-        this.time,
-        this.date,
-        this.result,
-        this.isBidOpen,
-        this.isResultDeclared,
-        this.isCoinDistributed,
-        this.isActive});
+  StarlineMarketData({
+    this.id,
+    this.market,
+    this.time,
+    this.date,
+    this.result,
+    this.isBidOpen,
+    this.isResultDeclared,
+    this.isCoinDistributed,
+    this.isActive,
+    this.isBlocked,
+  });
 
   StarlineMarketData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -59,6 +62,7 @@ class StarlineMarketData {
     isResultDeclared = json['IsResultDeclared'];
     isCoinDistributed = json['IsCoinDistributed'];
     isActive = json['IsActive'];
+    isBlocked = json['IsBlocked'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +76,7 @@ class StarlineMarketData {
     data['IsResultDeclared'] = isResultDeclared;
     data['IsCoinDistributed'] = isCoinDistributed;
     data['IsActive'] = isActive;
+    data['IsBlocked'] = isBlocked;
     return data;
   }
 }

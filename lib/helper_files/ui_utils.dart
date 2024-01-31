@@ -28,11 +28,7 @@ class AppUtils {
   );
 
   AppBar simpleAppbar(
-      {required String appBarTitle,
-      List<Widget>? actions,
-      Widget? leading,
-      double? leadingWidht,
-      bool? centerTitle}) {
+      {required String appBarTitle, List<Widget>? actions, Widget? leading, double? leadingWidht, bool? centerTitle}) {
     return AppBar(
       backgroundColor: AppColors.appbarColor,
       shadowColor: AppColors.white,
@@ -79,9 +75,8 @@ class AppUtils {
               padding: const EdgeInsets.only(top: 4.0),
               child: Text(
                 iconText,
-                style: CustomTextStyle.textPTsansMedium.copyWith(
-                    color: textColor ?? AppColors.grey,
-                    fontSize: Dimensions.h11),
+                style: CustomTextStyle.textPTsansMedium
+                    .copyWith(color: textColor ?? AppColors.grey, fontSize: Dimensions.h11),
               ),
             ),
           ],
@@ -99,49 +94,41 @@ class AppUtils {
     required String walletText,
     String? notifictionCount,
   }) {
-    var math;
     return AppBar(
       backgroundColor: AppColors.appbarColor,
-      title: const Text(
-        "SPL",
-      ),
+      title: const Text("SPL"),
       centerTitle: true,
-      leading: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: Dimensions.w5,
-            ),
-            InkWell(
-              onTap: onTapTranction,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                child: SizedBox(
-                  width: Dimensions.w45,
-                  child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    color: AppColors.white,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                walletText,
-                textAlign: TextAlign.center,
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+      leadingWidth: Get.width * 0.4,
+      leading: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(width: Dimensions.w5),
+          InkWell(
+            onTap: onTapTranction,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              child: SizedBox(
+                width: Dimensions.w40,
+                child: SvgPicture.asset(
+                  ConstantImage.walletAppbar,
                   color: AppColors.white,
-                  fontSize: Dimensions.h18,
                 ),
               ),
             ),
-            const Expanded(child: SizedBox())
-          ],
-        ),
+          ),
+          Text(
+            walletText.toString().length > 8 ? walletText.toString().split(".").toString() : walletText,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: CustomTextStyle.textRobotoSansMedium.copyWith(
+              color: AppColors.white,
+              fontSize: 20,
+            ),
+          ),
+        ],
       ),
-      leadingWidth: Dimensions.w150,
       actions: [
         notifictionCount == null || notifictionCount == "0"
             ? Padding(
@@ -173,9 +160,7 @@ class AppUtils {
             onTap: onTapTelegram,
             child: Container(
               width: 20,
-              decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(25)),
+              decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
               child: Transform.rotate(
                 angle: 180 * 3.14 / 48,
                 child: Padding(
@@ -200,9 +185,7 @@ class AppUtils {
             onTap: shareOntap,
             child: Container(
               width: 20,
-              decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(25)),
+              decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
               child: Icon(
                 Icons.share,
                 size: 13,
@@ -254,8 +237,7 @@ class AppUtils {
   }
 
   //common method for show error snack-bar
-  static void showErrorSnackBar(
-      {required String bodyText, Duration? duration}) {
+  static void showErrorSnackBar({required String bodyText, Duration? duration}) {
     Get.closeCurrentSnackbar();
     Get.snackbar(
       "",
@@ -311,15 +293,13 @@ class AppUtils {
   }
 
   ///drawer
-  Future<dynamic> showRateUsBoxDailog(
-      Function callCreateRatingApi, double? givenRatings) async {
+  Future<dynamic> showRateUsBoxDailog(Function callCreateRatingApi, double? givenRatings) async {
     double tempRatings = 0.00;
     IconData? selectedIcon;
-   
+
     return Get.dialog(
       Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: Dimensions.w15, vertical: Dimensions.h220),
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.w15, vertical: Dimensions.h220),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -349,22 +329,17 @@ class AppUtils {
                       ),
                     ),
                     RatingBar.builder(
-                      initialRating: givenRatings != null ||
-                              givenRatings!.toDouble() != 0.0
-                          ? givenRatings
-                          : 0,
+                      initialRating: givenRatings != null || givenRatings!.toDouble() != 0.0 ? givenRatings : 0,
                       minRating: 0,
                       direction: Axis.horizontal,
                       allowHalfRating: false,
                       itemCount: 5,
                       itemSize: Dimensions.h37,
-                      ignoreGestures:
-                          givenRatings.toDouble() != 0.0 ? true : false,
+                      ignoreGestures: givenRatings.toDouble() != 0.0 ? true : false,
                       glowColor: AppColors.appbarColor,
                       unratedColor: AppColors.grey,
 
-                      itemPadding:
-                          EdgeInsets.symmetric(horizontal: Dimensions.w4),
+                      itemPadding: EdgeInsets.symmetric(horizontal: Dimensions.w4),
                       itemBuilder: (context, index) {
                         if (index >= tempRatings) {
                           if (givenRatings.toDouble() != 0.0) {
@@ -405,8 +380,7 @@ class AppUtils {
                             height: Dimensions.h50,
                             width: Dimensions.w130,
                             decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.h5),
+                              borderRadius: BorderRadius.circular(Dimensions.h5),
                               border: Border.all(
                                 color: AppColors.white,
                                 width: 2.0,
@@ -415,8 +389,7 @@ class AppUtils {
                             child: Center(
                               child: Text(
                                 "CANCEL",
-                                style:
-                                    CustomTextStyle.textPTsansMedium.copyWith(
+                                style: CustomTextStyle.textPTsansMedium.copyWith(
                                   color: AppColors.redColor,
                                   fontSize: Dimensions.h18,
                                 ),
@@ -427,13 +400,10 @@ class AppUtils {
                         InkWell(
                           onTap: () {
                             if (givenRatings.toDouble() != 0.00) {
-                              AppUtils.showErrorSnackBar(
-                                  bodyText:
-                                      "You can not add ratings multiple times!!!");
+                              AppUtils.showErrorSnackBar(bodyText: "You can not add ratings multiple times!!!");
                             } else {
                               if (tempRatings < 1.00) {
-                                AppUtils.showErrorSnackBar(
-                                    bodyText: "Please Add Ratings");
+                                AppUtils.showErrorSnackBar(bodyText: "Please Add Ratings");
                               } else {
                                 callCreateRatingApi(tempRatings);
                               }
@@ -443,14 +413,11 @@ class AppUtils {
                             height: Dimensions.h50,
                             width: Dimensions.w130,
                             decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.h5),
-                                color: AppColors.white),
+                                borderRadius: BorderRadius.circular(Dimensions.h5), color: AppColors.white),
                             child: Center(
                               child: Text(
                                 "SUBMIT",
-                                style:
-                                    CustomTextStyle.textPTsansMedium.copyWith(
+                                style: CustomTextStyle.textPTsansMedium.copyWith(
                                   color: AppColors.appbarColor,
                                   fontSize: Dimensions.h18,
                                 ),

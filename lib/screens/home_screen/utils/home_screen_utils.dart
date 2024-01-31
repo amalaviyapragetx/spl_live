@@ -7,6 +7,7 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/common_utils.dart';
 import '../../../helper_files/constant_image.dart';
@@ -15,10 +16,9 @@ import '../../../models/starlinechar_model/new_starlinechart_model.dart';
 
 class HomeScreenUtils {
   var controller = Get.put(HomePageController());
-  Widget buildResult(
-      {required bool isOpenResult,
-      required bool resultDeclared,
-      required int result}) {
+  Widget buildResult({required bool isOpenResult, required bool resultDeclared, required int result}) {
+    print("isOpenResult : $isOpenResult , $resultDeclared ");
+    print(result);
     if (resultDeclared && result != 0 && result.toString().isNotEmpty) {
       int sum = 0;
       for (int i = result; i > 0; i = (i / 10).floor()) {
@@ -26,6 +26,16 @@ class HomeScreenUtils {
       }
       return Text(
         isOpenResult ? "$result - ${sum % 10}" : "${sum % 10} - $result",
+        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+          fontSize: Dimensions.h13,
+          fontWeight: FontWeight.bold,
+          color: AppColors.redColor,
+          letterSpacing: 1,
+        ),
+      );
+    } else if (result == 0 && result.toString().isNotEmpty && resultDeclared) {
+      return Text(
+        isOpenResult ? "000 - $result" : "$result - 000",
         style: CustomTextStyle.textRobotoSansMedium.copyWith(
           fontSize: Dimensions.h13,
           fontWeight: FontWeight.bold,
@@ -77,8 +87,7 @@ class HomeScreenUtils {
                 children: [
                   Text(
                     marketName,
-                    style: CustomTextStyle.textRobotoSansBold
-                        .copyWith(fontSize: Dimensions.h14),
+                    style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                   ),
                   Text(
                     // "446-47-359",
@@ -95,8 +104,7 @@ class HomeScreenUtils {
                 children: [
                   Text(
                     "RequestId:  $requestId",
-                    style: CustomTextStyle.textRobotoSansLight
-                        .copyWith(fontSize: Dimensions.h12),
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h12),
                   ),
                 ],
               ),
@@ -105,16 +113,9 @@ class HomeScreenUtils {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text(
-                    "POINTS  ",
-                    style: CustomTextStyle.textRobotoSansLight,
-                  ),
-                  SizedBox(
-                    width: Dimensions.w5,
-                  ),
-                  SizedBox(
-                    width: Dimensions.w5,
-                  ),
+                  Text("POINTS  ", style: CustomTextStyle.textRobotoSansLight),
+                  SizedBox(width: Dimensions.w5),
+                  SizedBox(width: Dimensions.w5),
                   Text(
                     coins,
                     style: CustomTextStyle.textRobotoSansLight.copyWith(
@@ -127,17 +128,13 @@ class HomeScreenUtils {
                   //   "Balance",
                   //   style: CustomTextStyle.textRobotoSansLight,
                   // ),
-                  SizedBox(
-                    width: Dimensions.w5,
-                  ),
+                  SizedBox(width: Dimensions.w5),
                   // Image.asset(
                   //   ConstantImage.ruppeeBlueIcon,
                   //   height: 25,
                   //   width: 25,
                   // ),
-                  SizedBox(
-                    width: Dimensions.w5,
-                  ),
+                  SizedBox(width: Dimensions.w5),
                   Text(
                     ballance,
                     style: CustomTextStyle.textRobotoSansLight.copyWith(
@@ -163,10 +160,7 @@ class HomeScreenUtils {
                 child: Row(
                   children: [
                     const Expanded(child: SizedBox()),
-                    Text(
-                      bidTime,
-                      style: CustomTextStyle.textRobotoSansBold,
-                    ),
+                    Text(bidTime, style: CustomTextStyle.textRobotoSansBold),
                     const Expanded(child: SizedBox()),
                   ],
                 ),
@@ -178,11 +172,7 @@ class HomeScreenUtils {
     );
   }
 
-  marketIcon(
-      {required Function() onTap,
-      required String text,
-      required String iconData,
-      required Color iconColor}) {
+  marketIcon({required Function() onTap, required String text, required String iconData, required Color iconColor}) {
     return InkWell(
       onTap: onTap,
       child: SizedBox(
@@ -245,10 +235,7 @@ class HomeScreenUtils {
             // color: Colors.amber,
             width: Dimensions.w100,
             child: marketIcon(
-                iconColor: iconColor2,
-                onTap: onTap2,
-                text: "STARLINE".tr,
-                iconData: ConstantImage.starLineIcon),
+                iconColor: iconColor2, onTap: onTap2, text: "STARLINE".tr, iconData: ConstantImage.starLineIcon),
           ),
         ),
         Expanded(
@@ -286,10 +273,7 @@ class HomeScreenUtils {
               // color: Colors.amber,
               width: Dimensions.w100,
               child: marketIcon(
-                  iconColor: iconColor1,
-                  onTap: onTap1,
-                  text: "BIDHISTORY".tr,
-                  iconData: ConstantImage.bidHistoryIcon),
+                  iconColor: iconColor1, onTap: onTap1, text: "BIDHISTORY".tr, iconData: ConstantImage.bidHistoryIcon),
             ),
           ),
           Expanded(
@@ -320,9 +304,7 @@ class HomeScreenUtils {
     );
   }
 
-  gridColumn(
-    size,
-  ) {
+  gridColumn(size) {
     return Obx(
       () {
         return controller.normalMarketList.isNotEmpty
@@ -355,13 +337,10 @@ class HomeScreenUtils {
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            const SizedBox(
-                              width: 4,
-                            ),
+                            const SizedBox(width: 4),
                             Text(
                               "+91 7769826748",
-                              style: CustomTextStyle.textRobotoSansBold
-                                  .copyWith(color: AppColors.white),
+                              style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
                             ),
                           ],
                         ),
@@ -383,13 +362,10 @@ class HomeScreenUtils {
                       MarketData marketData;
                       marketData = controller.normalMarketList[index];
                       return Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: Dimensions.h5),
+                        padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
                         child: GestureDetector(
                           onTap: () => marketData.isBidOpenForClose == true
-                              ? controller.onTapOfNormalMarket(
-                                  controller.normalMarketList[index],
-                                )
+                              ? controller.onTapOfNormalMarket(controller.normalMarketList[index])
                               : null,
                           child: Container(
                             decoration: BoxDecoration(
@@ -402,8 +378,7 @@ class HomeScreenUtils {
                                 )
                               ],
                               color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.h10),
+                              borderRadius: BorderRadius.circular(Dimensions.h10),
                               border: Border.all(color: Colors.red, width: 1),
                             ),
                             child: Column(
@@ -414,15 +389,12 @@ class HomeScreenUtils {
                                 ),
                                 Text(
                                   "${marketData.openTime ?? " "} | ${marketData.closeTime ?? ""}",
-                                  style: CustomTextStyle.textRobotoSansLight
-                                      .copyWith(fontWeight: FontWeight.w300),
+                                  style: CustomTextStyle.textRobotoSansLight.copyWith(fontWeight: FontWeight.w300),
                                 ),
                                 Text(
-                                  controller.normalMarketList[index].market ??
-                                      "",
+                                  controller.normalMarketList[index].market ?? "",
                                   // "MADHUR DAY",
-                                  style:
-                                      CustomTextStyle.textPTsansBold.copyWith(
+                                  style: CustomTextStyle.textPTsansBold.copyWith(
                                     fontWeight: FontWeight.w800,
                                     fontSize: Dimensions.h14,
                                   ),
@@ -433,15 +405,11 @@ class HomeScreenUtils {
                                   children: [
                                     buildResult(
                                         isOpenResult: true,
-                                        resultDeclared:
-                                            marketData.isOpenResultDeclared ??
-                                                false,
+                                        resultDeclared: marketData.isOpenResultDeclared ?? false,
                                         result: marketData.openResult ?? 0),
                                     buildResult(
                                       isOpenResult: false,
-                                      resultDeclared:
-                                          marketData.isCloseResultDeclared ??
-                                              false,
+                                      resultDeclared: marketData.isCloseResultDeclared ?? false,
                                       result: marketData.closeResult ?? 0,
                                     )
                                   ],
@@ -453,8 +421,7 @@ class HomeScreenUtils {
                                 Container(
                                   height: Dimensions.h30,
                                   decoration: BoxDecoration(
-                                    color:
-                                        Colors.grey.shade400.withOpacity(0.8),
+                                    color: Colors.grey.shade400.withOpacity(0.8),
                                     borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10),
@@ -462,21 +429,16 @@ class HomeScreenUtils {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      marketData.isBidOpenForClose == true
-                                          ? "Bidding is Open"
-                                          : "Bidding is Closed",
-                                      style:
-                                          marketData.isBidOpenForClose == true
-                                              ? CustomTextStyle.textPTsansMedium
-                                                  .copyWith(
-                                                  color: AppColors.greenShade,
-                                                  fontWeight: FontWeight.w500,
-                                                )
-                                              : CustomTextStyle.textPTsansMedium
-                                                  .copyWith(
-                                                  color: AppColors.redColor,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                      marketData.isBidOpenForClose == true ? "Bidding is Open" : "Bidding is Closed",
+                                      style: marketData.isBidOpenForClose == true
+                                          ? CustomTextStyle.textPTsansMedium.copyWith(
+                                              color: AppColors.greenShade,
+                                              fontWeight: FontWeight.w500,
+                                            )
+                                          : CustomTextStyle.textPTsansMedium.copyWith(
+                                              color: AppColors.redColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -500,8 +462,7 @@ class HomeScreenUtils {
     return Container(
       height: Dimensions.h25,
       width: Dimensions.w80,
-      decoration: BoxDecoration(
-          color: AppColors.blueButton, borderRadius: BorderRadius.circular(25)),
+      decoration: BoxDecoration(color: AppColors.blueButton, borderRadius: BorderRadius.circular(25)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -583,8 +544,7 @@ class HomeScreenUtils {
           return InkWell(
             onTap: () {
               controller.starLineMarketList[index].isBidOpen == true
-                  ? controller.onTapOfStarlineMarket(
-                      controller.starLineMarketList[index])
+                  ? controller.onTapOfStarlineMarket(controller.starLineMarketList[index])
                   : null;
             },
             child: Container(
@@ -604,12 +564,8 @@ class HomeScreenUtils {
               child: Column(
                 //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    height: Dimensions.h5,
-                  ),
-                  SizedBox(
-                    height: Dimensions.h5,
-                  ),
+                  SizedBox(height: Dimensions.h5),
+                  SizedBox(height: Dimensions.h5),
                   Text(
                     controller.starLineMarketList.elementAt(index).time ?? "",
                     style: CustomTextStyle.textRobotoSansMedium.copyWith(
@@ -617,25 +573,15 @@ class HomeScreenUtils {
                       fontSize: Dimensions.h15,
                     ),
                   ),
-                  SizedBox(
-                    height: Dimensions.h5,
-                  ),
+                  SizedBox(height: Dimensions.h5),
                   buildResult(
                     isOpenResult: true,
-                    resultDeclared:
-                        controller.starLineMarketList[index].isResultDeclared ??
-                            false,
+                    resultDeclared: controller.starLineMarketList[index].isResultDeclared ?? false,
                     result: controller.starLineMarketList[index].result ?? 0,
                   ),
-                  SizedBox(
-                    height: Dimensions.h5,
-                  ),
+                  SizedBox(height: Dimensions.h5),
                   playButton(),
-                  Expanded(
-                    child: SizedBox(
-                      height: Dimensions.h5,
-                    ),
-                  ),
+                  Expanded(child: SizedBox(height: Dimensions.h5)),
                   Container(
                     height: Dimensions.h30,
                     decoration: BoxDecoration(
@@ -650,12 +596,9 @@ class HomeScreenUtils {
                         controller.starLineMarketList[index].isBidOpen == true
                             ? "Bidding is Open"
                             : "Bidding is Closed",
-                        style: controller.starLineMarketList[index].isBidOpen ==
-                                true
-                            ? CustomTextStyle.textPTsansMedium
-                                .copyWith(color: AppColors.greenShade)
-                            : CustomTextStyle.textPTsansMedium
-                                .copyWith(color: AppColors.redColor),
+                        style: controller.starLineMarketList[index].isBidOpen == true
+                            ? CustomTextStyle.textPTsansMedium.copyWith(color: AppColors.greenShade)
+                            : CustomTextStyle.textPTsansMedium.copyWith(color: AppColors.redColor),
                       ),
                     ),
                   ),
@@ -697,27 +640,21 @@ class HomeScreenUtils {
               ),
             )
           : ListView.builder(
-              padding:
-                  EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
               itemCount: controller.marketHistoryList.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return listveiwTransaction(
                   isWin: controller.marketHistoryList[index].isWin ?? false,
-                  requestId:
-                      controller.marketHistoryList[index].requestId ?? "",
-                  bidTime: CommonUtils()
-                      .convertUtcToIstFormatStringToDDMMYYYYHHMMA(controller
-                          .marketHistoryList[index].bidTime
-                          .toString()),
-                  ballance:
-                      " ${controller.marketHistoryList[index].balance.toString()} ",
+                  requestId: controller.marketHistoryList[index].requestId ?? "",
+                  bidTime: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
+                      controller.marketHistoryList[index].bidTime.toString()),
+                  ballance: " ${controller.marketHistoryList[index].balance.toString()} ",
                   coins: controller.marketHistoryList[index].coins.toString(),
                   bidNumber:
                       "${controller.marketHistoryList[index].gameMode ?? ""} ${controller.marketHistoryList[index].bidNo ?? ""}",
-                  marketName: controller.marketHistoryList[index].marketName ??
-                      "00:00 AM",
+                  marketName: controller.marketHistoryList[index].marketName ?? "00:00 AM",
                 );
               },
             ),
@@ -727,30 +664,24 @@ class HomeScreenUtils {
   bidHistory(context) {
     return Column(
       children: [
-        SizedBox(
-          height: Dimensions.h11,
-        ),
+        SizedBox(height: Dimensions.h11),
         SizedBox(
           height: 45,
           child: TextField(
-            style: CustomTextStyle.textRobotoSansMedium
-                .copyWith(color: AppColors.appbarColor),
+            style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
             controller: controller.dateinput,
             decoration: InputDecoration(
-              hintText:
-                  DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+              hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
               hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                 color: AppColors.appbarColor,
               ),
               border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
-              contentPadding: EdgeInsets.symmetric(
-                  horizontal: Dimensions.w8, vertical: Dimensions.h10),
+              contentPadding: EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
               filled: true,
               fillColor: AppColors.grey.withOpacity(0.15),
-              prefixIcon: Icon(Icons.calendar_month_sharp,
-                  color: AppColors.appbarColor),
+              prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
             ),
             readOnly: true,
             onTap: () async {
@@ -760,10 +691,8 @@ class HomeScreenUtils {
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2101));
               if (pickedDate != null) {
-                String formattedDate =
-                    DateFormat('yyyy-MM-dd').format(pickedDate);
-                String formattedDate2 =
-                    DateFormat('dd-MM-yyyy').format(pickedDate);
+                String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                String formattedDate2 = DateFormat('dd-MM-yyyy').format(pickedDate);
                 controller.dateinput.text = formattedDate2;
 
                 controller.getMarketBidsByUserId(
@@ -776,9 +705,7 @@ class HomeScreenUtils {
             },
           ),
         ),
-        SizedBox(
-          height: Dimensions.h11,
-        ),
+        SizedBox(height: Dimensions.h11),
         bidHistoryList(),
       ],
     );
@@ -788,30 +715,24 @@ class HomeScreenUtils {
     return Obx(
       () => Column(
         children: [
-          SizedBox(
-            height: Dimensions.h11,
-          ),
+          SizedBox(height: Dimensions.h11),
           SizedBox(
             height: 45,
             child: TextField(
               controller: controller.dateinputForResultHistory,
-              style: CustomTextStyle.textRobotoSansMedium
-                  .copyWith(color: AppColors.appbarColor),
+              style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
               decoration: InputDecoration(
-                hintText:
-                    DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
                 hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                   color: AppColors.appbarColor,
                 ),
                 border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.w8, vertical: Dimensions.h10),
+                contentPadding: EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
                 filled: true,
                 fillColor: AppColors.grey.withOpacity(0.15),
-                prefixIcon: Icon(Icons.calendar_month_sharp,
-                    color: AppColors.appbarColor),
+                prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
               ),
               readOnly: true,
               onTap: () async {
@@ -822,22 +743,17 @@ class HomeScreenUtils {
                     lastDate: DateTime(2101));
 
                 if (pickedDate != null) {
-                  String formattedDate =
-                      DateFormat('yyyy-MM-dd').format(pickedDate);
-                  String formattedDate2 =
-                      DateFormat('dd-MM-yyyy').format(pickedDate);
+                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                  String formattedDate2 = DateFormat('dd-MM-yyyy').format(pickedDate);
                   controller.dateinputForResultHistory.text = formattedDate2;
 
-                  controller.getDailyStarLineMarkets(
-                      formattedDate, formattedDate);
+                  controller.getDailyStarLineMarkets(formattedDate, formattedDate);
                   controller.bidHistotyDate = pickedDate;
                 }
               },
             ),
           ),
-          SizedBox(
-            height: Dimensions.h11,
-          ),
+          SizedBox(height: Dimensions.h11),
           controller.marketListForResult.isNotEmpty
               ? ListView.builder(
                   padding: EdgeInsets.zero,
@@ -863,59 +779,34 @@ class HomeScreenUtils {
                         ),
                         child: Row(
                           children: [
-                            SizedBox(
-                              width: Dimensions.w20,
-                            ),
-                            SizedBox(
-                                width: Dimensions.w35,
-                                child: SvgPicture.asset(
-                                    ConstantImage.stopWatchIcon)),
+                            SizedBox(width: Dimensions.w20),
+                            SizedBox(width: Dimensions.w35, child: SvgPicture.asset(ConstantImage.stopWatchIcon)),
                             // Icon(Icons.watch, color: AppColors.black),
-                            SizedBox(
-                              width: Dimensions.w10,
-                            ),
+                            SizedBox(width: Dimensions.w10),
                             Text(
-                              controller
-                                      .marketListForResult.value[index].time ??
-                                  "00:00 AM",
-                              style: CustomTextStyle.textRobotoSansBold
-                                  .copyWith(fontSize: Dimensions.h15),
+                              controller.marketListForResult.value[index].time ?? "00:00 AM",
+                              style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h15),
                             ),
                             Expanded(
-                              child: SizedBox(
-                                width: Dimensions.w10,
-                              ),
+                              child: SizedBox(width: Dimensions.w10),
                             ),
                             controller.getResult(
-                                      controller.marketListForResult
-                                              .value[index].isResultDeclared ??
-                                          false,
-                                      controller.marketListForResult[index]
-                                              .result ??
-                                          0,
+                                      controller.marketListForResult.value[index].isResultDeclared ?? false,
+                                      controller.marketListForResult[index].result ?? 0,
                                     ) !=
                                     "***-*"
                                 ? Padding(
-                                    padding:
-                                        EdgeInsets.only(right: Dimensions.h50),
+                                    padding: EdgeInsets.only(right: Dimensions.h50),
                                     child: Text(
                                       controller.getResult(
-                                        controller
-                                                .marketListForResult
-                                                .value[index]
-                                                .isResultDeclared ??
-                                            false,
-                                        controller.marketListForResult[index]
-                                                .result ??
-                                            0,
+                                        controller.marketListForResult.value[index].isResultDeclared ?? false,
+                                        controller.marketListForResult[index].result ?? 0,
                                       ),
-                                      style: CustomTextStyle.textRobotoSansBold
-                                          .copyWith(fontSize: Dimensions.h15),
+                                      style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h15),
                                     ),
                                   )
                                 : Padding(
-                                    padding:
-                                        EdgeInsets.only(right: Dimensions.h50),
+                                    padding: EdgeInsets.only(right: Dimensions.h50),
                                     child: SvgPicture.asset(
                                       ConstantImage.openStarsSvg,
                                       width: Dimensions.w60,
@@ -971,9 +862,7 @@ class HomeScreenUtils {
                 child: Container(
                   height: Dimensions.h30,
                   width: Dimensions.w100,
-                  decoration: BoxDecoration(
-                      color: AppColors.appbarColor,
-                      border: Border.all(color: AppColors.white)),
+                  decoration: BoxDecoration(color: AppColors.appbarColor, border: Border.all(color: AppColors.white)),
                   child: Center(
                     child: Text(
                       'Date',
@@ -1030,9 +919,7 @@ class HomeScreenUtils {
                     //13,
                     (j) {
                       final time = controller.starlineChartTime[j];
-                      final timeData = controller
-                          .starlineChartDateAndTime[i].time
-                          ?.firstWhere(
+                      final timeData = controller.starlineChartDateAndTime[i].time?.firstWhere(
                         (item) => item.marketName == time.marketName,
                         orElse: () => Time(),
                       );
@@ -1041,8 +928,7 @@ class HomeScreenUtils {
                           height: Dimensions.h40,
                           width: Dimensions.w100,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.grey.withOpacity(0.2)),
+                            border: Border.all(color: AppColors.grey.withOpacity(0.2)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
@@ -1054,13 +940,9 @@ class HomeScreenUtils {
                                   child: FittedBox(
                                     fit: BoxFit.fitHeight,
                                     child: Text(
-                                      timeData!.result != null
-                                          ? controller.getResult2(
-                                              true, timeData.result)
-                                          : "***",
+                                      timeData!.result != null ? controller.getResult2(true, timeData.result) : "***",
                                       textAlign: TextAlign.center,
-                                      style:
-                                          CustomTextStyle.textRobotoSansMedium,
+                                      style: CustomTextStyle.textRobotoSansMedium,
                                     ),
                                   ),
                                 ),
@@ -1071,13 +953,9 @@ class HomeScreenUtils {
                                     : const SizedBox(),
                                 Expanded(
                                   child: Text(
-                                    timeData.result != null
-                                        ? controller.getResult3(
-                                            true, timeData.result)
-                                        : "*",
+                                    timeData.result != null ? controller.getResult3(true, timeData.result) : "*",
                                     textAlign: TextAlign.center,
-                                    style: CustomTextStyle.textRobotoSansMedium
-                                        .copyWith(
+                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                       fontSize: Dimensions.h14,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -1101,16 +979,13 @@ class HomeScreenUtils {
                 label: Container(
                   height: Dimensions.h30,
                   width: Dimensions.w100,
-                  decoration: BoxDecoration(
-                      color: AppColors.appbarColor,
-                      border: Border.all(color: AppColors.white)),
+                  decoration: BoxDecoration(color: AppColors.appbarColor, border: Border.all(color: AppColors.white)),
                   child: Center(
                     child: Text(
                       controller.starlineChartTime[index].marketName ?? "",
                       // "11:00 AM",
                       textAlign: TextAlign.center,
-                      style: CustomTextStyle.textRobotoSansMedium
-                          .copyWith(color: AppColors.white),
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white),
                     ),
                   ),
                 ),
@@ -1143,10 +1018,8 @@ class HomeScreenUtils {
                   itemCount: controller.notificationData.length,
                   itemBuilder: (context, index) {
                     return notificationWidget(
-                      notifiactionHeder:
-                          controller.notificationData[index].title ?? "",
-                      notifiactionSubTitle:
-                          controller.notificationData[index].description ?? "",
+                      notifiactionHeder: controller.notificationData[index].title ?? "",
+                      notifiactionSubTitle: controller.notificationData[index].description ?? "",
                     );
                   },
                 ),
@@ -1186,9 +1059,7 @@ class HomeScreenUtils {
     );
   }
 
-  Widget notificationWidget(
-      {required String notifiactionHeder,
-      required String notifiactionSubTitle}) {
+  Widget notificationWidget({required String notifiactionHeder, required String notifiactionSubTitle}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
       child: Container(

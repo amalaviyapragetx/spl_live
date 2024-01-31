@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+
 import '../../helper_files/common_utils.dart';
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
@@ -33,8 +34,7 @@ class BidHistory extends StatelessWidget {
                 SizedBox(width: Dimensions.w15),
                 Text(
                   appbarTitle,
-                  style: CustomTextStyle.textRobotoSansMedium
-                      .copyWith(fontSize: Dimensions.h20),
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
                 ),
               ],
             ),
@@ -49,7 +49,7 @@ class BidHistory extends StatelessWidget {
 
   bidHistoryList() {
     return Obx(
-      () => homePageController.marketBidHistoryList.value.isEmpty
+      () => homePageController.marketBidHistoryList.isEmpty
           ? Center(
               child: Text(
                 "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
@@ -73,14 +73,10 @@ class BidHistory extends StatelessWidget {
                   bidNo: data.bidNo.toString(),
                   ballance: data.balance.toString(),
                   coins: data.coins.toString(),
-                  closeTime:
-                      CommonUtils().formatStringToHHMMA(data.closeTime ?? ""),
-                  openTime:
-                      CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
+                  closeTime: CommonUtils().formatStringToHHMMA(data.closeTime ?? ""),
+                  openTime: CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
                   transactiontype: data.marketName.toString(),
-                  timeDate: CommonUtils()
-                      .convertUtcToIstFormatStringToDDMMYYYYHHMMA(
-                          data.bidTime.toString()),
+                  timeDate: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(data.bidTime.toString()),
                   marketName: data.transactionType ?? "",
                   gameMode: data.gameMode ?? "",
                   bidType: data.bidType ?? "",
@@ -304,38 +300,33 @@ class BidHistory extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "$transactiontype :",
-                      style: CustomTextStyle.textRobotoSansBold
-                          .copyWith(fontSize: Dimensions.h14),
+                      style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                     ),
                     SizedBox(
                       width: Dimensions.w5,
                     ),
                     Text(
                       bidNo,
-                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.appbarColor,
-                          fontSize: Dimensions.h13),
+                      style: CustomTextStyle.textRobotoSansMedium
+                          .copyWith(color: AppColors.appbarColor, fontSize: Dimensions.h13),
                     ),
                     const Expanded(child: SizedBox()),
                     Row(
                       children: [
                         Text(
                           "Points :",
-                          style: CustomTextStyle.textRobotoSansBold
-                              .copyWith(fontSize: Dimensions.h14),
+                          style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                         ),
                         Text(
                           " $coins",
-                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                              fontSize: Dimensions.h14,
-                              color: AppColors.appbarColor),
+                          style: CustomTextStyle.textRobotoSansMedium
+                              .copyWith(fontSize: Dimensions.h14, color: AppColors.appbarColor),
                         ),
                       ],
                     ),
@@ -349,8 +340,7 @@ class BidHistory extends StatelessWidget {
                   children: [
                     Text(
                       requestId,
-                      style: CustomTextStyle.textRobotoSansLight
-                          .copyWith(fontSize: Dimensions.h12),
+                      style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h12),
                     ),
                   ],
                 ),
@@ -362,8 +352,7 @@ class BidHistory extends StatelessWidget {
                   children: [
                     Text(
                       gameMode,
-                      style: CustomTextStyle.textRobotoSansLight
-                          .copyWith(fontSize: Dimensions.h12),
+                      style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h12),
                     ),
                     // SizedBox(
                     //   width: 180,
@@ -377,9 +366,7 @@ class BidHistory extends StatelessWidget {
                         SizedBox(
                           width: Dimensions.w8,
                         ),
-                        Text(ballance,
-                            style: CustomTextStyle.textRobotoSansLight
-                                .copyWith(fontSize: Dimensions.h12)),
+                        Text(ballance, style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h12)),
                       ],
                     ),
 
