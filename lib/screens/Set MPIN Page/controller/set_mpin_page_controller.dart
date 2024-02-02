@@ -44,16 +44,18 @@ class SetMPINPageController extends GetxController {
     super.dispose();
   }
 
-  getLocationsData({bool? isLogin, UserDetails? userDetail}) {
-    final locationData = GetStorage().read(ConstantsVariables.locationData) ?? [];
+  getLocationsData({bool? isLogin, UserDetails? userDetail}) async {
+    final locationData = await GetStorage().read(ConstantsVariables.locationData) ?? [];
     List list = [];
-    list.add(locationData[0]['location']);
-    List<LocationModel> data = LocationModel.fromJsonList(list);
-    city.value = data[0].city ?? 'Unknown';
-    country.value = data[0].country ?? 'Unknown';
-    state.value = data[0].state ?? 'Unknown';
-    street.value = data[0].street ?? 'Unknown';
-    postalCode.value = data[0].postalCode ?? 'Unknown';
+    if (locationData != null) {
+      list.add(locationData[0]['location']);
+      List<LocationModel> data = LocationModel.fromJsonList(list);
+      city.value = data[0].city ?? 'Unknown';
+      country.value = data[0].country ?? 'Unknown';
+      state.value = data[0].state ?? 'Unknown';
+      street.value = data[0].street ?? 'Unknown';
+      postalCode.value = data[0].postalCode ?? 'Unknown';
+    }
   }
   // getLocationsData() async {
   //   List locationData = await LocalStorage.read(ConstantsVariables.locationData);
@@ -76,9 +78,10 @@ class SetMPINPageController extends GetxController {
   //   print("userDetails :---$data");
   // }
 
-  void getArguments() async {
-    await LocalStorage.write(ConstantsVariables.starlineConnect, false);
-    if (arguments != null) {
+  void getArguments() {
+    GetStorage().write(ConstantsVariables.starlineConnect, false);
+    userDetails = arguments ?? UserDetails();
+    if (userDetails.authToken != null && userDetails.userName != null) {
       userDetails = arguments;
       _fromLoginPage = false;
     } else {
@@ -112,9 +115,8 @@ class SetMPINPageController extends GetxController {
     }
   }
 
-  void callSetUserDetailsApi() async {
+  callSetUserDetailsApi() async {
     try {
-      print(userDetails.userName);
       ApiService()
           .setUserDetails(userDetails.userName == null ? await userDetailsBody2() : await userDetailsBody())
           .then((value) async {

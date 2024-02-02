@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
-import '../../../components/DeviceInfo/device_info.dart';
-import '../../../components/DeviceInfo/device_information_model.dart';
 
 class SignUpPageController extends GetxController {
   var mobileNumberController = TextEditingController();
@@ -26,8 +25,7 @@ class SignUpPageController extends GetxController {
         print("SignUP Api Response :- $value");
       }
       if (value['data'] != null && value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.toNamed(AppRoutName.verifyOTPPage, arguments: {
           "countryCode": countryCode.value,
           "phoneNumber": mobileNumberController.text,
@@ -41,7 +39,6 @@ class SignUpPageController extends GetxController {
   }
 
   Future<Map<String, dynamic>> signUpBody() async {
-    DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
     final signUpBody = {
       // "appVersion": deviceInfo.appVersion,
       // "brandName": deviceInfo.brandName,
@@ -51,7 +48,7 @@ class SignUpPageController extends GetxController {
       // "osVersion": deviceInfo.osVersion,
       "countryCode": countryCode.value,
       "phoneNumber": mobileNumberController.text,
-      "deviceId": deviceInfo.deviceId,
+      "deviceId": DeviceInfo.deviceId,
     };
     if (kDebugMode) {
       print(signUpBody.toString());

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+
 import '../api_services/api_service.dart';
 
 class WalletController extends GetxController {
@@ -14,10 +14,11 @@ class WalletController extends GetxController {
 
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
-    
       if (value['status']) {
-        var tempBalance = value['data']['Amount'] ?? 00;
-        walletBalance.value = tempBalance.toString();
+        if (value['data'] != null) {
+          var tempBalance = value['data']['Amount'] ?? 00;
+          walletBalance.value = tempBalance.toString();
+        }
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -12,8 +13,7 @@ import '../../../models/location_models/location_model.dart';
 import '../../Local Storage.dart';
 
 class MPINPageController extends GetxController {
-  StreamController<ErrorAnimationType> mpinErrorController =
-      StreamController<ErrorAnimationType>();
+  StreamController<ErrorAnimationType> mpinErrorController = StreamController<ErrorAnimationType>();
   RxString mpin = "".obs;
   RxString street = ''.obs;
   RxString postalCode = ''.obs;
@@ -46,8 +46,17 @@ class MPINPageController extends GetxController {
   }
 
   void verifyMPIN() async {
-    ApiService().verifyMPIN(await verifyMPINBody()).then((value) async {
-    
+    ApiService().verifyMPIN({
+      "id": userId,
+      "mPin": mpin.value,
+      "deviceId": DeviceInfo.deviceId,
+      "city": city.value,
+      "country": country.value,
+      "state": state.value,
+      "street": street.value,
+      "postalCode": postalCode.value,
+      "ipAddress": await getIpAddress()
+    }).then((value) async {
       if (value != null && value['status']) {
         // AppUtils.showSuccessSnackBar(
         //   bodyText: "${value['message']}",
@@ -70,23 +79,28 @@ class MPINPageController extends GetxController {
     });
   }
 
-  Future<Map> verifyMPINBody() async {
-    final verifyMPINBody = {
-      "id": userId,
-      "mPin": mpin.value,
-      "deviceId": DeviceInfo.deviceId,
-      "city": city.value,
-      "country": country.value,
-      "state": state.value,
-      "street": street.value,
-      "postalCode": postalCode.value
-    };
-    return verifyMPINBody;
+  Future<String> getIpAddress() async {
+    try {
+      List<NetworkInterface> interfaces =
+          await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
+      for (NetworkInterface interface in interfaces) {
+        print("===========${interface.name.toLowerCase()}================================");
+        if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
+          for (InternetAddress address in interface.addresses) {
+            if (!address.isLoopback && !address.isLinkLocal) {
+              return address.address;
+            }
+          }
+        }
+      }
+    } on SocketException catch (e) {
+      print("Error getting IP address: $e");
+    }
+    return "Could not determine IP address";
   }
 
   void forgotMPINApi() async {
     ApiService().forgotMPIN().then((value) async {
-      
       if (value['status']) {
         Get.toNamed(AppRoutName.verifyOTPPage);
       } else {
@@ -98,18 +112,16 @@ class MPINPageController extends GetxController {
   }
 
   getLocationsData() async {
-    var locationData =
-        await LocalStorage.read(ConstantsVariables.locationData) ?? [];
+    var locationData = await LocalStorage.read(ConstantsVariables.locationData) ?? [];
     // getMarketBidsByUserId(lazyLoad: false);
     List list = [];
     list.add(locationData[0]['location']);
     List<LocationModel> data = LocationModel.fromJsonList(list);
-   
+
     city.value = data[0].city ?? 'Unknown';
     country.value = data[0].country ?? 'Unknown';
     state.value = data[0].state ?? 'Unknown';
     street.value = data[0].street ?? 'Unknown';
     postalCode.value = data[0].postalCode ?? 'Unknown';
-   
   }
 }

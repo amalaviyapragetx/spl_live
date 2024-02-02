@@ -81,6 +81,7 @@ class _MyAppState extends State<MyApp> {
     // });
     // _getLocation();
     // checkUserGrantPermission();
+
     super.initState();
   }
 

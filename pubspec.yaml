@@ -62,6 +62,7 @@ dependencies:
   geolocator: ^10.0.1
   geocoding: ^2.1.0
   flutter_jailbreak_detection: ^1.10.0
+  unique_identifier: ^0.3.0
 
 dev_dependencies:
   flutter_test:

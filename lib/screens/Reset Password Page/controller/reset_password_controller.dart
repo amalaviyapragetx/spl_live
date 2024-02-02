@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -36,11 +38,6 @@ class ResetPasswordController extends GetxController {
     focusNode3.dispose();
     super.dispose();
   }
-  // @override
-  // void onClose() {}
-
-  // @override
-  // void onReady() {}
 
   void getArguments() {
     if (arguments != null) {
@@ -54,10 +51,16 @@ class ResetPasswordController extends GetxController {
   }
 
   void callResetPasswordApi() async {
-    ApiService().resetPassword(await resetPasswordBody()).then((value) async {
+    ApiService().resetPassword({
+      "countryCode": countryCode,
+      "phoneNumber": phoneNumber,
+      "otp": otp.value,
+      "password": passwordController.text,
+      "confirmPassword": confirmPasswordController.text,
+    }).then((value) async {
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        GetStorage().write(ConstantsVariables.authToken, null);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.offAllNamed(AppRoutName.signInPage);
       } else {
         AppUtils.showErrorSnackBar(
@@ -65,18 +68,6 @@ class ResetPasswordController extends GetxController {
         );
       }
     });
-  }
-
-  Future<Map> resetPasswordBody() async {
-    final resetPasswordBody = {
-      "countryCode": countryCode,
-      "phoneNumber": phoneNumber,
-      "otp": otp.value,
-      "password": passwordController.text,
-      "confirmPassword": confirmPasswordController.text,
-    };
-
-    return resetPasswordBody;
   }
 
   void onTapOfResetPassword() {
@@ -126,25 +117,19 @@ class ResetPasswordController extends GetxController {
   }
 
   void callResendOtpApi() async {
-    ApiService().resendOTP(await resendOtpBody()).then((value) async {
+    ApiService().resendOTP({
+      "phoneNumber": phoneNumber,
+      "countryCode": "+91",
+    }).then((value) async {
       if (value['status']) {
         secondsRemaining.value = 60;
         _startTimer();
-        AppUtils.showSuccessSnackBar(
-            bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
         );
       }
     });
-  }
-
-  Future<Map> resendOtpBody() async {
-    final resendOtpBody = {
-      "phoneNumber": phoneNumber,
-      "countryCode": "+91",
-    };
-    return resendOtpBody;
   }
 }

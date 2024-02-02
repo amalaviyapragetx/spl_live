@@ -71,20 +71,6 @@ class ForgotPasswordPage extends StatelessWidget {
               ),
             ),
           ),
-          //  verticalSpace,
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
-          //   child: Text(
-          //     "FORGOT_SUBTEXT".tr,
-          //     textAlign: TextAlign.center,
-          //     style: CustomTextStyle.textRobotoSansLight.copyWith(
-          //       fontSize: Dimensions.h14,
-          //       //  letterSpacing: 1,
-          //       height: 1.5,
-          //       color: AppColors.grey,
-          //     ),
-          //   ),
-          // ),
           verticalSpace,
           _buildMobileNumberField(),
           verticalSpace,

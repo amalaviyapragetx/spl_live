@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -44,18 +43,14 @@ class MoreListController extends GetxController {
 
   void callLogout() async {
     ApiService().logout().then((value) async {
-    
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var deviceToken = await LocalStorage.read(ConstantsVariables.fcmToken);
-        var locationData1 =
-            await LocalStorage.read(ConstantsVariables.locationData);
+        var locationData1 = await LocalStorage.read(ConstantsVariables.locationData);
         await LocalStorage.eraseBox();
         await LocalStorage.write(ConstantsVariables.fcmToken, deviceToken);
-        await LocalStorage.write(
-            ConstantsVariables.locationData, locationData1);
-     
+        await LocalStorage.write(ConstantsVariables.locationData, locationData1);
+
         Get.offAllNamed(AppRoutName.walcomeScreen);
       } else {
         AppUtils.showErrorSnackBar(
@@ -79,13 +74,10 @@ class MoreListController extends GetxController {
       (value) async {
         if (value['status']) {
           if (value['data'] != null) {
-            NormalMarketBidHistoryResponseModel model =
-                NormalMarketBidHistoryResponseModel.fromJson(value);
+            NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
             lazyLoad
-                ? marketHistoryList
-                    .addAll(model.data?.resultArr ?? <ResultArr>[])
-                : marketHistoryList.value =
-                    model.data?.resultArr ?? <ResultArr>[];
+                ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
+                : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
           }
         } else {
           AppUtils.showErrorSnackBar(
@@ -98,10 +90,11 @@ class MoreListController extends GetxController {
 
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
-   
       if (value['status']) {
-        var tempBalance = value['data']['Amount'] ?? 00;
-        walletBalance.value = tempBalance.toString();
+        if (value['data'] != null) {
+          var tempBalance = value['data']['Amount'] ?? 00;
+          walletBalance.value = tempBalance.toString();
+        }
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
@@ -126,9 +119,8 @@ class MoreListController extends GetxController {
         if (value['status']) {
           var feedbackModel = GetFeedbackByIdApiResponseModel.fromJson(value);
           if (feedbackModel.data != null) {
-            tempRatings = feedbackModel.data!.user!.appRating != null
-                ? feedbackModel.data!.user!.appRating.toDouble()
-                : 0.00;
+            tempRatings =
+                feedbackModel.data!.user!.appRating != null ? feedbackModel.data!.user!.appRating.toDouble() : 0.00;
             tempFeedBack = feedbackModel.data!.feedback.toString();
           } else {
             tempRatings = 0.00;
@@ -186,13 +178,10 @@ class MoreListController extends GetxController {
   }
 
   void addRating(ratingValue) async {
-    ApiService()
-        .rateApp(await createRatingBody(ratingValue))
-        .then((value) async {
+    ApiService().rateApp(await createRatingBody(ratingValue)).then((value) async {
       if (value['status']) {
         Get.back();
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

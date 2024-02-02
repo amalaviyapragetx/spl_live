@@ -690,18 +690,22 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getBalance() async {
-    await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      ApiUtils.getBalance,
-      headers: headersWithToken,
-    );
-    if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
+    try {
+      await initApiService();
+      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+        ApiUtils.getBalance,
+        headers: headersWithToken,
+      );
+      if (response.status.hasError) {
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        return response.body;
       }
-      return Future.error(response.statusText!);
-    } else {
-      return response.body;
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -1082,19 +1086,14 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getAppVersion() async {
-    //AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.getVersion,
     );
 
     if (response.status.hasError) {
-      // AppUtils.hideProgressDialog();s
       return response.body;
     } else {
-      // AppUtils.hideProgressDialog();
-      // print("response2 ${response.body}");
-      // print("change pass2 ${response.status.code}");
       return response.body;
     }
   }

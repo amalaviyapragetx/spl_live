@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:unique_identifier/unique_identifier.dart';
 
 import 'device_information_model.dart';
 
@@ -16,24 +16,33 @@ class DeviceInfo {
   String brandName = "";
   String manufacturer = "";
   String osVersion = "";
+  String identifier = "";
+  Future<void> initUniqueIdentifierState() async {
+    try {
+      identifier = (await UniqueIdentifier.serial)!;
+    } on PlatformException {
+      identifier = 'Failed to get Unique Identifier';
+    }
+  }
 
   Future<DeviceInformationModel> initPlatformState() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
+    initUniqueIdentifierState();
     var appVersion = packageInfo.version;
-
     var deviceData = <String, dynamic>{};
     try {
       if (Platform.isAndroid) {
         deviceType = "Android";
         deviceData = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
         var androidInfo = await deviceInfoPlugin.androidInfo;
-        deviceId = androidInfo.id.toString();
-
+        // deviceId = androidInfo.id.toString();
+        deviceId = identifier;
         deviceModelNo = deviceData["model"] ?? "getting Null";
         manufacturer = deviceData["manufacturer"] ?? "getting Null";
         brandName = deviceData["brand"] ?? "getting Null";
         osVersion = deviceData["version.release"] ?? "getting Null";
+
+        // final serialNumber = deviceData['serialNumber'];
         // bool isRooted = androidInfo.isPhysicalDevice;
         // bool jailbroken = await FlutterJailbreakDetection.jailbroken;
         // print(jailbroken);

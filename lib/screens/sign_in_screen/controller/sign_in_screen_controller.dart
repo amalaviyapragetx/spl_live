@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
-import '../../../components/DeviceInfo/device_info.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../Local Storage.dart';
 
@@ -59,9 +59,7 @@ class SignInPageController extends GetxController {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -71,6 +69,7 @@ class SignInPageController extends GetxController {
       "phoneNumber": mobileNumberController.text,
       "password": passwordController.text,
       "countryCode": "+92",
+      // "deviceId": DeviceInfo.deviceId,
       "deviceId": DeviceInfo.deviceId,
       // "deviceId": "954f4d94fdsa94fdsf",
       // "fcmToken": fcmToken,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -117,15 +118,12 @@ class SplashController extends GetxController {
     appVersion = deviceInfo.appVersion.toString();
   }
 
-  void appVesionCheck() async {
+  void appVersionCheck() async {
     ApiService().getAppVersion().then((value) async {
-      print(value);
       if (value['status']) {
         if (value['data'] != appVersion) {
           _showExitDialog();
         }
-        // AppUtils.showSuccessSnackBar(
-        //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
@@ -149,7 +147,7 @@ class SplashController extends GetxController {
         Future.delayed(const Duration(seconds: 2), () {
           Get.offAllNamed(AppRoutName.verifyOTPPage);
           Timer(const Duration(milliseconds: 500), () {
-            appVesionCheck();
+            appVersionCheck();
             requestLocationPermission();
           });
         });
@@ -158,7 +156,7 @@ class SplashController extends GetxController {
         Future.delayed(const Duration(seconds: 2), () {
           Get.offAllNamed(AppRoutName.userDetailsPage);
           Timer(const Duration(milliseconds: 500), () {
-            appVesionCheck();
+            appVersionCheck();
             requestLocationPermission();
           });
         });
@@ -168,7 +166,7 @@ class SplashController extends GetxController {
           Future.delayed(const Duration(seconds: 2), () {
             Get.offAllNamed(AppRoutName.mPINPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
-              appVesionCheck();
+              appVersionCheck();
               requestLocationPermission();
             });
           });
@@ -176,7 +174,7 @@ class SplashController extends GetxController {
           Future.delayed(const Duration(seconds: 2), () {
             Get.offAllNamed(AppRoutName.signInPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
-              appVesionCheck();
+              appVersionCheck();
               requestLocationPermission();
             });
           });
@@ -187,7 +185,7 @@ class SplashController extends GetxController {
         // Get.offAllNamed(AppRoutes.dashboardPage);
         Get.offAllNamed(AppRoutName.walcomeScreen);
         Timer(const Duration(milliseconds: 500), () {
-          appVesionCheck();
+          appVersionCheck();
           requestLocationPermission();
         });
       });
@@ -318,23 +316,16 @@ class SplashController extends GetxController {
   }
 
   Future<String> getIpAddress() async {
-    print("================================================================");
+    getIpAddress2();
     try {
-      // Get a list of the network interfaces (e.g., Wi-Fi, mobile network, etc.)
       List<NetworkInterface> interfaces =
           await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
-
-      // Iterate over the network interfaces and find the first non-loopback and non-link-local interface
       for (NetworkInterface interface in interfaces) {
         print("===========${interface.name.toLowerCase()}================================");
         if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
-          print("================================================================");
           for (InternetAddress address in interface.addresses) {
-            // Check if the address is not a loopback address and is not a link-local address
-            print(address.address);
             if (!address.isLoopback && !address.isLinkLocal) {
-              print(address.host);
-              return address.address; // Return the first non-loopback and non-link-local IP address found
+              return address.address;
             }
           }
         }
@@ -342,6 +333,27 @@ class SplashController extends GetxController {
     } on SocketException catch (e) {
       print("Error getting IP address: $e");
     }
-    return "Could not determine IP address"; // Return a default message if no suitable address is found
+    return "Could not determine IP address";
+  }
+
+  void getIpAddress2() async {
+    ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+      try {
+        for (var interface in await NetworkInterface.list()) {
+          for (var addr in interface.addresses) {
+            if (addr.type.name.toLowerCase() == 'ipv4') {
+              print('IP Address: ${addr.address}');
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        print('Error getting IP address: $e');
+      }
+    } else {
+      print('No internet connection available');
+    }
   }
 }

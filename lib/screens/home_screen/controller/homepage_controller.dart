@@ -838,8 +838,10 @@ class HomePageController extends GetxController {
     ApiService().getBalance().then(
       (value) async {
         if (value['status']) {
-          var tempBalance = value['data']['Amount'] ?? 00;
-          walletBalance.value = tempBalance.toString();
+          if (value['data'] != null) {
+            var tempBalance = value['data']['Amount'] ?? 00;
+            walletBalance.value = tempBalance.toString();
+          }
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
