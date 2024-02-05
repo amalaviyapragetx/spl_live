@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
@@ -11,7 +12,6 @@ import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
-import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
 
 class StarlineBidsController extends GetxController {
@@ -38,22 +38,19 @@ class StarlineBidsController extends GetxController {
   }
 
   showData() async {
-    bidList.value =
-        await LocalStorage.read(ConstantsVariables.starlineBidsList);
-
+    bidList.value = await LocalStorage.read(ConstantsVariables.starlineBidsList);
   }
 
   void playMore() async {
-    await LocalStorage.write(
-        ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    await LocalStorage.write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
     Get.offAndToNamed(
-      AppRoutName.starLineGameModesPage,
+      AppRouteNames.starLineGameModesPage,
     );
   }
 
   Future<void> getArguments() async {
     showData();
-    
+
     gameMode.value = arguments['gameMode'];
     marketData.value = arguments['marketData'];
     requestModel.value.bids = arguments['bidsList'];
@@ -63,7 +60,7 @@ class StarlineBidsController extends GetxController {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    
+
     // await LocalStorage.write(ConstantsVariables.playMore, false);
     // var hh = await LocalStorage.read(ConstantsVariables.playMore);
     // print("playMore $hh");
@@ -129,35 +126,30 @@ class StarlineBidsController extends GetxController {
     requestModel.refresh();
     _calculateTotalAmount();
     if (requestModel.value.bids!.isEmpty) {
-      Get.offAndToNamed(AppRoutName.dashBoardPage);
+      Get.offAndToNamed(AppRouteNames.dashboardPage);
       // Get.back();
     }
   }
 
   void createMarketBidApi() async {
-    ApiService()
-        .createStarLineMarketBid(requestModel.value.toJson())
-        .then((value) async {
-
+    ApiService().createStarLineMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
         Get.offAllNamed(
-          AppRoutName.starLineGameModesPage,
+          AppRouteNames.starLineGameModesPage,
           arguments: marketData.value,
         );
-        //  Get.offAndToNamed(AppRoutName.dashBoardPage);
+        //  Get.offAndToNamed(AppRouteNames.dashboardPage);
         if (value['data'] == false) {
           Get.offAllNamed(
-            AppRoutName.starLineGameModesPage,
+            AppRouteNames.starLineGameModesPage,
             arguments: marketData.value,
           );
-          // Get.offAndToNamed(AppRoutName.dashBoardPage);
+          // Get.offAndToNamed(AppRouteNames.dashboardPage);
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",
           );
         } else {
-          AppUtils.showSuccessSnackBar(
-              bodyText: value['message'] ?? "",
-              headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }
         LocalStorage.remove(ConstantsVariables.bidsList);
         LocalStorage.remove(ConstantsVariables.marketName);

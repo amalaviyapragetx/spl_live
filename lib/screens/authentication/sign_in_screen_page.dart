@@ -1,25 +1,33 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:spllive/components/edit_text_field_with_icon.dart';
+import 'package:spllive/components/password_field_with_icon.dart';
+import 'package:spllive/components/simple_button_with_corner.dart';
+import 'package:spllive/controller/auth_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/helper_files/custom_text_style.dart';
+import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
-import '../../components/edit_text_field_with_icon.dart';
-import '../../components/password_field_with_icon.dart';
-import '../../components/simple_button_with_corner.dart';
-import '../../helper_files/custom_text_style.dart';
-import '../../helper_files/dimentions.dart';
-import 'controller/sign_in_screen_controller.dart';
-
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
-  final controller = Get.find<SignInPageController>();
 
-  final verticalSpace = SizedBox(height: Dimensions.h20);
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final controller = Get.put<AuthController>(AuthController());
+  @override
+  void initState() {
+    super.initState();
+    GetStorage().write(ConstantsVariables.mPinTimeOut, true);
+    controller.focusNodeSignIn = FocusNode();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,18 +45,18 @@ class SignInScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              verticalSpace,
-              verticalSpace,
-              verticalSpace,
+              SizedBox(height: Dimensions.h20),
+              SizedBox(height: Dimensions.h20),
+              SizedBox(height: Dimensions.h20),
               SizedBox(
                 height: Dimensions.h70,
                 width: Dimensions.w150,
                 child: Image.asset(
-                  ConstantImage.splLogo,
+                  AppImage.splLogo,
                   fit: BoxFit.contain,
                 ),
               ),
-              verticalSpace,
+              SizedBox(height: Dimensions.h20),
               Text(
                 "WELCOMEBACK".tr,
                 style: CustomTextStyle.textPTsansMedium.copyWith(
@@ -67,7 +75,7 @@ class SignInScreen extends StatelessWidget {
                   color: AppColors.appbarColor,
                 ),
               ),
-              verticalSpace,
+              SizedBox(height: Dimensions.h20),
               _buildSignInForm()
             ],
           ),
@@ -79,97 +87,26 @@ class SignInScreen extends StatelessWidget {
   _buildMobileNumberField() {
     return Row(
       children: [
-        // Container(
-        //   height: Dimensions.h40,
-        //   padding: EdgeInsets.zero,
-        //   decoration: BoxDecoration(
-        //     color: AppColors.grey.withOpacity(0.2),
-        //     borderRadius: BorderRadius.all(
-        //       Radius.circular(Dimensions.r10),
-        //     ),
-        //   ),
-        //   child: CountryListPick(
-        //     appBar: AppBar(
-        //       backgroundColor: AppColors.appbarColor,
-        //       title: const Text('Choose your country code'),
-        //     ),
-        //     pickerBuilder: (context, code) {
-        //       return Padding(
-        //         padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
-        //         child: Row(
-        //           children: [
-        //             Text(
-        //               code != null ? code.dialCode ?? "+91" : "91",
-        //               style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-        //                 color: AppColors.appbarColor,
-        //                 fontSize: Dimensions.h15,
-        //               ),
-        //             ),
-        //             Padding(
-        //               padding: EdgeInsets.only(
-        //                 left: Dimensions.w7,
-        //               ),
-        //               child: SvgPicture.asset(
-        //                 ConstantImage.dropDownArrowSVG,
-        //                 color: AppColors.appbarColor,
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     },
-        //     theme: CountryTheme(
-        //       isShowFlag: false,
-        //       isShowTitle: false,
-        //       isShowCode: true,
-        //       isDownIcon: true,
-        //       showEnglishName: true,
-        //       alphabetSelectedTextColor: AppColors.white,
-        //       labelColor: AppColors.black,
-        //       alphabetTextColor: AppColors.green,
-        //     ),
-        //     initialSelection: '+91',
-        //     onChanged: (code) {
-        //       String tempCountryCode =
-        //           code != null ? code.dialCode ?? "+91" : "91";
-        //       controller.onChangeCountryCode(tempCountryCode);
-        //     },
-        //     useUiOverlay: true,
-        //     useSafeArea: false,
-        //   ),
-        // ),
-        // SizedBox(
-        //   width: Dimensions.w9,
-        // ),
         Expanded(
           child: RoundedCornerEditTextWithIcon(
             height: Dimensions.h40,
             controller: controller.mobileNumberController,
             keyboardType: TextInputType.phone,
             hintText: "ENTERMOBILENUMBER".tr,
-            imagePath: ConstantImage.phoneSVG,
+            imagePath: AppImage.phoneSVG,
             autofocus: true,
             onChanged: (v) {
               if (v?.length == 10) {
-                controller.focusNode1.unfocus();
-                controller.focusNode2.requestFocus();
-                controller.cursorTimer?.cancel();
-                controller.cursorTimer = Timer(const Duration(milliseconds: 50), () {
-                  controller.mobileNumberController.selection = TextSelection.fromPosition(
-                    TextPosition(offset: controller.mobileNumberController.text.length),
-                  );
-                });
+                controller.focusNodeSignIn.nextFocus();
               }
             },
             hintTextStyle: CustomTextStyle.textRobotoSansLight.copyWith(
               color: AppColors.grey,
               fontSize: Dimensions.h14,
             ),
-            textStyle: CustomTextStyle.textRobotoSansLight.copyWith(
-              fontSize: Dimensions.h16,
-            ),
+            textStyle: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h16),
             maxLines: 1,
-            focusNode: controller.focusNode1,
+            focusNode: controller.focusNodeSignIn,
             minLines: 1,
             isEnabled: true,
             maxLength: 10,
@@ -187,36 +124,10 @@ class SignInScreen extends StatelessWidget {
         () => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: _buildMobileNumberField(),
-            ),
-            verticalSpace,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: _buildPasswordField(),
-            ),
-            verticalSpace,
-            // GestureDetector(
-            //   // onTap: () {},
-            //   onTap: () =>
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: const [
-            //       Text(
-            //         "Forgot Password?",
-            //         style: TextStyle(fontWeight: FontWeight.w500),
-            //         // "${"FORGOTPASSWORD".tr}?",
-            //         // style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-            //         //   fontSize: Dimensions.h12,
-            //         //   letterSpacing: 1,
-            //         //   color: AppColors.black,
-            //         // ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 18), child: _buildMobileNumberField()),
+            SizedBox(height: Dimensions.h20),
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 18), child: _buildPasswordField()),
+            SizedBox(height: Dimensions.h20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
               child: RoundedCornerButton(
@@ -230,15 +141,24 @@ class SignInScreen extends StatelessWidget {
                 borderRadius: Dimensions.r25,
                 borderWidth: 1,
                 textStyle: CustomTextStyle.textRobotoSansLight,
-                onTap: () => controller.onTapOfSignIn(),
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  Get.closeAllSnackbars();
+                  if (controller.mobileNumberController.text.isEmpty) {
+                    AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
+                  } else if (controller.mobileNumberController.text.length < 10) {
+                    AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
+                  } else if (controller.passwordController.text.isEmpty) {
+                    AppUtils.showErrorSnackBar(bodyText: "ENTERPASSWORD".tr);
+                  } else {
+                    controller.signIn();
+                  }
+                },
                 height: Dimensions.h30,
                 width: double.infinity,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: orView(),
-            ),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: orView()),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
               child: RoundedCornerButton(
@@ -252,13 +172,13 @@ class SignInScreen extends StatelessWidget {
                 borderRadius: Dimensions.r25,
                 borderWidth: 1,
                 textStyle: CustomTextStyle.textRobotoSansLight,
-                onTap: () => Get.toNamed(AppRoutName.forgotPasswordPage),
+                onTap: () => Get.toNamed(AppRouteNames.forgotPasswordPage),
                 height: Dimensions.h30,
                 width: double.infinity,
               ),
             ),
             // GestureDetector(
-            //   onTap: () => Get.offAllNamed(AppRoutName.signUnPage),
+            //   onTap: () => Get.offAllNamed(AppRouteNames.signUnPage),
             //   child: Container(
             //     padding:
             //         const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
@@ -311,16 +231,14 @@ class SignInScreen extends StatelessWidget {
 
   _buildPasswordField() {
     return PasswordFieldWithIcon(
-      focusNode: controller.focusNode2,
+      //   focusNode: controller.focusNode2,
       height: Dimensions.h40,
       keyBoardType: TextInputType.visiblePassword,
       controller: controller.passwordController,
       hintText: "ENTERPASSWORDTEXT".tr,
       hidePassword: controller.visiblePassword.value,
       suffixIcon: InkWell(
-        onTap: () {
-          controller.onTapOfVisibilityIcon();
-        },
+        onTap: () => controller.visiblePassword.value = !controller.visiblePassword.value,
         child: Icon(
           Icons.visibility,
           size: Dimensions.h15,
@@ -328,7 +246,7 @@ class SignInScreen extends StatelessWidget {
         ),
       ),
       suffixIconColor: AppColors.appbarColor,
-      imagePath: ConstantImage.lockSVG,
+      imagePath: AppImage.lockSVG,
     );
   }
 }

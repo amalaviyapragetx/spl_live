@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/components/edit_text_field_with_icon.dart';
+import 'package:spllive/components/simple_button_with_corner.dart';
+import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/helper_files/custom_text_style.dart';
+import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Create%20Withdrawal%20Page/controller/create_withdrawal_page_controller.dart';
-import '../../../components/edit_text_field_with_icon.dart';
-import '../../../components/simple_button_with_corner.dart';
-import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/custom_text_style.dart';
-import '../../../helper_files/dimentions.dart';
-import '../../../helper_files/ui_utils.dart';
+import 'package:spllive/utils/constant.dart';
 
 // ignore: must_be_immutable
 class CreatewithDrawalPage extends StatelessWidget {
@@ -17,9 +17,7 @@ class CreatewithDrawalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var verticalSpace = SizedBox(
-      height: Dimensions.h10,
-    );
+    var verticalSpace = SizedBox(height: Dimensions.h10);
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
         appBarTitle: "Request Admin",
@@ -107,9 +105,7 @@ class CreatewithDrawalPage extends StatelessWidget {
                             borderRadius: Dimensions.r25,
                             borderWidth: 1,
                             textStyle: CustomTextStyle.textRobotoSlabBold,
-                            onTap: () {
-                              controller.createWithdrawalRequest();
-                            },
+                            onTap: () => controller.createWithdrawalRequest(),
                             height: Dimensions.h35,
                             width: double.infinity,
                           ),
@@ -119,28 +115,24 @@ class CreatewithDrawalPage extends StatelessWidget {
                   verticalSpace,
                   verticalSpace,
                   Obx(
-                    () => controller.bankName.value == "" ||
-                            controller.bankName.value.isEmpty
+                    () => controller.bankName.value == "" || controller.bankName.value.isEmpty
                         ? SizedBox(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "To Add Bank Detaiils ",
-                                  style: CustomTextStyle.textRobotoSansMedium
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                     fontSize: Dimensions.h13,
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Get.offAndToNamed(
-                                        AppRoutName.myAccountPage);
+                                    Get.offAndToNamed(AppRouteNames.myAccountPage);
                                   },
                                   child: Text(
                                     "Click Here",
-                                    style: CustomTextStyle.textRobotoSansMedium
-                                        .copyWith(
+                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                       fontSize: Dimensions.h13,
                                       color: AppColors.redColor,
                                       decoration: TextDecoration.underline,
@@ -168,9 +160,7 @@ class CreatewithDrawalPage extends StatelessWidget {
       onWillPop: () async => false,
       titleStyle: CustomTextStyle.textRobotoSansMedium,
       content: Column(
-        children: [
-          Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)
-        ],
+        children: [Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)],
       ),
       actions: [
         InkWell(

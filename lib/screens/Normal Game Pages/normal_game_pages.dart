@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/bidlist_for_market.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../Custom Controllers/wallet_controller.dart';
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
-import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
@@ -32,7 +33,7 @@ class NormalGamePage extends StatelessWidget {
         actions: [
           InkWell(
             onTap: () {
-              //  Get.offAndToNamed(AppRoutName.transactionPage);
+              //  Get.offAndToNamed(AppRouteNames.transactionPage);
             },
             child: Row(
               children: [
@@ -40,7 +41,7 @@ class NormalGamePage extends StatelessWidget {
                   height: Dimensions.h20,
                   width: Dimensions.w25,
                   child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
+                    AppImage.walletAppbar,
                     color: AppColors.white,
                     fit: BoxFit.fill,
                   ),
@@ -74,9 +75,7 @@ class NormalGamePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
-                mainAxisAlignment: controller.gameMode.value.name!
-                        .toUpperCase()
-                        .contains("JODI")
+                mainAxisAlignment: controller.gameMode.value.name!.toUpperCase().contains("JODI")
                     ? MainAxisAlignment.center
                     : MainAxisAlignment.spaceBetween,
                 children: [
@@ -90,9 +89,7 @@ class NormalGamePage extends StatelessWidget {
                   ),
                   Text(
                     // "",
-                    controller.gameMode.value.name!
-                            .toUpperCase()
-                            .contains("JODI")
+                    controller.gameMode.value.name!.toUpperCase().contains("JODI")
                         ? ""
                         : controller.biddingType.value.toUpperCase(),
                     style: CustomTextStyle.textRobotoSansBold.copyWith(
@@ -110,16 +107,11 @@ class NormalGamePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         spDpTp(
-                          controller.spValue1.value
-                              ? AppColors.wpColor1
-                              : AppColors.white,
+                          controller.spValue1.value ? AppColors.wpColor1 : AppColors.white,
                           controller.spValue,
-                          controller.spValue1.value
-                              ? AppColors.white
-                              : AppColors.grey,
+                          controller.spValue1.value ? AppColors.white : AppColors.grey,
                           onTap: () {
-                            controller.spValue1.value =
-                                !controller.spValue1.value;
+                            controller.spValue1.value = !controller.spValue1.value;
                             if (controller.spValue1.value) {
                               controller.selectedValues.add("SP");
                             } else {
@@ -128,16 +120,11 @@ class NormalGamePage extends StatelessWidget {
                           },
                         ),
                         spDpTp(
-                          controller.dpValue2.value
-                              ? AppColors.wpColor1
-                              : AppColors.white,
+                          controller.dpValue2.value ? AppColors.wpColor1 : AppColors.white,
                           controller.dpValue,
-                          controller.dpValue2.value
-                              ? AppColors.white
-                              : AppColors.grey,
+                          controller.dpValue2.value ? AppColors.white : AppColors.grey,
                           onTap: () {
-                            controller.dpValue2.value =
-                                !controller.dpValue2.value;
+                            controller.dpValue2.value = !controller.dpValue2.value;
                             if (controller.dpValue2.value) {
                               controller.selectedValues.add("DP");
                             } else {
@@ -146,16 +133,11 @@ class NormalGamePage extends StatelessWidget {
                           },
                         ),
                         spDpTp(
-                          controller.tpValue3.value
-                              ? AppColors.wpColor1
-                              : AppColors.white,
+                          controller.tpValue3.value ? AppColors.wpColor1 : AppColors.white,
                           controller.tpValue,
-                          controller.tpValue3.value
-                              ? AppColors.white
-                              : AppColors.grey,
+                          controller.tpValue3.value ? AppColors.white : AppColors.grey,
                           onTap: () {
-                            controller.tpValue3.value =
-                                !controller.tpValue3.value;
+                            controller.tpValue3.value = !controller.tpValue3.value;
                             if (controller.tpValue3.value) {
                               controller.selectedValues.add("TP");
                             } else {
@@ -167,9 +149,7 @@ class NormalGamePage extends StatelessWidget {
                     ),
                   )
                 : Container(),
-            controller.gameMode.value.name!.toUpperCase().contains("SPDP")
-                ? verticalSpace
-                : Container(),
+            controller.gameMode.value.name!.toUpperCase().contains("SPDP") ? verticalSpace : Container(),
             controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -177,16 +157,11 @@ class NormalGamePage extends StatelessWidget {
                       children: [
                         Obx(
                           () => oddEvenContainer(
-                            buttonColor: controller.oddbool.value
-                                ? AppColors.wpColor1
-                                : AppColors.white,
-                            textColor: controller.oddbool.value
-                                ? AppColors.white
-                                : AppColors.black,
+                            buttonColor: controller.oddbool.value ? AppColors.wpColor1 : AppColors.white,
+                            textColor: controller.oddbool.value ? AppColors.white : AppColors.black,
                             text: "odd",
                             onTap: () {
-                              controller.oddbool.value =
-                                  !controller.oddbool.value;
+                              controller.oddbool.value = !controller.oddbool.value;
                               if (controller.oddbool.value) {
                                 controller.evenbool.value = false;
                               } else {
@@ -200,16 +175,11 @@ class NormalGamePage extends StatelessWidget {
                         ),
                         Obx(
                           () => oddEvenContainer(
-                            buttonColor: controller.evenbool.value
-                                ? AppColors.wpColor1
-                                : AppColors.white,
-                            textColor: controller.evenbool.value
-                                ? AppColors.white
-                                : AppColors.black,
+                            buttonColor: controller.evenbool.value ? AppColors.wpColor1 : AppColors.white,
+                            textColor: controller.evenbool.value ? AppColors.white : AppColors.black,
                             text: "Even",
                             onTap: () {
-                              controller.evenbool.value =
-                                  !controller.evenbool.value;
+                              controller.evenbool.value = !controller.evenbool.value;
                               if (controller.evenbool.value) {
                                 controller.oddbool.value = false;
                               } else {
@@ -245,41 +215,32 @@ class NormalGamePage extends StatelessWidget {
                               ),
                               child: RoundedCornerEditTextWithIcon(
                                 tapTextStyle: AppColors.appbarColor,
-                                hintTextColor:
-                                    AppColors.appbarColor.withOpacity(0.5),
+                                hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                                 width: size.width / 2,
                                 textAlign: TextAlign.center,
                                 controller: controller.leftAnkController,
-                                textStyle: CustomTextStyle.textRobotoSansMedium
-                                    .copyWith(
+                                textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                   color: AppColors.black.withOpacity(0.7),
                                   fontWeight: FontWeight.bold,
                                   fontSize: Dimensions.h15,
                                 ),
                                 autofocus: true,
-                                hintTextStyle: CustomTextStyle
-                                    .textRobotoSansMedium
-                                    .copyWith(
+                                hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                   color: AppColors.black.withOpacity(0.7),
                                   fontSize: Dimensions.h13,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 focusNode: controller.leftFocusNode,
-                                formatter: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
+                                formatter: [FilteringTextInputFormatter.digitsOnly],
                                 onChanged: (val) {
-                                  if (val!.length ==
-                                      controller.panaControllerLength.value) {
+                                  if (val!.length == controller.panaControllerLength.value) {
                                     controller.leftFocusNode.nextFocus();
                                     controller.middleFocusNode.requestFocus();
                                   }
                                 },
-                                maxLength:
-                                    controller.panaControllerLength.value,
+                                maxLength: controller.panaControllerLength.value,
                                 hintText: "Left Ank",
-                                contentPadding:
-                                    const EdgeInsets.only(right: 30),
+                                contentPadding: const EdgeInsets.only(right: 30),
                                 imagePath: "",
                                 containerBackColor: AppColors.black,
                                 iconColor: AppColors.white,
@@ -289,68 +250,51 @@ class NormalGamePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        controller.gameMode.value.name!.toUpperCase() ==
-                                "DIGITS BASED JODI"
+                        controller.gameMode.value.name!.toUpperCase() == "DIGITS BASED JODI"
                             ? Container()
                             : Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 10.0),
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(Dimensions.r10)),
+                                      borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                       color: AppColors.white,
                                       boxShadow: [
                                         BoxShadow(
                                           offset: const Offset(0, 4),
                                           blurRadius: 3,
                                           spreadRadius: 0.2,
-                                          color:
-                                              AppColors.grey.withOpacity(0.7),
+                                          color: AppColors.grey.withOpacity(0.7),
                                         ),
                                       ],
                                     ),
                                     child: RoundedCornerEditTextWithIcon(
                                       tapTextStyle: AppColors.appbarColor,
-                                      hintTextColor: AppColors.appbarColor
-                                          .withOpacity(0.5),
+                                      hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                                       width: size.width / 2,
                                       textAlign: TextAlign.center,
-                                      controller:
-                                          controller.middleAnkController,
-                                      textStyle: CustomTextStyle
-                                          .textRobotoSansMedium
-                                          .copyWith(
+                                      controller: controller.middleAnkController,
+                                      textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                         color: AppColors.black.withOpacity(0.7),
                                         fontWeight: FontWeight.bold,
                                         fontSize: Dimensions.h15,
                                       ),
-                                      hintTextStyle: CustomTextStyle
-                                          .textRobotoSansMedium
-                                          .copyWith(
+                                      hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                         color: AppColors.black.withOpacity(0.7),
                                         fontSize: Dimensions.h13,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      formatter: [
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
+                                      formatter: [FilteringTextInputFormatter.digitsOnly],
                                       focusNode: controller.middleFocusNode,
                                       onChanged: (val) {
-                                        if (val!.length ==
-                                            controller
-                                                .panaControllerLength.value) {
-                                          controller.middleFocusNode
-                                              .nextFocus();
-                                          controller.rightFocusNode
-                                              .requestFocus();
+                                        if (val!.length == controller.panaControllerLength.value) {
+                                          controller.middleFocusNode.nextFocus();
+                                          controller.rightFocusNode.requestFocus();
                                         }
                                       },
-                                      maxLength:
-                                          controller.panaControllerLength.value,
+                                      maxLength: controller.panaControllerLength.value,
                                       hintText: "Middle Ank",
-                                      contentPadding:
-                                          const EdgeInsets.only(right: 30),
+                                      contentPadding: const EdgeInsets.only(right: 30),
                                       imagePath: "",
                                       containerBackColor: AppColors.black,
                                       iconColor: AppColors.white,
@@ -363,8 +307,7 @@ class NormalGamePage extends StatelessWidget {
                         Expanded(
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(Dimensions.r10)),
+                              borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                               color: AppColors.white,
                               boxShadow: [
                                 BoxShadow(
@@ -377,30 +320,24 @@ class NormalGamePage extends StatelessWidget {
                             ),
                             child: RoundedCornerEditTextWithIcon(
                               tapTextStyle: AppColors.appbarColor,
-                              hintTextColor:
-                                  AppColors.appbarColor.withOpacity(0.5),
+                              hintTextColor: AppColors.appbarColor.withOpacity(0.5),
                               width: size.width / 2,
                               textAlign: TextAlign.center,
                               controller: controller.rightAnkController,
-                              textStyle:
-                                  CustomTextStyle.textRobotoSansMedium.copyWith(
+                              textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                 color: AppColors.black.withOpacity(0.7),
                                 fontWeight: FontWeight.bold,
                                 fontSize: Dimensions.h15,
                               ),
-                              hintTextStyle:
-                                  CustomTextStyle.textRobotoSansMedium.copyWith(
+                              hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                 color: AppColors.black.withOpacity(0.7),
                                 fontSize: Dimensions.h13,
                                 fontWeight: FontWeight.bold,
                               ),
-                              formatter: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
+                              formatter: [FilteringTextInputFormatter.digitsOnly],
                               focusNode: controller.rightFocusNode,
                               onChanged: (val) {
-                                if (val!.length ==
-                                    controller.panaControllerLength.value) {
+                                if (val!.length == controller.panaControllerLength.value) {
                                   controller.rightFocusNode.nextFocus();
                                   controller.coinFocusNode.requestFocus();
                                 }
@@ -429,8 +366,7 @@ class NormalGamePage extends StatelessWidget {
                     Expanded(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(Dimensions.r10)),
+                          borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                           color: AppColors.white,
                           boxShadow: [
                             BoxShadow(
@@ -447,43 +383,30 @@ class NormalGamePage extends StatelessWidget {
                           width: size.width / 2,
                           textAlign: TextAlign.center,
                           controller: controller.coinController,
-                          textStyle:
-                              CustomTextStyle.textRobotoSansMedium.copyWith(
+                          textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.black.withOpacity(0.7),
                             fontWeight: FontWeight.bold,
                             fontSize: Dimensions.h15,
                           ),
-                          hintTextStyle:
-                              CustomTextStyle.textRobotoSansMedium.copyWith(
+                          hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                             color: AppColors.black.withOpacity(0.7),
                             fontSize: Dimensions.h13,
                             fontWeight: FontWeight.bold,
                           ),
                           formatter: [FilteringTextInputFormatter.digitsOnly],
                           focusNode: controller.coinFocusNode,
-                          autofocus:
-                              controller.gameMode.value.name!.toUpperCase() ==
-                                      "ODD EVEN"
-                                  ? true
-                                  : false,
+                          autofocus: controller.gameMode.value.name!.toUpperCase() == "ODD EVEN" ? true : false,
                           onChanged: (val) {
                             if (val != null) {
-                  
-                              if (val.characters.characterAt(0) ==
-                                  Characters("0")) {
-                            
+                              if (val.characters.characterAt(0) == Characters("0")) {
                                 // we need to remove the first char
-                                controller.coinController.text =
-                                    val.substring(1);
+                                controller.coinController.text = val.substring(1);
                                 // we need to move the cursor
-                                controller.coinController.selection =
-                                    TextSelection.collapsed(
+                                controller.coinController.selection = TextSelection.collapsed(
                                   offset: controller.coinController.text.length,
                                 );
                               } else if (int.parse(val) > 10000) {
-                                AppUtils.showErrorSnackBar(
-                                    bodyText:
-                                        "You can not add more than 10000 points");
+                                AppUtils.showErrorSnackBar(bodyText: "You can not add more than 10000 points");
                               } else {
                                 // if (int.parse(val) >= 1) {
                                 //   print("333333333333333   ${val.length}");
@@ -516,8 +439,7 @@ class NormalGamePage extends StatelessWidget {
                     Expanded(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(Dimensions.r10)),
+                          borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                           color: AppColors.white,
                           boxShadow: [
                             BoxShadow(
@@ -543,17 +465,12 @@ class NormalGamePage extends StatelessWidget {
                             // controller.coinsFocusNode.unfocus();
                             // controller.openFocusNode.requestFocus();
                             //   controller.onTapOfAddButton();
-                            if (controller.gameMode.value.name!
-                                .toUpperCase()
-                                .contains("ODD EVEN")) {
+                            if (controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")) {
                               controller.onTapAddOddEven();
-                            } else if (controller.gameMode.value.name!
-                                    .toUpperCase() ==
-                                "DIGITS BASED JODI") {
+                            } else if (controller.gameMode.value.name!.toUpperCase() == "DIGITS BASED JODI") {
                               controller.newDigitBasedData();
                               // controller.digitsBasedJodiData();
-                            } else if (controller.gameMode.value.name ==
-                                "Choice Pana SPDP") {
+                            } else if (controller.gameMode.value.name == "Choice Pana SPDP") {
                               if (controller.spValue1.value == false &&
                                   controller.dpValue2.value == false &&
                                   controller.tpValue3.value == false) {
@@ -690,14 +607,8 @@ class NormalGamePage extends StatelessWidget {
                 itemBuilder: (context, item) {
                   return BidHistoryList(
                     bidType: controller.biddingType.value.toString(),
-                    bidCoin: controller.selectedBidsList
-                        .elementAt(item)
-                        .coins
-                        .toString(),
-                    bidNo: controller.selectedBidsList
-                        .elementAt(item)
-                        .bidNo
-                        .toString(),
+                    bidCoin: controller.selectedBidsList.elementAt(item).coins.toString(),
+                    bidNo: controller.selectedBidsList.elementAt(item).bidNo.toString(),
                     onDelete: () => controller.onDeleteBids(item),
                     marketName: controller.checkType(item),
                   );
@@ -707,8 +618,7 @@ class NormalGamePage extends StatelessWidget {
     );
   }
 
-  Widget spDpTp(Color containerColor, String text, Color textColor,
-      {required Function() onTap}) {
+  Widget spDpTp(Color containerColor, String text, Color textColor, {required Function() onTap}) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(25),
@@ -731,8 +641,7 @@ class NormalGamePage extends StatelessWidget {
           children: [
             Text(
               text,
-              style: CustomTextStyle.textRobotoSansMedium
-                  .copyWith(color: textColor),
+              style: CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 4.0),
@@ -749,10 +658,7 @@ class NormalGamePage extends StatelessWidget {
   }
 
   Widget nameColumn(
-      {required String? titleText,
-      required String subText,
-      required Color textColor,
-      required Color textColor2}) {
+      {required String? titleText, required String subText, required Color textColor, required Color textColor2}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 3.0,

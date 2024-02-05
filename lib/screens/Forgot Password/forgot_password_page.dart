@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
@@ -51,7 +51,7 @@ class ForgotPasswordPage extends StatelessWidget {
               height: Dimensions.h80,
               width: Dimensions.w200,
               child: Image.asset(
-                ConstantImage.splLogo,
+                AppImage.splLogo,
                 fit: BoxFit.contain,
               ),
             ),
@@ -133,7 +133,7 @@ class ForgotPasswordPage extends StatelessWidget {
           //                 left: Dimensions.w7,
           //               ),
           //               child: SvgPicture.asset(
-          //                 ConstantImage.dropDownArrowSVG,
+          //                 AppImage.dropDownArrowSVG,
           //                 color: AppColors.grey,
           //               ),
           //             ),
@@ -170,7 +170,7 @@ class ForgotPasswordPage extends StatelessWidget {
               controller: controller.mobileNumberController,
               keyboardType: TextInputType.phone,
               hintText: "ENTERMOBILENUMBER".tr,
-              imagePath: ConstantImage.phoneSVG,
+              imagePath: AppImage.phoneSVG,
               maxLines: 1,
               minLines: 1,
               isEnabled: true,

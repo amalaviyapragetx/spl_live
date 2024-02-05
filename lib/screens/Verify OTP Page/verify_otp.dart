@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:get/get.dart';
+import 'package:spllive/components/pin_code_field.dart';
+import 'package:spllive/controller/auth_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../components/simple_button_with_corner.dart';
-import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
-import 'controller/verify_otp_controller.dart';
 
-class VerifyOTPPage extends StatelessWidget {
-  VerifyOTPPage({Key? key}) : super(key: key);
+class VerifyOTPPage extends StatefulWidget {
+  final String? countryCode;
+  final String? phoneCon;
+  const VerifyOTPPage({super.key, this.countryCode, this.phoneCon});
 
-  final controller = Get.find<VerifyOTPController>();
+  @override
+  State<VerifyOTPPage> createState() => _VerifyOTPPageState();
+}
 
-  final verticalSpace = SizedBox(
-    height: Dimensions.h20,
-  );
+class _VerifyOTPPageState extends State<VerifyOTPPage> {
+  final controller = Get.put<AuthController>(AuthController());
+  @override
+  void initState() {
+    super.initState();
+    controller.phoneNumberOtp = widget.phoneCon ?? "";
+    controller.countryCodeOtp = widget.countryCode ?? "";
+    controller.startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,7 @@ class VerifyOTPPage extends StatelessWidget {
                 height: Dimensions.h100,
                 width: Dimensions.w150,
                 child: Image.asset(
-                  ConstantImage.splLogo,
+                  AppImage.splLogo,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -57,24 +67,43 @@ class VerifyOTPPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildPinCodeField(
-          onChange: (v) {
-            controller.onTapOfContinue();
-          },
-          context: context,
+        CommonPinCodeField(
           title: "OTP",
-          pinType: controller.otp,
           pinCodeLength: 6,
+          autoFocus: true,
+          onChanged: (v) {
+            if (v.length == 6) {
+              controller.phoneNumberOtp != "" && controller.countryCodeOtp != ""
+                  ? controller.verifyUser()
+                  : controller.verifyOTP();
+            }
+          },
+          onCompleted: (val) {
+            controller.otp.value = val;
+            if (val.length == 6) {
+              controller.phoneNumberOtp != "" && controller.countryCodeOtp != ""
+                  ? controller.verifyUser()
+                  : controller.verifyOTP();
+            }
+          },
         ),
-        verticalSpace,
+
+        // _buildPinCodeField(
+        //   onChange: (v) {
+        //     controller.onTapOfContinue();
+        //   },
+        //   context: context,
+        //   title: "OTP",
+        //   pinType: controller.otp,
+        //   pinCodeLength: 6,
+        // ),
+        SizedBox(height: Dimensions.h20),
         Obx(
           () => Center(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.h12),
               child: GestureDetector(
-                onTap: () => controller.formattedTime.toString() != "0:00"
-                    ? null
-                    : controller.callResendOtpApi(),
+                onTap: () => controller.secondsRemaining.value == 0 ? controller.resendOtpApi() : null,
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -88,8 +117,7 @@ class VerifyOTPPage extends StatelessWidget {
                       controller.formattedTime.toString() != "0:00"
                           ? TextSpan(
                               text: controller.formattedTime.toString(),
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
                                 color: AppColors.appbarColor,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.normal,
@@ -98,8 +126,7 @@ class VerifyOTPPage extends StatelessWidget {
                             )
                           : TextSpan(
                               text: "RESENDOTP".tr,
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
                                 color: AppColors.appbarColor,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.normal,
@@ -113,7 +140,7 @@ class VerifyOTPPage extends StatelessWidget {
             ),
           ),
         ),
-        verticalSpace,
+        SizedBox(height: Dimensions.h20),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.w18),
           child: RoundedCornerButton(
@@ -136,58 +163,64 @@ class VerifyOTPPage extends StatelessWidget {
     );
   }
 
-  _buildPinCodeField({
-    required BuildContext context,
-    required String title,
-    required RxString pinType,
-    required int pinCodeLength,
-    required onChange,
-  }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.w18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: CustomTextStyle.textRobotoSansMedium.copyWith(
-              fontWeight: FontWeight.normal,
-              fontSize: Dimensions.h15,
-              letterSpacing: 1,
-              color: AppColors.black,
-            ),
-          ),
-          SizedBox(
-            height: Dimensions.h10,
-          ),
-          PinCodeFields(
-            autofocus: true,
-            length: pinCodeLength,
-            obscureText: false,
-            obscureCharacter: "",
-            textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                color: AppColors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20),
-            animationDuration: const Duration(milliseconds: 200),
-            onComplete: (val) {
-              pinType.value = val;
-              onChange(val);
-            },
-            keyboardType: TextInputType.number,
-            animation: Animations.fade,
-            activeBorderColor: AppColors.appbarColor,
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            onChange: (val) {
-              pinType.value = val;
-            },
-            enabled: true,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            responsive: true,
-          ),
-        ],
-      ),
-    );
-  }
+  // _buildPinCodeField({
+  //   required BuildContext context,
+  //   required String title,
+  //   required RxString pinType,
+  //   required int pinCodeLength,
+  //   required onChange,
+  // }) {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(horizontal: Dimensions.w18),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           title,
+  //           textAlign: TextAlign.center,
+  //           style: CustomTextStyle.textRobotoSansMedium.copyWith(
+  //             fontWeight: FontWeight.normal,
+  //             fontSize: Dimensions.h15,
+  //             letterSpacing: 1,
+  //             color: AppColors.black,
+  //           ),
+  //         ),
+  //         SizedBox(height: Dimensions.h10),
+  //         CommonPinCodeField(
+  //           title: title,
+  //           pinCodeLength: pinCodeLength,
+  //           autoFocus: true,
+  //           onChanged: (val) => pinType.value = val,
+  //           onCompleted: (val) {
+  //             pinType.value = val;
+  //             onChange(val);
+  //           },
+  //         ),
+  //         PinCodeFields(
+  //           autofocus: true,
+  //           length: pinCodeLength,
+  //           obscureText: false,
+  //           obscureCharacter: "",
+  //           textStyle: CustomTextStyle.textRobotoSansMedium
+  //               .copyWith(color: AppColors.black, fontWeight: FontWeight.bold, fontSize: 20),
+  //           animationDuration: const Duration(milliseconds: 200),
+  //           onComplete: (val) {
+  //             pinType.value = val;
+  //             onChange(val);
+  //           },
+  //           keyboardType: TextInputType.number,
+  //           animation: Animations.fade,
+  //           activeBorderColor: AppColors.appbarColor,
+  //           margin: const EdgeInsets.symmetric(horizontal: 20),
+  //           onChange: (val) {
+  //             pinType.value = val;
+  //           },
+  //           enabled: true,
+  //           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  //           responsive: true,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

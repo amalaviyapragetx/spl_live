@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../helper_files/app_colors.dart';
-import '../../helper_files/constant_image.dart';
 import '../../helper_files/dimentions.dart';
 import 'controller/starline_game_modes_page_controller.dart';
 
@@ -37,7 +38,7 @@ class StarLineGameModesPage extends StatelessWidget {
           actions: [
             InkWell(
               onTap: () {
-                //  Get.offAndToNamed(AppRoutName.transactionPage);
+                //  Get.offAndToNamed(AppRouteNames.transactionPage);
               },
               child: Row(
                 children: [
@@ -45,7 +46,7 @@ class StarLineGameModesPage extends StatelessWidget {
                     height: Dimensions.h20,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
-                      ConstantImage.walletAppbar,
+                      AppImage.walletAppbar,
                       color: AppColors.white,
                       fit: BoxFit.fill,
                     ),
@@ -77,8 +78,7 @@ class StarLineGameModesPage extends StatelessWidget {
             child: controller.gameModesList.isEmpty
                 ? _buildCustomAboutBoxDialog()
                 : Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Dimensions.w10, vertical: Dimensions.h5),
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.w10, vertical: Dimensions.h5),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,8 +100,7 @@ class StarLineGameModesPage extends StatelessWidget {
     showDialog(
       context: context,
       barrierColor: AppColors.black.withOpacity(0.3), // Transparent background
-      barrierDismissible:
-          false, // Prevent users from dismissing the dialog by tapping outside
+      barrierDismissible: false, // Prevent users from dismissing the dialog by tapping outside
       builder: (context) => _buildCustomAboutBoxDialog(),
     );
   }
@@ -122,8 +121,7 @@ class StarLineGameModesPage extends StatelessWidget {
             SizedBox(width: Dimensions.w10),
             Text(
               "PLEASEWAIT".tr,
-              style: CustomTextStyle.textPTsansBold
-                  .copyWith(fontSize: Dimensions.h15),
+              style: CustomTextStyle.textPTsansBold.copyWith(fontSize: Dimensions.h15),
             ),
           ],
         ),
@@ -139,10 +137,7 @@ class StarLineGameModesPage extends StatelessWidget {
         shrinkWrap: true,
         itemCount: controller.gameModesList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: Dimensions.h140,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 2),
+            crossAxisCount: 2, mainAxisExtent: Dimensions.h140, crossAxisSpacing: 5, mainAxisSpacing: 2),
         itemBuilder: (context, index) {
           return Padding(
             padding: index % 2 == 0
@@ -178,10 +173,7 @@ class StarLineGameModesPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(17.0),
                         child: Image.network(
-                          controller.gameModesList
-                              .elementAt(index)
-                              .image
-                              .toString(),
+                          controller.gameModesList.elementAt(index).image.toString(),
                           height: Dimensions.h10,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(Icons.error);
@@ -200,10 +192,8 @@ class StarLineGameModesPage extends StatelessWidget {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              controller.gameModesList.elementAt(index).name ??
-                                  "",
-                              style: CustomTextStyle.textRobotoSansBold
-                                  .copyWith(fontSize: Dimensions.h14),
+                              controller.gameModesList.elementAt(index).name ?? "",
+                              style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                             ),
                           ),
                         ),

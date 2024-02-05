@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/api_services/api_service.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
-
-import '../../../../api_services/api_service.dart';
+import 'package:spllive/utils/constant.dart';
 
 class ChangeMpinPageController extends GetxController {
   TextEditingController oldMPIN = TextEditingController();
@@ -41,9 +40,8 @@ class ChangeMpinPageController extends GetxController {
   void changePasswordApi() async {
     ApiService().changeMPIN(await changePassBody()).then((value) async {
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        Get.offAndToNamed(AppRoutName.profilePage);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        Get.offAndToNamed(AppRouteNames.profilePage);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../Local Storage.dart';
 
 class ForgotPasswordController extends GetxController {
@@ -24,21 +22,17 @@ class ForgotPasswordController extends GetxController {
 
   void callForgotPasswordApi() async {
     ApiService().forgotPassword(await forgotPasswordBody()).then((value) async {
-   
       if (value['status']) {
-   
         String authToken = value['data']['Token'] ?? "Null From API";
         await LocalStorage.write(ConstantsVariables.authToken, authToken);
         if (value['data']['IsUserDetailSet'] == true) {
-          AppUtils.showSuccessSnackBar(
-              bodyText: value['message'] ?? "",
-              headerText: "SUCCESSMESSAGE".tr);
-          Get.toNamed(AppRoutName.resetPasswordPage, arguments: {
+          AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+          Get.toNamed(AppRouteNames.resetPasswordPage, arguments: {
             ConstantsVariables.phoneNumber: mobileNumberController.text,
             ConstantsVariables.countryCode: countryCode.value
           });
         } else {
-          Get.toNamed(AppRoutName.userDetailsPage);
+          Get.toNamed(AppRouteNames.userDetailsPage);
         }
       } else {
         AppUtils.showErrorSnackBar(

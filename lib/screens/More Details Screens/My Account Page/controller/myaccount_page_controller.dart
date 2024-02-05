@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../../api_services/api_service.dart';
-import '../../../../helper_files/constant_variables.dart';
 import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/user_details_model.dart';
 import '../../../Local Storage.dart';

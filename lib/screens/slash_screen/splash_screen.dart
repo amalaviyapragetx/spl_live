@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/controller/splash_screen_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/utils/constant.dart';
 
-import '../../helper_files/dimentions.dart';
-import 'controller/splash_screen_controller.dart';
-
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
-  final splashScreenController = Get.find<SplashController>();
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  final con = Get.put<SplashScreenController>(SplashScreenController());
+  @override
+  void initState() {
+    super.initState();
+    con.getLocation();
+    con.checkLogin();
+    con.getDeviceInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     Dimensions.initDimension(context);
@@ -21,7 +34,7 @@ class SplashScreen extends StatelessWidget {
         ),
         backgroundColor: AppColors.transparent,
         body: Image.asset(
-          ConstantImage.splashScreen,
+          AppImage.splashScreen,
           height: double.infinity,
           width: double.infinity,
           fit: BoxFit.fill,

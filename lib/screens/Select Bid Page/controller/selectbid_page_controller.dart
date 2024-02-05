@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../models/commun_models/bid_request_model.dart';
@@ -56,16 +57,14 @@ class SelectBidPageController extends GetxController {
     gameName.value = arguments["gameName"];
     // await LocalStorage.write(ConstantsVariables.playMore, false);
     // var hh = await LocalStorage.read(ConstantsVariables.playMore);
-   
+
     newBidListreaddata();
     _calculateTotalAmount();
     bidType.value = await LocalStorage.read(ConstantsVariables.bidType);
-  
   }
 
   newBidListreaddata() async {
     var newBidList = await LocalStorage.read(ConstantsVariables.bidsList);
-   
   }
 
   void onDeleteBids(int index) async {
@@ -77,8 +76,7 @@ class SelectBidPageController extends GetxController {
     _calculateTotalAmount();
     if (requestModel.value.bids!.isEmpty) {
       requestModel.value.bids!.clear();
-      await LocalStorage.write(
-          ConstantsVariables.bidsList, requestModel.value.bids!);
+      await LocalStorage.write(ConstantsVariables.bidsList, requestModel.value.bids!);
       Get.back();
       Get.back();
     }
@@ -97,7 +95,6 @@ class SelectBidPageController extends GetxController {
   void createMarketBidApi() async {
     ApiService().createMarketBid(requestModel.value.toJson()).then(
       (value) async {
-        
         if (value['status']) {
           Get.back();
           Get.back();
@@ -107,9 +104,7 @@ class SelectBidPageController extends GetxController {
               bodyText: value['message'] ?? "",
             );
           } else {
-            AppUtils.showSuccessSnackBar(
-                bodyText: value['message'] ?? "",
-                headerText: "SUCCESSMESSAGE".tr);
+            AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
           }
           LocalStorage.remove(ConstantsVariables.bidsList);
           LocalStorage.remove(ConstantsVariables.marketName);
@@ -132,7 +127,7 @@ class SelectBidPageController extends GetxController {
     _calculateTotalAmount();
     await LocalStorage.write(ConstantsVariables.totalAmount, totalAmount.value);
     // await LocalStorage.write(ConstantsVariables.marketName, marketName.value);
-    Get.offAndToNamed(AppRoutName.gameModePage, arguments: {
+    Get.offAndToNamed(AppRouteNames.gameModePage, arguments: {
       "biddingType": biddingType.value,
       //    "marketName": marketName.value,
       "totalAmount": totalAmount.value,

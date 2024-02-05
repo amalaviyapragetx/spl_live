@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
+import 'package:spllive/utils/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../helper_files/constant_image.dart';
+
 import '../../helper_files/ui_utils.dart';
 import '../home_screen/controller/homepage_controller.dart';
 import 'controller/bottum_navigation_controller.dart';
@@ -33,16 +32,14 @@ class MoreOptions extends StatelessWidget {
                   SizedBox(width: Dimensions.w15),
                   Text(
                     "MORE".tr,
-                    style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(fontSize: Dimensions.h20),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
                   ),
                 ],
               ),
             ),
             actions: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
+                padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
                 child: InkWell(
                   onTap: () {
                     controller.toggleShare();
@@ -72,31 +69,31 @@ class MoreOptions extends StatelessWidget {
                 ),
                 listItems(
                     onTap: () {
-                      Get.toNamed(AppRoutName.profilePage);
+                      Get.toNamed(AppRouteNames.profilePage);
                     },
-                    iconData: ConstantImage.profileIconSVG,
+                    iconData: AppImage.profileIconSVG,
                     text: "MYPROFILE".tr),
                 listItems(
                     onTap: () {
-                      Get.toNamed(AppRoutName.myAccountPage);
+                      Get.toNamed(AppRouteNames.myAccountPage);
                     },
-                    iconData: ConstantImage.bakAccount,
+                    iconData: AppImage.bakAccount,
                     text: "MYACCOUNT".tr),
                 listItems(
                     onTap: () {
-                      Get.toNamed(AppRoutName.gameRatePage);
+                      Get.toNamed(AppRouteNames.gameRatePage);
                     },
-                    iconData: ConstantImage.gameRate,
+                    iconData: AppImage.gameRate,
                     text: "GAMERATE".tr),
                 listItems(
                     onTap: () {
-                      Get.toNamed(AppRoutName.notificationDetailsPage);
+                      Get.toNamed(AppRouteNames.notificationDetailsPage);
                     },
-                    iconData: ConstantImage.notifiacation,
+                    iconData: AppImage.notifiacation,
                     text: "NOTIFICATIONS".tr),
                 // listItems(
                 //     onTap: () {},
-                //     iconData: ConstantImage.playIcon,
+                //     iconData: AppImage.playIcon,
                 //     text: "HOWTOPLAY".tr),
                 listItems(
                     onTap: () {
@@ -104,7 +101,7 @@ class MoreOptions extends StatelessWidget {
                         "https://wa.me/+917769826748/?text=hi",
                       );
                     },
-                    iconData: ConstantImage.plusIcon,
+                    iconData: AppImage.plusIcon,
                     text: "ADDFUND".tr),
                 listItems(
                     onTap: () {
@@ -112,57 +109,55 @@ class MoreOptions extends StatelessWidget {
                       homeController.currentIndex.value = 1;
                       homeController.marketBidsByUserId(lazyLoad: false);
                     },
-                    iconData: ConstantImage.clockIcon,
+                    iconData: AppImage.clockIcon,
                     text: "BIDDINGHISTORY".tr),
                 listItems(
                     onTap: () async {
-                      await LocalStorage.write(
-                          ConstantsVariables.withDrawal, true);
+                      await LocalStorage.write(ConstantsVariables.withDrawal, true);
                       homeController.pageWidget.value = 5;
                       homeController.currentIndex.value = 5;
-                      // Get.toNamed(AppRoutName.withdrawalpage);
+                      // Get.toNamed(AppRouteNames.withdrawalpage);
                     },
-                    iconData: ConstantImage.withDrawalIcon,
+                    iconData: AppImage.withDrawalIcon,
                     text: "WITHDRAWAL_TXT1".tr),
                 // listItems(
                 //     onTap: () {
-                //       Get.toNamed(AppRoutName.transactionPage);
+                //       Get.toNamed(AppRouteNames.transactionPage);
                 //     },
-                //     iconData: ConstantImage.addFundIcon,
+                //     iconData: AppImage.addFundIcon,
                 //     text: "TRANSACTIONHISTORY".tr),
                 listItems(
                     onTap: () {
-                      Get.toNamed(AppRoutName.feedBackPage);
+                      Get.toNamed(AppRouteNames.feedBackPage);
                     },
-                    iconData: ConstantImage.giveFeedbackIcon,
+                    iconData: AppImage.giveFeedbackIcon,
                     text: "GIVEFEEDBACK".tr),
                 listItems(
                   onTap: () {
                     controller.onTapOfRateUs();
                   },
-                  iconData: ConstantImage.rateusStartIcon,
+                  iconData: AppImage.rateusStartIcon,
                   text: "RATEUS".tr,
                 ),
                 // listItems(
                 //   onTap: () {
-                //     Get.toNamed(AppRoutName.stalineTerms);
+                //     Get.toNamed(AppRouteNames.stalineTerms);
                 //   },
-                //   iconData: ConstantImage.addFundIcon,
+                //   iconData: AppImage.addFundIcon,
                 //   text: "STARLINETERMS&CONDITION".tr,
                 // ),
                 listItems(
                   onTap: () {
-                    Get.toNamed(AppRoutName.aboutPage);
+                    Get.toNamed(AppRouteNames.aboutPage);
                   },
-                  iconData: ConstantImage.infoIcon,
+                  iconData: AppImage.infoIcon,
                   text: "ABOUTUS".tr,
                 ),
                 listItems(
                   onTap: () async {
                     controller.callLogout();
-                 
                   },
-                  iconData: ConstantImage.signOutIcon,
+                  iconData: AppImage.signOutIcon,
                   text: "SIGNOUT".tr,
                 ),
               ],
@@ -174,10 +169,7 @@ class MoreOptions extends StatelessWidget {
   }
 }
 
-Widget listItems(
-    {required Function() onTap,
-    required String iconData,
-    required String text}) {
+Widget listItems({required Function() onTap, required String iconData, required String text}) {
   return InkWell(
     onTap: onTap,
     child: Column(
@@ -205,8 +197,8 @@ Widget listItems(
                 width: Dimensions.w15,
               ),
               Text(text,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
-                      fontSize: Dimensions.h14, fontWeight: FontWeight.w500))
+                  style:
+                      CustomTextStyle.textPTsansMedium.copyWith(fontSize: Dimensions.h14, fontWeight: FontWeight.w500))
             ],
           ),
         ),

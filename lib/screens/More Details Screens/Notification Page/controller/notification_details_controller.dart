@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/ui_utils.dart';
@@ -13,10 +13,8 @@ class NotificationDetailsPageController extends GetxController {
 
   @override
   void onInit() async {
-    marketNotificationFromLocal.value =
-        await LocalStorage.read(ConstantsVariables.marketNotification);
-    starlineNotificationFromLocal.value =
-        await LocalStorage.read(ConstantsVariables.starlineNotification);
+    marketNotificationFromLocal.value = await LocalStorage.read(ConstantsVariables.marketNotification);
+    starlineNotificationFromLocal.value = await LocalStorage.read(ConstantsVariables.starlineNotification);
     if (marketNotificationFromLocal.value == null) {
       await LocalStorage.write(ConstantsVariables.marketNotification, true);
       await LocalStorage.write(ConstantsVariables.starlineNotification, true);
@@ -27,13 +25,10 @@ class NotificationDetailsPageController extends GetxController {
 
   void callNotification() async {
     ApiService().marketNotifications(await marketBody()).then((value) async {
-      
       if (value['status']) {
-        await LocalStorage.write(ConstantsVariables.marketNotification,
-            marketNotificationFromLocal.value);
-        await LocalStorage.write(ConstantsVariables.starlineNotification,
-            starlineNotificationFromLocal.value);
-        
+        await LocalStorage.write(ConstantsVariables.marketNotification, marketNotificationFromLocal.value);
+        await LocalStorage.write(ConstantsVariables.starlineNotification, starlineNotificationFromLocal.value);
+
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {

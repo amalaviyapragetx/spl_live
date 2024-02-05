@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
@@ -84,12 +84,10 @@ class GameModePagesController extends GetxController {
   }
 
   void checkBiddingStatus() {
-    var timeDiffForOpenBidding = CommonUtils()
-        .getDifferenceBetweenGivenTimeFromNow(
-            marketValue.value.openTime ?? "00:00 AM");
-    var timeDiffForCloseBidding = CommonUtils()
-        .getDifferenceBetweenGivenTimeFromNow(
-            marketValue.value.closeTime ?? "00:00 AM");
+    var timeDiffForOpenBidding =
+        CommonUtils().getDifferenceBetweenGivenTimeFromNow(marketValue.value.openTime ?? "00:00 AM");
+    var timeDiffForCloseBidding =
+        CommonUtils().getDifferenceBetweenGivenTimeFromNow(marketValue.value.closeTime ?? "00:00 AM");
     timeDiffForOpenBidding < 2 ? openBiddingOpen.value = false : true;
     timeDiffForCloseBidding < 2 ? closeBiddingOpen.value = false : true;
     if (!openBiddingOpen.value) {
@@ -108,7 +106,7 @@ class GameModePagesController extends GetxController {
     // arguments['marketName'] = marketName.value;
     // arguments['gameName'] = gameName.value;
     // if (bidList.length != 0) {
-    //   Get.toNamed(AppRoutName.selectedBidsPage, arguments: {
+    //   Get.toNamed(AppRouteNames.selectedBidsPage, arguments: {
     //     "bidsList": bidList,
     //     "biddingType": biddingType.value,
     //     "gameName": gameName.value,
@@ -122,7 +120,7 @@ class GameModePagesController extends GetxController {
     final walletController = Get.find<WalletController>();
     walletController.getUserBalance();
     walletController.walletBalance.refresh();
-    Get.offAllNamed(AppRoutName.dashBoardPage);
+    Get.offAllNamed(AppRouteNames.dashboardPage);
     // }
     // } else {
     //   selectedBidsList.clear();
@@ -130,26 +128,22 @@ class GameModePagesController extends GetxController {
     //   final walletController = Get.find<WalletController>();
     //   walletController.getUserBalance();
     //   walletController.walletBalance.refresh();
-    //   Get.offAllNamed(AppRoutName.dashBoardPage);
+    //   Get.offAllNamed(AppRouteNames.dashboardPage);
     // }
   }
 
   void callGetGameModes() async {
     ApiService()
         .getGameModes(
-            openCloseValue: openCloseValue.value != "CLOSEBID".tr ? "0" : "1",
-            marketID: marketValue.value.id ?? 0)
+            openCloseValue: openCloseValue.value != "CLOSEBID".tr ? "0" : "1", marketID: marketValue.value.id ?? 0)
         .then((value) async {
-
       if (value['status']) {
-        GameModesApiResponseModel gameModeModel =
-            GameModesApiResponseModel.fromJson(value);
+        GameModesApiResponseModel gameModeModel = GameModesApiResponseModel.fromJson(value);
         gameModeList.value = gameModeModel;
-      
+
         if (gameModeModel.data != null) {
           openBiddingOpen.value = gameModeModel.data!.isBidOpenForOpen ?? false;
-          closeBiddingOpen.value =
-              gameModeModel.data!.isBidOpenForClose ?? false;
+          closeBiddingOpen.value = gameModeModel.data!.isBidOpenForClose ?? false;
           gameModesList.value = gameModeModel.data!.gameMode ?? <GameMode>[];
         }
       } else {
@@ -158,7 +152,6 @@ class GameModePagesController extends GetxController {
         );
       }
     });
-   
   }
 
   void checkBids() async {
@@ -176,7 +169,6 @@ class GameModePagesController extends GetxController {
   }
 
   void onTapOfGameModeTile(int index) {
-   
     bool isBulkMode = false;
     bool digitBasedJodi = false;
     bool choicePanaSpDp = false;
@@ -224,7 +216,7 @@ class GameModePagesController extends GetxController {
     }
 
     if (halfSangamA || halfSangamB || fullSangam) {
-      Get.toNamed(AppRoutName.sangamPages, arguments: {
+      Get.toNamed(AppRouteNames.sangamPages, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketData": marketValue.value,
@@ -234,17 +226,14 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    
     } else if (isBulkMode) {
-    
-      Get.toNamed(AppRoutName.singleAnkPage, arguments: {
+      Get.toNamed(AppRouteNames.singleAnkPage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
         "marketValue": marketValue.value,
-        "time": openCloseValue.value == "OPENBID".tr
-            ? marketValue.value.openTime ?? ""
-            : marketValue.value.closeTime ?? "",
+        "time":
+            openCloseValue.value == "OPENBID".tr ? marketValue.value.openTime ?? "" : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": true,
         "gameModeList": gameModeList,
@@ -252,15 +241,13 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    
     } else if (choicePanaSpDp || digitsBasedJodi || oddEven) {
-      Get.toNamed(AppRoutName.newOddEvenPage, arguments: {
+      Get.toNamed(AppRouteNames.newOddEvenPage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
-        "time": openCloseValue.value == "OPENBID".tr
-            ? marketValue.value.openTime ?? ""
-            : marketValue.value.closeTime ?? "",
+        "time":
+            openCloseValue.value == "OPENBID".tr ? marketValue.value.openTime ?? "" : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": false,
         "gameModeList": gameModeList,
@@ -270,14 +257,13 @@ class GameModePagesController extends GetxController {
         "totalAmount": totalAmount.value,
       });
     } else {
-      Get.toNamed(AppRoutName.newGameModePage, arguments: {
+      Get.toNamed(AppRouteNames.newGameModePage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
         "marketValue": marketValue.value,
-        "time": openCloseValue.value == "OPENBID".tr
-            ? marketValue.value.openTime ?? ""
-            : marketValue.value.closeTime ?? "",
+        "time":
+            openCloseValue.value == "OPENBID".tr ? marketValue.value.openTime ?? "" : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": false,
         "gameModeList": gameModeList,
@@ -285,7 +271,6 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    
     }
   }
 
@@ -294,9 +279,8 @@ class GameModePagesController extends GetxController {
     // playmore = await LocalStorage.read(ConstantsVariables.playMore);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    selectedBidsList.value =
-        await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
-   
+    selectedBidsList.value = await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
+
     requestModel.refresh();
   }
 }

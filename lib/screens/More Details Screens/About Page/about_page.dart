@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/custom_text_style.dart';
@@ -24,7 +24,7 @@ class AboutUsPage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               height: Dimensions.h228,
-              child: SvgPicture.asset(ConstantImage.aboutUsImage),
+              child: SvgPicture.asset(AppImage.aboutUsImage),
             ),
             Row(
               children: [

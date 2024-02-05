@@ -3,11 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/gamemode_pages/controller/game_pages_controller.dart';
+import 'package:spllive/utils/constant.dart';
 
 class GameModePage extends StatelessWidget {
   GameModePage({super.key});
@@ -34,7 +34,7 @@ class GameModePage extends StatelessWidget {
           actions: [
             InkWell(
               onTap: () {
-                //  Get.offAndToNamed(AppRoutName.transactionPage);
+                //  Get.offAndToNamed(AppRouteNames.transactionPage);
               },
               child: Row(
                 children: [
@@ -42,7 +42,7 @@ class GameModePage extends StatelessWidget {
                     height: Dimensions.h20,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
-                      ConstantImage.walletAppbar,
+                      AppImage.walletAppbar,
                       color: AppColors.white,
                       fit: BoxFit.fill,
                     ),
@@ -82,42 +82,32 @@ class GameModePage extends StatelessWidget {
                       children: [
                         openCloseMarket(
                           textColor:
-                              controller.openCloseValue.value == "OPENBID".tr
-                                  ? AppColors.white
-                                  : AppColors.black,
+                              controller.openCloseValue.value == "OPENBID".tr ? AppColors.white : AppColors.black,
                           "${"OPENBID".tr.toUpperCase()} : ${controller.marketValue.value.openTime.toString()}",
                           onTap: () async {
-                            if (controller.openBiddingOpen.value &&
-                                controller.openCloseValue.value !=
-                                    "OPENBID".tr) {
+                            if (controller.openBiddingOpen.value && controller.openCloseValue.value != "OPENBID".tr) {
                               controller.openCloseValue.value = "OPENBID".tr;
                               controller.callGetGameModes();
                             }
                           },
-                          containerColor:
-                              controller.openCloseValue.value == "OPENBID".tr
-                                  ? AppColors.appbarColor
-                                  : AppColors.openclose,
+                          containerColor: controller.openCloseValue.value == "OPENBID".tr
+                              ? AppColors.appbarColor
+                              : AppColors.openclose,
                         ),
                         openCloseMarket(
                           "${"CLOSEBID".tr.toUpperCase()} : ${controller.marketValue.value.closeTime.toString()}",
                           onTap: () async {
-                           
-                            if (controller.openCloseValue.value !=
-                                "CLOSEBID".tr) {
+                            if (controller.openCloseValue.value != "CLOSEBID".tr) {
                               controller.openCloseValue.value = "CLOSEBID".tr;
                               controller.callGetGameModes();
                             }
                             controller.onTapOpenClose;
                           },
-                          containerColor:
-                              controller.openCloseValue.value == "CLOSEBID".tr
-                                  ? AppColors.appbarColor
-                                  : AppColors.openclose,
+                          containerColor: controller.openCloseValue.value == "CLOSEBID".tr
+                              ? AppColors.appbarColor
+                              : AppColors.openclose,
                           textColor:
-                              controller.openCloseValue.value == "CLOSEBID".tr
-                                  ? AppColors.white
-                                  : AppColors.black,
+                              controller.openCloseValue.value == "CLOSEBID".tr ? AppColors.white : AppColors.black,
                         ),
                       ],
                     ),
@@ -168,8 +158,7 @@ class GameModePage extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: Text(
                     text,
-                    style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(color: textColor, fontSize: Dimensions.h10),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor, fontSize: Dimensions.h10),
                   ),
                 ),
               ),
@@ -188,10 +177,7 @@ Widget cardWidget(GameModePagesController controller, Size size) {
       child: GridView.builder(
         itemCount: controller.gameModesList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: Dimensions.h130,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 2),
+            crossAxisCount: 2, mainAxisExtent: Dimensions.h130, crossAxisSpacing: 5, mainAxisSpacing: 2),
         itemBuilder: (context, index) {
           return Padding(
             padding: index % 2 == 0
@@ -227,10 +213,7 @@ Widget cardWidget(GameModePagesController controller, Size size) {
                       child: Padding(
                         padding: const EdgeInsets.all(17.0),
                         child: Image.network(
-                          controller.gameModesList
-                              .elementAt(index)
-                              .image
-                              .toString(),
+                          controller.gameModesList.elementAt(index).image.toString(),
                           height: Dimensions.h10,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(Icons.error);
@@ -249,10 +232,8 @@ Widget cardWidget(GameModePagesController controller, Size size) {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              controller.gameModesList.elementAt(index).name ??
-                                  "",
-                              style: CustomTextStyle.textRobotoSansBold
-                                  .copyWith(fontSize: Dimensions.h14),
+                              controller.gameModesList.elementAt(index).name ?? "",
+                              style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                             ),
                           ),
                         ),

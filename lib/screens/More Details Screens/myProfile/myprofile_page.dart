@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/More%20Details%20Screens/myProfile/controller/myprofile_page_controller.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+import 'package:spllive/utils/constant.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
@@ -32,7 +31,7 @@ class ProfilePage extends StatelessWidget {
                   height: Dimensions.h50,
                   width: Dimensions.w100,
                   child: Image.asset(
-                    ConstantImage.splLogo,
+                    AppImage.splLogo,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -64,10 +63,10 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             cardListwidget("CHANGEPASSWORD2".tr, onTap: () {
-              Get.toNamed(AppRoutName.changePassPage);
+              Get.toNamed(AppRouteNames.changePassPage);
             }),
             cardListwidget("CHANGEMOBILENUMBER".tr, onTap: () {
-              Get.toNamed(AppRoutName.changeMpinPage);
+              Get.toNamed(AppRouteNames.changeMpinPage);
             }),
             const SizedBox(height: 10),
           ],

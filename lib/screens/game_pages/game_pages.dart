@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../Custom Controllers/wallet_controller.dart';
 import '../../components/new_edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
@@ -28,7 +29,7 @@ class SingleAnkPage extends StatelessWidget {
           actions: [
             InkWell(
               onTap: () {
-                //  Get.offAndToNamed(AppRoutName.transactionPage);
+                //  Get.offAndToNamed(AppRouteNames.transactionPage);
               },
               child: Row(
                 children: [
@@ -36,7 +37,7 @@ class SingleAnkPage extends StatelessWidget {
                     height: Dimensions.h20,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
-                      ConstantImage.walletAppbar,
+                      AppImage.walletAppbar,
                       color: AppColors.white,
                       fit: BoxFit.fill,
                     ),
@@ -90,9 +91,8 @@ class SingleAnkPage extends StatelessWidget {
                             //         .contains("JODI")
                             //     ? " ${controller.gameMode.name}".toUpperCase(),
                             // : " ${controller.gameMode.name}".toUpperCase(),
-                            style: CustomTextStyle.textRobotoSansBold.copyWith(
-                                color: AppColors.appbarColor,
-                                fontSize: Dimensions.h18),
+                            style: CustomTextStyle.textRobotoSansBold
+                                .copyWith(color: AppColors.appbarColor, fontSize: Dimensions.h18),
                             // style: TextStyle(
                             //     color: AppColors.appbarColor,
                             //     fontWeight: FontWeight.bold,
@@ -100,9 +100,8 @@ class SingleAnkPage extends StatelessWidget {
                           ),
                           Text(
                             controller.biddingType.value.toUpperCase(),
-                            style: CustomTextStyle.textRobotoSansBold.copyWith(
-                                color: AppColors.appbarColor,
-                                fontSize: Dimensions.h18),
+                            style: CustomTextStyle.textRobotoSansBold
+                                .copyWith(color: AppColors.appbarColor, fontSize: Dimensions.h18),
                             // style: TextStyle(
                             //     color: AppColors.appbarColor,
                             //     fontWeight: FontWeight.bold,
@@ -118,8 +117,7 @@ class SingleAnkPage extends StatelessWidget {
                           Expanded(
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.r10)),
+                                borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                 color: AppColors.white,
                                 boxShadow: [
                                   BoxShadow(
@@ -131,21 +129,16 @@ class SingleAnkPage extends StatelessWidget {
                                 ],
                               ),
                               child: RoundedCornerEditTextWithIcon2(
-                                formatter: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
+                                formatter: [FilteringTextInputFormatter.digitsOnly],
                                 tapTextStyle: AppColors.black,
                                 hintTextColor: AppColors.black.withOpacity(0.5),
                                 //textAlign: TextAlign.center,
-                                hintTextStyle: CustomTextStyle
-                                    .textRobotoSansMedium
-                                    .copyWith(
+                                hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                   color: AppColors.black.withOpacity(0.5),
                                   fontSize: Dimensions.h15,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                textStyle: CustomTextStyle.textRobotoSansMedium
-                                    .copyWith(
+                                textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                   color: AppColors.black.withOpacity(0.8),
                                   fontSize: Dimensions.h15,
                                   fontWeight: FontWeight.bold,
@@ -154,32 +147,23 @@ class SingleAnkPage extends StatelessWidget {
                                 width: size.width / 2,
                                 onChanged: (val) {
                                   if (val != null) {
-                                    if (val.characters.characterAt(0) ==
-                                        Characters("0")) {
+                                    if (val.characters.characterAt(0) == Characters("0")) {
                                       // we need to remove the first char
-                                      controller.coinController.text =
-                                          val.substring(1);
+                                      controller.coinController.text = val.substring(1);
                                       // we need to move the cursor
-                                      controller.coinController.selection =
-                                          TextSelection.collapsed(
-                                        offset: controller
-                                            .coinController.text.length,
+                                      controller.coinController.selection = TextSelection.collapsed(
+                                        offset: controller.coinController.text.length,
                                       );
                                     } else if (int.parse(val) >= 1) {
                                       controller.validCoinsEntered.value = true;
                                       controller.isEnable.value = true;
                                     } else if (int.parse(val) > 10000) {
-                                      AppUtils.showErrorSnackBar(
-                                          bodyText:
-                                              "You can not add more than 10000 points");
-                                      controller.validCoinsEntered.value =
-                                          false;
+                                      AppUtils.showErrorSnackBar(bodyText: "You can not add more than 10000 points");
+                                      controller.validCoinsEntered.value = false;
                                       controller.isEnable.value = false;
                                     } else {
-                                
                                       controller.ondebounce();
-                                      controller.validCoinsEntered.value =
-                                          false;
+                                      controller.validCoinsEntered.value = false;
                                       controller.isEnable.value = false;
                                     }
                                   } else {
@@ -193,8 +177,7 @@ class SingleAnkPage extends StatelessWidget {
                                 imagePath: "",
                                 autofocus: true,
                                 textAlign: TextAlign.center,
-                                contentPadding:
-                                    const EdgeInsets.only(right: 40),
+                                contentPadding: const EdgeInsets.only(right: 40),
                                 containerBackColor: AppColors.transparent,
                                 height: Dimensions.h35,
                                 keyboardType: TextInputType.number,
@@ -207,8 +190,7 @@ class SingleAnkPage extends StatelessWidget {
                           Expanded(
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.r10)),
+                                borderRadius: BorderRadius.all(Radius.circular(Dimensions.r10)),
                                 color: AppColors.white,
                                 boxShadow: [
                                   BoxShadow(
@@ -220,21 +202,16 @@ class SingleAnkPage extends StatelessWidget {
                                 ],
                               ),
                               child: RoundedCornerEditTextWithIcon2(
-                                formatter: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
+                                formatter: [FilteringTextInputFormatter.digitsOnly],
                                 tapTextStyle: AppColors.black,
                                 hintTextColor: AppColors.black.withOpacity(0.5),
                                 //textAlign: TextAlign.center,
-                                hintTextStyle: CustomTextStyle
-                                    .textRobotoSansMedium
-                                    .copyWith(
+                                hintTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                   color: AppColors.black.withOpacity(0.5),
                                   fontSize: Dimensions.h15,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                textStyle: CustomTextStyle.textRobotoSansMedium
-                                    .copyWith(
+                                textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                   color: AppColors.black.withOpacity(0.8),
                                   fontSize: Dimensions.h15,
                                   fontWeight: FontWeight.bold,
@@ -277,7 +254,7 @@ class SingleAnkPage extends StatelessWidget {
                                 // },
                                 controller: controller.searchController,
                                 hintText: "SEARCH_TEXT".tr,
-                                imagePath: ConstantImage.serchZoomIcon,
+                                imagePath: AppImage.serchZoomIcon,
                                 containerBackColor: AppColors.transparent,
                                 height: Dimensions.h35,
                                 keyboardType: TextInputType.number,
@@ -300,8 +277,7 @@ class SingleAnkPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisExtent: 50,
                           crossAxisSpacing: 10,
@@ -311,57 +287,45 @@ class SingleAnkPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return InkWell(
                             borderRadius: BorderRadius.circular(Dimensions.r10),
-                            onTap: () => controller.isEnable.value
-                                ? controller.onTapNumberList(index)
-                                : null,
+                            onTap: () => controller.isEnable.value ? controller.onTapNumberList(index) : null,
                             child: Opacity(
-                              opacity:
-                                  controller.validCoinsEntered.value ? 1 : 0.5,
+                              opacity: controller.validCoinsEntered.value ? 1 : 0.5,
                               child: numberRedioButton(
-                                textColor:
-                                    controller.digitList[index].isSelected ??
-                                            false
-                                        ? AppColors.green
-                                        : AppColors.appbarColor,
-                                container:
-                                    controller.digitList[index].isSelected ??
-                                            false
-                                        ? Container(
-                                            height: Dimensions.h15,
-                                            width: Dimensions.h15,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.green,
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              border: Border.all(
-                                                color: AppColors.green,
-                                                width: Dimensions.w2,
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Icon(Icons.check,
-                                                    size: 13,
-                                                    color: AppColors.white),
-                                              ),
-                                            ),
-                                          )
-                                        : Container(
-                                            height: Dimensions.h15,
-                                            width: Dimensions.w15,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.transparent,
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                              border: Border.all(
-                                                color: AppColors.appbarColor,
-                                                width: Dimensions.w2,
-                                              ),
-                                            ),
+                                textColor: controller.digitList[index].isSelected ?? false
+                                    ? AppColors.green
+                                    : AppColors.appbarColor,
+                                container: controller.digitList[index].isSelected ?? false
+                                    ? Container(
+                                        height: Dimensions.h15,
+                                        width: Dimensions.h15,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.green,
+                                          borderRadius: BorderRadius.circular(50),
+                                          border: Border.all(
+                                            color: AppColors.green,
+                                            width: Dimensions.w2,
                                           ),
-                                color: controller.digitList[index].isSelected ??
-                                        false
+                                        ),
+                                        child: Center(
+                                          child: FittedBox(
+                                            fit: BoxFit.fitWidth,
+                                            child: Icon(Icons.check, size: 13, color: AppColors.white),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(
+                                        height: Dimensions.h15,
+                                        width: Dimensions.w15,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.transparent,
+                                          borderRadius: BorderRadius.circular(25),
+                                          border: Border.all(
+                                            color: AppColors.appbarColor,
+                                            width: Dimensions.w2,
+                                          ),
+                                        ),
+                                      ),
+                                color: controller.digitList[index].isSelected ?? false
                                     ? AppColors.green
                                     : AppColors.transparent,
                                 controller.digitList[index].value ?? "",
@@ -425,10 +389,7 @@ class SingleAnkPage extends StatelessWidget {
   }
 
   Widget nameColumn(
-      {required String titleText,
-      required String subText,
-      required Color textColor,
-      required Color textColor2}) {
+      {required String titleText, required String subText, required Color textColor, required Color textColor2}) {
     return Padding(
       padding: const EdgeInsets.only(
         top: 5,
@@ -496,13 +457,11 @@ class SingleAnkPage extends StatelessWidget {
                 Container(
                   height: Dimensions.h25,
                   width: Dimensions.h25,
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(25)),
+                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SvgPicture.asset(
-                      ConstantImage.rupeeImage,
+                      AppImage.rupeeImage,
                       fit: BoxFit.contain,
                       color: AppColors.appbarColor,
                     ),
@@ -528,10 +487,7 @@ class SingleAnkPage extends StatelessWidget {
     );
   }
 
-  Widget numberRedioButton(text,
-      {required Color color,
-      required Widget container,
-      required Color textColor}) {
+  Widget numberRedioButton(text, {required Color color, required Widget container, required Color textColor}) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.grey.withOpacity(0.2),
@@ -636,19 +592,15 @@ class SingleAnkPage extends StatelessWidget {
                                       : AppColors.wpColor1,
                                   width: 1),
                               borderRadius: BorderRadius.circular(4),
-                              color: controller.digitRow[index].isSelected!
-                                  ? AppColors.white
-                                  : AppColors.wpColor1,
+                              color: controller.digitRow[index].isSelected! ? AppColors.white : AppColors.wpColor1,
                             ),
                             child: Center(
                               child: Text(
                                 controller.digitRow[index].value ?? "",
                                 style: TextStyle(
-                                    color:
-                                        controller.digitRow[index].isSelected ??
-                                                false
-                                            ? AppColors.black
-                                            : AppColors.white,
+                                    color: controller.digitRow[index].isSelected ?? false
+                                        ? AppColors.black
+                                        : AppColors.white,
                                     fontSize: Dimensions.h15,
                                     fontWeight: FontWeight.bold),
                               ),

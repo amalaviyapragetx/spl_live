@@ -7,14 +7,13 @@ import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
-import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
 
 class StarLineGameModesPageController extends GetxController {
@@ -40,7 +39,7 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   onBackButton() async {
-    Get.offAllNamed(AppRoutName.dashBoardPage);
+    Get.offAllNamed(AppRouteNames.dashboardPage);
     requestModel.value.bids?.clear();
     await LocalStorage.write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
   }
@@ -149,7 +148,7 @@ class StarLineGameModesPageController extends GetxController {
     }
 
     if (isBulkMode) {
-      Get.toNamed(AppRoutName.starLineGamePage, arguments: {
+      Get.toNamed(AppRouteNames.starLineGamePage, arguments: {
         "gameMode": gameModesList[index],
         //   "gameModeName": gameModesList[index].name,
         "marketData": marketData.value,
@@ -157,7 +156,7 @@ class StarLineGameModesPageController extends GetxController {
         "getBIdType": gameModesList[index].name,
       });
     } else {
-      Get.toNamed(AppRoutName.newStarlineGames, arguments: {
+      Get.toNamed(AppRouteNames.newStarlineGames, arguments: {
         "gameMode": gameModesList[index],
         "gameModeName": gameModesList[index].name,
         "marketData": marketData.value,

@@ -14,7 +14,6 @@ class TransactionPage extends StatelessWidget {
   var controller = Get.put(TransactionHistoryPageController());
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppUtils().simpleAppbar(appBarTitle: "TRANSACTIONS".tr),
@@ -33,20 +32,16 @@ class TransactionPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var data = controller.transactionList[index];
                           return listveiwTransaction(
-                            containerColor: data.isWin == true
-                                ? AppColors.greenAccent.withOpacity(0.65)
-                                : AppColors.white,
+                            containerColor:
+                                data.isWin == true ? AppColors.greenAccent.withOpacity(0.65) : AppColors.white,
                             bid: data.isWin == true ? "Earning" : "Bid",
-                            timeDate: CommonUtils().formatStringToDDMMYYYYHHMMA(
-                                data.bidTime ?? ""),
+                            timeDate: CommonUtils().formatStringToDDMMYYYYHHMMA(data.bidTime ?? ""),
                             ballance: data.balance.toString(),
                             coins: data.coins.toString(),
                             bidNo: data.bidNo ?? "",
                             gameName: data.gameMode ?? "",
-                            closeTime: CommonUtils()
-                                .formatStringToHHMMA(data.openTime ?? ""),
-                            openTime: CommonUtils()
-                                .formatStringToHHMMA(data.openTime ?? ""),
+                            closeTime: CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
+                            openTime: CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
                             marketName: data.marketName ?? "",
                           );
                         },
@@ -60,8 +55,7 @@ class TransactionPage extends StatelessWidget {
                           child: Center(
                             child: Text(
                               "There is no Transaction History",
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
                                 fontSize: Dimensions.h13,
                               ),
                             ),
@@ -114,8 +108,7 @@ class TransactionPage extends StatelessWidget {
                 children: [
                   Text(
                     bid,
-                    style: CustomTextStyle.textRobotoSansBold
-                        .copyWith(fontSize: Dimensions.h15),
+                    style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h15),
                   ),
                   Text(
                     marketName,
@@ -155,7 +148,7 @@ class TransactionPage extends StatelessWidget {
                     width: Dimensions.w5,
                   ),
                   // Image.asset(
-                  //   ConstantImage.ruppeeBlueIcon,
+                  //   AppImage.ruppeeBlueIcon,
                   //   height: Dimensions.h25,
                   //   width: Dimensions.w25,
                   // ),
@@ -175,7 +168,7 @@ class TransactionPage extends StatelessWidget {
                     width: Dimensions.w5,
                   ),
                   // Image.asset(
-                  //   ConstantImage.ruppeeBlueIcon,
+                  //   AppImage.ruppeeBlueIcon,
                   //   height: Dimensions.h25,
                   //   width: Dimensions.w25,
                   // ),

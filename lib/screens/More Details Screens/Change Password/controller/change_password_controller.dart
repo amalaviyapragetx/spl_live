@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../../api_services/api_service.dart';
-import '../../../../helper_files/constant_variables.dart';
 import '../../../../models/commun_models/user_details_model.dart';
 import '../../../Local Storage.dart';
 
@@ -99,7 +98,7 @@ class ChangepasswordPageController extends GetxController {
     ApiService().changePassword(await changePassBody()).then((value) async {
       if (value['status']) {
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        Get.offAndToNamed(AppRoutName.profilePage);
+        Get.offAndToNamed(AppRouteNames.profilePage);
       } else {
         // AppUtils.showErrorSnackBar(
         //   bodyText: value['message'] ?? "",
@@ -153,7 +152,7 @@ class ChangepasswordPageController extends GetxController {
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:http/http.dart';
-// import '../../../../helper_files/constant_variables.dart';
+// import 'package:spllive/utils/constant.dart';
 // import '../../../../models/commun_models/user_details_model.dart';
 // import '../../../Local Storage.dart';
 

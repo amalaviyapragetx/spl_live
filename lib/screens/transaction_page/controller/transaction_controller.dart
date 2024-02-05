@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/transaction_history_api_response_model.dart';
@@ -31,7 +32,6 @@ class TransactionHistoryPageController extends GetxController {
     var userData = await LocalStorage.read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(userData);
     if (userDetailsModel.id != null) {
-     
       getTransactionHistory(offset: offset);
     } else {
       AppUtils.showErrorSnackBar(
@@ -41,23 +41,15 @@ class TransactionHistoryPageController extends GetxController {
   }
 
   void getTransactionHistory({required int offset}) async {
-    ApiService()
-        .getTransactionHistoryById(
-            userId: userDetailsModel.id ?? 0, offset: offset)
-        .then(
+    ApiService().getTransactionHistoryById(userId: userDetailsModel.id ?? 0, offset: offset).then(
       (value) async {
-     
         if (value['status']) {
-          TransactionHistoryApiResponseModel transactionModel =
-              TransactionHistoryApiResponseModel.fromJson(value);
+          TransactionHistoryApiResponseModel transactionModel = TransactionHistoryApiResponseModel.fromJson(value);
 
-          if (transactionModel.data?.resultArr != null &&
-              transactionModel.data!.resultArr!.isNotEmpty) {
-            transactionList.value =
-                transactionModel.data!.resultArr as List<ResultArr>;
+          if (transactionModel.data?.resultArr != null && transactionModel.data!.resultArr!.isNotEmpty) {
+            transactionList.value = transactionModel.data!.resultArr as List<ResultArr>;
           } else {
             transactionList.value = <ResultArr>[];
-           
           }
         } else {
           AppUtils.showErrorSnackBar(

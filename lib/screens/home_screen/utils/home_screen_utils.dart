@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+import 'package:spllive/utils/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/common_utils.dart';
-import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../models/starlinechar_model/new_starlinechart_model.dart';
 
@@ -45,7 +45,7 @@ class HomeScreenUtils {
       );
     } else {
       return SvgPicture.asset(
-        isOpenResult ? ConstantImage.openStarsSvg : ConstantImage.closeStarsSvg,
+        isOpenResult ? AppImage.openStarsSvg : AppImage.closeStarsSvg,
         width: Dimensions.w60,
       );
     }
@@ -130,7 +130,7 @@ class HomeScreenUtils {
                   // ),
                   SizedBox(width: Dimensions.w5),
                   // Image.asset(
-                  //   ConstantImage.ruppeeBlueIcon,
+                  //   AppImage.ruppeeBlueIcon,
                   //   height: 25,
                   //   width: 25,
                   // ),
@@ -226,7 +226,7 @@ class HomeScreenUtils {
               iconColor: iconColor1,
               onTap: onTap1,
               text: "MARKET".tr,
-              iconData: ConstantImage.marketIcon,
+              iconData: AppImage.marketIcon,
             ),
           ),
         ),
@@ -234,8 +234,8 @@ class HomeScreenUtils {
           child: SizedBox(
             // color: Colors.amber,
             width: Dimensions.w100,
-            child: marketIcon(
-                iconColor: iconColor2, onTap: onTap2, text: "STARLINE".tr, iconData: ConstantImage.starLineIcon),
+            child:
+                marketIcon(iconColor: iconColor2, onTap: onTap2, text: "STARLINE".tr, iconData: AppImage.starLineIcon),
           ),
         ),
         Expanded(
@@ -246,7 +246,7 @@ class HomeScreenUtils {
               onTap: onTap3,
               iconColor: iconColor3,
               text: "ADD FUND".tr,
-              iconData: ConstantImage.addFundIcon,
+              iconData: AppImage.addFundIcon,
             ),
           ),
         ),
@@ -273,7 +273,7 @@ class HomeScreenUtils {
               // color: Colors.amber,
               width: Dimensions.w100,
               child: marketIcon(
-                  iconColor: iconColor1, onTap: onTap1, text: "BIDHISTORY".tr, iconData: ConstantImage.bidHistoryIcon),
+                  iconColor: iconColor1, onTap: onTap1, text: "BIDHISTORY".tr, iconData: AppImage.bidHistoryIcon),
             ),
           ),
           Expanded(
@@ -284,7 +284,7 @@ class HomeScreenUtils {
                   onTap: onTap2,
                   iconColor: iconColor2,
                   text: "RESULTHISTORY2".tr,
-                  iconData: ConstantImage.resultHistoryIcons),
+                  iconData: AppImage.resultHistoryIcons),
             ),
           ),
           Expanded(
@@ -295,7 +295,7 @@ class HomeScreenUtils {
                 onTap: onTap3,
                 iconColor: iconColor3,
                 text: "CHART2".tr,
-                iconData: ConstantImage.chartIcon,
+                iconData: AppImage.chartIcon,
               ),
             ),
           ),
@@ -333,7 +333,7 @@ class HomeScreenUtils {
                             Padding(
                               padding: const EdgeInsets.all(3.0),
                               child: Image.asset(
-                                ConstantImage.whatsaapIcon,
+                                AppImage.whatsaapIcon,
                                 fit: BoxFit.contain,
                               ),
                             ),
@@ -780,7 +780,7 @@ class HomeScreenUtils {
                         child: Row(
                           children: [
                             SizedBox(width: Dimensions.w20),
-                            SizedBox(width: Dimensions.w35, child: SvgPicture.asset(ConstantImage.stopWatchIcon)),
+                            SizedBox(width: Dimensions.w35, child: SvgPicture.asset(AppImage.stopWatchIcon)),
                             // Icon(Icons.watch, color: AppColors.black),
                             SizedBox(width: Dimensions.w10),
                             Text(
@@ -808,7 +808,7 @@ class HomeScreenUtils {
                                 : Padding(
                                     padding: EdgeInsets.only(right: Dimensions.h50),
                                     child: SvgPicture.asset(
-                                      ConstantImage.openStarsSvg,
+                                      AppImage.openStarsSvg,
                                       width: Dimensions.w60,
                                     ),
                                   )

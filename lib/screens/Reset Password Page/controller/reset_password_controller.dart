@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
 
 class ResetPasswordController extends GetxController {
   final passwordController = TextEditingController();
@@ -61,7 +60,7 @@ class ResetPasswordController extends GetxController {
       if (value['status']) {
         GetStorage().write(ConstantsVariables.authToken, null);
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        Get.offAllNamed(AppRoutName.signInPage);
+        Get.offAllNamed(AppRouteNames.signInPage);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

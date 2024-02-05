@@ -11,14 +11,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_information_model.dart';
 import '../../../components/simple_button_with_corner.dart';
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
@@ -145,7 +144,7 @@ class SplashController extends GetxController {
       if (!isActive && !isVerified) {
         //   callFcmApi(_userDetailsModel.id);
         Future.delayed(const Duration(seconds: 2), () {
-          Get.offAllNamed(AppRoutName.verifyOTPPage);
+          Get.offAllNamed(AppRouteNames.verifyOTPPage);
           Timer(const Duration(milliseconds: 500), () {
             appVersionCheck();
             requestLocationPermission();
@@ -154,7 +153,7 @@ class SplashController extends GetxController {
       } else if (!hasMPIN && !isUserDetailSet) {
         //   callFcmApi(_userDetailsModel.id);
         Future.delayed(const Duration(seconds: 2), () {
-          Get.offAllNamed(AppRoutName.userDetailsPage);
+          Get.offAllNamed(AppRouteNames.userDetailsPage);
           Timer(const Duration(milliseconds: 500), () {
             appVersionCheck();
             requestLocationPermission();
@@ -164,7 +163,7 @@ class SplashController extends GetxController {
         if (hasMPIN) {
           callFcmApi(_userDetailsModel.id);
           Future.delayed(const Duration(seconds: 2), () {
-            Get.offAllNamed(AppRoutName.mPINPage, arguments: {"id": _userDetailsModel.id});
+            Get.offAllNamed(AppRouteNames.mPINPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVersionCheck();
               requestLocationPermission();
@@ -172,7 +171,7 @@ class SplashController extends GetxController {
           });
         } else {
           Future.delayed(const Duration(seconds: 2), () {
-            Get.offAllNamed(AppRoutName.signInPage, arguments: {"id": _userDetailsModel.id});
+            Get.offAllNamed(AppRouteNames.signInPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVersionCheck();
               requestLocationPermission();
@@ -183,7 +182,7 @@ class SplashController extends GetxController {
     } else {
       Future.delayed(const Duration(seconds: 2), () {
         // Get.offAllNamed(AppRoutes.dashboardPage);
-        Get.offAllNamed(AppRoutName.walcomeScreen);
+        Get.offAllNamed(AppRouteNames.welcomeScreen);
         Timer(const Duration(milliseconds: 500), () {
           appVersionCheck();
           requestLocationPermission();
@@ -224,11 +223,7 @@ class SplashController extends GetxController {
       ),
       actions: [
         InkWell(
-          onTap: () async {
-            launch(
-              "https://spl.live",
-            );
-          },
+          onTap: () async => launch("https://spl.live"),
           child: Container(
             color: AppColors.appbarColor,
             height: Dimensions.h40,
@@ -249,10 +244,7 @@ class SplashController extends GetxController {
 
   Future<void> requestLocationPermission() async {
     var status = await Permission.location.request();
-    print("ooooooooooooooooo$status");
     if (status.isGranted) {
-      // Permission granted, proceed with your flow.
-      print('Location permission granted');
     } else if (status.isDenied) {
       // Permission denied.
       Get.defaultDialog(
@@ -282,8 +274,6 @@ class SplashController extends GetxController {
         ),
       );
     } else if (status.isPermanentlyDenied) {
-      // Permission permanently denied.
-
       Get.defaultDialog(
         titlePadding: EdgeInsets.only(top: Dimensions.h10),
         radius: Dimensions.r10,
@@ -315,28 +305,27 @@ class SplashController extends GetxController {
     }
   }
 
-  Future<String> getIpAddress() async {
-    getIpAddress2();
-    try {
-      List<NetworkInterface> interfaces =
-          await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
-      for (NetworkInterface interface in interfaces) {
-        print("===========${interface.name.toLowerCase()}================================");
-        if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
-          for (InternetAddress address in interface.addresses) {
-            if (!address.isLoopback && !address.isLinkLocal) {
-              return address.address;
-            }
-          }
-        }
-      }
-    } on SocketException catch (e) {
-      print("Error getting IP address: $e");
-    }
-    return "Could not determine IP address";
-  }
+  // Future<String> getIpAddress() async {
+  //   getIpAddress2();
+  //   try {
+  //     List<NetworkInterface> interfaces =
+  //         await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
+  //     for (NetworkInterface interface in interfaces) {
+  //       if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
+  //         for (InternetAddress address in interface.addresses) {
+  //           if (!address.isLoopback && !address.isLinkLocal) {
+  //             return address.address;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } on SocketException catch (e) {
+  //     print("Error getting IP address: $e");
+  //   }
+  //   return "Could not determine IP address";
+  // }
 
-  void getIpAddress2() async {
+  void getIpAddress() async {
     ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {

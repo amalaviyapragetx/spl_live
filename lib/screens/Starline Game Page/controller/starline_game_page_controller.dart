@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
@@ -129,8 +130,7 @@ class StarLineGamePageController extends GetxController {
         for (var e in jsonModel.allSinglePana!) {
           panaDigitList.add(DigitListModelOffline.fromJson(e));
         }
-        List<List<DigitListModelOffline>> chunks =
-            splitListIntoChunks(panaDigitList, 12);
+        List<List<DigitListModelOffline>> chunks = splitListIntoChunks(panaDigitList, 12);
 
         digitList.value = chunks[0];
         //  initializeTextControllers();
@@ -147,8 +147,7 @@ class StarLineGamePageController extends GetxController {
         for (var e in jsonModel.allDoublePana!) {
           panaDigitList.add(DigitListModelOffline.fromJson(e));
         }
-        List<List<DigitListModelOffline>> chunks =
-            splitListIntoChunks(panaDigitList, 9);
+        List<List<DigitListModelOffline>> chunks = splitListIntoChunks(panaDigitList, 9);
 
         digitList.value = chunks[0];
         //  initializeTextControllers();
@@ -181,9 +180,8 @@ class StarLineGamePageController extends GetxController {
           selectedBidsList.refresh();
         }
 
-        await LocalStorage.write(
-            ConstantsVariables.starlineBidsList, selectedBidsList);
-        Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
+        await LocalStorage.write(ConstantsVariables.starlineBidsList, selectedBidsList);
+        Get.offAndToNamed(AppRouteNames.starlineBidpage, arguments: {
           "bidsList": selectedBidsList,
           "gameMode": gameMode.value,
           "marketData": marketData.value,
@@ -196,9 +194,8 @@ class StarLineGamePageController extends GetxController {
         digitList.refresh();
         coinController.clear();
       } else {
-        await LocalStorage.write(
-            ConstantsVariables.starlineBidsList, selectedBidsList);
-        Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
+        await LocalStorage.write(ConstantsVariables.starlineBidsList, selectedBidsList);
+        Get.offAndToNamed(AppRouteNames.starlineBidpage, arguments: {
           "bidsList": selectedBidsList,
           "gameMode": gameMode.value,
           "marketData": marketData.value,
@@ -244,16 +241,14 @@ class StarLineGamePageController extends GetxController {
   }
 
   Future<void> loadJsonFile() async {
-    final String response =
-        await rootBundle.loadString('assets/JSON File/digit_file.json');
+    final String response = await rootBundle.loadString('assets/JSON File/digit_file.json');
     final data = await json.decode(response);
     jsonModel = JsonFileModel.fromJson(data);
   }
 
   void panaSwitchCase(int index, int chunkSize) {
     List<DigitListModelOffline> tempList = [];
-    List<List<DigitListModelOffline>> chunks =
-        splitListIntoChunks(panaDigitList, chunkSize);
+    List<List<DigitListModelOffline>> chunks = splitListIntoChunks(panaDigitList, chunkSize);
     switch (index) {
       case 0:
         tempList = chunks[0];
@@ -293,8 +288,7 @@ class StarLineGamePageController extends GetxController {
     digitList.value = tempList;
   }
 
-  List<List<DigitListModelOffline>> splitListIntoChunks(
-      List<DigitListModelOffline> tempList, int chunkSize) {
+  List<List<DigitListModelOffline>> splitListIntoChunks(List<DigitListModelOffline> tempList, int chunkSize) {
     List<List<DigitListModelOffline>> chunks = [];
 
     for (var i = 0; i < tempList.length; i += chunkSize) {
@@ -319,9 +313,7 @@ class StarLineGamePageController extends GetxController {
       digitList.refresh();
       newList.add(digitList[index].coins!.toInt());
       if (selectedBidsList.isNotEmpty) {
-        var tempBid = selectedBidsList
-            .where((element) => element.bidNo == digitList[index].value)
-            .toList();
+        var tempBid = selectedBidsList.where((element) => element.bidNo == digitList[index].value).toList();
         if (tempBid.isNotEmpty) {
           for (var element in selectedBidsList) {
             if (element.bidNo == digitList[index].value) {
@@ -335,8 +327,7 @@ class StarLineGamePageController extends GetxController {
               bidNo: digitList[index].value,
               coins: int.parse(coinController.text),
               starlineGameId: gameMode.value.id,
-              remarks:
-                  "You invested At ${marketData.value.time} on ${digitList[index].value} (${gameMode.value.name})",
+              remarks: "You invested At ${marketData.value.time} on ${digitList[index].value} (${gameMode.value.name})",
             ),
           );
           //_calculateTotalAmount();
@@ -348,8 +339,7 @@ class StarLineGamePageController extends GetxController {
             bidNo: digitList[index].value,
             coins: int.parse(coinController.text),
             starlineGameId: gameMode.value.id,
-            remarks:
-                "You invested At ${marketData.value.time} on ${digitList[index].value} (${gameMode.value.name})",
+            remarks: "You invested At ${marketData.value.time} on ${digitList[index].value} (${gameMode.value.name})",
           ),
         );
       }
@@ -371,8 +361,7 @@ class StarLineGamePageController extends GetxController {
     digitList[index].coins = 0;
     digitList[index].isSelected = false;
     digitList.refresh();
-    selectedBidsList
-        .removeWhere((element) => element.bidNo == digitList[index].value);
+    selectedBidsList.removeWhere((element) => element.bidNo == digitList[index].value);
     _calculateTotalAmount();
   }
 
@@ -390,11 +379,8 @@ class StarLineGamePageController extends GetxController {
     List<DigitListModelOffline> tempList = digitList;
     if (val.toString().isNotEmpty) {
       var searchResultList = tempList
-          .where((element) => element.value
-              .toString()
-              .toLowerCase()
-              .trim()
-              .contains(val.toString().toLowerCase().trim()))
+          .where(
+              (element) => element.value.toString().toLowerCase().trim().contains(val.toString().toLowerCase().trim()))
           .toList();
       searchResultList.toSet().toList();
       digitList.value = searchResultList;

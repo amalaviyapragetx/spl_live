@@ -1,10 +1,10 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../Local Storage.dart';
 
 class VerifyOTPController extends GetxController {
@@ -24,7 +24,6 @@ class VerifyOTPController extends GetxController {
 
   var userData;
   Future<void> getStoredUserData() async {
-  
     if (argument != null) {
       phoneNumber = argument['phoneNumber'];
       // countryCode = argument['countryCode'];
@@ -37,7 +36,7 @@ class VerifyOTPController extends GetxController {
   }
 
   void onTapOfContinue() {
-      if (otp.isEmpty) {
+    if (otp.isEmpty) {
       AppUtils.showErrorSnackBar(
         bodyText: "ENTEROTP".tr,
       );
@@ -52,10 +51,8 @@ class VerifyOTPController extends GetxController {
 
   void callVerifyUserApi() async {
     ApiService().verifyUser(await verifyUserBody()).then((value) async {
-  
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
         if (userData != null) {
           String authToken = userData['Token'] ?? "Null From API";
@@ -65,9 +62,8 @@ class VerifyOTPController extends GetxController {
           await LocalStorage.write(ConstantsVariables.authToken, authToken);
           await LocalStorage.write(ConstantsVariables.isActive, isActive);
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
-          await LocalStorage.write(
-              ConstantsVariables.isUserDetailSet, isUserDetailSet);
-          Get.toNamed(AppRoutName.userDetailsPage);
+          await LocalStorage.write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
+          Get.toNamed(AppRouteNames.userDetailsPage);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
@@ -90,16 +86,14 @@ class VerifyOTPController extends GetxController {
 
   void callVerifyOTPApi() async {
     ApiService().verifyOTP(await verifyOTPBody()).then((value) async {
-    
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
         String authToken = userData['Token'] ?? "Null From API";
         await LocalStorage.write(ConstantsVariables.authToken, authToken);
         if (userData != null) {
           Get.toNamed(
-            AppRoutName.setMPINPage,
+            AppRouteNames.setMPINPage,
           );
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
@@ -116,18 +110,16 @@ class VerifyOTPController extends GetxController {
     final verifyOTPBody = {
       "otp": otp.value,
     };
-    
+
     return verifyOTPBody;
   }
 
   void callResendOtpApi() async {
     ApiService().resendOTP(await resendOtpBody()).then((value) async {
-      
       if (value['status']) {
         secondsRemaining.value = 60;
         _startTimer();
-        AppUtils.showSuccessSnackBar(
-            bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

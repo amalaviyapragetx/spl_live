@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../../api_services/api_service.dart';
-import '../../../../helper_files/constant_variables.dart';
 import '../../../../helper_files/ui_utils.dart';
 import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/response_model.dart';
@@ -22,8 +22,7 @@ class CreateWithDrawalPageController extends GetxController {
   RxString ifcsCode = "".obs;
   var userId = "";
 
-  final _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
 
   @override
@@ -51,8 +50,7 @@ class CreateWithDrawalPageController extends GetxController {
     print(userId);
     ApiService().getBankDetails({"id": userId}).then((value) async {
       if (value['status']) {
-        BankDetailsResponseModel model =
-            BankDetailsResponseModel.fromJson(value);
+        BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         // if (model.message!.isNotEmpty) {
         //   AppUtils.showSuccessSnackBar(
         //       bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
@@ -79,16 +77,13 @@ class CreateWithDrawalPageController extends GetxController {
       );
 
   void createWithdrawalRequest() async {
-    ApiService()
-        .createWithdrawalRequest(await createWithdrawalRequestBody())
-        .then((value) async {
+    ApiService().createWithdrawalRequest(await createWithdrawalRequestBody()).then((value) async {
       if (value['status']) {
         ResponseModel model = ResponseModel.fromJson(value);
         amountTextController.clear();
-        Get.offAndToNamed(AppRoutName.withdrawalpage);
+        Get.offAndToNamed(AppRouteNames.withdrawalpage);
         if (model.message!.isNotEmpty) {
-          AppUtils.showSuccessSnackBar(
-              bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
       } else {
         AppUtils.showErrorSnackBar(

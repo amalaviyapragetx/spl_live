@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../api_services/api_urls.dart';
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
@@ -299,7 +299,7 @@ class NormalGamePageController extends GetxController {
         if (value['data'] == false) {
           selectedBidsList.clear();
           Get.offAllNamed(
-            AppRoutName.gameModePage,
+            AppRouteNames.gameModePage,
             arguments: marketValue.value,
           );
           AppUtils.showErrorSnackBar(
@@ -307,7 +307,7 @@ class NormalGamePageController extends GetxController {
           );
         } else {
           Get.offAllNamed(
-            AppRoutName.gameModePage,
+            AppRouteNames.gameModePage,
             arguments: marketValue.value,
           );
           AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);

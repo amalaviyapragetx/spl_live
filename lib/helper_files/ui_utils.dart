@@ -4,9 +4,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/utils/constant.dart';
 
 class AppUtils {
   static bool isProgressVisible = false;
@@ -111,7 +111,7 @@ class AppUtils {
               child: SizedBox(
                 width: Dimensions.w40,
                 child: SvgPicture.asset(
-                  ConstantImage.walletAppbar,
+                  AppImage.walletAppbar,
                   color: AppColors.white,
                 ),
               ),

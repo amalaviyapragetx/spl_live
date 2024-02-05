@@ -2,20 +2,22 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/models/banner_model.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
+import 'package:spllive/utils/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
-import '../../../models/benner_model.dart';
 import '../../../models/bid_history_model_new.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/starline_bid_request_model.dart';
@@ -28,7 +30,6 @@ import '../../../models/notifiaction_models/notification_count_model.dart';
 import '../../../models/passbook_page_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starlinechar_model/new_starlinechart_model.dart';
-import '../../../routes/app_routes_name.dart';
 import '../../Local Storage.dart';
 import '../../bottum_navigation_screens/bid_history.dart';
 import '../../bottum_navigation_screens/moreoptions.dart';
@@ -36,6 +37,7 @@ import '../../bottum_navigation_screens/passbook_page.dart';
 import '../utils/home_screen_utils.dart';
 
 class HomePageController extends GetxController {
+  final homeCon = Get.put<HomeController>(HomeController());
   TextEditingController dateinput = TextEditingController();
   TextEditingController dateinputForResultHistory = TextEditingController();
   DateTime bidHistotyDate = DateTime.now();
@@ -79,24 +81,22 @@ class HomePageController extends GetxController {
   var walletController = Get.put(WalletController());
   RxString walletBalance = "00".obs;
   RxInt getNotifiactionCount = 0.obs;
-  RxList<BennerData> bennerData = <BennerData>[].obs;
+  RxList<BannerDataModel> bennerData = <BannerDataModel>[].obs;
   RxBool starlineCheck = false.obs;
   @override
   void onInit() {
-    setboolData();
-    callMarketsApi();
-    getUserData();
-    getUserBalance();
-    getNotificationCount();
-    getNotificationsData();
+    setBoolData();
+    // callMarketsApi();
+    // getUserData();
+    // getUserBalance();
+    // getNotificationCount();
+    // getNotificationsData();
     super.onInit();
   }
 
   callFcmApi(userId) async {
     var token = await LocalStorage.read(ConstantsVariables.fcmToken);
-    Timer(const Duration(milliseconds: 200), () {
-      fsmApiCall(userId, token);
-    });
+    Timer(const Duration(milliseconds: 200), () => fsmApiCall(userId, token));
   }
 
   fcmBody(userId, fcmToken) {
@@ -113,9 +113,7 @@ class HomePageController extends GetxController {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -130,30 +128,29 @@ class HomePageController extends GetxController {
           //     bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
 
-  void setboolData() async {
-    await LocalStorage.write(ConstantsVariables.timeOut, true);
-    await LocalStorage.write(ConstantsVariables.mPinTimeOut, false);
-    await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
-    await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
-    await LocalStorage.write(ConstantsVariables.totalAmount, "0");
-    await LocalStorage.write(ConstantsVariables.marketName, "");
-    await LocalStorage.write(ConstantsVariables.marketNotification, true);
-    await LocalStorage.write(ConstantsVariables.starlineNotification, true);
-    starlineCheck.value = await LocalStorage.read(ConstantsVariables.starlineConnect);
-
+  void setBoolData() async {
+    GetStorage().write(ConstantsVariables.timeOut, true);
+    GetStorage().write(ConstantsVariables.mPinTimeOut, false);
+    GetStorage().write(ConstantsVariables.bidsList, selectedBidsList);
+    GetStorage().write(ConstantsVariables.starlineBidsList, bidList);
+    GetStorage().write(ConstantsVariables.totalAmount, "0");
+    GetStorage().write(ConstantsVariables.marketName, "");
+    GetStorage().write(ConstantsVariables.marketNotification, true);
+    GetStorage().write(ConstantsVariables.starlineNotification, true);
+    starlineCheck.value = GetStorage().read(ConstantsVariables.starlineConnect) ?? false;
     starlineCheck.value == true ? widgetContainer.value = 1 : widgetContainer.value;
     starlineCheck.value == true ? isStarline.value = true : isStarline.value;
     Timer(const Duration(seconds: 1), () async {
-      await LocalStorage.write(ConstantsVariables.starlineConnect, false);
+      GetStorage().write(ConstantsVariables.starlineConnect, false);
     });
-    getBennerData();
+
+    homeCon.getHomeData();
+    // getBennerData();
   }
 
   void callMarketsApi() {
@@ -166,7 +163,7 @@ class HomePageController extends GetxController {
 
   Future<void> handleRefresh() async {
     await Future.delayed(const Duration(seconds: 1));
-    setboolData();
+    setBoolData();
     callMarketsApi();
     getUserData();
     getNotificationCount();
@@ -176,12 +173,50 @@ class HomePageController extends GetxController {
   @override
   void dispose() async {
     marketHistoryList.clear();
-
     super.dispose();
   }
+  //
+  // RxBool load = false.obs;
+  // getHomeData() async {
+  //   try {
+  //     load.value = true;
+  //     final resp = await Future.wait([
+  //       getBennearData(),
+  //     ]);
+  //     if (resp.isNotEmpty) {
+  //       if (resp[0].runtimeType == StreamSongModel) {
+  //         streamSongModel.value = resp[0] as StreamSongModel;
+  //         if (streamSongModel.value.status ?? false) {
+  //           streamList.value = streamSongModel.value.data ?? [];
+  //           if (streamList.isNotEmpty) {
+  //             currentPlaySongImage.value = streamList[0].image ?? "";
+  //             currentPlaySongTitle.value = streamList[0].title ?? "";
+  //             currentPlaySongArtist.value = streamList[0].artist ?? "";
+  //             currentPlaySongDuration.value = streamList[0].duration ?? "";
+  //             currentPlaySongYear.value = streamList[0].year ?? "";
+  //
+  //             streamList.removeAt(0);
+  //           }
+  //           load.value = false;
+  //           count.value++;
+  //         }
+  //       }
+  //       if (resp[1].runtimeType == HomeModel) {
+  //         homeModel.value = resp[1] as HomeModel;
+  //         if (homeModel.value.status ?? false) {
+  //           dashboardlist.value = homeModel.value.data?.buzz?.rows ?? [];
+  //           podCaslList.value = homeModel.value.data?.podcast?.rows ?? [];
+  //         }
+  //       }
+  //       load.value = false;
+  //     }
+  //   } catch (e) {
+  //     load.value = false;
+  //   }
+  // }
 
   ontapOfBidData() {
-    Get.toNamed(AppRoutName.newBidHistorypage);
+    Get.toNamed(AppRouteNames.newBidHistorypage);
   }
 
   Future<void> getUserData() async {
@@ -221,9 +256,7 @@ class HomePageController extends GetxController {
           // print("Star ********************* ${starLineMarketList.toJson()}");
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -262,9 +295,7 @@ class HomePageController extends GetxController {
           noMarketFound.value = true;
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -293,9 +324,7 @@ class HomePageController extends GetxController {
               "Starline Chart",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            SizedBox(
-              height: Dimensions.h5,
-            ),
+            SizedBox(height: Dimensions.h5),
             starlineChartDateAndTime.isEmpty
                 ? SizedBox(
                     height: size.height / 2.5,
@@ -315,9 +344,7 @@ class HomePageController extends GetxController {
           ],
         );
       default:
-        return HomeScreenUtils().gridColumn(
-          size,
-        );
+        return HomeScreenUtils().gridColumn(size);
     }
   }
 
@@ -333,7 +360,7 @@ class HomePageController extends GetxController {
                   walletText: walletBalance.toString(),
                   onTapTranction: () {},
                   notifictionCount: notifictionCount,
-                  onTapNotifiaction: () => Get.toNamed(AppRoutName.notificationPage),
+                  onTapNotifiaction: () => Get.toNamed(AppRouteNames.notificationPage),
                   onTapTelegram: () => launch("https://t.me/satta_matka_kalyan_bazar_milan"),
                   shareOntap: () => Share.share("http://spl.live")),
               Expanded(
@@ -392,9 +419,7 @@ class HomePageController extends GetxController {
                                   position = 2;
                                   widgetContainer.value = position;
                                   isStarline.value = false;
-                                  launch(
-                                    "https://wa.me/+917769826748/?text=hi",
-                                  );
+                                  launch("https://wa.me/+917769826748/?text=hi");
                                 },
                               ),
                               spaceBeetween,
@@ -557,9 +582,7 @@ class HomePageController extends GetxController {
                   ),
                   Obx(
                     () => Column(
-                      children: [
-                        getDashBoardWidget(widgetContainer.value, size, context),
-                      ],
+                      children: [getDashBoardWidget(widgetContainer.value, size, context)],
                     ),
                   ),
                 ],
@@ -572,24 +595,20 @@ class HomePageController extends GetxController {
 
   onTapOfNormalMarket(MarketData market) {
     if (market.isBidOpenForClose ?? false) {
-      Get.toNamed(AppRoutName.gameModePage, arguments: market);
+      Get.toNamed(AppRouteNames.gameModePage, arguments: market);
     } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Bidding is Closed!!!!",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
     }
   }
 
   void onTapOfStarlineMarket(StarlineMarketData market) {
     if (market.isBidOpen ?? false) {
       Get.toNamed(
-        AppRoutName.starLineGameModesPage,
+        AppRouteNames.starLineGameModesPage,
         arguments: market,
       );
     } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Bidding is Closed!!!!",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
     }
   }
 
@@ -686,9 +705,7 @@ class HomePageController extends GetxController {
           starlineChartTime.value = model.data!.markets as List<Markets>;
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -702,9 +719,7 @@ class HomePageController extends GetxController {
           AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -733,9 +748,7 @@ class HomePageController extends GetxController {
                 : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
           }
         } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
       },
     );
@@ -760,9 +773,7 @@ class HomePageController extends GetxController {
           passBookModelData.refresh();
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -810,11 +821,7 @@ class HomePageController extends GetxController {
   }
 
   void marketBidsByUserId({required bool lazyLoad}) {
-    ApiService()
-        .bidHistoryByUserId(
-      userId: userData.id.toString(),
-    )
-        .then(
+    ApiService().bidHistoryByUserId(userId: userData.id.toString()).then(
       (value) async {
         if (value['status']) {
           if (value['data'] != null) {
@@ -826,9 +833,7 @@ class HomePageController extends GetxController {
           }
           marketBidHistoryList.refresh();
         } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
       },
     );
@@ -843,16 +848,14 @@ class HomePageController extends GetxController {
             walletBalance.value = tempBalance.toString();
           }
         } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
       },
     );
   }
 
   void resetNotificationCount() async {
-    ApiService().resetNotification().then((value) async {
+    ApiService().resetNotification().then((value) {
       debugPrint("Notifiaction Count Api ------------- :- $value");
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
@@ -870,8 +873,8 @@ class HomePageController extends GetxController {
     ApiService().getBennerData().then((value) async {
       debugPrint("benner Response Api ------------- :- $value");
       if (value['status']) {
-        BennerModel model = BennerModel.fromJson(value);
-        bennerData.value = model.data as List<BennerData>;
+        BannerModel model = BannerModel.fromJson(value);
+        bennerData.value = model.data as List<BannerDataModel>;
         //  NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
         // getNotifiactionCount.value = model.data!.notificationCount!.toInt();
         // if (model.message!.isNotEmpty) {}

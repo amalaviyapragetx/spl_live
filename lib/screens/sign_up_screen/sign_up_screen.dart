@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/custom_text_style.dart';
@@ -46,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
                 height: Dimensions.h150,
                 width: Dimensions.w200,
                 child: Image.asset(
-                  ConstantImage.splLogo,
+                  AppImage.splLogo,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -87,7 +88,7 @@ class SignUpScreen extends StatelessWidget {
               ),
               // verticalSpace,
               // GestureDetector(
-              //   onTap: () => Get.offAllNamed(AppRoutName.signInPage),
+              //   onTap: () => Get.offAllNamed(AppRouteNames.signInPage),
               //   child: Container(
               //     padding: const EdgeInsets.all(10),
               //     child: Text(
@@ -143,7 +144,7 @@ class SignUpScreen extends StatelessWidget {
         //                 left: Dimensions.w7,
         //               ),
         //               child: SvgPicture.asset(
-        //                 ConstantImage.dropDownArrowSVG,
+        //                 AppImage.dropDownArrowSVG,
         //                 color: AppColors.grey,
         //               ),
         //             ),
@@ -180,7 +181,7 @@ class SignUpScreen extends StatelessWidget {
             controller: controller.mobileNumberController,
             keyboardType: TextInputType.phone,
             hintText: "Enter Mobile Number".tr,
-            imagePath: ConstantImage.phoneSVG,
+            imagePath: AppImage.phoneSVG,
             autofocus: true,
             maxLines: 1,
             minLines: 1,

@@ -3,19 +3,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../helper_files/common_utils.dart';
-import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
 import 'controller/bottum_navigation_controller.dart';
 
 class BidHistory extends StatelessWidget {
-  BidHistory({
-    super.key,
-    required this.appbarTitle,
-  });
+  BidHistory({super.key, required this.appbarTitle});
   final String appbarTitle;
   var controller = Get.put(MoreListController());
   var homePageController = Get.put(HomePageController());
@@ -163,7 +160,7 @@ class BidHistory extends StatelessWidget {
   //                         //         style: CustomTextStyle.textRobotoSansBold,
   //                         //       )
   //                         //     : SvgPicture.asset(
-  //                         //         ConstantImage.openStarsSvg,
+  //                         //         AppImage.openStarsSvg,
   //                         //         height: Dimensions.h13,
   //                         //       ),
   //                         // closeResult != ""
@@ -173,7 +170,7 @@ class BidHistory extends StatelessWidget {
   //                         //         style: CustomTextStyle.textRobotoSansBold,
   //                         //       )
   //                         //     : SvgPicture.asset(
-  //                         //         ConstantImage.closeStarsSvg,
+  //                         //         AppImage.closeStarsSvg,
   //                         //         height: Dimensions.h13,
   //                         //       ),
   //                       ],
@@ -360,7 +357,7 @@ class BidHistory extends StatelessWidget {
                     Row(
                       children: [
                         SvgPicture.asset(
-                          ConstantImage.walletAppbar,
+                          AppImage.walletAppbar,
                           height: Dimensions.h13,
                         ),
                         SizedBox(
@@ -393,7 +390,7 @@ class BidHistory extends StatelessWidget {
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SvgPicture.asset(
-                        ConstantImage.clockSvg,
+                        AppImage.clockSvg,
                         height: Dimensions.h14,
                       ),
                       SizedBox(

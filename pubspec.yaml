@@ -52,8 +52,7 @@ dependencies:
   url_launcher: ^6.1.11
   share_plus: ^7.0.2
   image_picker: ^1.0.1
-  flutter_pin_code_fields: ^2.2.0
-  flutter_local_notifications: ^15.1.1
+#  flutter_pin_code_fields: ^2.2.0
   firebase_messaging: ^14.6.7
   firebase_core: ^2.15.1
   firebase_analytics: ^10.4.5
@@ -63,6 +62,13 @@ dependencies:
   geocoding: ^2.1.0
   flutter_jailbreak_detection: ^1.10.0
   unique_identifier: ^0.3.0
+  logger: ^2.0.2+1
+  dio: ^5.4.0
+  get_it: ^7.6.0
+  json_annotation: ^4.8.1
+  json_serializable: ^6.6.2
+  build_runner: ^2.3.3
+  awesome_notifications: ^0.8.2
 
 dev_dependencies:
   flutter_test:

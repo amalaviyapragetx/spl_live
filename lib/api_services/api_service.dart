@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
-import '../helper_files/constant_variables.dart';
 import '../screens/Local Storage.dart';
 import 'api_urls.dart';
 import 'network_info.dart';
@@ -51,33 +52,33 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> signInAPI(body) async {
-    try {
-      AppUtils.showProgressDialog(isCancellable: false);
-      await initApiService();
-      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
-        ApiUtils.signIN,
-        body,
-        headers: headers,
-        // contentType: contentType,
-      );
-
-      if (response.status.hasError) {
-        AppUtils.hideProgressDialog();
-        AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
-        // AppUtils.showErrorSnackBar(
-        //   bodyText: response.status.code.toString() + response.toString(),
-        // );
-        return Future.error(response.statusText!);
-      } else {
-        AppUtils.hideProgressDialog();
-        return response.body;
-      }
-    } catch (e) {
-      AppUtils.hideProgressDialog();
-      print(e.toString());
-    }
-  }
+  // Future<dynamic> signInAPI(body) async {
+  //   try {
+  //     AppUtils.showProgressDialog(isCancellable: false);
+  //     await initApiService();
+  //     final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
+  //       ApiUtils.signIN,
+  //       body,
+  //       headers: headers,
+  //       // contentType: contentType,
+  //     );
+  //
+  //     if (response.status.hasError) {
+  //       AppUtils.hideProgressDialog();
+  //       AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
+  //       // AppUtils.showErrorSnackBar(
+  //       //   bodyText: response.status.code.toString() + response.toString(),
+  //       // );
+  //       return Future.error(response.statusText!);
+  //     } else {
+  //       AppUtils.hideProgressDialog();
+  //       return response.body;
+  //     }
+  //   } catch (e) {
+  //     AppUtils.hideProgressDialog();
+  //     print(e.toString());
+  //   }
+  // }
 
   Future<dynamic> verifyUser(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
@@ -541,27 +542,27 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> verifyMPIN(body) async {
-    AppUtils.showProgressDialog(isCancellable: false);
-    await initApiService();
-    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
-      ApiUtils.verifyMPIN,
-      body,
-      headers: headersWithToken,
-    );
-
-    if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
-
-      return response.body;
-    } else {
-      AppUtils.hideProgressDialog();
-      return response.body;
-    }
-  }
+  // Future<dynamic> verifyMPIN(body) async {
+  //   AppUtils.showProgressDialog(isCancellable: false);
+  //   await initApiService();
+  //   final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
+  //     ApiUtils.verifyMPIN,
+  //     body,
+  //     headers: headersWithToken,
+  //   );
+  //
+  //   if (response.status.hasError) {
+  //     AppUtils.hideProgressDialog();
+  //     if (response.status.code != null && response.status.code == 401) {
+  //       tokenExpired();
+  //     }
+  //
+  //     return response.body;
+  //   } else {
+  //     AppUtils.hideProgressDialog();
+  //     return response.body;
+  //   }
+  // }
 
   Future<dynamic> forgotMPIN() async {
     AppUtils.showProgressDialog(isCancellable: false);
@@ -584,31 +585,31 @@ class ApiService extends GetConnect implements GetxService {
 
   // new api functions
 
-  Future<dynamic> setUserDetails(body) async {
-    //  AppUtils.showProgressDialog(isCancellable: false);
-    try {
-      await initApiService();
-      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
-        ApiUtils.setUserDetails,
-        body,
-        headers: headersWithToken,
-      );
-      if (response.status.hasError) {
-        AppUtils.hideProgressDialog();
-        if (response.status.code != null && response.status.code == 401) {
-          tokenExpired();
-        }
-
-        return response.body;
-      } else {
-        AppUtils.hideProgressDialog();
-        return response.body;
-      }
-    } catch (e) {
-      AppUtils.hideProgressDialog();
-      print(e);
-    }
-  }
+  // Future<dynamic> setUserDetails(body) async {
+  //   //  AppUtils.showProgressDialog(isCancellable: false);
+  //   try {
+  //     await initApiService();
+  //     final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
+  //       ApiUtils.setUserDetails,
+  //       body,
+  //       headers: headersWithToken,
+  //     );
+  //     if (response.status.hasError) {
+  //       AppUtils.hideProgressDialog();
+  //       if (response.status.code != null && response.status.code == 401) {
+  //         tokenExpired();
+  //       }
+  //
+  //       return response.body;
+  //     } else {
+  //       AppUtils.hideProgressDialog();
+  //       return response.body;
+  //     }
+  //   } catch (e) {
+  //     AppUtils.hideProgressDialog();
+  //     print(e);
+  //   }
+  // }
 
   // Future<dynamic> setDeviceDetails(body) async {
   //   try {
@@ -636,36 +637,36 @@ class ApiService extends GetConnect implements GetxService {
   //     print(e);
   //   }
   // }
-
-  Future<dynamic> setMPIN(body) async {
-    try {
-      AppUtils.showProgressDialog(isCancellable: false);
-      await initApiService();
-      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
-        ApiUtils.setMPIN,
-        body,
-        headers: headersWithToken,
-      );
-      if (response.status.hasError) {
-        AppUtils.hideProgressDialog();
-        if (response.status.code != null && response.status.code == 401) {
-          tokenExpired();
-        }
-        return response.body;
-      } else {
-        AppUtils.hideProgressDialog();
-        return response.body;
-      }
-    } catch (e) {
-      AppUtils.hideProgressDialog();
-      print(e);
-    }
-  }
+  //
+  // Future<dynamic> setMPIN(body) async {
+  //   try {
+  //     AppUtils.showProgressDialog(isCancellable: false);
+  //     await initApiService();
+  //     final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
+  //       ApiUtils.setMPIN,
+  //       body,
+  //       headers: headersWithToken,
+  //     );
+  //     if (response.status.hasError) {
+  //       AppUtils.hideProgressDialog();
+  //       if (response.status.code != null && response.status.code == 401) {
+  //         tokenExpired();
+  //       }
+  //       return response.body;
+  //     } else {
+  //       AppUtils.hideProgressDialog();
+  //       return response.body;
+  //     }
+  //   } catch (e) {
+  //     AppUtils.hideProgressDialog();
+  //     print(e);
+  //   }
+  // }
 
   Future<void> tokenExpired() async {
-    await LocalStorage.remove(ConstantsVariables.authToken);
+    GetStorage().remove(ConstantsVariables.authToken);
     AppUtils.showErrorSnackBar(bodyText: "Session timeout, sign in again");
-    Get.offAllNamed(AppRoutName.signInPage);
+    Get.offAllNamed(AppRouteNames.signInPage);
   }
 
   Future<dynamic> verifyOTP(body) async {
@@ -703,6 +704,7 @@ class ApiService extends GetConnect implements GetxService {
         }
         return Future.error(response.statusText!);
       } else {
+        Logger().e(response.body);
         return response.body;
       }
     } catch (e) {
@@ -1031,20 +1033,20 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<dynamic> getBennerData() async {
     // print(ApiUtils.bennerApi);
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.bennerApi,
       headers: headersWithToken,
     );
     if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
       return Future.error(response.statusText!);
     } else {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       return response.body;
     }
   }

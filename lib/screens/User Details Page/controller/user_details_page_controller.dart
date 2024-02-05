@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
-
-import '../../Set MPIN Page/model/user_details_model.dart';
+import 'package:spllive/utils/constant.dart';
 
 class UserDetailsPageController extends GetxController {
   var fullNameController = TextEditingController();
@@ -23,11 +21,9 @@ class UserDetailsPageController extends GetxController {
       AppUtils.showErrorSnackBar(
         bodyText: "ENTERFULLNAME".tr,
       );
-    } else if (fullNameController.text.length < 6 &&
-        pattern.hasMatch(fullNameController.text.toString())) {
+    } else if (fullNameController.text.length < 6 && pattern.hasMatch(fullNameController.text.toString())) {
       AppUtils.showErrorSnackBar(
-        bodyText:
-            "Full name must be at least 6 characters long and \nshould not contain any numbers",
+        bodyText: "Full name must be at least 6 characters long and \nshould not contain any numbers",
       );
     } else if (userNameController.text.isEmpty) {
       AppUtils.showErrorSnackBar(
@@ -69,7 +65,7 @@ class UserDetailsPageController extends GetxController {
         userName: userNameController.text,
         password: passwordController.text,
       );
-      Get.toNamed(AppRoutName.setMPINPage, arguments: userDetails);
+      Get.toNamed(AppRouteNames.setMPINPage, arguments: userDetails);
     }
   }
 }

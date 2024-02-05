@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/get_feedback_by_id_api_response_model.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
@@ -51,7 +50,7 @@ class MoreListController extends GetxController {
         await LocalStorage.write(ConstantsVariables.fcmToken, deviceToken);
         await LocalStorage.write(ConstantsVariables.locationData, locationData1);
 
-        Get.offAllNamed(AppRoutName.walcomeScreen);
+        Get.offAllNamed(AppRouteNames.welcomeScreen);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../Custom Controllers/wallet_controller.dart';
 import '../../components/auto_complete_text_field_with_suggestion.dart';
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
-import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
@@ -32,7 +32,7 @@ class StarLineNewGamePage extends StatelessWidget {
           actions: [
             InkWell(
               onTap: () {
-                //  Get.offAndToNamed(AppRoutName.transactionPage);
+                //  Get.offAndToNamed(AppRouteNames.transactionPage);
               },
               child: Row(
                 children: [
@@ -40,7 +40,7 @@ class StarLineNewGamePage extends StatelessWidget {
                     height: Dimensions.w22,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
-                      ConstantImage.walletAppbar,
+                      AppImage.walletAppbar,
                       color: AppColors.white,
                       fit: BoxFit.fill,
                     ),
@@ -884,7 +884,7 @@ class StarLineNewGamePage extends StatelessWidget {
                                     //   height: Dimensions.w15,
                                     //   width: Dimensions.w15,
                                     //   child: SvgPicture.asset(
-                                    //     ConstantImage.rupeeImage,
+                                    //     AppImage.rupeeImage,
                                     //     color: AppColors.black,
                                     //   ),
                                     // ),

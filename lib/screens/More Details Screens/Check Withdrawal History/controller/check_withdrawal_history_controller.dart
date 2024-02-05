@@ -1,17 +1,16 @@
 import 'package:get/get.dart';
 import 'package:spllive/models/commun_models/withdrawal_request_model.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../../../Custom Controllers/wallet_controller.dart';
 import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/app_colors.dart';
-import '../../../../helper_files/constant_variables.dart';
 import '../../../../helper_files/ui_utils.dart';
 import '../../../../models/commun_models/user_details_model.dart';
 import '../../../Local Storage.dart';
 
 class CheckWithdrawalPageController extends GetxController {
-  RxList<WithdrawalRequestList> withdrawalRequestList =
-      <WithdrawalRequestList>[].obs;
+  RxList<WithdrawalRequestList> withdrawalRequestList = <WithdrawalRequestList>[].obs;
   UserDetailsModel userData = UserDetailsModel();
   int? userId = 0;
 
@@ -31,7 +30,6 @@ class CheckWithdrawalPageController extends GetxController {
   }
 
   void getWithdrawalHistoryByUserId({required bool lazyLoad}) async {
-  
     await ApiService()
         .getWithdrawalHistoryByUserId(
       userId: userId,
@@ -40,14 +38,10 @@ class CheckWithdrawalPageController extends GetxController {
       (value) async {
         if (value['status']) {
           if (value['data'] != null) {
-            WithdrawalRequestResponseModel model =
-                WithdrawalRequestResponseModel.fromJson(value);
+            WithdrawalRequestResponseModel model = WithdrawalRequestResponseModel.fromJson(value);
             lazyLoad
-                ? withdrawalRequestList
-                    .addAll(model.data ?? <WithdrawalRequestList>[])
-                : withdrawalRequestList.value =
-                    model.data ?? <WithdrawalRequestList>[];
-       
+                ? withdrawalRequestList.addAll(model.data ?? <WithdrawalRequestList>[])
+                : withdrawalRequestList.value = model.data ?? <WithdrawalRequestList>[];
           } else {
             // AppUtils.showErrorSnackBar(
             //   bodyText: value['message'] ?? "",

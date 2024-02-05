@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../Custom Controllers/wallet_controller.dart';
 import '../../components/bidList_for_market.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
-import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
@@ -29,7 +29,7 @@ class StarlineBidsPage extends StatelessWidget {
             InkWell(
               onTap: null,
               //  () {
-              //   //  Get.offAndToNamed(AppRoutName.transactionPage);
+              //   //  Get.offAndToNamed(AppRouteNames.transactionPage);
               // },
               child: Row(
                 children: [
@@ -37,7 +37,7 @@ class StarlineBidsPage extends StatelessWidget {
                     height: Dimensions.h20,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
-                      ConstantImage.walletAppbar,
+                      AppImage.walletAppbar,
                       color: AppColors.white,
                       fit: BoxFit.fill,
                     ),
@@ -68,8 +68,7 @@ class StarlineBidsPage extends StatelessWidget {
           height: size.height,
           width: size.width,
           child: Obx(
-            () => controller.requestModel.value.bids != null &&
-                    controller.requestModel.value.bids!.isNotEmpty
+            () => controller.requestModel.value.bids != null && controller.requestModel.value.bids!.isNotEmpty
                 ? SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(children: [
@@ -83,12 +82,8 @@ class StarlineBidsPage extends StatelessWidget {
                             return BidHistoryList(
                               marketName: controller.checkType(index),
                               bidType: "",
-                              bidCoin: controller
-                                  .requestModel.value.bids![index].coins
-                                  .toString(),
-                              bidNo: controller
-                                  .requestModel.value.bids![index].bidNo
-                                  .toString(),
+                              bidCoin: controller.requestModel.value.bids![index].coins.toString(),
+                              bidNo: controller.requestModel.value.bids![index].bidNo.toString(),
                               onDelete: () => controller.onDeleteBids(index),
                             );
                             // return Padding(
@@ -121,7 +116,7 @@ class StarlineBidsPage extends StatelessWidget {
                             //           height: Dimensions.h30,
                             //           width: Dimensions.w30,
                             //           child: SvgPicture.asset(
-                            //             ConstantImage.trashIcon,
+                            //             AppImage.trashIcon,
                             //             fit: BoxFit.cover,
                             //           ),
                             //         ),
@@ -225,10 +220,7 @@ class StarlineBidsPage extends StatelessWidget {
   }
 
   Widget nameColumn(
-      {required String titleText,
-      required String subText,
-      required Color textColor,
-      required Color textColor2}) {
+      {required String titleText, required String subText, required Color textColor, required Color textColor2}) {
     return Padding(
       padding: const EdgeInsets.only(
         top: 5,
@@ -300,7 +292,7 @@ class StarlineBidsPage extends StatelessWidget {
   //                 child: Padding(
   //                   padding: const EdgeInsets.all(8.0),
   //                   child: SvgPicture.asset(
-  //                     ConstantImage.rupeeImage,
+  //                     AppImage.rupeeImage,
   //                     fit: BoxFit.contain,
   //                     color: AppColors.appbarColor,
   //                   ),

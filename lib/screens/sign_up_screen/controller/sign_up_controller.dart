@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spllive/api_services/api_service.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
-
-import '../../../api_services/api_service.dart';
+import 'package:spllive/utils/constant.dart';
 
 class SignUpPageController extends GetxController {
   var mobileNumberController = TextEditingController();
@@ -26,7 +25,7 @@ class SignUpPageController extends GetxController {
       }
       if (value['data'] != null && value['status']) {
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        Get.toNamed(AppRoutName.verifyOTPPage, arguments: {
+        Get.toNamed(AppRouteNames.verifyOTPPage, arguments: {
           "countryCode": countryCode.value,
           "phoneNumber": mobileNumberController.text,
         });

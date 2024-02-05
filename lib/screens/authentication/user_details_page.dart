@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
+import 'package:spllive/controller/auth_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
-import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/utils/constant.dart';
 
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/password_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
-import 'controller/user_details_page_controller.dart';
 
 class UserDetailsPage extends StatelessWidget {
   UserDetailsPage({Key? key}) : super(key: key);
 
-  final controller = Get.find<UserDetailsPageController>();
-
-  final verticalSpace = SizedBox(
-    height: Dimensions.h15,
-  );
+  final controller = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,31 +36,30 @@ class UserDetailsPage extends StatelessWidget {
         backgroundColor: AppColors.white,
         body: SafeArea(
           child: Padding(
-            padding:
-                EdgeInsets.only(left: Dimensions.h15, right: Dimensions.h15),
+            padding: EdgeInsets.only(left: Dimensions.h15, right: Dimensions.h15),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
+                  SizedBox(height: Dimensions.h15),
+                  SizedBox(height: Dimensions.h15),
+                  SizedBox(height: Dimensions.h15),
+                  SizedBox(height: Dimensions.h15),
+                  SizedBox(height: Dimensions.h15),
+                  SizedBox(height: Dimensions.h15),
                   Center(
                     child: SizedBox(
                       height: Dimensions.h70,
                       width: Dimensions.w150,
                       child: Image.asset(
-                        ConstantImage.splLogo,
+                        AppImage.splLogo,
                         fit: BoxFit.contain,
                       ),
                     ),
                   ),
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
                   Text(
                     "SIGN UP".tr,
                     style: CustomTextStyle.textRobotoSlabBold.copyWith(
@@ -76,46 +69,40 @@ class UserDetailsPage extends StatelessWidget {
                       color: AppColors.appbarColor,
                     ),
                   ),
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
                   _buildNormalField(
                     hintText: "Enter Full Name".tr,
-                    textController: controller.fullNameController,
+                    textController: controller.fullNameRes,
                     maxLength: 100,
                     keyboardType: TextInputType.text,
                     autofocus: true,
-                    formatter: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^[a-zA-Z\s]+$'))
-                    ],
+                    formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]+$'))],
                     //focusNode: controller.fullNameFocusNode,
                   ),
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
                   _buildNormalField(
                     hintText: "Enter User Name".tr,
-                    textController: controller.userNameController,
+                    textController: controller.userNameRes,
                     maxLength: 100,
                     keyboardType: TextInputType.text,
-                    formatter: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^[a-zA-Z0-9\s]+$'))
-                    ],
+                    formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))],
                     //  focusNode: controller.userNameFocusNode,
                   ),
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
                   _buildPasswordField(
                     hintText: "Enter Password".tr,
-                    textController: controller.passwordController,
+                    textController: controller.passwordRes,
                     visibility: controller.pVisibility,
                   ),
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
                   _buildPasswordField(
                     hintText: "Enter Confirm Password".tr,
-                    textController: controller.confirmPasswordController,
+                    textController: controller.confirmPasswordRes,
                     visibility: controller.cpVisibility,
                   ),
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
                   _buildSignUpButtonRow(),
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h15),
                   _buildCreateAccount(),
                 ],
               ),
@@ -126,15 +113,13 @@ class UserDetailsPage extends StatelessWidget {
     );
   }
 
-  AlertDialog onExitAlert(BuildContext context,
-      {required Function() onExit, required Function() onCancel}) {
+  AlertDialog onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
     return AlertDialog(
       title: Text(
         'Exit App',
         style: CustomTextStyle.textRobotoSansBold,
       ),
-      content: Text('Are you sure you want to exit the app?',
-          style: CustomTextStyle.textRobotoSansMedium),
+      content: Text('Are you sure you want to exit the app?', style: CustomTextStyle.textRobotoSansMedium),
       actions: [
         TextButton(
           onPressed: onCancel,
@@ -172,7 +157,7 @@ class UserDetailsPage extends StatelessWidget {
       controller: textController,
       keyboardType: keyboardType,
       hintText: hintText,
-      imagePath: ConstantImage.profileIconSVG,
+      imagePath: AppImage.profileIconSVG,
       maxLines: 1,
       minLines: 1,
       isEnabled: true,
@@ -205,9 +190,7 @@ class UserDetailsPage extends StatelessWidget {
         hintText: hintText,
         hidePassword: visibility.value,
         suffixIcon: InkWell(
-          onTap: () {
-            controller.onTapOfVisibilityIcon(visibility);
-          },
+          onTap: () => visibility.value = !visibility.value,
           child: Icon(
             Icons.visibility,
             size: Dimensions.h15,
@@ -215,7 +198,7 @@ class UserDetailsPage extends StatelessWidget {
           ),
         ),
         suffixIconColor: AppColors.appbarColor,
-        imagePath: ConstantImage.lockSVG,
+        imagePath: AppImage.lockSVG,
       );
     });
   }
@@ -249,7 +232,7 @@ class UserDetailsPage extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: Dimensions.h15),
       child: GestureDetector(
-        onTap: () => Get.offAllNamed(AppRoutName.signInPage),
+        onTap: () => Get.offAllNamed(AppRouteNames.signInPage),
         child: Center(
           child: Text(
             "ACCOUNTLOGIN".tr,

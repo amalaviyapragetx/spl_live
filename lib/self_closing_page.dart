@@ -1,15 +1,16 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:spllive/helper_files/constant_image.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/models/commun_models/user_details_model.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
+import 'package:spllive/utils/constant.dart';
+
 import 'helper_files/app_colors.dart';
-import 'helper_files/constant_variables.dart';
 import 'helper_files/custom_text_style.dart';
-import 'models/commun_models/user_details_model.dart';
-import 'routes/app_routes_name.dart';
 
 class InactivityController extends GetxController {
   Timer? _inactivityTimer;
@@ -25,7 +26,6 @@ class InactivityController extends GetxController {
   void _resetInactivityTimer() {
     _inactivityTimer?.cancel();
     _inactivityTimer = Timer(_inactivityDuration, () {
-      // Navigate to the home screen or do other actions
       _showExitDialog();
     });
   }
@@ -37,12 +37,9 @@ class InactivityController extends GetxController {
   ifUserLogedIn() async {
     bool alreadyLoggedIn = await getStoredUserData();
 
-    bool isActive =
-        await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    bool isVerified =
-        await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin =
-        await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
+    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
     // print("-------------------------------==========$userLogin");
     if (userLogin) {
       if (alreadyLoggedIn) {
@@ -55,12 +52,9 @@ class InactivityController extends GetxController {
 
   userLogIn(PointerEvent event) async {
     bool alreadyLoggedIn = await getStoredUserData();
-    bool isActive =
-        await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    bool isVerified =
-        await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin =
-        await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
+    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
 
     if (userLogin) {
       if (alreadyLoggedIn) {
@@ -80,10 +74,9 @@ class InactivityController extends GetxController {
   UserDetailsModel _userDetailsModel = UserDetailsModel();
 
   Future<bool> getStoredUserData() async {
-    String? authToken =
-        await LocalStorage.read(ConstantsVariables.authToken) ?? "";
-    var userData = await LocalStorage.read(ConstantsVariables.userData);
-    if (authToken != null && authToken.isNotEmpty) {
+    String? authToken = GetStorage().read(ConstantsVariables.authToken) ?? "";
+    var userData = GetStorage().read(ConstantsVariables.userData);
+    if (authToken.isNotEmpty && authToken.isNotEmpty) {
       if (userData != null) {
         _userDetailsModel = UserDetailsModel.fromJson(userData);
       }
@@ -104,7 +97,7 @@ class InactivityController extends GetxController {
             height: 50,
             width: 50,
             child: SvgPicture.asset(
-              ConstantImage.clockIcon,
+              AppImage.clockIcon,
               color: AppColors.appbarColor,
             ),
           ),
@@ -123,17 +116,15 @@ class InactivityController extends GetxController {
         InkWell(
           onTap: () async {
             bool alreadyLoggedIn = await getStoredUserData();
-            bool isActive =
-                await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-            bool isVerified =
-                await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-            await LocalStorage.write(ConstantsVariables.timeOut, false);
-            var timeOut = await LocalStorage.read(ConstantsVariables.timeOut);
+            bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
+            bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
+            GetStorage().write(ConstantsVariables.timeOut, false);
+            var timeOut = GetStorage().read(ConstantsVariables.timeOut);
             if (timeOut) {
               if (alreadyLoggedIn) {
                 if (isActive && isVerified) {
                   Get.offAllNamed(
-                    AppRoutName.mPINPage,
+                    AppRouteNames.mPINPage,
                     arguments: {"id": _userDetailsModel.id},
                   );
                   _inactivityTimer?.cancel();
@@ -143,7 +134,7 @@ class InactivityController extends GetxController {
               }
             } else {
               Get.offAllNamed(
-                AppRoutName.mPINPage,
+                AppRouteNames.mPINPage,
                 arguments: {"id": _userDetailsModel.id},
               );
               _inactivityTimer?.cancel();

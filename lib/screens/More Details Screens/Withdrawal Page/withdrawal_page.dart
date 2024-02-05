@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../../helper_files/app_colors.dart';
-import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
-import '../../../routes/app_routes_name.dart';
 
 class WithdrawalPage extends StatelessWidget {
   WithdrawalPage({super.key});
@@ -27,7 +27,7 @@ class WithdrawalPage extends StatelessWidget {
       onWillPop: () async {
         homeController.pageWidget.value = 4;
         homeController.currentIndex.value = 4;
-        Get.toNamed(AppRoutName.dashBoardPage);
+        Get.toNamed(AppRouteNames.dashboardPage);
         return false;
       },
       child: Scaffold(
@@ -37,14 +37,14 @@ class WithdrawalPage extends StatelessWidget {
             onPressed: () {
               homeController.pageWidget.value = 4;
               homeController.currentIndex.value = 4;
-              Get.toNamed(AppRoutName.dashBoardPage);
+              Get.toNamed(AppRouteNames.dashboardPage);
             },
             icon: const Icon(Icons.arrow_back),
           ),
           actions: [
             InkWell(
               onTap: () {
-                // Get.offAndToNamed(AppRoutName.transactionPage);
+                // Get.offAndToNamed(AppRouteNames.transactionPage);
               },
               child: Row(
                 children: [
@@ -52,22 +52,18 @@ class WithdrawalPage extends StatelessWidget {
                     height: Dimensions.h20,
                     width: Dimensions.w25,
                     child: SvgPicture.asset(
-                      ConstantImage.walletAppbar,
+                      AppImage.walletAppbar,
                       color: AppColors.white,
                       fit: BoxFit.fill,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: Dimensions.r10,
-                        bottom: Dimensions.r8,
-                        left: Dimensions.r10,
-                        right: Dimensions.r10),
+                        top: Dimensions.r10, bottom: Dimensions.r8, left: Dimensions.r10, right: Dimensions.r10),
                     child: Obx(
                       () => Text(
                         walletController.walletBalance.toString(),
-                        style: CustomTextStyle.textRobotoSansMedium
-                            .copyWith(fontSize: Dimensions.h18),
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h18),
                       ),
                     ),
                   ),
@@ -77,8 +73,7 @@ class WithdrawalPage extends StatelessWidget {
           ],
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: Dimensions.w20, vertical: Dimensions.h10),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.w20, vertical: Dimensions.h10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,24 +115,21 @@ class WithdrawalPage extends StatelessWidget {
                               children: [
                                 Text(
                                   "10:00 AM",
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                                     color: AppColors.black,
                                     fontSize: Dimensions.h14,
                                   ),
                                 ),
                                 Text(
                                   "  to ",
-                                  style: CustomTextStyle.textRobotoSansLight
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansLight.copyWith(
                                     color: AppColors.black,
                                     fontSize: Dimensions.h14,
                                   ),
                                 ),
                                 Text(
                                   "07:00 PM",
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                                     color: AppColors.black,
                                     fontSize: Dimensions.h14,
                                   ),
@@ -150,8 +142,7 @@ class WithdrawalPage extends StatelessWidget {
                             Text(
                               "(Withdrawal Available all days including Sunday & Bank Holidays )",
                               textAlign: TextAlign.center,
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
                                 color: AppColors.black,
                                 fontSize: Dimensions.h14,
                               ),
@@ -215,8 +206,7 @@ class WithdrawalPage extends StatelessWidget {
                               child: Text(
                                 textAlign: TextAlign.start,
                                 "Withdrawal request processing time minimum 60 min to 24 Hrs ",
-                                style: CustomTextStyle.textRobotoSansLight
-                                    .copyWith(
+                                style: CustomTextStyle.textRobotoSansLight.copyWith(
                                   color: AppColors.black,
                                   fontSize: Dimensions.h14,
                                 ),
@@ -252,7 +242,7 @@ class WithdrawalPage extends StatelessWidget {
                         borderWidth: 0,
                         textStyle: CustomTextStyle.textRobotoSansLight,
                         onTap: () {
-                          Get.toNamed(AppRoutName.createWithDrawalPage);
+                          Get.toNamed(AppRouteNames.createWithDrawalPage);
                         },
                         height: Dimensions.h40,
                         width: Dimensions.w200,
@@ -283,8 +273,8 @@ class WithdrawalPage extends StatelessWidget {
                         textStyle: CustomTextStyle.textRobotoSansLight,
                         onTap: () {
                           // checkWithdrawalPageController.get(lazyLoad: false);
-                        
-                          Get.offAndToNamed(AppRoutName.checkWithDrawalPage);
+
+                          Get.offAndToNamed(AppRouteNames.checkWithDrawalPage);
                         },
                         height: Dimensions.h40,
                         width: Dimensions.w200,

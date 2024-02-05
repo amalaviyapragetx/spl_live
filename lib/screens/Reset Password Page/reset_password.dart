@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:get/get.dart';
+import 'package:spllive/components/pin_code_field.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/utils/constant.dart';
+
 import '../../components/password_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/custom_text_style.dart';
@@ -44,7 +44,7 @@ class ResetPasswordPage extends StatelessWidget {
               height: Dimensions.h80,
               width: Dimensions.w200,
               child: Image.asset(
-                ConstantImage.splLogo,
+                AppImage.splLogo,
                 fit: BoxFit.contain,
               ),
             ),
@@ -63,45 +63,46 @@ class ResetPasswordPage extends StatelessWidget {
               ),
             ),
           ),
-          // verticalSpace,
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: Dimensions.w20),
-          //   child: Text(
-          //     "RESETPASSWORDTEXT".tr,
-          //     textAlign: TextAlign.center,
-          //     style: CustomTextStyle.textRobotoSansLight.copyWith(
-          //       fontSize: Dimensions.h16,
-          //       letterSpacing: 1,
-          //       height: 1.5,
-          //       color: AppColors.appbarColor,
-          //     ),
-          //   ),
-          // ),
+
           verticalSpace,
-          _buildPinCodeField(
-            context: context,
-            pinCodeLength: 6,
+          CommonPinCodeField(
             title: "OTP".tr,
-            pinType: controller.otp,
+            pinCodeLength: 6,
             focusNode: controller.focusNode1,
-            onChanged: (val) {
+            onChanged: (v) {
+              if (v.length == 6) {
+                controller.focusNode1.unfocus();
+                controller.focusNode2.requestFocus();
+              }
+            },
+            onCompleted: (val) {
+              controller.otp.value = val;
               if (val.length == 6) {
                 controller.focusNode1.unfocus();
                 controller.focusNode2.requestFocus();
               }
             },
           ),
-          SizedBox(
-            height: Dimensions.h10,
-          ),
+          // _buildPinCodeField(
+          //   context: context,
+          //   pinCodeLength: 6,
+          //   title: "OTP".tr,
+          //   pinType: controller.otp,
+          //   focusNode: controller.focusNode1,
+          //   onChanged: (val) {
+          //     if (val.length == 6) {
+          //       controller.focusNode1.unfocus();
+          //       controller.focusNode2.requestFocus();
+          //     }
+          //   },
+          // ),
+          SizedBox(height: Dimensions.h10),
           Obx(
             () => Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.h12),
                 child: GestureDetector(
-                  onTap: () => controller.formattedTime.toString() != "0:00"
-                      ? null
-                      : controller.callResendOtpApi(),
+                  onTap: () => controller.formattedTime.toString() != "0:00" ? null : controller.callResendOtpApi(),
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
@@ -115,8 +116,7 @@ class ResetPasswordPage extends StatelessWidget {
                         controller.formattedTime.toString() != "0:00"
                             ? TextSpan(
                                 text: controller.formattedTime.toString(),
-                                style: CustomTextStyle.textRobotoSansLight
-                                    .copyWith(
+                                style: CustomTextStyle.textRobotoSansLight.copyWith(
                                   color: AppColors.appbarColor,
                                   decoration: TextDecoration.underline,
                                   fontWeight: FontWeight.normal,
@@ -125,8 +125,7 @@ class ResetPasswordPage extends StatelessWidget {
                               )
                             : TextSpan(
                                 text: "RESENDOTP".tr,
-                                style: CustomTextStyle.textRobotoSansLight
-                                    .copyWith(
+                                style: CustomTextStyle.textRobotoSansLight.copyWith(
                                   color: AppColors.appbarColor,
                                   decoration: TextDecoration.underline,
                                   fontWeight: FontWeight.normal,
@@ -235,93 +234,91 @@ class ResetPasswordPage extends StatelessWidget {
           ),
         ),
         suffixIconColor: AppColors.grey,
-        imagePath: ConstantImage.lockSVG,
+        imagePath: AppImage.lockSVG,
       );
     });
   }
 
-  _buildPinCodeField({
-    required BuildContext context,
-    required String title,
-    required RxString pinType,
-    required int pinCodeLength,
-    FocusNode? focusNode,
-    required Function(String) onChanged,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: CustomTextStyle.textRobotoSlabBold.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: Dimensions.h15,
-            letterSpacing: 1,
-            color: AppColors.black,
-          ),
-        ),
-        PinCodeFields(
-          autofocus: true,
-          length: pinCodeLength,
-          focusNode: focusNode,
-          obscureText: false,
-          obscureCharacter: "",
-          textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-              color: AppColors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20),
-          animationDuration: const Duration(milliseconds: 200),
-          onComplete: (val) {
-            pinType.value = val;
-          },
-          keyboardType: TextInputType.number,
-          animation: Animations.fade,
-          activeBorderColor: AppColors.appbarColor,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          onChange: (val) {
-            pinType.value = val;
-            onChanged(val);
-          },
-          enabled: true,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          responsive: true,
-        ),
-        // PinCodeTextField(
-        //   length: pinCodeLength,
-        //   appContext: context,
-        //   cursorColor: AppColors.black,
-        //   obscureText: false,
-        //   animationType: AnimationType.fade,
-        //   keyboardType: TextInputType.number,
-        //   enableActiveFill: true,
-        //   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        //   pinTheme: PinTheme(
-        //       shape: PinCodeFieldShape.box,
-        //       activeFillColor: AppColors.grey.withOpacity(0.2),
-        //       inactiveFillColor: AppColors.grey.withOpacity(0.2),
-        //       selectedFillColor: AppColors.grey.withOpacity(0.2),
-        //       inactiveColor: Colors.transparent,
-        //       activeColor: Colors.transparent,
-        //       selectedColor: Colors.transparent,
-        //       errorBorderColor: Colors.transparent,
-        //       borderWidth: 0,
-        //       borderRadius: BorderRadius.all(Radius.circular(Dimensions.r5))),
-        //   textStyle: CustomTextStyle.textPTsansMedium
-        //       .copyWith(color: AppColors.black, fontWeight: FontWeight.bold),
-        //   animationDuration: const Duration(milliseconds: 200),
-        //   // controller: controller.otpController,
-        //   onCompleted: (val) {
-        //     pinType.value = val;
-        //   },
-        //   onChanged: (val) {
-        //     pinType.value = val;
-        //   },
-        //   beforeTextPaste: (text) {
-        //     return false;
-        //   },
-        // ),
-      ],
-    );
-  }
+  // _buildPinCodeField({
+  //   required BuildContext context,
+  //   required String title,
+  //   required RxString pinType,
+  //   required int pinCodeLength,
+  //   FocusNode? focusNode,
+  //   required Function(String) onChanged,
+  // }) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         title,
+  //         textAlign: TextAlign.center,
+  //         style: CustomTextStyle.textRobotoSlabBold.copyWith(
+  //           fontWeight: FontWeight.bold,
+  //           fontSize: Dimensions.h15,
+  //           letterSpacing: 1,
+  //           color: AppColors.black,
+  //         ),
+  //       ),
+  //       PinCodeFields(
+  //         autofocus: true,
+  //         length: pinCodeLength,
+  //         focusNode: focusNode,
+  //         obscureText: false,
+  //         obscureCharacter: "",
+  //         textStyle: CustomTextStyle.textRobotoSansMedium
+  //             .copyWith(color: AppColors.black, fontWeight: FontWeight.bold, fontSize: 20),
+  //         animationDuration: const Duration(milliseconds: 200),
+  //         onComplete: (val) {
+  //           pinType.value = val;
+  //         },
+  //         keyboardType: TextInputType.number,
+  //         animation: Animations.fade,
+  //         activeBorderColor: AppColors.appbarColor,
+  //         margin: const EdgeInsets.symmetric(horizontal: 20),
+  //         onChange: (val) {
+  //           pinType.value = val;
+  //           onChanged(val);
+  //         },
+  //         enabled: true,
+  //         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  //         responsive: true,
+  //       ),
+  //       // PinCodeTextField(
+  //       //   length: pinCodeLength,
+  //       //   appContext: context,
+  //       //   cursorColor: AppColors.black,
+  //       //   obscureText: false,
+  //       //   animationType: AnimationType.fade,
+  //       //   keyboardType: TextInputType.number,
+  //       //   enableActiveFill: true,
+  //       //   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  //       //   pinTheme: PinTheme(
+  //       //       shape: PinCodeFieldShape.box,
+  //       //       activeFillColor: AppColors.grey.withOpacity(0.2),
+  //       //       inactiveFillColor: AppColors.grey.withOpacity(0.2),
+  //       //       selectedFillColor: AppColors.grey.withOpacity(0.2),
+  //       //       inactiveColor: Colors.transparent,
+  //       //       activeColor: Colors.transparent,
+  //       //       selectedColor: Colors.transparent,
+  //       //       errorBorderColor: Colors.transparent,
+  //       //       borderWidth: 0,
+  //       //       borderRadius: BorderRadius.all(Radius.circular(Dimensions.r5))),
+  //       //   textStyle: CustomTextStyle.textPTsansMedium
+  //       //       .copyWith(color: AppColors.black, fontWeight: FontWeight.bold),
+  //       //   animationDuration: const Duration(milliseconds: 200),
+  //       //   // controller: controller.otpController,
+  //       //   onCompleted: (val) {
+  //       //     pinType.value = val;
+  //       //   },
+  //       //   onChanged: (val) {
+  //       //     pinType.value = val;
+  //       //   },
+  //       //   beforeTextPaste: (text) {
+  //       //     return false;
+  //       //   },
+  //       // ),
+  //     ],
+  //   );
+  // }
 }
