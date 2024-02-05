@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

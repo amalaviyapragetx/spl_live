@@ -26,7 +26,6 @@ class ApiUtils {
   static String createStarLineMarketBid = '$baseURL/bid/starlineBidCreate';
   static String getDailyStarLineMarkets = '$baseURL/starline/getDailyStarlineMarket';
   static String createWithdrawalRequest = '$baseURL/withdraw/createRequest';
-  // static String getWithdrawalRequestTime = '$baseURL/withdraw/getRequestTime';
   static String getWithdrawalHistoryByUserId = '$baseURL/withdraw/getRequestByUserId/';
   static String getStarlineGameRates = '$baseURL/game/getAll/';
   static String createFeedback = '$baseURL/feedback/create';

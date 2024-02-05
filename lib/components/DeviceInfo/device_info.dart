@@ -41,8 +41,6 @@ class DeviceInfo {
         manufacturer = deviceData["manufacturer"] ?? "getting Null";
         brandName = deviceData["brand"] ?? "getting Null";
         osVersion = deviceData["version.release"] ?? "getting Null";
-
-        // final serialNumber = deviceData['serialNumber'];
         // bool isRooted = androidInfo.isPhysicalDevice;
         // bool jailbroken = await FlutterJailbreakDetection.jailbroken;
         // print(jailbroken);

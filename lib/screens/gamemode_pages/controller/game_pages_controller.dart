@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
@@ -140,7 +139,7 @@ class GameModePagesController extends GetxController {
         .getGameModes(
             openCloseValue: openCloseValue.value != "CLOSEBID".tr ? "0" : "1",
             marketID: marketValue.value.id ?? 0)
-        .then((value) async {;
+        .then((value) async {
 
       if (value['status']) {
         GameModesApiResponseModel gameModeModel =

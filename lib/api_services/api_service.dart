@@ -12,6 +12,7 @@ class ApiService extends GetConnect implements GetxService {
   Map<String, String>? headersWithToken = {};
   String contentType = "";
   String authToken = '';
+  @override
   final allowAutoSignedCert = true;
   @override
   void onInit() {
@@ -31,7 +32,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> signUpAPI(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.signUP,
       body,
       headers: headers,
@@ -54,7 +55,7 @@ class ApiService extends GetConnect implements GetxService {
     try {
       AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
-      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
         ApiUtils.signIN,
         body,
         headers: headers,
@@ -81,7 +82,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> verifyUser(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.verifyUSER,
       body,
       headers: headers,
@@ -101,7 +102,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> logout() async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.logout,
       {},
       headers: headersWithToken,
@@ -123,7 +124,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> forgotPassword(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.forgotPassword,
       body,
       headers: headers,
@@ -145,7 +146,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> resetPassword(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.resetPassword,
       body,
       headers: headersWithToken,
@@ -167,7 +168,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> getBankDetails(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.getBankDetails,
       body,
       headers: headersWithToken,
@@ -187,7 +188,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> editBankDetails(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.editBankDetails,
       body,
       headers: headersWithToken,
@@ -211,7 +212,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.getDailyMarkets,
       headers: headersWithToken,
     );
@@ -233,7 +234,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getGameModes}$openCloseValue/$marketID",
       headers: headersWithToken,
     );
@@ -252,7 +253,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> createMarketBid(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.createMarketBid,
       body,
       headers: headersWithToken,
@@ -274,7 +275,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> createStarLineMarketBid(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.createStarLineMarketBid,
       body,
       headers: headersWithToken,
@@ -299,7 +300,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> createWithdrawalRequest(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.createWithdrawalRequest,
       body,
       headers: headersWithToken,
@@ -324,7 +325,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
       headers: headersWithToken,
     );
@@ -347,7 +348,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getStarLineGameModes}$marketID",
       headers: headersWithToken,
     );
@@ -369,7 +370,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getTransactionHistory}?id=$userId&limit=100&offset=$offset",
       headers: headersWithToken,
     );
@@ -391,7 +392,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getFeedbackAndRatingsById}$userId",
       headers: headersWithToken,
     );
@@ -413,7 +414,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getWithdrawalHistoryByUserId}$userId",
       headers: headersWithToken,
     );
@@ -458,7 +459,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getStarlineGameRates}true",
       headers: headersWithToken,
     );
@@ -480,7 +481,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.getStarlineGameRates}$forStarlineGameModes",
       headers: headersWithToken,
     );
@@ -499,7 +500,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> createFeedback(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.createFeedback,
       body,
       headers: headersWithToken,
@@ -521,7 +522,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> resendOTP(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.resendOTP,
       body,
       headers: headersWithToken,
@@ -543,7 +544,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> verifyMPIN(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.verifyMPIN,
       body,
       headers: headersWithToken,
@@ -565,7 +566,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> forgotMPIN() async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.forgotMPIN,
       headers: headersWithToken,
     );
@@ -587,7 +588,7 @@ class ApiService extends GetConnect implements GetxService {
     //  AppUtils.showProgressDialog(isCancellable: false);
     try {
       await initApiService();
-      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
         ApiUtils.setUserDetails,
         body,
         headers: headersWithToken,
@@ -640,7 +641,7 @@ class ApiService extends GetConnect implements GetxService {
     try {
       AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
-      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
         ApiUtils.setMPIN,
         body,
         headers: headersWithToken,
@@ -670,7 +671,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> verifyOTP(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.verifyOTP,
       body,
       headers: headersWithToken,
@@ -692,7 +693,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> getBalance() async {
     try {
       await initApiService();
-      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
         ApiUtils.getBalance,
         headers: headersWithToken,
       );
@@ -719,7 +720,7 @@ class ApiService extends GetConnect implements GetxService {
   }) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
       headers: headersWithToken,
     );
@@ -738,7 +739,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> changePassword(body) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.changePassword,
       body,
       headers: headersWithToken,
@@ -784,7 +785,7 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.webStarLinechar,
       headers: headersWithToken,
     );
@@ -828,7 +829,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> newGameModeApi(body, url) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       url,
       body,
       //  headers: headersWithToken,
@@ -855,7 +856,7 @@ class ApiService extends GetConnect implements GetxService {
   }) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.passBookApi}/$userId?isAll=$isAll&limit=$limit&offset=$offset",
       //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
       headers: headersWithToken,
@@ -882,7 +883,7 @@ class ApiService extends GetConnect implements GetxService {
     //   "${ApiUtils.marketbidHistory}/$userId",
     //   headers: headersWithToken,
     // );
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.bidHistory}?id=$userId&limit=5000&offset=0",
       headers: headersWithToken,
     );
@@ -932,7 +933,7 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<dynamic> getNotificationCount() async {
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.getNotificationCount,
       headers: headersWithToken,
     );
@@ -950,7 +951,7 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<dynamic> getAllNotifications() async {
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.getAllNotifications,
       headers: headersWithToken,
     );
@@ -968,7 +969,7 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<dynamic> resetNotification() async {
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.resetNotificationCount,
       headers: headersWithToken,
     );
@@ -987,7 +988,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> rateApp(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.rateAppApi,
       body,
       headers: headersWithToken,
@@ -1032,7 +1033,7 @@ class ApiService extends GetConnect implements GetxService {
     // print(ApiUtils.bennerApi);
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.bennerApi,
       headers: headersWithToken,
     );
@@ -1051,7 +1052,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> fcmToken(body) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.fcmToken,
       body,
       headers: headersWithToken,
@@ -1070,7 +1071,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> appKilledStateApi() async {
     //AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.appKillApi,
       headers: headersWithToken,
     );
@@ -1087,7 +1088,7 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<dynamic> getAppVersion() async {
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.getVersion,
     );
 

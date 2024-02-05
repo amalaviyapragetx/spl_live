@@ -30,7 +30,6 @@ class NormalGamePageController extends GetxController {
   final FocusNode middleFocusNode = FocusNode();
   final FocusNode rightFocusNode = FocusNode();
   final FocusNode coinFocusNode = FocusNode();
-  // late FocusNode focusNode;
   var spdptpList = [];
   String spValue = "SP";
   String dpValue = "DP";
@@ -72,7 +71,6 @@ class NormalGamePageController extends GetxController {
   void onInit() {
     super.onInit();
     getArguments();
-    // focusNode = FocusNode();
   }
 
   checkType(index) {
@@ -91,9 +89,6 @@ class NormalGamePageController extends GetxController {
     biddingType.value = argument['biddingType'];
     marketName.value = argument['marketName'];
     marketId = argument['marketId'];
-    // isBulkMode.value = argument['isBulkMode'];
-    // marketData.value = argument['marketData'];
-    // requestModel.value.dailyMarketId = marketData.value.id;
     requestModel.value.bidType = bidType;
     var data = await LocalStorage.read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
@@ -102,14 +97,13 @@ class NormalGamePageController extends GetxController {
     requestModel.value.dailyMarketId = marketId;
     await loadJsonFile();
     RxBool showNumbersLine = false.obs;
-    RxList<String> suggestionList = <String>[].obs;
-    List<String> _tempValidationList = [];
+    List<String> tempValidationList = [];
     switch (gameMode.value.name) {
       case "Choice Pana SPDP":
         showNumbersLine.value = false;
         apiUrl = ApiUtils.choicePanaSPDP;
         panaControllerLength.value = 1;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         choisePanaSPDPTP = jsonModel.spdptp!;
         break;
       case "Digits Based Jodi":
@@ -117,15 +111,15 @@ class NormalGamePageController extends GetxController {
         panaControllerLength.value = 1;
         apiUrl = ApiUtils.digitsBasedJodi;
         digitBasedJodi = jsonModel.jodi!;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         break;
       case "Odd Even":
         showNumbersLine.value = false;
         panaControllerLength.value = 1;
-        _tempValidationList = jsonModel.singleAnk!;
+        tempValidationList = jsonModel.singleAnk!;
         break;
     }
-    _validationListForNormalMode.addAll(_tempValidationList);
+    _validationListForNormalMode.addAll(tempValidationList);
   }
 
 // Function to filter elements that match the provided digits
@@ -146,15 +140,6 @@ class NormalGamePageController extends GetxController {
       }
     }
     var a = panaArray.where((num1) {
-      // if ((left.isNotEmpty && num1[0] != left)) {
-      //   print("+============");
-      //   return false;
-      // } else if (((middle.isNotEmpty && num1[num1.length ~/ 2] != middle))) {
-      //   return false;
-      // } else if ((last.isNotEmpty && num1[num1.length - 1] != last)) {
-      //   return false;
-      // }
-      // return true;
       return matchesDigits(num1, left: left, middle: middle, last: last);
     }).toList();
 
@@ -183,16 +168,16 @@ class NormalGamePageController extends GetxController {
 
     bool endsWithRight(String num) => num.endsWith(right);
 
-    if (right == null) {
-      result = jodiArray.where((num) => startsWithLeft(num)).toList();
+    if (right.isEmpty) {
+      result = jodiArray.where((String num) => startsWithLeft(num)).toList();
       result.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
-    } else if (left == null) {
-      result = jodiArray.where((num) => endsWithRight(num)).toList();
+    } else if (left.isEmpty) {
+      result = jodiArray.where((String num) => endsWithRight(num)).toList();
       result.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
-    } else if (left != null && right != null) {
-      List<String> leftList = jodiArray.where((num) => endsWithRight(num)).toList();
+    } else if (left.isNotEmpty && right.isNotEmpty) {
+      List<String> leftList = jodiArray.where((String num) => endsWithRight(num)).toList();
       leftList.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
-      List<String> rightList = jodiArray.where((num) => startsWithLeft(num)).toList();
+      List<String> rightList = jodiArray.where((String num) => startsWithLeft(num)).toList();
       rightList.sort((a, b) => b.compareTo(a)); // Sort in descending order for strings.
 
       result = [...leftList, ...rightList];

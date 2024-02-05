@@ -11,7 +11,7 @@ import '../../helper_files/dimentions.dart';
 import 'controller/set_mpin_page_controller.dart';
 
 class SetMPINPage extends StatefulWidget {
-  SetMPINPage({Key? key}) : super(key: key);
+  const SetMPINPage({Key? key}) : super(key: key);
 
   @override
   State<SetMPINPage> createState() => _SetMPINPageState();

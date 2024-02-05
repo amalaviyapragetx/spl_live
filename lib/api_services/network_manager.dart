@@ -21,24 +21,20 @@ class GetXNetworkManager extends GetxController {
   @override
   void onInit() {
     getConnectionType();
-    _streamSubscription =
-        _connectivity.onConnectivityChanged.listen(_updateState);
+    _streamSubscription = _connectivity.onConnectivityChanged.listen(_updateState);
     super.onInit();
   }
 
-  // a method to get which connection result, if you we connected to internet or no if yes then which network
   Future<void> getConnectionType() async {
-    var connectivityResult;
+    ConnectivityResult? connectivityResult;
     try {
       connectivityResult = await (_connectivity.checkConnectivity());
     } on PlatformException catch (e) {
       debugPrint(e.toString());
     }
-    return _updateState(connectivityResult);
+    return _updateState(connectivityResult!);
   }
 
-  // state update, of network, if you are connected to WIFI connectionType will get set to 1,
-  // and update the state to the consumer of that variable.
   _updateState(ConnectivityResult result) {
     switch (result) {
       case ConnectivityResult.wifi:

@@ -171,7 +171,7 @@ class AppRoutes {
       name: AppRoutName.setMPINPage,
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
-      page: () => SetMPINPage(),
+      page: () => const SetMPINPage(),
       bindings: [
         SetMPINPageBinding(),
       ],
