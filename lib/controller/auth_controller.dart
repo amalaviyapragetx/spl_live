@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:logger/logger.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:spllive/api/service_locator.dart';
 import 'package:spllive/api/services/auth_service.dart';
@@ -484,19 +483,19 @@ class AuthController extends GetxController {
       DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
       AppUtils.showProgressDialog(isCancellable: false);
       final resp = await authService.verifyMPIN(
-          id: userId.value,
-          deviceId: deviceInfo.deviceId,
-          city: city.value,
-          country: country.value,
-          state: state.value,
-          street: street.value,
-          postalCode: postalCode.value,
-          mpin: verifyMpin.value);
+        id: userId.value,
+        deviceId: deviceInfo.deviceId,
+        city: city.value,
+        country: country.value,
+        state: state.value,
+        street: street.value,
+        postalCode: postalCode.value,
+        mpin: verifyMpin.value,
+      );
       if (resp['status']) {
         if (resp['data'] != null) {
           GetStorage().write(ConstantsVariables.authToken, resp['data']['Token'] ?? "Null From API");
         }
-        Logger().e(GetStorage().read(ConstantsVariables.authToken));
         Get.offAllNamed(AppRouteNames.dashboardPage);
       } else {
         mpinErrorController.add(ErrorAnimationType.shake);

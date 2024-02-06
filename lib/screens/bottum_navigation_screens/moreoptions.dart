@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/screens/Local%20Storage.dart';
 import 'package:spllive/utils/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,37 +13,30 @@ import '../home_screen/controller/homepage_controller.dart';
 import 'controller/bottum_navigation_controller.dart';
 
 class MoreOptions extends StatelessWidget {
-  const MoreOptions({super.key});
-
+  MoreOptions({super.key});
+  var controller = Get.put(MoreListController());
+  var homeController = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    var controller = Get.put(MoreListController());
-    var homeController = Get.put(HomePageController());
-    // ignore: sized_box_for_whitespace
     return Column(
       children: [
         AppUtils().simpleAppbar(
             appBarTitle: "",
             leadingWidht: Dimensions.w200,
-            leading: Container(
-              child: Row(
-                children: [
-                  SizedBox(width: Dimensions.w15),
-                  Text(
-                    "MORE".tr,
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
-                  ),
-                ],
-              ),
+            leading: Row(
+              children: [
+                SizedBox(width: Dimensions.w15),
+                Text(
+                  "MORE".tr,
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
+                ),
+              ],
             ),
             actions: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
                 child: InkWell(
-                  onTap: () {
-                    controller.toggleShare();
-                  },
+                  onTap: () => controller.toggleShare(),
                   child: Container(
                     width: Dimensions.w20,
                     decoration: BoxDecoration(
@@ -64,99 +57,58 @@ class MoreOptions extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                SizedBox(
-                  height: Dimensions.h15,
-                ),
+                SizedBox(height: Dimensions.h15),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRouteNames.profilePage);
-                    },
+                    onTap: () => Get.toNamed(AppRouteNames.profilePage),
                     iconData: AppImage.profileIconSVG,
                     text: "MYPROFILE".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRouteNames.myAccountPage);
-                    },
+                    onTap: () => Get.toNamed(AppRouteNames.myAccountPage),
                     iconData: AppImage.bakAccount,
                     text: "MYACCOUNT".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRouteNames.gameRatePage);
-                    },
+                    onTap: () => Get.toNamed(AppRouteNames.gameRatePage),
                     iconData: AppImage.gameRate,
                     text: "GAMERATE".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRouteNames.notificationDetailsPage);
-                    },
+                    onTap: () => Get.toNamed(AppRouteNames.notificationDetailsPage),
                     iconData: AppImage.notifiacation,
                     text: "NOTIFICATIONS".tr),
-                // listItems(
-                //     onTap: () {},
-                //     iconData: AppImage.playIcon,
-                //     text: "HOWTOPLAY".tr),
                 listItems(
-                    onTap: () {
-                      launch(
-                        "https://wa.me/+917769826748/?text=hi",
-                      );
-                    },
+                    onTap: () => launch("https://wa.me/+917769826748/?text=hi"),
                     iconData: AppImage.plusIcon,
                     text: "ADDFUND".tr),
                 listItems(
                     onTap: () {
-                      homeController.pageWidget.value = 1;
-                      homeController.currentIndex.value = 1;
-                      homeController.marketBidsByUserId(lazyLoad: false);
+                      // homeController.pageWidget.value = 1;
+                      // homeController.currentIndex.value = 1;
                     },
                     iconData: AppImage.clockIcon,
                     text: "BIDDINGHISTORY".tr),
                 listItems(
-                    onTap: () async {
-                      await LocalStorage.write(ConstantsVariables.withDrawal, true);
-                      homeController.pageWidget.value = 5;
-                      homeController.currentIndex.value = 5;
-                      // Get.toNamed(AppRouteNames.withdrawalpage);
+                    onTap: () {
+                      GetStorage().write(ConstantsVariables.withDrawal, true);
+                      // homeController.pageWidget.value = 5;
+                      // homeController.currentIndex.value = 5;
                     },
                     iconData: AppImage.withDrawalIcon,
                     text: "WITHDRAWAL_TXT1".tr),
-                // listItems(
-                //     onTap: () {
-                //       Get.toNamed(AppRouteNames.transactionPage);
-                //     },
-                //     iconData: AppImage.addFundIcon,
-                //     text: "TRANSACTIONHISTORY".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRouteNames.feedBackPage);
-                    },
+                    onTap: () => Get.toNamed(AppRouteNames.feedBackPage),
                     iconData: AppImage.giveFeedbackIcon,
                     text: "GIVEFEEDBACK".tr),
                 listItems(
-                  onTap: () {
-                    controller.onTapOfRateUs();
-                  },
+                  onTap: () => controller.onTapOfRateUs(),
                   iconData: AppImage.rateusStartIcon,
                   text: "RATEUS".tr,
                 ),
-                // listItems(
-                //   onTap: () {
-                //     Get.toNamed(AppRouteNames.stalineTerms);
-                //   },
-                //   iconData: AppImage.addFundIcon,
-                //   text: "STARLINETERMS&CONDITION".tr,
-                // ),
                 listItems(
-                  onTap: () {
-                    Get.toNamed(AppRouteNames.aboutPage);
-                  },
+                  onTap: () => Get.toNamed(AppRouteNames.aboutPage),
                   iconData: AppImage.infoIcon,
                   text: "ABOUTUS".tr,
                 ),
                 listItems(
-                  onTap: () async {
-                    controller.callLogout();
-                  },
+                  onTap: () => controller.callLogout(),
                   iconData: AppImage.signOutIcon,
                   text: "SIGNOUT".tr,
                 ),

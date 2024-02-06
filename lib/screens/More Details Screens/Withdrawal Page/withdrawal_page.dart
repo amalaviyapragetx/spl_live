@@ -25,8 +25,8 @@ class WithdrawalPage extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        homeController.pageWidget.value = 4;
-        homeController.currentIndex.value = 4;
+        // homeController.pageWidget.value = 4;
+        // homeController.currentIndex.value = 4;
         Get.toNamed(AppRouteNames.dashboardPage);
         return false;
       },
@@ -35,8 +35,8 @@ class WithdrawalPage extends StatelessWidget {
           appBarTitle: "My Wallet",
           leading: IconButton(
             onPressed: () {
-              homeController.pageWidget.value = 4;
-              homeController.currentIndex.value = 4;
+              // homeController.pageWidget.value = 4;
+              // homeController.currentIndex.value = 4;
               Get.toNamed(AppRouteNames.dashboardPage);
             },
             icon: const Icon(Icons.arrow_back),

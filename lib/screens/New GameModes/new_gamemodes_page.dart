@@ -19,61 +19,52 @@ class NewGameModePage extends StatelessWidget {
   NewGameModePage({super.key});
   var walletController = Get.put(WalletController());
   var controller = Get.put(NewGamemodePageController());
-  var verticalSpace = SizedBox(
-    height: Dimensions.h10,
-  );
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Obx(
       () => Scaffold(
         appBar: AppUtils().simpleAppbar(
           appBarTitle: controller.marketName.toString(),
           actions: [
-            InkWell(
-              onTap: () {
-                //  Get.offAndToNamed(AppRouteNames.transactionPage);
-              },
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: Dimensions.h20,
-                    width: Dimensions.w25,
-                    child: SvgPicture.asset(
-                      AppImage.walletAppbar,
-                      color: AppColors.white,
-                      fit: BoxFit.fill,
-                    ),
+            Row(
+              children: [
+                SizedBox(
+                  height: Dimensions.h20,
+                  width: Dimensions.w25,
+                  child: SvgPicture.asset(
+                    AppImage.walletAppbar,
+                    color: AppColors.white,
+                    fit: BoxFit.fill,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: Dimensions.r8,
-                      bottom: Dimensions.r5,
-                      left: Dimensions.r10,
-                      right: Dimensions.r10,
-                    ),
-                    child: Obx(
-                      () => Text(
-                        walletController.walletBalance.toString(),
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.white,
-                          fontSize: Dimensions.h17,
-                        ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: Dimensions.r8,
+                    bottom: Dimensions.r5,
+                    left: Dimensions.r10,
+                    right: Dimensions.r10,
+                  ),
+                  child: Obx(
+                    () => Text(
+                      walletController.walletBalance.toString(),
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        color: AppColors.white,
+                        fontSize: Dimensions.h17,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
         body: SizedBox(
-          height: size.height,
-          width: size.width,
+          height: Get.height,
+          width: Get.width,
           child: Column(
             children: [
-              verticalSpace,
+              SizedBox(height: Dimensions.h10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
@@ -101,7 +92,7 @@ class NewGameModePage extends StatelessWidget {
                   ],
                 ),
               ),
-              verticalSpace,
+              SizedBox(height: Dimensions.h10),
               controller.gameMode.value.name!.toUpperCase().contains("SPDP")
                   ? Obx(
                       () => Row(
@@ -150,7 +141,9 @@ class NewGameModePage extends StatelessWidget {
                       ),
                     )
                   : Container(),
-              controller.gameMode.value.name!.toUpperCase().contains("SPDP") ? verticalSpace : Container(),
+              controller.gameMode.value.name!.toUpperCase().contains("SPDP")
+                  ? SizedBox(height: Dimensions.h10)
+                  : Container(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
@@ -207,7 +200,7 @@ class NewGameModePage extends StatelessWidget {
                         child: RoundedCornerEditTextWithIcon(
                           tapTextStyle: AppColors.appbarColor,
                           hintTextColor: AppColors.appbarColor.withOpacity(0.5),
-                          width: size.width / 2,
+                          width: Get.width / 2,
                           textAlign: TextAlign.center,
                           controller: controller.coinController,
                           textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
@@ -254,8 +247,8 @@ class NewGameModePage extends StatelessWidget {
                   ],
                 ),
               ),
-              verticalSpace,
-              verticalSpace,
+              SizedBox(height: Dimensions.h10),
+              SizedBox(height: Dimensions.h10),
               RoundedCornerButton(
                 text: "PLUSADD".tr,
                 color: AppColors.appbarColor,
@@ -347,20 +340,20 @@ class NewGameModePage extends StatelessWidget {
                 height: Dimensions.h30,
                 width: Dimensions.w150,
               ),
-              verticalSpace,
-              bidList(size),
+              SizedBox(height: Dimensions.h10),
+              bidList(),
             ],
           ),
         ),
-        bottomNavigationBar: bottombar(size, context),
+        bottomNavigationBar: bottombar(context),
       ),
     );
   }
 
-  bottombar(Size size, context) {
+  bottombar(context) {
     return Obx(
       () => Container(
-        width: size.width,
+        width: Get.width,
         height: Dimensions.h45,
         color: AppColors.appbarColor,
         child: Row(
@@ -390,9 +383,7 @@ class NewGameModePage extends StatelessWidget {
                 borderRadius: Dimensions.r5,
                 borderWidth: 0.2,
                 textStyle: CustomTextStyle.textRobotoSansBold,
-                onTap: () {
-                  controller.onTapOfSaveButton(context);
-                },
+                onTap: () => controller.onTapOfSaveButton(context),
                 height: Dimensions.h25,
                 width: Dimensions.w100,
               ),
@@ -403,7 +394,7 @@ class NewGameModePage extends StatelessWidget {
     );
   }
 
-  Widget bidList(Size size) {
+  Widget bidList() {
     return Obx(
       () => controller.selectedBidsList.isEmpty
           ? Container()
@@ -445,10 +436,7 @@ class NewGameModePage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              text,
-              style: CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor),
-            ),
+            Text(text, style: CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor)),
             Padding(
               padding: const EdgeInsets.only(left: 4.0),
               child: Icon(
@@ -466,9 +454,7 @@ class NewGameModePage extends StatelessWidget {
   Widget nameColumn(
       {required String? titleText, required String subText, required Color textColor, required Color textColor2}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 3.0,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 3.0),
       child: SizedBox(
         // color: AppColors.balanceCoinsColor,
         width: Dimensions.w95,

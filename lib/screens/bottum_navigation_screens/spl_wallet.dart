@@ -144,8 +144,8 @@ class SPLWallet extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      homeController.pageWidget.value = 5;
-                      homeController.currentIndex.value = 5;
+                      // homeController.pageWidget.value = 5;
+                      // homeController.currentIndex.value = 5;
                     },
                     child: Container(
                       height: Dimensions.h50,

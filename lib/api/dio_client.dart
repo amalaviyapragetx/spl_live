@@ -3,7 +3,6 @@ import 'package:logger/logger.dart';
 import 'package:spllive/utils/constant.dart';
 
 class DioClient {
-// dio instance
   final Dio _dio;
   final Logger _logger = Logger(printer: PrettyPrinter(colors: true, printEmojis: true, printTime: false));
 

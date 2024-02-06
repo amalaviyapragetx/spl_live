@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:spllive/controller/home_controller.dart';
+import 'package:spllive/controller/passbook_controller.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/common_utils.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
-import '../home_screen/controller/homepage_controller.dart';
 import 'controller/bottum_navigation_controller.dart';
 
-class PassBook extends StatelessWidget {
+class PassBook extends StatefulWidget {
   PassBook({super.key});
-  var verticalSpace = SizedBox(
-    width: Dimensions.w3,
-  );
-  var homeController = Get.put(HomePageController());
+
+  @override
+  State<PassBook> createState() => _PassBookState();
+}
+
+class _PassBookState extends State<PassBook> {
+  var homeController = Get.find<HomeController>();
   var controller = Get.put(MoreListController());
+  final passCon = Get.put<PassbookController>(PassbookController());
+
+  @override
+  void initState() {
+    super.initState();
+    passCon.getPassBookData(lazyLoad: false, offset: controller.offset.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -33,27 +46,20 @@ class PassBook extends StatelessWidget {
                   SizedBox(width: Dimensions.w15),
                   Text(
                     "Passbook",
-                    style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(fontSize: Dimensions.h20),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
                   ),
                   const Expanded(child: SizedBox()),
                   GestureDetector(
                     onTap: () {
-                      if (homeController.pageWidget.value == 3 &&
-                          homeController.currentIndex.value == 3) {
-                        if (MediaQuery.of(context).orientation ==
-                            Orientation.portrait) {
-                          SystemChrome.setPreferredOrientations(
-                              [DeviceOrientation.landscapeLeft]);
+                      if (homeController.pageWidget.value == 3 && homeController.currentIndex.value == 3) {
+                        if (MediaQuery.of(context).orientation == Orientation.portrait) {
+                          SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
                         } else {
-                          SystemChrome.setPreferredOrientations(
-                              [DeviceOrientation.portraitUp]);
+                          SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                         }
                       } else {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.portraitUp,
-                          DeviceOrientation.landscapeLeft
-                        ]);
+                        SystemChrome.setPreferredOrientations(
+                            [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                       }
                     },
                     child: Padding(
@@ -83,16 +89,16 @@ class PassBook extends StatelessWidget {
                 pageWidget(
                   "previous",
                   onTap: () {
-                    homeController.prevPage();
+                    passCon.prevPage();
                   },
                 ),
                 pageWidget(
-                  "(${homeController.offset} / ${homeController.calculateTotalPages().toString()})",
+                  "(${passCon.offset} / ${passCon.calculateTotalPages().toString()})",
                 ),
                 pageWidget(
                   "NEXT",
                   onTap: () {
-                    homeController.nextPage();
+                    passCon.nextPage();
                   },
                 ),
               ],
@@ -129,7 +135,7 @@ class PassBook extends StatelessWidget {
   }
 
   table() {
-    print(homeController.passBookModelData.toJson());
+    print(passCon.passBookModelData.toJson());
 
     return Obx(
       () => DataTable(
@@ -157,10 +163,10 @@ class PassBook extends StatelessWidget {
         columnSpacing: 1,
 
         rows: List.generate(
-          homeController.passBookModelData.length,
+          passCon.passBookModelData.length,
           (index) {
-            var data = homeController.passBookModelData.elementAt(index);
-  
+            var data = passCon.passBookModelData.elementAt(index);
+
             return DataRow(cells: [
               dataCells(
                 width: Dimensions.w170,
@@ -184,9 +190,7 @@ class PassBook extends StatelessWidget {
               ),
               dataCells(
                   width: Dimensions.w150,
-                  textColor: data.credit == "" ||
-                          data.credit == "null" ||
-                          data.credit == null
+                  textColor: data.credit == "" || data.credit == "null" || data.credit == null
                       ? AppColors.redColor
                       : AppColors.green,
                   text: data.credit == "" || data.credit == null
@@ -235,8 +239,7 @@ class PassBook extends StatelessWidget {
     );
   }
 
-  DataCell dataCells(
-      {required String text, required Color textColor, required double width}) {
+  DataCell dataCells({required String text, required Color textColor, required double width}) {
     return DataCell(
       Padding(
         padding: const EdgeInsets.all(2.0),
@@ -261,8 +264,7 @@ class PassBook extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   text,
-                  style: CustomTextStyle.textRobotoSansMedium
-                      .copyWith(color: textColor),
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor),
                 ),
               ),
             ),

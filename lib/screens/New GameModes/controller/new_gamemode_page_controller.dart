@@ -21,7 +21,6 @@ import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
 import '../../../models/new_game_model.dart';
 import '../../Local Storage.dart';
-import '../../home_screen/controller/homepage_controller.dart';
 
 class NewGamemodePageController extends GetxController {
   var coinController = TextEditingController();
@@ -578,23 +577,9 @@ class NewGamemodePageController extends GetxController {
           if (value['data'] == false) {
             selectedBidsList.clear();
             Get.offAllNamed(AppRouteNames.gameModePage, arguments: marketValue.value);
-            // Get.offAndToNamed(
-            //   AppRouteNames.gameModePage,
-            //   arguments: marketValue.value,
-            // );
-            AppUtils.showErrorSnackBar(
-              bodyText: value['message'] ?? "",
-            );
-            HomePageController().marketBidsByUserId(lazyLoad: false);
+            AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
           } else {
-            Get.offAllNamed(
-              AppRouteNames.gameModePage,
-              arguments: marketValue.value,
-            );
-            // Get.offAndToNamed(
-            //   AppRouteNames.gameModePage,
-            //   arguments: marketValue.value,
-            // );
+            Get.offAllNamed(AppRouteNames.gameModePage, arguments: marketValue.value);
             AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
             final walletController = Get.find<WalletController>();
             walletController.getUserBalance();

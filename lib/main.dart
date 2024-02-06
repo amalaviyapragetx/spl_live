@@ -37,11 +37,11 @@ showNotification(RemoteMessage message) {
 }
 
 void main() async {
+  // HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   WidgetsBinding.instance.addObserver(AppStateListener());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
   await GetStorage.init();
   await Permission.location.request();
   await setup();

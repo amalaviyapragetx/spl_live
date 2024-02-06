@@ -17,9 +17,13 @@ class BannerModel {
 @JsonSerializable()
 class BannerDataModel {
   num? id;
+  @JsonKey(name: "Banner")
   String? banner;
+  @JsonKey(name: "Key")
   String? key;
+  @JsonKey(name: "IsActive")
   bool? isActive;
+  @JsonKey(name: "Priority")
   num? priority;
   String? createdAt;
   String? updatedAt;

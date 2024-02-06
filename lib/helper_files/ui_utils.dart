@@ -85,8 +85,7 @@ class AppUtils {
     );
   }
 
-  AppBar appbar(
-    size, {
+  AppBar appbar({
     required Function() onTapTranction,
     required Function() onTapNotifiaction,
     required Function() shareOntap,
@@ -160,7 +159,7 @@ class AppUtils {
             onTap: onTapTelegram,
             child: Container(
               width: 20,
-              decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
+              decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
               child: Transform.rotate(
                 angle: 180 * 3.14 / 48,
                 child: Padding(
@@ -180,12 +179,12 @@ class AppUtils {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
+          padding: const EdgeInsets.all(10),
           child: InkWell(
             onTap: shareOntap,
             child: Container(
-              width: 20,
-              decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
               child: Icon(
                 Icons.share,
                 size: 13,

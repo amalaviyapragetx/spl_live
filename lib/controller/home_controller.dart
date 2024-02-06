@@ -1,35 +1,54 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/api/service_locator.dart';
 import 'package:spllive/api/services/home_service.dart';
+import 'package:spllive/api_services/api_service.dart';
+import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/balance_model.dart';
 import 'package:spllive/models/banner_model.dart';
+import 'package:spllive/models/commun_models/bid_request_model.dart';
+import 'package:spllive/models/commun_models/starline_bid_request_model.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/models/notifiaction_models/get_all_notification_model.dart';
 import 'package:spllive/models/notifiaction_models/notification_count_model.dart';
 import 'package:spllive/models/starline_daily_market_api_response.dart';
+import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
+import 'package:spllive/screens/bottum_navigation_screens/bid_history.dart';
+import 'package:spllive/screens/bottum_navigation_screens/moreoptions.dart';
+import 'package:spllive/screens/bottum_navigation_screens/passbook_page.dart';
+import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
+import 'package:spllive/screens/home_pages/home_screen.dart';
+import 'package:spllive/screens/home_screen/utils/home_screen_utils.dart';
+import 'package:spllive/utils/constant.dart';
 
 class HomeController extends GetxController {
-  Map<String, String>? headers = {};
-  Map<String, String>? headersWithToken = {};
-  Map<String, String>? headersWithImageAndToken = {};
-  String contentType = "";
-  String authToken = '';
+  RxInt widgetContainer = 0.obs;
+  RxInt pageWidget = 0.obs;
+  RxBool isStarline = false.obs;
+  RxInt currentIndex = 0.obs;
   final homeService = getIt.get<HomeService>();
+  var position = 0;
 
-  // Future<BannerModel?> getBannerData() async {
-  //   try {
-  //     final resp = await homeService.getBannerData();
-  //     if (resp != null) {
-  //       // return resp;
-  //     }
-  //   } catch (e) {
-  //     AppUtils.hideProgressDialog();
-  //     AppUtils.showErrorSnackBar(bodyText: e.toString());
-  //     return null;
-  //   }
-  // }
+  void getBannerData() async {
+    try {
+      final resp = await homeService.getBannerData();
+      if (resp != null) {
+        if (resp.status ?? false) {
+          bannerData.value = bannerModel?.value.data ?? [];
+        }
+      }
+    } catch (e) {
+      AppUtils.hideProgressDialog();
+      AppUtils.showErrorSnackBar(bodyText: e.toString());
+      return null;
+    }
+  }
 
   RxBool load = false.obs;
   RxList<BannerDataModel> bannerData = <BannerDataModel>[].obs;
@@ -37,7 +56,6 @@ class HomeController extends GetxController {
   Rx<DailyMarketApiResponseModel> dailyMarketModel = DailyMarketApiResponseModel().obs;
   RxList<MarketData> normalMarketList = <MarketData>[].obs;
   RxBool noMarketFound = false.obs;
-
   Rx<StarLineDailyMarketApiResponseModel> starLineModel = StarLineDailyMarketApiResponseModel().obs;
   RxList<StarlineMarketData> starLineMarketList = <StarlineMarketData>[].obs;
   Rx<BalanceModel> balanceModel = BalanceModel().obs;
@@ -45,7 +63,6 @@ class HomeController extends GetxController {
   Rx<NotifiactionCountModel> notificationModel = NotifiactionCountModel().obs;
   Rx<GetAllNotificationsData> getAllNotificationModel = GetAllNotificationsData().obs;
   RxInt getNotificationCount = 0.obs;
-
   RxList<NotificationData> notificationData = <NotificationData>[].obs;
   getHomeData() async {
     try {
@@ -155,6 +172,139 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       load.value = false;
+    }
+  }
+
+  RxList<Bids> selectedBidsList = <Bids>[].obs;
+  RxBool starlineCheck = false.obs;
+  RxList<StarLineBids> bidList = <StarLineBids>[].obs;
+  void setBoolData() {
+    GetStorage().write(ConstantsVariables.timeOut, true);
+    GetStorage().write(ConstantsVariables.mPinTimeOut, false);
+    GetStorage().write(ConstantsVariables.bidsList, selectedBidsList);
+    GetStorage().write(ConstantsVariables.starlineBidsList, bidList);
+    GetStorage().write(ConstantsVariables.totalAmount, "0");
+    GetStorage().write(ConstantsVariables.marketName, "");
+    GetStorage().write(ConstantsVariables.marketNotification, true);
+    GetStorage().write(ConstantsVariables.starlineNotification, true);
+    starlineCheck.value = GetStorage().read(ConstantsVariables.starlineConnect) ?? false;
+    starlineCheck.value == true ? widgetContainer.value = 1 : widgetContainer.value;
+    starlineCheck.value == true ? isStarline.value = true : isStarline.value;
+    getHomeData();
+    Timer(const Duration(seconds: 1), () => GetStorage().write(ConstantsVariables.starlineConnect, false));
+  }
+
+  void getNotificationsData() async {
+    ApiService().getAllNotifications().then((value) async {
+      if (value['status']) {
+        GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
+        notificationData.value = model.data!.rows as List<NotificationData>;
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+      }
+    });
+  }
+
+  Widget getDashBoardPages(index, BuildContext context, {required String notificationCount}) {
+    switch (index) {
+      case 0:
+        return const HomeScreen();
+      case 1:
+        return BidHistory(appbarTitle: "Your Market");
+      case 2:
+        return SPLWallet();
+      case 3:
+        return PassBook();
+      case 4:
+        return MoreOptions();
+      case 5:
+        return WithdrawalPage();
+      default:
+        return SafeArea(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                SizedBox(height: Dimensions.h10),
+                HomeScreenUtils().banner(),
+                SizedBox(height: Dimensions.h10),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          spreadRadius: 1,
+                          color: AppColors.grey,
+                          blurRadius: 7,
+                          offset: const Offset(6, 4),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(Dimensions.h5),
+                      border: Border.all(color: AppColors.redColor, width: 1),
+                    ),
+                    //padding: const EdgeInsets.symmetric(horizontal: 60),
+                    child: Column(
+                      children: [
+                        SizedBox(height: Dimensions.h10),
+                        HomeScreenUtils().iconsContainer(
+                          iconColor1: widgetContainer.value == 0 ? AppColors.appbarColor : AppColors.iconColorMain,
+                          iconColor2: widgetContainer.value == 1 ? AppColors.appbarColor : AppColors.iconColorMain,
+                          iconColor3: widgetContainer.value == 2 ? AppColors.appbarColor : AppColors.iconColorMain,
+                          onTap1: () {
+                            position = 0;
+                            widgetContainer.value = position;
+                            isStarline.value = false;
+                            // print(widgetContainer.value);
+                          },
+                          onTap2: () {
+                            position = 1;
+                            isStarline.value = true;
+                            widgetContainer.value = position;
+                            //   print(widgetContainer.value);
+                          },
+                          onTap3: () {
+                            position = 2;
+                            widgetContainer.value = position;
+                            isStarline.value = false;
+                          },
+                        ),
+                        SizedBox(height: Dimensions.h10),
+                        Obx(() {
+                          return isStarline.value
+                              ? HomeScreenUtils().iconsContainer2(
+                                  iconColor1:
+                                      widgetContainer.value == 3 ? AppColors.appbarColor : AppColors.iconColorMain,
+                                  iconColor2:
+                                      widgetContainer.value == 4 ? AppColors.appbarColor : AppColors.iconColorMain,
+                                  iconColor3:
+                                      widgetContainer.value == 5 ? AppColors.appbarColor : AppColors.iconColorMain,
+                                  onTap1: () {
+                                    position = 3;
+                                    widgetContainer.value = position;
+                                    //   print(widgetContainer.value);
+                                  },
+                                  onTap2: () {
+                                    position = 4;
+                                    widgetContainer.value = position;
+                                  },
+                                  onTap3: () {
+                                    position = 5;
+                                    widgetContainer.value = position;
+                                    // print(widgetContainer.value);
+                                  })
+                              : Container();
+                        }),
+                        SizedBox(height: Dimensions.h10),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
     }
   }
 }

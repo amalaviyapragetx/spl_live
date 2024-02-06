@@ -3,6 +3,7 @@ import 'package:spllive/api/dio_exceptions.dart';
 import 'package:spllive/api/request/home_api.dart';
 import 'package:spllive/models/balance_model.dart';
 import 'package:spllive/models/banner_model.dart';
+import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/models/notifiaction_models/get_all_notification_model.dart';
 import 'package:spllive/models/notifiaction_models/notification_count_model.dart';
 
@@ -23,11 +24,11 @@ class HomeService {
     return null;
   }
 
-  Future<BannerModel?> getDailyMarkets() async {
+  Future<DailyMarketApiResponseModel?> getDailyMarkets() async {
     try {
       final response = await authApi.getDailyMarkets();
       if (response != null) {
-        return BannerModel.fromJson(response.data);
+        return DailyMarketApiResponseModel.fromJson(response.data);
       }
     } catch (e) {
       final errorMessage = DioExceptions.fromDioError(e as DioException);

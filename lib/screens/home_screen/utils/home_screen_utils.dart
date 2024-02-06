@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
@@ -16,6 +17,7 @@ import '../../../models/starlinechar_model/new_starlinechart_model.dart';
 
 class HomeScreenUtils {
   var controller = Get.put(HomePageController());
+  final homeCon = Get.find<HomeController>();
   Widget buildResult({required bool isOpenResult, required bool resultDeclared, required int result}) {
     print("isOpenResult : $isOpenResult , $resultDeclared ");
     print(result);
@@ -304,157 +306,147 @@ class HomeScreenUtils {
     );
   }
 
-  gridColumn(size) {
+  gridColumn() {
     return Obx(
-      () {
-        return controller.normalMarketList.isNotEmpty
-            ? Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: InkWell(
-                      onTap: () {
-                        launch(
-                          "https://wa.me/+917769826748/?text=hi",
-                        );
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: Dimensions.h30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          gradient: LinearGradient(
-                            colors: [AppColors.wpColor1, AppColors.wpColor2],
+      () => controller.normalMarketList.isNotEmpty
+          ? Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () => launch("https://wa.me/+917769826748/?text=hi"),
+                    child: Container(
+                      width: double.infinity,
+                      height: Dimensions.h30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        gradient: LinearGradient(
+                          colors: [AppColors.wpColor1, AppColors.wpColor2],
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Image.asset(
+                              AppImage.whatsaapIcon,
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: Image.asset(
-                                AppImage.whatsaapIcon,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              "+91 7769826748",
-                              style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
-                            ),
-                          ],
-                        ),
+                          const SizedBox(width: 4),
+                          Text(
+                            "+91 7769826748",
+                            style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  GridView.builder(
-                    padding: EdgeInsets.all(Dimensions.h5),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: size.width / 2,
-                      mainAxisExtent: size.width / 2.4,
-                      crossAxisSpacing: 0,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: controller.normalMarketList.length,
-                    itemBuilder: (context, index) {
-                      MarketData marketData;
-                      marketData = controller.normalMarketList[index];
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
-                        child: GestureDetector(
-                          onTap: () => marketData.isBidOpenForClose == true
-                              ? controller.onTapOfNormalMarket(controller.normalMarketList[index])
-                              : null,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  spreadRadius: 0.2,
-                                  color: AppColors.grey,
-                                  blurRadius: 3.5,
-                                  offset: const Offset(2, 4),
-                                )
-                              ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(Dimensions.h10),
-                              border: Border.all(color: Colors.red, width: 1),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  height: Dimensions.h10,
+                ),
+                GridView.builder(
+                  padding: EdgeInsets.all(Dimensions.h5),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: Get.width / 2,
+                    mainAxisExtent: Get.width / 2.4,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: controller.normalMarketList.length,
+                  itemBuilder: (context, index) {
+                    MarketData marketData;
+                    marketData = controller.normalMarketList[index];
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
+                      child: GestureDetector(
+                        onTap: () => marketData.isBidOpenForClose == true
+                            ? controller.onTapOfNormalMarket(controller.normalMarketList[index])
+                            : null,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                spreadRadius: 0.2,
+                                color: AppColors.grey,
+                                blurRadius: 3.5,
+                                offset: const Offset(2, 4),
+                              )
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(Dimensions.h10),
+                            border: Border.all(color: Colors.red, width: 1),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: Dimensions.h10,
+                              ),
+                              Text(
+                                "${marketData.openTime ?? " "} | ${marketData.closeTime ?? ""}",
+                                style: CustomTextStyle.textRobotoSansLight.copyWith(fontWeight: FontWeight.w300),
+                              ),
+                              Text(
+                                controller.normalMarketList[index].market ?? "",
+                                // "MADHUR DAY",
+                                style: CustomTextStyle.textPTsansBold.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: Dimensions.h14,
                                 ),
-                                Text(
-                                  "${marketData.openTime ?? " "} | ${marketData.closeTime ?? ""}",
-                                  style: CustomTextStyle.textRobotoSansLight.copyWith(fontWeight: FontWeight.w300),
-                                ),
-                                Text(
-                                  controller.normalMarketList[index].market ?? "",
-                                  // "MADHUR DAY",
-                                  style: CustomTextStyle.textPTsansBold.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: Dimensions.h14,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  buildResult(
+                                      isOpenResult: true,
+                                      resultDeclared: marketData.isOpenResultDeclared ?? false,
+                                      result: marketData.openResult ?? 0),
+                                  buildResult(
+                                    isOpenResult: false,
+                                    resultDeclared: marketData.isCloseResultDeclared ?? false,
+                                    result: marketData.closeResult ?? 0,
+                                  )
+                                ],
+                              ),
+                              playButton(),
+                              SizedBox(height: Dimensions.h5),
+                              Container(
+                                height: Dimensions.h30,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade400.withOpacity(0.8),
+                                  borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    buildResult(
-                                        isOpenResult: true,
-                                        resultDeclared: marketData.isOpenResultDeclared ?? false,
-                                        result: marketData.openResult ?? 0),
-                                    buildResult(
-                                      isOpenResult: false,
-                                      resultDeclared: marketData.isCloseResultDeclared ?? false,
-                                      result: marketData.closeResult ?? 0,
-                                    )
-                                  ],
-                                ),
-                                playButton(),
-                                SizedBox(
-                                  height: Dimensions.h5,
-                                ),
-                                Container(
-                                  height: Dimensions.h30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade400.withOpacity(0.8),
-                                    borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      marketData.isBidOpenForClose == true ? "Bidding is Open" : "Bidding is Closed",
-                                      style: marketData.isBidOpenForClose == true
-                                          ? CustomTextStyle.textPTsansMedium.copyWith(
-                                              color: AppColors.greenShade,
-                                              fontWeight: FontWeight.w500,
-                                            )
-                                          : CustomTextStyle.textPTsansMedium.copyWith(
-                                              color: AppColors.redColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                    ),
+                                child: Center(
+                                  child: Text(
+                                    marketData.isBidOpenForClose == true ? "Bidding is Open" : "Bidding is Closed",
+                                    style: marketData.isBidOpenForClose == true
+                                        ? CustomTextStyle.textPTsansMedium.copyWith(
+                                            color: AppColors.greenShade,
+                                            fontWeight: FontWeight.w500,
+                                          )
+                                        : CustomTextStyle.textPTsansMedium.copyWith(
+                                            color: AppColors.redColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ],
-              )
-            : const Center(
-                child: Text("No Data Found"),
-              );
-      },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            )
+          : const Center(child: Text("No Data Found")),
     );
   }
 
@@ -493,25 +485,25 @@ class HomeScreenUtils {
   }
 
   banner() {
-    return Obx(() => CarouselSlider(
-          items: controller.bennerData.map((element) {
-            return Builder(
-              builder: (context) {
-                return imagewidget("${element.banner}");
-              },
-            );
-          }).toList(),
-          options: CarouselOptions(
-            height: Dimensions.h90,
-            enlargeCenterPage: true,
-            autoPlay: true,
-            aspectRatio: 15 / 4,
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enableInfiniteScroll: true,
-            autoPlayAnimationDuration: const Duration(milliseconds: 600),
-            viewportFraction: 1,
-          ),
-        ));
+    return Obx(
+      () => CarouselSlider(
+        items: homeCon.bannerData
+            .map((element) => Builder(
+                  builder: (context) => imagewidget("${element.banner}"),
+                ))
+            .toList(),
+        options: CarouselOptions(
+          height: Dimensions.h90,
+          enlargeCenterPage: true,
+          autoPlay: true,
+          aspectRatio: 15 / 4,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enableInfiniteScroll: true,
+          autoPlayAnimationDuration: const Duration(milliseconds: 600),
+          viewportFraction: 1,
+        ),
+      ),
+    );
   }
 
   imagewidget(String imageText) {
@@ -526,89 +518,6 @@ class HomeScreenUtils {
         ),
       ),
     );
-  }
-
-  gridColumnForStarLine(size) {
-    return Obx(() {
-      return GridView.builder(
-        padding: EdgeInsets.all(Dimensions.h5),
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: size.width / 2,
-            mainAxisExtent: size.width / 2.5,
-            crossAxisSpacing: 7,
-            mainAxisSpacing: Dimensions.h10),
-        itemCount: controller.starLineMarketList.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              controller.starLineMarketList[index].isBidOpen == true
-                  ? controller.onTapOfStarlineMarket(controller.starLineMarketList[index])
-                  : null;
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 0.2,
-                    color: AppColors.grey,
-                    blurRadius: 2.5,
-                    offset: const Offset(2, 3),
-                  )
-                ],
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(Dimensions.h10),
-                border: Border.all(color: Colors.red, width: 1),
-              ),
-              child: Column(
-                //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(height: Dimensions.h5),
-                  SizedBox(height: Dimensions.h5),
-                  Text(
-                    controller.starLineMarketList.elementAt(index).time ?? "",
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      color: AppColors.black,
-                      fontSize: Dimensions.h15,
-                    ),
-                  ),
-                  SizedBox(height: Dimensions.h5),
-                  buildResult(
-                    isOpenResult: true,
-                    resultDeclared: controller.starLineMarketList[index].isResultDeclared ?? false,
-                    result: controller.starLineMarketList[index].result ?? 0,
-                  ),
-                  SizedBox(height: Dimensions.h5),
-                  playButton(),
-                  Expanded(child: SizedBox(height: Dimensions.h5)),
-                  Container(
-                    height: Dimensions.h30,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade400.withOpacity(0.8),
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        controller.starLineMarketList[index].isBidOpen == true
-                            ? "Bidding is Open"
-                            : "Bidding is Closed",
-                        style: controller.starLineMarketList[index].isBidOpen == true
-                            ? CustomTextStyle.textPTsansMedium.copyWith(color: AppColors.greenShade)
-                            : CustomTextStyle.textPTsansMedium.copyWith(color: AppColors.redColor),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    });
   }
 
   bidHistoryList() {
@@ -675,9 +584,7 @@ class HomeScreenUtils {
               hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                 color: AppColors.appbarColor,
               ),
-              border: const OutlineInputBorder(
-                borderSide: BorderSide.none,
-              ),
+              border: const OutlineInputBorder(borderSide: BorderSide.none),
               contentPadding: EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
               filled: true,
               fillColor: AppColors.grey.withOpacity(0.15),
@@ -1038,8 +945,8 @@ class HomeScreenUtils {
               alignment: Alignment.topRight,
               child: InkWell(
                 onTap: () {
-                  controller.resetNotificationCount();
-                  controller.getNotifiactionCount.refresh();
+                  // controller.resetNotificationCount();
+                  // controller.getNotifiactionCount.refresh();
                 },
                 child: Container(
                   decoration: BoxDecoration(

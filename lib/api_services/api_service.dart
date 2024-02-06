@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:logger/logger.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/utils/constant.dart';
 
@@ -704,7 +703,6 @@ class ApiService extends GetConnect implements GetxService {
         }
         return Future.error(response.statusText!);
       } else {
-        Logger().e(response.body);
         return response.body;
       }
     } catch (e) {
@@ -881,10 +879,7 @@ class ApiService extends GetConnect implements GetxService {
   }) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    // final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-    //   "${ApiUtils.marketbidHistory}/$userId",
-    //   headers: headersWithToken,
-    // );
+
     final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${ApiUtils.bidHistory}?id=$userId&limit=5000&offset=0",
       headers: headersWithToken,
