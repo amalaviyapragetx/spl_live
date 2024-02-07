@@ -45,7 +45,7 @@ class DeviceInfo {
         // final serialNumber = deviceData['serialNumber'];
         // bool isRooted = androidInfo.isPhysicalDevice;
         // bool jailbroken = await FlutterJailbreakDetection.jailbroken;
-        // print(jailbroken);
+
         // if (jailbroken || isRooted) {
         //   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         // }

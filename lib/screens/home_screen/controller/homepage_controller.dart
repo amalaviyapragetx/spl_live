@@ -218,12 +218,9 @@ class HomePageController extends GetxController {
           });
           tempFinalMarketList.addAll(biddingClosedMarketList);
           starLineMarketList.value = tempFinalMarketList;
-          // print("Star ********************* ${starLineMarketList.toJson()}");
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -262,9 +259,7 @@ class HomePageController extends GetxController {
           noMarketFound.value = true;
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -335,7 +330,7 @@ class HomePageController extends GetxController {
                   notifictionCount: notifictionCount,
                   onTapNotifiaction: () => Get.toNamed(AppRoutName.notificationPage),
                   onTapTelegram: () => launch("https://t.me/satta_matka_kalyan_bazar_milan"),
-                  shareOntap: () => Share.share("http://spl.live")),
+                  shareOntap: () => Share.share("https://spl.live")),
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.zero,
@@ -510,13 +505,11 @@ class HomePageController extends GetxController {
                               position = 0;
                               widgetContainer.value = position;
                               isStarline.value = false;
-                              // print(widgetContainer.value);
                             },
                             onTap2: () {
                               position = 1;
                               isStarline.value = true;
                               widgetContainer.value = position;
-                              //   print(widgetContainer.value);
                             },
                             onTap3: () {
                               position = 2;
@@ -537,7 +530,6 @@ class HomePageController extends GetxController {
                                     onTap1: () {
                                       position = 3;
                                       widgetContainer.value = position;
-                                      //   print(widgetContainer.value);
                                     },
                                     onTap2: () {
                                       position = 4;
@@ -546,7 +538,6 @@ class HomePageController extends GetxController {
                                     onTap3: () {
                                       position = 5;
                                       widgetContainer.value = position;
-                                      // print(widgetContainer.value);
                                     })
                                 : Container();
                           }),
@@ -781,15 +772,13 @@ class HomePageController extends GetxController {
 
   void nextPage() {
     if (offset.value < calculateTotalPages()) {
-      ///  print("offset.value ${offset.value}");
       passBookModelData.clear();
       offset.value++;
 
       num = num + itemLimit;
 
-      //  print("offset.value ${offset.value}");
       getPassBookData(lazyLoad: false, offset: num.toString());
-      //  print("offset.value ${offset.value}");
+
       // passBookModelData.refresh();
       update();
     }
@@ -801,9 +790,8 @@ class HomePageController extends GetxController {
       offset.value--;
       num = num - itemLimit;
 
-      //print("offset.value ${offset.value}");
       getPassBookData(lazyLoad: false, offset: num.toString());
-      // print("offset.value ${offset.value}");
+
       passBookModelData.refresh();
       update();
     }
@@ -859,9 +847,7 @@ class HomePageController extends GetxController {
         getNotifiactionCount.value = model.data!.notificationCount!.toInt();
         if (model.message!.isNotEmpty) {}
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }

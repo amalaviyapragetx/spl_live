@@ -137,7 +137,6 @@ class SplashController extends GetxController {
     bool hasMPIN = await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
     bool isUserDetailSet = await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
 
-    //print(LocalStorage.read(ConstantsVariables.authToken.));
     if (alreadyLoggedIn) {
       if (!isActive && !isVerified) {
         //   callFcmApi(_userDetailsModel.id);
@@ -246,10 +245,9 @@ class SplashController extends GetxController {
 
   Future<void> requestLocationPermission() async {
     var status = await Permission.location.request();
-    print("ooooooooooooooooo$status");
+
     if (status.isGranted) {
       // Permission granted, proceed with your flow.
-      print('Location permission granted');
     } else if (status.isDenied) {
       // Permission denied.
       Get.defaultDialog(
@@ -318,7 +316,7 @@ class SplashController extends GetxController {
   //     List<NetworkInterface> interfaces =
   //         await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
   //     for (NetworkInterface interface in interfaces) {
-  //       print("===========${interface.name.toLowerCase()}================================");
+
   //       if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
   //         for (InternetAddress address in interface.addresses) {
   //           if (!address.isLoopback && !address.isLinkLocal) {
@@ -328,7 +326,7 @@ class SplashController extends GetxController {
   //       }
   //     }
   //   } on SocketException catch (e) {
-  //     print("Error getting IP address: $e");
+
   //   }
   //   return "Could not determine IP address";
   // }
@@ -341,16 +339,16 @@ class SplashController extends GetxController {
   //       for (var interface in await NetworkInterface.list()) {
   //         for (var addr in interface.addresses) {
   //           if (addr.type.name.toLowerCase() == 'ipv4') {
-  //             print('IP Address: ${addr.address}');
+
   //             return;
   //           }
   //         }
   //       }
   //     } catch (e) {
-  //       print('Error getting IP address: $e');
+
   //     }
   //   } else {
-  //     print('No internet connection available');
+
   //   }
   // }
 }

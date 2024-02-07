@@ -159,19 +159,14 @@ class AppUtils {
           child: InkWell(
             onTap: onTapTelegram,
             child: Container(
-              width: 20,
-              decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
+              decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
               child: Transform.rotate(
                 angle: 180 * 3.14 / 48,
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: Dimensions.h3,
-                    left: Dimensions.h3,
-                    top: Dimensions.h3,
-                  ),
+                  padding: EdgeInsets.only(bottom: 5, top: 5, left: 5, right: 3),
                   child: Icon(
                     Icons.send,
-                    size: 13,
+                    size: 11,
                     color: AppColors.appbarColor,
                   ),
                 ),
@@ -184,12 +179,14 @@ class AppUtils {
           child: InkWell(
             onTap: shareOntap,
             child: Container(
-              width: 20,
-              decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
-              child: Icon(
-                Icons.share,
-                size: 13,
-                color: AppColors.appbarColor,
+              decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
+              child: Padding(
+                padding: EdgeInsets.all(4),
+                child: Icon(
+                  Icons.share,
+                  size: 11,
+                  color: AppColors.appbarColor,
+                ),
               ),
             ),
           ),

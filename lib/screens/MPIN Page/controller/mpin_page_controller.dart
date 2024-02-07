@@ -74,16 +74,14 @@ class MPINPageController extends GetxController {
         Get.offAllNamed(AppRoutName.dashBoardPage);
       } else {
         mpinErrorController.add(ErrorAnimationType.shake);
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
 
   Future<String?> getPublicIpAddress() async {
     try {
-      final response = await GetConnect(timeout: Duration(seconds: 15)).get('https://api.ipify.org?format=json');
+      final response = await GetConnect(timeout: const Duration(seconds: 15)).get('https://api.ipify.org?format=json');
       if (response.statusCode == 200) {
         final data = response.body['ip'];
         ip.value = data;
@@ -96,26 +94,6 @@ class MPINPageController extends GetxController {
       return null;
     }
   }
-
-  // Future<String> getIpAddress() async {
-  //   try {
-  //     List<NetworkInterface> interfaces =
-  //         await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
-  //     for (NetworkInterface interface in interfaces) {
-  //       print("===========${interface.name.toLowerCase()}================================");
-  //       if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
-  //         for (InternetAddress address in interface.addresses) {
-  //           if (!address.isLoopback && !address.isLinkLocal) {
-  //             return address.address;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   } on SocketException catch (e) {
-  //     print("Error getting IP address: $e");
-  //   }
-  //   return "Could not determine IP address";
-  // }
 
   void forgotMPINApi() async {
     ApiService().forgotMPIN().then((value) async {
@@ -130,16 +108,17 @@ class MPINPageController extends GetxController {
   }
 
   getLocationsData() async {
-    var locationData = await GetStorage().read(ConstantsVariables.locationData) ?? [];
+    final locationData = await GetStorage().read(ConstantsVariables.locationData) ?? [];
     // getMarketBidsByUserId(lazyLoad: false);
-    List list = [];
-    list.add(locationData[0]['location']);
-    List<LocationModel> data = LocationModel.fromJsonList(list);
-
-    city.value = data[0].city ?? 'Unknown';
-    country.value = data[0].country ?? 'Unknown';
-    state.value = data[0].state ?? 'Unknown';
-    street.value = data[0].street ?? 'Unknown';
-    postalCode.value = data[0].postalCode ?? 'Unknown';
+    if (locationData != null) {
+      List list = [];
+      list.add(locationData[0]['location']);
+      List<LocationModel> data = LocationModel.fromJsonList(list);
+      city.value = data[0].city ?? 'Unknown';
+      country.value = data[0].country ?? 'Unknown';
+      state.value = data[0].state ?? 'Unknown';
+      street.value = data[0].street ?? 'Unknown';
+      postalCode.value = data[0].postalCode ?? 'Unknown';
+    }
   }
 }

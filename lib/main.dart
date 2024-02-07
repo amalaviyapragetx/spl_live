@@ -60,7 +60,6 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) {
       LocalStorage.write(ConstantsVariables.fcmToken, value);
-      print("deviceToken: $value");
     });
 
     // if (!apiCalled) {
@@ -119,14 +118,13 @@ class _MyAppState extends State<MyApp> {
   //       service.setAsBackgroundService();
   //     });
   //     service.on('setAsBackground').listen((event) {
-  //       print(
-  //           "================================================================");
+
   //       service.setAsBackgroundService();
   //     });
   //   }
 
   //   service.on('stopService').listen((event) {
-  //     print("-=======================");
+
   //     service.stopSelf();
   //   });
 
@@ -137,7 +135,7 @@ class _MyAppState extends State<MyApp> {
   //       }
   //     }
   //     /////permorm some oprations on background which is not noticable to  the user everytime
-  //     print("Back Ground Service is running ");
+
   //     service.invoke('update');
   //   });
   // }
@@ -174,8 +172,7 @@ class _MyAppState extends State<MyApp> {
 
   // Future<void> getLocation() async {
   //   final locationData = await location.getLocation();
-  //   print(
-  //       'Latitude: ${locationData.latitude}, Longitude: ${locationData.longitude}');
+
   // }
 
   Locale getLocale() {
@@ -267,7 +264,7 @@ class AppStateListener extends WidgetsBindingObserver {
 //     var status = await Permission.location.request();
 //     if (status.isGranted) {
 //       // Permission granted, proceed with your flow.
-//       print('Location permission granted');
+//
 //     } else if (status.isDenied) {
 //       // Permission denied.
 //       Get.defaultDialog(

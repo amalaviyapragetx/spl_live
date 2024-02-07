@@ -22,8 +22,7 @@ class CreateWithDrawalPageController extends GetxController {
   RxString ifcsCode = "".obs;
   var userId = "";
 
-  final _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
 
   @override
@@ -37,7 +36,7 @@ class CreateWithDrawalPageController extends GetxController {
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
 
     userId = userData.id == null ? "" : userData.id.toString();
-    print("===============-=-=-=-$userId");
+
     if (userId.isNotEmpty) {
       callGetBankDetails(userId);
     } else {
@@ -48,11 +47,9 @@ class CreateWithDrawalPageController extends GetxController {
   }
 
   void callGetBankDetails(String userId) async {
-    print(userId);
     ApiService().getBankDetails({"id": userId}).then((value) async {
       if (value['status']) {
-        BankDetailsResponseModel model =
-            BankDetailsResponseModel.fromJson(value);
+        BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         // if (model.message!.isNotEmpty) {
         //   AppUtils.showSuccessSnackBar(
         //       bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
@@ -79,16 +76,13 @@ class CreateWithDrawalPageController extends GetxController {
       );
 
   void createWithdrawalRequest() async {
-    ApiService()
-        .createWithdrawalRequest(await createWithdrawalRequestBody())
-        .then((value) async {
+    ApiService().createWithdrawalRequest(await createWithdrawalRequestBody()).then((value) async {
       if (value['status']) {
         ResponseModel model = ResponseModel.fromJson(value);
         amountTextController.clear();
         Get.offAndToNamed(AppRoutName.withdrawalpage);
         if (model.message!.isNotEmpty) {
-          AppUtils.showSuccessSnackBar(
-              bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
       } else {
         AppUtils.showErrorSnackBar(

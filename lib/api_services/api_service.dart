@@ -22,7 +22,6 @@ class ApiService extends GetConnect implements GetxService {
   Future<void> initApiService() async {
     authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
     await NetworkInfo.checkNetwork().whenComplete(() async {
-      //    print("Auth Token from API service is :- $authToken");
       headers = {"Accept": "application/json"};
       headersWithToken = {"Accept": "application/json", "Authorization": "Bearer $authToken"};
     });
@@ -74,7 +73,6 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
-      print(e.toString());
     }
   }
 
@@ -331,9 +329,9 @@ class ApiService extends GetConnect implements GetxService {
 
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -605,7 +603,6 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
-      print(e);
     }
   }
 
@@ -632,7 +629,7 @@ class ApiService extends GetConnect implements GetxService {
   //     }
   //   } catch (e) {
   //     AppUtils.hideProgressDialog();
-  //     print(e);
+  //
   //   }
   // }
 
@@ -657,7 +654,6 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
-      print(e);
     }
   }
 
@@ -704,9 +700,7 @@ class ApiService extends GetConnect implements GetxService {
       } else {
         return response.body;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   Future<dynamic> getBidHistoryByUserId({
@@ -790,9 +784,9 @@ class ApiService extends GetConnect implements GetxService {
     );
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -861,9 +855,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
     );
     if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
       AppUtils.hideProgressDialog();
 
       return Future.error(response.statusText!);
@@ -888,6 +882,32 @@ class ApiService extends GetConnect implements GetxService {
     );
 
     if (response.status.hasError) {
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
+      AppUtils.hideProgressDialog();
+
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getNewMarketBidlistData({
+    required String dailyMarketId,
+    required String limit,
+    required String offset,
+    required String bidType,
+  }) async {
+    await initApiService();
+
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+      "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType",
+      //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
@@ -899,35 +919,6 @@ class ApiService extends GetConnect implements GetxService {
       return response.body;
     }
   }
-
-  // Future<dynamic> getNewMarketBidlistData({
-  //   required String dailyMarketId,
-  //   required String limit,
-  //   required String offset,
-  //   required String bidType,
-  // }) async {
-  //   print(
-  //       "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType");
-  //   // AppUtils.showProgressDialog(isCancellable: false);
-  //   await initApiService();
-
-  //   final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-  //     "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType",
-  //     //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
-  //     headers: headersWithToken,
-  //   );
-  //   if (response.status.hasError) {
-  //     if (response.status.code != null && response.status.code == 401) {
-  //       tokenExpired();
-  //     }
-  //     AppUtils.hideProgressDialog();
-
-  //     return Future.error(response.statusText!);
-  //   } else {
-  //     AppUtils.hideProgressDialog();
-  //     return response.body;
-  //   }
-  // }
   ///////// Notifications ///////////
 
   Future<dynamic> getNotificationCount() async {
@@ -937,9 +928,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
     );
     if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
       AppUtils.hideProgressDialog();
       return Future.error(response.statusText!);
     } else {
@@ -955,9 +946,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
     );
     if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
       AppUtils.hideProgressDialog();
       return Future.error(response.statusText!);
     } else {
@@ -973,9 +964,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
     );
     if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
       AppUtils.hideProgressDialog();
       return Future.error(response.statusText!);
     } else {
@@ -1029,7 +1020,6 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getBennerData() async {
-    // print(ApiUtils.bennerApi);
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
@@ -1079,8 +1069,7 @@ class ApiService extends GetConnect implements GetxService {
       return response.body;
     } else {
       // AppUtils.hideProgressDialog();
-      // print("response2 ${response.body}");
-      // print("change pass2 ${response.status.code}");
+
       return response.body;
     }
   }

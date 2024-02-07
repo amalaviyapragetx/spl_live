@@ -17,8 +17,6 @@ import '../../../models/starlinechar_model/new_starlinechart_model.dart';
 class HomeScreenUtils {
   var controller = Get.put(HomePageController());
   Widget buildResult({required bool isOpenResult, required bool resultDeclared, required int result}) {
-    print("isOpenResult : $isOpenResult , $resultDeclared ");
-    print(result);
     if (resultDeclared && result != 0 && result.toString().isNotEmpty) {
       int sum = 0;
       for (int i = result; i > 0; i = (i / 10).floor()) {

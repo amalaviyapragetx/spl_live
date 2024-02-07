@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/common_utils.dart';
 import '../../helper_files/custom_text_style.dart';
@@ -11,16 +12,13 @@ import 'controller/bottum_navigation_controller.dart';
 
 class PassBook extends StatelessWidget {
   PassBook({super.key});
-  var verticalSpace = SizedBox(
-    width: Dimensions.w3,
-  );
+  var verticalSpace = SizedBox(width: Dimensions.w3);
   var homeController = Get.put(HomePageController());
   var controller = Get.put(MoreListController());
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SizedBox(
-      height: size.height,
+      height: Get.height,
       child: Column(
         children: [
           AppUtils().simpleAppbar(
@@ -33,27 +31,20 @@ class PassBook extends StatelessWidget {
                   SizedBox(width: Dimensions.w15),
                   Text(
                     "Passbook",
-                    style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(fontSize: Dimensions.h20),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
                   ),
                   const Expanded(child: SizedBox()),
                   GestureDetector(
                     onTap: () {
-                      if (homeController.pageWidget.value == 3 &&
-                          homeController.currentIndex.value == 3) {
-                        if (MediaQuery.of(context).orientation ==
-                            Orientation.portrait) {
-                          SystemChrome.setPreferredOrientations(
-                              [DeviceOrientation.landscapeLeft]);
+                      if (homeController.pageWidget.value == 3 && homeController.currentIndex.value == 3) {
+                        if (MediaQuery.of(context).orientation == Orientation.portrait) {
+                          SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
                         } else {
-                          SystemChrome.setPreferredOrientations(
-                              [DeviceOrientation.portraitUp]);
+                          SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                         }
                       } else {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.portraitUp,
-                          DeviceOrientation.landscapeLeft
-                        ]);
+                        SystemChrome.setPreferredOrientations(
+                            [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                       }
                     },
                     child: Padding(
@@ -68,35 +59,44 @@ class PassBook extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: table(),
-              ),
-            ),
+          Obx(
+            () => homeController.passBookModelData.isNotEmpty
+                ? Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: table(),
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: Center(
+                      child: Text(
+                        "There is no data",
+                        style: TextStyle(color: AppColors.black),
+                      ),
+                    ),
+                  ),
           ),
           Obx(
-            () => Row(
-              children: [
-                pageWidget(
-                  "previous",
-                  onTap: () {
-                    homeController.prevPage();
-                  },
-                ),
-                pageWidget(
-                  "(${homeController.offset} / ${homeController.calculateTotalPages().toString()})",
-                ),
-                pageWidget(
-                  "NEXT",
-                  onTap: () {
-                    homeController.nextPage();
-                  },
-                ),
-              ],
-            ),
+            () => homeController.passBookModelData.isNotEmpty
+                ? Row(
+                    children: [
+                      pageWidget(
+                        "previous",
+                        onTap: () => homeController.prevPage(),
+                      ),
+                      pageWidget(
+                        "(${homeController.offset} / ${homeController.calculateTotalPages().toString()})",
+                      ),
+                      pageWidget(
+                        "NEXT",
+                        onTap: () => homeController.nextPage(),
+                      ),
+                    ],
+                  )
+                : Container(),
           )
         ],
       ),
@@ -132,76 +132,76 @@ class PassBook extends StatelessWidget {
     print(homeController.passBookModelData.toJson());
 
     return Obx(
-      () => DataTable(
-        headingRowHeight: Dimensions.h45,
-        dataRowHeight: Dimensions.h35,
-        horizontalMargin: 0,
-        decoration: BoxDecoration(color: AppColors.white),
-        // columnSpacing: 30,
-        columns: [
-          dataColumns(
-            text: "Transaction Date",
-            width: Dimensions.w170,
-          ),
-          dataColumns(
-            text: "Particulers",
-            width: 420,
-          ),
-          dataColumns(
-            text: "Previous Amount",
-            width: Dimensions.w150,
-          ),
-          dataColumns(text: "Transaction Amount", width: Dimensions.w150),
-          dataColumns(text: "Current Amount", width: Dimensions.w150),
-        ],
-        columnSpacing: 1,
-
-        rows: List.generate(
-          homeController.passBookModelData.length,
-          (index) {
-            var data = homeController.passBookModelData.elementAt(index);
-  
-            return DataRow(cells: [
-              dataCells(
-                width: Dimensions.w170,
-                textColor: AppColors.black,
-                text: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
-                  data.createdAt.toString(),
+      () => homeController.passBookModelData.isNotEmpty
+          ? DataTable(
+              headingRowHeight: Dimensions.h45,
+              dataRowHeight: Dimensions.h35,
+              horizontalMargin: 0,
+              decoration: BoxDecoration(color: AppColors.white),
+              // columnSpacing: 30,
+              columns: [
+                dataColumns(
+                  text: "Transaction Date",
+                  width: Dimensions.w170,
                 ),
-              ),
-              dataCells(
+                dataColumns(
+                  text: "Particulers",
                   width: 420,
-                  textColor: AppColors.black,
-                  text: data.transactionType != "Bid"
-                      ? "${data.remarks}"
-                      : data.marketName == null
-                          ? "${data.transactionType ?? ""} (STARLINE : ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
-                          : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType ?? ""} ) : ${data.bidNo ?? ""}"),
-              dataCells(
-                width: Dimensions.w150,
-                textColor: AppColors.black,
-                text: data.previousAmount.toString(),
-              ),
-              dataCells(
+                ),
+                dataColumns(
+                  text: "Previous Amount",
                   width: Dimensions.w150,
-                  textColor: data.credit == "" ||
-                          data.credit == "null" ||
-                          data.credit == null
-                      ? AppColors.redColor
-                      : AppColors.green,
-                  text: data.credit == "" || data.credit == null
-                      ? "-${data.debit.toString()}"
-                      : "+${data.credit.toString()}"),
-              dataCells(
-                width: Dimensions.w150,
-                textColor: AppColors.black,
-                text: data.balance.toString(),
-              ),
-            ]);
-          },
-        ).toList(),
-        showBottomBorder: true,
-      ),
+                ),
+                dataColumns(text: "Transaction Amount", width: Dimensions.w150),
+                dataColumns(text: "Current Amount", width: Dimensions.w150),
+              ],
+              columnSpacing: 1,
+
+              rows: List.generate(
+                homeController.passBookModelData.length,
+                (index) {
+                  var data = homeController.passBookModelData.elementAt(index);
+
+                  return DataRow(cells: [
+                    dataCells(
+                      width: Dimensions.w170,
+                      textColor: AppColors.black,
+                      text: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
+                        data.createdAt.toString(),
+                      ),
+                    ),
+                    dataCells(
+                        width: 420,
+                        textColor: AppColors.black,
+                        text: data.transactionType != "Bid"
+                            ? "${data.remarks}"
+                            : data.marketName == null
+                                ? "${data.transactionType ?? ""} (STARLINE : ${CommonUtils().formatStringToHHMMA(data.marketTime ?? "")} : ${data.modeName ?? ""} ) : ${data.bidNo} "
+                                : "${data.transactionType ?? ""} ( ${data.marketName ?? ""} :  ${data.modeName ?? ""} : ${data.bidType ?? ""} ) : ${data.bidNo ?? ""}"),
+                    dataCells(
+                      width: Dimensions.w150,
+                      textColor: AppColors.black,
+                      text: data.previousAmount.toString(),
+                    ),
+                    dataCells(
+                        width: Dimensions.w150,
+                        textColor: data.credit == "" || data.credit == "null" || data.credit == null
+                            ? AppColors.redColor
+                            : AppColors.green,
+                        text: data.credit == "" || data.credit == null
+                            ? "-${data.debit.toString()}"
+                            : "+${data.credit.toString()}"),
+                    dataCells(
+                      width: Dimensions.w150,
+                      textColor: AppColors.black,
+                      text: data.balance.toString(),
+                    ),
+                  ]);
+                },
+              ).toList(),
+              showBottomBorder: true,
+            )
+          : Container(),
     );
   }
 
@@ -235,8 +235,7 @@ class PassBook extends StatelessWidget {
     );
   }
 
-  DataCell dataCells(
-      {required String text, required Color textColor, required double width}) {
+  DataCell dataCells({required String text, required Color textColor, required double width}) {
     return DataCell(
       Padding(
         padding: const EdgeInsets.all(2.0),
@@ -261,8 +260,7 @@ class PassBook extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   text,
-                  style: CustomTextStyle.textRobotoSansMedium
-                      .copyWith(color: textColor),
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(color: textColor),
                 ),
               ),
             ),

@@ -1,10 +1,12 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
+
 import 'helper_files/app_colors.dart';
 import 'helper_files/constant_variables.dart';
 import 'helper_files/custom_text_style.dart';
@@ -37,13 +39,9 @@ class InactivityController extends GetxController {
   ifUserLogedIn() async {
     bool alreadyLoggedIn = await getStoredUserData();
 
-    bool isActive =
-        await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    bool isVerified =
-        await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin =
-        await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
-    // print("-------------------------------==========$userLogin");
+    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
     if (userLogin) {
       if (alreadyLoggedIn) {
         if (isActive && isVerified) {
@@ -55,12 +53,9 @@ class InactivityController extends GetxController {
 
   userLogIn(PointerEvent event) async {
     bool alreadyLoggedIn = await getStoredUserData();
-    bool isActive =
-        await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    bool isVerified =
-        await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin =
-        await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
+    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
 
     if (userLogin) {
       if (alreadyLoggedIn) {
@@ -80,8 +75,7 @@ class InactivityController extends GetxController {
   UserDetailsModel _userDetailsModel = UserDetailsModel();
 
   Future<bool> getStoredUserData() async {
-    String? authToken =
-        await LocalStorage.read(ConstantsVariables.authToken) ?? "";
+    String? authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
     var userData = await LocalStorage.read(ConstantsVariables.userData);
     if (authToken != null && authToken.isNotEmpty) {
       if (userData != null) {
@@ -123,10 +117,8 @@ class InactivityController extends GetxController {
         InkWell(
           onTap: () async {
             bool alreadyLoggedIn = await getStoredUserData();
-            bool isActive =
-                await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-            bool isVerified =
-                await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
+            bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
+            bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
             await LocalStorage.write(ConstantsVariables.timeOut, false);
             var timeOut = await LocalStorage.read(ConstantsVariables.timeOut);
             if (timeOut) {

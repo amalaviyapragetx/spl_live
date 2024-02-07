@@ -524,13 +524,12 @@ class StarLineNewGamePage extends StatelessWidget {
                           //   if (controller
                           //           .autoCompleteFieldController.text.length <=
                           //       1) {
-                          //     print("@@@@@@@@@@@");
                           //     AppUtils.showErrorSnackBar(
                           //       bodyText:
                           //           "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                           //     );
                           //   } else {
-                          //     print("@@@@@@@@@@@");
+
                           //     controller.getspdptp();
                           //   }
                           // }
@@ -650,11 +649,11 @@ class StarLineNewGamePage extends StatelessWidget {
                                               bodyText: "You can not add more than 10000 points");
                                         } else {
                                           // if (int.parse(val) >= 1) {
-                                          //   print("333333333333333   ${val.length}");
+
                                           //   // controller.validCoinsEntered.value = true;
                                           //   // controller.isEnable.value = true;
                                           // } else {
-                                          //   print("444444444444444444   ${val.length}");
+
                                           //   // controller.ondebounce();
 
                                           //   // controller.validCoinsEntered.value = false;
