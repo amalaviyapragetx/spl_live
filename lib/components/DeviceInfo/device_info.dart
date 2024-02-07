@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:unique_identifier/unique_identifier.dart';
 
 import 'device_information_model.dart';
 
@@ -17,17 +16,9 @@ class DeviceInfo {
   String manufacturer = "";
   String osVersion = "";
   String identifier = "";
-  Future<void> initUniqueIdentifierState() async {
-    try {
-      identifier = (await UniqueIdentifier.serial)!;
-    } on PlatformException {
-      identifier = 'Failed to get Unique Identifier';
-    }
-  }
 
   Future<DeviceInformationModel> initPlatformState() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    initUniqueIdentifierState();
     var appVersion = packageInfo.version;
     var deviceData = <String, dynamic>{};
     try {

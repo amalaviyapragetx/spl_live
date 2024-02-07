@@ -230,6 +230,7 @@ class AuthService {
     String? state,
     String? street,
     String? postalCode,
+    String? ipAddress,
   }) async {
     try {
       final response = await authApi.verifyMPIN(
@@ -240,7 +241,8 @@ class AuthService {
           country: country,
           state: state,
           street: street,
-          postalCode: postalCode);
+          postalCode: postalCode,
+          ipAddress: ipAddress);
       if (response != null) {
         return response.data;
       }

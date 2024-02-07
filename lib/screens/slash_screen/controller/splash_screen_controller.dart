@@ -92,10 +92,7 @@ class SplashController extends GetxController {
   }
 
   fcmBody(userId, fcmToken) {
-    var a = {
-      "id": userId,
-      "fcmToken": fcmToken,
-    };
+    var a = {"id": userId, "fcmToken": fcmToken};
     return a;
   }
 
@@ -105,9 +102,7 @@ class SplashController extends GetxController {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -124,9 +119,7 @@ class SplashController extends GetxController {
           _showExitDialog();
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }

@@ -17,15 +17,12 @@ class NotificationController extends GetxController {
 
   @override
   void onClose() {
-   
     getNotifiactionCount.refresh();
-
     super.onClose();
   }
 
   void getNotificationsData() async {
     ApiService().getAllNotifications().then((value) async {
-      
       if (value['status']) {
         GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
         notificationData.value = model.data!.rows as List<NotificationData>;
@@ -43,7 +40,6 @@ class NotificationController extends GetxController {
 
   void resetNotificationCount() async {
     ApiService().resetNotification().then((value) async {
-     
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
         getNotifiactionCount.value = model.data!.notificationCount.toString();

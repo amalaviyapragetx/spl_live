@@ -6,9 +6,21 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/screens/home_pages/normal_market_screen.dart';
 
-class StarlineMarketScreen extends StatelessWidget {
+class StarlineMarketScreen extends StatefulWidget {
   StarlineMarketScreen({super.key});
+
+  @override
+  State<StarlineMarketScreen> createState() => _StarlineMarketScreenState();
+}
+
+class _StarlineMarketScreenState extends State<StarlineMarketScreen> {
   final homeCon = Get.find<HomeController>();
+  @override
+  void initState() {
+    super.initState();
+    homeCon.getDailyStarLineMarkets();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,9 +39,9 @@ class StarlineMarketScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  // homeCon.starLineMarketList[index].isBidOpen == true
-                  //     ? homeCon.onTapOfStarlineMarket(homeCon.starLineMarketList[index])
-                  //     : null;
+                  homeCon.starLineMarketList[index].isBidOpen == true
+                      ? homeCon.onTapOfStarlineMarket(homeCon.starLineMarketList[index])
+                      : null;
                 },
                 child: Container(
                   decoration: BoxDecoration(

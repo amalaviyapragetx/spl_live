@@ -62,8 +62,7 @@ class GameMode {
   GameMode.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['Name'];
-    image = json['Image'] ??
-        "http://43.205.145.101:9867/public/images/games/single-ank.png";
+    image = json['Image'] ?? "";
     isActive = json['IsActive'];
   }
 

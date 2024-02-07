@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/utils/constant.dart';
 
@@ -118,7 +117,7 @@ class HomePageController extends GetxController {
   // }
 
   void callMarketsApi() {
-    getStarLineMarkets(DateFormat('yyyy-MM-dd').format(startEndDate), DateFormat('yyyy-MM-dd').format(startEndDate));
+    //getStarLineMarkets(DateFormat('yyyy-MM-dd').format(startEndDate), DateFormat('yyyy-MM-dd').format(startEndDate));
   }
 
   Future<void> handleRefresh() async {
@@ -178,44 +177,44 @@ class HomePageController extends GetxController {
   Future<void> getUserData() async {
     var data = await LocalStorage.read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
-    getMarketBidsByUserId(
-        lazyLoad: false,
-        startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-        endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
+    // getMarketBidsByUserId(
+    //     lazyLoad: false,
+    //     startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+    //     endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
     callFcmApi(userData.id);
   }
 
-  void getStarLineMarkets(String startDate, String endDate) async {
-    ApiService().getDailyStarLineMarkets(startDate: startDate, endDate: endDate).then((value) async {
-      if (value['status']) {
-        StarLineDailyMarketApiResponseModel responseModel = StarLineDailyMarketApiResponseModel.fromJson(value);
-        starLineMarketList.value = responseModel.data ?? <StarlineMarketData>[];
-        if (starLineMarketList.isNotEmpty) {
-          var biddingOpenMarketList =
-              starLineMarketList.where((element) => element.isBidOpen == true && element.isBlocked == false).toList();
-          var biddingClosedMarketList =
-              starLineMarketList.where((element) => element.isBidOpen == false && element.isBlocked == false).toList();
-          var tempFinalMarketList = <StarlineMarketData>[];
-          biddingOpenMarketList.sort((a, b) {
-            DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
-            DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
-            return dateTimeA.compareTo(dateTimeB);
-          });
-          tempFinalMarketList = biddingOpenMarketList;
-          biddingClosedMarketList.sort((a, b) {
-            DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
-            DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
-            return dateTimeA.compareTo(dateTimeB);
-          });
-          tempFinalMarketList.addAll(biddingClosedMarketList);
-          starLineMarketList.value = tempFinalMarketList;
-          // print("Star ********************* ${starLineMarketList.toJson()}");
-        }
-      } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-      }
-    });
-  }
+  // void getStarLineMarkets(String startDate, String endDate) async {
+  //   ApiService().getDailyStarLineMarkets(startDate: startDate, endDate: endDate).then((value) async {
+  //     if (value['status']) {
+  //       StarLineDailyMarketApiResponseModel responseModel = StarLineDailyMarketApiResponseModel.fromJson(value);
+  //       starLineMarketList.value = responseModel.data ?? <StarlineMarketData>[];
+  //       if (starLineMarketList.isNotEmpty) {
+  //         var biddingOpenMarketList =
+  //             starLineMarketList.where((element) => element.isBidOpen == true && element.isBlocked == false).toList();
+  //         var biddingClosedMarketList =
+  //             starLineMarketList.where((element) => element.isBidOpen == false && element.isBlocked == false).toList();
+  //         var tempFinalMarketList = <StarlineMarketData>[];
+  //         biddingOpenMarketList.sort((a, b) {
+  //           DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
+  //           DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
+  //           return dateTimeA.compareTo(dateTimeB);
+  //         });
+  //         tempFinalMarketList = biddingOpenMarketList;
+  //         biddingClosedMarketList.sort((a, b) {
+  //           DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
+  //           DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
+  //           return dateTimeA.compareTo(dateTimeB);
+  //         });
+  //         tempFinalMarketList.addAll(biddingClosedMarketList);
+  //         starLineMarketList.value = tempFinalMarketList;
+  //         // print("Star ********************* ${starLineMarketList.toJson()}");
+  //       }
+  //     } else {
+  //       AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+  //     }
+  //   });
+  // }
 
   // void getDailyMarkets() async {
   //   ApiService().getDailyMarkets().then((value) async {
@@ -421,98 +420,98 @@ class HomePageController extends GetxController {
   //   }
   // }
 
-  onTapOfNormalMarket(MarketData market) {
-    if (market.isBidOpenForClose ?? false) {
-      Get.toNamed(AppRouteNames.gameModePage, arguments: market);
-    } else {
-      AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
-    }
-  }
+  // onTapOfNormalMarket(MarketData market) {
+  //   if (market.isBidOpenForClose ?? false) {
+  //     Get.toNamed(AppRouteNames.gameModePage, arguments: market);
+  //   } else {
+  //     AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
+  //   }
+  // }
+  //
+  // void onTapOfStarlineMarket(StarlineMarketData market) {
+  //   if (market.isBidOpen ?? false) {
+  //     Get.toNamed(
+  //       AppRouteNames.starLineGameModesPage,
+  //       arguments: market,
+  //     );
+  //   } else {
+  //     AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
+  //   }
+  // }
 
-  void onTapOfStarlineMarket(StarlineMarketData market) {
-    if (market.isBidOpen ?? false) {
-      Get.toNamed(
-        AppRouteNames.starLineGameModesPage,
-        arguments: market,
-      );
-    } else {
-      AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
-    }
-  }
+  // void getDailyStarLineMarkets(String startDate, String endDate) async {
+  //   ApiService().getDailyStarLineMarkets(startDate: startDate, endDate: endDate).then((value) async {
+  //     if (value['status']) {
+  //       StarLineDailyMarketApiResponseModel responseModel = StarLineDailyMarketApiResponseModel.fromJson(value);
+  //       marketList.value = responseModel.data ?? <StarlineMarketData>[];
+  //       marketListForResult.value = responseModel.data ?? <StarlineMarketData>[];
+  //       if (marketList.isNotEmpty) {
+  //         var biddingOpenMarketList =
+  //             marketList.where((element) => element.isBidOpen == true && element.isBlocked == false).toList();
+  //         var biddingClosedMarketList =
+  //             marketList.where((element) => element.isBidOpen == false && element.isBlocked == false).toList();
+  //         var tempFinalMarketList = <StarlineMarketData>[];
+  //         biddingOpenMarketList.sort((a, b) {
+  //           DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
+  //           DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
+  //           return dateTimeA.compareTo(dateTimeB);
+  //         });
+  //         tempFinalMarketList = biddingOpenMarketList;
+  //         biddingClosedMarketList.sort((a, b) {
+  //           DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
+  //           DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
+  //           return dateTimeA.compareTo(dateTimeB);
+  //         });
+  //         tempFinalMarketList.addAll(biddingClosedMarketList);
+  //         marketList.value = tempFinalMarketList;
+  //         marketListForResult.sort((a, b) {
+  //           DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
+  //           DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
+  //           return dateTimeA.compareTo(dateTimeB);
+  //         });
+  //       }
+  //     } else {
+  //       AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+  //     }
+  //   });
+  // }
 
-  void getDailyStarLineMarkets(String startDate, String endDate) async {
-    ApiService().getDailyStarLineMarkets(startDate: startDate, endDate: endDate).then((value) async {
-      if (value['status']) {
-        StarLineDailyMarketApiResponseModel responseModel = StarLineDailyMarketApiResponseModel.fromJson(value);
-        marketList.value = responseModel.data ?? <StarlineMarketData>[];
-        marketListForResult.value = responseModel.data ?? <StarlineMarketData>[];
-        if (marketList.isNotEmpty) {
-          var biddingOpenMarketList =
-              marketList.where((element) => element.isBidOpen == true && element.isBlocked == false).toList();
-          var biddingClosedMarketList =
-              marketList.where((element) => element.isBidOpen == false && element.isBlocked == false).toList();
-          var tempFinalMarketList = <StarlineMarketData>[];
-          biddingOpenMarketList.sort((a, b) {
-            DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
-            DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
-            return dateTimeA.compareTo(dateTimeB);
-          });
-          tempFinalMarketList = biddingOpenMarketList;
-          biddingClosedMarketList.sort((a, b) {
-            DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
-            DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
-            return dateTimeA.compareTo(dateTimeB);
-          });
-          tempFinalMarketList.addAll(biddingClosedMarketList);
-          marketList.value = tempFinalMarketList;
-          marketListForResult.sort((a, b) {
-            DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
-            DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
-            return dateTimeA.compareTo(dateTimeB);
-          });
-        }
-      } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-      }
-    });
-  }
-
-  String getResult(bool resultDeclared, int result) {
-    if (resultDeclared) {
-      int sum = 0;
-      for (int i = result; i > 0; i = (i / 10).floor()) {
-        sum += (i % 10);
-      }
-      return "$result - ${sum % 10}";
-    } else {
-      return "***-*";
-    }
-  }
-
-  String getResult2(bool resultDeclared, int result) {
-    if (resultDeclared) {
-      int sum = 0;
-      for (int i = result; i > 0; i = (i / 10).floor()) {
-        sum += (i % 10);
-      }
-
-      return "$result";
-    } else {
-      return "***";
-    }
-  }
-
-  String getResult3(bool resultDeclared, int result) {
-    if (resultDeclared) {
-      int sum = 0;
-      for (int i = result; i > 0; i = (i / 10).floor()) {
-        sum += (i % 10);
-      }
-      return "${sum % 10}";
-    } else {
-      return "*";
-    }
-  }
+  // String getResult(bool resultDeclared, int result) {
+  //   if (resultDeclared) {
+  //     int sum = 0;
+  //     for (int i = result; i > 0; i = (i / 10).floor()) {
+  //       sum += (i % 10);
+  //     }
+  //     return "$result - ${sum % 10}";
+  //   } else {
+  //     return "***-*";
+  //   }
+  // }
+  //
+  // String getResult2(bool resultDeclared, int result) {
+  //   if (resultDeclared) {
+  //     int sum = 0;
+  //     for (int i = result; i > 0; i = (i / 10).floor()) {
+  //       sum += (i % 10);
+  //     }
+  //
+  //     return "$result";
+  //   } else {
+  //     return "***";
+  //   }
+  // }
+  //
+  // String getResult3(bool resultDeclared, int result) {
+  //   if (resultDeclared) {
+  //     int sum = 0;
+  //     for (int i = result; i > 0; i = (i / 10).floor()) {
+  //       sum += (i % 10);
+  //     }
+  //     return "${sum % 10}";
+  //   } else {
+  //     return "*";
+  //   }
+  // }
 
   // reverse(String originalString) {
   //   String reversedString = '';
@@ -551,36 +550,6 @@ class HomePageController extends GetxController {
   //     }
   //   });
   // }
-
-  void getMarketBidsByUserId({
-    required bool lazyLoad,
-    required String startDate,
-    required String endDate,
-  }) {
-    ApiService()
-        .getBidHistoryByUserId(
-      userId: userData.id.toString(),
-      startDate: startDate,
-      endDate: endDate,
-      limit: "5000",
-      offset: offset.value.toString(),
-      isStarline: isStarline.value,
-    )
-        .then(
-      (value) async {
-        if (value['status']) {
-          if (value['data'] != null) {
-            NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
-            lazyLoad
-                ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
-                : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
-          }
-        } else {
-          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-        }
-      },
-    );
-  }
 
   // final int itemLimit = 30;
 

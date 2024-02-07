@@ -6,6 +6,7 @@ import 'package:spllive/models/banner_model.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/models/notifiaction_models/get_all_notification_model.dart';
 import 'package:spllive/models/notifiaction_models/notification_count_model.dart';
+import 'package:spllive/models/starline_daily_market_api_response.dart';
 
 class HomeService {
   final HomeApi authApi;
@@ -37,11 +38,11 @@ class HomeService {
     return null;
   }
 
-  Future<BannerModel?> getDailyStarLineMarkets({String? startDate, String? endDate}) async {
+  Future<StarLineDailyMarketApiResponseModel?> getDailyStarLineMarkets({String? startDate, String? endDate}) async {
     try {
       final response = await authApi.getDailyStarLineMarkets(startDate: startDate, endDate: endDate);
       if (response != null) {
-        return BannerModel.fromJson(response.data);
+        return StarLineDailyMarketApiResponseModel.fromJson(response.data);
       }
     } catch (e) {
       final errorMessage = DioExceptions.fromDioError(e as DioException);

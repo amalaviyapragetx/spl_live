@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:logger/logger.dart';
 import 'package:spllive/utils/constant.dart';
 
@@ -6,13 +9,25 @@ class DioClient {
   final Dio _dio;
   final Logger _logger = Logger(printer: PrettyPrinter(colors: true, printEmojis: true, printTime: false));
 
+  // static Dio createInstance() {
+  //   var dio = Dio(baseOptions);
+  //   dio.httpClientAdapter =
+  //   return dio;
+  // }
+
   DioClient(this._dio) {
     _dio.interceptors.clear();
     _dio
       ..options.baseUrl = EndPoints.baseUrl
       ..options.connectTimeout = const Duration(milliseconds: EndPoints.connectionTimeout)
       ..options.receiveTimeout = const Duration(milliseconds: EndPoints.receiveTimeout)
-      ..options.responseType = ResponseType.json;
+      ..options.responseType = ResponseType.json
+      ..httpClientAdapter = IOHttpClientAdapter(
+        onHttpClientCreate: (client) {
+          client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+          return client;
+        },
+      );
   }
 
   Future<Response?> get(

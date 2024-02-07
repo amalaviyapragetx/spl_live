@@ -491,6 +491,7 @@ class AuthController extends GetxController {
         street: street.value,
         postalCode: postalCode.value,
         mpin: verifyMpin.value,
+        ipAddress: ip.value,
       );
       if (resp['status']) {
         if (resp['data'] != null) {
@@ -505,6 +506,38 @@ class AuthController extends GetxController {
     } catch (e) {
       AppUtils.hideProgressDialog();
       AppUtils.showErrorSnackBar(bodyText: e.toString());
+    }
+  }
+
+  getLocationsDataMpin() async {
+    final locationData = await GetStorage().read(ConstantsVariables.locationData) ?? [];
+    if (locationData != null) {
+      List list = [];
+      list.add(locationData[0]['location']);
+      List<LocationModel> data = LocationModel.fromJsonList(list);
+      city.value = data[0].city ?? 'Unknown';
+      country.value = data[0].country ?? 'Unknown';
+      state.value = data[0].state ?? 'Unknown';
+      street.value = data[0].street ?? 'Unknown';
+      postalCode.value = data[0].postalCode ?? 'Unknown';
+    }
+  }
+
+  Rx<String?> ip = "".obs;
+
+  Future<String?> getPublicIpAddress() async {
+    try {
+      final response = await GetConnect(timeout: const Duration(seconds: 15)).get('https://api.ipify.org?format=json');
+      if (response.statusCode == 200) {
+        final data = response.body['ip'];
+        ip.value = data;
+        return data;
+      } else {
+        throw Exception('Failed to load IP address');
+      }
+    } catch (e) {
+      print('Error fetching IP address: $e');
+      return null;
     }
   }
 

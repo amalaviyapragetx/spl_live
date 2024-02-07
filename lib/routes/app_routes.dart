@@ -12,6 +12,7 @@ import 'package:spllive/screens/authentication/set_mpin_page.dart';
 import 'package:spllive/screens/authentication/sign_in_screen_page.dart';
 import 'package:spllive/screens/game_pages/game_pages.dart';
 import 'package:spllive/screens/gamemode_pages/gamemode_page.dart';
+import 'package:spllive/screens/home_screen/dashboard_screen.dart';
 import 'package:spllive/screens/sign_up_screen/bindings/sing_up_screen_bindings.dart';
 import 'package:spllive/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:spllive/screens/slash_screen/bindings/splash_screen_bindings.dart';
@@ -63,7 +64,6 @@ import '../screens/authentication/user_details_page.dart';
 import '../screens/game_pages/bindings/game_mode_page_binding.dart';
 import '../screens/gamemode_pages/bindings/game_mode_page_binding.dart';
 import '../screens/home_screen/binding/home_screen_binding.dart';
-import '../screens/home_screen/home_screen.dart';
 import '../screens/transaction_page/binding/transaction_page_binding.dart';
 import '../screens/transaction_page/transaction.dart';
 import '../screens/welcome_screen/bindings/welcome_screen_bindings.dart';
@@ -77,27 +77,21 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
       page: () => SplashScreen(),
-      bindings: [
-        SplashScreenBinding(),
-      ],
+      bindings: [SplashScreenBinding()],
     ),
     GetPage(
       name: AppRouteNames.welcomeScreen,
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
       page: () => WelcomeScreen(),
-      bindings: [
-        WelcomeScreenBinding(),
-      ],
+      bindings: [WelcomeScreenBinding()],
     ),
     GetPage(
       name: AppRouteNames.dashboardPage,
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
-      page: () => const DashBoardPage(),
-      bindings: [
-        HomePageBindings(),
-      ],
+      page: () => DashBoardPage(),
+      bindings: [HomePageBindings()],
     ),
     GetPage(
       name: AppRouteNames.transactionPage,

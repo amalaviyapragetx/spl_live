@@ -245,6 +245,7 @@ class AuthApi {
     String? state,
     String? street,
     String? postalCode,
+    String? ipAddress,
   }) async {
     try {
       final response = await dioClient.post(
@@ -257,7 +258,8 @@ class AuthApi {
           "country": country,
           "state": state,
           "street": street,
-          "postalCode": postalCode
+          "postalCode": postalCode,
+          "ipAddress": ipAddress
         },
         options: Options(
           headers: {'Authorization': "Bearer ${GetStorage().read(ConstantsVariables.authToken) ?? ""}"},

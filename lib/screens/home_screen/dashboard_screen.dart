@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/components/bottumnavigation/bottumnavigation.dart';
 import 'package:spllive/controller/home_controller.dart';
+import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/screens/home_screen/utils/home_screen_utils.dart';
 
-import '../../components/bottumnavigation/bottumnavigation.dart';
-import '../../helper_files/app_colors.dart';
-
 class DashBoardPage extends StatelessWidget {
-  const DashBoardPage({super.key});
+  DashBoardPage({super.key});
+  final walletController = Get.put(WalletController());
+  final homeCon = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    // var controller = Get.put(HomePageController());
-    var walletController = Get.put(WalletController());
-    final homeCon = Get.put(HomeController());
     return WillPopScope(
       onWillPop: () async {
         if (homeCon.pageWidget.value == 1 ||

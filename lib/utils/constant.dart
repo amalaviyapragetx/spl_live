@@ -85,10 +85,10 @@ class AppColor {
 class EndPoints {
   EndPoints._();
   // Spl Production
-  // static String baseUrl = "https://vishnulive.in:9869";
+  static String baseUrl = "https://vishnulive.in:9869";
 
   // // local url
-  static String baseUrl = "http://192.168.29.143:8080";
+  // static String baseUrl = "http://192.168.29.143:8080";
   // receiveTimeout
   static const int receiveTimeout = 15000;
 

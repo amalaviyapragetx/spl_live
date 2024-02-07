@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -5,7 +7,10 @@ import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/screens/home_pages/normal_bid_history.dart';
 import 'package:spllive/screens/home_pages/normal_market_screen.dart';
+import 'package:spllive/screens/home_pages/result_history_screen.dart';
+import 'package:spllive/screens/home_pages/starline_chart.dart';
 import 'package:spllive/screens/home_pages/starline_market_screen.dart';
 import 'package:spllive/screens/home_screen/utils/home_screen_utils.dart';
 import 'package:spllive/utils/constant.dart';
@@ -44,7 +49,35 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                HomeScreenUtils().banner(),
+                Obx(
+                  () => CarouselSlider(
+                    items: homeCon.bannerData
+                        .map(
+                          (element) => Builder(
+                            builder: (context) => Padding(
+                              padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+                              child: CachedNetworkImage(
+                                imageUrl: element.banner ?? "",
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    options: CarouselOptions(
+                      height: Dimensions.h90,
+                      enlargeCenterPage: true,
+                      autoPlay: true,
+                      aspectRatio: 15 / 4,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enableInfiniteScroll: true,
+                      autoPlayAnimationDuration: const Duration(milliseconds: 600),
+                      viewportFraction: 1,
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.h10, vertical: Dimensions.h5),
                   child: Container(
@@ -80,12 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap2: () {
                               homeCon.position = 1;
                               homeCon.isStarline.value = true;
-                              // getDailyStarLineMarkets(DateFormat('yyyy-MM-dd').format(startEndDate),
-                              //     DateFormat('yyyy-MM-dd').format(startEndDate));
-                              // getMarketBidsByUserId(
-                              //        lazyLoad: false,
-                              //        endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-                              //        startDate: DateFormat('yyyy-MM-dd').format(startEndDate));
                               homeCon.widgetContainer.value = 1;
                             },
                             onTap3: () {
@@ -93,6 +120,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               homeCon.widgetContainer.value = 2;
                               homeCon.isStarline.value = false;
                               launch("https://wa.me/+917769826748/?text=hi");
+                              Future.delayed(
+                                const Duration(seconds: 1),
+                                () {
+                                  homeCon.widgetContainer.value = 0;
+                                  homeCon.position = 0;
+                                },
+                              );
                             },
                           ),
                           const SizedBox(height: 10),
@@ -111,27 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap1: () {
                                       homeCon.position = 3;
                                       homeCon.widgetContainer.value = 3;
-                                      // getMarketBidsByUserId(
-                                      //   lazyLoad: false,
-                                      //   endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-                                      //   startDate: DateFormat('yyyy-MM-dd').format(
-                                      //     startEndDate,
-                                      //   ),
-                                      // );
                                     },
                                     onTap2: () {
                                       homeCon.position = 4;
                                       homeCon.widgetContainer.value = 4;
-                                      // getDailyStarLineMarkets(
-                                      //   DateFormat('yyyy-MM-dd').format(startEndDate),
-                                      //   DateFormat('yyyy-MM-dd').format(startEndDate),
-                                      // );
                                     },
                                     onTap3: () {
                                       homeCon.position = 5;
                                       homeCon.widgetContainer.value = 5;
-
-                                      // callGetStarLineChart();
                                     },
                                   )
                                 : Container();
@@ -160,37 +181,13 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return Container();
       case 3:
-        return Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.h10), child: HomeScreenUtils().bidHistory(context));
+        return const NormalMarketBidHistory();
       case 4:
-        return Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.h10), child: HomeScreenUtils().resultHistory(context));
+        return const ResultHistoryScreen();
       case 5:
-        return Column(
-          children: [
-            SizedBox(height: Dimensions.h10),
-            const Text("Starline Chart", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            SizedBox(height: Dimensions.h5),
-            // homeCon.starlineChartDateAndTime.isEmpty
-            //     ? SizedBox(
-            //         height: Get.height / 2.5,
-            //         child: Center(
-            //           child: Text(
-            //             "There is no Data in Starlin Chart",
-            //             style: CustomTextStyle.textRobotoSansMedium,
-            //           ),
-            //         ),
-            //       )
-            //     : SingleChildScrollView(
-            //         scrollDirection: Axis.vertical,
-            //         child: Row(
-            //           children: [HomeScreenUtils().dateColumn(), Expanded(child: HomeScreenUtils().timeColumn())],
-            //         ),
-            //       ),
-          ],
-        );
+        return const StarlineChart();
       default:
-        return HomeScreenUtils().gridColumn();
+        return const NormalMarketScreen();
     }
   }
 }

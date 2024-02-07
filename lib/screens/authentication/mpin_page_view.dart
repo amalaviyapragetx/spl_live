@@ -23,6 +23,8 @@ class _MPINPageViewState extends State<MPINPageView> {
   void initState() {
     super.initState();
     controller.userId.value = "${widget.id ?? ""}";
+    // controller.getLocationsDataMpin();
+    controller.getPublicIpAddress();
   }
 
   @override

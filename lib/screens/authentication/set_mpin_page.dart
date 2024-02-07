@@ -23,6 +23,7 @@ class _SetMPINPageState extends State<SetMPINPage> {
   @override
   void initState() {
     super.initState();
+
     controller.getLocationsData(isLogin: widget.fromLogin, userDetail: widget.userDetails);
   }
 

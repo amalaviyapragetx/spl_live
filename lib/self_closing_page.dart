@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/models/commun_models/user_details_model.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
+import 'package:spllive/screens/authentication/mpin_page_view.dart';
 import 'package:spllive/utils/constant.dart';
 
 import 'helper_files/app_colors.dart';
@@ -123,20 +124,22 @@ class InactivityController extends GetxController {
             if (timeOut) {
               if (alreadyLoggedIn) {
                 if (isActive && isVerified) {
-                  Get.offAllNamed(
-                    AppRouteNames.mPINPage,
-                    arguments: {"id": _userDetailsModel.id},
-                  );
+                  // Get.offAllNamed(
+                  //   AppRouteNames.mPINPage,
+                  //   arguments: {"id": _userDetailsModel.id},
+                  // );
+                  Get.offAll(MPINPageView(id: _userDetailsModel.id));
                   _inactivityTimer?.cancel();
                 }
               } else {
                 _inactivityTimer?.cancel();
               }
             } else {
-              Get.offAllNamed(
-                AppRouteNames.mPINPage,
-                arguments: {"id": _userDetailsModel.id},
-              );
+              Get.offAll(MPINPageView(id: _userDetailsModel.id));
+              // Get.offAllNamed(
+              //   AppRouteNames.mPINPage,
+              //   arguments: {"id": _userDetailsModel.id},
+              // );
               _inactivityTimer?.cancel();
             }
           },

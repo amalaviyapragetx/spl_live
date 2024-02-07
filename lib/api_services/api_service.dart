@@ -319,28 +319,28 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getDailyStarLineMarkets({required String startDate, required String endDate}) async {
-    Future.delayed(const Duration(milliseconds: 2), () {
-      AppUtils.showProgressDialog(isCancellable: false);
-    });
-
-    await initApiService();
-    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
-      headers: headersWithToken,
-    );
-
-    if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
-      return Future.error(response.statusText!);
-    } else {
-      AppUtils.hideProgressDialog();
-      return response.body;
-    }
-  }
+  // Future<dynamic> getDailyStarLineMarkets({required String startDate, required String endDate}) async {
+  //   Future.delayed(const Duration(milliseconds: 2), () {
+  //     AppUtils.showProgressDialog(isCancellable: false);
+  //   });
+  //   // """"""""""""""""""""""""""""""""""""
+  //   await initApiService();
+  //   final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
+  //     "${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$endDate",
+  //     headers: headersWithToken,
+  //   );
+  //
+  //   if (response.status.hasError) {
+  //     AppUtils.hideProgressDialog();
+  //     if (response.status.code != null && response.status.code == 401) {
+  //       tokenExpired();
+  //     }
+  //     return Future.error(response.statusText!);
+  //   } else {
+  //     AppUtils.hideProgressDialog();
+  //     return response.body;
+  //   }
+  // }
 
   Future<dynamic> getStarLineGameModes({required int marketID}) async {
     Future.delayed(const Duration(milliseconds: 2), () {
@@ -718,7 +718,7 @@ class ApiService extends GetConnect implements GetxService {
     required String? startDate,
     required String? endDate,
   }) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    //   AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
@@ -728,10 +728,10 @@ class ApiService extends GetConnect implements GetxService {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
-      AppUtils.hideProgressDialog();
+      //   AppUtils.hideProgressDialog();
       return Future.error(response.statusText!);
     } else {
-      AppUtils.hideProgressDialog();
+//      AppUtils.hideProgressDialog();
       return response.body;
     }
   }
@@ -779,7 +779,7 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getStarlineChar() async {
+  Future<dynamic> getStarlineChart() async {
     Future.delayed(const Duration(milliseconds: 2), () {
       AppUtils.showProgressDialog(isCancellable: false);
     });
@@ -817,7 +817,6 @@ class ApiService extends GetConnect implements GetxService {
   //       tokenExpired();
   //     }
   //     AppUtils.hideProgressDialog();
-
   //     return Future.error(response.statusText!);
   //   } else {
   //     AppUtils.hideProgressDialog();
@@ -877,7 +876,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> bidHistoryByUserId({
     required String userId,
   }) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
 
     final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(

@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.7.0
   get: ^4.6.5
-  http: ^0.13.6
   get_storage: ^2.1.1
   carousel_slider: ^4.2.1
   connectivity_plus: ^4.0.1
@@ -47,21 +46,17 @@ dependencies:
   device_info_plus: ^9.0.2
   package_info_plus: ^4.0.2
   intl: ^0.18.1
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.1
   flutter_rating_bar: ^4.0.1
   url_launcher: ^6.1.11
   share_plus: ^7.0.2
-  image_picker: ^1.0.1
-#  flutter_pin_code_fields: ^2.2.0
   firebase_messaging: ^14.6.7
   firebase_core: ^2.15.1
-  firebase_analytics: ^10.4.5
   permission_handler: ^10.4.3
   open_app_settings: ^2.0.1
   geolocator: ^10.0.1
   geocoding: ^2.1.0
   flutter_jailbreak_detection: ^1.10.0
-  unique_identifier: ^0.3.0
   logger: ^2.0.2+1
   dio: ^5.4.0
   get_it: ^7.6.0
