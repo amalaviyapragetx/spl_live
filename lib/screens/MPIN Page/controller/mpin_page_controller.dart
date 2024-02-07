@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
@@ -23,9 +23,11 @@ class MPINPageController extends GetxController {
   RxString city = ''.obs;
   RxString country = ''.obs;
   RxString state = ''.obs;
+  RxString ip = ''.obs;
   @override
   void onInit() async {
     super.onInit();
+    getPublicIpAddress();
     await LocalStorage.write(ConstantsVariables.starlineConnect, false);
     await LocalStorage.write(ConstantsVariables.timeOut, false);
     await LocalStorage.write(ConstantsVariables.mPinTimeOut, true);
@@ -55,7 +57,7 @@ class MPINPageController extends GetxController {
       "state": state.value,
       "street": street.value,
       "postalCode": postalCode.value,
-      "ipAddress": await getIpAddress()
+      "ipAddress": ip.value
     }).then((value) async {
       if (value != null && value['status']) {
         // AppUtils.showSuccessSnackBar(
@@ -79,25 +81,41 @@ class MPINPageController extends GetxController {
     });
   }
 
-  Future<String> getIpAddress() async {
+  Future<String?> getPublicIpAddress() async {
     try {
-      List<NetworkInterface> interfaces =
-          await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
-      for (NetworkInterface interface in interfaces) {
-        print("===========${interface.name.toLowerCase()}================================");
-        if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
-          for (InternetAddress address in interface.addresses) {
-            if (!address.isLoopback && !address.isLinkLocal) {
-              return address.address;
-            }
-          }
-        }
+      final response = await GetConnect(timeout: Duration(seconds: 15)).get('https://api.ipify.org?format=json');
+      if (response.statusCode == 200) {
+        final data = response.body['ip'];
+        ip.value = data;
+        return data;
+      } else {
+        throw Exception('Failed to load IP address');
       }
-    } on SocketException catch (e) {
-      print("Error getting IP address: $e");
+    } catch (e) {
+      print('Error fetching IP address: $e');
+      return null;
     }
-    return "Could not determine IP address";
   }
+
+  // Future<String> getIpAddress() async {
+  //   try {
+  //     List<NetworkInterface> interfaces =
+  //         await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
+  //     for (NetworkInterface interface in interfaces) {
+  //       print("===========${interface.name.toLowerCase()}================================");
+  //       if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
+  //         for (InternetAddress address in interface.addresses) {
+  //           if (!address.isLoopback && !address.isLinkLocal) {
+  //             return address.address;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } on SocketException catch (e) {
+  //     print("Error getting IP address: $e");
+  //   }
+  //   return "Could not determine IP address";
+  // }
 
   void forgotMPINApi() async {
     ApiService().forgotMPIN().then((value) async {
@@ -112,7 +130,7 @@ class MPINPageController extends GetxController {
   }
 
   getLocationsData() async {
-    var locationData = await LocalStorage.read(ConstantsVariables.locationData) ?? [];
+    var locationData = await GetStorage().read(ConstantsVariables.locationData) ?? [];
     // getMarketBidsByUserId(lazyLoad: false);
     List list = [];
     list.add(locationData[0]['location']);

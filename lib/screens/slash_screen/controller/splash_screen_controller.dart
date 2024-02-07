@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,7 +42,6 @@ class SplashController extends GetxController {
     getLocation();
     checkLogin();
     getDeviceInfo();
-    getIpAddress();
     // Timer(Duration(milliseconds: 700), () {});
   }
 
@@ -315,45 +312,45 @@ class SplashController extends GetxController {
     }
   }
 
-  Future<String> getIpAddress() async {
-    getIpAddress2();
-    try {
-      List<NetworkInterface> interfaces =
-          await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
-      for (NetworkInterface interface in interfaces) {
-        print("===========${interface.name.toLowerCase()}================================");
-        if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
-          for (InternetAddress address in interface.addresses) {
-            if (!address.isLoopback && !address.isLinkLocal) {
-              return address.address;
-            }
-          }
-        }
-      }
-    } on SocketException catch (e) {
-      print("Error getting IP address: $e");
-    }
-    return "Could not determine IP address";
-  }
-
-  void getIpAddress2() async {
-    ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
-
-    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
-      try {
-        for (var interface in await NetworkInterface.list()) {
-          for (var addr in interface.addresses) {
-            if (addr.type.name.toLowerCase() == 'ipv4') {
-              print('IP Address: ${addr.address}');
-              return;
-            }
-          }
-        }
-      } catch (e) {
-        print('Error getting IP address: $e');
-      }
-    } else {
-      print('No internet connection available');
-    }
-  }
+  // Future<String> getIpAddress() async {
+  //   getIpAddress2();
+  //   try {
+  //     List<NetworkInterface> interfaces =
+  //         await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
+  //     for (NetworkInterface interface in interfaces) {
+  //       print("===========${interface.name.toLowerCase()}================================");
+  //       if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
+  //         for (InternetAddress address in interface.addresses) {
+  //           if (!address.isLoopback && !address.isLinkLocal) {
+  //             return address.address;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } on SocketException catch (e) {
+  //     print("Error getting IP address: $e");
+  //   }
+  //   return "Could not determine IP address";
+  // }
+  //
+  // void getIpAddress2() async {
+  //   ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
+  //
+  //   if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+  //     try {
+  //       for (var interface in await NetworkInterface.list()) {
+  //         for (var addr in interface.addresses) {
+  //           if (addr.type.name.toLowerCase() == 'ipv4') {
+  //             print('IP Address: ${addr.address}');
+  //             return;
+  //           }
+  //         }
+  //       }
+  //     } catch (e) {
+  //       print('Error getting IP address: $e');
+  //     }
+  //   } else {
+  //     print('No internet connection available');
+  //   }
+  // }
 }
