@@ -10,7 +10,6 @@ import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_info.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/location_models/location_model.dart';
-import '../../Local Storage.dart';
 
 class MPINPageController extends GetxController {
   StreamController<ErrorAnimationType> mpinErrorController = StreamController<ErrorAnimationType>();
@@ -25,12 +24,12 @@ class MPINPageController extends GetxController {
   RxString state = ''.obs;
   RxString ip = ''.obs;
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     getPublicIpAddress();
-    await LocalStorage.write(ConstantsVariables.starlineConnect, false);
-    await LocalStorage.write(ConstantsVariables.timeOut, false);
-    await LocalStorage.write(ConstantsVariables.mPinTimeOut, true);
+    GetStorage().write(ConstantsVariables.starlineConnect, false);
+    GetStorage().write(ConstantsVariables.timeOut, false);
+    GetStorage().write(ConstantsVariables.mPinTimeOut, true);
     userId = arguments['id'].toString();
     getLocationsData();
   }
@@ -47,7 +46,7 @@ class MPINPageController extends GetxController {
     }
   }
 
-  void verifyMPIN() async {
+  void verifyMPIN() {
     ApiService().verifyMPIN({
       "id": userId,
       "mPin": mpin.value,
@@ -67,7 +66,7 @@ class MPINPageController extends GetxController {
         var userData = value['data'];
         if (userData != null) {
           String authToken = userData['Token'] ?? "Null From API";
-          await LocalStorage.write(ConstantsVariables.authToken, authToken);
+          GetStorage().write(ConstantsVariables.authToken, authToken);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
@@ -95,7 +94,7 @@ class MPINPageController extends GetxController {
     }
   }
 
-  void forgotMPINApi() async {
+  void forgotMPINApi() {
     ApiService().forgotMPIN().then((value) async {
       if (value['status']) {
         Get.toNamed(AppRoutName.verifyOTPPage);

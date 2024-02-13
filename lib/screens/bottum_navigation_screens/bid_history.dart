@@ -12,10 +12,7 @@ import '../../helper_files/ui_utils.dart';
 import 'controller/bottum_navigation_controller.dart';
 
 class BidHistory extends StatelessWidget {
-  BidHistory({
-    super.key,
-    required this.appbarTitle,
-  });
+  BidHistory({super.key, required this.appbarTitle});
   final String appbarTitle;
   var controller = Get.put(MoreListController());
   var homePageController = Get.put(HomePageController());
@@ -28,16 +25,14 @@ class BidHistory extends StatelessWidget {
         AppUtils().simpleAppbar(
           appBarTitle: "",
           leadingWidht: Dimensions.w200,
-          leading: Container(
-            child: Row(
-              children: [
-                SizedBox(width: Dimensions.w15),
-                Text(
-                  appbarTitle,
-                  style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
-                ),
-              ],
-            ),
+          leading: Row(
+            children: [
+              SizedBox(width: Dimensions.w15),
+              Text(
+                appbarTitle,
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
+              ),
+            ],
           ),
         ),
         Expanded(

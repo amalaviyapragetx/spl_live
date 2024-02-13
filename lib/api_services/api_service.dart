@@ -539,24 +539,26 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> verifyMPIN(body) async {
-    AppUtils.showProgressDialog(isCancellable: false);
-    await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
-      ApiUtils.verifyMPIN,
-      body,
-      headers: headersWithToken,
-    );
-
-    if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
+    try {
+      AppUtils.showProgressDialog(isCancellable: false);
+      await initApiService();
+      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+        ApiUtils.verifyMPIN,
+        body,
+        headers: headersWithToken,
+      );
+      if (response.status.hasError) {
+        AppUtils.hideProgressDialog();
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return response.body;
+      } else {
+        AppUtils.hideProgressDialog();
+        return response.body;
       }
-
-      return response.body;
-    } else {
+    } catch (e) {
       AppUtils.hideProgressDialog();
-      return response.body;
     }
   }
 
