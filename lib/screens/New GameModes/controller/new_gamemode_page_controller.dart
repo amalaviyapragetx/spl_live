@@ -583,19 +583,17 @@ class NewGamemodePageController extends GetxController {
             //   AppRoutName.gameModePage,
             //   arguments: marketValue.value,
             // );
-            AppUtils.showErrorSnackBar(
-              bodyText: value['message'] ?? "",
-            );
+            AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
             HomePageController().marketBidsByUserId(lazyLoad: false);
           } else {
-            Get.offAllNamed(
-              AppRoutName.gameModePage,
-              arguments: marketValue.value,
-            );
-            // Get.offAndToNamed(
+            // Get.offAllNamed(
             //   AppRoutName.gameModePage,
             //   arguments: marketValue.value,
             // );
+            Get.offAndToNamed(
+              AppRoutName.gameModePage,
+              arguments: marketValue.value,
+            );
             AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
             final walletController = Get.find<WalletController>();
             walletController.getUserBalance();
@@ -605,9 +603,7 @@ class NewGamemodePageController extends GetxController {
           LocalStorage.remove(ConstantsVariables.marketName);
           LocalStorage.remove(ConstantsVariables.biddingType);
         } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
         requestModel.value.bids!.clear();
         _calculateTotalAmount();

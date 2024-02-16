@@ -413,9 +413,7 @@ class HomeScreenUtils {
                                   ],
                                 ),
                                 playButton(),
-                                SizedBox(
-                                  height: Dimensions.h5,
-                                ),
+                                SizedBox(height: Dimensions.h5),
                                 Container(
                                   height: Dimensions.h30,
                                   decoration: BoxDecoration(
@@ -449,9 +447,7 @@ class HomeScreenUtils {
                   ),
                 ],
               )
-            : const Center(
-                child: Text("No Data Found"),
-              );
+            : const Center(child: Text("No Data Found"));
       },
     );
   }

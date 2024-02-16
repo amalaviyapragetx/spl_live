@@ -361,14 +361,23 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getTransactionHistoryById({required int userId, required int offset}) async {
+  Future<dynamic> getTransactionHistoryById({
+    String? userId,
+    String? offset,
+    String? limit,
+  }) async {
     Future.delayed(const Duration(milliseconds: 2), () {
       AppUtils.showProgressDialog(isCancellable: false);
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${ApiUtils.getTransactionHistory}?id=$userId&limit=100&offset=$offset",
+    // final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+    //   // "${ApiUtils.getTransactionHistory}?id=$userId&limit=100&offset=$offset",
+    //   headers: headersWithToken,
+    // );
+    final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
+      ApiUtils.getTransactionHistory,
+      {"userId": userId, "limit": limit, "offset": offset},
       headers: headersWithToken,
     );
     if (response.status.hasError) {
@@ -1086,6 +1095,30 @@ class ApiService extends GetConnect implements GetxService {
       return response.body;
     } else {
       return response.body;
+    }
+  }
+
+  Future<dynamic> addFund({String? amount}) async {
+    try {
+      AppUtils.showProgressDialog(isCancellable: false);
+      await initApiService();
+      final response = await GetConnect(timeout: Duration(seconds: 20), allowAutoSignedCert: true).post(
+        ApiUtils.addFund,
+        {"amount": "$amount.00", "type": "Deposit"},
+        headers: headersWithToken,
+      );
+      if (response.status.hasError) {
+        AppUtils.hideProgressDialog();
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return response.body;
+      } else {
+        AppUtils.hideProgressDialog();
+        return response.body;
+      }
+    } catch (e) {
+      AppUtils.hideProgressDialog();
     }
   }
 }

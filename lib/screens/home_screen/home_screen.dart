@@ -4,18 +4,36 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/screens/home_screen/utils/home_screen_utils.dart';
-import '../../components/bottumnavigation/bottumnavigation.dart';
-import 'controller/homepage_controller.dart';
-import '../../helper_files/app_colors.dart';
 
-class DashBoardPage extends StatelessWidget {
+import '../../components/bottumnavigation/bottumnavigation.dart';
+import '../../helper_files/app_colors.dart';
+import 'controller/homepage_controller.dart';
+
+class DashBoardPage extends StatefulWidget {
   const DashBoardPage({super.key});
+
+  @override
+  State<DashBoardPage> createState() => _DashBoardPageState();
+}
+
+class _DashBoardPageState extends State<DashBoardPage> {
+  final controller = Get.put<HomePageController>(HomePageController());
+  final walletController = Get.put<WalletController>(WalletController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.setboolData();
+    controller.callMarketsApi();
+    controller.getUserData();
+    controller.getUserBalance();
+    controller.getNotificationCount();
+    controller.getNotificationsData();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var controller = Get.put(HomePageController());
-    var walletController = Get.put(WalletController());
-    // print("${controller.getNotifiactionCount.value.toString()}");
     return WillPopScope(
       onWillPop: () async {
         if (controller.pageWidget.value == 1 ||
@@ -24,8 +42,7 @@ class DashBoardPage extends StatelessWidget {
             controller.pageWidget.value == 4) {
           controller.pageWidget.value = 0;
           controller.currentIndex.value = 0;
-          SystemChrome.setPreferredOrientations(
-              [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
+          SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
           return false;
         } else if (controller.pageWidget.value == 5) {
           controller.pageWidget.value = 4;
@@ -60,45 +77,35 @@ class DashBoardPage extends StatelessWidget {
                   controller.pageWidget.value = 1;
                   controller.currentIndex.value = 1;
                   controller.marketBidsByUserId(lazyLoad: false);
-                  SystemChrome.setPreferredOrientations([
-                    DeviceOrientation.portraitUp,
-                    DeviceOrientation.landscapeLeft
-                  ]);
+                  SystemChrome.setPreferredOrientations(
+                      [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                   // controller.getUserBalance();
                 },
                 onTapHome: () {
                   controller.pageWidget.value = 0;
                   controller.currentIndex.value = 0;
-                  SystemChrome.setPreferredOrientations([
-                    DeviceOrientation.portraitUp,
-                    DeviceOrientation.landscapeLeft
-                  ]);
+                  SystemChrome.setPreferredOrientations(
+                      [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                   // controller.getUserBalance();
                 },
                 onTapMore: () {
                   controller.pageWidget.value = 4;
                   controller.currentIndex.value = 4;
-                  SystemChrome.setPreferredOrientations([
-                    DeviceOrientation.portraitUp,
-                    DeviceOrientation.landscapeLeft
-                  ]);
+                  SystemChrome.setPreferredOrientations(
+                      [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                   // controller.getUserBalance();
                 },
                 onTapWallet: () {
                   controller.pageWidget.value = 2;
                   controller.currentIndex.value = 2;
-                  SystemChrome.setPreferredOrientations([
-                    DeviceOrientation.portraitUp,
-                    DeviceOrientation.landscapeLeft
-                  ]);
+                  SystemChrome.setPreferredOrientations(
+                      [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                   walletController.walletBalance.refresh();
                   controller.getUserBalance();
                   walletController.walletBalance.refresh();
                 },
                 onTapPassbook: () {
-                  controller.getPassBookData(
-                      lazyLoad: false,
-                      offset: controller.offset.value.toString());
+                  controller.getPassBookData(lazyLoad: false, offset: controller.offset.value.toString());
                   controller.pageWidget.value = 3;
                   controller.currentIndex.value = 3;
                 },
@@ -107,8 +114,7 @@ class DashBoardPage extends StatelessWidget {
             backgroundColor: AppColors.white,
             body: RefreshIndicator(
               onRefresh: () async {
-                if (controller.pageWidget.value == 0 ||
-                    controller.pageWidget.value == 2) {
+                if (controller.pageWidget.value == 0) {
                   controller.handleRefresh();
                   walletController.walletBalance.refresh();
                 }
@@ -118,33 +124,27 @@ class DashBoardPage extends StatelessWidget {
                   controller.pageWidget.value,
                   size,
                   context,
-                  notifictionCount:
-                      controller.getNotifiactionCount.value.toString(),
+                  notifictionCount: controller.getNotifiactionCount.value.toString(),
                 ),
               ),
             ),
           ),
           Obx(
-            () => controller.getNotifiactionCount.value > 0
-                ? HomeScreenUtils().notificationAbout(
-                    context,
-                  )
-                : Container(),
+            () =>
+                controller.getNotifiactionCount.value > 0 ? HomeScreenUtils().notificationAbout(context) : Container(),
           )
         ],
       ),
     );
   }
 
-  AlertDialog onExitAlert(BuildContext context,
-      {required Function() onExit, required Function() onCancel}) {
+  AlertDialog onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
     return AlertDialog(
       title: Text(
         'Exit App',
         style: CustomTextStyle.textRobotoSansBold,
       ),
-      content: Text('Are you sure you want to exit the app?',
-          style: CustomTextStyle.textRobotoSansMedium),
+      content: Text('Are you sure you want to exit the app?', style: CustomTextStyle.textRobotoSansMedium),
       actions: [
         TextButton(
           onPressed: onCancel,

@@ -1,64 +1,51 @@
 import 'package:get/get.dart';
-import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
-import '../../../helper_files/ui_utils.dart';
-import '../../../models/commun_models/user_details_model.dart';
-import '../../../models/transaction_history_api_response_model.dart';
-import '../../Local Storage.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:spllive/api_services/api_service.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
+import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/models/commun_models/user_details_model.dart';
+import 'package:spllive/models/payment_transaction_model.dart';
 
 class TransactionHistoryPageController extends GetxController {
-  // TransactionHistoryApiResponseModel transactionModel = TransactionHistoryApiResponseModel();
-  RxList<ResultArr> transactionList = <ResultArr>[].obs;
+  Rx<PaymentTransactionModel> transactionModel = PaymentTransactionModel().obs;
+  // RxList<ResultArr> transactionList = <ResultArr>[].obs;
   UserDetailsModel userDetailsModel = UserDetailsModel();
   int offset = 0;
-  Future<void> onSwipeRefresh() async {
-    if (userDetailsModel.id != null) {
-      getTransactionHistory(offset: offset);
-    } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "SOMETHINGWENTWRONG".tr,
-      );
-    }
-  }
+  // Future<void> onSwipeRefresh() async {
+  //   if (userDetailsModel.id != null) {
+  //     getTransactionHistory(offset: offset);
+  //   } else {
+  //     AppUtils.showErrorSnackBar(
+  //       bodyText: "SOMETHINGWENTWRONG".tr,
+  //     );
+  //   }
+  // }
 
-  @override
-  void onInit() {
-    fetchUserData();
-    super.onInit();
-  }
-
-  Future<void> fetchUserData() async {
-    var userData = await LocalStorage.read(ConstantsVariables.userData);
+  fetchUserData() {
+    final userData = GetStorage().read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(userData);
     if (userDetailsModel.id != null) {
-     
-      getTransactionHistory(offset: offset);
-    } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "SOMETHINGWENTWRONG".tr,
-      );
+      getTransactionHistory();
     }
+    // } else {
+    //   AppUtils.showErrorSnackBar(
+    //     bodyText: "SOMETHINGWENTWRONG".tr,
+    //   );
+    // }
   }
 
-  void getTransactionHistory({required int offset}) async {
+  void getTransactionHistory() async {
     ApiService()
         .getTransactionHistoryById(
-            userId: userDetailsModel.id ?? 0, offset: offset)
+      userId: "${userDetailsModel.id ?? 0}",
+      offset: "$offset",
+      limit: "5000",
+    )
         .then(
       (value) async {
-     
         if (value['status']) {
-          TransactionHistoryApiResponseModel transactionModel =
-              TransactionHistoryApiResponseModel.fromJson(value);
-
-          if (transactionModel.data?.resultArr != null &&
-              transactionModel.data!.resultArr!.isNotEmpty) {
-            transactionList.value =
-                transactionModel.data!.resultArr as List<ResultArr>;
-          } else {
-            transactionList.value = <ResultArr>[];
-           
-          }
+          transactionModel.value = PaymentTransactionModel.fromJson(value);
+          print(transactionModel.value.data?.rows?.length ?? 0);
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",

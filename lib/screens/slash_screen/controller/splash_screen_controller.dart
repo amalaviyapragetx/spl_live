@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_information_model.dart';
-import '../../../components/simple_button_with_corner.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
@@ -144,7 +142,7 @@ class SplashController extends GetxController {
           Get.offAllNamed(AppRoutName.verifyOTPPage);
           Timer(const Duration(milliseconds: 500), () {
             appVersionCheck();
-            requestLocationPermission();
+            //   requestLocationPermission();
           });
         });
       } else if (!hasMPIN && !isUserDetailSet) {
@@ -153,7 +151,7 @@ class SplashController extends GetxController {
           Get.offAllNamed(AppRoutName.userDetailsPage);
           Timer(const Duration(milliseconds: 500), () {
             appVersionCheck();
-            requestLocationPermission();
+            //  requestLocationPermission();
           });
         });
       } else {
@@ -163,7 +161,7 @@ class SplashController extends GetxController {
             Get.offAllNamed(AppRoutName.mPINPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVersionCheck();
-              requestLocationPermission();
+              //   requestLocationPermission();
             });
           });
         } else {
@@ -171,7 +169,7 @@ class SplashController extends GetxController {
             Get.offAllNamed(AppRoutName.signInPage, arguments: {"id": _userDetailsModel.id});
             Timer(const Duration(milliseconds: 500), () {
               appVersionCheck();
-              requestLocationPermission();
+              //  requestLocationPermission();
             });
           });
         }
@@ -182,7 +180,8 @@ class SplashController extends GetxController {
         Get.offAllNamed(AppRoutName.walcomeScreen);
         Timer(const Duration(milliseconds: 500), () {
           appVersionCheck();
-          requestLocationPermission();
+
+          ///    requestLocationPermission();
         });
       });
     }
@@ -246,67 +245,37 @@ class SplashController extends GetxController {
   Future<void> requestLocationPermission() async {
     var status = await Permission.location.request();
 
+    // if(GetStorage().read(ConstantsVariables.isMpinSet))
     if (status.isGranted) {
       // Permission granted, proceed with your flow.
     } else if (status.isDenied) {
       // Permission denied.
-      Get.defaultDialog(
-        titlePadding: EdgeInsets.only(top: Dimensions.h10),
-        title: 'Permission Denied',
-        middleText: 'Please grant location permission to use this feature.',
-        confirm: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
-          child: RoundedCornerButton(
-            text: 'Open Settings',
-            color: AppColors.appbarColor,
-            borderColor: AppColors.appbarColor,
-            fontSize: Dimensions.h12,
-            fontWeight: FontWeight.w500,
-            fontColor: AppColors.white,
-            letterSpacing: 0,
-            borderRadius: Dimensions.r5,
-            borderWidth: 1,
-            textStyle: CustomTextStyle.textRobotoSansLight,
-            onTap: () {
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              openAppSettings(); // Open app settings if permission is permanently denied.
-            },
-            height: Dimensions.h30,
-            width: double.infinity,
-          ),
-        ),
-      );
-    } else if (status.isPermanentlyDenied) {
-      // Permission permanently denied.
-
-      Get.defaultDialog(
-        titlePadding: EdgeInsets.only(top: Dimensions.h10),
-        radius: Dimensions.r10,
-        title: 'Permission Denied',
-        onWillPop: () async => false,
-        middleText: 'Please enable location permission in your app settings.',
-        confirm: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
-          child: RoundedCornerButton(
-            text: 'Open Settings',
-            color: AppColors.appbarColor,
-            borderColor: AppColors.appbarColor,
-            fontSize: Dimensions.h12,
-            fontWeight: FontWeight.w500,
-            fontColor: AppColors.white,
-            letterSpacing: 0,
-            borderRadius: Dimensions.r5,
-            borderWidth: 1,
-            textStyle: CustomTextStyle.textRobotoSansLight,
-            onTap: () {
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              openAppSettings(); // Open app settings if permission is permanently denied.
-            },
-            height: Dimensions.h30,
-            width: double.infinity,
-          ),
-        ),
-      );
+      // Get.defaultDialog(
+      //   titlePadding: EdgeInsets.only(top: Dimensions.h10),
+      //   title: 'Permission Denied',
+      //   middleText: 'Please grant location permission to use this feature.',
+      //   confirm: Padding(
+      //     padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
+      //     child: RoundedCornerButton(
+      //       text: 'Open Settings',
+      //       color: AppColors.appbarColor,
+      //       borderColor: AppColors.appbarColor,
+      //       fontSize: Dimensions.h12,
+      //       fontWeight: FontWeight.w500,
+      //       fontColor: AppColors.white,
+      //       letterSpacing: 0,
+      //       borderRadius: Dimensions.r5,
+      //       borderWidth: 1,
+      //       textStyle: CustomTextStyle.textRobotoSansLight,
+      //       onTap: () {
+      //         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      //         openAppSettings(); // Open app settings if permission is permanently denied.
+      //       },
+      //       height: Dimensions.h30,
+      //       width: double.infinity,
+      //     ),
+      //   ),
+      // );
     }
   }
 

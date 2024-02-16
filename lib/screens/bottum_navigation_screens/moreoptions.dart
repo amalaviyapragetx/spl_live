@@ -8,6 +8,7 @@ import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/Local%20Storage.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/ui_utils.dart';
 import '../home_screen/controller/homepage_controller.dart';
@@ -33,16 +34,14 @@ class MoreOptions extends StatelessWidget {
                   SizedBox(width: Dimensions.w15),
                   Text(
                     "MORE".tr,
-                    style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(fontSize: Dimensions.h20),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
                   ),
                 ],
               ),
             ),
             actions: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
+                padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
                 child: InkWell(
                   onTap: () {
                     controller.toggleShare();
@@ -116,26 +115,24 @@ class MoreOptions extends StatelessWidget {
                     text: "BIDDINGHISTORY".tr),
                 listItems(
                     onTap: () async {
-                      await LocalStorage.write(
-                          ConstantsVariables.withDrawal, true);
+                      await LocalStorage.write(ConstantsVariables.withDrawal, true);
                       homeController.pageWidget.value = 5;
                       homeController.currentIndex.value = 5;
                       // Get.toNamed(AppRoutName.withdrawalpage);
                     },
                     iconData: ConstantImage.withDrawalIcon,
                     text: "WITHDRAWAL_TXT1".tr),
-                // listItems(
-                //     onTap: () {
-                //       Get.toNamed(AppRoutName.transactionPage);
-                //     },
-                //     iconData: ConstantImage.addFundIcon,
-                //     text: "TRANSACTIONHISTORY".tr),
                 listItems(
                     onTap: () {
-                      Get.toNamed(AppRoutName.feedBackPage);
+                      Get.toNamed(AppRoutName.transactionPage);
                     },
-                    iconData: ConstantImage.giveFeedbackIcon,
-                    text: "GIVEFEEDBACK".tr),
+                    iconData: ConstantImage.addFundIcon,
+                    text: "TRANSACTIONHISTORY".tr),
+                listItems(
+                  onTap: () => Get.toNamed(AppRoutName.feedBackPage),
+                  iconData: ConstantImage.giveFeedbackIcon,
+                  text: "GIVEFEEDBACK".tr,
+                ),
                 listItems(
                   onTap: () {
                     controller.onTapOfRateUs();
@@ -160,7 +157,6 @@ class MoreOptions extends StatelessWidget {
                 listItems(
                   onTap: () async {
                     controller.callLogout();
-                 
                   },
                   iconData: ConstantImage.signOutIcon,
                   text: "SIGNOUT".tr,
@@ -174,10 +170,7 @@ class MoreOptions extends StatelessWidget {
   }
 }
 
-Widget listItems(
-    {required Function() onTap,
-    required String iconData,
-    required String text}) {
+Widget listItems({required Function() onTap, required String iconData, required String text}) {
   return InkWell(
     onTap: onTap,
     child: Column(
@@ -205,8 +198,8 @@ Widget listItems(
                 width: Dimensions.w15,
               ),
               Text(text,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
-                      fontSize: Dimensions.h14, fontWeight: FontWeight.w500))
+                  style:
+                      CustomTextStyle.textPTsansMedium.copyWith(fontSize: Dimensions.h14, fontWeight: FontWeight.w500))
             ],
           ),
         ),

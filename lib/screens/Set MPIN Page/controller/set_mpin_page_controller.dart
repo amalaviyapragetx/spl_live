@@ -45,7 +45,7 @@ class SetMPINPageController extends GetxController {
   }
 
   getLocationsData({bool? isLogin, UserDetails? userDetail}) async {
-    final locationData = await GetStorage().read(ConstantsVariables.locationData) ?? [];
+    final locationData = await GetStorage().read(ConstantsVariables.locationData);
     List list = [];
     if (locationData != null) {
       list.add(locationData[0]['location']);

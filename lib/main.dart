@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:spllive/Custom%20Controllers/doubletap_exitcontroller.dart';
 
 import 'Push Notification/notificationservices.dart';
@@ -28,7 +29,7 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessegingBackgroundHendler);
   await GetStorage.init();
-  // await Permission.location.request();
+  await Permission.location.request();
   final appStateListener = AppStateListener();
   WidgetsBinding.instance.addObserver(appStateListener);
   runApp(const MyApp());
@@ -152,9 +153,7 @@ class _MyAppState extends State<MyApp> {
           onPointerUp: conrroller.userLogIn,
           child: GetMaterialApp(
             title: 'SPL app',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
+            theme: ThemeData(primarySwatch: Colors.blue),
             defaultTransition: Transition.fadeIn,
             debugShowCheckedModeBanner: false,
             navigatorKey: navigatorKey,

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/custom_text_style.dart';
@@ -43,9 +44,7 @@ class WithdrawalPage extends StatelessWidget {
           ),
           actions: [
             InkWell(
-              onTap: () {
-                // Get.offAndToNamed(AppRoutName.transactionPage);
-              },
+              onTap: () {},
               child: Row(
                 children: [
                   SizedBox(
@@ -59,15 +58,11 @@ class WithdrawalPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: Dimensions.r10,
-                        bottom: Dimensions.r8,
-                        left: Dimensions.r10,
-                        right: Dimensions.r10),
+                        top: Dimensions.r10, bottom: Dimensions.r8, left: Dimensions.r10, right: Dimensions.r10),
                     child: Obx(
                       () => Text(
                         walletController.walletBalance.toString(),
-                        style: CustomTextStyle.textRobotoSansMedium
-                            .copyWith(fontSize: Dimensions.h18),
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h18),
                       ),
                     ),
                   ),
@@ -77,8 +72,7 @@ class WithdrawalPage extends StatelessWidget {
           ],
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: Dimensions.w20, vertical: Dimensions.h10),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.w20, vertical: Dimensions.h10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,24 +114,21 @@ class WithdrawalPage extends StatelessWidget {
                               children: [
                                 Text(
                                   "10:00 AM",
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                                     color: AppColors.black,
                                     fontSize: Dimensions.h14,
                                   ),
                                 ),
                                 Text(
                                   "  to ",
-                                  style: CustomTextStyle.textRobotoSansLight
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansLight.copyWith(
                                     color: AppColors.black,
                                     fontSize: Dimensions.h14,
                                   ),
                                 ),
                                 Text(
                                   "07:00 PM",
-                                  style: CustomTextStyle.textRobotoSansBold
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansBold.copyWith(
                                     color: AppColors.black,
                                     fontSize: Dimensions.h14,
                                   ),
@@ -150,8 +141,7 @@ class WithdrawalPage extends StatelessWidget {
                             Text(
                               "(Withdrawal Available all days including Sunday & Bank Holidays )",
                               textAlign: TextAlign.center,
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
                                 color: AppColors.black,
                                 fontSize: Dimensions.h14,
                               ),
@@ -215,8 +205,7 @@ class WithdrawalPage extends StatelessWidget {
                               child: Text(
                                 textAlign: TextAlign.start,
                                 "Withdrawal request processing time minimum 60 min to 24 Hrs ",
-                                style: CustomTextStyle.textRobotoSansLight
-                                    .copyWith(
+                                style: CustomTextStyle.textRobotoSansLight.copyWith(
                                   color: AppColors.black,
                                   fontSize: Dimensions.h14,
                                 ),
@@ -283,7 +272,7 @@ class WithdrawalPage extends StatelessWidget {
                         textStyle: CustomTextStyle.textRobotoSansLight,
                         onTap: () {
                           // checkWithdrawalPageController.get(lazyLoad: false);
-                        
+
                           Get.offAndToNamed(AppRoutName.checkWithDrawalPage);
                         },
                         height: Dimensions.h40,

@@ -47,35 +47,39 @@ class MPINPageController extends GetxController {
   }
 
   void verifyMPIN() {
-    ApiService().verifyMPIN({
-      "id": userId,
-      "mPin": mpin.value,
-      "deviceId": DeviceInfo.deviceId,
-      "city": city.value,
-      "country": country.value,
-      "state": state.value,
-      "street": street.value,
-      "postalCode": postalCode.value,
-      "ipAddress": ip.value
-    }).then((value) async {
-      if (value != null && value['status']) {
-        // AppUtils.showSuccessSnackBar(
-        //   bodyText: "${value['message']}",
-        //   headerText: "SUCCESSMESSAGE".tr,
-        // );
-        var userData = value['data'];
-        if (userData != null) {
-          String authToken = userData['Token'] ?? "Null From API";
-          GetStorage().write(ConstantsVariables.authToken, authToken);
+    try {
+      ApiService().verifyMPIN({
+        "id": userId,
+        "mPin": mpin.value,
+        "deviceId": DeviceInfo.deviceId,
+        "city": city.value,
+        "country": country.value,
+        "state": state.value,
+        "street": street.value,
+        "postalCode": postalCode.value,
+        "ipAddress": ip.value
+      }).then((value) async {
+        if (value != null && value['status']) {
+          // AppUtils.showSuccessSnackBar(
+          //   bodyText: "${value['message']}",
+          //   headerText: "SUCCESSMESSAGE".tr,
+          // );
+          var userData = value['data'];
+          if (userData != null) {
+            String authToken = userData['Token'] ?? "Null From API";
+            GetStorage().write(ConstantsVariables.authToken, authToken);
+          } else {
+            AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
+          }
+          Get.offAllNamed(AppRoutName.dashBoardPage);
         } else {
-          AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
+          mpinErrorController.add(ErrorAnimationType.shake);
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
-        Get.offAllNamed(AppRoutName.dashBoardPage);
-      } else {
-        mpinErrorController.add(ErrorAnimationType.shake);
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-      }
-    });
+      });
+    } catch (e) {
+      AppUtils.showErrorSnackBar(bodyText: e.toString());
+    }
   }
 
   Future<String?> getPublicIpAddress() async {
@@ -107,7 +111,7 @@ class MPINPageController extends GetxController {
   }
 
   getLocationsData() async {
-    final locationData = await GetStorage().read(ConstantsVariables.locationData) ?? [];
+    final locationData = await GetStorage().read(ConstantsVariables.locationData);
     // getMarketBidsByUserId(lazyLoad: false);
     if (locationData != null) {
       List list = [];

@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/dimentions.dart';
@@ -34,8 +33,7 @@ class SPLWallet extends StatelessWidget {
                   SizedBox(width: Dimensions.w15),
                   Text(
                     "SPL_WALLET".tr,
-                    style: CustomTextStyle.textRobotoSansMedium
-                        .copyWith(fontSize: Dimensions.h20),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
                   ),
                 ],
               ),
@@ -69,8 +67,7 @@ class SPLWallet extends StatelessWidget {
                       children: [
                         Text(
                           "WALLETBALANCE".tr,
-                          style: CustomTextStyle.textRobotoSansBold
-                              .copyWith(fontSize: Dimensions.h22),
+                          style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h22),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -89,9 +86,7 @@ class SPLWallet extends StatelessWidget {
                             Text(
                               controller.walletBalance.toString(),
                               style: CustomTextStyle.textRobotoSansMedium
-                                  .copyWith(
-                                      fontSize: Dimensions.h28,
-                                      color: AppColors.appbarColor),
+                                  .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
                             ),
                           ],
                         ),
@@ -106,9 +101,12 @@ class SPLWallet extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      launch(
-                        "https://wa.me/+917769826748/?text=hi",
-                      );
+                      homeController.pageWidget.value = 0;
+                      homeController.currentIndex.value = 0;
+                      homeController.widgetContainer.value = 2;
+                      // launch(
+                      //   "https://wa.me/+917769826748/?text=hi",
+                      // );
                     },
                     child: Container(
                       height: Dimensions.h50,
@@ -126,20 +124,15 @@ class SPLWallet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimensions.r4),
                       ),
                       child: Row(children: [
-                        SizedBox(
-                          width: Dimensions.w10,
-                        ),
+                        SizedBox(width: Dimensions.w10),
                         SvgPicture.asset(
                           ConstantImage.addFundIconInWallet,
                           height: Dimensions.h17,
                         ),
-                        SizedBox(
-                          width: Dimensions.w15,
-                        ),
+                        SizedBox(width: Dimensions.w15),
                         Text(
                           "ADDFUND".tr,
-                          style: CustomTextStyle.textRobotoSansMedium
-                              .copyWith(fontSize: Dimensions.h18),
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h18),
                         ),
                       ]),
                     ),
@@ -180,8 +173,7 @@ class SPLWallet extends StatelessWidget {
                         ),
                         Text(
                           "Withdrawal Fund",
-                          style: CustomTextStyle.textRobotoSansMedium
-                              .copyWith(fontSize: Dimensions.h18),
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h18),
                         ),
                       ]),
                     ),

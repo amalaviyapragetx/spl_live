@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
+import 'package:spllive/screens/home_screen/add_fund.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Custom Controllers/wallet_controller.dart';
@@ -76,21 +78,11 @@ class HomePageController extends GetxController {
   DateTime startEndDate = DateTime.now();
 
   RxList<NotificationData> notificationData = <NotificationData>[].obs;
-  var walletController = Get.put(WalletController());
+  final walletController = Get.put<WalletController>(WalletController());
   RxString walletBalance = "00".obs;
   RxInt getNotifiactionCount = 0.obs;
   RxList<BennerData> bennerData = <BennerData>[].obs;
   RxBool starlineCheck = false.obs;
-  @override
-  void onInit() {
-    setboolData();
-    callMarketsApi();
-    getUserData();
-    getUserBalance();
-    getNotificationCount();
-    getNotificationsData();
-    super.onInit();
-  }
 
   callFcmApi(userId) async {
     var token = await LocalStorage.read(ConstantsVariables.fcmToken);
@@ -137,22 +129,23 @@ class HomePageController extends GetxController {
     });
   }
 
-  void setboolData() async {
-    await LocalStorage.write(ConstantsVariables.timeOut, true);
-    await LocalStorage.write(ConstantsVariables.mPinTimeOut, false);
-    await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
-    await LocalStorage.write(ConstantsVariables.starlineBidsList, bidList);
-    await LocalStorage.write(ConstantsVariables.totalAmount, "0");
-    await LocalStorage.write(ConstantsVariables.marketName, "");
-    await LocalStorage.write(ConstantsVariables.marketNotification, true);
-    await LocalStorage.write(ConstantsVariables.starlineNotification, true);
-    starlineCheck.value = await LocalStorage.read(ConstantsVariables.starlineConnect);
+  void setboolData() {
+    GetStorage().write(ConstantsVariables.timeOut, true);
+    GetStorage().write(ConstantsVariables.mPinTimeOut, false);
+    GetStorage().write(ConstantsVariables.bidsList, selectedBidsList);
+    GetStorage().write(ConstantsVariables.starlineBidsList, bidList);
+    GetStorage().write(ConstantsVariables.totalAmount, "0");
+    GetStorage().write(ConstantsVariables.marketName, "");
+    GetStorage().write(ConstantsVariables.marketNotification, true);
+    GetStorage().write(ConstantsVariables.starlineNotification, true);
+    starlineCheck.value = GetStorage().read(ConstantsVariables.starlineConnect);
 
     starlineCheck.value == true ? widgetContainer.value = 1 : widgetContainer.value;
     starlineCheck.value == true ? isStarline.value = true : isStarline.value;
-    Timer(const Duration(seconds: 1), () async {
-      await LocalStorage.write(ConstantsVariables.starlineConnect, false);
+    Timer(const Duration(seconds: 1), () {
+      GetStorage().write(ConstantsVariables.starlineConnect, false);
     });
+    debugPrint("///////////////setboolData////////////////");
     getBennerData();
   }
 
@@ -165,7 +158,8 @@ class HomePageController extends GetxController {
   }
 
   Future<void> handleRefresh() async {
-    await Future.delayed(const Duration(seconds: 1));
+    debugPrint("///////////////handleRefresh///////////////");
+    // await Future.delayed(const Duration(seconds: 1));
     setboolData();
     callMarketsApi();
     getUserData();
@@ -174,9 +168,9 @@ class HomePageController extends GetxController {
   }
 
   @override
-  void dispose() async {
+  void dispose() {
     marketHistoryList.clear();
-
+    // addFundCon.clear();
     super.dispose();
   }
 
@@ -184,8 +178,8 @@ class HomePageController extends GetxController {
     Get.toNamed(AppRoutName.newBidHistorypage);
   }
 
-  Future<void> getUserData() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+  getUserData() {
+    var data = GetStorage().read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
     getMarketBidsByUserId(
         lazyLoad: false,
@@ -264,6 +258,14 @@ class HomePageController extends GetxController {
     });
   }
 
+  RxList<Map<String, dynamic>> tickets = [
+    {"text": "100", "onTap": () {}, "isSelected": false},
+    {"text": "500", "onTap": () {}, "isSelected": false},
+    {"text": "1000", "onTap": () {}, "isSelected": false},
+    {"text": "5000", "onTap": () {}, "isSelected": false},
+    {"text": "10000", "onTap": () {}, "isSelected": false},
+  ].obs;
+
   Widget getDashBoardWidget(index, size, BuildContext context) {
     switch (index) {
       case 0:
@@ -273,7 +275,7 @@ class HomePageController extends GetxController {
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
             child: HomeScreenUtils().gridColumnForStarLine(size));
       case 2:
-        return Container();
+        return AddFund();
       case 3:
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h10), child: HomeScreenUtils().bidHistory(context));
@@ -288,9 +290,7 @@ class HomePageController extends GetxController {
               "Starline Chart",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            SizedBox(
-              height: Dimensions.h5,
-            ),
+            SizedBox(height: Dimensions.h5),
             starlineChartDateAndTime.isEmpty
                 ? SizedBox(
                     height: size.height / 2.5,
@@ -310,149 +310,162 @@ class HomePageController extends GetxController {
           ],
         );
       default:
-        return HomeScreenUtils().gridColumn(
-          size,
-        );
+        return HomeScreenUtils().gridColumn(size);
     }
   }
 
+  void addFund({String? amount}) {
+    try {
+      ApiService().addFund(amount: amount).then((value) async {
+        if (value['status']) {
+          if (value['data'] != null) {
+            // if ( canLaunchUrl(Uri.parse(value['data']['qrString']))) {
+            await _launchUrl(value['data']['qrString']);
+            // } else {
+            //   AppUtils.showErrorSnackBar(bodyText: "Payment app not installed");
+            // }
+            addFundCon.clear();
+          }
+        } else {
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _launchUrl(url) async {
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  TextEditingController addFundCon = TextEditingController();
   Widget getDashBoardPages(index, size, BuildContext context, {required String notifictionCount}) {
     switch (index) {
       case 0:
-        return SizedBox(
-          height: size.height,
-          width: double.infinity,
-          child: Column(
-            children: [
-              AppUtils().appbar(size,
-                  walletText: walletBalance.toString(),
-                  onTapTranction: () {},
-                  notifictionCount: notifictionCount,
-                  onTapNotifiaction: () => Get.toNamed(AppRoutName.notificationPage),
-                  onTapTelegram: () => launch("https://t.me/satta_matka_kalyan_bazar_milan"),
-                  shareOntap: () => Share.share("https://spl.live")),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.zero,
-                  child: Column(
-                    children: [
-                      spaceBeetween,
-                      HomeScreenUtils().banner(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Dimensions.h10, vertical: Dimensions.h5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                spreadRadius: 0.1,
-                                color: AppColors.grey,
-                                blurRadius: 10,
-                                offset: const Offset(2, 3),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(Dimensions.h5),
-                            border: Border.all(color: AppColors.redColor, width: 1),
-                          ),
-                          child: Column(
-                            children: [
-                              spaceBeetween,
-                              HomeScreenUtils().iconsContainer(
-                                iconColor1:
-                                    widgetContainer.value == 0 ? AppColors.appbarColor : AppColors.iconColorMain,
-                                iconColor2:
-                                    widgetContainer.value == 1 ? AppColors.appbarColor : AppColors.iconColorMain,
-                                iconColor3:
-                                    widgetContainer.value == 2 ? AppColors.appbarColor : AppColors.iconColorMain,
-                                onTap1: () {
-                                  position = 0;
-                                  widgetContainer.value = position;
-                                  isStarline.value = false;
-                                },
-                                onTap2: () {
-                                  position = 1;
-                                  isStarline.value = true;
-                                  //   callGetStarLineChart();
-                                  getDailyStarLineMarkets(
-                                    DateFormat('yyyy-MM-dd').format(startEndDate),
-                                    DateFormat('yyyy-MM-dd').format(startEndDate),
-                                  );
-                                  getMarketBidsByUserId(
-                                      lazyLoad: false,
-                                      endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-                                      startDate: DateFormat('yyyy-MM-dd').format(startEndDate));
-                                  widgetContainer.value = position;
-                                },
-                                onTap3: () {
-                                  position = 2;
-                                  widgetContainer.value = position;
-                                  isStarline.value = false;
-                                  launch(
-                                    "https://wa.me/+917769826748/?text=hi",
-                                  );
-                                },
-                              ),
-                              spaceBeetween,
-                              Obx(() {
-                                return isStarline.value
-                                    ? HomeScreenUtils().iconsContainer2(
-                                        iconColor1: widgetContainer.value == 3
-                                            ? AppColors.appbarColor
-                                            : AppColors.iconColorMain,
-                                        iconColor2: widgetContainer.value == 4
-                                            ? AppColors.appbarColor
-                                            : AppColors.iconColorMain,
-                                        iconColor3: widgetContainer.value == 5
-                                            ? AppColors.appbarColor
-                                            : AppColors.iconColorMain,
-                                        onTap1: () {
-                                          position = 3;
-                                          widgetContainer.value = position;
+        return Column(
+          children: [
+            AppUtils().appbar(size,
+                walletText: walletBalance.toString(),
+                onTapTranction: () {},
+                notifictionCount: notifictionCount,
+                onTapNotifiaction: () => Get.toNamed(AppRoutName.notificationPage),
+                onTapTelegram: () => launch("https://t.me/satta_matka_kalyan_bazar_milan"),
+                shareOntap: () => Share.share("https://spl.live")),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    spaceBeetween,
+                    HomeScreenUtils().banner(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.h10, vertical: Dimensions.h5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              spreadRadius: 0.1,
+                              color: AppColors.grey,
+                              blurRadius: 10,
+                              offset: const Offset(2, 3),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(Dimensions.h5),
+                          border: Border.all(color: AppColors.redColor, width: 1),
+                        ),
+                        child: Column(
+                          children: [
+                            spaceBeetween,
+                            HomeScreenUtils().iconsContainer(
+                              iconColor1: widgetContainer.value == 0 ? AppColors.appbarColor : AppColors.iconColorMain,
+                              iconColor2: widgetContainer.value == 1 ? AppColors.appbarColor : AppColors.iconColorMain,
+                              iconColor3: widgetContainer.value == 2 ? AppColors.appbarColor : AppColors.iconColorMain,
+                              onTap1: () {
+                                position = 0;
+                                widgetContainer.value = position;
+                                isStarline.value = false;
+                              },
+                              onTap2: () {
+                                position = 1;
+                                isStarline.value = true;
+                                //   callGetStarLineChart();
+                                getDailyStarLineMarkets(
+                                  DateFormat('yyyy-MM-dd').format(startEndDate),
+                                  DateFormat('yyyy-MM-dd').format(startEndDate),
+                                );
+                                getMarketBidsByUserId(
+                                    lazyLoad: false,
+                                    endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+                                    startDate: DateFormat('yyyy-MM-dd').format(startEndDate));
+                                widgetContainer.value = position;
+                              },
+                              onTap3: () {
+                                position = 2;
+                                widgetContainer.value = position;
+                                isStarline.value = false;
+                              },
+                            ),
+                            spaceBeetween,
+                            Obx(() {
+                              return isStarline.value
+                                  ? HomeScreenUtils().iconsContainer2(
+                                      iconColor1:
+                                          widgetContainer.value == 3 ? AppColors.appbarColor : AppColors.iconColorMain,
+                                      iconColor2:
+                                          widgetContainer.value == 4 ? AppColors.appbarColor : AppColors.iconColorMain,
+                                      iconColor3:
+                                          widgetContainer.value == 5 ? AppColors.appbarColor : AppColors.iconColorMain,
+                                      onTap1: () {
+                                        position = 3;
+                                        widgetContainer.value = position;
 
-                                          getMarketBidsByUserId(
-                                            lazyLoad: false,
-                                            endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-                                            startDate: DateFormat('yyyy-MM-dd').format(
-                                              startEndDate,
-                                            ),
-                                          );
-                                        },
-                                        onTap2: () {
-                                          position = 4;
-                                          widgetContainer.value = position;
+                                        getMarketBidsByUserId(
+                                          lazyLoad: false,
+                                          endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+                                          startDate: DateFormat('yyyy-MM-dd').format(
+                                            startEndDate,
+                                          ),
+                                        );
+                                      },
+                                      onTap2: () {
+                                        position = 4;
+                                        widgetContainer.value = position;
 
-                                          getDailyStarLineMarkets(
-                                            DateFormat('yyyy-MM-dd').format(startEndDate),
-                                            DateFormat('yyyy-MM-dd').format(startEndDate),
-                                          );
-                                        },
-                                        onTap3: () {
-                                          position = 5;
-                                          widgetContainer.value = position;
+                                        getDailyStarLineMarkets(
+                                          DateFormat('yyyy-MM-dd').format(startEndDate),
+                                          DateFormat('yyyy-MM-dd').format(startEndDate),
+                                        );
+                                      },
+                                      onTap3: () {
+                                        position = 5;
+                                        widgetContainer.value = position;
 
-                                          callGetStarLineChart();
-                                        },
-                                      )
-                                    : Container();
-                              }),
-                            ],
-                          ),
+                                        callGetStarLineChart();
+                                      },
+                                    )
+                                  : Container();
+                            }),
+                          ],
                         ),
                       ),
-                      Obx(
-                        () => getDashBoardWidget(
-                          widgetContainer.value,
-                          size,
-                          context,
-                        ),
+                    ),
+                    Obx(
+                      () => getDashBoardWidget(
+                        widgetContainer.value,
+                        size,
+                        context,
                       ),
-                      spaceBeetween,
-                    ],
-                  ),
+                    ),
+                    spaceBeetween,
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       case 1:
         return BidHistory(appbarTitle: "Your Market");
@@ -465,35 +478,37 @@ class HomePageController extends GetxController {
       case 5:
         return WithdrawalPage();
       default:
-        return SafeArea(
-          child: SizedBox(
-            // color: AppColors.grey,
-            height: size.height,
-            width: double.infinity,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
+        return Column(
+          children: [
+            AppUtils().appbar(size,
+                walletText: walletBalance.toString(),
+                onTapTranction: () {},
+                notifictionCount: notifictionCount,
+                onTapNotifiaction: () => Get.toNamed(AppRoutName.notificationPage),
+                onTapTelegram: () => launch("https://t.me/satta_matka_kalyan_bazar_milan"),
+                shareOntap: () => Share.share("https://spl.live")),
+            SingleChildScrollView(
+              padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   spaceBeetween,
                   HomeScreenUtils().banner(),
-                  spaceBeetween,
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.h10, vertical: Dimensions.h5),
                     child: Container(
                       decoration: BoxDecoration(
                         color: AppColors.white,
                         boxShadow: [
                           BoxShadow(
-                            spreadRadius: 1,
+                            spreadRadius: 0.1,
                             color: AppColors.grey,
-                            blurRadius: 7,
-                            offset: const Offset(6, 4),
+                            blurRadius: 10,
+                            offset: const Offset(2, 3),
                           )
                         ],
                         borderRadius: BorderRadius.circular(Dimensions.h5),
                         border: Border.all(color: AppColors.redColor, width: 1),
                       ),
-                      //padding: const EdgeInsets.symmetric(horizontal: 60),
                       child: Column(
                         children: [
                           spaceBeetween,
@@ -509,6 +524,15 @@ class HomePageController extends GetxController {
                             onTap2: () {
                               position = 1;
                               isStarline.value = true;
+                              //   callGetStarLineChart();
+                              getDailyStarLineMarkets(
+                                DateFormat('yyyy-MM-dd').format(startEndDate),
+                                DateFormat('yyyy-MM-dd').format(startEndDate),
+                              );
+                              getMarketBidsByUserId(
+                                  lazyLoad: false,
+                                  endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+                                  startDate: DateFormat('yyyy-MM-dd').format(startEndDate));
                               widgetContainer.value = position;
                             },
                             onTap3: () {
@@ -530,33 +554,49 @@ class HomePageController extends GetxController {
                                     onTap1: () {
                                       position = 3;
                                       widgetContainer.value = position;
+
+                                      getMarketBidsByUserId(
+                                        lazyLoad: false,
+                                        endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+                                        startDate: DateFormat('yyyy-MM-dd').format(
+                                          startEndDate,
+                                        ),
+                                      );
                                     },
                                     onTap2: () {
                                       position = 4;
                                       widgetContainer.value = position;
+
+                                      getDailyStarLineMarkets(
+                                        DateFormat('yyyy-MM-dd').format(startEndDate),
+                                        DateFormat('yyyy-MM-dd').format(startEndDate),
+                                      );
                                     },
                                     onTap3: () {
                                       position = 5;
                                       widgetContainer.value = position;
-                                    })
+
+                                      callGetStarLineChart();
+                                    },
+                                  )
                                 : Container();
                           }),
-                          spaceBeetween
                         ],
                       ),
                     ),
                   ),
                   Obx(
-                    () => Column(
-                      children: [
-                        getDashBoardWidget(widgetContainer.value, size, context),
-                      ],
+                    () => getDashBoardWidget(
+                      widgetContainer.value,
+                      size,
+                      context,
                     ),
                   ),
+                  spaceBeetween,
                 ],
               ),
             ),
-          ),
+          ],
         );
     }
   }
@@ -565,9 +605,7 @@ class HomePageController extends GetxController {
     if (market.isBidOpenForClose ?? false) {
       Get.toNamed(AppRoutName.gameModePage, arguments: market);
     } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Bidding is Closed!!!!",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
     }
   }
 
@@ -578,9 +616,7 @@ class HomePageController extends GetxController {
         arguments: market,
       );
     } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Bidding is Closed!!!!",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!");
     }
   }
 
@@ -814,9 +850,7 @@ class HomePageController extends GetxController {
           }
           marketBidHistoryList.refresh();
         } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
       },
     );

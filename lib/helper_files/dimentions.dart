@@ -15,18 +15,16 @@ class Dimensions {
           : sf < 1
               ? 1.2
               : 1;
-      debugPrint("Text Scale Factor is :- $sf");
+      // debugPrint("Text Scale Factor is :- $sf");
     } else {
       sf = MediaQuery.of(context).textScaleFactor;
     }
   }
 
   static double getDevicePpi() {
-    final mediaQuery =
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+    final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     final size = mediaQuery.size;
-    final diagonalInches =
-        sqrt(size.width * size.width + size.height * size.height);
+    final diagonalInches = sqrt(size.width * size.width + size.height * size.height);
     final diagonalPixels = diagonalInches * mediaQuery.devicePixelRatio;
     final ppi = diagonalPixels / diagonalInches;
     return ppi;
