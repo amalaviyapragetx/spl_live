@@ -320,11 +320,10 @@ class HomePageController extends GetxController {
         if (value['status']) {
           if (value['data'] != null) {
             // if ( canLaunchUrl(Uri.parse(value['data']['qrString']))) {
-            await _launchUrl(value['data']['qrString']);
+            await _launchUrl(Uri.parse(value['data']['qrString']));
             // } else {
             //   AppUtils.showErrorSnackBar(bodyText: "Payment app not installed");
             // }
-            addFundCon.clear();
           }
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");

@@ -27,7 +27,11 @@ class _AddFundState extends State<AddFund> {
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: TextFormField(
             controller: homeCon.addFundCon,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+            ],
+            keyboardType: TextInputType.number,
             style: CustomTextStyle.textGothamMedium,
             cursorColor: AppColors.appbarColor,
             decoration: InputDecoration(
@@ -104,10 +108,11 @@ class _AddFundState extends State<AddFund> {
             borderWidth: 0,
             textStyle: CustomTextStyle.textGothamMedium,
             onTap: () {
-              if (homeCon.addFundCon.text.isNotEmpty && int.parse(homeCon.addFundCon.text) >= 100) {
+              // if (homeCon.addFundCon.text.isNotEmpty && int.parse(homeCon.addFundCon.text) >= 100) {
+              if (homeCon.addFundCon.text.isNotEmpty) {
                 homeCon.addFund(amount: homeCon.addFundCon.text);
-              } else if (int.parse(homeCon.addFundCon.text) < 100) {
-                AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
+                // } else if (int.parse(homeCon.addFundCon.text) < 100) {
+                //   AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
               } else {
                 AppUtils.showErrorSnackBar(bodyText: "Please enter amount");
               }
