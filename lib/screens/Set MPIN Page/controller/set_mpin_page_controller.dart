@@ -134,6 +134,7 @@ class SetMPINPageController extends GetxController {
             await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
             await LocalStorage.write(ConstantsVariables.userData, userData);
             await LocalStorage.write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
+            GetStorage().write(ConstantsVariables.id, userData["Id"]);
             callFcmApi(userData["Id"]);
           } else {
             AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
@@ -218,6 +219,23 @@ class SetMPINPageController extends GetxController {
     return userDetailsBody;
   }
 
+  RxString ip = ''.obs;
+  Future<String?> getPublicIpAddress() async {
+    try {
+      final response = await GetConnect(timeout: const Duration(seconds: 15)).get('https://api.ipify.org?format=json');
+      if (response.statusCode == 200) {
+        final data = response.body['ip'];
+        ip.value = data;
+        return data;
+      } else {
+        throw Exception('Failed to load IP address');
+      }
+    } catch (e) {
+      print('Error fetching IP address: $e');
+      return null;
+    }
+  }
+
   // Future<void> getLocation() async {
   //   try {
   //     Position position = await Geolocator.getCurrentPosition(
@@ -260,6 +278,7 @@ class SetMPINPageController extends GetxController {
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
           await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
+
           callSetUserDetailsApi();
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
@@ -274,9 +293,7 @@ class SetMPINPageController extends GetxController {
   }
 
   Future<Map> setMpinBody() async {
-    final userDetailsBody = {
-      "mPin": mpin.value,
-    };
+    final userDetailsBody = {"mPin": mpin.value, "ipAddress": ip.value};
     return userDetailsBody;
   }
 }

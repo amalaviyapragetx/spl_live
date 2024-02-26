@@ -5,13 +5,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
-import 'package:spllive/screens/home_screen/add_fund.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../helper_files/custom_text_style.dart';
@@ -275,7 +274,7 @@ class HomePageController extends GetxController {
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
             child: HomeScreenUtils().gridColumnForStarLine(size));
       case 2:
-        return AddFund();
+        return Container();
       case 3:
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.h10), child: HomeScreenUtils().bidHistory(context));
@@ -391,7 +390,6 @@ class HomePageController extends GetxController {
                               onTap2: () {
                                 position = 1;
                                 isStarline.value = true;
-                                //   callGetStarLineChart();
                                 getDailyStarLineMarkets(
                                   DateFormat('yyyy-MM-dd').format(startEndDate),
                                   DateFormat('yyyy-MM-dd').format(startEndDate),
@@ -406,6 +404,8 @@ class HomePageController extends GetxController {
                                 position = 2;
                                 widgetContainer.value = position;
                                 isStarline.value = false;
+                                pageWidget.value = 2;
+                                currentIndex.value = 2;
                               },
                             ),
                             spaceBeetween,

@@ -31,13 +31,20 @@ class ConstantImage {
   static String signOutIcon = "assets/images/log out_icon.svg";
   static String serchZoomIcon = "assets/images/search_zoom_icon.svg";
   static String profileImage = "assets/images/myProfileImage.svg";
-  static String aboutUsImage =
-      "assets/images/8219552_communication_support_talk_conversation_folder_icon.svg";
+  static String aboutUsImage = "assets/images/8219552_communication_support_talk_conversation_folder_icon.svg";
   static String stopWatchIcon = "assets/images/stop_watch.svg";
   static String passBookIcon = "assets/images/passbook_icon.svg";
   static String withDrawalPageIcon = "assets/images/bid_History_Icon.svg";
   static String clockSvg = "assets/images/clock.svg";
   static String withDrawalFundIcon = "assets/images/vaadin_money-withdraw.svg";
-  static String addFundIconInWallet =
-      "assets/images/majesticons_rupee-circle-line.svg";
+  static String addFundIconInWallet = "assets/images/majesticons_rupee-circle-line.svg";
+  static String fundDepositIcon = "assets/images/fund_deposit_icon.svg";
+  static String gPay = "assets/images/GooglePay.png";
+  static String icici_bank = "assets/images/icici_bank.png";
+  static String paytm = "assets/images/paytm.png";
+  static String phonepay = "assets/images/phonepay.png";
+  static String upi = "assets/images/upi.png";
+  static String bhim = "assets/images/bhim.png";
+  static String amazon = "assets/images/amazon.png";
+  static String sendWatchIcon = "assets/images/send_watch_icon.svg";
 }

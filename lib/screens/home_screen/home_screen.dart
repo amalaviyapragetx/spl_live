@@ -42,6 +42,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             controller.pageWidget.value == 4) {
           controller.pageWidget.value = 0;
           controller.currentIndex.value = 0;
+          walletController.selectedIndex.value = null;
           SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
           return false;
         } else if (controller.pageWidget.value == 5) {
@@ -51,7 +52,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
         } else {
           if (controller.widgetContainer.value != 0) {
             controller.widgetContainer.value = 0;
-
             return false;
           } else {
             return await showDialog(
@@ -76,6 +76,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 onTapBidHistory: () {
                   controller.pageWidget.value = 1;
                   controller.currentIndex.value = 1;
+                  walletController.selectedIndex.value = null;
                   controller.marketBidsByUserId(lazyLoad: false);
                   SystemChrome.setPreferredOrientations(
                       [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
@@ -84,6 +85,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 onTapHome: () {
                   controller.pageWidget.value = 0;
                   controller.currentIndex.value = 0;
+                  walletController.selectedIndex.value = null;
                   SystemChrome.setPreferredOrientations(
                       [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                   // controller.getUserBalance();
@@ -91,6 +93,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 onTapMore: () {
                   controller.pageWidget.value = 4;
                   controller.currentIndex.value = 4;
+                  walletController.selectedIndex.value = null;
                   SystemChrome.setPreferredOrientations(
                       [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
                   // controller.getUserBalance();
@@ -105,6 +108,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   walletController.walletBalance.refresh();
                 },
                 onTapPassbook: () {
+                  walletController.selectedIndex.value = null;
                   controller.getPassBookData(lazyLoad: false, offset: controller.offset.value.toString());
                   controller.pageWidget.value = 3;
                   controller.currentIndex.value = 3;

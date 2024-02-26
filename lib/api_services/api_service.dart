@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/models/FundTransactionModel.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../helper_files/constant_variables.dart';
@@ -25,6 +27,7 @@ class ApiService extends GetConnect implements GetxService {
       headers = {"Accept": "application/json"};
       headersWithToken = {"Accept": "application/json", "Authorization": "Bearer $authToken"};
     });
+    print(headersWithToken);
   }
 
   Future<dynamic> signUpAPI(body) async {
@@ -1119,6 +1122,28 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
+    }
+  }
+
+  Future<FundTransactionModel?> getTransactionHistory() async {
+    try {
+      await initApiService();
+      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+          "${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}",
+          headers: headersWithToken,
+          query: {"search": ""});
+      print("${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}");
+      if (response.status.hasError) {
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        return FundTransactionModel.fromJson(response.body);
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 }

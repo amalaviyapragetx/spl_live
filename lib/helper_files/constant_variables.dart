@@ -49,4 +49,5 @@ class ConstantsVariables {
   // locationData
   static const String locationData = "location_data";
   static const String mPinTimeOut = "m_pin_time_out";
+  static const String id = "user_id";
 }

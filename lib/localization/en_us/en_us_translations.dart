@@ -53,8 +53,7 @@ final Map<String, String> enUs = {
   "SUBMIT": "SUBMIT",
   "WITHDRAWAL": "Withdrawal",
   "WITHDRAWALHISTORY": "Withdrawal History",
-  "PLEASEENTERYOURREGISTEREDNUMBERTOSENDRESETCODE":
-      "Please enter your registered phone number to send the reset code",
+  "PLEASEENTERYOURREGISTEREDNUMBERTOSENDRESETCODE": "Please enter your registered phone number to send the reset code",
   "BIDDINGFOROPENISCLOSED": "Bidding for Open is Closed",
   "STARLINETERMSANDCONDITIONS": "Starline Terms & Conditions",
   "MORE": "More",
@@ -130,8 +129,7 @@ final Map<String, String> enUs = {
   "CONFIRMPINTEXT": "Confirm pin",
   "DIGITTEXT": "*Must have 4 digit",
   "PASSWORDTEXT": "*First letter capital and should have minimum 6 characters",
-  "REGEXPASSWORDCHECK":
-      "Password must contain at least one uppercase letter, one lowercase letter, and one digit",
+  "REGEXPASSWORDCHECK": "Password must contain at least one uppercase letter, one lowercase letter, and one digit",
   "MINSIXCHAR": "Password should have minimum 6 characters",
 
   // new design texts
@@ -146,8 +144,7 @@ final Map<String, String> enUs = {
   "WELCOMETEXT": "Sign in to your existing account or create a new account",
   "REGISTERTEXT": "Enter your mobile number to register in Spl",
   "NEXT": "NEXT",
-  "SETMPINTEXT":
-      "Set 4 digit code that you want to use for Login in your account",
+  "SETMPINTEXT": "Set 4 digit code that you want to use for Login in your account",
   "OTPTEXT": "Enter 6 digit code that you received in your mobile number",
   "REGISTER": "REGISTER",
   "LOGIN": "LOGIN",
@@ -168,8 +165,7 @@ final Map<String, String> enUs = {
   "MPIN": "MPIN",
   "REENTERMPIN": "RE-ENTER MPIN",
   "FORGOTPASS": "FORGOT PASSWORD ?",
-  "FORGOTPASSWORDTEXT":
-      "Please enter your registered phone number to send the reset code",
+  "FORGOTPASSWORDTEXT": "Please enter your registered phone number to send the reset code",
   "MPINPAGETEXT": "Enter 4 digit code that you set for Login in your account",
   "FORGOTYOURMPIN": "Forgot your MPIN",
   "PLAYNOW": "Play Now",
@@ -219,31 +215,27 @@ final Map<String, String> enUs = {
   // about us
   "WELCOME_SPL":
       "Welcome to SPL LIVE Game, The SPL Live app is Created in such a way that all the features are easily accessible. All you need to do is randomly predict a number and bet on it. You will earn a massive amount as a reward each time you win. There are numerous options in our app to deposit the money before betting and we have designed the app with the easiest registration process than any other gaming apps. We display the fastest online results of each game on our app along with great precision and accuracy.",
-  "WELCOME_SPL2":
-      "Simply visit our website SPL LIVE now and download the Online SPL LIVE app to have the great fun.",
+  "WELCOME_SPL2": "Simply visit our website SPL LIVE now and download the Online SPL LIVE app to have the great fun.",
 
   //  withdrawal
   "WITHDRAWAL_TEXT":
       "All the withdrawal request will be accepted on Monday to Saturday ( Timing : 09:00 AM  to 07:00 PM )",
   "WITHDRAWAL_TEXT2": "Sunday ( Timing : 09:00 AM to 03:00 PM)",
   "WITHDRAWAL_TEXT3": "All the customers are requested to add bank account",
-  "WITHDRAWAL_TEXT4":
-      "Deatils along with correct IFSC code in the bank details section is must",
+  "WITHDRAWAL_TEXT4": "Deatils along with correct IFSC code in the bank details section is must",
   "WITHDRAWAL_TEXT5": "Minimum Withdrawal is Rs. 500/-",
   "CHECKWITHDRAWAL": "CREATE WITHDRAWAL REQUEST",
   "CHECKHISTORY": "CHECK WITHDRAWAL HISTORY",
 
   // starline terms & conditions
-  "STARLINE_TEXT":
-      "1) SPL Starline is an independent market, it has nothing to do with other markets.",
-  "STARLINE_TEXT2":
-      "2) SPL Starline shall play only Single Ank, Single Panna,Double Panna and Triple Panna.",
-  "STARLINE_TEXT3":
-      "3) SPL Starline results are valid only for SPL Starline Market.",
+  "STARLINE_TEXT": "1) SPL Starline is an independent market, it has nothing to do with other markets.",
+  "STARLINE_TEXT2": "2) SPL Starline shall play only Single Ank, Single Panna,Double Panna and Triple Panna.",
+  "STARLINE_TEXT3": "3) SPL Starline results are valid only for SPL Starline Market.",
 
   // AppBar names
 
   "SPL_WALLET": "Spl Wallet",
+  "WALLET": "Wallet",
   "TIMEBAZAAR": "TIME BAZAAR",
 
   "GAMEMODES_TEXT": "Game Modes",
@@ -256,8 +248,7 @@ final Map<String, String> enUs = {
   "IFSC_TEXT": "IFSC Code:",
   "MESSAGE_TEXT": "Error Message",
   "SNACKMSG_TEXT": "Please contact to admin for edit",
-  "FORGOT_SUBTEXT":
-      "Please enter your registered phone number to send the reset code",
+  "FORGOT_SUBTEXT": "Please enter your registered phone number to send the reset code",
   "RESULTHISTORY2": "RESULT HISTORY",
   "CHART2": "CHART",
   "NOBIDHISTORY": "No Bid History",

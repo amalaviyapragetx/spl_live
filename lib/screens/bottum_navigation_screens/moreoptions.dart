@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/routes/app_routes_name.dart';
-import 'package:spllive/screens/Local%20Storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../helper_files/constant_image.dart';
@@ -114,10 +114,10 @@ class MoreOptions extends StatelessWidget {
                     iconData: ConstantImage.clockIcon,
                     text: "BIDDINGHISTORY".tr),
                 listItems(
-                    onTap: () async {
-                      await LocalStorage.write(ConstantsVariables.withDrawal, true);
-                      homeController.pageWidget.value = 5;
-                      homeController.currentIndex.value = 5;
+                    onTap: () {
+                      GetStorage().write(ConstantsVariables.withDrawal, true);
+                      homeController.pageWidget.value = 2;
+                      homeController.currentIndex.value = 2;
                       // Get.toNamed(AppRoutName.withdrawalpage);
                     },
                     iconData: ConstantImage.withDrawalIcon,

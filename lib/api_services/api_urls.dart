@@ -4,8 +4,8 @@ class ApiUtils {
   // static String baseURL = "http://10.0.0.201:8080";
   // local url
   // static String baseURL = "http://192.168.29.143:8080";
-  // static String baseURL = "http://10.0.0.201:8080";
-  // static String baseURL = "https://f266-2405-201-2023-a83c-1440-2422-c7ef-b921.ngrok-free.app";
+  // static String baseURL = "http://192.168.29.226:9867";
+
   // endpoints
   static String signUP = '$baseURL/auth/signup';
   static String signIN = '$baseURL/auth/signin';
@@ -72,4 +72,7 @@ class ApiUtils {
   static String getVersion = "$baseURL/auth/appVersion";
   static String appKillApi = "$baseURL/user/log/out";
   static String addFund = "$baseURL/payment/process";
+
+  ///
+  static String getWalletTransactionHistory = "$baseURL/payment/user";
 }

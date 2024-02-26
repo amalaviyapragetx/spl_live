@@ -6,7 +6,6 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -115,14 +114,14 @@ class SplashController extends GetxController {
 
   void appVersionCheck() async {
     ApiService().getAppVersion().then((value) async {
-      if (value['status']) {
-        if (value['data'] != appVersion) {
-          _showExitDialog();
+      if (value != null) {
+        if (value['status']) {
+          if (value['data'] != appVersion) {
+            _showExitDialog();
+          }
+        } else {
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
-      } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
       }
     });
   }
@@ -242,42 +241,42 @@ class SplashController extends GetxController {
     );
   }
 
-  Future<void> requestLocationPermission() async {
-    var status = await Permission.location.request();
-
-    // if(GetStorage().read(ConstantsVariables.isMpinSet))
-    if (status.isGranted) {
-      // Permission granted, proceed with your flow.
-    } else if (status.isDenied) {
-      // Permission denied.
-      // Get.defaultDialog(
-      //   titlePadding: EdgeInsets.only(top: Dimensions.h10),
-      //   title: 'Permission Denied',
-      //   middleText: 'Please grant location permission to use this feature.',
-      //   confirm: Padding(
-      //     padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
-      //     child: RoundedCornerButton(
-      //       text: 'Open Settings',
-      //       color: AppColors.appbarColor,
-      //       borderColor: AppColors.appbarColor,
-      //       fontSize: Dimensions.h12,
-      //       fontWeight: FontWeight.w500,
-      //       fontColor: AppColors.white,
-      //       letterSpacing: 0,
-      //       borderRadius: Dimensions.r5,
-      //       borderWidth: 1,
-      //       textStyle: CustomTextStyle.textRobotoSansLight,
-      //       onTap: () {
-      //         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-      //         openAppSettings(); // Open app settings if permission is permanently denied.
-      //       },
-      //       height: Dimensions.h30,
-      //       width: double.infinity,
-      //     ),
-      //   ),
-      // );
-    }
-  }
+  // Future<void> requestLocationPermission() async {
+  //   // var status = await Permission.location.request();
+  //
+  //   // if(GetStorage().read(ConstantsVariables.isMpinSet))
+  //   if (status.isGranted) {
+  //     // Permission granted, proceed with your flow.
+  //   } else if (status.isDenied) {
+  //     // Permission denied.
+  //     // Get.defaultDialog(
+  //     //   titlePadding: EdgeInsets.only(top: Dimensions.h10),
+  //     //   title: 'Permission Denied',
+  //     //   middleText: 'Please grant location permission to use this feature.',
+  //     //   confirm: Padding(
+  //     //     padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
+  //     //     child: RoundedCornerButton(
+  //     //       text: 'Open Settings',
+  //     //       color: AppColors.appbarColor,
+  //     //       borderColor: AppColors.appbarColor,
+  //     //       fontSize: Dimensions.h12,
+  //     //       fontWeight: FontWeight.w500,
+  //     //       fontColor: AppColors.white,
+  //     //       letterSpacing: 0,
+  //     //       borderRadius: Dimensions.r5,
+  //     //       borderWidth: 1,
+  //     //       textStyle: CustomTextStyle.textRobotoSansLight,
+  //     //       onTap: () {
+  //     //         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  //     //         openAppSettings(); // Open app settings if permission is permanently denied.
+  //     //       },
+  //     //       height: Dimensions.h30,
+  //     //       width: double.infinity,
+  //     //     ),
+  //     //   ),
+  //     // );
+  //   }
+  // }
 
   // Future<String> getIpAddress() async {
   //   getIpAddress2();

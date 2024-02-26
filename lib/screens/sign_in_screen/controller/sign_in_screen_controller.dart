@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
@@ -50,6 +51,7 @@ class SignInPageController extends GetxController {
           await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
           await LocalStorage.write(ConstantsVariables.userData, value['data']);
           await LocalStorage.write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
+          GetStorage().write(ConstantsVariables.id, value['data']["Id"]);
           if (isUserDetailSet) {
             Get.toNamed(AppRoutName.setMPINPage);
           } else {

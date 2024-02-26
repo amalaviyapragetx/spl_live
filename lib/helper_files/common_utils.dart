@@ -3,16 +3,14 @@ import 'package:intl/intl.dart';
 class CommonUtils {
   String formatStringToDDMMMYYYYHHMMSSA(String date) {
     DateTime dateTime = DateTime.parse(date);
-    String formattedDateTimeString =
-        DateFormat('dd MMMM, yyyy, hh:mm:ss a').format(dateTime);
+    String formattedDateTimeString = DateFormat('dd MMMM, yyyy, hh:mm:ss a').format(dateTime);
     return formattedDateTimeString;
   }
 
   String formatStringToDDMMYYYYHHMMA(String date) {
     DateTime dateTime = DateTime.parse(date);
 
-    String formattedDateTimeString =
-        DateFormat('dd-MM-yyyy hh:mm a').format(dateTime);
+    String formattedDateTimeString = DateFormat('dd-MM-yyyy hh:mm a').format(dateTime);
     return formattedDateTimeString;
   }
 
@@ -35,8 +33,7 @@ class CommonUtils {
 
   String convertUtcToIst(String utcTimestamp) {
     DateTime utcDateTime = DateTime.parse(utcTimestamp);
-    DateTime istDateTime =
-        utcDateTime.add(const Duration(hours: 5, minutes: 30));
+    DateTime istDateTime = utcDateTime.add(const Duration(hours: 5, minutes: 30));
     String formattedDate = DateFormat('MMM dd, yyyy').format(istDateTime);
     String formattedTime = DateFormat('hh:mm a').format(istDateTime);
     return '$formattedDate $formattedTime';
@@ -44,10 +41,15 @@ class CommonUtils {
 
   String convertUtcToIstFormatStringToDDMMYYYYHHMMA(String date) {
     DateTime utcDateTime = DateTime.parse(date);
-    DateTime istDateTime =
-        utcDateTime.add(const Duration(hours: 5, minutes: 30));
-    String formattedDateTimeString =
-        DateFormat('dd/MM/yyyy hh:mm:ss a').format(istDateTime);
+    DateTime istDateTime = utcDateTime.add(const Duration(hours: 5, minutes: 30));
+    String formattedDateTimeString = DateFormat('dd/MM/yyyy hh:mm:ss a').format(istDateTime);
+    return formattedDateTimeString;
+  }
+
+  String convertUtcToIstFormatStringToDDMMYYYYHHMMA2(String date) {
+    DateTime utcDateTime = DateTime.parse(date);
+    DateTime istDateTime = utcDateTime.add(const Duration(hours: 5, minutes: 30));
+    String formattedDateTimeString = DateFormat('dd-MM-yyyy hh:mm a').format(istDateTime);
     return formattedDateTimeString;
   }
 }
