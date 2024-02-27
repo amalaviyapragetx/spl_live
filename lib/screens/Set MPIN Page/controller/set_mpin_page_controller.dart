@@ -115,10 +115,11 @@ class SetMPINPageController extends GetxController {
     }
   }
 
-  callSetUserDetailsApi() async {
+  callSetUserDetailsApi({String? userName}) async {
     try {
       ApiService()
-          .setUserDetails(userDetails.userName == null ? await userDetailsBody2() : await userDetailsBody())
+          .setUserDetails(
+              userDetails.userName == null ? await userDetailsBody2(userName: userName) : await userDetailsBody())
           .then((value) async {
         if (value != null && value['status']) {
           var userData = value['data'];
@@ -200,7 +201,7 @@ class SetMPINPageController extends GetxController {
     return userDetailsBody;
   }
 
-  userDetailsBody2() async {
+  userDetailsBody2({String? userName}) async {
     DeviceInformationModel deviceInfo = await DeviceInfo().initPlatformState();
     final userDetailsBody = {
       "oSVersion": deviceInfo.osVersion,
@@ -213,7 +214,8 @@ class SetMPINPageController extends GetxController {
       "country": country.value,
       "state": state.value,
       "street": street.value,
-      "postalCode": postalCode.value
+      "postalCode": postalCode.value,
+      "userName": userName ?? ""
     };
 
     return userDetailsBody;
@@ -279,7 +281,7 @@ class SetMPINPageController extends GetxController {
           await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
           await LocalStorage.write(ConstantsVariables.userData, userData);
 
-          callSetUserDetailsApi();
+          callSetUserDetailsApi(userName: userData['UserName'] ?? "");
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }

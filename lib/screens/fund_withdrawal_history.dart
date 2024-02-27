@@ -26,9 +26,9 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => walletCon.fundTransactionList.isNotEmpty
-          ? Expanded(
-              child: Padding(
+      () => Expanded(
+        child: walletCon.fundTransactionList.isNotEmpty
+            ? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.separated(
                   shrinkWrap: true,
@@ -190,9 +190,9 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                     );
                   },
                 ),
-              ),
-            )
-          : const Center(child: Text("There is No Transactions")),
+              )
+            : const Center(child: Text("There is No Transactions")),
+      ),
     );
   }
 }

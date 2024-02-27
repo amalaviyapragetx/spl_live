@@ -1,10 +1,9 @@
 class ApiUtils {
   // Spl Production
   static String baseURL = "https://vishnulive.in:9869";
-  // static String baseURL = "http://10.0.0.201:8080";
   // local url
   // static String baseURL = "http://192.168.29.143:8080";
-  // static String baseURL = "http://192.168.29.226:9867";
+  // static String baseURL = "http://10.0.0.201:8080";
 
   // endpoints
   static String signUP = '$baseURL/auth/signup';
@@ -38,7 +37,7 @@ class ApiUtils {
   static String forgotMPIN = '$baseURL/auth/mPin/forgot';
   // new api endpoints
   static String setUserDetails = '$baseURL/auth/setUserDetails';
-  static String setDeviceDetails = '$baseURL/auth/setDeviceDetails';
+  // static String setDeviceDetails = '$baseURL/auth/setDeviceDetails';
   static String setMPIN = '$baseURL/auth/mPin/set';
   static String getBalance = '$baseURL/wallet/getBalance';
   static String normalMarketBidHistory = '$baseURL/bid/getByUserId';

@@ -49,12 +49,14 @@ class _SPLWalletState extends State<SPLWallet> {
                       color: AppColors.white,
                     ),
                     const SizedBox(width: 5),
-                    Flexible(
-                      child: Text(
-                        walletCon.walletBalance.value,
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          fontSize: Dimensions.h16,
-                          color: AppColors.white,
+                    GetBuilder<WalletController>(
+                      builder: (con) => Flexible(
+                        child: Text(
+                          con.walletBalance.value,
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                            fontSize: Dimensions.h16,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -70,7 +72,7 @@ class _SPLWalletState extends State<SPLWallet> {
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
               ],
             ),
           ),

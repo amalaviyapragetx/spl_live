@@ -258,6 +258,7 @@ class HomePageController extends GetxController {
   }
 
   RxList<Map<String, dynamic>> tickets = [
+    {"text": "1", "onTap": () {}, "isSelected": false},
     {"text": "100", "onTap": () {}, "isSelected": false},
     {"text": "500", "onTap": () {}, "isSelected": false},
     {"text": "1000", "onTap": () {}, "isSelected": false},

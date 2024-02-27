@@ -60,7 +60,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             SizedBox(height: Dimensions.h10),
@@ -203,11 +203,11 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                     AppUtils.showErrorSnackBar(bodyText: "Please enter amount");
                   } else {
                     if (homeCon.addFundCon.text.isNotEmpty) {
-                      if (int.parse(homeCon.addFundCon.text) < 100) {
-                        AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
-                      } else {
-                        homeCon.addFund(amount: homeCon.addFundCon.text);
-                      }
+                      // if (int.parse(homeCon.addFundCon.text) < 100) {
+                      //   AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
+                      // } else {
+                      homeCon.addFund(amount: homeCon.addFundCon.text);
+                      // }
                     }
                   }
                 },
@@ -217,7 +217,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
             ),
             SizedBox(height: Get.height * 0.08),
             Divider(endIndent: 20, indent: 20, color: AppColors.black),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               "Pay using any UPI app",
               style: CustomTextStyle.textPTsansMedium.copyWith(
@@ -225,7 +225,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                 color: AppColors.black,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Wrap(
               children: [
                 Padding(
@@ -270,7 +270,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
