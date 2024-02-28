@@ -8,6 +8,7 @@ import 'package:spllive/screens/New%20GameModes/binding/new_gamemode_page_bindin
 import 'package:spllive/screens/New%20GameModes/new_gamemodes_page.dart';
 import 'package:spllive/screens/Sangam%20Page/binding/snagam_page_binding.dart';
 import 'package:spllive/screens/Starline%20Bid%20Page/bidings/starline_bids_bidings.dart';
+import 'package:spllive/screens/bottom_bar_screens/bottom_bar_screen.dart';
 import 'package:spllive/screens/game_pages/game_pages.dart';
 import 'package:spllive/screens/gamemode_pages/gamemode_page.dart';
 import 'package:spllive/screens/sign_in_screen/bindings/sign_in_screen_binding.dart';
@@ -63,8 +64,6 @@ import '../screens/Verify OTP Page/binding/verify_otp_binding.dart';
 import '../screens/Verify OTP Page/verify_otp.dart';
 import '../screens/game_pages/bindings/game_mode_page_binding.dart';
 import '../screens/gamemode_pages/bindings/game_mode_page_binding.dart';
-import '../screens/home_screen/binding/home_screen_binding.dart';
-import '../screens/home_screen/home_screen.dart';
 import '../screens/sign_in_screen/sign_in_screen_page.dart';
 import '../screens/transaction_page/binding/transaction_page_binding.dart';
 import '../screens/transaction_page/transaction.dart';
@@ -91,13 +90,19 @@ class AppRoutes {
         WelcomeScreenBinding(),
       ],
     ),
+
+    // GetPage(
+    //   name: AppRoutName.dashBoardPage,
+    //   transition: Transition.fadeIn,
+    //   page: () => const DashBoardPage(),
+    //   bindings: [
+    //     HomePageBindings(),
+    //   ],
+    // ),
     GetPage(
       name: AppRoutName.dashBoardPage,
       transition: Transition.fadeIn,
-      page: () => const DashBoardPage(),
-      bindings: [
-        HomePageBindings(),
-      ],
+      page: () => const BottomBarScreen(),
     ),
     GetPage(
       name: AppRoutName.transactionPage,

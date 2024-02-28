@@ -25,4 +25,5 @@ class AppColors {
   static Color textFieldFillColor = const Color(0xffF1F1F1);
   static Color openclose = const Color(0xffE8E8E8);
   static Color withDrawalSvgColor = const Color(0xFF377dd2);
+  static Color bottomBarColor = const Color(0xFFEEEEEE);
 }

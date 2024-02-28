@@ -2,43 +2,43 @@
 /// status : true
 /// data : [{"id":1,"Banner":"http://35.154.94.107:9869/public/banner/test-1.jpeg","Key":"test","IsActive":true,"Priority":1,"createdAt":"2023-08-29T13:11:03.958Z","updatedAt":"2023-08-29T13:11:03.958Z"}]
 
-class BennerModel {
-  BennerModel({
+class BannerModel {
+  BannerModel({
     String? message,
     bool? status,
-    List<BennerData>? data,
+    List<BannerData>? data,
   }) {
     _message = message;
     _status = status;
     _data = data;
   }
 
-  BennerModel.fromJson(dynamic json) {
+  BannerModel.fromJson(dynamic json) {
     _message = json['message'];
     _status = json['status'];
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(BennerData.fromJson(v));
+        _data?.add(BannerData.fromJson(v));
       });
     }
   }
   String? _message;
   bool? _status;
-  List<BennerData>? _data;
-  BennerModel copyWith({
+  List<BannerData>? _data;
+  BannerModel copyWith({
     String? message,
     bool? status,
-    List<BennerData>? data,
+    List<BannerData>? data,
   }) =>
-      BennerModel(
+      BannerModel(
         message: message ?? _message,
         status: status ?? _status,
         data: data ?? _data,
       );
   String? get message => _message;
   bool? get status => _status;
-  List<BennerData>? get data => _data;
+  List<BannerData>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -59,8 +59,8 @@ class BennerModel {
 /// createdAt : "2023-08-29T13:11:03.958Z"
 /// updatedAt : "2023-08-29T13:11:03.958Z"
 
-class BennerData {
-  BennerData({
+class BannerData {
+  BannerData({
     num? id,
     String? banner,
     String? key,
@@ -78,7 +78,7 @@ class BennerData {
     _updatedAt = updatedAt;
   }
 
-  BennerData.fromJson(dynamic json) {
+  BannerData.fromJson(dynamic json) {
     _id = json['id'];
     _banner = json['Banner'];
     _key = json['Key'];
@@ -94,7 +94,7 @@ class BennerData {
   num? _priority;
   String? _createdAt;
   String? _updatedAt;
-  BennerData copyWith({
+  BannerData copyWith({
     num? id,
     String? banner,
     String? key,
@@ -103,7 +103,7 @@ class BennerData {
     String? createdAt,
     String? updatedAt,
   }) =>
-      BennerData(
+      BannerData(
         id: id ?? _id,
         banner: banner ?? _banner,
         key: key ?? _key,

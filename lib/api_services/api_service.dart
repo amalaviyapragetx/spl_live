@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/FundTransactionModel.dart';
+import 'package:spllive/models/benner_model.dart';
+import 'package:spllive/models/daily_market_api_response_model.dart';
 import 'package:spllive/models/tikets_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -207,7 +209,7 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getDailyMarkets() async {
+  Future<DailyMarketApiResponseModel?> getDailyMarkets() async {
     Future.delayed(const Duration(milliseconds: 2), () {
       AppUtils.showProgressDialog(isCancellable: false);
     });
@@ -225,7 +227,7 @@ class ApiService extends GetConnect implements GetxService {
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
-      return response.body;
+      return DailyMarketApiResponseModel.fromJson(response.body);
     }
   }
 
@@ -1034,7 +1036,7 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getBennerData() async {
+  Future<BannerModel?> getBannerData() async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
@@ -1049,7 +1051,7 @@ class ApiService extends GetConnect implements GetxService {
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
-      return response.body;
+      return BannerModel.fromJson(response.body);
     }
   }
 

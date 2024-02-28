@@ -80,7 +80,7 @@ class HomePageController extends GetxController {
   final walletController = Get.put<WalletController>(WalletController());
   RxString walletBalance = "00".obs;
   RxInt getNotifiactionCount = 0.obs;
-  RxList<BennerData> bennerData = <BennerData>[].obs;
+  RxList<BannerData> bennerData = <BannerData>[].obs;
   RxBool starlineCheck = false.obs;
 
   callFcmApi(userId) async {
@@ -219,11 +219,11 @@ class HomePageController extends GetxController {
   }
 
   void getDailyMarkets() async {
-    ApiService().getDailyMarkets().then((value) async {
-      if (value['status']) {
-        DailyMarketApiResponseModel marketModel = DailyMarketApiResponseModel.fromJson(value);
-        if (marketModel.data != null && marketModel.data!.isNotEmpty) {
-          normalMarketList.value = marketModel.data!;
+    final resp = await ApiService().getDailyMarkets();
+    if (resp != null) {
+      if (resp.status ?? false) {
+        if (resp.data != null && resp.data!.isNotEmpty) {
+          normalMarketList.value = resp.data!;
           noMarketFound.value = false;
           var biddingOpenMarketList = normalMarketList
               .where((element) =>
@@ -252,10 +252,48 @@ class HomePageController extends GetxController {
           noMarketFound.value = true;
         }
       } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        AppUtils.showErrorSnackBar(bodyText: resp.message ?? "");
       }
-    });
+    }
   }
+  // void getDailyMarkets() async {
+  //   ApiService().getDailyMarkets().then((value) async {
+  //     if (value['status']) {
+  //       DailyMarketApiResponseModel marketModel = DailyMarketApiResponseModel.fromJson(value);
+  //       if (marketModel.data != null && marketModel.data!.isNotEmpty) {
+  //         normalMarketList.value = marketModel.data!;
+  //         noMarketFound.value = false;
+  //         var biddingOpenMarketList = normalMarketList
+  //             .where((element) =>
+  //                 (element.isBidOpenForClose == true || element.isBidOpenForOpen == true) && element.isBlocked == false)
+  //             .toList();
+  //         var biddingClosedMarketList = normalMarketList
+  //             .where((element) =>
+  //                 (element.isBidOpenForOpen == false && element.isBidOpenForClose == false) &&
+  //                 element.isBlocked == false)
+  //             .toList();
+  //         var tempFinalMarketList = <MarketData>[];
+  //         biddingOpenMarketList.sort((a, b) {
+  //           DateTime dateTimeA = DateFormat('hh:mm a').parse(a.openTime ?? "00:00 AM");
+  //           DateTime dateTimeB = DateFormat('hh:mm a').parse(b.openTime ?? "00:00 AM");
+  //           return dateTimeA.compareTo(dateTimeB);
+  //         });
+  //         tempFinalMarketList = biddingOpenMarketList;
+  //         biddingClosedMarketList.sort((a, b) {
+  //           DateTime dateTimeA = DateFormat('hh:mm a').parse(a.openTime ?? "00:00 AM");
+  //           DateTime dateTimeB = DateFormat('hh:mm a').parse(b.openTime ?? "00:00 AM");
+  //           return dateTimeA.compareTo(dateTimeB);
+  //         });
+  //         tempFinalMarketList.addAll(biddingClosedMarketList);
+  //         normalMarketList.value = tempFinalMarketList;
+  //       } else {
+  //         noMarketFound.value = true;
+  //       }
+  //     } else {
+  //       AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+  //     }
+  //   });
+  // }
 
   RxList<Map<String, dynamic>> tickets = [
     {"text": "100", "isSelected": false},
@@ -885,17 +923,31 @@ class HomePageController extends GetxController {
     });
   }
 
+  // void getBennerData() async {
+  //   ApiService().getBannerData().then((value) async {
+  //     debugPrint("benner Response Api ------------- :- $value");
+  //     if (value['status']) {
+  //       BennerModel model = BennerModel.fromJson(value);
+  //       bennerData.value = model.data as List<BennerData>;
+  //       //  NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
+  //       // getNotifiactionCount.value = model.data!.notificationCount!.toInt();
+  //       // if (model.message!.isNotEmpty) {}
+  //     } else {
+  //       AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+  //     }
+  //   });
+  // }
   void getBennerData() async {
-    ApiService().getBennerData().then((value) async {
-      debugPrint("benner Response Api ------------- :- $value");
-      if (value['status']) {
-        BennerModel model = BennerModel.fromJson(value);
-        bennerData.value = model.data as List<BennerData>;
-        //  NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
-        // getNotifiactionCount.value = model.data!.notificationCount!.toInt();
-        // if (model.message!.isNotEmpty) {}
-      } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+    ApiService().getBannerData().then((value) async {
+      if (value != null) {
+        if (value.status ?? false) {
+          bennerData.value = value.data as List<BannerData>;
+          //  NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
+          // getNotifiactionCount.value = model.data!.notificationCount!.toInt();
+          // if (model.message!.isNotEmpty) {}
+        } else {
+          AppUtils.showErrorSnackBar(bodyText: value.message ?? "");
+        }
       }
     });
   }
