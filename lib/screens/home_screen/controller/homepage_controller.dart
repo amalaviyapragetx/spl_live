@@ -334,8 +334,33 @@ class HomePageController extends GetxController {
   }
 
   Future<void> _launchUrl(url) async {
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
+    try {
+      if (!await launchUrl(url)) {
+        throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      Get.defaultDialog(
+        backgroundColor: AppColors.white,
+        title: "Error",
+        titleStyle: CustomTextStyle.textRobotoSansMedium,
+        content: Text(
+          'No payment apps installed on your device.',
+          style: CustomTextStyle.textRobotoSansMedium,
+        ),
+        actions: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            color: AppColors.appbarColor,
+            width: Get.width / 2,
+            child: Center(
+              child: Text(
+                'OK',
+                style: CustomTextStyle.textRobotoSansMedium,
+              ),
+            ),
+          ),
+        ],
+      );
     }
   }
 
@@ -469,7 +494,7 @@ class HomePageController extends GetxController {
       case 1:
         return BidHistory(appbarTitle: "Your Market");
       case 2:
-        return SPLWallet();
+        return const SPLWallet();
       case 3:
         return PassBook();
       case 4:

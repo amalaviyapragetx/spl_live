@@ -207,10 +207,10 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                       if (int.parse(homeCon.addFundCon.text) < 100) {
                         AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
                       } else {
-                        walletCon.isCallDialog.value = true;
-                        walletCon.getTransactionSuccess(
-                          transactionId: int.parse(walletCon.fundTransactionList[0].id.toString()),
-                        );
+                        // walletCon.isCallDialog.value = true;
+                        // walletCon.getTransactionSuccess(
+                        //   transactionId: int.parse(walletCon.fundTransactionList[0].id.toString()),
+                        // );
                         homeCon.addFund(amount: homeCon.addFundCon.text);
                       }
                     }
