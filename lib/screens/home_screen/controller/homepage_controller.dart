@@ -258,12 +258,11 @@ class HomePageController extends GetxController {
   }
 
   RxList<Map<String, dynamic>> tickets = [
-    {"text": "1", "onTap": () {}, "isSelected": false},
-    {"text": "100", "onTap": () {}, "isSelected": false},
-    {"text": "500", "onTap": () {}, "isSelected": false},
-    {"text": "1000", "onTap": () {}, "isSelected": false},
-    {"text": "5000", "onTap": () {}, "isSelected": false},
-    {"text": "10000", "onTap": () {}, "isSelected": false},
+    {"text": "100", "isSelected": false},
+    {"text": "500", "isSelected": false},
+    {"text": "1000", "isSelected": false},
+    {"text": "5000", "isSelected": false},
+    {"text": "10000", "isSelected": false},
   ].obs;
 
   Widget getDashBoardWidget(index, size, BuildContext context) {

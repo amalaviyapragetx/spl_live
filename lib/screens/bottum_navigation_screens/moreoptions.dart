@@ -7,7 +7,6 @@ import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/routes/app_routes_name.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/ui_utils.dart';
@@ -93,15 +92,10 @@ class MoreOptions extends StatelessWidget {
                     },
                     iconData: ConstantImage.notifiacation,
                     text: "NOTIFICATIONS".tr),
-                // listItems(
-                //     onTap: () {},
-                //     iconData: ConstantImage.playIcon,
-                //     text: "HOWTOPLAY".tr),
                 listItems(
                     onTap: () {
-                      launch(
-                        "https://wa.me/+917769826748/?text=hi",
-                      );
+                      homeController.pageWidget.value = 2;
+                      homeController.currentIndex.value = 2;
                     },
                     iconData: ConstantImage.plusIcon,
                     text: "ADDFUND".tr),

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/FundTransactionModel.dart';
+import 'package:spllive/models/tikets_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../helper_files/constant_variables.dart';
@@ -1140,6 +1141,48 @@ class ApiService extends GetConnect implements GetxService {
         return Future.error(response.statusText!);
       } else {
         return FundTransactionModel.fromJson(response.body);
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<dynamic> getTransactionSuccess({int? transactionId}) async {
+    try {
+      await initApiService();
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).put(
+          ApiUtils.putWalletTransactionStatus, {"id": transactionId},
+          headers: headersWithToken, query: {"search": ""});
+
+      if (response.status.hasError) {
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        return response.body;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<TicketsModel?> getAllPackages() async {
+    try {
+      await initApiService();
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
+        ApiUtils.getAllPackages,
+        headers: headersWithToken,
+      );
+      if (response.status.hasError) {
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        return TicketsModel.fromJson(response.body);
       }
     } catch (e) {
       print(e.toString());

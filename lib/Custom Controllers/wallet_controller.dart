@@ -15,6 +15,7 @@ import '../api_services/api_service.dart';
 class WalletController extends GetxController {
   RxString walletBalance = "00".obs;
   final selectedIndex = Rxn<int>();
+  RxBool isCallDialog = false.obs;
 
   final RxList<FilterModel> filterDateList = [
     FilterModel(
@@ -62,6 +63,15 @@ class WalletController extends GetxController {
     });
   }
 
+  void getTransactionSuccess({int? transactionId}) {
+    ApiService().getTransactionSuccess(transactionId: transactionId).then((value) async {
+      if (value['status']) {
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+      }
+    });
+  }
+
   // transaction
 
   RxList<FundTransactionList> fundTransactionList = <FundTransactionList>[].obs;
@@ -71,148 +81,152 @@ class WalletController extends GetxController {
         if (value.status ?? false) {
           fundTransactionList.value = value.data?.rows ?? [];
           if (view) {
-            if (fundTransactionList[0].status == "Ok") {
-              Get.defaultDialog(
-                barrierDismissible: false,
-                onWillPop: () async => false,
-                title: "",
-                titleStyle: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: AppColors.appbarColor,
-                  fontSize: 0,
-                ),
-                content: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                        color: AppColors.green,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.check_rounded,
-                          color: AppColors.white,
-                          size: 40,
+            if (isCallDialog.value) {
+              if (fundTransactionList[0].status == "Ok") {
+                isCallDialog.value = false;
+                Get.defaultDialog(
+                  barrierDismissible: false,
+                  onWillPop: () async => false,
+                  title: "",
+                  titleStyle: CustomTextStyle.textRobotoSansBold.copyWith(
+                    color: AppColors.appbarColor,
+                    fontSize: 0,
+                  ),
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(4.0),
+                        decoration: BoxDecoration(
+                          color: AppColors.green,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.check_rounded,
+                            color: AppColors.white,
+                            size: 40,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "Payment Successful",
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(
-                        color: AppColors.green,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "We have received the payment of",
-                      style: CustomTextStyle.textRobotoSansMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "\n₹ ${fundTransactionList[0].amount}",
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RoundedCornerButton(
-                        text: "OK".tr,
-                        color: AppColors.appbarColor,
-                        borderColor: AppColors.appbarColor,
-                        fontSize: Dimensions.h15,
-                        fontWeight: FontWeight.w500,
-                        fontColor: AppColors.white,
-                        letterSpacing: 0,
-                        borderRadius: Dimensions.r5,
-                        borderWidth: 0,
-                        textStyle: CustomTextStyle.textGothamMedium,
-                        onTap: () {
-                          getUserBalance();
-                          walletBalance.refresh();
-                          Get.offAllNamed(AppRoutName.dashBoardPage);
-                        },
-                        height: 40,
-                        width: Get.width / 2.8,
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
-            if (fundTransactionList[0].status == "F") {
-              Get.defaultDialog(
-                barrierDismissible: false,
-                onWillPop: () async => false,
-                title: "",
-                titleStyle: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: AppColors.appbarColor,
-                  fontSize: 0,
-                ),
-                content: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                        color: AppColors.redColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.close_rounded,
-                          color: AppColors.white,
-                          size: 40,
+                      const SizedBox(height: 10),
+                      Text(
+                        "Payment Successful",
+                        style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          color: AppColors.green,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "Payment Failed",
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(
-                        color: AppColors.redColor,
+                      const SizedBox(height: 10),
+                      Text(
+                        "We have received the payment of",
+                        style: CustomTextStyle.textRobotoSansMedium,
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "Your payment was not successfully processed",
-                      style: CustomTextStyle.textRobotoSansMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "Please try again",
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RoundedCornerButton(
-                        text: "OK".tr,
-                        color: AppColors.appbarColor,
-                        borderColor: AppColors.appbarColor,
-                        fontSize: Dimensions.h15,
-                        fontWeight: FontWeight.w500,
-                        fontColor: AppColors.white,
-                        letterSpacing: 0,
-                        borderRadius: Dimensions.r5,
-                        borderWidth: 0,
-                        textStyle: CustomTextStyle.textGothamMedium,
-                        onTap: () {
-                          Get.back();
-                          Get.offAllNamed(AppRoutName.dashBoardPage);
-                        },
-                        height: 40,
-                        width: Get.width / 2.8,
+                      Text(
+                        "\n₹ ${fundTransactionList[0].amount}",
+                        style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 20),
+                        textAlign: TextAlign.center,
                       ),
-                    )
-                  ],
-                ),
-              );
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RoundedCornerButton(
+                          text: "OK".tr,
+                          color: AppColors.appbarColor,
+                          borderColor: AppColors.appbarColor,
+                          fontSize: Dimensions.h15,
+                          fontWeight: FontWeight.w500,
+                          fontColor: AppColors.white,
+                          letterSpacing: 0,
+                          borderRadius: Dimensions.r5,
+                          borderWidth: 0,
+                          textStyle: CustomTextStyle.textGothamMedium,
+                          onTap: () {
+                            getUserBalance();
+                            walletBalance.refresh();
+                            Get.offAllNamed(AppRoutName.dashBoardPage);
+                          },
+                          height: 40,
+                          width: Get.width / 2.8,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
+              if (fundTransactionList[0].status == "F") {
+                isCallDialog.value = false;
+                Get.defaultDialog(
+                  barrierDismissible: false,
+                  onWillPop: () async => false,
+                  title: "",
+                  titleStyle: CustomTextStyle.textRobotoSansBold.copyWith(
+                    color: AppColors.appbarColor,
+                    fontSize: 0,
+                  ),
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(4.0),
+                        decoration: BoxDecoration(
+                          color: AppColors.redColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.close_rounded,
+                            color: AppColors.white,
+                            size: 40,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Payment Failed",
+                        style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          color: AppColors.redColor,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Your payment was not successfully processed",
+                        style: CustomTextStyle.textRobotoSansMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Please try again",
+                        style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RoundedCornerButton(
+                          text: "OK".tr,
+                          color: AppColors.appbarColor,
+                          borderColor: AppColors.appbarColor,
+                          fontSize: Dimensions.h15,
+                          fontWeight: FontWeight.w500,
+                          fontColor: AppColors.white,
+                          letterSpacing: 0,
+                          borderRadius: Dimensions.r5,
+                          borderWidth: 0,
+                          textStyle: CustomTextStyle.textGothamMedium,
+                          onTap: () {
+                            Get.back();
+                            Get.offAllNamed(AppRoutName.dashBoardPage);
+                          },
+                          height: 40,
+                          width: Get.width / 2.8,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
             }
           }
           //    AppUtils.showSuccessSnackBar(bodyText: value.message ?? "");

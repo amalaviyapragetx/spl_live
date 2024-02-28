@@ -13,6 +13,7 @@ import 'package:spllive/screens/home_screen/controller/homepage_controller.dart'
 
 class AddFund extends StatefulWidget {
   final String? wallet;
+
   const AddFund({super.key, this.wallet});
 
   @override
@@ -103,7 +104,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                           width: Dimensions.w10,
                         ),
                         Text(
-                          widget.wallet ?? "",
+                          walletCon.walletBalance.value ?? "",
                           style: CustomTextStyle.textRobotoSansMedium
                               .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
                         ),
@@ -203,11 +204,15 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                     AppUtils.showErrorSnackBar(bodyText: "Please enter amount");
                   } else {
                     if (homeCon.addFundCon.text.isNotEmpty) {
-                      // if (int.parse(homeCon.addFundCon.text) < 100) {
-                      //   AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
-                      // } else {
-                      homeCon.addFund(amount: homeCon.addFundCon.text);
-                      // }
+                      if (int.parse(homeCon.addFundCon.text) < 100) {
+                        AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
+                      } else {
+                        walletCon.isCallDialog.value = true;
+                        walletCon.getTransactionSuccess(
+                          transactionId: int.parse(walletCon.fundTransactionList[0].id.toString()),
+                        );
+                        homeCon.addFund(amount: homeCon.addFundCon.text);
+                      }
                     }
                   }
                 },

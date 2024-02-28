@@ -100,16 +100,16 @@ class FundTransactionData {
 /// createdAt : "2024-02-20T05:40:56.314Z"
 
 class FundTransactionList {
-  FundTransactionList({
-    num? id,
-    num? userId,
-    String? clientRefId,
-    String? orderId,
-    num? amount,
-    String? status,
-    String? paymentMode,
-    String? createdAt,
-  }) {
+  FundTransactionList(
+      {num? id,
+      num? userId,
+      String? clientRefId,
+      String? orderId,
+      num? amount,
+      String? status,
+      String? paymentMode,
+      String? createdAt,
+      bool? isRead}) {
     _id = id;
     _userId = userId;
     _clientRefId = clientRefId;
@@ -118,6 +118,7 @@ class FundTransactionList {
     _status = status;
     _paymentMode = paymentMode;
     _createdAt = createdAt;
+    _isRead = isRead;
   }
 
   FundTransactionList.fromJson(dynamic json) {
@@ -129,6 +130,7 @@ class FundTransactionList {
     _status = json['Status'];
     _paymentMode = json['PaymentMode'];
     _createdAt = json['createdAt'];
+    _isRead = json['IsRead'];
   }
   num? _id;
   num? _userId;
@@ -138,6 +140,7 @@ class FundTransactionList {
   String? _status;
   String? _paymentMode;
   String? _createdAt;
+  bool? _isRead;
   FundTransactionList copyWith({
     num? id,
     num? userId,
@@ -147,6 +150,7 @@ class FundTransactionList {
     String? status,
     String? paymentMode,
     String? createdAt,
+    bool? isRead,
   }) =>
       FundTransactionList(
         id: id ?? _id,
@@ -157,6 +161,7 @@ class FundTransactionList {
         status: status ?? _status,
         paymentMode: paymentMode ?? _paymentMode,
         createdAt: createdAt ?? _createdAt,
+        isRead: isRead ?? _isRead,
       );
   num? get id => _id;
   num? get userId => _userId;
@@ -166,6 +171,7 @@ class FundTransactionList {
   String? get status => _status;
   String? get paymentMode => _paymentMode;
   String? get createdAt => _createdAt;
+  bool? get isRead => _isRead;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -177,6 +183,7 @@ class FundTransactionList {
     map['Status'] = _status;
     map['PaymentMode'] = _paymentMode;
     map['createdAt'] = _createdAt;
+    map['IsRead'] = _isRead;
     return map;
   }
 }
