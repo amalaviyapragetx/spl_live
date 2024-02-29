@@ -348,14 +348,22 @@ class HomePageController extends GetxController {
           style: CustomTextStyle.textRobotoSansMedium,
         ),
         actions: <Widget>[
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            color: AppColors.appbarColor,
-            width: Get.width / 2,
-            child: Center(
-              child: Text(
-                'OK',
-                style: CustomTextStyle.textRobotoSansMedium,
+          InkWell(
+            onTap: () => Get.back(),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              width: Get.width / 2,
+              decoration: BoxDecoration(
+                color: AppColors.appbarColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  'OK',
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
               ),
             ),
           ),

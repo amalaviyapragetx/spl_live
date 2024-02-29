@@ -597,7 +597,7 @@ class ApiService extends GetConnect implements GetxService {
   // new api functions
 
   Future<dynamic> setUserDetails(body) async {
-    //  AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     try {
       await initApiService();
       final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
@@ -664,7 +664,7 @@ class ApiService extends GetConnect implements GetxService {
         }
         return response.body;
       } else {
-        AppUtils.hideProgressDialog();
+        // AppUtils.hideProgressDialog();
         return response.body;
       }
     } catch (e) {

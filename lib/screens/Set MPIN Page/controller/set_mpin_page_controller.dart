@@ -140,7 +140,8 @@ class SetMPINPageController extends GetxController {
           } else {
             AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
           }
-          userDetails.userName == null ? null : Get.offAllNamed(AppRoutName.dashBoardPage);
+          Get.offAllNamed(AppRoutName.dashBoardPage);
+          //  userDetails.userName == null ? null : Get.offAllNamed(AppRoutName.dashBoardPage);
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
@@ -267,7 +268,7 @@ class SetMPINPageController extends GetxController {
   // }
 
   Future<void> callSetMpinApi() async {
-    ApiService().setMPIN(await setMpinBody()).then((value) async {
+    ApiService().setMPIN({"mPin": mpin.value, "ipAddress": ip.value}).then((value) async {
       if (value != null && value['status']) {
         var userData = value['data'];
         if (userData != null) {
@@ -285,17 +286,11 @@ class SetMPINPageController extends GetxController {
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
-        Get.offAllNamed(AppRoutName.dashBoardPage);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
         );
       }
     });
-  }
-
-  Future<Map> setMpinBody() async {
-    final userDetailsBody = {"mPin": mpin.value, "ipAddress": ip.value};
-    return userDetailsBody;
   }
 }

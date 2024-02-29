@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
@@ -45,12 +46,11 @@ class MoreListController extends GetxController {
     ApiService().logout().then((value) async {
       if (value['status']) {
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        var deviceToken = await LocalStorage.read(ConstantsVariables.fcmToken);
-        var locationData1 = await LocalStorage.read(ConstantsVariables.locationData);
-        await LocalStorage.eraseBox();
-        await LocalStorage.write(ConstantsVariables.fcmToken, deviceToken);
-        await LocalStorage.write(ConstantsVariables.locationData, locationData1);
-
+        // var deviceToken = GetStorage().read(ConstantsVariables.fcmToken);
+        // var locationData1 = GetStorage().read(ConstantsVariables.locationData);
+        GetStorage().erase();
+        // GetStorage().write(ConstantsVariables.fcmToken, deviceToken);
+        // GetStorage().write(ConstantsVariables.locationData, locationData1);
         Get.offAllNamed(AppRoutName.walcomeScreen);
       } else {
         AppUtils.showErrorSnackBar(

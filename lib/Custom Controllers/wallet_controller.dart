@@ -63,14 +63,14 @@ class WalletController extends GetxController {
     });
   }
 
-  void getTransactionSuccess({int? transactionId}) {
-    ApiService().getTransactionSuccess(transactionId: transactionId).then((value) async {
-      if (value['status']) {
-      } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-      }
-    });
-  }
+  // void getTransactionSuccess({int? transactionId}) {
+  //   ApiService().getTransactionSuccess(transactionId: transactionId).then((value) async {
+  //     if (value['status']) {
+  //     } else {
+  //       AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+  //     }
+  //   });
+  // }
 
   // transaction
 

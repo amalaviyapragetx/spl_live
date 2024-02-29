@@ -17,6 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.5+5
+# 1.0.5+5
 # 1.1.0+4
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -57,7 +58,6 @@ dependencies:
   firebase_messaging: ^14.6.7
   firebase_core: ^2.15.1
   firebase_analytics: ^10.4.5
-  permission_handler: ^10.4.3
   open_app_settings: ^2.0.1
   geolocator: ^10.0.1
   geocoding: ^2.1.0
