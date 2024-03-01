@@ -28,7 +28,6 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessegingBackgroundHendler);
   await GetStorage.init();
-  // await Permission.location.request();
   final appStateListener = AppStateListener();
   WidgetsBinding.instance.addObserver(appStateListener);
   runApp(const MyApp());

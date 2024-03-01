@@ -71,7 +71,6 @@ class SignInPageController extends GetxController {
       "phoneNumber": mobileNumberController.text,
       "password": passwordController.text,
       "countryCode": "+92",
-      // "deviceId": DeviceInfo.deviceId,
       "deviceId": DeviceInfo.deviceId,
       // "deviceId": "954f4d94fdsa94fdsf",
       // "fcmToken": fcmToken,

@@ -28,7 +28,7 @@ class ApiService extends GetConnect implements GetxService {
       headers = {"Accept": "application/json"};
       headersWithToken = {"Accept": "application/json", "Authorization": "Bearer $authToken"};
     });
-    print(headersWithToken);
+    // print(headersWithToken);
   }
 
   Future<dynamic> signUpAPI(body) async {
@@ -1035,7 +1035,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getBennerData() async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    //   AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.bennerApi,

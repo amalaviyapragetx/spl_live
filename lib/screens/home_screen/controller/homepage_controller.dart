@@ -180,10 +180,10 @@ class HomePageController extends GetxController {
   getUserData() {
     var data = GetStorage().read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
-    getMarketBidsByUserId(
-        lazyLoad: false,
-        startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-        endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
+    // getMarketBidsByUserId(
+    //     lazyLoad: false,
+    //     startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+    //     endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
     callFcmApi(userData.id);
   }
 

@@ -59,34 +59,34 @@ class MoreListController extends GetxController {
       }
     });
   }
-
-  void getMarketBidsByUserId({required bool lazyLoad}) {
-    ApiService()
-        .getBidHistoryByUserId(
-            userId: userData.id.toString(),
-            endDate: "2023-08-17",
-            startDate: "2023-08-17",
-            //  userId: "3",
-            limit: "10",
-            offset: offset.toString(),
-            isStarline: isStarline.value)
-        .then(
-      (value) async {
-        if (value['status']) {
-          if (value['data'] != null) {
-            NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
-            lazyLoad
-                ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
-                : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
-          }
-        } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
-        }
-      },
-    );
-  }
+  //
+  // void getMarketBidsByUserId({required bool lazyLoad}) {
+  //   ApiService()
+  //       .getBidHistoryByUserId(
+  //           userId: userData.id.toString(),
+  //           endDate: "2023-08-17",
+  //           startDate: "2023-08-17",
+  //           //  userId: "3",
+  //           limit: "10",
+  //           offset: offset.toString(),
+  //           isStarline: isStarline.value)
+  //       .then(
+  //     (value) async {
+  //       if (value['status']) {
+  //         if (value['data'] != null) {
+  //           NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
+  //           lazyLoad
+  //               ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
+  //               : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
+  //         }
+  //       } else {
+  //         AppUtils.showErrorSnackBar(
+  //           bodyText: value['message'] ?? "",
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
 
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
