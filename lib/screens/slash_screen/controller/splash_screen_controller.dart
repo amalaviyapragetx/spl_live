@@ -4,9 +4,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:ota_update/ota_update.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/routes/app_routes_name.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../components/DeviceInfo/device_information_model.dart';
@@ -113,6 +113,7 @@ class SplashController extends GetxController {
       if (value != null) {
         if (value['status']) {
           if (value['data'] != appVersion) {
+            print(value['data']);
             _showExitDialog();
           }
         } else {
@@ -125,7 +126,6 @@ class SplashController extends GetxController {
   Future<void> checkLogin() async {
     bool alreadyLoggedIn = await getStoredUserData();
     bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-
     bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
     bool hasMPIN = await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
     bool isUserDetailSet = await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
@@ -215,9 +215,15 @@ class SplashController extends GetxController {
       actions: [
         InkWell(
           onTap: () async {
-            launch(
-              "https://spl.live",
-            );
+            // launch("https://spl.live");
+            print("new version");
+            try {
+              OtaUpdate().execute('http://192.168.29.46:8002/media/apk_files/spl_live.apk').listen(
+                    (OtaEvent event) {},
+                  );
+            } catch (e) {
+              print('Failed to make OTA update. Details: $e');
+            }
           },
           child: Container(
             color: AppColors.appbarColor,

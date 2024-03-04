@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:spllive/Custom%20Controllers/doubletap_exitcontroller.dart';
 
 import 'Push Notification/notificationservices.dart';
 import 'helper_files/constant_variables.dart';
@@ -45,8 +44,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // final Location location = Location();
 
-  var conrroller = Get.put(InactivityController());
-  var exitondoubleTap = Get.put(DoubleTapExitController());
+  final con = Get.put(InactivityController());
   // bool apiCalled = false;
   @override
   void initState() {
@@ -94,7 +92,7 @@ class _MyAppState extends State<MyApp> {
   //       isForegroundMode: true,
   //     ),
   //     iosConfiguration: IosConfiguration(
-  //         // auto start service
+  //         // auto start s ervice
   //         autoStart: true,
   //         onForeground: onStart,
   //         onBackground: onIsoBackground),
@@ -145,10 +143,10 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(360, 690),
       builder: (context, child) {
         return Listener(
-          onPointerSignal: conrroller.userLogIn,
-          onPointerDown: conrroller.userLogIn,
-          onPointerMove: conrroller.userLogIn,
-          onPointerUp: conrroller.userLogIn,
+          onPointerSignal: con.userLogIn,
+          onPointerDown: con.userLogIn,
+          onPointerMove: con.userLogIn,
+          onPointerUp: con.userLogIn,
           child: GetMaterialApp(
             title: 'SPL app',
             theme: ThemeData(primarySwatch: Colors.blue),
@@ -224,13 +222,13 @@ class MyHttpOverrides extends HttpOverrides {
 // }
 
 class AppStateListener extends WidgetsBindingObserver {
-  var conrroller = Get.put(InactivityController());
+  final con = Get.put(InactivityController());
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
-        bool alreadyLoggedIn = await conrroller.getStoredUserData();
+        bool alreadyLoggedIn = await con.getStoredUserData();
         var mPinTimeOut = await LocalStorage.read(ConstantsVariables.mPinTimeOut) ?? true;
         if (alreadyLoggedIn && !mPinTimeOut) {
           await LocalStorage.write(ConstantsVariables.timeOut, true);
