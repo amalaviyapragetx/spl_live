@@ -31,14 +31,6 @@ class ResetPasswordController extends GetxController {
     getArguments();
   }
 
-  @override
-  void dispose() {
-    focusNode1.dispose();
-    focusNode2.dispose();
-    focusNode3.dispose();
-    super.dispose();
-  }
-
   void getArguments() {
     if (arguments != null) {
       phoneNumber = arguments[ConstantsVariables.phoneNumber];

@@ -60,10 +60,6 @@ class MPINPageController extends GetxController {
         "ipAddress": ip.value
       }).then((value) async {
         if (value != null && value['status']) {
-          // AppUtils.showSuccessSnackBar(
-          //   bodyText: "${value['message']}",
-          //   headerText: "SUCCESSMESSAGE".tr,
-          // );
           var userData = value['data'];
           if (userData != null) {
             String authToken = userData['Token'] ?? "Null From API";

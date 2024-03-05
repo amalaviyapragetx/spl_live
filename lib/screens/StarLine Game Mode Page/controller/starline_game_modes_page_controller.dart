@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -15,7 +16,6 @@ import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
 import '../../../routes/app_routes_name.dart';
-import '../../Local Storage.dart';
 
 class StarLineGameModesPageController extends GetxController {
   var arguments = Get.arguments;
@@ -35,22 +35,22 @@ class StarLineGameModesPageController extends GetxController {
     super.onInit();
     marketData.value = arguments;
     checkBiddingStatus();
-    await LocalStorage.write(ConstantsVariables.starlineConnect, true);
+    GetStorage().write(ConstantsVariables.starlineConnect, true);
     callGetGameModes();
   }
 
   onBackButton() async {
     Get.offAllNamed(AppRoutName.dashBoardPage);
     requestModel.value.bids?.clear();
-    await LocalStorage.write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    GetStorage().write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
   }
 
   @override
   void onClose() async {
     requestModel.value.bids?.clear();
-    await LocalStorage.write(ConstantsVariables.playMore, true);
-    await LocalStorage.write(ConstantsVariables.totalAmount, "");
-    await LocalStorage.write(ConstantsVariables.marketName, "");
+    GetStorage().write(ConstantsVariables.playMore, true);
+    GetStorage().write(ConstantsVariables.totalAmount, "");
+    GetStorage().write(ConstantsVariables.marketName, "");
     super.onClose();
   }
 
@@ -190,9 +190,9 @@ class StarLineGameModesPageController extends GetxController {
         } else {
           AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }
-        LocalStorage.remove(ConstantsVariables.bidsList);
-        LocalStorage.remove(ConstantsVariables.marketName);
-        LocalStorage.remove(ConstantsVariables.biddingType);
+        GetStorage().remove(ConstantsVariables.bidsList);
+        GetStorage().remove(ConstantsVariables.marketName);
+        GetStorage().remove(ConstantsVariables.biddingType);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

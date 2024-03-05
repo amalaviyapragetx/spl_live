@@ -9,7 +9,6 @@ import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/get_feedback_by_id_api_response_model.dart';
 import '../../../models/normal_market_bid_history_response_model.dart';
-import '../../Local Storage.dart';
 
 class MoreListController extends GetxController {
   UserDetailsModel userData = UserDetailsModel();
@@ -37,8 +36,7 @@ class MoreListController extends GetxController {
   }
 
   Future<void> getUserData() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
-    userData = UserDetailsModel.fromJson(data);
+    userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
     // getMarketBidsByUserId(lazyLoad: false);
   }
 
@@ -46,47 +44,13 @@ class MoreListController extends GetxController {
     ApiService().logout().then((value) async {
       if (value['status']) {
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        // var deviceToken = GetStorage().read(ConstantsVariables.fcmToken);
-        // var locationData1 = GetStorage().read(ConstantsVariables.locationData);
         GetStorage().erase();
-        // GetStorage().write(ConstantsVariables.fcmToken, deviceToken);
-        // GetStorage().write(ConstantsVariables.locationData, locationData1);
         Get.offAllNamed(AppRoutName.walcomeScreen);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
-  //
-  // void getMarketBidsByUserId({required bool lazyLoad}) {
-  //   ApiService()
-  //       .getBidHistoryByUserId(
-  //           userId: userData.id.toString(),
-  //           endDate: "2023-08-17",
-  //           startDate: "2023-08-17",
-  //           //  userId: "3",
-  //           limit: "10",
-  //           offset: offset.toString(),
-  //           isStarline: isStarline.value)
-  //       .then(
-  //     (value) async {
-  //       if (value['status']) {
-  //         if (value['data'] != null) {
-  //           NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
-  //           lazyLoad
-  //               ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
-  //               : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
-  //         }
-  //       } else {
-  //         AppUtils.showErrorSnackBar(
-  //           bodyText: value['message'] ?? "",
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
 
   void getUserBalance() {
     ApiService().getBalance().then((value) async {
@@ -96,25 +60,16 @@ class MoreListController extends GetxController {
           walletBalance.value = tempBalance.toString();
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
 
   // Rate Controller
-  void onTapOfRateUs() async {
-    await getFeedbackAndRatingsById();
-  }
-
+  var tempRatings = 0.00;
+  String tempFeedBack = "";
   Future<void> getFeedbackAndRatingsById() async {
-    var tempRatings = 0.00;
-    var tempFeedBack = "";
-    ApiService()
-        //.getFeedbackAndRatingsById(userId: 1)
-        .getFeedbackAndRatingsById(userId: userData.id)
-        .then(
+    ApiService().getFeedbackAndRatingsById(userId: userData.id).then(
       (value) async {
         if (value['status']) {
           var feedbackModel = GetFeedbackByIdApiResponseModel.fromJson(value);
@@ -143,32 +98,6 @@ class MoreListController extends GetxController {
     );
   }
 
-  // void addFeedbackApi(ratingValue, feedBack) async {
-  //   ApiService()
-  //       .createFeedback(await createFeedbackBody(ratingValue, feedBack))
-  //       .then((value) async {
-  //     debugPrint("Create Feedback Api Response :- $value");
-  //     if (value['status']) {
-  //       Get.back();
-  //       AppUtils.showSuccessSnackBar(
-  //           bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-  //     } else {
-  //       AppUtils.showErrorSnackBar(
-  //         bodyText: value['message'] ?? "",
-  //       );
-  //     }
-  //   });
-  // }
-
-  // Future<Map> createFeedbackBody(rating, String? feedBack) async {
-  //   final createFeedbackBody = {
-  //     "userId": userData.id,
-  //     "feedback": feedBack,
-  //     "rating": rating,
-  //   };
-  //   debugPrint(createFeedbackBody.toString());
-  //   return createFeedbackBody;
-  // }
   Future<Map> createRatingBody(rating) async {
     final createFeedbackBody = {
       "userId": userData.id,

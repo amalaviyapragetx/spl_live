@@ -20,118 +20,88 @@ class SetMPINPage extends StatefulWidget {
 class _SetMPINPageState extends State<SetMPINPage> {
   final controller = Get.find<SetMPINPageController>();
 
-  final verticalSpace = SizedBox(height: Dimensions.h20);
-  @override
-  void initState() {
-    super.initState();
-    controller.getLocationsData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _buildOtpAndMpinForm(context),
-          ],
-        ),
-      ),
+      body: _buildOtpAndMpinForm(context),
     );
   }
 
   _buildOtpAndMpinForm(context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.h20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: SizedBox(
-              height: Dimensions.h100,
-              width: Dimensions.w150,
-              child: Image.asset(
-                ConstantImage.splLogo,
-                fit: BoxFit.contain,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.h20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: Get.height * 0.2),
+            Center(
+              child: SizedBox(
+                height: Dimensions.h100,
+                width: Dimensions.w150,
+                child: Image.asset(
+                  ConstantImage.splLogo,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-          Center(
-            child: Text(
-              // "SET MPIN",
-              "SETMPIN".tr,
-              style: CustomTextStyle.textRobotoSlabBold.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: Dimensions.h25,
-                letterSpacing: 1,
-                color: AppColors.appbarColor,
+            Center(
+              child: Text(
+                // "SET MPIN",
+                "SETMPIN".tr,
+                style: CustomTextStyle.textRobotoSlabBold.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimensions.h25,
+                  letterSpacing: 1,
+                  color: AppColors.appbarColor,
+                ),
               ),
             ),
-          ),
-          // verticalSpace,
-          // Text(
-          //   // "Set 4 digit code that you want to use for Login in your account",
-          //   "SETMPINTEXT".tr,
-          //   textAlign: TextAlign.center,
-          //   style: CustomTextStyle.textRobotoSansLight
-          //       .copyWith(fontSize: Dimensions.h15),
-          //   // style: TextStyle(
-          //   //   color: AppColors.black,
-          //   //   fontSize: Dimensions.h14,
-          //   // ),
-          //   // style: CustomTextStyle.textRobotoSlabLight.copyWith(
-          //   //   fontSize: Dimensions.h17,
-          //   //   letterSpacing: 1,
-          //   //   height: 1.5,
-          //   //   color: AppColors.black,
-          //   // ),
-          // ),
-          verticalSpace,
-          _buildPinCodeField(
-              context: context,
-              title: "MPIN".tr,
-              pinType: controller.mpin,
-              pinCodeLength: 4,
-              focusNode: controller.focusNode1,
-              onChanged: (v) {
-                if (controller.mpin.value.length == 4) {
-                  controller.focusNode1.unfocus();
-                  controller.focusNode2.requestFocus();
-                }
-              }),
-          verticalSpace,
-          _buildPinCodeField(
-              context: context,
-              title: "REENTERMPIN".tr,
-              pinType: controller.confirmMpin,
-              pinCodeLength: 4,
-              focusNode: controller.focusNode2,
-              onChanged: (v) {
-                if (v.length == 4) {
-                  controller.onTapOfContinue();
-                }
-              }),
-          verticalSpace,
-          RoundedCornerButton(
-            text: "CONTINUE".tr,
-            color: AppColors.appbarColor,
-            borderColor: AppColors.appbarColor,
-            fontSize: Dimensions.h13,
-            fontWeight: FontWeight.w500,
-            fontColor: AppColors.white,
-            letterSpacing: 1,
-            borderRadius: Dimensions.r9,
-            borderWidth: 1,
-            textStyle: CustomTextStyle.textRobotoSansMedium,
-            onTap: () => controller.onTapOfContinue(),
-            height: Dimensions.h30,
-            width: double.infinity,
-          ),
-        ],
+            SizedBox(height: Dimensions.h20),
+            _buildPinCodeField(
+                context: context,
+                title: "MPIN".tr,
+                pinType: controller.mpin,
+                pinCodeLength: 4,
+                focusNode: controller.focusNode1,
+                onChanged: (v) {
+                  if (controller.mpin.value.length == 4) {
+                    controller.focusNode1.unfocus();
+                    controller.focusNode2.requestFocus();
+                  }
+                }),
+            SizedBox(height: Dimensions.h20),
+            _buildPinCodeField(
+                context: context,
+                title: "REENTERMPIN".tr,
+                pinType: controller.confirmMpin,
+                pinCodeLength: 4,
+                focusNode: controller.focusNode2,
+                onChanged: (v) {
+                  if (v.length == 4) {
+                    controller.onTapOfContinue();
+                  }
+                }),
+            SizedBox(height: Dimensions.h20),
+            RoundedCornerButton(
+              text: "CONTINUE".tr,
+              color: AppColors.appbarColor,
+              borderColor: AppColors.appbarColor,
+              fontSize: Dimensions.h13,
+              fontWeight: FontWeight.w500,
+              fontColor: AppColors.white,
+              letterSpacing: 1,
+              borderRadius: Dimensions.r9,
+              borderWidth: 1,
+              textStyle: CustomTextStyle.textRobotoSansMedium,
+              onTap: () => controller.onTapOfContinue(),
+              height: Dimensions.h30,
+              width: double.infinity,
+            ),
+            SizedBox(height: Get.height * 0.3),
+          ],
+        ),
       ),
     );
   }
@@ -157,9 +127,7 @@ class _SetMPINPageState extends State<SetMPINPage> {
             color: AppColors.appbarColor,
           ),
         ),
-        SizedBox(
-          height: Dimensions.h10,
-        ),
+        SizedBox(height: Dimensions.h10),
         PinCodeFields(
           autofocus: true,
           length: pinCodeLength,

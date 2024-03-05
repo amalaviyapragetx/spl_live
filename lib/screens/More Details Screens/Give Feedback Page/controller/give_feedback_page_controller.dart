@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
 import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/constant_variables.dart';
 import '../../../../models/commun_models/user_details_model.dart';
 import '../../../../models/get_feedback_by_id_api_response_model.dart';
-import '../../../Local Storage.dart';
 
 class GiveFeedbackPageController extends GetxController {
   final feedbackController = TextEditingController();
@@ -21,13 +20,10 @@ class GiveFeedbackPageController extends GetxController {
   }
 
   void addFeedbackApi(ratingValue) async {
-    ApiService()
-        .createFeedback(await createFeedbackBody(ratingValue))
-        .then((value) async {
+    ApiService().createFeedback(await createFeedbackBody(ratingValue)).then((value) async {
       if (value['status']) {
         Get.back();
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
@@ -38,7 +34,7 @@ class GiveFeedbackPageController extends GetxController {
 
   // UserDetailsModel userData = UserDetailsModel();
   // Future<void> getUserData() async {
-  //   var data = await LocalStorage.read(ConstantsVariables.userData);
+  //   var data = GetStorage().read(ConstantsVariables.userData);
   //   userData = UserDetailsModel.fromJson(data);
   //   // getMarketBidsByUserId(lazyLoad: false);
   // }
@@ -68,9 +64,9 @@ class GiveFeedbackPageController extends GetxController {
   // }
 
   getArguments() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    var data = GetStorage().read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(data);
-  
+
     // getFeedbackAndRatingsById();
   }
 
@@ -89,7 +85,6 @@ class GiveFeedbackPageController extends GetxController {
         .getFeedbackAndRatingsById(userId: userDetailsModel.id)
         .then(
       (value) async {
-      
         if (value['status']) {
           feedbackModel.value = GetFeedbackByIdApiResponseModel.fromJson(value);
           feedbackController.text = feedbackModel.value.data!.feedback ?? "";

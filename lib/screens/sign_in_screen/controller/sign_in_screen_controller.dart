@@ -9,7 +9,6 @@ import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
-import '../../Local Storage.dart';
 
 class SignInPageController extends GetxController {
   final mobileNumberController = TextEditingController();
@@ -18,45 +17,37 @@ class SignInPageController extends GetxController {
   final FocusNode focusNode2 = FocusNode();
   RxBool visiblePassword = false.obs;
   Timer? cursorTimer;
-  // var countryCode = '+91'.obs;
 
   @override
   void dispose() {
     cursorTimer?.cancel();
     mobileNumberController.dispose();
     passwordController.dispose();
-    focusNode1.dispose();
-    focusNode2.dispose();
     super.dispose();
   }
 
-  void onTapOfVisibilityIcon() {
-    visiblePassword.value = !visiblePassword.value;
-  }
+  void onTapOfVisibilityIcon() => visiblePassword.value = !visiblePassword.value;
 
   void callSignInApi() async {
-    ApiService().signInAPI(await signInBody()).then((value) async {
+    ApiService().signInAPI({
+      "phoneNumber": mobileNumberController.text,
+      "password": passwordController.text,
+      "countryCode": "+92",
+      "deviceId": DeviceInfo.deviceId,
+    }).then((value) async {
       if (value['status']) {
-        // AppUtils.showSuccessSnackBar(
-        //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         if (value['data'] != null) {
           String authToken = value['data']['Token'] ?? "Null From API";
-          // bool isMpinSet = value['data']['IsMPinSet'] ?? false;
           bool isActive = value['data']['IsActive'] ?? false;
           bool isVerified = value['data']['IsVerified'] ?? false;
           bool isUserDetailSet = value['data']['IsUserDetailSet'] ?? false;
-          await LocalStorage.write(ConstantsVariables.authToken, authToken);
-          // await LocalStorage.write(ConstantsVariables.isMpinSet, isMpinSet);
-          await LocalStorage.write(ConstantsVariables.isActive, isActive);
-          await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
-          await LocalStorage.write(ConstantsVariables.userData, value['data']);
-          await LocalStorage.write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
+          GetStorage().write(ConstantsVariables.authToken, authToken);
+          GetStorage().write(ConstantsVariables.isActive, isActive);
+          GetStorage().write(ConstantsVariables.isVerified, isVerified);
+          GetStorage().write(ConstantsVariables.userData, value['data']);
+          GetStorage().write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
           GetStorage().write(ConstantsVariables.id, value['data']["Id"]);
-          if (isUserDetailSet) {
-            Get.toNamed(AppRoutName.setMPINPage);
-          } else {
-            Get.toNamed(AppRoutName.userDetailsPage);
-          }
+          Get.toNamed(AppRoutName.setMPINPage);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
@@ -66,34 +57,15 @@ class SignInPageController extends GetxController {
     });
   }
 
-  Future<Map> signInBody() async {
-    final signInBody = {
-      "phoneNumber": mobileNumberController.text,
-      "password": passwordController.text,
-      "countryCode": "+92",
-      "deviceId": DeviceInfo.deviceId,
-      // "deviceId": "954f4d94fdsa94fdsf",
-      // "fcmToken": fcmToken,
-    };
-
-    return signInBody;
-  }
-
   void onTapOfSignIn() {
     FocusManager.instance.primaryFocus?.unfocus();
     Get.closeAllSnackbars();
     if (mobileNumberController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERMOBILENUMBER".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
     } else if (mobileNumberController.text.length < 10) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERVALIDNUMBER".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
     } else if (passwordController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERPASSWORD".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERPASSWORD".tr);
     } else {
       callSignInApi();
     }

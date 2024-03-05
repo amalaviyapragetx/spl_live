@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
+
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
@@ -12,7 +13,6 @@ import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
-import '../../Local Storage.dart';
 
 class GameModePagesController extends GetxController {
   RxBool containerChange = false.obs;
@@ -65,9 +65,9 @@ class GameModePagesController extends GetxController {
   @override
   void onClose() async {
     requestModel.value.bids?.clear();
-    // await LocalStorage.write(ConstantsVariables.playMore, true);
-    await LocalStorage.write(ConstantsVariables.totalAmount, "");
-    await LocalStorage.write(ConstantsVariables.marketName, "");
+    // GetStorage().write(ConstantsVariables.playMore, true);
+    GetStorage().write(ConstantsVariables.totalAmount, "");
+    GetStorage().write(ConstantsVariables.marketName, "");
     super.onClose();
   }
 
@@ -85,12 +85,10 @@ class GameModePagesController extends GetxController {
   }
 
   void checkBiddingStatus() {
-    var timeDiffForOpenBidding = CommonUtils()
-        .getDifferenceBetweenGivenTimeFromNow(
-            marketValue.value.openTime ?? "00:00 AM");
-    var timeDiffForCloseBidding = CommonUtils()
-        .getDifferenceBetweenGivenTimeFromNow(
-            marketValue.value.closeTime ?? "00:00 AM");
+    var timeDiffForOpenBidding =
+        CommonUtils().getDifferenceBetweenGivenTimeFromNow(marketValue.value.openTime ?? "00:00 AM");
+    var timeDiffForCloseBidding =
+        CommonUtils().getDifferenceBetweenGivenTimeFromNow(marketValue.value.closeTime ?? "00:00 AM");
     timeDiffForOpenBidding < 2 ? openBiddingOpen.value = false : true;
     timeDiffForCloseBidding < 2 ? closeBiddingOpen.value = false : true;
     if (!openBiddingOpen.value) {
@@ -99,11 +97,11 @@ class GameModePagesController extends GetxController {
   }
 
   onBackButton() async {
-    // var hh = await LocalStorage.read(ConstantsVariables.playMore);
+    // var hh = GetStorage().read(ConstantsVariables.playMore);
     // if (!hh) {
-    // var bidList = await LocalStorage.read(ConstantsVariables.bidsList);
+    // var bidList = GetStorage().read(ConstantsVariables.bidsList);
     // totalBidsAmount.value =
-    //     await LocalStorage.read(ConstantsVariables.totalAmount);
+    //     GetStorage().read(ConstantsVariables.totalAmount);
 
     // arguments['totalAmount'] = totalAmount.value;
     // arguments['marketName'] = marketName.value;
@@ -119,7 +117,7 @@ class GameModePagesController extends GetxController {
     //   });
     // } else {
     selectedBidsList.clear();
-    await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+    GetStorage().write(ConstantsVariables.bidsList, selectedBidsList);
     final walletController = Get.find<WalletController>();
     walletController.getUserBalance();
     walletController.walletBalance.refresh();
@@ -127,7 +125,7 @@ class GameModePagesController extends GetxController {
     // }
     // } else {
     //   selectedBidsList.clear();
-    //   await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+    //   GetStorage().write(ConstantsVariables.bidsList, selectedBidsList);
     //   final walletController = Get.find<WalletController>();
     //   walletController.getUserBalance();
     //   walletController.walletBalance.refresh();
@@ -138,19 +136,15 @@ class GameModePagesController extends GetxController {
   void callGetGameModes() async {
     ApiService()
         .getGameModes(
-            openCloseValue: openCloseValue.value != "CLOSEBID".tr ? "0" : "1",
-            marketID: marketValue.value.id ?? 0)
-        .then((value) async {;
-
+            openCloseValue: openCloseValue.value != "CLOSEBID".tr ? "0" : "1", marketID: marketValue.value.id ?? 0)
+        .then((value) async {
       if (value['status']) {
-        GameModesApiResponseModel gameModeModel =
-            GameModesApiResponseModel.fromJson(value);
+        GameModesApiResponseModel gameModeModel = GameModesApiResponseModel.fromJson(value);
         gameModeList.value = gameModeModel;
-      
+
         if (gameModeModel.data != null) {
           openBiddingOpen.value = gameModeModel.data!.isBidOpenForOpen ?? false;
-          closeBiddingOpen.value =
-              gameModeModel.data!.isBidOpenForClose ?? false;
+          closeBiddingOpen.value = gameModeModel.data!.isBidOpenForClose ?? false;
           gameModesList.value = gameModeModel.data!.gameMode ?? <GameMode>[];
         }
       } else {
@@ -159,14 +153,13 @@ class GameModePagesController extends GetxController {
         );
       }
     });
-   
   }
 
   void checkBids() async {
-    // var hh = await LocalStorage.read(ConstantsVariables.playMore);
+    // var hh = GetStorage().read(ConstantsVariables.playMore);
 
     //  if (!hh) {
-    var bidList = await LocalStorage.read(ConstantsVariables.bidsList);
+    var bidList = GetStorage().read(ConstantsVariables.bidsList);
 
     // biddingType.value = arguments["biddingType"];
     // marketName.value = arguments["marketName"];
@@ -177,7 +170,6 @@ class GameModePagesController extends GetxController {
   }
 
   void onTapOfGameModeTile(int index) {
-   
     bool isBulkMode = false;
     bool digitBasedJodi = false;
     bool choicePanaSpDp = false;
@@ -235,17 +227,14 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    
     } else if (isBulkMode) {
-    
       Get.toNamed(AppRoutName.singleAnkPage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
         "marketValue": marketValue.value,
-        "time": openCloseValue.value == "OPENBID".tr
-            ? marketValue.value.openTime ?? ""
-            : marketValue.value.closeTime ?? "",
+        "time":
+            openCloseValue.value == "OPENBID".tr ? marketValue.value.openTime ?? "" : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": true,
         "gameModeList": gameModeList,
@@ -253,15 +242,13 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    
     } else if (choicePanaSpDp || digitsBasedJodi || oddEven) {
       Get.toNamed(AppRoutName.newOddEvenPage, arguments: {
         "gameMode": gameModesList[index],
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
-        "time": openCloseValue.value == "OPENBID".tr
-            ? marketValue.value.openTime ?? ""
-            : marketValue.value.closeTime ?? "",
+        "time":
+            openCloseValue.value == "OPENBID".tr ? marketValue.value.openTime ?? "" : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": false,
         "gameModeList": gameModeList,
@@ -276,9 +263,8 @@ class GameModePagesController extends GetxController {
         "marketName": marketValue.value.market ?? "",
         "marketId": marketValue.value.id ?? "",
         "marketValue": marketValue.value,
-        "time": openCloseValue.value == "OPENBID".tr
-            ? marketValue.value.openTime ?? ""
-            : marketValue.value.closeTime ?? "",
+        "time":
+            openCloseValue.value == "OPENBID".tr ? marketValue.value.openTime ?? "" : marketValue.value.closeTime ?? "",
         "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
         "isBulkMode": false,
         "gameModeList": gameModeList,
@@ -286,18 +272,15 @@ class GameModePagesController extends GetxController {
         "gameName": gameModesList[index].name,
         "totalAmount": totalAmount.value,
       });
-    
     }
   }
 
   Future<void> getArguments() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
-    // playmore = await LocalStorage.read(ConstantsVariables.playMore);
+    var data = GetStorage().read(ConstantsVariables.userData);
+    // playmore = GetStorage().read(ConstantsVariables.playMore);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    selectedBidsList.value =
-        await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
-   
+    selectedBidsList.value = GetStorage().read(ConstantsVariables.bidsList) ?? [];
     requestModel.refresh();
   }
 }

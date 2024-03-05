@@ -30,7 +30,6 @@ import '../../../models/passbook_page_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starlinechar_model/new_starlinechart_model.dart';
 import '../../../routes/app_routes_name.dart';
-import '../../Local Storage.dart';
 import '../../bottum_navigation_screens/bid_history.dart';
 import '../../bottum_navigation_screens/moreoptions.dart';
 import '../../bottum_navigation_screens/passbook_page.dart';
@@ -84,17 +83,14 @@ class HomePageController extends GetxController {
   RxBool starlineCheck = false.obs;
 
   callFcmApi(userId) async {
-    var token = await LocalStorage.read(ConstantsVariables.fcmToken);
+    final token = GetStorage().read(ConstantsVariables.fcmToken);
     Timer(const Duration(milliseconds: 200), () {
       fsmApiCall(userId, token);
     });
   }
 
   fcmBody(userId, fcmToken) {
-    var a = {
-      "id": userId,
-      "fcmToken": fcmToken,
-    };
+    var a = {"id": userId, "fcmToken": fcmToken};
     return a;
   }
 
@@ -177,13 +173,9 @@ class HomePageController extends GetxController {
     Get.toNamed(AppRoutName.newBidHistorypage);
   }
 
-  getUserData() {
-    var data = GetStorage().read(ConstantsVariables.userData);
+  getUserData() async {
+    final data = GetStorage().read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
-    // getMarketBidsByUserId(
-    //     lazyLoad: false,
-    //     startDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-    //     endDate: DateFormat('yyyy-MM-dd').format(startEndDate));
     callFcmApi(userData.id);
   }
 
@@ -439,6 +431,10 @@ class HomePageController extends GetxController {
                                 isStarline.value = false;
                                 pageWidget.value = 2;
                                 currentIndex.value = 2;
+                                Future.delayed(Duration(milliseconds: 300), () {
+                                  position = 0;
+                                  widgetContainer.value = position;
+                                });
                               },
                             ),
                             spaceBeetween,

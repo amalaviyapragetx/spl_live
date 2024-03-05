@@ -38,9 +38,7 @@ class AppUtils {
       leadingWidth: leadingWidht,
       title: Text(
         appBarTitle,
-        style: CustomTextStyle.textRobotoSansMedium,
-        // style: GoogleFonts.aclonica(
-        //     color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
+        style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white),
       ),
       actions: actions,
     );
@@ -96,7 +94,7 @@ class AppUtils {
   }) {
     return AppBar(
       backgroundColor: AppColors.appbarColor,
-      title: const Text("SPL"),
+      title: Text("SPL", style: TextStyle(color: AppColors.white)),
       centerTitle: true,
       leadingWidth: Get.width * 0.4,
       leading: Row(

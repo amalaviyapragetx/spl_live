@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
@@ -19,7 +20,6 @@ import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
 import '../../../routes/app_routes_name.dart';
-import '../../Local Storage.dart';
 
 class NormalGamePageController extends GetxController {
   var coinController = TextEditingController();
@@ -71,8 +71,11 @@ class NormalGamePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getArguments();
-    // focusNode = FocusNode();
+    marketValue.value = argument["marketValue"];
+    gameMode.value = argument['gameMode'];
+    biddingType.value = argument['biddingType'];
+    marketName.value = argument['marketName'];
+    marketId = argument['marketId'];
   }
 
   checkType(index) {
@@ -86,21 +89,17 @@ class NormalGamePageController extends GetxController {
   }
 
   void getArguments() async {
-    marketValue.value = argument["marketValue"];
-    gameMode.value = argument['gameMode'];
-    biddingType.value = argument['biddingType'];
-    marketName.value = argument['marketName'];
-    marketId = argument['marketId'];
+    await loadJsonFile();
     // isBulkMode.value = argument['isBulkMode'];
     // marketData.value = argument['marketData'];
     // requestModel.value.dailyMarketId = marketData.value.id;
     requestModel.value.bidType = bidType;
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
     requestModel.value.bidType = biddingType.value;
     requestModel.value.dailyMarketId = marketId;
-    await loadJsonFile();
+
     RxBool showNumbersLine = false.obs;
     RxList<String> suggestionList = <String>[].obs;
     List<String> _tempValidationList = [];
@@ -330,10 +329,10 @@ class NormalGamePageController extends GetxController {
           walletController.getUserBalance();
           walletController.walletBalance.refresh();
         }
-        LocalStorage.remove(ConstantsVariables.bidsList);
+        GetStorage().remove(ConstantsVariables.bidsList);
         requestModel.value.bids!.clear();
-        LocalStorage.remove(ConstantsVariables.marketName);
-        LocalStorage.remove(ConstantsVariables.biddingType);
+        GetStorage().remove(ConstantsVariables.marketName);
+        GetStorage().remove(ConstantsVariables.biddingType);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

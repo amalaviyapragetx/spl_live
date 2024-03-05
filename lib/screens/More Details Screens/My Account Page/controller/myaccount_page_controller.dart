@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
@@ -7,7 +8,6 @@ import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/constant_variables.dart';
 import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/user_details_model.dart';
-import '../../../Local Storage.dart';
 
 class MyAccountPageController extends GetxController {
   var bankNameController = TextEditingController();
@@ -31,7 +31,7 @@ class MyAccountPageController extends GetxController {
   }
 
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     userId = userData.id == null ? "" : userData.id.toString();
     if (userId.isNotEmpty) {
@@ -46,21 +46,13 @@ class MyAccountPageController extends GetxController {
 
   void validationFied() {
     if (bankNameController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Enter name of the bank",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Enter name of the bank");
     } else if (accHolderNameController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Enter Account Holder Name",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Enter Account Holder Name");
     } else if (accNoController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Enter Account Number",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Enter Account Number");
     } else if (ifscCodeController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "Enter Ifsc Code",
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Enter Ifsc Code");
     } else {
       onTapOfEditDetails();
       Get.back();
@@ -72,9 +64,7 @@ class MyAccountPageController extends GetxController {
       callEditBankDetailsApi();
       walletbalance.walletBalance.refresh();
     } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "CONTACTADMINTOEDITDETAILS".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "CONTACTADMINTOEDITDETAILS".tr);
     }
   }
 
@@ -117,13 +107,10 @@ class MyAccountPageController extends GetxController {
         accNoController.text = model.data!.accountNumber ?? "Null From API";
         ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
         bankId = model.data!.id ?? 0;
-
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
         isEditDetails.value = true;
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }

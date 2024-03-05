@@ -202,7 +202,7 @@ class StarlineBidsPage extends StatelessWidget {
     return Obx(
       () => Container(
         width: size.width,
-        height: Dimensions.h45,
+
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -240,6 +240,7 @@ class StarlineBidsPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 textAlign: TextAlign.center,

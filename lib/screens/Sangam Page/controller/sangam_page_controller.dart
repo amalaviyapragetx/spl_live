@@ -1,8 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -14,7 +17,6 @@ import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
-import '../../Local Storage.dart';
 
 class SangamPageController extends GetxController {
   bool isValue = false;
@@ -74,7 +76,7 @@ class SangamPageController extends GetxController {
     marketData.value = argument['marketData'];
     requestModel.value.dailyMarketId = marketData.value.id;
     requestModel.value.bidType = bidType;
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
     await loadJsonFile();
@@ -119,17 +121,13 @@ class SangamPageController extends GetxController {
   }
 
   Future<void> loadJsonFile() async {
-    final String response =
-        await rootBundle.loadString('assets/JSON File/digit_file.json');
+    final String response = await rootBundle.loadString('assets/JSON File/digit_file.json');
     final data = await json.decode(response);
     jsonModel = JsonFileModel.fromJson(data);
   }
 
   void createMarketBidApi() async {
-    ApiService()
-        .createMarketBid(requestModel.value.toJson())
-        .then((value) async {
-    
+    ApiService().createMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
         if (value['data'] == null) {
           AppUtils.showErrorSnackBar(
@@ -138,9 +136,7 @@ class SangamPageController extends GetxController {
         } else {
           Get.back();
           Get.back();
-          AppUtils.showSuccessSnackBar(
-              bodyText: value['message'] ?? "",
-              headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }
       } else {
         AppUtils.showErrorSnackBar(
@@ -172,13 +168,11 @@ class SangamPageController extends GetxController {
       addedNormalBidValue = value;
       closeValue = value;
       // checkBidValue = "$openValue-$closeValue";
-      
     }
   }
 
   void onTapOfSaveButton(context) {
-    if (requestModel.value.bids != null &&
-        requestModel.value.bids!.isNotEmpty) {
+    if (requestModel.value.bids != null && requestModel.value.bids!.isNotEmpty) {
       //  createMarketBidApi();
       showConfirmationDialog(context);
     } else {
@@ -256,25 +250,20 @@ class SangamPageController extends GetxController {
         focusNode.previousFocus();
         focusNode.previousFocus();
       } else {
-       
         var existingIndex = addedSangamList.indexWhere((element) {
-       
-          return element.bidNo ==
-              manipulateString("$openValue-$closeValue", gameMode.value.name!);
+          return element.bidNo == manipulateString("$openValue-$closeValue", gameMode.value.name!);
         });
-       
+
         if (existingIndex != -1) {
           // If the bidNo already exists in selectedBidsList, update coins value.
           addedSangamList[existingIndex].coins =
-              (addedSangamList[existingIndex].coins! +
-                  int.parse(coinsController.text));
+              (addedSangamList[existingIndex].coins! + int.parse(coinsController.text));
           addedSangamList.refresh();
           requestModel.refresh();
         } else {
           addedSangamList.add(
             Bids(
-                bidNo: manipulateString(
-                    "$openValue-$closeValue", gameMode.value.name!),
+                bidNo: manipulateString("$openValue-$closeValue", gameMode.value.name!),
                 coins: int.parse(coinsController.text),
                 gameId: gameMode.value.id,
                 gameModeName: gameMode.value.name,
@@ -315,7 +304,6 @@ class SangamPageController extends GetxController {
     manipulatedString.value = "${parts[1]}-${parts[0]}";
 
     if (gameMode == "Half Sangam A") {
-
       return manipulatedString.value;
     } else {
       return input;

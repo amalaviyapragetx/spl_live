@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
@@ -19,17 +20,6 @@ class NotificationDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text(
-            //   "SPLNOTIFICATION".tr,
-            //   style: CustomTextStyle.textPTsansMedium.copyWith(
-            //     color: AppColors.black,
-            //     fontSize: Dimensions.h15,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: Dimensions.h20,
-            // ),
             Container(
               height: Dimensions.h50,
               width: double.infinity,
@@ -109,8 +99,7 @@ class NotificationDetailsPage extends StatelessWidget {
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         value: controller.starlineNotificationFromLocal.value,
                         onChanged: (value) {
-                          controller.starlineNotificationFromLocal.value =
-                              value;
+                          controller.starlineNotificationFromLocal.value = value;
 
                           controller.callNotification();
                         },

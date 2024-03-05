@@ -16,7 +16,6 @@ import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import '../../../models/commun_models/user_details_model.dart';
-import '../../Local Storage.dart';
 
 class SplashController extends GetxController {
   final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
@@ -67,8 +66,8 @@ class SplashController extends GetxController {
   //                 'location': placeMark.location?.toJson(),
   //               })
   //           .toList();
-  //       await LocalStorage.write(ConstantsVariables.locationData, placeMarkJsonList);
-  //       var storedPlaceMarkJsonList = await LocalStorage.read(ConstantsVariables.locationData) ?? [];
+  //       GetStorage().write(ConstantsVariables.locationData, placeMarkJsonList);
+  //       var storedPlaceMarkJsonList = GetStorage().read(ConstantsVariables.locationData) ?? [];
   //     }
   //   } catch (e) {
   //     print('Error getting location: $e');
@@ -125,66 +124,67 @@ class SplashController extends GetxController {
 
   Future<void> checkLogin() async {
     bool alreadyLoggedIn = await getStoredUserData();
-    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool hasMPIN = await LocalStorage.read(ConstantsVariables.isMpinSet) ?? false;
-    bool isUserDetailSet = await LocalStorage.read(ConstantsVariables.isUserDetailSet) ?? false;
+    bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
+    bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
+    bool hasMPIN = GetStorage().read(ConstantsVariables.isMpinSet) ?? false;
+    bool isUserDetailSet = GetStorage().read(ConstantsVariables.isUserDetailSet) ?? false;
 
     if (alreadyLoggedIn) {
-      if (!isActive && !isVerified) {
-        //   callFcmApi(_userDetailsModel.id);
+      // if (isActive && isVerified) {
+      //   //   callFcmApi(_userDetailsModel.id);
+      //   Future.delayed(const Duration(seconds: 2), () {
+      //     Get.offAllNamed(AppRoutName.verifyOTPPage);
+      //     Timer(const Duration(milliseconds: 500), () {
+      //       appVersionCheck();
+      //       //   requestLocationPermission();
+      //     });
+      //   });
+      // } else
+      // if (!hasMPIN && !isUserDetailSet) {
+      //   //   callFcmApi(_userDetailsModel.id);
+      //   Future.delayed(const Duration(seconds: 2), () {
+      //     Get.offAllNamed(AppRoutName.userDetailsPage);
+      //     Timer(const Duration(milliseconds: 500), () {
+      //       appVersionCheck();
+      //       //  requestLocationPermission();
+      //     });
+      //   });
+      // } else {
+      if (hasMPIN && isActive && isVerified && isUserDetailSet) {
+        callFcmApi(_userDetailsModel.id);
         Future.delayed(const Duration(seconds: 2), () {
-          Get.offAllNamed(AppRoutName.verifyOTPPage);
-          Timer(const Duration(milliseconds: 500), () {
-            appVersionCheck();
-            //   requestLocationPermission();
-          });
-        });
-      } else if (!hasMPIN && !isUserDetailSet) {
-        //   callFcmApi(_userDetailsModel.id);
-        Future.delayed(const Duration(seconds: 2), () {
-          Get.offAllNamed(AppRoutName.userDetailsPage);
-          Timer(const Duration(milliseconds: 500), () {
-            appVersionCheck();
-            //  requestLocationPermission();
-          });
+          Get.offAllNamed(AppRoutName.mPINPage, arguments: {"id": _userDetailsModel.id});
+          Timer(const Duration(milliseconds: 500), () => appVersionCheck());
         });
       } else {
-        if (hasMPIN) {
-          callFcmApi(_userDetailsModel.id);
-          Future.delayed(const Duration(seconds: 2), () {
-            Get.offAllNamed(AppRoutName.mPINPage, arguments: {"id": _userDetailsModel.id});
-            Timer(const Duration(milliseconds: 500), () {
-              appVersionCheck();
-              //   requestLocationPermission();
-            });
-          });
-        } else {
-          Future.delayed(const Duration(seconds: 2), () {
-            Get.offAllNamed(AppRoutName.signInPage, arguments: {"id": _userDetailsModel.id});
-            Timer(const Duration(milliseconds: 500), () {
-              appVersionCheck();
-              //  requestLocationPermission();
-            });
-          });
-        }
+        Future.delayed(const Duration(seconds: 2), () {
+          // Get.offAllNamed(AppRoutes.dashboardPage);
+          Get.offAllNamed(AppRoutName.walcomeScreen);
+          Timer(const Duration(milliseconds: 500), () => appVersionCheck());
+        });
       }
+      // } else {
+      //   Future.delayed(const Duration(seconds: 2), () {
+      //     Get.offAllNamed(AppRoutName.signInPage, arguments: {"id": _userDetailsModel.id});
+      //     Timer(const Duration(milliseconds: 500), () {
+      //       appVersionCheck();
+      //       //  requestLocationPermission();
+      //     });
+      //   });
+      // }
+      // }
     } else {
       Future.delayed(const Duration(seconds: 2), () {
         // Get.offAllNamed(AppRoutes.dashboardPage);
         Get.offAllNamed(AppRoutName.walcomeScreen);
-        Timer(const Duration(milliseconds: 500), () {
-          appVersionCheck();
-
-          ///    requestLocationPermission();
-        });
+        Timer(const Duration(milliseconds: 500), () => appVersionCheck());
       });
     }
   }
 
   Future<bool> getStoredUserData() async {
-    String? authToken = await LocalStorage.read(ConstantsVariables.authToken);
-    var userData = await LocalStorage.read(ConstantsVariables.userData);
+    String? authToken = GetStorage().read(ConstantsVariables.authToken);
+    final userData = GetStorage().read(ConstantsVariables.userData);
     if (authToken != null && authToken.isNotEmpty) {
       if (userData != null) {
         _userDetailsModel = UserDetailsModel.fromJson(userData);
@@ -194,6 +194,8 @@ class SplashController extends GetxController {
       return false;
     }
   }
+
+  RxBool load = false.obs;
 
   void _showExitDialog() {
     Get.defaultDialog(
@@ -215,26 +217,50 @@ class SplashController extends GetxController {
       actions: [
         InkWell(
           onTap: () async {
+            load.value = true;
             // launch("https://spl.live");
-            print("new version");
             try {
               OtaUpdate().execute('http://192.168.29.46:8002/media/apk_files/spl_live.apk').listen(
-                    (OtaEvent event) {},
-                  );
+                (OtaEvent event) {
+                  if (event.status == OtaStatus.DOWNLOADING) {
+                    load.value = true;
+                  } else if (event.status == OtaStatus.CANCELED) {
+                    load.value = false;
+                    AppUtils.showErrorSnackBar(bodyText: "Download Canceled");
+                  } else if (event.status == OtaStatus.DOWNLOAD_ERROR) {
+                    load.value = false;
+                    AppUtils.showErrorSnackBar(bodyText: "Download error");
+                  } else if (event.status == OtaStatus.INTERNAL_ERROR) {
+                    load.value = false;
+                    AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
+                  } else if (event.status == OtaStatus.PERMISSION_NOT_GRANTED_ERROR) {
+                    load.value = false;
+                  } else {
+                    load.value = false;
+                  }
+                  update();
+                },
+                onDone: () => load.value = false,
+              );
             } catch (e) {
               print('Failed to make OTA update. Details: $e');
             }
+            update();
           },
           child: Container(
             color: AppColors.appbarColor,
             height: Dimensions.h40,
             width: Dimensions.w200,
-            child: Center(
-              child: Text(
-                'OK',
-                style: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: AppColors.white,
-                ),
+            child: Obx(
+              () => Center(
+                child: load.value
+                    ? CircularProgressIndicator(color: AppColors.white)
+                    : Text(
+                        'OK',
+                        style: CustomTextStyle.textRobotoSansBold.copyWith(
+                          color: AppColors.white,
+                        ),
+                      ),
               ),
             ),
           ),
@@ -242,83 +268,4 @@ class SplashController extends GetxController {
       ],
     );
   }
-
-  // Future<void> requestLocationPermission() async {
-  //   // var status = await Permission.location.request();
-  //
-  //   // if(GetStorage().read(ConstantsVariables.isMpinSet))
-  //   if (status.isGranted) {
-  //     // Permission granted, proceed with your flow.
-  //   } else if (status.isDenied) {
-  //     // Permission denied.
-  //     // Get.defaultDialog(
-  //     //   titlePadding: EdgeInsets.only(top: Dimensions.h10),
-  //     //   title: 'Permission Denied',
-  //     //   middleText: 'Please grant location permission to use this feature.',
-  //     //   confirm: Padding(
-  //     //     padding: EdgeInsets.symmetric(horizontal: Dimensions.w50, vertical: Dimensions.h5),
-  //     //     child: RoundedCornerButton(
-  //     //       text: 'Open Settings',
-  //     //       color: AppColors.appbarColor,
-  //     //       borderColor: AppColors.appbarColor,
-  //     //       fontSize: Dimensions.h12,
-  //     //       fontWeight: FontWeight.w500,
-  //     //       fontColor: AppColors.white,
-  //     //       letterSpacing: 0,
-  //     //       borderRadius: Dimensions.r5,
-  //     //       borderWidth: 1,
-  //     //       textStyle: CustomTextStyle.textRobotoSansLight,
-  //     //       onTap: () {
-  //     //         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-  //     //         openAppSettings(); // Open app settings if permission is permanently denied.
-  //     //       },
-  //     //       height: Dimensions.h30,
-  //     //       width: double.infinity,
-  //     //     ),
-  //     //   ),
-  //     // );
-  //   }
-  // }
-
-  // Future<String> getIpAddress() async {
-  //   getIpAddress2();
-  //   try {
-  //     List<NetworkInterface> interfaces =
-  //         await NetworkInterface.list(includeLoopback: false, type: InternetAddressType.IPv4);
-  //     for (NetworkInterface interface in interfaces) {
-
-  //       if (interface.name.toLowerCase().contains("wlan") || interface.name.toLowerCase().contains("eth")) {
-  //         for (InternetAddress address in interface.addresses) {
-  //           if (!address.isLoopback && !address.isLinkLocal) {
-  //             return address.address;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   } on SocketException catch (e) {
-
-  //   }
-  //   return "Could not determine IP address";
-  // }
-  //
-  // void getIpAddress2() async {
-  //   ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
-  //
-  //   if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
-  //     try {
-  //       for (var interface in await NetworkInterface.list()) {
-  //         for (var addr in interface.addresses) {
-  //           if (addr.type.name.toLowerCase() == 'ipv4') {
-
-  //             return;
-  //           }
-  //         }
-  //       }
-  //     } catch (e) {
-
-  //     }
-  //   } else {
-
-  //   }
-  // }
 }

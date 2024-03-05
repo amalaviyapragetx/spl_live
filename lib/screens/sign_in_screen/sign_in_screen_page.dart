@@ -18,165 +18,89 @@ import 'controller/sign_in_screen_controller.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
   final controller = Get.find<SignInPageController>();
-
-  final verticalSpace = SizedBox(height: Dimensions.h20);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
         iconTheme: IconThemeData(color: AppColors.appbarColor),
         systemOverlayStyle: AppUtils.toolBarStyleDark,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              verticalSpace,
-              verticalSpace,
-              verticalSpace,
-              SizedBox(
-                height: Dimensions.h70,
-                width: Dimensions.w150,
-                child: Image.asset(
-                  ConstantImage.splLogo,
-                  fit: BoxFit.contain,
-                ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            SizedBox(height: Get.height * 0.1),
+            SizedBox(
+              height: Dimensions.h70,
+              width: Dimensions.w150,
+              child: Image.asset(
+                ConstantImage.splLogo,
+                fit: BoxFit.contain,
               ),
-              verticalSpace,
-              Text(
-                "WELCOMEBACK".tr,
-                style: CustomTextStyle.textPTsansMedium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  fontSize: Dimensions.h12,
-                  letterSpacing: 1,
-                  color: AppColors.black.withAlpha(200),
-                ),
+            ),
+            SizedBox(height: Dimensions.h20),
+            Text(
+              "WELCOMEBACK".tr,
+              style: CustomTextStyle.textPTsansMedium.copyWith(
+                fontWeight: FontWeight.w500,
+                fontSize: Dimensions.h12,
+                letterSpacing: 1,
+                color: AppColors.black.withAlpha(200),
               ),
-              Text(
-                "SIGNIN".tr,
-                style: CustomTextStyle.textRobotoSlabBold.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.h20,
-                  letterSpacing: 1,
-                  color: AppColors.appbarColor,
-                ),
+            ),
+            Text(
+              "SIGNIN".tr,
+              style: CustomTextStyle.textRobotoSlabBold.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: Dimensions.h20,
+                letterSpacing: 1,
+                color: AppColors.appbarColor,
               ),
-              verticalSpace,
-              _buildSignInForm()
-            ],
-          ),
+            ),
+            SizedBox(height: Dimensions.h20),
+            _buildSignInForm(),
+            SizedBox(height: Dimensions.h20),
+          ],
         ),
       ),
     );
   }
 
   _buildMobileNumberField() {
-    return Row(
-      children: [
-        // Container(
-        //   height: Dimensions.h40,
-        //   padding: EdgeInsets.zero,
-        //   decoration: BoxDecoration(
-        //     color: AppColors.grey.withOpacity(0.2),
-        //     borderRadius: BorderRadius.all(
-        //       Radius.circular(Dimensions.r10),
-        //     ),
-        //   ),
-        //   child: CountryListPick(
-        //     appBar: AppBar(
-        //       backgroundColor: AppColors.appbarColor,
-        //       title: const Text('Choose your country code'),
-        //     ),
-        //     pickerBuilder: (context, code) {
-        //       return Padding(
-        //         padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
-        //         child: Row(
-        //           children: [
-        //             Text(
-        //               code != null ? code.dialCode ?? "+91" : "91",
-        //               style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-        //                 color: AppColors.appbarColor,
-        //                 fontSize: Dimensions.h15,
-        //               ),
-        //             ),
-        //             Padding(
-        //               padding: EdgeInsets.only(
-        //                 left: Dimensions.w7,
-        //               ),
-        //               child: SvgPicture.asset(
-        //                 ConstantImage.dropDownArrowSVG,
-        //                 color: AppColors.appbarColor,
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     },
-        //     theme: CountryTheme(
-        //       isShowFlag: false,
-        //       isShowTitle: false,
-        //       isShowCode: true,
-        //       isDownIcon: true,
-        //       showEnglishName: true,
-        //       alphabetSelectedTextColor: AppColors.white,
-        //       labelColor: AppColors.black,
-        //       alphabetTextColor: AppColors.green,
-        //     ),
-        //     initialSelection: '+91',
-        //     onChanged: (code) {
-        //       String tempCountryCode =
-        //           code != null ? code.dialCode ?? "+91" : "91";
-        //       controller.onChangeCountryCode(tempCountryCode);
-        //     },
-        //     useUiOverlay: true,
-        //     useSafeArea: false,
-        //   ),
-        // ),
-        // SizedBox(
-        //   width: Dimensions.w9,
-        // ),
-        Expanded(
-          child: RoundedCornerEditTextWithIcon(
-            height: Dimensions.h40,
-            controller: controller.mobileNumberController,
-            keyboardType: TextInputType.phone,
-            hintText: "ENTERMOBILENUMBER".tr,
-            imagePath: ConstantImage.phoneSVG,
-            autofocus: true,
-            onChanged: (v) {
-              if (v?.length == 10) {
-                controller.focusNode1.unfocus();
-                controller.focusNode2.requestFocus();
-                controller.cursorTimer?.cancel();
-                controller.cursorTimer = Timer(const Duration(milliseconds: 50), () {
-                  controller.mobileNumberController.selection = TextSelection.fromPosition(
-                    TextPosition(offset: controller.mobileNumberController.text.length),
-                  );
-                });
-              }
-            },
-            hintTextStyle: CustomTextStyle.textRobotoSansLight.copyWith(
-              color: AppColors.grey,
-              fontSize: Dimensions.h14,
-            ),
-            textStyle: CustomTextStyle.textRobotoSansLight.copyWith(
-              fontSize: Dimensions.h16,
-            ),
-            maxLines: 1,
-            focusNode: controller.focusNode1,
-            minLines: 1,
-            isEnabled: true,
-            maxLength: 10,
-            formatter: [FilteringTextInputFormatter.digitsOnly],
-          ),
-        ),
-      ],
+    return RoundedCornerEditTextWithIcon(
+      height: Dimensions.h40,
+      controller: controller.mobileNumberController,
+      keyboardType: TextInputType.phone,
+      hintText: "ENTERMOBILENUMBER".tr,
+      imagePath: ConstantImage.phoneSVG,
+      autofocus: true,
+      onChanged: (v) {
+        if (v?.length == 10) {
+          controller.focusNode1.unfocus();
+          controller.focusNode2.requestFocus();
+          controller.cursorTimer?.cancel();
+          controller.cursorTimer = Timer(const Duration(milliseconds: 50), () {
+            controller.mobileNumberController.selection = TextSelection.fromPosition(
+              TextPosition(offset: controller.mobileNumberController.text.length),
+            );
+          });
+        }
+      },
+      hintTextStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+        color: AppColors.grey,
+        fontSize: Dimensions.h14,
+      ),
+      textStyle: CustomTextStyle.textRobotoSansLight.copyWith(
+        fontSize: Dimensions.h16,
+      ),
+      maxLines: 1,
+      focusNode: controller.focusNode1,
+      minLines: 1,
+      isEnabled: true,
+      maxLength: 10,
+      formatter: [FilteringTextInputFormatter.digitsOnly],
     );
   }
 
@@ -191,32 +115,12 @@ class SignInScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: _buildMobileNumberField(),
             ),
-            verticalSpace,
+            SizedBox(height: Dimensions.h20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: _buildPasswordField(),
             ),
-            verticalSpace,
-            // GestureDetector(
-            //   // onTap: () {},
-            //   onTap: () =>
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: const [
-            //       Text(
-            //         "Forgot Password?",
-            //         style: TextStyle(fontWeight: FontWeight.w500),
-            //         // "${"FORGOTPASSWORD".tr}?",
-            //         // style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-            //         //   fontSize: Dimensions.h12,
-            //         //   letterSpacing: 1,
-            //         //   color: AppColors.black,
-            //         // ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
+            SizedBox(height: Dimensions.h20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
               child: RoundedCornerButton(
@@ -257,23 +161,6 @@ class SignInScreen extends StatelessWidget {
                 width: double.infinity,
               ),
             ),
-            // GestureDetector(
-            //   onTap: () => Get.offAllNamed(AppRoutName.signUnPage),
-            //   child: Container(
-            //     padding:
-            //         const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
-            //     child: Text(
-            //       "Don’t Have an Account? Register here.".tr,
-            //       textAlign: TextAlign.center,
-            //       style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-            //         fontSize: Dimensions.h12,
-            //         letterSpacing: 1,
-            //         height: 1.5,
-            //         color: AppColors.black,
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -332,157 +219,3 @@ class SignInScreen extends StatelessWidget {
     );
   }
 }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Center(
-//             child: Text(
-//               "LOGIN",
-//               style: TextStyle(
-//                   fontSize: 25,
-//                   color: Color.fromARGB(255, 42, 90, 173),
-//                   fontWeight: FontWeight.bold),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 25,
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               Container(
-//                 decoration: BoxDecoration(
-//                     color: Color.fromARGB(255, 243, 240, 240),
-//                     borderRadius: BorderRadius.circular(8.0)),
-//                 child: DropdownButton<String>(
-//                   icon: Icon(Icons.arrow_drop_down_outlined),
-//                   elevation: 0,
-//                   underline: Container(),
-//                   dropdownColor: Color.fromARGB(255, 243, 240, 240),
-//                   borderRadius: BorderRadius.circular(8.0),
-//                   value: null,
-//                   hint: Padding(
-//                     padding: const EdgeInsets.fromLTRB(17, 0, 0, 0),
-//                     child: Text(' +91'),
-//                   ),
-//                   onChanged: (value) {},
-//                   items: [
-//                     DropdownMenuItem<String>(
-//                       value: 'Option 1',
-//                       child: Text('Option 1'),
-//                     ),
-//                     DropdownMenuItem<String>(
-//                       value: 'Option 2',
-//                       child: Text('Option 2'),
-//                     ),
-//                     DropdownMenuItem<String>(
-//                       value: 'Option 3',
-//                       child: Text('Option 3'),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 50,
-//                 width: 220,
-//                 child: TextField(
-//                   decoration: InputDecoration(
-//                       fillColor: Color.fromARGB(255, 243, 240, 240),
-//                       filled: true,
-//                       border: OutlineInputBorder(
-//                           borderRadius: BorderRadius.circular(8.0),
-//                           borderSide: BorderSide.none),
-//                       prefixIcon: Icon(
-//                         Icons.phone,
-//                         color:
-//                             Color.fromARGB(255, 42, 90, 173).withOpacity(0.7),
-//                       ),
-//                       hintText: 'Enter Mobile Number',
-//                       hintStyle: TextStyle(color: Colors.grey)),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           SizedBox(
-//             height: 17,
-//           ),
-//           Container(
-//             height: 55,
-//             child: Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 25),
-//               child: TextField(
-//                 decoration: InputDecoration(
-//                     fillColor: Color.fromARGB(255, 243, 240, 240),
-//                     filled: true,
-//                     border: OutlineInputBorder(
-//                         borderRadius: BorderRadius.circular(8.0),
-//                         borderSide: BorderSide.none),
-//                     prefixIcon: Icon(
-//                       Icons.lock,
-//                       color: Color.fromARGB(255, 42, 90, 173).withOpacity(0.7),
-//                     ),
-//                     hintText: 'Enter Password',
-//                     suffixIcon:
-//                         Icon(Icons.remove_red_eye, color: Colors.blueGrey),
-//                     hintStyle: TextStyle(color: Colors.grey)),
-//               ),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 15,
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.fromLTRB(225, 0, 0, 0),
-//             child: Text(
-//               "Forgot Password?",
-//               style: TextStyle(
-//                 color: Color.fromARGB(255, 42, 90, 173),
-//               ),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 17,
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(
-//               horizontal: 35,
-//             ),
-//             child: InkWell(
-//               onTap: () {},
-//               child: Container(
-//                 width: double.infinity,
-//                 height: 45,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(10),
-//                   color: Color.fromARGB(255, 42, 90, 173),
-//                 ),
-//                 child: Center(
-//                   child: Text(
-//                     'Login',
-//                     style: TextStyle(
-//                       fontSize: 17,
-//                       color: Colors.white,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 20,
-//           ),
-//           Text(
-//             "Don't Have an Account? Register here.",
-//             style: TextStyle(
-//                 color: Color.fromARGB(255, 42, 90, 173), fontSize: 17),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

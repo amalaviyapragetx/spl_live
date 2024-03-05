@@ -31,7 +31,10 @@ class PassBook extends StatelessWidget {
                   SizedBox(width: Dimensions.w15),
                   Text(
                     "Passbook",
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                      fontSize: Dimensions.h20,
+                      color: AppColors.white,
+                    ),
                   ),
                   const Expanded(child: SizedBox()),
                   GestureDetector(

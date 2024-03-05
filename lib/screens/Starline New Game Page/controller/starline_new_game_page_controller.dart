@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../api_services/api_urls.dart';
@@ -17,7 +20,6 @@ import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
 import '../../../routes/app_routes_name.dart';
-import '../../Local Storage.dart';
 
 class StarlineNewGamePageController extends GetxController {
   Rx<StarLineGameMod> gameMode = StarLineGameMod().obs;
@@ -151,9 +153,7 @@ class StarlineNewGamePageController extends GetxController {
         );
       }
     } else if (gameMode.value.name == "SPDPTP") {
-      if (spValue1.value == false &&
-          dpValue2.value == false &&
-          tpValue3.value == false) {
+      if (spValue1.value == false && dpValue2.value == false && tpValue3.value == false) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please select SP,DP or TP",
         );
@@ -227,15 +227,13 @@ class StarlineNewGamePageController extends GetxController {
   onTapAddOddEven() {
     for (var i = 0; i < 10; i++) {
       var bidNo = i.toString();
-      var existingIndex =
-          selectedBidsList.indexWhere((element) => element.bidNo == bidNo);
+      var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == bidNo);
       var coins = int.parse(coinController.text);
       if (oddbool.value) {
         if (i % 2 != 0) {
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
-            selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! + coins);
+            selectedBidsList[existingIndex].coins = (selectedBidsList[existingIndex].coins! + coins);
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
             selectedBidsList.insert(
@@ -244,8 +242,7 @@ class StarlineNewGamePageController extends GetxController {
                 bidNo: bidNo,
                 coins: coins,
                 starlineGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketData.value.time} on $bidNo (${gameMode.value.name})",
+                remarks: "You invested At ${marketData.value.time} on $bidNo (${gameMode.value.name})",
               ),
             );
           }
@@ -265,8 +262,7 @@ class StarlineNewGamePageController extends GetxController {
         if (i % 2 == 0) {
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
-            selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! + coins);
+            selectedBidsList[existingIndex].coins = (selectedBidsList[existingIndex].coins! + coins);
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
             selectedBidsList.insert(
@@ -275,8 +271,7 @@ class StarlineNewGamePageController extends GetxController {
                 bidNo: bidNo,
                 coins: coins,
                 starlineGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketData.value.time} on $bidNo (${gameMode.value.name})",
+                remarks: "You invested At ${marketData.value.time} on $bidNo (${gameMode.value.name})",
               ),
             );
           }
@@ -303,9 +298,7 @@ class StarlineNewGamePageController extends GetxController {
 
   RxList<StarLineGameMod> gameModesList = <StarLineGameMod>[].obs;
   void createMarketBidApi() async {
-    ApiService()
-        .createStarLineMarketBid(requestModel.value.toJson())
-        .then((value) async {
+    ApiService().createStarLineMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
         selectedBidsList.clear();
         Get.offAllNamed(
@@ -328,13 +321,11 @@ class StarlineNewGamePageController extends GetxController {
             bodyText: value['message'] ?? "",
           );
         } else {
-          AppUtils.showSuccessSnackBar(
-              bodyText: value['message'] ?? "",
-              headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }
-        LocalStorage.remove(ConstantsVariables.bidsList);
-        LocalStorage.remove(ConstantsVariables.marketName);
-        LocalStorage.remove(ConstantsVariables.biddingType);
+        GetStorage().remove(ConstantsVariables.bidsList);
+        GetStorage().remove(ConstantsVariables.marketName);
+        GetStorage().remove(ConstantsVariables.biddingType);
         final walletController = Get.find<WalletController>();
         walletController.getUserBalance();
         walletController.walletBalance.refresh();
@@ -347,8 +338,7 @@ class StarlineNewGamePageController extends GetxController {
   }
 
   Future<void> loadJsonFile() async {
-    final String response =
-        await rootBundle.loadString('assets/JSON File/digit_file.json');
+    final String response = await rootBundle.loadString('assets/JSON File/digit_file.json');
     final data = await json.decode(response);
     jsonModel = JsonFileModel.fromJson(data);
   }
@@ -363,7 +353,7 @@ class StarlineNewGamePageController extends GetxController {
 
     _calculateTotalAmount();
     requestModel.value.dailyStarlineMarketId = marketData.value.id;
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    var data = await GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
 
@@ -550,8 +540,7 @@ class StarlineNewGamePageController extends GetxController {
         coinController.clear();
         selectedBidsList.refresh();
         focusNode.previousFocus();
-      } else if (coinController.text.trim().isEmpty ||
-          int.parse(coinController.text.trim()) < 1) {
+      } else if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid points",
         );
@@ -569,13 +558,11 @@ class StarlineNewGamePageController extends GetxController {
         focusNode.previousFocus();
       } else {
         if (spdptpList.isEmpty) {
-          var existingIndex = selectedBidsList
-              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
             selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! +
-                    int.parse(coinController.text));
+                (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
             selectedBidsList.insert(
@@ -584,19 +571,16 @@ class StarlineNewGamePageController extends GetxController {
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
                 starlineGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
+                remarks: "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
               ),
             );
           }
         } else {
-          var existingIndex = selectedBidsList
-              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
             selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! +
-                    int.parse(coinController.text));
+                (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
             selectedBidsList.insert(
@@ -605,8 +589,7 @@ class StarlineNewGamePageController extends GetxController {
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
                 starlineGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
+                remarks: "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
               ),
             );
           }
@@ -631,8 +614,7 @@ class StarlineNewGamePageController extends GetxController {
           bodyText: "Please enter ${gameMode.value.name!.toLowerCase()}",
         );
         return;
-      } else if (coinController.text.isEmpty ||
-          int.parse(coinController.text.trim()) < 1) {
+      } else if (coinController.text.isEmpty || int.parse(coinController.text.trim()) < 1) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid points",
         );
@@ -646,13 +628,11 @@ class StarlineNewGamePageController extends GetxController {
         selectedBidsList.refresh();
         focusNode.previousFocus();
       } else {
-        var existingIndex = selectedBidsList
-            .indexWhere((element) => element.bidNo == addedNormalBidValue);
+        var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
         if (existingIndex != -1) {
           // If the bidNo already exists in selectedBidsList, update coins value.
           selectedBidsList[existingIndex].coins =
-              (selectedBidsList[existingIndex].coins! +
-                  int.parse(coinController.text));
+              (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
         } else {
           // If bidNo doesn't exist in selectedBidsList, add a new entry.
           selectedBidsList.insert(
@@ -661,8 +641,7 @@ class StarlineNewGamePageController extends GetxController {
               bidNo: addedNormalBidValue,
               coins: int.parse(coinController.text),
               starlineGameId: gameMode.value.id,
-              remarks:
-                  "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
+              remarks: "You invested At ${marketData.value.time} on $addedNormalBidValue (${gameMode.value.name})",
             ),
           );
         }
@@ -728,20 +707,17 @@ class StarlineNewGamePageController extends GetxController {
       case "Panel Group":
         return getPanelGroupPana(int.parse(autoCompleteFieldController.text));
       case "SPDPTP":
-        return getSPDPTPPana(
-            int.parse(autoCompleteFieldController.text.removeAllWhitespace));
+        return getSPDPTPPana(int.parse(autoCompleteFieldController.text.removeAllWhitespace));
       // case "Choice Pana SPDP":
       //   return groupJodi(autoCompleteFieldController.text.removeAllWhitespace);
       case "Two Digits Panel":
-        return getTwoDigitPanelPana(
-            int.parse(autoCompleteFieldController.text.removeAllWhitespace));
+        return getTwoDigitPanelPana(int.parse(autoCompleteFieldController.text.removeAllWhitespace));
       default:
     }
   }
 
   List<String> getTwoDigitPanelPana(int inputNumber) {
-    List<int> inputDigits =
-        inputNumber.toString().split('').map(int.parse).toList();
+    List<int> inputDigits = inputNumber.toString().split('').map(int.parse).toList();
 
     bool containsBothInputDigits(String num) {
       String numStr = num.toString();
@@ -752,8 +728,7 @@ class StarlineNewGamePageController extends GetxController {
   }
 
   void newCallOnAddButton() {
-    if (coinController.text.trim().isEmpty ||
-        int.parse(coinController.text.trim()) < 1) {
+    if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
       AppUtils.showErrorSnackBar(
         bodyText: "Please enter valid points",
       );
@@ -782,13 +757,11 @@ class StarlineNewGamePageController extends GetxController {
       } else {
         for (var i = 0; i < spdptpList.length; i++) {
           addedNormalBidValue = spdptpList[i].toString();
-          var existingIndex = selectedBidsList
-              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
             selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! +
-                    int.parse(coinController.text));
+                (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
           } else {
             // If bidNo doesn't exist in selectedBidsList, add a new entry.
             selectedBidsList.insert(
@@ -797,8 +770,7 @@ class StarlineNewGamePageController extends GetxController {
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
                 starlineGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
+                remarks: "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
               ),
             );
           }
@@ -814,9 +786,7 @@ class StarlineNewGamePageController extends GetxController {
 
   void getspdptp() async {
     if (gameMode.value.name == "Choice Pana SPDP") {
-      if (spValue1.value == false &&
-          dpValue2.value == false &&
-          tpValue3.value == false) {
+      if (spValue1.value == false && dpValue2.value == false && tpValue3.value == false) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please select SP,DP or TP",
         );
@@ -827,8 +797,7 @@ class StarlineNewGamePageController extends GetxController {
 
         //     if (value['status']) {
         //       spdptpList = value['data'];
-        if (coinController.text.trim().isEmpty ||
-            int.parse(coinController.text.trim()) < 1) {
+        if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
           AppUtils.showErrorSnackBar(
             bodyText: "Please enter valid points",
           );
@@ -849,8 +818,7 @@ class StarlineNewGamePageController extends GetxController {
         } else {
           if (spdptpList.isEmpty) {
             AppUtils.showErrorSnackBar(
-              bodyText:
-                  "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+              bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
             );
             autoCompleteFieldController.clear();
             coinController.clear();
@@ -860,13 +828,11 @@ class StarlineNewGamePageController extends GetxController {
           } else {
             for (var i = 0; i < spdptpList.length; i++) {
               addedNormalBidValue = spdptpList[i].toString();
-              var existingIndex = selectedBidsList.indexWhere(
-                  (element) => element.bidNo == addedNormalBidValue);
+              var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
               if (existingIndex != -1) {
                 // If the bidNo already exists in selectedBidsList, update coins value.
                 selectedBidsList[existingIndex].coins =
-                    (selectedBidsList[existingIndex].coins! +
-                        int.parse(coinController.text));
+                    (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
               } else {
                 // If bidNo doesn't exist in selectedBidsList, add a new entry.
                 selectedBidsList.insert(
@@ -875,8 +841,7 @@ class StarlineNewGamePageController extends GetxController {
                     bidNo: addedNormalBidValue,
                     coins: int.parse(coinController.text),
                     starlineGameId: gameMode.value.id,
-                    remarks:
-                        "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
+                    remarks: "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
                   ),
                 );
               }
@@ -905,8 +870,7 @@ class StarlineNewGamePageController extends GetxController {
         (value) async {
           if (value['status']) {
             spdptpList = value['data'];
-            if (coinController.text.trim().isEmpty ||
-                int.parse(coinController.text.trim()) < 1) {
+            if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
               AppUtils.showErrorSnackBar(
                 bodyText: "Please enter valid points",
               );
@@ -925,8 +889,7 @@ class StarlineNewGamePageController extends GetxController {
             } else {
               if (spdptpList.isEmpty) {
                 AppUtils.showErrorSnackBar(
-                  bodyText:
-                      "Please enter valid ${gameMode.value.name!.toLowerCase()}",
+                  bodyText: "Please enter valid ${gameMode.value.name!.toLowerCase()}",
                 );
                 autoCompleteFieldController.clear();
                 coinController.clear();
@@ -935,13 +898,11 @@ class StarlineNewGamePageController extends GetxController {
               } else {
                 for (var i = 0; i < spdptpList.length; i++) {
                   addedNormalBidValue = spdptpList[i].toString();
-                  var existingIndex = selectedBidsList.indexWhere(
-                      (element) => element.bidNo == addedNormalBidValue);
+                  var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
                   if (existingIndex != -1) {
                     // If the bidNo already exists in selectedBidsList, update coins value.
                     selectedBidsList[existingIndex].coins =
-                        (selectedBidsList[existingIndex].coins! +
-                            int.parse(coinController.text));
+                        (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
                   } else {
                     // If bidNo doesn't exist in selectedBidsList, add a new entry.
                     selectedBidsList.insert(
@@ -989,8 +950,7 @@ class StarlineNewGamePageController extends GetxController {
 
     //   if (value['status']) {
     //     spdptpList = value['data'];
-    if (coinController.text.trim().isEmpty ||
-        int.parse(coinController.text.trim()) < 1) {
+    if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
       AppUtils.showErrorSnackBar(
         bodyText: "Please enter valid points",
       );
@@ -1014,12 +974,10 @@ class StarlineNewGamePageController extends GetxController {
       } else {
         for (var i = 0; i < spdptpList.length; i++) {
           addedNormalBidValue = spdptpList[i].toString();
-          var existingIndex = selectedBidsList
-              .indexWhere((element) => element.bidNo == addedNormalBidValue);
+          var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
           if (existingIndex != -1) {
             selectedBidsList[existingIndex].coins =
-                (selectedBidsList[existingIndex].coins! +
-                    int.parse(coinController.text));
+                (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
           } else {
             selectedBidsList.insert(
               0,
@@ -1027,8 +985,7 @@ class StarlineNewGamePageController extends GetxController {
                 bidNo: addedNormalBidValue,
                 coins: int.parse(coinController.text),
                 starlineGameId: gameMode.value.id,
-                remarks:
-                    "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
+                remarks: "You invested At ${marketData.value.time} on ${spdptpList[i]} (${gameMode.value.name})",
               ),
             );
           }

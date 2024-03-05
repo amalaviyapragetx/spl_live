@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
@@ -15,13 +14,7 @@ import 'controller/user_details_page_controller.dart';
 
 class UserDetailsPage extends StatelessWidget {
   UserDetailsPage({Key? key}) : super(key: key);
-
   final controller = Get.find<UserDetailsPageController>();
-
-  final verticalSpace = SizedBox(
-    height: Dimensions.h15,
-  );
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -38,87 +31,72 @@ class UserDetailsPage extends StatelessWidget {
             false;
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
         backgroundColor: AppColors.white,
-        body: SafeArea(
+        body: SingleChildScrollView(
           child: Padding(
-            padding:
-                EdgeInsets.only(left: Dimensions.h15, right: Dimensions.h15),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
-                  Center(
-                    child: SizedBox(
-                      height: Dimensions.h70,
-                      width: Dimensions.w150,
-                      child: Image.asset(
-                        ConstantImage.splLogo,
-                        fit: BoxFit.contain,
-                      ),
+            padding: EdgeInsets.only(left: Dimensions.h15, right: Dimensions.h15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: Get.height * 0.2),
+                Center(
+                  child: SizedBox(
+                    height: Dimensions.h70,
+                    width: Dimensions.w150,
+                    child: Image.asset(
+                      ConstantImage.splLogo,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  verticalSpace,
-                  Text(
-                    "SIGN UP".tr,
-                    style: CustomTextStyle.textRobotoSlabBold.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: Dimensions.h25,
-                      letterSpacing: 1,
-                      color: AppColors.appbarColor,
-                    ),
+                ),
+                SizedBox(height: Dimensions.h15),
+                Text(
+                  "SIGN UP".tr,
+                  style: CustomTextStyle.textRobotoSlabBold.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.h25,
+                    letterSpacing: 1,
+                    color: AppColors.appbarColor,
                   ),
-                  verticalSpace,
-                  _buildNormalField(
-                    hintText: "Enter Full Name".tr,
-                    textController: controller.fullNameController,
-                    maxLength: 100,
-                    keyboardType: TextInputType.text,
-                    autofocus: true,
-                    formatter: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^[a-zA-Z\s]+$'))
-                    ],
-                    //focusNode: controller.fullNameFocusNode,
-                  ),
-                  verticalSpace,
-                  _buildNormalField(
-                    hintText: "Enter User Name".tr,
-                    textController: controller.userNameController,
-                    maxLength: 100,
-                    keyboardType: TextInputType.text,
-                    formatter: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^[a-zA-Z0-9\s]+$'))
-                    ],
-                    //  focusNode: controller.userNameFocusNode,
-                  ),
-                  verticalSpace,
-                  _buildPasswordField(
-                    hintText: "Enter Password".tr,
-                    textController: controller.passwordController,
-                    visibility: controller.pVisibility,
-                  ),
-                  verticalSpace,
-                  _buildPasswordField(
-                    hintText: "Enter Confirm Password".tr,
-                    textController: controller.confirmPasswordController,
-                    visibility: controller.cpVisibility,
-                  ),
-                  verticalSpace,
-                  _buildSignUpButtonRow(),
-                  verticalSpace,
-                  _buildCreateAccount(),
-                ],
-              ),
+                ),
+                SizedBox(height: Dimensions.h15),
+                _buildNormalField(
+                  hintText: "Enter Full Name".tr,
+                  textController: controller.fullNameController,
+                  maxLength: 100,
+                  keyboardType: TextInputType.text,
+                  autofocus: true,
+                  formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]+$'))],
+                  //focusNode: controller.fullNameFocusNode,
+                ),
+                SizedBox(height: Dimensions.h15),
+                _buildNormalField(
+                  hintText: "Enter User Name".tr,
+                  textController: controller.userNameController,
+                  maxLength: 100,
+                  keyboardType: TextInputType.text,
+                  formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))],
+                  //  focusNode: controller.userNameFocusNode,
+                ),
+                SizedBox(height: Dimensions.h15),
+                _buildPasswordField(
+                  hintText: "Enter Password".tr,
+                  textController: controller.passwordController,
+                  visibility: controller.pVisibility,
+                ),
+                SizedBox(height: Dimensions.h15),
+                _buildPasswordField(
+                  hintText: "Enter Confirm Password".tr,
+                  textController: controller.confirmPasswordController,
+                  visibility: controller.cpVisibility,
+                ),
+                SizedBox(height: Dimensions.h15),
+                _buildSignUpButtonRow(),
+                SizedBox(height: Dimensions.h15),
+                _buildCreateAccount(),
+                SizedBox(height: Get.height * 0.2),
+              ],
             ),
           ),
         ),
@@ -126,15 +104,13 @@ class UserDetailsPage extends StatelessWidget {
     );
   }
 
-  AlertDialog onExitAlert(BuildContext context,
-      {required Function() onExit, required Function() onCancel}) {
+  AlertDialog onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
     return AlertDialog(
       title: Text(
         'Exit App',
         style: CustomTextStyle.textRobotoSansBold,
       ),
-      content: Text('Are you sure you want to exit the app?',
-          style: CustomTextStyle.textRobotoSansMedium),
+      content: Text('Are you sure you want to exit the app?', style: CustomTextStyle.textRobotoSansMedium),
       actions: [
         TextButton(
           onPressed: onCancel,

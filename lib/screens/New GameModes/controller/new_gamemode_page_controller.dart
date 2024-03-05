@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -21,7 +22,6 @@ import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/daily_market_api_response_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
 import '../../../models/new_game_model.dart';
-import '../../Local Storage.dart';
 import '../../home_screen/controller/homepage_controller.dart';
 
 class NewGamemodePageController extends GetxController {
@@ -112,11 +112,6 @@ class NewGamemodePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getArguments();
-    focusNode = FocusNode();
-  }
-
-  void getArguments() async {
     gameModeList = argument['gameModeList'];
     marketValue.value = argument['marketValue'];
     // marketValue.value = argument['marketValue'];
@@ -125,16 +120,20 @@ class NewGamemodePageController extends GetxController {
     marketName.value = argument['marketName'];
     marketId = argument['marketId'];
     isBulkMode.value = argument['isBulkMode'];
+    update();
+    focusNode = FocusNode();
+  }
+
+  void getArguments() async {
+    await loadJsonFile();
     // marketData.value = argument['marketData'];
     // requestModel.value.dailyMarketId = marketData.value.id;
     requestModel.value.bidType = bidType;
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
     requestModel.value.bidType = biddingType.value;
     requestModel.value.dailyMarketId = marketId;
-
-    await loadJsonFile();
     RxBool showNumbersLine = false.obs;
     RxList<String> suggestionList = <String>[].obs;
     List<String> tempValidationList = [];
@@ -599,9 +598,9 @@ class NewGamemodePageController extends GetxController {
             walletController.getUserBalance();
             walletController.walletBalance.refresh();
           }
-          LocalStorage.remove(ConstantsVariables.bidsList);
-          LocalStorage.remove(ConstantsVariables.marketName);
-          LocalStorage.remove(ConstantsVariables.biddingType);
+          GetStorage().remove(ConstantsVariables.bidsList);
+          GetStorage().remove(ConstantsVariables.marketName);
+          GetStorage().remove(ConstantsVariables.biddingType);
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }

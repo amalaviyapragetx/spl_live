@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
 import '../../../Custom Controllers/wallet_controller.dart';
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/app_colors.dart';
@@ -12,7 +14,6 @@ import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
 import '../../../routes/app_routes_name.dart';
-import '../../Local Storage.dart';
 
 class StarlineBidsController extends GetxController {
   Rx<StarlineBidRequestModel> requestModel = StarlineBidRequestModel().obs;
@@ -25,7 +26,7 @@ class StarlineBidsController extends GetxController {
   @override
   void onInit() async {
     getArguments();
-    await LocalStorage.write(ConstantsVariables.starlineConnect, true);
+    GetStorage().write(ConstantsVariables.starlineConnect, true);
     super.onInit();
   }
 
@@ -37,35 +38,30 @@ class StarlineBidsController extends GetxController {
     }
   }
 
-  showData() async {
-    bidList.value =
-        await LocalStorage.read(ConstantsVariables.starlineBidsList);
-
+  showData() {
+    bidList.value = GetStorage().read(ConstantsVariables.starlineBidsList);
   }
 
-  void playMore() async {
-    await LocalStorage.write(
-        ConstantsVariables.starlineBidsList, requestModel.value.bids);
-    Get.offAndToNamed(
-      AppRoutName.starLineGameModesPage,
-    );
+  void playMore() {
+    GetStorage().write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
+    Get.offAndToNamed(AppRoutName.starLineGameModesPage);
   }
 
   Future<void> getArguments() async {
     showData();
-    
+
     gameMode.value = arguments['gameMode'];
     marketData.value = arguments['marketData'];
     requestModel.value.bids = arguments['bidsList'];
     requestModel.refresh();
     _calculateTotalAmount();
     requestModel.value.dailyStarlineMarketId = marketData.value.id;
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    var data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    
-    // await LocalStorage.write(ConstantsVariables.playMore, false);
-    // var hh = await LocalStorage.read(ConstantsVariables.playMore);
+
+    // GetStorage().write(ConstantsVariables.playMore, false);
+    // var hh = GetStorage().read(ConstantsVariables.playMore);
     // print("playMore $hh");
   }
 
@@ -135,10 +131,7 @@ class StarlineBidsController extends GetxController {
   }
 
   void createMarketBidApi() async {
-    ApiService()
-        .createStarLineMarketBid(requestModel.value.toJson())
-        .then((value) async {
-
+    ApiService().createStarLineMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
         Get.offAllNamed(
           AppRoutName.starLineGameModesPage,
@@ -155,13 +148,11 @@ class StarlineBidsController extends GetxController {
             bodyText: value['message'] ?? "",
           );
         } else {
-          AppUtils.showSuccessSnackBar(
-              bodyText: value['message'] ?? "",
-              headerText: "SUCCESSMESSAGE".tr);
+          AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }
-        LocalStorage.remove(ConstantsVariables.bidsList);
-        LocalStorage.remove(ConstantsVariables.marketName);
-        LocalStorage.remove(ConstantsVariables.biddingType);
+        GetStorage().remove(ConstantsVariables.bidsList);
+        GetStorage().remove(ConstantsVariables.marketName);
+        GetStorage().remove(ConstantsVariables.biddingType);
         requestModel.value.bids?.clear();
         final walletController = Get.find<WalletController>();
         walletController.getUserBalance();

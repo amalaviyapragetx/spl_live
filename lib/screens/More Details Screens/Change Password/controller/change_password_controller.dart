@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/constant_variables.dart';
 import '../../../../models/commun_models/user_details_model.dart';
-import '../../../Local Storage.dart';
 
 class ChangepasswordPageController extends GetxController {
   // final password = TextEditingController().obs;
@@ -133,7 +133,7 @@ class ChangepasswordPageController extends GetxController {
   }
 
   Future<dynamic> fetchSavedData() async {
-    var userData = await LocalStorage.read(ConstantsVariables.userData);
+    final userData = GetStorage().read(ConstantsVariables.userData);
     userDetailsModel = UserDetailsModel.fromJson(userData);
   }
 }
@@ -218,7 +218,7 @@ class ChangepasswordPageController extends GetxController {
 //   }
 
 //   Future<dynamic> fetchSavedData() async {
-//     var userData = await LocalStorage.read(ConstantsVariables.userData);
+//     var userData = GetStorage().read(ConstantsVariables.userData);
 //     userDetailsModel = UserDetailsModel.fromJson(userData);
 //     print("Get User Data ***********************${userDetailsModel.toJson()}");
 //   }

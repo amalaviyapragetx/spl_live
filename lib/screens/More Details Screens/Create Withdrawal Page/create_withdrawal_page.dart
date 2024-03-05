@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Create%20Withdrawal%20Page/controller/create_withdrawal_page_controller.dart';
+
 import '../../../components/edit_text_field_with_icon.dart';
 import '../../../components/simple_button_with_corner.dart';
 import '../../../helper_files/app_colors.dart';
@@ -17,28 +18,14 @@ class CreatewithDrawalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var verticalSpace = SizedBox(
-      height: Dimensions.h10,
-    );
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
         appBarTitle: "Request Admin",
-        //leading: Container(),
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: InkWell(
-              onTap: () {
-                _showExitDialog();
-                // await showDialog(
-                //   barrierDismissible: false,
-                //   context: context,
-                //   builder: (context) => onExitAlert(context, onCancel: () {
-                //     Navigator.of(context).pop(false);
-                //   }),
-                // );
-                //  AppUtils.showErrorSnackBar(bodyText: "SNACKMSG_TEXT".tr);
-              },
+              onTap: () => _showExitDialog(),
               child: Icon(
                 Icons.note_alt_rounded,
                 color: AppColors.white,
@@ -55,7 +42,7 @@ class CreatewithDrawalPage extends StatelessWidget {
             child: Obx(
               () => Column(
                 children: [
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h10),
                   Row(
                     children: [
                       Expanded(
@@ -74,25 +61,13 @@ class CreatewithDrawalPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  verticalSpace,
-                  listTileDetails(
-                    text: "BANK_TEXT".tr,
-                    value: controller.bankName.value,
-                  ),
-                  listTileDetails(
-                    text: "ACNAME_TEXT".tr,
-                    value: controller.accountName.value,
-                  ),
-                  listTileDetails(
-                    text: "ACNO_TEXT".tr,
-                    value: controller.accountNumber.value,
-                  ),
-                  listTileDetails(
-                    text: "IFSC_TEXT".tr,
-                    value: controller.ifcsCode.value,
-                  ),
-                  verticalSpace,
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h10),
+                  listTileDetails(text: "BANK_TEXT".tr, value: controller.bankName.value),
+                  listTileDetails(text: "ACNAME_TEXT".tr, value: controller.accountName.value),
+                  listTileDetails(text: "ACNO_TEXT".tr, value: controller.accountNumber.value),
+                  listTileDetails(text: "IFSC_TEXT".tr, value: controller.ifcsCode.value),
+                  SizedBox(height: Dimensions.h10),
+                  SizedBox(height: Dimensions.h10),
                   controller.bankName.value != ""
                       ? Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40.0),
@@ -115,32 +90,26 @@ class CreatewithDrawalPage extends StatelessWidget {
                           ),
                         )
                       : Container(),
-                  verticalSpace,
-                  verticalSpace,
-                  verticalSpace,
+                  SizedBox(height: Dimensions.h30),
                   Obx(
-                    () => controller.bankName.value == "" ||
-                            controller.bankName.value.isEmpty
+                    () => controller.bankName.value == "" || controller.bankName.value.isEmpty
                         ? SizedBox(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "To Add Bank Detaiils ",
-                                  style: CustomTextStyle.textRobotoSansMedium
-                                      .copyWith(
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                     fontSize: Dimensions.h13,
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Get.offAndToNamed(
-                                        AppRoutName.myAccountPage);
+                                    Get.offAndToNamed(AppRoutName.myAccountPage);
                                   },
                                   child: Text(
                                     "Click Here",
-                                    style: CustomTextStyle.textRobotoSansMedium
-                                        .copyWith(
+                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                       fontSize: Dimensions.h13,
                                       color: AppColors.redColor,
                                       decoration: TextDecoration.underline,
@@ -168,9 +137,7 @@ class CreatewithDrawalPage extends StatelessWidget {
       onWillPop: () async => false,
       titleStyle: CustomTextStyle.textRobotoSansMedium,
       content: Column(
-        children: [
-          Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)
-        ],
+        children: [Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)],
       ),
       actions: [
         InkWell(

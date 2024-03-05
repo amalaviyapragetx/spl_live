@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/screens/Local%20Storage.dart';
 
 import 'helper_files/app_colors.dart';
 import 'helper_files/constant_variables.dart';
@@ -27,7 +27,6 @@ class InactivityController extends GetxController {
   void _resetInactivityTimer() {
     _inactivityTimer?.cancel();
     _inactivityTimer = Timer(_inactivityDuration, () {
-      // Navigate to the home screen or do other actions
       _showExitDialog();
     });
   }
@@ -39,9 +38,9 @@ class InactivityController extends GetxController {
   ifUserLogedIn() async {
     bool alreadyLoggedIn = await getStoredUserData();
 
-    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
+    bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
+    bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
+    bool userLogin = GetStorage().read(ConstantsVariables.timeOut) ?? false;
     if (userLogin) {
       if (alreadyLoggedIn) {
         if (isActive && isVerified) {
@@ -53,9 +52,9 @@ class InactivityController extends GetxController {
 
   userLogIn(PointerEvent event) async {
     bool alreadyLoggedIn = await getStoredUserData();
-    bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-    bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin = await LocalStorage.read(ConstantsVariables.timeOut) ?? false;
+    bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
+    bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
+    bool userLogin = GetStorage().read(ConstantsVariables.timeOut) ?? false;
 
     if (userLogin) {
       if (alreadyLoggedIn) {
@@ -74,9 +73,9 @@ class InactivityController extends GetxController {
 
   UserDetailsModel _userDetailsModel = UserDetailsModel();
 
-  Future<bool> getStoredUserData() async {
-    String? authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
-    var userData = await LocalStorage.read(ConstantsVariables.userData);
+  bool getStoredUserData() {
+    final authToken = GetStorage().read(ConstantsVariables.authToken);
+    final userData = GetStorage().read(ConstantsVariables.userData);
     if (authToken != null && authToken.isNotEmpty) {
       if (userData != null) {
         _userDetailsModel = UserDetailsModel.fromJson(userData);
@@ -115,30 +114,32 @@ class InactivityController extends GetxController {
       ),
       actions: [
         InkWell(
-          onTap: () async {
-            bool alreadyLoggedIn = await getStoredUserData();
-            bool isActive = await LocalStorage.read(ConstantsVariables.isActive) ?? false;
-            bool isVerified = await LocalStorage.read(ConstantsVariables.isVerified) ?? false;
-            await LocalStorage.write(ConstantsVariables.timeOut, false);
-            var timeOut = await LocalStorage.read(ConstantsVariables.timeOut);
-            if (timeOut) {
-              if (alreadyLoggedIn) {
-                if (isActive && isVerified) {
-                  Get.offAllNamed(
-                    AppRoutName.mPINPage,
-                    arguments: {"id": _userDetailsModel.id},
-                  );
+          onTap: () {
+            bool alreadyLoggedIn = getStoredUserData();
+            bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
+            bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
+            GetStorage().write(ConstantsVariables.timeOut, false);
+            final timeOut = GetStorage().read(ConstantsVariables.timeOut);
+            if (timeOut != null) {
+              if (timeOut) {
+                if (alreadyLoggedIn) {
+                  if (isActive && isVerified) {
+                    Get.offAllNamed(
+                      AppRoutName.mPINPage,
+                      arguments: {"id": _userDetailsModel.id},
+                    );
+                    _inactivityTimer?.cancel();
+                  }
+                } else {
                   _inactivityTimer?.cancel();
                 }
               } else {
+                Get.offAllNamed(
+                  AppRoutName.mPINPage,
+                  arguments: {"id": _userDetailsModel.id},
+                );
                 _inactivityTimer?.cancel();
               }
-            } else {
-              Get.offAllNamed(
-                AppRoutName.mPINPage,
-                arguments: {"id": _userDetailsModel.id},
-              );
-              _inactivityTimer?.cancel();
             }
           },
           child: Container(

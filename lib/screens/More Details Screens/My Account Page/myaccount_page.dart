@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/edit_text_field_with_icon.dart';
-
 import 'package:spllive/components/simple_button_with_corner.dart';
 
 import '../../../Custom Controllers/doubletap_exitcontroller.dart';
@@ -15,12 +14,9 @@ import 'controller/myaccount_page_controller.dart';
 class MyAccountPage extends StatelessWidget {
   MyAccountPage({super.key});
   var controller = Get.put(MyAccountPageController());
-  final DoubleTapExitController exitController = Get.find();
+  final exitController = Get.put<DoubleTapExitController>(DoubleTapExitController());
   @override
   Widget build(BuildContext context) {
-    var verticalSpace = SizedBox(
-      height: Dimensions.h10,
-    );
     return WillPopScope(
       onWillPop: exitController.onWillPop,
       child: Scaffold(
@@ -30,10 +26,7 @@ class MyAccountPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: InkWell(
-                onTap: () {
-                  _showExitDialog();
-                  // AppUtils.showErrorSnackBar(bodyText: "SNACKMSG_TEXT".tr);
-                },
+                onTap: () => _showExitDialog(),
                 child: Icon(
                   Icons.note_alt_rounded,
                   color: AppColors.white,
@@ -47,7 +40,7 @@ class MyAccountPage extends StatelessWidget {
           child: Obx(
             () => Column(
               children: [
-                verticalSpace,
+                SizedBox(height: Dimensions.h10),
                 listTileDetails(
                     text: "BANK_TEXT".tr,
                     value: controller.bankName.value,
@@ -105,10 +98,7 @@ class MyAccountPage extends StatelessWidget {
   }
 
   Padding listTileDetails(
-      {required String text,
-      required String value,
-      required TextEditingController fieldController,
-      bool? autofocus}) {
+      {required String text, required String value, required TextEditingController fieldController, bool? autofocus}) {
     return Padding(
       padding: EdgeInsets.all(Dimensions.w8),
       child: Container(
@@ -144,8 +134,7 @@ class MyAccountPage extends StatelessWidget {
                       )
                     : Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: bidHistoryList(fieldController,
-                            autofocus: autofocus),
+                        child: bidHistoryList(fieldController, autofocus: autofocus),
                       ),
               ),
             ],
@@ -162,12 +151,9 @@ class MyAccountPage extends StatelessWidget {
       imagePath: "",
       height: Dimensions.h42,
       keyboardType: TextInputType.text,
-      textStyle: CustomTextStyle.textRobotoSansMedium
-          .copyWith(fontSize: Dimensions.h15, fontWeight: FontWeight.w500),
+      textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h15, fontWeight: FontWeight.w500),
       autofocus: autofocus,
-      formatter: [
-        FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))
-      ],
+      formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))],
     );
   }
 
@@ -178,9 +164,7 @@ class MyAccountPage extends StatelessWidget {
       onWillPop: () async => false,
       titleStyle: CustomTextStyle.textRobotoSansMedium,
       content: Column(
-        children: [
-          Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)
-        ],
+        children: [Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)],
       ),
       actions: [
         InkWell(

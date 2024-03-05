@@ -6,7 +6,6 @@ import 'package:spllive/models/tikets_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../helper_files/constant_variables.dart';
-import '../screens/Local Storage.dart';
 import 'api_urls.dart';
 import 'network_info.dart';
 
@@ -23,12 +22,12 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<void> initApiService() async {
-    authToken = await LocalStorage.read(ConstantsVariables.authToken) ?? "";
+    authToken = GetStorage().read(ConstantsVariables.authToken) ?? "";
     await NetworkInfo.checkNetwork().whenComplete(() async {
       headers = {"Accept": "application/json"};
       headersWithToken = {"Accept": "application/json", "Authorization": "Bearer $authToken"};
     });
-    // print(headersWithToken);
+    print(authToken);
   }
 
   Future<dynamic> signUpAPI(body) async {
@@ -43,9 +42,7 @@ class ApiService extends GetConnect implements GetxService {
 
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
-      AppUtils.showErrorSnackBar(
-        bodyText: response.status.code.toString() + response.toString(),
-      );
+      AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
       return Future.error(response.statusText!);
     } else {
       AppUtils.hideProgressDialog();
@@ -57,19 +54,15 @@ class ApiService extends GetConnect implements GetxService {
     try {
       AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
-      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).post(
         ApiUtils.signIN,
         body,
         headers: headers,
-        // contentType: contentType,
       );
 
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();
         AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
-        // AppUtils.showErrorSnackBar(
-        //   bodyText: response.status.code.toString() + response.toString(),
-        // );
         return Future.error(response.statusText!);
       } else {
         AppUtils.hideProgressDialog();
@@ -673,9 +666,9 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<void> tokenExpired() async {
-    await LocalStorage.remove(ConstantsVariables.authToken);
+    GetStorage().remove(ConstantsVariables.authToken);
     AppUtils.showErrorSnackBar(bodyText: "Session timeout, sign in again");
-    Get.offAllNamed(AppRoutName.signInPage);
+    Get.offAllNamed(AppRoutName.walcomeScreen);
   }
 
   Future<dynamic> verifyOTP(body) async {

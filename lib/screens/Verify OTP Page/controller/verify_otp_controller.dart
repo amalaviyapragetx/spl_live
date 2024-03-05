@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:spllive/api_services/api_service.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
-
-import '../../../api_services/api_service.dart';
-import '../../../helper_files/constant_variables.dart';
-import '../../Local Storage.dart';
 
 class VerifyOTPController extends GetxController {
   var argument = Get.arguments;
@@ -31,7 +29,7 @@ class VerifyOTPController extends GetxController {
       // countryCode = argument['countryCode'];
       verifyOTP = false;
     } else {
-      // var data = await LocalStorage.read(ConstantsVariables.userData);
+      // var data = GetStorage().read(ConstantsVariables.userData);
       // userData = UserDetailsModel.fromJson(data);
       verifyOTP = true;
     }
@@ -39,20 +37,20 @@ class VerifyOTPController extends GetxController {
 
   void onTapOfContinue() {
     if (otp.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTEROTP".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTEROTP".tr);
     } else if (otp.value.length < 6) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERVALIDOTP".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDOTP".tr);
     } else {
       verifyOTP ? callVerifyOTPApi() : callVerifyUserApi();
     }
   }
 
   void callVerifyUserApi() async {
-    ApiService().verifyUser(await verifyUserBody()).then((value) async {
+    ApiService().verifyUser({
+      "countryCode": "+91",
+      "phoneNumber": phoneNumber,
+      "otp": otp.value,
+    }).then((value) async {
       if (value['status']) {
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
@@ -61,39 +59,28 @@ class VerifyOTPController extends GetxController {
           bool isActive = userData['IsActive'] ?? false;
           bool isVerified = userData['IsVerified'] ?? false;
           bool isUserDetailSet = value['data']['IsUserDetailSet'] ?? false;
-          await LocalStorage.write(ConstantsVariables.authToken, authToken);
-          await LocalStorage.write(ConstantsVariables.isActive, isActive);
-          await LocalStorage.write(ConstantsVariables.isVerified, isVerified);
-          await LocalStorage.write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
+          GetStorage().write(ConstantsVariables.authToken, authToken);
+          GetStorage().write(ConstantsVariables.isActive, isActive);
+          GetStorage().write(ConstantsVariables.isVerified, isVerified);
+          GetStorage().write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
           GetStorage().write(ConstantsVariables.id, value['data']['Id']);
           Get.toNamed(AppRoutName.userDetailsPage);
         } else {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
 
-  Future<Map> verifyUserBody() async {
-    final verifyUserBody = {
-      "countryCode": "+91",
-      "phoneNumber": phoneNumber,
-      "otp": otp.value,
-    };
-    return verifyUserBody;
-  }
-
   void callVerifyOTPApi() async {
-    ApiService().verifyOTP(await verifyOTPBody()).then((value) async {
+    ApiService().verifyOTP({"otp": otp.value}).then((value) async {
       if (value['status']) {
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
         String authToken = userData['Token'] ?? "Null From API";
-        await LocalStorage.write(ConstantsVariables.authToken, authToken);
+        GetStorage().write(ConstantsVariables.authToken, authToken);
         if (userData != null) {
           Get.toNamed(
             AppRoutName.setMPINPage,
@@ -109,16 +96,8 @@ class VerifyOTPController extends GetxController {
     });
   }
 
-  Future<Map> verifyOTPBody() async {
-    final verifyOTPBody = {
-      "otp": otp.value,
-    };
-
-    return verifyOTPBody;
-  }
-
   void callResendOtpApi() async {
-    ApiService().resendOTP(await resendOtpBody()).then((value) async {
+    ApiService().resendOTP({"phoneNumber": phoneNumber, "countryCode": "+91"}).then((value) async {
       if (value['status']) {
         secondsRemaining.value = 60;
         _startTimer();
@@ -129,14 +108,6 @@ class VerifyOTPController extends GetxController {
         );
       }
     });
-  }
-
-  Future<Map> resendOtpBody() async {
-    final resendOtpBody = {
-      "phoneNumber": phoneNumber,
-      "countryCode": "+91",
-    };
-    return resendOtpBody;
   }
 
   var secondsRemaining = 60.obs;

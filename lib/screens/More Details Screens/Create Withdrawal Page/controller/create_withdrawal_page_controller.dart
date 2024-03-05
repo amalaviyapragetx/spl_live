@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/constant_variables.dart';
@@ -10,7 +11,6 @@ import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/response_model.dart';
 import '../../../../models/commun_models/user_details_model.dart';
 import '../../../../routes/app_routes_name.dart';
-import '../../../Local Storage.dart';
 
 class CreateWithDrawalPageController extends GetxController {
   TextEditingController amountTextController = TextEditingController();
@@ -32,7 +32,7 @@ class CreateWithDrawalPageController extends GetxController {
   }
 
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    var data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
 
     userId = userData.id == null ? "" : userData.id.toString();

@@ -780,7 +780,7 @@ class StarLineNewGamePage extends StatelessWidget {
     return Obx(
       () => Container(
         width: size.width,
-        height: Dimensions.h40,
+
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -976,6 +976,7 @@ class StarLineNewGamePage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               titleText == ""

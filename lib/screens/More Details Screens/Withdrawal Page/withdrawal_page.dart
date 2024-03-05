@@ -57,49 +57,45 @@ class WithdrawalPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "10:00 AM",
-                                style: CustomTextStyle.textRobotoSansBold.copyWith(
-                                  color: AppColors.black,
-                                  fontSize: Dimensions.h14,
-                                ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "10:00 AM",
+                              style: CustomTextStyle.textRobotoSansBold.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h14,
                               ),
-                              Text(
-                                "  to ",
-                                style: CustomTextStyle.textRobotoSansLight.copyWith(
-                                  color: AppColors.black,
-                                  fontSize: Dimensions.h14,
-                                ),
-                              ),
-                              Text(
-                                "07:00 PM",
-                                style: CustomTextStyle.textRobotoSansBold.copyWith(
-                                  color: AppColors.black,
-                                  fontSize: Dimensions.h14,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Dimensions.h5,
-                          ),
-                          Text(
-                            "(Withdrawal Available all days including Sunday & Bank Holidays )",
-                            textAlign: TextAlign.center,
-                            style: CustomTextStyle.textRobotoSansLight.copyWith(
-                              color: AppColors.black,
-                              fontSize: Dimensions.h14,
                             ),
+                            Text(
+                              "  to ",
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h14,
+                              ),
+                            ),
+                            Text(
+                              "07:00 PM",
+                              style: CustomTextStyle.textRobotoSansBold.copyWith(
+                                color: AppColors.black,
+                                fontSize: Dimensions.h14,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: Dimensions.h5),
+                        Text(
+                          "(Withdrawal Available all days including Sunday & Bank Holidays )",
+                          textAlign: TextAlign.center,
+                          style: CustomTextStyle.textRobotoSansLight.copyWith(
+                            color: AppColors.black,
+                            fontSize: Dimensions.h14,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(
@@ -112,9 +108,7 @@ class WithdrawalPage extends StatelessWidget {
                       fontSize: Dimensions.h20,
                     ),
                   ),
-                  SizedBox(
-                    height: Dimensions.h5,
-                  ),
+                  SizedBox(height: Dimensions.h5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -192,9 +186,7 @@ class WithdrawalPage extends StatelessWidget {
                       borderRadius: Dimensions.r3,
                       borderWidth: 0,
                       textStyle: CustomTextStyle.textRobotoSansLight,
-                      onTap: () {
-                        Get.toNamed(AppRoutName.createWithDrawalPage);
-                      },
+                      onTap: () => Get.toNamed(AppRoutName.createWithDrawalPage),
                       height: Dimensions.h40,
                       width: Dimensions.w200,
                     ),
@@ -222,11 +214,7 @@ class WithdrawalPage extends StatelessWidget {
                       borderRadius: Dimensions.r3,
                       borderWidth: 0,
                       textStyle: CustomTextStyle.textRobotoSansLight,
-                      onTap: () {
-                        // checkWithdrawalPageController.get(lazyLoad: false);
-
-                        Get.offAndToNamed(AppRoutName.checkWithDrawalPage);
-                      },
+                      onTap: () => Get.toNamed(AppRoutName.checkWithDrawalPage),
                       height: Dimensions.h40,
                       width: Dimensions.w200,
                     ),

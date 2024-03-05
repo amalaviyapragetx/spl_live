@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
+
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/bid_request_model.dart';
 import '../../../models/commun_models/digit_list_model.dart';
 import '../../../models/commun_models/json_file_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/game_modes_api_response_model.dart';
-import '../../Local Storage.dart';
 
 class GamePageController extends GetxController {
   var panaDigitList = <DigitListModelOffline>[].obs;
@@ -68,7 +70,12 @@ class GamePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getArguments();
+    gameMode = argument['gameMode'];
+    biddingType.value = argument['biddingType'];
+    marketName.value = argument['marketName'];
+    marketId = argument['marketId'];
+    marketTime.value = argument['time'];
+    isBulkMode.value = argument['isBulkMode'];
   }
 
   ondebounce() {
@@ -85,8 +92,7 @@ class GamePageController extends GetxController {
   // onchangeBulk(String val) {}
 
   Future<void> loadJsonFile() async {
-    final String response =
-        await rootBundle.loadString('assets/JSON File/digit_file.json');
+    final String response = await rootBundle.loadString('assets/JSON File/digit_file.json');
     final data = await json.decode(response);
     jsonModel = JsonFileModel.fromJson(data);
   }
@@ -94,18 +100,13 @@ class GamePageController extends GetxController {
   // var marketList = MarketData().obs;
   // List<MarketData> tempMarketList = <MarketData>[];
   Future<void> getArguments() async {
-    //totalAmount.value = await LocalStorage.read(ConstantsVariables.totalAmount);
+    await loadJsonFile();
+    //totalAmount.value = GetStorage().read(ConstantsVariables.totalAmount);
     //print(totalAmount.value);
-    bidsList.value = await LocalStorage.read(ConstantsVariables.bidsList) ?? [];
-    gameMode = argument['gameMode'];
-    biddingType.value = argument['biddingType'];
-    marketName.value = argument['marketName'];
-    marketId = argument['marketId'];
-    marketTime.value = argument['time'];
-    isBulkMode.value = argument['isBulkMode'];
+    bidsList.value = GetStorage().read(ConstantsVariables.bidsList) ?? [];
+
     // marketList.value = argument['marketValue'];
     // print(marketList.toJson());
-    await loadJsonFile();
     switch (gameMode.name) {
       case "Single Ank Bulk":
         showNumbersLine.value = false;
@@ -139,8 +140,7 @@ class GamePageController extends GetxController {
         for (var e in jsonModel.allSinglePana!) {
           panaDigitList.add(DigitListModelOffline.fromJson(e));
         }
-        List<List<DigitListModelOffline>> chunks =
-            splitListIntoChunks(panaDigitList, 12);
+        List<List<DigitListModelOffline>> chunks = splitListIntoChunks(panaDigitList, 12);
         digitList.value = chunks[0];
         break;
       case "Double Pana Bulk":
@@ -155,8 +155,7 @@ class GamePageController extends GetxController {
         for (var e in jsonModel.allDoublePana!) {
           panaDigitList.add(DigitListModelOffline.fromJson(e));
         }
-        List<List<DigitListModelOffline>> chunks =
-            splitListIntoChunks(panaDigitList, 9);
+        List<List<DigitListModelOffline>> chunks = splitListIntoChunks(panaDigitList, 9);
         digitList.value = chunks[0];
         break;
       case "Tripple Pana":
@@ -170,20 +169,18 @@ class GamePageController extends GetxController {
         for (var e in jsonModel.allThreePana!) {
           panaDigitList.add(DigitListModelOffline.fromJson(e));
         }
-        List<List<DigitListModelOffline>> chunks =
-            splitListIntoChunks(panaDigitList, 12);
+        List<List<DigitListModelOffline>> chunks = splitListIntoChunks(panaDigitList, 12);
         digitList.value = chunks[0];
         break;
     }
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    var data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.userId = userData.id;
     requestModel.bidType = biddingType.value;
     requestModel.dailyMarketId = marketId;
   }
 
-  List<List<DigitListModelOffline>> splitListIntoChunks(
-      List<DigitListModelOffline> tempList, int chunkSize) {
+  List<List<DigitListModelOffline>> splitListIntoChunks(List<DigitListModelOffline> tempList, int chunkSize) {
     List<List<DigitListModelOffline>> chunks = [];
 
     for (var i = 0; i < tempList.length; i += chunkSize) {
@@ -217,10 +214,8 @@ class GamePageController extends GetxController {
       digitList[index].isSelected = true;
       digitList.refresh();
       if (selectedBidsList.isNotEmpty) {
-        var tempBid = selectedBidsList
-            .where((element) => element.bidNo == digitList[index].value)
-            .toList();
-    
+        var tempBid = selectedBidsList.where((element) => element.bidNo == digitList[index].value).toList();
+
         if (tempBid.isNotEmpty) {
           for (var element in selectedBidsList) {
             if (element.bidNo == digitList[index].value) {
@@ -234,8 +229,7 @@ class GamePageController extends GetxController {
               coins: int.parse(coinController.text),
               gameId: gameMode.id,
               gameModeName: gameMode.name,
-              remarks:
-                  "You invested At ${marketName.value} on ${digitList[index].value} (${gameMode.name})",
+              remarks: "You invested At ${marketName.value} on ${digitList[index].value} (${gameMode.name})",
             ),
           );
         }
@@ -246,8 +240,7 @@ class GamePageController extends GetxController {
             coins: int.parse(coinController.text),
             gameId: gameMode.id,
             gameModeName: gameMode.name,
-            remarks:
-                "You invested At ${marketName.value} on ${digitList[index].value} (${gameMode.name})",
+            remarks: "You invested At ${marketName.value} on ${digitList[index].value} (${gameMode.name})",
           ),
         );
       }
@@ -257,11 +250,10 @@ class GamePageController extends GetxController {
       validCoinsEntered.value = false;
       digitList.refresh();
       digitList[index].isSelected = false;
-   
+
       isEnable.value = false;
       digitList.refresh();
-      selectedBidsList
-          .removeWhere((element) => element.bidNo == digitList[index].value);
+      selectedBidsList.removeWhere((element) => element.bidNo == digitList[index].value);
       _calculateTotalAmount();
       // print("Enable Value:${isEnable.value}");
       AppUtils.showErrorSnackBar(bodyText: "Please enter coins!");
@@ -272,8 +264,7 @@ class GamePageController extends GetxController {
     digitList[index].coins = 0;
     digitList[index].isSelected = false;
     digitList.refresh();
-    selectedBidsList
-        .removeWhere((element) => element.bidNo == digitList[index].value);
+    selectedBidsList.removeWhere((element) => element.bidNo == digitList[index].value);
     _calculateTotalAmount();
   }
 
@@ -292,7 +283,6 @@ class GamePageController extends GetxController {
     digitRow[index].isSelected = true;
     digitRow.refresh();
     if (gameMode.name!.toUpperCase() == "SINGLE PANA BULK") {
-     
       panaSwitchCase(index, 12);
     } else {
       panaSwitchCase(index, 9);
@@ -377,8 +367,7 @@ class GamePageController extends GetxController {
 
   void panaSwitchCase(int index, chunkSize) {
     List<DigitListModelOffline> tempList = [];
-    List<List<DigitListModelOffline>> chunks =
-        splitListIntoChunks(panaDigitList, chunkSize);
+    List<List<DigitListModelOffline>> chunks = splitListIntoChunks(panaDigitList, chunkSize);
     switch (index) {
       case 0:
         tempList = chunks[0];
@@ -424,7 +413,7 @@ class GamePageController extends GetxController {
           var existingIndex = selectedBidsList.indexOf(bidsList[i]);
           selectedBidsList.add(bidsList[i]);
         }
-        await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
+        GetStorage().write(ConstantsVariables.bidsList, selectedBidsList);
         Get.offAndToNamed(AppRoutName.selectedBidsPage, arguments: {
           "bidsList": selectedBidsList,
           "biddingType": biddingType.value,
@@ -440,11 +429,9 @@ class GamePageController extends GetxController {
         //  totalBid.value == "0";
         getArguments();
       } else {
-     
-        await LocalStorage.write(ConstantsVariables.bidsList, selectedBidsList);
-        await LocalStorage.write(
-            ConstantsVariables.totalAmount, totalAmount.value);
-        await LocalStorage.write(ConstantsVariables.bidType, biddingType.value);
+        GetStorage().write(ConstantsVariables.bidsList, selectedBidsList);
+        GetStorage().write(ConstantsVariables.totalAmount, totalAmount.value);
+        GetStorage().write(ConstantsVariables.bidType, biddingType.value);
 
         Get.offAndToNamed(AppRoutName.selectedBidsPage, arguments: {
           "bidsList": selectedBidsList,
@@ -469,21 +456,15 @@ class GamePageController extends GetxController {
   }
 
   void onSearch(val) {
-   
-    
     List<DigitListModelOffline> tempList = digitList;
     if (val.toString().isNotEmpty) {
       var searchResultList = tempList
-          .where((element) => element.value
-              .toString()
-              .toLowerCase()
-              .trim()
-              .contains(val.toString().toLowerCase().trim()))
+          .where(
+              (element) => element.value.toString().toLowerCase().trim().contains(val.toString().toLowerCase().trim()))
           .toList();
       searchResultList.toSet().toList();
       digitList.value = searchResultList;
     } else {
-  
       switch (gameMode.id) {
         case 19:
           digitList.value = singleAnkList;

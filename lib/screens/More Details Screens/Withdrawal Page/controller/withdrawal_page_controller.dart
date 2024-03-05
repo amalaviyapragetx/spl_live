@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../../Custom Controllers/wallet_controller.dart';
 import '../../../../api_services/api_service.dart';
@@ -6,7 +7,6 @@ import '../../../../helper_files/constant_variables.dart';
 import '../../../../helper_files/ui_utils.dart';
 import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/user_details_model.dart';
-import '../../../Local Storage.dart';
 
 class WithdrawalPageController extends GetxController {
   var userId = "";
@@ -18,7 +18,7 @@ class WithdrawalPageController extends GetxController {
   }
 
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
-    var data = await LocalStorage.read(ConstantsVariables.userData);
+    final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     userId = userData.id == null ? "" : userData.id.toString();
     if (userId.isNotEmpty) {

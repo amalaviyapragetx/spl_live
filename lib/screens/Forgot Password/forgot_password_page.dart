@@ -28,7 +28,8 @@ class ForgotPasswordPage extends StatelessWidget {
       ),
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
-      body: SafeArea(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,6 +47,7 @@ class ForgotPasswordPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: Get.height * 0.2),
           Center(
             child: SizedBox(
               height: Dimensions.h80,
@@ -91,7 +93,8 @@ class ForgotPasswordPage extends StatelessWidget {
               height: Dimensions.h30,
               width: double.infinity,
             ),
-          )
+          ),
+          SizedBox(height: Get.height * 0.2),
         ],
       ),
     );

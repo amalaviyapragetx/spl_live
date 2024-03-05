@@ -25,32 +25,34 @@ class MoreOptions extends StatelessWidget {
     return Column(
       children: [
         AppUtils().simpleAppbar(
-            appBarTitle: "",
-            leadingWidht: Dimensions.w200,
-            leading: Container(
-              child: Row(
-                children: [
-                  SizedBox(width: Dimensions.w15),
-                  Text(
-                    "MORE".tr,
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20),
+          appBarTitle: "",
+          leadingWidht: Dimensions.w200,
+          leading: Container(
+            child: Row(
+              children: [
+                SizedBox(width: Dimensions.w15),
+                Text(
+                  "MORE".tr,
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    fontSize: Dimensions.h20,
+                    color: AppColors.white,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
-                child: InkWell(
-                  onTap: () {
-                    controller.toggleShare();
-                  },
-                  child: Container(
-                    width: Dimensions.w20,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: InkWell(
+                onTap: () => controller.toggleShare(),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
                     child: Icon(
                       Icons.share,
                       size: 13,
@@ -59,7 +61,9 @@ class MoreOptions extends StatelessWidget {
                   ),
                 ),
               ),
-            ]),
+            ),
+          ],
+        ),
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -69,27 +73,19 @@ class MoreOptions extends StatelessWidget {
                   height: Dimensions.h15,
                 ),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRoutName.profilePage);
-                    },
+                    onTap: () => Get.toNamed(AppRoutName.profilePage),
                     iconData: ConstantImage.profileIconSVG,
                     text: "MYPROFILE".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRoutName.myAccountPage);
-                    },
+                    onTap: () => Get.toNamed(AppRoutName.myAccountPage),
                     iconData: ConstantImage.bakAccount,
                     text: "MYACCOUNT".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRoutName.gameRatePage);
-                    },
+                    onTap: () => Get.toNamed(AppRoutName.gameRatePage),
                     iconData: ConstantImage.gameRate,
                     text: "GAMERATE".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRoutName.notificationDetailsPage);
-                    },
+                    onTap: () => Get.toNamed(AppRoutName.notificationDetailsPage),
                     iconData: ConstantImage.notifiacation,
                     text: "NOTIFICATIONS".tr),
                 listItems(
@@ -117,9 +113,7 @@ class MoreOptions extends StatelessWidget {
                     iconData: ConstantImage.withDrawalIcon,
                     text: "WITHDRAWAL_TXT1".tr),
                 listItems(
-                    onTap: () {
-                      Get.toNamed(AppRoutName.transactionPage);
-                    },
+                    onTap: () => Get.toNamed(AppRoutName.transactionPage),
                     iconData: ConstantImage.addFundIcon,
                     text: "TRANSACTIONHISTORY".tr),
                 listItems(
@@ -128,30 +122,17 @@ class MoreOptions extends StatelessWidget {
                   text: "GIVEFEEDBACK".tr,
                 ),
                 listItems(
-                  onTap: () {
-                    controller.onTapOfRateUs();
-                  },
+                  onTap: () => controller.getFeedbackAndRatingsById(),
                   iconData: ConstantImage.rateusStartIcon,
                   text: "RATEUS".tr,
                 ),
-                // listItems(
-                //   onTap: () {
-                //     Get.toNamed(AppRoutName.stalineTerms);
-                //   },
-                //   iconData: ConstantImage.addFundIcon,
-                //   text: "STARLINETERMS&CONDITION".tr,
-                // ),
                 listItems(
-                  onTap: () {
-                    Get.toNamed(AppRoutName.aboutPage);
-                  },
+                  onTap: () => Get.toNamed(AppRoutName.aboutPage),
                   iconData: ConstantImage.infoIcon,
                   text: "ABOUTUS".tr,
                 ),
                 listItems(
-                  onTap: () async {
-                    controller.callLogout();
-                  },
+                  onTap: () => controller.callLogout(),
                   iconData: ConstantImage.signOutIcon,
                   text: "SIGNOUT".tr,
                 ),

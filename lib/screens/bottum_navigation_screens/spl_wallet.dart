@@ -44,8 +44,8 @@ class _SPLWalletState extends State<SPLWallet> {
                   children: [
                     SvgPicture.asset(
                       ConstantImage.walletAppbar,
-                      height: 18,
-                      width: 20,
+                      height: 25,
+                      width: 30,
                       color: AppColors.white,
                     ),
                     const SizedBox(width: 5),
@@ -62,6 +62,7 @@ class _SPLWalletState extends State<SPLWallet> {
                     ),
                   ],
                 ),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     textAlign: TextAlign.center,

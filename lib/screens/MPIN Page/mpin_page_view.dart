@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
@@ -12,22 +13,15 @@ class MPINPageView extends StatelessWidget {
   MPINPageView({Key? key}) : super(key: key);
 
   final controller = Get.find<MPINPageController>();
-  final verticalSpace = SizedBox(height: Dimensions.h20);
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _buildOtpAndMpinForm(context),
-          ],
-        ),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: _buildOtpAndMpinForm(context),
       ),
     );
   }
@@ -38,6 +32,7 @@ class MPINPageView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: Get.height * 0.3),
           Center(
             child: SizedBox(
               height: Dimensions.h100,
@@ -60,7 +55,7 @@ class MPINPageView extends StatelessWidget {
               ),
             ),
           ),
-          verticalSpace,
+          SizedBox(height: Dimensions.h20),
           Center(
             child: SizedBox(
               child: Icon(
@@ -70,33 +65,14 @@ class MPINPageView extends StatelessWidget {
               ),
             ),
           ),
-          verticalSpace,
+          SizedBox(height: Dimensions.h20),
           _buildPinCodeField(
             context: context,
             title: "MPIN".tr,
             pinType: controller.mpin,
             pinCodeLength: 4,
           ),
-          // verticalSpace,
-          // Padding(
-          //   padding:  EdgeInsets.symmetric(horizontal: Dimensions.w18),
-          //   child: RoundedCornerButton(
-          //     text: "CONTINUE".tr,
-          //     color: AppColors.textColorMain,
-          //     borderColor: AppColors.textColorMain,
-          //     fontSize: Dimensions.sp16dot5,
-          //     fontWeight: FontWeight.w500,
-          //     fontColor: AppColors.white,
-          //     letterSpacing: 0,
-          //     borderRadius: Dimensions.r9,
-          //     borderWidth: 1,
-          //     textStyle: CustomTextStyle.textGothamLight,
-          //     onTap: () => controller.onTapOfVerify(),
-          //     height: Dimensions.h46,
-          //     width: double.infinity,
-          //   ),
-          // ),
-          verticalSpace,
+          SizedBox(height: Dimensions.h20),
           Center(
             child: GestureDetector(
               onTap: () => controller.forgotMPINApi(),
@@ -113,6 +89,7 @@ class MPINPageView extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: Get.height * 0.3),
         ],
       ),
     );

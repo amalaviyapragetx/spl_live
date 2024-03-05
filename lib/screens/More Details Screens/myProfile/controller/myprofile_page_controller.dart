@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../../../../models/commun_models/user_details_model.dart';
 
 class MyProfilePageController extends GetxController {
@@ -25,15 +26,14 @@ class MyProfilePageController extends GetxController {
   }
 
   // Future<void> fetchSavedData() async {
-  //   var userData = await LocalStorage.read(ConstantsVariables.userData);
+  //   var userData = GetStorage().read(ConstantsVariables.userData);
   //   userDetailsModel = UserDetailsModel.fromJson(userData);
   //   print("Get User Data ***********************${userDetailsModel.toJson()}");
   // }
 
   imageSelection() async {
     try {
-      final imagetemp =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+      final imagetemp = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (imagetemp == null) return;
       final imagelocation = File(imagetemp.path);
       myimagepath = imagelocation;

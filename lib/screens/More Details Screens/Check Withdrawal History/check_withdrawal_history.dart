@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 
 import '../../../helper_files/app_colors.dart';
 import '../../../helper_files/common_utils.dart';
@@ -9,122 +10,109 @@ import '../../../helper_files/constant_image.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
-import '../../../routes/app_routes_name.dart';
 import 'controller/check_withdrawal_history_controller.dart';
 
 class CheckWithdrawalPage extends StatelessWidget {
   CheckWithdrawalPage({super.key});
-  var controller = Get.put(CheckWithdrawalPageController());
-
-  var walletController = Get.put(WalletController());
+  final controller = Get.put<CheckWithdrawalPageController>(CheckWithdrawalPageController());
+  final walletController = Get.put<WalletController>(WalletController());
+  final homeCon = Get.find<HomePageController>();
 
   @override
   Widget build(BuildContext context) {
-    var verticalSpace = SizedBox(
-      height: Dimensions.h10,
-    );
-    return WillPopScope(
-      onWillPop: () async {
-        Get.offAllNamed(AppRoutName.withdrawalpage);
-        return false;
-      },
-      child: Scaffold(
-        appBar: AppUtils().simpleAppbar(
-          appBarTitle: "Withdrawal",
-          centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.offAllNamed(AppRoutName.withdrawalpage);
-              },
-              icon: const Icon(Icons.close),
-            )
-          ],
-          leadingWidht: Dimensions.w130,
-          leading: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: Dimensions.w36,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 8.0),
-                  child: SvgPicture.asset(
-                    ConstantImage.walletAppbar,
+    return Scaffold(
+      appBar: AppUtils().simpleAppbar(
+        appBarTitle: "Withdrawal",
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(Icons.close),
+          )
+        ],
+        leadingWidht: Dimensions.w130,
+        leading: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: Dimensions.w36,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 8.0),
+                child: SvgPicture.asset(
+                  ConstantImage.walletAppbar,
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+            SizedBox(width: Dimensions.w5),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  walletController.walletBalance.toString(),
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    fontSize: Dimensions.h16,
                     color: AppColors.white,
                   ),
                 ),
               ),
-              SizedBox(
-                width: Dimensions.w5,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text(
-                    walletController.walletBalance.toString(),
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      fontSize: Dimensions.h16,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            controller.getUserData();
-          },
-          child: Column(
-            children: [
-              Expanded(
-                child: withdrawalHistoryList2(),
-              ),
-            ],
-          ),
-        ),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async => controller.getUserData(),
+        child: withdrawalHistoryList2(),
       ),
     );
   }
 
   withdrawalHistoryList() {
-    return Obx(
-      () => controller.withdrawalRequestList.isEmpty
-          ? Center(
-              child: Text(
-                "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
-                style: CustomTextStyle.textPTsansMedium.copyWith(
-                  fontSize: Dimensions.h13,
-                  color: AppColors.black,
-                ),
-              ),
-            )
-          : ListView.builder(
-              padding:
-                  EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
-              itemCount: controller.withdrawalRequestList.length,
-              itemBuilder: (context, index) {
-                // var data = controller.marketHistoryList.elementAt(index);
-                // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
-                return listveiwTransaction(
-                  requestId: controller.withdrawalRequestList[index].requestId
-                      .toString(),
-                  requestProcessedAt: controller
-                      .withdrawalRequestList[index].requestProcessedAt
-                      .toString(),
-                  requestTime: CommonUtils().formatStringToDDMMMYYYYHHMMSSA(
-                      controller.withdrawalRequestList[index].requestTime
-                          .toString()),
-                  requestedAmount: controller
-                      .withdrawalRequestList[index].requestedAmount
-                      .toString(),
-                  status:
-                      controller.withdrawalRequestList[index].status.toString(),
-                );
-              },
-            ),
+    // return Obx(
+    //   () => controller.withdrawalRequestList.isEmpty
+    //       ? Center(
+    //           child: Text(
+    //             "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
+    //             style: CustomTextStyle.textPTsansMedium.copyWith(
+    //               fontSize: Dimensions.h13,
+    //               color: AppColors.black,
+    //             ),
+    //           ),
+    //         )
+    //       :
+    //   ListView.builder(
+    //           padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+    //           itemCount: controller.withdrawalRequestList.length,
+    //           itemBuilder: (context, index) {
+    //             // var data = controller.marketHistoryList.elementAt(index);
+    //             // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
+    //             return listveiwTransaction(
+    //               requestId: controller.withdrawalRequestList[index].requestId.toString(),
+    //               requestProcessedAt: controller.withdrawalRequestList[index].requestProcessedAt.toString(),
+    //               requestTime: CommonUtils()
+    //                   .formatStringToDDMMMYYYYHHMMSSA(controller.withdrawalRequestList[index].requestTime.toString()),
+    //               requestedAmount: controller.withdrawalRequestList[index].requestedAmount.toString(),
+    //               status: controller.withdrawalRequestList[index].status.toString(),
+    //             );
+    //           },
+    //         ),
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+      itemCount: controller.withdrawalRequestList.length,
+      itemBuilder: (context, index) {
+        // var data = controller.marketHistoryList.elementAt(index);
+        // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
+        return listveiwTransaction(
+          requestId: controller.withdrawalRequestList[index].requestId.toString(),
+          requestProcessedAt: controller.withdrawalRequestList[index].requestProcessedAt.toString(),
+          requestTime: CommonUtils()
+              .formatStringToDDMMMYYYYHHMMSSA(controller.withdrawalRequestList[index].requestTime.toString()),
+          requestedAmount: controller.withdrawalRequestList[index].requestedAmount.toString(),
+          status: controller.withdrawalRequestList[index].status.toString(),
+        );
+      },
     );
+    // );
   }
 
   withdrawalHistoryList2() {
@@ -140,46 +128,32 @@ class CheckWithdrawalPage extends StatelessWidget {
               ),
             )
           : ListView.builder(
-              padding:
-                  EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
               itemCount: controller.withdrawalRequestList.length,
               itemBuilder: (context, index) {
                 // var data = controller.marketHistoryList.elementAt(index);
                 // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
                 return withDrawalHistoryDetails(
                   remarkTitle:
-                      controller.withdrawalRequestList[index].remarks == null
-                          ? "Withdrawal Status"
-                          : "Remarks",
-                  remarks: controller.withdrawalRequestList[index].remarks ??
-                      "Pending for Approval",
+                      controller.withdrawalRequestList[index].remarks == null ? "Withdrawal Status" : "Remarks",
+                  remarks: controller.withdrawalRequestList[index].remarks ?? "Pending for Approval",
                   requestTimeColor: AppColors.white,
                   onStatusContainerColor: controller.checkColor(index),
-                  statusColor: controller.withdrawalRequestList[index].status
-                              .toString() ==
-                          "Pending"
+                  statusColor: controller.withdrawalRequestList[index].status.toString() == "Pending"
                       ? AppColors.appbarColor
                       : AppColors.white,
                   coins: "",
                   marketName: "",
-                  requestId: controller.withdrawalRequestList[index].requestId
-                      .toString(),
+                  requestId: controller.withdrawalRequestList[index].requestId.toString(),
                   // requestProcessedAt: controller
                   //     .withdrawalRequestList[index].requestProcessedAt
                   //     .toString(),
-                  requestTime: CommonUtils()
-                      .convertUtcToIstFormatStringToDDMMYYYYHHMMA(controller
-                          .withdrawalRequestList[index].requestTime
-                          .toString()),
-                  requestedAmount: controller
-                      .withdrawalRequestList[index].requestedAmount
-                      .toString(),
-                  status: controller.withdrawalRequestList[index].status
-                              .toString() ==
-                          "Pending"
+                  requestTime: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
+                      controller.withdrawalRequestList[index].requestTime.toString()),
+                  requestedAmount: controller.withdrawalRequestList[index].requestedAmount.toString(),
+                  status: controller.withdrawalRequestList[index].status.toString() == "Pending"
                       ? ""
-                      : controller.withdrawalRequestList[index].status
-                          .toString(),
+                      : controller.withdrawalRequestList[index].status.toString(),
                 );
               },
             ),
@@ -221,15 +195,13 @@ class CheckWithdrawalPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "RequestId : $requestId",
-                      style: CustomTextStyle.textRobotoSansBold
-                          .copyWith(fontSize: Dimensions.h14),
+                      style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                     ),
                     SizedBox(
                       width: Dimensions.w5,
@@ -237,9 +209,8 @@ class CheckWithdrawalPage extends StatelessWidget {
                     const Expanded(child: SizedBox()),
                     Text(
                       requestedAmount,
-                      style: CustomTextStyle.textRobotoSansBold.copyWith(
-                          color: AppColors.appbarColor,
-                          fontSize: Dimensions.h13),
+                      style: CustomTextStyle.textRobotoSansBold
+                          .copyWith(color: AppColors.appbarColor, fontSize: Dimensions.h13),
                     ),
                     // Text(
                     //   requestedAmount,
@@ -291,8 +262,7 @@ class CheckWithdrawalPage extends StatelessWidget {
                       ),
                       Text(
                         requestTime,
-                        style: CustomTextStyle.textRobotoSansLight
-                            .copyWith(color: requestTimeColor),
+                        style: CustomTextStyle.textRobotoSansLight.copyWith(color: requestTimeColor),
                       ),
                       // SizedBox(
                       //   width: Dimensions.w8,
@@ -347,16 +317,14 @@ class CheckWithdrawalPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "RequestId : $requestId",
-                      style: CustomTextStyle.textRobotoSansLight
-                          .copyWith(fontSize: Dimensions.h14),
+                      style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h14),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
@@ -420,15 +388,13 @@ class CheckWithdrawalPage extends StatelessWidget {
     );
   }
 
-  AlertDialog onExitAlert(BuildContext context,
-      {required Function() onExit, required Function() onCancel}) {
+  AlertDialog onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
     return AlertDialog(
       title: Text(
         'Exit App',
         style: CustomTextStyle.textRobotoSansBold,
       ),
-      content: Text('Are you sure you want to exit the app?',
-          style: CustomTextStyle.textRobotoSansMedium),
+      content: Text('Are you sure you want to exit the app?', style: CustomTextStyle.textRobotoSansMedium),
       actions: [
         TextButton(
           onPressed: onCancel,
