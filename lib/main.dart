@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
             defaultTransition: Transition.fadeIn,
             debugShowCheckedModeBanner: false,
             navigatorKey: navigatorKey,
-            transitionDuration: const Duration(milliseconds: 500),
+            // transitionDuration: const Duration(milliseconds: 500),
             translations: AppLocalization(),
             locale: getLocale(),
             initialBinding: InitialBindings(),

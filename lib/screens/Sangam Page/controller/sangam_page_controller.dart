@@ -52,7 +52,7 @@ class SangamPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getArguments();
+    loadJsonFile();
     focusNode = FocusNode();
   }
 
@@ -71,7 +71,7 @@ class SangamPageController extends GetxController {
   var allThreePanaList = <DigitListModelOffline>[].obs;
   List<String> _tempValidationList = [];
 
-  void getArguments() async {
+  Future<void> getArguments() async {
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
     requestModel.value.dailyMarketId = marketData.value.id;
@@ -79,8 +79,8 @@ class SangamPageController extends GetxController {
     final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     requestModel.value.userId = userData.id;
-    await loadJsonFile();
-    switch (gameMode.value.name) {
+
+    switch (gameMode.value.name ?? "") {
       case "Full Sangam":
         openText.value = "OPENPANA".tr;
         openFieldHint.value = "ENTERPANA".tr;
@@ -124,6 +124,7 @@ class SangamPageController extends GetxController {
     final String response = await rootBundle.loadString('assets/JSON File/digit_file.json');
     final data = await json.decode(response);
     jsonModel = JsonFileModel.fromJson(data);
+    await getArguments();
   }
 
   void createMarketBidApi() async {

@@ -159,9 +159,9 @@ class GameModePagesController extends GetxController {
     // var hh = GetStorage().read(ConstantsVariables.playMore);
 
     //  if (!hh) {
-    var bidList = GetStorage().read(ConstantsVariables.bidsList);
+    final bidList = GetStorage().read(ConstantsVariables.bidsList);
 
-    // biddingType.value = arguments["biddingType"];
+    //  biddingType.value = arguments["biddingType"];
     // marketName.value = arguments["marketName"];
     // selectedBidsList.value = bidList as List<Bids>;
     // } else {}
@@ -258,20 +258,24 @@ class GameModePagesController extends GetxController {
         "totalAmount": totalAmount.value,
       });
     } else {
-      Get.toNamed(AppRoutName.newGameModePage, arguments: {
-        "gameMode": gameModesList[index],
-        "marketName": marketValue.value.market ?? "",
-        "marketId": marketValue.value.id ?? "",
-        "marketValue": marketValue.value,
-        "time":
-            openCloseValue.value == "OPENBID".tr ? marketValue.value.openTime ?? "" : marketValue.value.closeTime ?? "",
-        "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
-        "isBulkMode": false,
-        "gameModeList": gameModeList,
-        "bidsList": selectedBidsList,
-        "gameName": gameModesList[index].name,
-        "totalAmount": totalAmount.value,
-      });
+      Future.delayed(
+        Duration(milliseconds: 200),
+        () => Get.toNamed(AppRoutName.newGameModePage, arguments: {
+          "gameMode": gameModesList[index],
+          "marketName": marketValue.value.market ?? "",
+          "marketId": marketValue.value.id ?? "",
+          "marketValue": marketValue.value,
+          "time": openCloseValue.value == "OPENBID".tr
+              ? marketValue.value.openTime ?? ""
+              : marketValue.value.closeTime ?? "",
+          "biddingType": openCloseValue.value == "OPENBID".tr ? "Open" : "Close",
+          "isBulkMode": false,
+          "gameModeList": gameModeList,
+          "bidsList": selectedBidsList,
+          "gameName": gameModesList[index].name,
+          "totalAmount": totalAmount.value,
+        }),
+      );
     }
   }
 

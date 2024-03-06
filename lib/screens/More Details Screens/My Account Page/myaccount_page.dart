@@ -11,10 +11,22 @@ import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import 'controller/myaccount_page_controller.dart';
 
-class MyAccountPage extends StatelessWidget {
+class MyAccountPage extends StatefulWidget {
   MyAccountPage({super.key});
-  var controller = Get.put(MyAccountPageController());
+
+  @override
+  State<MyAccountPage> createState() => _MyAccountPageState();
+}
+
+class _MyAccountPageState extends State<MyAccountPage> {
+  final controller = Get.put<MyAccountPageController>(MyAccountPageController());
   final exitController = Get.put<DoubleTapExitController>(DoubleTapExitController());
+  @override
+  void initState() {
+    controller.fetchStoredUserDetailsAndGetBankDetailsByUserId();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -51,9 +63,12 @@ class MyAccountPage extends StatelessWidget {
                     value: controller.accountName.value,
                     fieldController: controller.accHolderNameController),
                 listTileDetails(
-                    text: "ACNO_TEXT".tr,
-                    value: controller.accountNumber.value,
-                    fieldController: controller.accNoController),
+                  text: "ACNO_TEXT".tr,
+                  value: controller.accountNumber.value,
+                  fieldController: controller.accNoController,
+                  formatter: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.number,
+                ),
                 listTileDetails(
                     text: "IFSC_TEXT".tr,
                     value: controller.ifcsCode.value,
@@ -97,8 +112,14 @@ class MyAccountPage extends StatelessWidget {
     );
   }
 
-  Padding listTileDetails(
-      {required String text, required String value, required TextEditingController fieldController, bool? autofocus}) {
+  Padding listTileDetails({
+    required String text,
+    required String value,
+    required TextEditingController fieldController,
+    bool? autofocus,
+    List<TextInputFormatter>? formatter,
+    TextInputType? keyboardType,
+  }) {
     return Padding(
       padding: EdgeInsets.all(Dimensions.w8),
       child: Container(
@@ -134,7 +155,12 @@ class MyAccountPage extends StatelessWidget {
                       )
                     : Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: bidHistoryList(fieldController, autofocus: autofocus),
+                        child: bidHistoryList(
+                          fieldController,
+                          autofocus: autofocus,
+                          formatter: formatter,
+                          keyboardType: keyboardType,
+                        ),
                       ),
               ),
             ],
@@ -144,16 +170,17 @@ class MyAccountPage extends StatelessWidget {
     );
   }
 
-  bidHistoryList(TextEditingController controller, {bool? autofocus}) {
+  bidHistoryList(TextEditingController controller,
+      {bool? autofocus, List<TextInputFormatter>? formatter, TextInputType? keyboardType}) {
     return RoundedCornerEditTextWithIcon(
       controller: controller,
       hintText: "",
       imagePath: "",
       height: Dimensions.h42,
-      keyboardType: TextInputType.text,
+      keyboardType: keyboardType ?? TextInputType.text,
       textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h15, fontWeight: FontWeight.w500),
       autofocus: autofocus,
-      formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))],
+      formatter: formatter ?? [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))],
     );
   }
 

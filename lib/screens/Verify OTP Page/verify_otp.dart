@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
@@ -23,11 +24,13 @@ class VerifyOTPPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
-      body: SafeArea(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: Get.height * 0.25),
             Center(
               child: SizedBox(
                 height: Dimensions.h100,
@@ -47,6 +50,7 @@ class VerifyOTPPage extends StatelessWidget {
               ),
             ),
             _buildOtpAndMpinForm(context),
+            SizedBox(height: Get.height * 0.2),
           ],
         ),
       ),
@@ -72,9 +76,7 @@ class VerifyOTPPage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.h12),
               child: GestureDetector(
-                onTap: () => controller.formattedTime.toString() != "0:00"
-                    ? null
-                    : controller.callResendOtpApi(),
+                onTap: () => controller.formattedTime.toString() != "0:00" ? null : controller.callResendOtpApi(),
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -88,8 +90,7 @@ class VerifyOTPPage extends StatelessWidget {
                       controller.formattedTime.toString() != "0:00"
                           ? TextSpan(
                               text: controller.formattedTime.toString(),
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
                                 color: AppColors.appbarColor,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.normal,
@@ -98,8 +99,7 @@ class VerifyOTPPage extends StatelessWidget {
                             )
                           : TextSpan(
                               text: "RESENDOTP".tr,
-                              style:
-                                  CustomTextStyle.textRobotoSansLight.copyWith(
+                              style: CustomTextStyle.textRobotoSansLight.copyWith(
                                 color: AppColors.appbarColor,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.normal,
@@ -166,10 +166,8 @@ class VerifyOTPPage extends StatelessWidget {
             length: pinCodeLength,
             obscureText: false,
             obscureCharacter: "",
-            textStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                color: AppColors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20),
+            textStyle: CustomTextStyle.textRobotoSansMedium
+                .copyWith(color: AppColors.black, fontWeight: FontWeight.bold, fontSize: 20),
             animationDuration: const Duration(milliseconds: 200),
             onComplete: (val) {
               pinType.value = val;

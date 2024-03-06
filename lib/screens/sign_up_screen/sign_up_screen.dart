@@ -19,6 +19,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(size.height);
     return Scaffold(
       //  resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -35,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: Get.height * 0.3),
+              SizedBox(height: Get.height * 0.15),
               SizedBox(
                 height: Dimensions.h150,
                 width: Dimensions.w200,
@@ -83,7 +84,7 @@ class SignUpScreen extends StatelessWidget {
                 height: Dimensions.h30,
                 width: double.infinity,
               ),
-              SizedBox(height: Get.height * 0.3),
+              SizedBox(height: Get.height * 0.1),
             ],
           ),
         ),

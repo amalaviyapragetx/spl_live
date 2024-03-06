@@ -5,7 +5,7 @@ final Map<String, String> enUs = {
   "WELCOMEBACK": "Welcome Back",
   "WELCOME": "Welcome",
   "SIGNIN": "Login",
-  "SIGNUP": "I'am a new user ,Register",
+  "SIGNUP": "I'am a new user, Register",
   "HELLO": "Hello",
   "OR": "OR",
   "DATE": "Date",

@@ -997,12 +997,7 @@ class HomeScreenUtils {
         Material(
           color: AppColors.black.withOpacity(0.4),
           child: Padding(
-            padding: EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              top: Dimensions.h95,
-              bottom: 60.0,
-            ),
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: Dimensions.h95, bottom: 60.0),
             child: Container(
               color: AppColors.white,
               width: double.infinity,
@@ -1024,10 +1019,7 @@ class HomeScreenUtils {
         Material(
           color: AppColors.transparent,
           child: Padding(
-            padding: EdgeInsets.only(
-              top: Dimensions.h87,
-              bottom: 8.0,
-            ),
+            padding: EdgeInsets.only(top: Dimensions.h87, bottom: 8.0),
             child: Align(
               alignment: Alignment.topRight,
               child: InkWell(
@@ -1040,10 +1032,7 @@ class HomeScreenUtils {
                     color: AppColors.white,
                     borderRadius: BorderRadius.circular(Dimensions.r10),
                   ),
-                  child: Icon(
-                    Icons.close,
-                    color: AppColors.redColor,
-                  ),
+                  child: Icon(Icons.close, color: AppColors.redColor),
                 ),
               ),
             ),
@@ -1055,7 +1044,7 @@ class HomeScreenUtils {
 
   Widget notificationWidget({required String notifiactionHeder, required String notifiactionSubTitle}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -1075,9 +1064,7 @@ class HomeScreenUtils {
             //mainAxisAlignment: MainAxisAlignment.start,
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: Dimensions.h5,
-              ),
+              SizedBox(height: Dimensions.h5),
               Text(
                 notifiactionHeder,
                 style: CustomTextStyle.textRobotoSansBold.copyWith(
@@ -1085,9 +1072,7 @@ class HomeScreenUtils {
                   fontSize: Dimensions.h14,
                 ),
               ),
-              SizedBox(
-                height: Dimensions.h5,
-              ),
+              SizedBox(height: Dimensions.h5),
               Align(
                 alignment: Alignment.topLeft,
                 child: SizedBox(

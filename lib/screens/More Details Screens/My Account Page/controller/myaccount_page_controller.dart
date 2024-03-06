@@ -24,12 +24,6 @@ class MyAccountPageController extends GetxController {
   int bankId = 0;
   var walletbalance = Get.put(WalletController());
 
-  @override
-  void onInit() {
-    fetchStoredUserDetailsAndGetBankDetailsByUserId();
-    super.onInit();
-  }
-
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
     final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);

@@ -2,7 +2,7 @@ class ApiUtils {
   // Spl Production
   // static String baseURL = "https://vishnulive.in:9869";
   // local url
-  static String baseURL = "http://192.168.29.143:8080";
+  static String baseURL = "http://192.168.29.153:8080";
   // static String baseURL = "http://10.0.0.201:8080";
 
   // endpoints
@@ -76,4 +76,6 @@ class ApiUtils {
   static String getWalletTransactionHistory = "$baseURL/payment/user";
   static String putWalletTransactionStatus = "$baseURL/payment/ReadPaymentNotification";
   static String getAllPackages = "$baseURL/payment/getAllPackages";
+  static String checkUserName = "$baseURL/user/checkUsername";
+  static String getApk = "$baseURL/public/apk/spl_live.apk";
 }

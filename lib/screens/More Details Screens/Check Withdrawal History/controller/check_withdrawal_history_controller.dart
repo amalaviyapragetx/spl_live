@@ -15,14 +15,9 @@ class CheckWithdrawalPageController extends GetxController {
   int? userId = 0;
 
   var walletController = Get.put(WalletController());
-  @override
-  void onInit() {
-    getUserData();
-    super.onInit();
-  }
 
   Future<void> getUserData() async {
-    var data = GetStorage().read(ConstantsVariables.userData);
+    final data = GetStorage().read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
     userId = userData.id;
     getWithdrawalHistoryByUserId(lazyLoad: false);
@@ -30,11 +25,7 @@ class CheckWithdrawalPageController extends GetxController {
   }
 
   void getWithdrawalHistoryByUserId({required bool lazyLoad}) async {
-    await ApiService()
-        .getWithdrawalHistoryByUserId(
-      userId: userId,
-    )
-        .then(
+    await ApiService().getWithdrawalHistoryByUserId(userId: userId).then(
       (value) async {
         if (value['status']) {
           if (value['data'] != null) {
@@ -48,9 +39,7 @@ class CheckWithdrawalPageController extends GetxController {
             // );
           }
         } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
       },
     );

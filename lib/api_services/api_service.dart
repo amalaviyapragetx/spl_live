@@ -1182,4 +1182,30 @@ class ApiService extends GetConnect implements GetxService {
       return null;
     }
   }
+
+  Future<dynamic> checkUserName({String? username}) async {
+    try {
+      AppUtils.showProgressDialog(isCancellable: false);
+      await initApiService();
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
+        ApiUtils.checkUserName,
+        query: {"username": username},
+        headers: headersWithToken,
+      );
+      if (response.status.hasError) {
+        AppUtils.hideProgressDialog();
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        AppUtils.hideProgressDialog();
+        return response.body;
+      }
+    } catch (e) {
+      AppUtils.hideProgressDialog();
+      print(e.toString());
+      return null;
+    }
+  }
 }

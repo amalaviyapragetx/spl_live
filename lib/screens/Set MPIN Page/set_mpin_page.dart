@@ -19,6 +19,11 @@ class SetMPINPage extends StatefulWidget {
 
 class _SetMPINPageState extends State<SetMPINPage> {
   final controller = Get.find<SetMPINPageController>();
+  @override
+  void initState() {
+    controller.getPublicIpAddress();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -34,6 +34,7 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
     this.hintTextStyle,
     this.autofocus = false,
     this.focusNode,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -61,6 +62,7 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
   Function()? onEditingComplete;
   Function(PointerDownEvent?)? onTapOutside;
   TextStyle? hintTextStyle;
+  Function(String)? onFieldSubmitted;
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -88,9 +90,7 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
           textAlign: textAlign ?? TextAlign.start,
           decoration: InputDecoration(
             contentPadding: contentPadding ??
-                (imagePath.isEmpty
-                    ? EdgeInsets.symmetric(horizontal: Dimensions.w12)
-                    : EdgeInsets.zero),
+                (imagePath.isEmpty ? EdgeInsets.symmetric(horizontal: Dimensions.w12) : EdgeInsets.zero),
             focusColor: AppColors.appbarColor,
             filled: true,
             fillColor: AppColors.grey.withOpacity(0.2),
@@ -112,12 +112,9 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: containerBackColor,
-                          borderRadius: BorderRadius.circular(50)),
+                      decoration: BoxDecoration(color: containerBackColor, borderRadius: BorderRadius.circular(50)),
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            top: Dimensions.h4, bottom: Dimensions.h4),
+                        padding: EdgeInsets.only(top: Dimensions.h4, bottom: Dimensions.h4),
                         child: SvgPicture.asset(
                           imagePath,
                           color: iconColor ?? AppColors.appbarColor,
@@ -129,6 +126,9 @@ class RoundedCornerEditTextWithIcon extends StatelessWidget {
                 : null,
           ),
           onChanged: onChanged,
+          onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
+          onTapOutside: onTapOutside,
         ),
       ),
     );

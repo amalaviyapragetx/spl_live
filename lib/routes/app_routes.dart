@@ -78,7 +78,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.splashScreen,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => SplashScreen(),
       bindings: [
         SplashScreenBinding(),
@@ -87,7 +87,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.walcomeScreen,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => WelcomeScreen(),
       bindings: [
         WelcomeScreenBinding(),
@@ -97,7 +97,7 @@ class AppRoutes {
       name: AppRoutName.dashBoardPage,
       transition: Transition.fadeIn,
       page: () => const DashBoardPage(),
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       bindings: [
         HomePageBindings(),
       ],
@@ -106,7 +106,7 @@ class AppRoutes {
       name: AppRoutName.transactionPage,
       transition: Transition.fadeIn,
       page: () => TransactionPage(),
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       bindings: [
         TransactionPageBindings(),
       ],
@@ -115,7 +115,7 @@ class AppRoutes {
       name: AppRoutName.notificationPage,
       transition: Transition.fadeIn,
       page: () => NotificationPage(),
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       bindings: [
         NotificationBinding(),
       ],
@@ -124,7 +124,7 @@ class AppRoutes {
       name: AppRoutName.gameModePage,
       transition: Transition.fadeIn,
       page: () => GameModePage(),
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       bindings: [
         GameModepageBinding(),
       ],
@@ -132,14 +132,14 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.signInPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => SignInScreen(),
       bindings: [SignInPageBinding()],
     ),
     GetPage(
       name: AppRoutName.signUnPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => SignUpScreen(),
       bindings: [SignUpPageBinding()],
     ),
@@ -148,7 +148,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.verifyOTPPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => VerifyOTPPage(),
       bindings: [
         VerifyOTPBinding(),
@@ -159,7 +159,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.userDetailsPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => UserDetailsPage(),
       bindings: [
         UserDetailsPageBinding(),
@@ -170,7 +170,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.setMPINPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => SetMPINPage(),
       bindings: [
         SetMPINPageBinding(),
@@ -181,7 +181,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.mPINPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => MPINPageView(),
       bindings: [
         MPINPageBinding(),
@@ -190,7 +190,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.forgotPasswordPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => ForgotPasswordPage(),
       bindings: [
         ForgotPasswordPageBindings(),
@@ -201,7 +201,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.resetPasswordPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => ResetPasswordPage(),
       bindings: [
         ResetPasswordBinding(),
@@ -212,7 +212,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.profilePage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => ProfilePage(),
       bindings: [
         MyProfilePageBindings(),
@@ -223,7 +223,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.singleAnkPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => SingleAnkPage(),
       bindings: [
         GamepageBinding(),
@@ -234,7 +234,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.selectedBidsPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => SelectedBidsPage(),
       bindings: [
         SelecteBidPageBinding(),
@@ -245,7 +245,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.sangamPages,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => SangamPages(),
       bindings: [
         SangamPageBindings(),
@@ -257,7 +257,7 @@ class AppRoutes {
       name: AppRoutName.starLineGameModesPage,
       transition: Transition.fadeIn,
       page: () => StarLineGameModesPage(),
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       bindings: [
         StarLineGameModesPageBindings(),
       ],
@@ -267,7 +267,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.starLineGamePage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => StarLineGamePage(),
       bindings: [
         StarLineGamePageBinding(),
@@ -278,7 +278,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.myAccountPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => MyAccountPage(),
       bindings: [
         MyAccountPageBinding(),
@@ -289,7 +289,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.gameRatePage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => GameRatePage(),
       bindings: [
         GameRatePageBinding(),
@@ -300,7 +300,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.notificationDetailsPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => NotificationDetailsPage(),
       bindings: [
         NotificationDetailsPageBindings(),
@@ -311,7 +311,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.withdrawalpage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => WithdrawalPage(),
       bindings: [
         WithdrawalPageBindings(),
@@ -322,7 +322,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.feedBackPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => GiveFeedbackPage(),
       bindings: [
         GiveFeedbackPageBinding(),
@@ -331,7 +331,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.stalineTerms,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => StarlineTermsPage(),
       bindings: [
         StarlineTermsPageBindig(),
@@ -342,13 +342,13 @@ class AppRoutes {
       name: AppRoutName.aboutPage,
       transition: Transition.fadeIn,
       page: () => AboutUsPage(),
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       bindings: [AboutUsPageBiding()],
     ),
     GetPage(
       name: AppRoutName.changePassPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => ChangePasswordPage(),
       bindings: [ChangePasswordPageBidings()],
     ),
@@ -357,7 +357,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.changeMpinPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => ChangeMpinPage(),
       bindings: [ChangeMpinPageBinding()],
     ),
@@ -366,14 +366,14 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.createWithDrawalPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => CreatewithDrawalPage(),
       bindings: [CreateWithDrawalPageBiding()],
     ),
     GetPage(
       name: AppRoutName.checkWithDrawalPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => CheckWithdrawalPage(),
       bindings: [CheckWithdrawalPageBinding()],
     ),
@@ -387,28 +387,28 @@ class AppRoutes {
     GetPage(
       name: AppRoutName.newGameModePage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => NewGameModePage(),
       bindings: [NewGamemodePageBindings()],
     ),
     GetPage(
       name: AppRoutName.newOddEvenPage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => NormalGamePage(),
       bindings: [NormalGamePageBindings()],
     ),
     GetPage(
       name: AppRoutName.starlineBidpage,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => StarlineBidsPage(),
       bindings: [StarlineBidsBidings()],
     ),
     GetPage(
       name: AppRoutName.newStarlineGames,
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 300),
       page: () => StarLineNewGamePage(),
       bindings: [StarlineNewGamePageBinding()],
     ),

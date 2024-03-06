@@ -117,9 +117,7 @@ class HomePageController extends GetxController {
           //     bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }

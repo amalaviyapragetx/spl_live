@@ -39,7 +39,7 @@ class UserDetailsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: Get.height * 0.2),
+                SizedBox(height: Get.height * 0.15),
                 Center(
                   child: SizedBox(
                     height: Dimensions.h70,
@@ -77,6 +77,10 @@ class UserDetailsPage extends StatelessWidget {
                   maxLength: 100,
                   keyboardType: TextInputType.text,
                   formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))],
+                  // onFieldSubmitted: (v) => controller.checkUserName(username: v),
+                  // onTapOutside: (v) {
+                  //   controller.checkUserName(username: controller.userNameController.text);
+                  // }
                   //  focusNode: controller.userNameFocusNode,
                 ),
                 SizedBox(height: Dimensions.h15),
@@ -142,6 +146,9 @@ class UserDetailsPage extends StatelessWidget {
     List<TextInputFormatter>? formatter,
     bool? autofocus,
     FocusNode? focusNode,
+    Function()? onEditingComplete,
+    Function(PointerDownEvent?)? onTapOutside,
+    Function(String)? onFieldSubmitted,
   }) {
     return RoundedCornerEditTextWithIcon(
       height: Dimensions.h40,
@@ -155,6 +162,9 @@ class UserDetailsPage extends StatelessWidget {
       maxLength: maxLength,
       formatter: formatter,
       focusNode: focusNode,
+      onEditingComplete: onEditingComplete,
+      onFieldSubmitted: onFieldSubmitted,
+      onTapOutside: onTapOutside,
       autofocus: autofocus ?? false,
       hintTextStyle: CustomTextStyle.textRobotoSansLight.copyWith(
         color: AppColors.grey,

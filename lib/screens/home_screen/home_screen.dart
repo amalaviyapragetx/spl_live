@@ -142,33 +142,36 @@ class _DashBoardPageState extends State<DashBoardPage> {
     );
   }
 
-  AlertDialog onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
-    return AlertDialog(
-      title: Text(
-        'Exit App',
-        style: CustomTextStyle.textRobotoSansBold,
+  Padding onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
+    return Padding(
+      padding: EdgeInsets.all(20.0),
+      child: AlertDialog(
+        title: Text(
+          'Exit App',
+          style: CustomTextStyle.textRobotoSansBold,
+        ),
+        content: Text('Are you sure you want to exit the app?', style: CustomTextStyle.textRobotoSansMedium),
+        actions: [
+          TextButton(
+            onPressed: onCancel,
+            child: Text(
+              'Cancel',
+              style: CustomTextStyle.textRobotoSansBold.copyWith(
+                color: AppColors.appbarColor,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: onExit,
+            child: Text(
+              'Exit',
+              style: CustomTextStyle.textRobotoSansBold.copyWith(
+                color: AppColors.redColor,
+              ),
+            ),
+          ),
+        ],
       ),
-      content: Text('Are you sure you want to exit the app?', style: CustomTextStyle.textRobotoSansMedium),
-      actions: [
-        TextButton(
-          onPressed: onCancel,
-          child: Text(
-            'Cancel',
-            style: CustomTextStyle.textRobotoSansBold.copyWith(
-              color: AppColors.appbarColor,
-            ),
-          ),
-        ),
-        TextButton(
-          onPressed: onExit,
-          child: Text(
-            'Exit',
-            style: CustomTextStyle.textRobotoSansBold.copyWith(
-              color: AppColors.redColor,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

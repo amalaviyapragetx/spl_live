@@ -71,11 +71,7 @@ class NormalGamePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    marketValue.value = argument["marketValue"];
-    gameMode.value = argument['gameMode'];
-    biddingType.value = argument['biddingType'];
-    marketName.value = argument['marketName'];
-    marketId = argument['marketId'];
+    getArguments();
   }
 
   checkType(index) {
@@ -90,6 +86,11 @@ class NormalGamePageController extends GetxController {
 
   void getArguments() async {
     await loadJsonFile();
+    marketValue.value = argument["marketValue"];
+    gameMode.value = argument['gameMode'];
+    biddingType.value = argument['biddingType'];
+    marketName.value = argument['marketName'];
+    marketId = argument['marketId'];
     // isBulkMode.value = argument['isBulkMode'];
     // marketData.value = argument['marketData'];
     // requestModel.value.dailyMarketId = marketData.value.id;
@@ -101,7 +102,6 @@ class NormalGamePageController extends GetxController {
     requestModel.value.dailyMarketId = marketId;
 
     RxBool showNumbersLine = false.obs;
-    RxList<String> suggestionList = <String>[].obs;
     List<String> _tempValidationList = [];
     switch (gameMode.value.name) {
       case "Choice Pana SPDP":
@@ -308,22 +308,14 @@ class NormalGamePageController extends GetxController {
   void createMarketBidApi() async {
     ApiService().createMarketBid(requestModel.toJson()).then((value) async {
       if (value['status']) {
-        // Get.back();
-        // Get.back();
+        Get.back();
+        Get.back();
         if (value['data'] == false) {
           selectedBidsList.clear();
-          Get.offAllNamed(
-            AppRoutName.gameModePage,
-            arguments: marketValue.value,
-          );
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          Get.offAndToNamed(AppRoutName.gameModePage, arguments: marketValue.value);
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         } else {
-          Get.offAllNamed(
-            AppRoutName.gameModePage,
-            arguments: marketValue.value,
-          );
+          Get.offAndToNamed(AppRoutName.gameModePage, arguments: marketValue.value);
           AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
           final walletController = Get.find<WalletController>();
           walletController.getUserBalance();

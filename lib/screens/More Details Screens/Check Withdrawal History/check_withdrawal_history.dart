@@ -12,11 +12,22 @@ import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import 'controller/check_withdrawal_history_controller.dart';
 
-class CheckWithdrawalPage extends StatelessWidget {
+class CheckWithdrawalPage extends StatefulWidget {
   CheckWithdrawalPage({super.key});
+
+  @override
+  State<CheckWithdrawalPage> createState() => _CheckWithdrawalPageState();
+}
+
+class _CheckWithdrawalPageState extends State<CheckWithdrawalPage> {
   final controller = Get.put<CheckWithdrawalPageController>(CheckWithdrawalPageController());
   final walletController = Get.put<WalletController>(WalletController());
   final homeCon = Get.find<HomePageController>();
+  @override
+  void initState() {
+    controller.getUserData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +35,7 @@ class CheckWithdrawalPage extends StatelessWidget {
       appBar: AppUtils().simpleAppbar(
         appBarTitle: "Withdrawal",
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(Icons.close),
-          )
-        ],
+        actions: [IconButton(onPressed: () => Get.back(), icon: const Icon(Icons.close))],
         leadingWidht: Dimensions.w130,
         leading: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -68,51 +74,34 @@ class CheckWithdrawalPage extends StatelessWidget {
   }
 
   withdrawalHistoryList() {
-    // return Obx(
-    //   () => controller.withdrawalRequestList.isEmpty
-    //       ? Center(
-    //           child: Text(
-    //             "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
-    //             style: CustomTextStyle.textPTsansMedium.copyWith(
-    //               fontSize: Dimensions.h13,
-    //               color: AppColors.black,
-    //             ),
-    //           ),
-    //         )
-    //       :
-    //   ListView.builder(
-    //           padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
-    //           itemCount: controller.withdrawalRequestList.length,
-    //           itemBuilder: (context, index) {
-    //             // var data = controller.marketHistoryList.elementAt(index);
-    //             // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
-    //             return listveiwTransaction(
-    //               requestId: controller.withdrawalRequestList[index].requestId.toString(),
-    //               requestProcessedAt: controller.withdrawalRequestList[index].requestProcessedAt.toString(),
-    //               requestTime: CommonUtils()
-    //                   .formatStringToDDMMMYYYYHHMMSSA(controller.withdrawalRequestList[index].requestTime.toString()),
-    //               requestedAmount: controller.withdrawalRequestList[index].requestedAmount.toString(),
-    //               status: controller.withdrawalRequestList[index].status.toString(),
-    //             );
-    //           },
-    //         ),
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
-      itemCount: controller.withdrawalRequestList.length,
-      itemBuilder: (context, index) {
-        // var data = controller.marketHistoryList.elementAt(index);
-        // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
-        return listveiwTransaction(
-          requestId: controller.withdrawalRequestList[index].requestId.toString(),
-          requestProcessedAt: controller.withdrawalRequestList[index].requestProcessedAt.toString(),
-          requestTime: CommonUtils()
-              .formatStringToDDMMMYYYYHHMMSSA(controller.withdrawalRequestList[index].requestTime.toString()),
-          requestedAmount: controller.withdrawalRequestList[index].requestedAmount.toString(),
-          status: controller.withdrawalRequestList[index].status.toString(),
-        );
-      },
+    return Obx(
+      () => controller.withdrawalRequestList.isEmpty
+          ? Center(
+              child: Text(
+                "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
+                style: CustomTextStyle.textPTsansMedium.copyWith(
+                  fontSize: Dimensions.h13,
+                  color: AppColors.black,
+                ),
+              ),
+            )
+          : ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+              itemCount: controller.withdrawalRequestList.length,
+              itemBuilder: (context, index) {
+                // var data = controller.marketHistoryList.elementAt(index);
+                // print(")))))))))))))))))))))))))))))))))))))))))))))))))) $data");
+                return listveiwTransaction(
+                  requestId: controller.withdrawalRequestList[index].requestId.toString(),
+                  requestProcessedAt: controller.withdrawalRequestList[index].requestProcessedAt.toString(),
+                  requestTime: CommonUtils()
+                      .formatStringToDDMMMYYYYHHMMSSA(controller.withdrawalRequestList[index].requestTime.toString()),
+                  requestedAmount: controller.withdrawalRequestList[index].requestedAmount.toString(),
+                  status: controller.withdrawalRequestList[index].status.toString(),
+                );
+              },
+            ),
     );
-    // );
   }
 
   withdrawalHistoryList2() {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ota_update/ota_update.dart';
+import 'package:spllive/api_services/api_urls.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -220,7 +221,7 @@ class SplashController extends GetxController {
             load.value = true;
             // launch("https://spl.live");
             try {
-              OtaUpdate().execute('http://192.168.29.46:8002/media/apk_files/spl_live.apk').listen(
+              OtaUpdate().execute(ApiUtils.getApk).listen(
                 (OtaEvent event) {
                   if (event.status == OtaStatus.DOWNLOADING) {
                     load.value = true;

@@ -5,6 +5,7 @@ import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/routes/app_routes_name.dart';
+
 import '../../components/simple_button_with_corner.dart';
 import 'controller/welcome_screen.dart';
 
@@ -13,68 +14,71 @@ class WelcomeScreen extends StatelessWidget {
   var controller = Get.put(WelcomeScreenController());
   @override
   Widget build(BuildContext context) {
-    var verticalSpace = SizedBox(
-      height: Dimensions.h10,
-    );
+    var verticalSpace = SizedBox(height: Dimensions.h10);
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimensions.w25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: Dimensions.h150,
-              width: Dimensions.h200,
-              child: Image.asset(
-                ConstantImage.splLogo,
-                fit: BoxFit.contain,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.w25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: Get.height * 0.2),
+              SizedBox(
+                height: Dimensions.h150,
+                width: Dimensions.h200,
+                child: Image.asset(
+                  ConstantImage.splLogo,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-            Text(
-              "Welcome",
-              style: CustomTextStyle.textRobotoSlabLight.copyWith(
-                fontSize: Dimensions.h25,
+              Text(
+                "Welcome",
+                style: CustomTextStyle.textRobotoSlabLight.copyWith(
+                  fontSize: Dimensions.h25,
+                  color: AppColors.appbarColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              verticalSpace,
+              verticalSpace,
+              RoundedCornerButton(
+                text: "SIGNIN".tr,
                 color: AppColors.appbarColor,
+                borderColor: AppColors.appbarColor,
+                fontSize: Dimensions.h12,
                 fontWeight: FontWeight.w500,
+                fontColor: AppColors.white,
+                letterSpacing: 0,
+                borderRadius: Dimensions.r25,
+                borderWidth: 1,
+                textStyle: CustomTextStyle.textRobotoSansLight,
+                onTap: () => Get.toNamed(AppRoutName.signInPage),
+                height: Dimensions.h30,
+                width: double.infinity,
               ),
-            ),
-            verticalSpace,
-            verticalSpace,
-            RoundedCornerButton(
-              text: "SIGNIN".tr,
-              color: AppColors.appbarColor,
-              borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h12,
-              fontWeight: FontWeight.w500,
-              fontColor: AppColors.white,
-              letterSpacing: 0,
-              borderRadius: Dimensions.r25,
-              borderWidth: 1,
-              textStyle: CustomTextStyle.textRobotoSansLight,
-              onTap: () => Get.toNamed(AppRoutName.signInPage),
-              height: Dimensions.h30,
-              width: double.infinity,
-            ),
-            verticalSpace,
-            orView(),
-            verticalSpace,
-            RoundedCornerButton(
-              text: "SIGNUP".tr,
-              color: AppColors.white,
-              borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h12,
-              fontWeight: FontWeight.w500,
-              fontColor: AppColors.appbarColor,
-              letterSpacing: 0,
-              borderRadius: Dimensions.r50,
-              borderWidth: 1,
-              textStyle: CustomTextStyle.textRobotoSansMedium,
-              onTap: () => Get.toNamed(AppRoutName.signUnPage),
-              height: Dimensions.h30,
-              width: double.infinity,
-            ),
-          ],
+              verticalSpace,
+              orView(),
+              verticalSpace,
+              RoundedCornerButton(
+                text: "SIGNUP".tr,
+                color: AppColors.white,
+                borderColor: AppColors.appbarColor,
+                fontSize: Dimensions.h12,
+                fontWeight: FontWeight.w500,
+                fontColor: AppColors.appbarColor,
+                letterSpacing: 0,
+                borderRadius: Dimensions.r50,
+                borderWidth: 1,
+                textStyle: CustomTextStyle.textRobotoSansMedium,
+                onTap: () => Get.toNamed(AppRoutName.signUnPage),
+                height: Dimensions.h30,
+                width: double.infinity,
+              ),
+              SizedBox(height: Get.height * 0.2),
+            ],
+          ),
         ),
       ),
     );

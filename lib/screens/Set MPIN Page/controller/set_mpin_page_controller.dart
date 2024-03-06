@@ -35,6 +35,13 @@ class SetMPINPageController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void dispose() {
+    focusNode1.dispose();
+    focusNode2.dispose();
+    super.dispose();
+  }
+
   void getArguments() {
     GetStorage().write(ConstantsVariables.starlineConnect, false);
     userDetails = arguments ?? UserDetails();
@@ -119,9 +126,7 @@ class SetMPINPageController extends GetxController {
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -139,11 +144,7 @@ class SetMPINPageController extends GetxController {
       "model": deviceInfo.model,
       "os": deviceInfo.deviceOs,
       "manufacturer": deviceInfo.manufacturer,
-      "city": city.value,
-      "country": country.value,
-      "state": state.value,
-      "street": street.value,
-      "postalCode": postalCode.value
+      "ipAddress": ip.value
     };
 
     return userDetailsBody;
@@ -158,12 +159,8 @@ class SetMPINPageController extends GetxController {
       "model": deviceInfo.model,
       "os": deviceInfo.deviceOs,
       "manufacturer": deviceInfo.manufacturer,
-      "city": city.value,
-      "country": country.value,
-      "state": state.value,
-      "street": street.value,
-      "postalCode": postalCode.value,
-      "userName": userName ?? ""
+      "userName": userName ?? "",
+      "ipAddress": ip.value
     };
 
     return userDetailsBody;
