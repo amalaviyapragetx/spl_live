@@ -59,11 +59,58 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Material(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              color: AppColors.appbarColor,
+              padding: const EdgeInsets.all(15.0),
+              child: SafeArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          ConstantImage.walletAppbar,
+                          height: 25,
+                          width: 30,
+                          color: AppColors.white,
+                        ),
+                        const SizedBox(width: 5),
+                        GetBuilder<WalletController>(
+                          builder: (con) => Flexible(
+                            child: Text(
+                              con.walletBalance.value,
+                              style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                fontSize: Dimensions.h16,
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "Add Fund",
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h20,
+                        ),
+                      ),
+                    ),
+                    const Expanded(child: SizedBox()),
+                  ],
+                ),
+              ),
+            ),
             SizedBox(height: Dimensions.h10),
             Padding(
               padding: const EdgeInsets.all(10.0),

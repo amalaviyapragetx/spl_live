@@ -225,7 +225,7 @@ final Map<String, String> enUs = {
   "WITHDRAWAL_TEXT4": "Deatils along with correct IFSC code in the bank details section is must",
   "WITHDRAWAL_TEXT5": "Minimum Withdrawal is Rs. 500/-",
   "CHECKWITHDRAWAL": "CREATE WITHDRAWAL REQUEST",
-  "CHECKHISTORY": "CHECK WITHDRAWAL HISTORY",
+  "CHECKHISTORY": "Create Withdrawal Request",
 
   // starline terms & conditions
   "STARLINE_TEXT": "1) SPL Starline is an independent market, it has nothing to do with other markets.",

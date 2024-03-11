@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
 import '../../helper_files/app_colors.dart';
@@ -15,6 +18,7 @@ class PassBook extends StatelessWidget {
   var verticalSpace = SizedBox(width: Dimensions.w3);
   var homeController = Get.put(HomePageController());
   var controller = Get.put(MoreListController());
+  final walletCon = Get.find<WalletController>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,17 +30,38 @@ class PassBook extends StatelessWidget {
             leadingWidht: 900,
             leading: SizedBox(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(width: Dimensions.w15),
-                  Text(
-                    "Passbook",
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      fontSize: Dimensions.h20,
-                      color: AppColors.white,
+                  SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    height: 25,
+                    width: 30,
+                    color: AppColors.white,
+                  ),
+                  SizedBox(width: Dimensions.w5),
+                  GetBuilder<WalletController>(
+                    builder: (con) => Flexible(
+                      child: Text(
+                        con.walletBalance.value,
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          fontSize: Dimensions.h16,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: Dimensions.w60),
+                  Center(
+                    child: Text(
+                      "Passbook",
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        fontSize: Dimensions.h20,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                   const Expanded(child: SizedBox()),
+                  SizedBox(width: Dimensions.w80),
                   GestureDetector(
                     onTap: () {
                       if (homeController.pageWidget.value == 3 && homeController.currentIndex.value == 3) {

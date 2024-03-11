@@ -47,4 +47,6 @@ class ConstantImage {
   static String bhim = "assets/images/bhim.png";
   static String amazon = "assets/images/amazon.png";
   static String sendWatchIcon = "assets/images/send_watch_icon.svg";
+  static String filter = "assets/images/filter.svg";
+  static String close = "assets/images/close.svg";
 }

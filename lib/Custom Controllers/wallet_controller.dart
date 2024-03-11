@@ -26,22 +26,22 @@ class WalletController extends GetxController {
       image: ConstantImage.withDrawalFundIcon,
       name: "Withdrawal Fund",
     ),
-    // FilterModel(
-    //   image: ConstantImage.withDrawalFundIcon,
-    //   name: "Add bank details",
-    // ),
+    FilterModel(
+      image: ConstantImage.withDrawalFundIcon,
+      name: "Add bank details",
+    ),
     FilterModel(
       image: ConstantImage.fundDepositIcon,
       name: "Fund deposit history",
     ),
-    // FilterModel(
-    //   image: ConstantImage.fundDepositIcon,
-    //   name: "Fund withdrawal history",
-    // ),
-    // FilterModel(
-    //   image: ConstantImage.withDrawalFundIcon,
-    //   name: "Bank Changes history",
-    // ),
+    FilterModel(
+      image: ConstantImage.fundDepositIcon,
+      name: "Fund withdrawal history",
+    ),
+    FilterModel(
+      image: ConstantImage.withDrawalFundIcon,
+      name: "Bank Changes history",
+    ),
   ].obs;
 
   @override

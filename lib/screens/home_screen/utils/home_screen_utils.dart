@@ -522,6 +522,7 @@ class HomeScreenUtils {
     );
   }
 
+  /// starline markets ........
   gridColumnForStarLine(size) {
     return Obx(() {
       return GridView.builder(

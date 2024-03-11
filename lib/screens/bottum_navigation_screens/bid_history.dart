@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+import 'package:spllive/screens/new_ui/bottom_bar_screens/set_filter.dart';
 
 import '../../helper_files/common_utils.dart';
 import '../../helper_files/constant_image.dart';
@@ -16,6 +18,7 @@ class BidHistory extends StatelessWidget {
   final String appbarTitle;
   var controller = Get.put(MoreListController());
   var homePageController = Get.put(HomePageController());
+  final walletCon = Get.find<WalletController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +26,41 @@ class BidHistory extends StatelessWidget {
     return Column(
       children: [
         AppUtils().simpleAppbar(
+          centerTitle: true,
           appBarTitle: "",
           leadingWidht: Dimensions.w200,
           leading: Row(
             children: [
+              SizedBox(width: Dimensions.w10),
+              SvgPicture.asset(
+                ConstantImage.walletAppbar,
+                height: 25,
+                width: 30,
+                color: AppColors.white,
+              ),
+              SizedBox(width: Dimensions.w5),
+              GetBuilder<WalletController>(
+                builder: (con) => Flexible(
+                  child: Text(
+                    con.walletBalance.value,
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                      fontSize: Dimensions.h16,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(width: Dimensions.w15),
               Text(
                 appbarTitle,
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h20, color: AppColors.white),
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h17, color: AppColors.white),
               ),
             ],
           ),
+          actions: [
+            InkWell(onTap: () => Get.to(() => SetFilter()), child: SvgPicture.asset(ConstantImage.filter)),
+            SizedBox(width: Dimensions.w10),
+          ],
         ),
         Expanded(
           child: bidHistoryList(),

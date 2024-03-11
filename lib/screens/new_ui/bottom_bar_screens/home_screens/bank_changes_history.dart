@@ -7,14 +7,14 @@ import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 
-class FundDipositHistory extends StatefulWidget {
-  const FundDipositHistory({super.key});
+class BankChangeHistory extends StatefulWidget {
+  const BankChangeHistory({super.key});
 
   @override
-  State<FundDipositHistory> createState() => _FundDipositHistoryState();
+  State<BankChangeHistory> createState() => _BankChangeHistoryState();
 }
 
-class _FundDipositHistoryState extends State<FundDipositHistory> {
+class _BankChangeHistoryState extends State<BankChangeHistory> {
   var walletCon = Get.find<WalletController>();
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
             children: [
               Container(
                 color: AppColors.appbarColor,
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15),
                 child: SafeArea(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +51,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                       const SizedBox(width: 10),
                       Text(
                         textAlign: TextAlign.center,
-                        "Fund deposit history",
+                        "Bank change history",
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.white,
                           fontSize: Dimensions.h17,
@@ -92,29 +92,9 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Amount: ₹20",
-                                        // "₹ ${walletCon.fundTransactionList[i].amount} ",
-                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                          color: AppColors.appbarColor,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "Deposit",
-                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
                                   children: [
                                     Text(
-                                      "Payment Mode",
+                                      "Account no.",
                                       style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                         color: AppColors.grey,
                                         fontSize: 15,
@@ -132,31 +112,68 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 8),
+                                SizedBox(height: 5),
                                 Row(
                                   children: [
+                                    Text(
+                                      "IFSC code",
+                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                        color: AppColors.grey,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
                                     Expanded(
-                                      child: RichText(
-                                        textAlign: TextAlign.start,
-                                        text: TextSpan(
-                                          text: "Order Id ",
-                                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                            fontSize: 15,
-                                            color: AppColors.grey,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                          children: [
-                                            TextSpan(
-                                              text: ""
-                                                  "               : 89878459565484984",
-                                              // text: "${walletCon.fundTransactionList[i].orderId}",
-                                              style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      child: Text(
+                                        ": UPI/Google pay",
+                                        // ":  ${walletCon.fundTransactionList[i].paymentMode}",
+                                        style: CustomTextStyle.textRobotoSansMedium
+                                            .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Account holder name",
+                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                        color: AppColors.grey,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Text(
+                                        ": UPI/Google pay",
+                                        // ":  ${walletCon.fundTransactionList[i].paymentMode}",
+                                        style: CustomTextStyle.textRobotoSansMedium
+                                            .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Bank name",
+                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                        color: AppColors.grey,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Text(
+                                        ": UPI/Google pay",
+                                        // ":  ${walletCon.fundTransactionList[i].paymentMode}",
+                                        style: CustomTextStyle.textRobotoSansMedium
+                                            .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
                                       ),
                                     ),
                                   ],

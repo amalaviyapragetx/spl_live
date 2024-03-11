@@ -7,14 +7,14 @@ import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 
-class FundDipositHistory extends StatefulWidget {
-  const FundDipositHistory({super.key});
+class FundWithdrawalHistory extends StatefulWidget {
+  const FundWithdrawalHistory({super.key});
 
   @override
-  State<FundDipositHistory> createState() => _FundDipositHistoryState();
+  State<FundWithdrawalHistory> createState() => _FundWithdrawalHistoryState();
 }
 
-class _FundDipositHistoryState extends State<FundDipositHistory> {
+class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
   var walletCon = Get.find<WalletController>();
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                       const SizedBox(width: 10),
                       Text(
                         textAlign: TextAlign.center,
-                        "Fund deposit history",
+                        "Fund withdrawal history",
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.white,
                           fontSize: Dimensions.h17,
@@ -65,7 +65,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                 child: ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   separatorBuilder: (context, index) => const SizedBox(height: 20),
                   itemCount: 10,
@@ -105,8 +105,9 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                       ),
                                     ),
                                     Text(
-                                      "Deposit",
-                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: 15),
+                                      "Withdrawal",
+                                      style: CustomTextStyle.textRobotoSansMedium
+                                          .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                                     ),
                                   ],
                                 ),
