@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/common_wallet_list.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
-import 'package:spllive/screens/fund_withdrawal_history.dart';
+import 'package:spllive/screens/fund_deposit_history.dart';
 import 'package:spllive/screens/home_screen/add_fund.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screens/add_bank_details.dart';
@@ -115,7 +115,7 @@ class _SPLWalletState extends State<SPLWallet> {
       case 2:
         return const AddBankDetails();
       case 3:
-        return const FundDipositHistory();
+        return FundDipositHistory();
       case 4:
         return const FundWithdrawalHistory();
       case 5:

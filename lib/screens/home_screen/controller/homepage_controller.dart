@@ -59,7 +59,6 @@ class HomePageController extends GetxController {
   RxList<Markets> starlineChartTime = <Markets>[].obs;
   UserDetailsModel userData = UserDetailsModel();
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
-  RxList<ResultArr> starLineMarketHistoryList = <ResultArr>[].obs;
   RxList<Rows> passBookModelData = <Rows>[].obs;
   RxList<Rows> passBookModelData2 = <Rows>[].obs;
   RxInt passbookCount = 0.obs;

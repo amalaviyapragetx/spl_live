@@ -22,7 +22,6 @@ class BidHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         AppUtils().simpleAppbar(
@@ -38,27 +37,26 @@ class BidHistory extends StatelessWidget {
                 width: 30,
                 color: AppColors.white,
               ),
-              SizedBox(width: Dimensions.w5),
+              SizedBox(width: Dimensions.w2),
               GetBuilder<WalletController>(
-                builder: (con) => Flexible(
-                  child: Text(
-                    con.walletBalance.value,
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      fontSize: Dimensions.h16,
-                      color: AppColors.white,
-                    ),
-                  ),
+                builder: (con) => Text(
+                  con.walletBalance.value,
+                  style:
+                      CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h16, color: AppColors.white),
                 ),
               ),
-              SizedBox(width: Dimensions.w15),
+              // SizedBox(width: Dimensions.w20),
               Text(
                 appbarTitle,
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h17, color: AppColors.white),
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  fontSize: Dimensions.h17,
+                  color: AppColors.white,
+                ),
               ),
             ],
           ),
           actions: [
-            InkWell(onTap: () => Get.to(() => SetFilter()), child: SvgPicture.asset(ConstantImage.filter)),
+            InkWell(onTap: () => Get.to(() => const SetFilter()), child: SvgPicture.asset(ConstantImage.filter)),
             SizedBox(width: Dimensions.w10),
           ],
         ),
@@ -82,10 +80,7 @@ class BidHistory extends StatelessWidget {
               ),
             )
           : ListView.builder(
-              padding: EdgeInsets.symmetric(
-                vertical: 5,
-                horizontal: Dimensions.h10,
-              ),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
               itemCount: homePageController.marketBidHistoryList.length,
               itemBuilder: (context, index) {
                 var data = homePageController.marketBidHistoryList[index];

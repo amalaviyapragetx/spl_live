@@ -1,70 +1,130 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/common_utils.dart';
+import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
+import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/screens/bottum_navigation_screens/controller/bottum_navigation_controller.dart';
+import 'package:spllive/screens/new_ui/bottom_bar_screens/set_filter.dart';
 
-class BidHistory extends StatefulWidget {
-  const BidHistory({super.key});
+class BidHistoryNew extends StatefulWidget {
+  const BidHistoryNew({super.key});
 
   @override
-  State<BidHistory> createState() => _BidHistoryState();
+  State<BidHistoryNew> createState() => _BidHistoryNewState();
 }
 
-class _BidHistoryState extends State<BidHistory> {
-  var controller = Get.put(HomePageController());
+class _BidHistoryNewState extends State<BidHistoryNew> {
+  var controller = Get.put(MoreListController());
+
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.marketHistoryList.isEmpty
-          ? Container(
-              height: Dimensions.h35,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.grey.shade300,
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 0.2,
-                    color: AppColors.grey,
-                    blurRadius: 1,
-                    offset: const Offset(0, 2),
-                  )
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  "NOBIDHISTORY".tr,
-                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                    fontSize: Dimensions.h16,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey.shade600,
+      () => controller.marketBidHistoryList.isEmpty
+          ? Column(
+              children: [
+                AppUtils().simpleAppbar(
+                  centerTitle: true,
+                  appBarTitle: "",
+                  leadingWidht: Dimensions.w200,
+                  leading: Row(
+                    children: [
+                      SizedBox(width: Dimensions.w10),
+                      SvgPicture.asset(
+                        ConstantImage.walletAppbar,
+                        height: 25,
+                        width: 30,
+                        color: AppColors.white,
+                      ),
+                      SizedBox(width: Dimensions.w2),
+                      GetBuilder<WalletController>(
+                        builder: (con) => Text(
+                          con.walletBalance.value,
+                          style: CustomTextStyle.textRobotoSansMedium
+                              .copyWith(fontSize: Dimensions.h16, color: AppColors.white),
+                        ),
+                      ),
+                      // SizedBox(width: Dimensions.w20),
+                      Text(
+                        "Bid History",
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          fontSize: Dimensions.h17,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
                   ),
+                  actions: [
+                    InkWell(
+                        onTap: () => Get.to(() => const SetFilter()), child: SvgPicture.asset(ConstantImage.filter)),
+                    SizedBox(width: Dimensions.w10),
+                  ],
                 ),
-              ),
+                // Expanded(
+                //   child: bidHistoryList(),
+                // ),
+              ],
             )
           : ListView.builder(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
-              itemCount: controller.marketHistoryList.length,
+              itemCount: controller.marketBidHistoryList.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return listveiwTransaction(
-                  isWin: controller.marketHistoryList[index].isWin ?? false,
-                  requestId: controller.marketHistoryList[index].requestId ?? "",
+                  isWin: controller.marketBidHistoryList[index].isWin ?? false,
+                  requestId: controller.marketBidHistoryList[index].requestId ?? "",
                   bidTime: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
-                      controller.marketHistoryList[index].bidTime.toString()),
-                  ballance: " ${controller.marketHistoryList[index].balance.toString()} ",
-                  coins: controller.marketHistoryList[index].coins.toString(),
+                      controller.marketBidHistoryList[index].bidTime.toString()),
+                  ballance: " ${controller.marketBidHistoryList[index].balance.toString()} ",
+                  coins: controller.marketBidHistoryList[index].coins.toString(),
                   bidNumber:
-                      "${controller.marketHistoryList[index].gameMode ?? ""} ${controller.marketHistoryList[index].bidNo ?? ""}",
-                  marketName: controller.marketHistoryList[index].marketName ?? "00:00 AM",
+                      "${controller.marketBidHistoryList[index].gameMode ?? ""} ${controller.marketBidHistoryList[index].bidNo ?? ""}",
+                  marketName: controller.marketBidHistoryList[index].marketName ?? "00:00 AM",
                 );
               },
             ),
     );
   }
+  // bidHistoryList() {
+  //   return Obx(
+  //         () => homePageController.marketBidHistoryList.isEmpty
+  //         ? Center(
+  //       child: Text(
+  //         "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
+  //         style: CustomTextStyle.textPTsansMedium.copyWith(
+  //           fontSize: Dimensions.h13,
+  //           color: AppColors.black,
+  //         ),
+  //       ),
+  //     )
+  //         : ListView.builder(
+  //       padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+  //       itemCount: homePageController.marketBidHistoryList.length,
+  //       itemBuilder: (context, index) {
+  //         var data = homePageController.marketBidHistoryList[index];
+  //         return listveiwTransactionNew(
+  //           requestId: "RequestId :  ${data.requestId ?? ""}",
+  //           isWin: data.isWin ?? false,
+  //           bidNo: data.bidNo.toString(),
+  //           ballance: data.balance.toString(),
+  //           coins: data.coins.toString(),
+  //           closeTime: CommonUtils().formatStringToHHMMA(data.closeTime ?? ""),
+  //           openTime: CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
+  //           transactiontype: data.marketName.toString(),
+  //           timeDate: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(data.bidTime.toString()),
+  //           marketName: data.transactionType ?? "",
+  //           gameMode: data.gameMode ?? "",
+  //           bidType: data.bidType ?? "",
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 }
 
 Widget listveiwTransaction({

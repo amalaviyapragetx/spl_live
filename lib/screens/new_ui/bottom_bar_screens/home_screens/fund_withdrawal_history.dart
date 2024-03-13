@@ -32,7 +32,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
             children: [
               Container(
                 color: AppColors.appbarColor,
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(10),
                 child: SafeArea(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +65,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                 child: ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   separatorBuilder: (context, index) => const SizedBox(height: 20),
                   itemCount: 10,
@@ -96,7 +96,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Amount: ₹20",
+                                        "₹20",
                                         // "₹ ${walletCon.fundTransactionList[i].amount} ",
                                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                           color: AppColors.appbarColor,
@@ -115,9 +115,9 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                 Row(
                                   children: [
                                     Text(
-                                      "Payment Mode",
+                                      "Request Id",
                                       style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                        color: AppColors.grey,
+                                        color: AppColors.textColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -125,7 +125,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: Text(
-                                        ": UPI/Google pay",
+                                        "     : 89878459565484984",
                                         // ":  ${walletCon.fundTransactionList[i].paymentMode}",
                                         style: CustomTextStyle.textRobotoSansMedium
                                             .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
@@ -140,16 +140,16 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                       child: RichText(
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
-                                          text: "Order Id ",
+                                          text: "Remarks",
                                           style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                             fontSize: 15,
-                                            color: AppColors.grey,
-                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                           children: [
                                             TextSpan(
-                                              text: ""
-                                                  "               : 89878459565484984",
+                                              text:
+                                                  " : Your withdrawal request is approved and amount is credited to bank account ending with 8569",
                                               // text: "${walletCon.fundTransactionList[i].orderId}",
                                               style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                                 color: AppColors.black,
@@ -178,7 +178,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  SvgPicture.asset(ConstantImage.clockSvg, height: 15),
+                                  SvgPicture.asset(ConstantImage.clockSvg, height: 18),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Text(

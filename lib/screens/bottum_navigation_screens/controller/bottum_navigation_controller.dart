@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/models/market_bid_history.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
@@ -13,17 +15,23 @@ import '../../../models/normal_market_bid_history_response_model.dart';
 class MoreListController extends GetxController {
   UserDetailsModel userData = UserDetailsModel();
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
+  RxList<MarketBidHistoryList> marketBidHistoryList = <MarketBidHistoryList>[].obs;
   RxBool isStarline = false.obs;
   int offset = 0;
   RxString walletBalance = "00".obs;
   double ratingValue = 0.00;
   RxBool isSharing = false.obs;
+  DateTime startEndDate = DateTime.now();
   @override
   void onInit() {
     getUserData();
     walletBalance.refresh();
     getUserBalance();
     walletBalance.refresh();
+    getMarketBidsByUserId(
+        lazyLoad: false,
+        endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
+        startDate: DateFormat('yyyy-MM-dd').format(startEndDate));
     super.onInit();
   }
 
@@ -124,5 +132,35 @@ class MoreListController extends GetxController {
     if (isSharing.value) {
       Share.share("http://spl.live");
     }
+  }
+
+  void getMarketBidsByUserId({
+    required bool lazyLoad,
+    required String startDate,
+    required String endDate,
+  }) {
+    ApiService()
+        .getBidHistoryByUserId(
+      userId: userData.id.toString(),
+      startDate: startDate,
+      endDate: endDate,
+      limit: "5000",
+      offset: offset.toString(),
+      isStarline: false,
+    )
+        .then(
+      (value) async {
+        if (value['status']) {
+          if (value['data'] != null) {
+            NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
+            lazyLoad
+                ? marketBidHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
+                : marketBidHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
+          }
+        } else {
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        }
+      },
+    );
   }
 }

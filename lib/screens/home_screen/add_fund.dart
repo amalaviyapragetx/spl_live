@@ -67,7 +67,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
           children: [
             Container(
               color: AppColors.appbarColor,
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10),
               child: SafeArea(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

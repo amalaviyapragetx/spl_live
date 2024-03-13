@@ -40,17 +40,15 @@ class PassBook extends StatelessWidget {
                   ),
                   SizedBox(width: Dimensions.w5),
                   GetBuilder<WalletController>(
-                    builder: (con) => Flexible(
-                      child: Text(
-                        con.walletBalance.value,
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          fontSize: Dimensions.h16,
-                          color: AppColors.white,
-                        ),
+                    builder: (con) => Text(
+                      con.walletBalance.value,
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        fontSize: Dimensions.h16,
+                        color: AppColors.white,
                       ),
                     ),
                   ),
-                  SizedBox(width: Dimensions.w60),
+                  SizedBox(width: Dimensions.w10),
                   Center(
                     child: Text(
                       "Passbook",

@@ -4,11 +4,12 @@ import 'package:spllive/api_services/api_service.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/banner_model.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
-import 'package:spllive/screens/bottum_navigation_screens/bid_history.dart';
 import 'package:spllive/screens/bottum_navigation_screens/moreoptions.dart';
 import 'package:spllive/screens/bottum_navigation_screens/passbook_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screen.dart';
+
+import '../screens/new_ui/bottom_bar_screens/bid_history_new.dart';
 
 class HomeController extends GetxController {
   RxInt currentIndex = 0.obs;
@@ -16,12 +17,13 @@ class HomeController extends GetxController {
   final notificationCount = Rxn<int>();
   RxList<BannerData> bannerData = <BannerData>[].obs;
   RxList<MarketData> normalMarketList = <MarketData>[].obs;
+
   getDashBoardPages(index) {
     switch (index) {
       case 0:
         return const HomeScreen();
       case 1:
-        return BidHistory(appbarTitle: 'Bid History');
+        return BidHistoryNew();
       case 2:
         return SPLWallet();
       case 3:

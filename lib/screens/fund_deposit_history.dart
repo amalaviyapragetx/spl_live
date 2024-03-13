@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -15,7 +16,9 @@ class FundDipositHistory extends StatefulWidget {
 }
 
 class _FundDipositHistoryState extends State<FundDipositHistory> {
-  var walletCon = Get.find<WalletController>();
+  final walletCon = Get.find<WalletController>();
+  final homeCon = Get.find<HomeController>();
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +35,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
             children: [
               Container(
                 color: AppColors.appbarColor,
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(10),
                 child: SafeArea(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +45,8 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                         children: [
                           InkWell(
                               onTap: () {
-                                Get.back();
+                                homeCon.pageWidget.value = 2;
+                                homeCon.currentIndex.value = 2;
                               },
                               child: Icon(Icons.arrow_back, color: AppColors.white)),
                           const SizedBox(width: 5),
@@ -96,7 +100,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Amount: ₹20",
+                                        "₹20",
                                         // "₹ ${walletCon.fundTransactionList[i].amount} ",
                                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                           color: AppColors.appbarColor,
@@ -116,7 +120,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                     Text(
                                       "Payment Mode",
                                       style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                        color: AppColors.grey,
+                                        color: AppColors.textColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -142,7 +146,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                           text: "Order Id ",
                                           style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                             fontSize: 15,
-                                            color: AppColors.grey,
+                                            color: AppColors.textColor,
                                             fontWeight: FontWeight.w400,
                                           ),
                                           children: [
@@ -177,7 +181,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  SvgPicture.asset(ConstantImage.clockSvg, height: 15),
+                                  SvgPicture.asset(ConstantImage.clockSvg, height: 18),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Text(

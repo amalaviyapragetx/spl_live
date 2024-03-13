@@ -4,13 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/controller/home_controller.dart';
+import 'package:spllive/controller/starline_market_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/screens/home_screen/add_fund.dart';
 import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screens/normal_markets.dart';
-import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screens/starline_markets.dart';
+import 'package:spllive/screens/new_ui/bottom_bar_screens/starline%20market/starline_markets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final homeCon = Get.find<HomeController>();
+  final starlineCon = Get.find<StarlineMarketController>();
   @override
   void initState() {
     super.initState();
@@ -164,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: () => Get.to(() => StarlineMarketList()),
+                    onTap: () => Get.to(() => StarlineDailyMarketData()),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(

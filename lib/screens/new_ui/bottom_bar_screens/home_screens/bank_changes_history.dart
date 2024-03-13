@@ -32,7 +32,7 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
             children: [
               Container(
                 color: AppColors.appbarColor,
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: SafeArea(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,6 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
                   shrinkWrap: true,
                   separatorBuilder: (context, index) => const SizedBox(height: 20),
                   itemCount: 10,
-                  // walletCon.fundTransactionList.length,
                   itemBuilder: (context, i) {
                     return Container(
                       decoration: BoxDecoration(
@@ -93,12 +92,14 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
                               children: [
                                 Row(
                                   children: [
-                                    Text(
-                                      "Account no.",
-                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                        color: AppColors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
+                                    Expanded(
+                                      child: Text(
+                                        "Account no.",
+                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                          color: AppColors.textColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(width: 10),
@@ -112,37 +113,17 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 5),
+                                // SizedBox(height: 5),
                                 Row(
                                   children: [
-                                    Text(
-                                      "IFSC code",
-                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                        color: AppColors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
                                     Expanded(
                                       child: Text(
-                                        ": UPI/Google pay",
-                                        // ":  ${walletCon.fundTransactionList[i].paymentMode}",
-                                        style: CustomTextStyle.textRobotoSansMedium
-                                            .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Account holder name",
-                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                        color: AppColors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
+                                        "IFSC code",
+                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                          color: AppColors.textColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(width: 10),
@@ -159,12 +140,38 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
                                 const SizedBox(height: 5),
                                 Row(
                                   children: [
-                                    Text(
-                                      "Bank name",
-                                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                        color: AppColors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
+                                    Expanded(
+                                      child: Text(
+                                        "Account holder name",
+                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                          color: AppColors.textColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Text(
+                                        ": UPI/Google pay",
+                                        // ":  ${walletCon.fundTransactionList[i].paymentMode}",
+                                        style: CustomTextStyle.textRobotoSansMedium
+                                            .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Bank name",
+                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                          color: AppColors.textColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(width: 10),
@@ -194,7 +201,7 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  SvgPicture.asset(ConstantImage.clockSvg, height: 15),
+                                  SvgPicture.asset(ConstantImage.clockSvg, height: 18),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Text(

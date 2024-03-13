@@ -7,6 +7,8 @@ class AppColors {
   static Color black = Colors.black;
   static Color blueAccent = Colors.blueAccent;
   static Color appbarColor = const Color(0xFF2A5AAD);
+  static Color textColor = const Color(0xFF777777);
+
   static Color blueButton = const Color.fromARGB(255, 42, 90, 173);
   static Color buttonColorDarkGreen = const Color.fromARGB(255, 23, 123, 25);
   static Color buttonColorOrange = const Color.fromARGB(255, 254, 69, 2);

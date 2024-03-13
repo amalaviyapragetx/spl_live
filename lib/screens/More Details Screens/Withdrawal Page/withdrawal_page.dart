@@ -24,7 +24,7 @@ class WithdrawalPage extends StatelessWidget {
           children: [
             Container(
               color: AppColors.appbarColor,
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10),
               child: SafeArea(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +174,7 @@ class WithdrawalPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                " 500",
+                                " 500/-",
                                 style: CustomTextStyle.textRobotoSansLight.copyWith(
                                   color: AppColors.black,
                                   fontSize: Dimensions.h14,
@@ -196,9 +196,7 @@ class WithdrawalPage extends StatelessWidget {
                                     fontSize: Dimensions.h18,
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
+                                const SizedBox(width: 10),
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 6.0),
@@ -207,7 +205,7 @@ class WithdrawalPage extends StatelessWidget {
                                       "Withdrawal request processing time minimum 60 min to 24 Hrs ",
                                       style: CustomTextStyle.textRobotoSansLight.copyWith(
                                         color: AppColors.black,
-                                        fontSize: Dimensions.h14,
+                                        fontSize: Dimensions.h13,
                                       ),
                                     ),
                                   ),
@@ -248,9 +246,7 @@ class WithdrawalPage extends StatelessWidget {
                     //     ],
                     //   ),
                     // ),
-                    SizedBox(
-                      height: Dimensions.h10,
-                    ),
+                    SizedBox(height: Dimensions.h10),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
                       child: Row(
@@ -262,8 +258,8 @@ class WithdrawalPage extends StatelessWidget {
                               color: AppColors.wpColor1,
                               borderColor: AppColors.wpColor1,
                               fontSize: Dimensions.h13,
-                              fontWeight: FontWeight.w500,
-                              fontColor: AppColors.white,
+                              fontWeight: FontWeight.w600,
+                              fontColor: AppColors.black,
                               letterSpacing: 0.5,
                               borderRadius: Dimensions.r3,
                               borderWidth: 0,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/doubletap_exitcontroller.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/app_colors.dart';
@@ -8,6 +10,7 @@ import 'package:spllive/helper_files/common_textfield_border.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/screens/More%20Details%20Screens/My%20Account%20Page/controller/myaccount_page_controller.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 
 class AddBankDetails extends StatefulWidget {
@@ -21,6 +24,15 @@ class _AddBankDetailsState extends State<AddBankDetails> {
   final homeCon = Get.put(HomePageController());
   final walletCon = Get.find<WalletController>();
   // var walletCon = Get.find<WalletController>();
+
+  final controller = Get.put<MyAccountPageController>(MyAccountPageController());
+  final exitController = Get.put<DoubleTapExitController>(DoubleTapExitController());
+  @override
+  void initState() {
+    controller.fetchStoredUserDetailsAndGetBankDetailsByUserId();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -31,7 +43,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
           children: [
             Container(
               color: AppColors.appbarColor,
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10),
               child: SafeArea(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +53,6 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                       children: [
                         InkWell(
                             onTap: () {
-                              Get.back();
                               Get.back();
                             },
                             child: Icon(Icons.arrow_back, color: AppColors.white)),
@@ -64,13 +75,16 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                 ),
               ),
             ),
-            CommonTextFieldBorder(
-              hintText: "Account No.",
-              keyBoardType: TextInputType.number,
+            Obx(
+              () => CommonTextFieldBorder(
+                hintText: controller.accountNumber.value ?? "Abc",
+                keyBoardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              ),
             ),
-            CommonTextFieldBorder(hintText: "IFSC Code"),
-            CommonTextFieldBorder(hintText: "Account Holder Name"),
-            CommonTextFieldBorder(hintText: "Bank Name"),
+            Obx(() => CommonTextFieldBorder(hintText: controller.ifcsCode.value)),
+            Obx(() => CommonTextFieldBorder(hintText: controller.accountName.value)),
+            Obx(() => CommonTextFieldBorder(hintText: controller.bankName.value)),
             const SizedBox(height: 15),
             RoundedCornerButton(
               text: "SUBMIT",
