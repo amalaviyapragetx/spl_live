@@ -111,10 +111,7 @@ class HomePageController extends GetxController {
       if (value['status']) {
         GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
         notificationData.value = model.data!.rows as List<NotificationData>;
-        if (model.message!.isNotEmpty) {
-          // AppUtils.showSuccessSnackBar(
-          //     bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
-        }
+        if (model.message!.isNotEmpty) {}
       } else {
         AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
@@ -925,4 +922,27 @@ class HomePageController extends GetxController {
       }
     });
   }
+
+  RxList<TicketModel> newTicketsList = <TicketModel>[].obs;
+  void getTickets() async {
+    ApiService().getTickets().then((value) async {
+      debugPrint("benner Response Api ------------- :- $value");
+      if (value['status']) {
+        List data = value['data'];
+        for (int i = 0; i < data.length; i++) {
+          newTicketsList.add(TicketModel(name: data[i], isSelected: false.obs));
+        }
+        print(newTicketsList);
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+      }
+    });
+  }
+}
+
+class TicketModel {
+  String? name;
+  RxBool isSelected = false.obs;
+
+  TicketModel({this.name, required this.isSelected});
 }

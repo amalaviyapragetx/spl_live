@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/models/BankHistory.dart';
 import 'package:spllive/models/FundTransactionModel.dart';
+import 'package:spllive/models/commun_models/user_details_model.dart';
 import 'package:spllive/models/filter_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -63,14 +67,17 @@ class WalletController extends GetxController {
     });
   }
 
-  // void getTransactionSuccess({int? transactionId}) {
-  //   ApiService().getTransactionSuccess(transactionId: transactionId).then((value) async {
-  //     if (value['status']) {
-  //     } else {
-  //       AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-  //     }
-  //   });
-  // }
+  RxList<BankHistoryData> bankHistoryData = <BankHistoryData>[].obs;
+  void getBankHistory() {
+    UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
+    ApiService().getBankHistory(id: userData.id.toString()).then((value) async {
+      if (value?.status ?? false) {
+        bankHistoryData.value = value?.data ?? [];
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
+      }
+    });
+  }
 
   // transaction
 

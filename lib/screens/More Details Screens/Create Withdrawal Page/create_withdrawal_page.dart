@@ -12,9 +12,15 @@ import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 
 // ignore: must_be_immutable
-class CreatewithDrawalPage extends StatelessWidget {
+class CreatewithDrawalPage extends StatefulWidget {
   CreatewithDrawalPage({super.key});
-  var controller = Get.put(CreateWithDrawalPageController());
+
+  @override
+  State<CreatewithDrawalPage> createState() => _CreatewithDrawalPageState();
+}
+
+class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
+  final controller = Get.put(CreateWithDrawalPageController());
 
   @override
   Widget build(BuildContext context) {
@@ -68,28 +74,27 @@ class CreatewithDrawalPage extends StatelessWidget {
                   listTileDetails(text: "IFSC_TEXT".tr, value: controller.ifcsCode.value),
                   SizedBox(height: Dimensions.h10),
                   SizedBox(height: Dimensions.h10),
-                  controller.bankName.value != ""
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                          child: RoundedCornerButton(
-                            text: "CONTINUE".tr,
-                            color: AppColors.appbarColor,
-                            borderColor: AppColors.appbarColor,
-                            fontSize: Dimensions.h15,
-                            fontWeight: FontWeight.w500,
-                            fontColor: AppColors.white,
-                            letterSpacing: 0,
-                            borderRadius: Dimensions.r25,
-                            borderWidth: 1,
-                            textStyle: CustomTextStyle.textRobotoSlabBold,
-                            onTap: () {
-                              controller.createWithdrawalRequest();
-                            },
-                            height: Dimensions.h35,
-                            width: double.infinity,
-                          ),
-                        )
-                      : Container(),
+                  if (controller.bankName.value != "")
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      child: RoundedCornerButton(
+                        text: "CONTINUE".tr,
+                        color: AppColors.appbarColor,
+                        borderColor: AppColors.appbarColor,
+                        fontSize: Dimensions.h15,
+                        fontWeight: FontWeight.w500,
+                        fontColor: AppColors.white,
+                        letterSpacing: 0,
+                        borderRadius: Dimensions.r25,
+                        borderWidth: 1,
+                        textStyle: CustomTextStyle.textRobotoSlabBold,
+                        onTap: () => controller.createWithdrawalRequest(),
+                        height: Dimensions.h35,
+                        width: double.infinity,
+                      ),
+                    )
+                  else
+                    Container(),
                   SizedBox(height: Dimensions.h30),
                   Obx(
                     () => controller.bankName.value == "" || controller.bankName.value.isEmpty
@@ -104,9 +109,7 @@ class CreatewithDrawalPage extends StatelessWidget {
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    Get.offAndToNamed(AppRoutName.myAccountPage);
-                                  },
+                                  onTap: () => Get.offAndToNamed(AppRoutName.myAccountPage),
                                   child: Text(
                                     "Click Here",
                                     style: CustomTextStyle.textRobotoSansMedium.copyWith(
@@ -163,33 +166,6 @@ class CreatewithDrawalPage extends StatelessWidget {
   }
 
   // AlertDialog onExitAlert(BuildContext context,
-  //     {required Function() onCancel}) {
-  //   return AlertDialog(
-  //     content:
-  //         Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium),
-  //     actions: [
-  //       Center(
-  //         child: InkWell(
-  //           onTap: onCancel,
-  //           child: Container(
-  //             height: Dimensions.h40,
-  //             width: Dimensions.w150,
-  //             color: AppColors.appbarColor,
-  //             child: Center(
-  //               child: Text(
-  //                 'Ok',
-  //                 style: CustomTextStyle.textRobotoSansBold.copyWith(
-  //                   color: AppColors.white,
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   Padding listTileDetails({required String text, required String value}) {
     return Padding(
       padding: EdgeInsets.all(Dimensions.w8),

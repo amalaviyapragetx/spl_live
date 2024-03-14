@@ -61,7 +61,7 @@ class CommonTextFieldBorder extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(Dimensions.w10),
       child: TextFormField(
-        style: CustomTextStyle.textPTsansBold,
+        style: CustomTextStyle.textRobotoSansBold,
         maxLines: maxLine ?? 1,
         controller: con,
         keyboardType: keyBoardType,
@@ -83,12 +83,12 @@ class CommonTextFieldBorder extends StatelessWidget {
           prefixIcon: prefix,
           labelText: labelText,
           suffixIcon: suffix,
-          labelStyle: TextStyle(
+          labelStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
             color: hintTextColor ?? AppColors.black,
             fontWeight: hintTextFontWeight ?? FontWeight.w700,
             fontSize: hintTextFontSize ?? 14,
           ),
-          hintStyle: TextStyle(
+          hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
             color: hintTextColor ?? AppColors.black,
             fontWeight: hintTextFontWeight ?? FontWeight.w600,
             fontSize: hintTextFontSize ?? 18,

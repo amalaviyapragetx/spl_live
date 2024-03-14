@@ -101,7 +101,9 @@ class StarLineGamePageController extends GetxController {
   }
 
   Future<void> getArguments() async {
-    bidList = GetStorage().read(ConstantsVariables.starlineBidsList);
+    if (GetStorage().read(ConstantsVariables.starlineBidsList) != null) {
+      bidList.value = GetStorage().read(ConstantsVariables.starlineBidsList);
+    }
     gameMode.value = argument['gameMode'];
     marketData.value = argument['marketData'];
     getBidData = argument['getBidData'];
@@ -180,7 +182,6 @@ class StarLineGamePageController extends GetxController {
           var existingIndex = selectedBidsList.indexOf(bidList[i]);
           selectedBidsList.refresh();
         }
-
         GetStorage().write(ConstantsVariables.starlineBidsList, selectedBidsList);
         Get.offAndToNamed(AppRoutName.starlineBidpage, arguments: {
           "bidsList": selectedBidsList,

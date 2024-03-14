@@ -35,91 +35,119 @@ class _AddBankDetailsState extends State<AddBankDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              color: AppColors.appbarColor,
-              padding: const EdgeInsets.all(10),
-              child: SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Icon(Icons.arrow_back, color: AppColors.white)),
-                        const SizedBox(width: 5),
-                      ],
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "Add bank details",
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.white,
-                          fontSize: Dimensions.h17,
+    return WillPopScope(
+      onWillPop: () async {
+        walletCon.selectedIndex.value = null;
+        return false;
+      },
+      child: Material(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                color: AppColors.appbarColor,
+                padding: const EdgeInsets.all(10),
+                child: SafeArea(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: () => walletCon.selectedIndex.value = null,
+                            child: Icon(Icons.arrow_back, color: AppColors.white),
+                          ),
+                          const SizedBox(width: 5),
+                        ],
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          "Add bank details",
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.white,
+                            fontSize: Dimensions.h17,
+                          ),
                         ),
                       ),
-                    ),
-                    const Expanded(child: SizedBox()),
-                  ],
+                      const Expanded(child: SizedBox()),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Obx(
-              () => CommonTextFieldBorder(
-                hintText: controller.accountNumber.value ?? "Abc",
-                keyBoardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              SizedBox(height: Dimensions.h10),
+              Obx(
+                () => CommonTextFieldBorder(
+                  con: controller.accNoController,
+                  labelText: "Account No.",
+                  keyBoardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  readOnly: !controller.isEditDetails.value,
+                ),
               ),
-            ),
-            Obx(() => CommonTextFieldBorder(hintText: controller.ifcsCode.value)),
-            Obx(() => CommonTextFieldBorder(hintText: controller.accountName.value)),
-            Obx(() => CommonTextFieldBorder(hintText: controller.bankName.value)),
-            const SizedBox(height: 15),
-            RoundedCornerButton(
-              text: "SUBMIT",
-              color: AppColors.appbarColor,
-              borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h13,
-              fontWeight: FontWeight.bold,
-              fontColor: AppColors.white,
-              letterSpacing: 1,
-              borderRadius: 5,
-              borderWidth: 0,
-              textStyle: CustomTextStyle.textPTsansMedium,
-              onTap: () {},
-              height: 40,
-              width: 200,
-            ),
-            const SizedBox(height: 20),
-            RoundedCornerButton(
-              text: "EDIT BANK DETAILS",
-              color: AppColors.wpColor1,
-              borderColor: AppColors.appbarColor,
-              fontSize: Dimensions.h13,
-              fontWeight: FontWeight.bold,
-              fontColor: AppColors.black,
-              letterSpacing: 1,
-              borderRadius: 5,
-              borderWidth: 0,
-              textStyle: CustomTextStyle.textPTsansMedium,
-              onTap: () {
-                _showExitDialog();
-              },
-              height: 40,
-              width: 200,
-            )
-          ],
+              Obx(
+                () => CommonTextFieldBorder(
+                  con: controller.ifscCodeController,
+                  labelText: "IFSC Code",
+                  readOnly: !controller.isEditDetails.value,
+                ),
+              ),
+              Obx(
+                () => CommonTextFieldBorder(
+                  con: controller.accHolderNameController,
+                  labelText: "Account Holder Name",
+                  readOnly: !controller.isEditDetails.value,
+                ),
+              ),
+              Obx(
+                () => CommonTextFieldBorder(
+                  con: controller.bankNameController,
+                  labelText: "Bank Name",
+                  readOnly: !controller.isEditDetails.value,
+                ),
+              ),
+              const SizedBox(height: 15),
+              controller.isEditDetails.value == true
+                  ? RoundedCornerButton(
+                      text: "SUBMIT",
+                      color: AppColors.appbarColor,
+                      borderColor: AppColors.appbarColor,
+                      fontSize: Dimensions.h13,
+                      fontWeight: FontWeight.bold,
+                      fontColor: AppColors.white,
+                      letterSpacing: 1,
+                      borderRadius: 5,
+                      borderWidth: 0,
+                      textStyle: CustomTextStyle.textPTsansMedium,
+                      onTap: () {},
+                      height: 40,
+                      width: 200,
+                    )
+                  : Container(),
+              const SizedBox(height: 20),
+              RoundedCornerButton(
+                text: "EDIT BANK DETAILS",
+                color: AppColors.wpColor1,
+                borderColor: AppColors.appbarColor,
+                fontSize: Dimensions.h13,
+                fontWeight: FontWeight.bold,
+                fontColor: AppColors.black,
+                letterSpacing: 1,
+                borderRadius: 5,
+                borderWidth: 0,
+                textStyle: CustomTextStyle.textPTsansMedium,
+                onTap: () {
+                  _showExitDialog();
+                },
+                height: 40,
+                width: 200,
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/controller/home_controller.dart';
+import 'package:spllive/controller/passbook_controller.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
@@ -10,122 +12,131 @@ import '../../helper_files/app_colors.dart';
 import '../../helper_files/common_utils.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
-import '../home_screen/controller/homepage_controller.dart';
 import 'controller/bottum_navigation_controller.dart';
 
-class PassBook extends StatelessWidget {
+class PassBook extends StatefulWidget {
   PassBook({super.key});
-  var verticalSpace = SizedBox(width: Dimensions.w3);
-  var homeController = Get.put(HomePageController());
-  var controller = Get.put(MoreListController());
+
+  @override
+  State<PassBook> createState() => _PassBookState();
+}
+
+class _PassBookState extends State<PassBook> {
+  final homeController = Get.find<HomeController>();
+  final controller = Get.put(MoreListController());
   final walletCon = Get.find<WalletController>();
+  final passBookCon = Get.find<PassbookHistoryController>();
+
+  @override
+  void initState() {
+    super.initState();
+    passBookCon.getPassBookData(lazyLoad: false, offset: "0");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Get.height,
-      child: Column(
-        children: [
-          AppUtils().simpleAppbar(
-            appBarTitle: "",
-            leadingWidht: 900,
-            leading: SizedBox(
-              child: Row(
-                children: [
-                  SizedBox(width: Dimensions.w15),
-                  SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    height: 25,
-                    width: 30,
-                    color: AppColors.white,
-                  ),
-                  SizedBox(width: Dimensions.w5),
-                  GetBuilder<WalletController>(
-                    builder: (con) => Text(
-                      con.walletBalance.value,
-                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                        fontSize: Dimensions.h16,
-                        color: AppColors.white,
-                      ),
+    return Column(
+      children: [
+        AppUtils().simpleAppbar(
+          appBarTitle: "",
+          leadingWidht: 900,
+          leading: SizedBox(
+            child: Row(
+              children: [
+                SizedBox(width: Dimensions.w15),
+                SvgPicture.asset(
+                  ConstantImage.walletAppbar,
+                  height: 25,
+                  width: 30,
+                  color: AppColors.white,
+                ),
+                SizedBox(width: Dimensions.w5),
+                GetBuilder<WalletController>(
+                  builder: (con) => Text(
+                    con.walletBalance.value,
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                      fontSize: Dimensions.h16,
+                      color: AppColors.white,
                     ),
                   ),
-                  SizedBox(width: Dimensions.w10),
-                  Center(
-                    child: Text(
-                      "Passbook",
-                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                        fontSize: Dimensions.h20,
-                        color: AppColors.white,
-                      ),
+                ),
+                SizedBox(width: Dimensions.w10),
+                Center(
+                  child: Text(
+                    "Passbook",
+                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                      fontSize: Dimensions.h20,
+                      color: AppColors.white,
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
-                  SizedBox(width: Dimensions.w80),
-                  GestureDetector(
-                    onTap: () {
-                      if (homeController.pageWidget.value == 3 && homeController.currentIndex.value == 3) {
-                        if (MediaQuery.of(context).orientation == Orientation.portrait) {
-                          SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
-                        } else {
-                          SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-                        }
+                ),
+                const Expanded(child: SizedBox()),
+                SizedBox(width: Dimensions.w80),
+                GestureDetector(
+                  onTap: () {
+                    if (homeController.pageWidget.value == 3) {
+                      if (MediaQuery.of(context).orientation == Orientation.portrait) {
+                        SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
                       } else {
-                        SystemChrome.setPreferredOrientations(
-                            [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
+                        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                       }
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.all(Dimensions.h8),
-                      child: Icon(
-                        Icons.flip,
-                        color: AppColors.white,
-                      ),
+                    } else {
+                      SystemChrome.setPreferredOrientations(
+                          [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(Dimensions.h8),
+                    child: Icon(
+                      Icons.flip,
+                      color: AppColors.white,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          Obx(
-            () => homeController.passBookModelData.isNotEmpty
-                ? Expanded(
+        ),
+        Obx(
+          () => passBookCon.passBookModelData.isNotEmpty
+              ? Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
                     child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: table(),
-                      ),
-                    ),
-                  )
-                : Expanded(
-                    child: Center(
-                      child: Text(
-                        "There is no data",
-                        style: TextStyle(color: AppColors.black),
-                      ),
+                      scrollDirection: Axis.horizontal,
+                      child: table(),
                     ),
                   ),
-          ),
-          Obx(
-            () => homeController.passBookModelData.isNotEmpty
-                ? Row(
-                    children: [
-                      pageWidget(
-                        "previous",
-                        onTap: () => homeController.prevPage(),
-                      ),
-                      pageWidget(
-                        "(${homeController.offset} / ${homeController.calculateTotalPages().toString()})",
-                      ),
-                      pageWidget(
-                        "NEXT",
-                        onTap: () => homeController.nextPage(),
-                      ),
-                    ],
-                  )
-                : Container(),
-          )
-        ],
-      ),
+                )
+              : Expanded(
+                  child: Center(
+                    child: Text(
+                      "There is no data",
+                      style: TextStyle(color: AppColors.black),
+                    ),
+                  ),
+                ),
+        ),
+        Obx(
+          () => passBookCon.passBookModelData.isNotEmpty
+              ? Row(
+                  children: [
+                    pageWidget(
+                      "previous",
+                      onTap: () => passBookCon.prevPage(),
+                    ),
+                    pageWidget(
+                      "(${passBookCon.offset} / ${passBookCon.calculateTotalPages().toString()})",
+                    ),
+                    pageWidget(
+                      "NEXT",
+                      onTap: () => passBookCon.nextPage(),
+                    ),
+                  ],
+                )
+              : Container(),
+        )
+      ],
     );
   }
 
@@ -155,10 +166,10 @@ class PassBook extends StatelessWidget {
   }
 
   table() {
-    print(homeController.passBookModelData.toJson());
+    print(passBookCon.passBookModelData.toJson());
 
     return Obx(
-      () => homeController.passBookModelData.isNotEmpty
+      () => passBookCon.passBookModelData.isNotEmpty
           ? DataTable(
               headingRowHeight: Dimensions.h45,
               dataRowHeight: Dimensions.h35,
@@ -184,9 +195,9 @@ class PassBook extends StatelessWidget {
               columnSpacing: 1,
 
               rows: List.generate(
-                homeController.passBookModelData.length,
+                passBookCon.passBookModelData.length,
                 (index) {
-                  var data = homeController.passBookModelData.elementAt(index);
+                  var data = passBookCon.passBookModelData.elementAt(index);
 
                   return DataRow(cells: [
                     dataCells(
@@ -296,151 +307,3 @@ class PassBook extends StatelessWidget {
     );
   }
 }
-
-// Row(
-//   children: [
-//     BottomPage(
-//       text: "PREVIOUS",
-//     ),
-//     const SizedBox(
-//       width: 50,
-//     ),
-//     BottomPage(
-//       text: "(1/0)",
-//     ),
-//     const SizedBox(
-//       width: 50,
-//     ),
-//     BottomPage(
-//       text: "NEXT",
-//     ),
-//   ],
-// )
-
-//   timeColumn() {
-//     return SingleChildScrollView(
-//       scrollDirection: Axis.horizontal,
-//       child: DataTable(
-//         headingRowHeight: Dimensions.h45,
-//         dataRowHeight: Dimensions.h45,
-//         horizontalMargin: 0,
-//         headingRowColor: MaterialStateColor.resolveWith(
-//           (states) => Colors.white,
-//         ),
-//         rows: List<DataRow>.generate(
-//           homeController.passBookModelData.length,
-//           (i) {
-//             return DataRow(
-//                 color: MaterialStateColor.resolveWith(
-//                   (states) => Colors.white,
-//                 ),
-//                 cells: List<DataCell>.generate(
-//                   homeController.passBookModelData.length,
-//                   (j) {
-//                     return DataCell(
-//                       Padding(
-//                         padding: const EdgeInsets.all(1.0),
-//                         child: Container(
-//                           height: Dimensions.h45,
-//                           width: Dimensions.w200,
-//                           decoration: BoxDecoration(
-//                             color: AppColors.white,
-//                             boxShadow: [
-//                               BoxShadow(
-//                                 blurRadius: 2,
-//                                 spreadRadius: 0.2,
-//                                 offset: Offset(0, 2),
-//                                 color: AppColors.grey,
-//                               )
-//                             ],
-//                           ),
-//                           child: Center(
-//                             child: Text(
-//                               "***-*",
-//                               textAlign: TextAlign.center,
-//                               // style: CustomTextStyle.textGothamLight.copyWith(
-//                               //   color: ColorConstant.textColorMain,
-//                               //   fontWeight: FontWeight.normal,
-//                               //   fontSize: Dimensions.sp16,
-//                               // ),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     );
-//                   },
-//                 ));
-//           },
-//         ),
-//         columnSpacing: 0,
-//         columns: List<DataColumn>.generate(
-//           homeController.passBookModelData.length,
-//           (index) {
-//             return DataColumn(
-//               label: Container(
-//                 height: Dimensions.h45,
-//                 width: Dimensions.w200,
-//                 decoration: BoxDecoration(
-//                     color: AppColors.wpColor1,
-//                     border: Border.all(color: AppColors.white)),
-//                 child: Center(
-//                   child: Text(
-//                     textAlign: TextAlign.center,
-//                     style: TextStyle(color: AppColors.white),
-//                     // style: CustomTextStyle.textGothamMedium.copyWith(
-//                     //   color: ColorConstant.white,
-//                     //   fontWeight: FontWeight.normal,
-//                     //   fontSize: Dimensions.sp14,
-//                     // ),5
-//                   ),
-//                 ),
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// ignore: camel_case_types
-
-// //  ignore: must_be_immutable
-// class Amount extends StatelessWidget {
-//   Amount({super.key, required this.text});
-//   String text;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(left: 2.0),
-//       child: Container(
-//         height: Dimensions.h40,
-//         width: Dimensions.w210,
-//         decoration: BoxDecoration(
-//             color: AppColors.white,
-//             borderRadius: BorderRadius.circular(0),
-//             boxShadow: [
-//               BoxShadow(
-//                 blurRadius: 2,
-//                 spreadRadius: 0.2,
-//                 offset: Offset(0, 2),
-//                 color: AppColors.grey,
-//               )
-//             ]),
-//         child: Center(
-//           child: FittedBox(
-//             fit: BoxFit.fitWidth,
-//             child: Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-//               child: Text(
-//                 text,
-//                 style: CustomTextStyle.textRobotoSansLight
-//                     .copyWith(color: AppColors.black),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

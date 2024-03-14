@@ -2,89 +2,75 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
+import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
-import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 
 import '../../../helper_files/dimentions.dart';
 import '../../../routes/app_routes_name.dart';
 
-class WithdrawalPage extends StatelessWidget {
+class WithdrawalPage extends StatefulWidget {
   WithdrawalPage({super.key});
-  var walletController = Get.put(WalletController());
-  var homeController = Get.put(HomePageController());
+
+  @override
+  State<WithdrawalPage> createState() => _WithdrawalPageState();
+}
+
+class _WithdrawalPageState extends State<WithdrawalPage> {
+  final walletController = Get.put(WalletController());
+
+  final homeCon = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
-    var verticalSpace = SizedBox(height: Dimensions.h15);
-    return Material(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              color: AppColors.appbarColor,
-              padding: const EdgeInsets.all(10),
-              child: SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Icon(Icons.arrow_back, color: AppColors.white)),
-                        // SvgPicture.asset(
-                        //   ConstantImage.walletAppbar,
-                        //   height: 25,
-                        //   width: 30,
-                        //   color: AppColors.white,
-                        // ),
-                        const SizedBox(width: 5),
-                        // GetBuilder<WalletController>(
-                        //   builder: (con) => Flexible(
-                        //     child: Text(
-                        //       con.walletBalance.value,
-                        //       style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                        //         fontSize: Dimensions.h16,
-                        //         color: AppColors.white,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      textAlign: TextAlign.center,
-                      "Withdrawal Fund",
-                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                        color: AppColors.white,
-                        fontSize: Dimensions.h18,
+    return WillPopScope(
+      onWillPop: () async {
+        walletController.selectedIndex.value = null;
+        return false;
+      },
+      child: Material(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                color: AppColors.appbarColor,
+                padding: const EdgeInsets.all(10),
+                child: SafeArea(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: () => walletController.selectedIndex.value = null,
+                            child: Icon(Icons.arrow_back, color: AppColors.white),
+                          ),
+                          const SizedBox(width: 5),
+                        ],
                       ),
-                    ),
-                    const Expanded(child: SizedBox()),
-                  ],
+                      const SizedBox(width: 10),
+                      Text(
+                        textAlign: TextAlign.center,
+                        "Withdrawal Fund",
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h18,
+                        ),
+                      ),
+                      const Expanded(child: SizedBox()),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            WillPopScope(
-              onWillPop: () async {
-                homeController.pageWidget.value = 4;
-                homeController.currentIndex.value = 4;
-                Get.toNamed(AppRoutName.dashBoardPage);
-                return false;
-              },
-              child: Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w20, vertical: Dimensions.h10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    verticalSpace,
+                    SizedBox(height: Dimensions.h15),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
@@ -101,7 +87,7 @@ class WithdrawalPage extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          verticalSpace,
+                          SizedBox(height: Dimensions.h15),
                           Text(
                             "Withdrawal Timing",
                             style: CustomTextStyle.textRamblaBold.copyWith(
@@ -216,36 +202,7 @@ class WithdrawalPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    verticalSpace,
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //     left: Dimensions.w10,
-                    //     right: Dimensions.w10,
-                    //     top: Dimensions.h10,
-                    //   ),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Expanded(
-                    //         child: RoundedCornerButton(
-                    //           text: "CHECKWITHDRAWAL".tr,
-                    //           color: AppColors.appbarColor,
-                    //           borderColor: AppColors.appbarColor,
-                    //           fontSize: Dimensions.h13,
-                    //           fontWeight: FontWeight.w500,
-                    //           fontColor: AppColors.white,
-                    //           letterSpacing: 0.5,
-                    //           borderRadius: Dimensions.r3,
-                    //           borderWidth: 0,
-                    //           textStyle: CustomTextStyle.textRobotoSansLight,
-                    //           onTap: () => Get.toNamed(AppRoutName.createWithDrawalPage),
-                    //           height: Dimensions.h40,
-                    //           width: Dimensions.w200,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
+                    SizedBox(height: Dimensions.h15),
                     SizedBox(height: Dimensions.h10),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
@@ -264,7 +221,7 @@ class WithdrawalPage extends StatelessWidget {
                               borderRadius: Dimensions.r3,
                               borderWidth: 0,
                               textStyle: CustomTextStyle.textRobotoSansLight,
-                              onTap: () => Get.toNamed(AppRoutName.checkWithDrawalPage),
+                              onTap: () =>   Get.toNamed(AppRoutName.createWithDrawalPage),
                               height: Dimensions.h40,
                               width: Dimensions.w200,
                             ),
@@ -275,8 +232,8 @@ class WithdrawalPage extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

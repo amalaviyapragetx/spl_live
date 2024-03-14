@@ -1,9 +1,16 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/api_services/api_service.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/banner_model.dart';
+import 'package:spllive/models/commun_models/user_details_model.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
+import 'package:spllive/models/market_bid_history.dart';
+import 'package:spllive/models/normal_market_bid_history_response_model.dart';
+import 'package:spllive/models/notifiaction_models/get_all_notification_model.dart';
+import 'package:spllive/models/notifiaction_models/notification_count_model.dart';
 import 'package:spllive/screens/bottum_navigation_screens/moreoptions.dart';
 import 'package:spllive/screens/bottum_navigation_screens/passbook_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
@@ -17,7 +24,7 @@ class HomeController extends GetxController {
   final notificationCount = Rxn<int>();
   RxList<BannerData> bannerData = <BannerData>[].obs;
   RxList<MarketData> normalMarketList = <MarketData>[].obs;
-
+  RxInt getNotificationCount = 0.obs;
   getDashBoardPages(index) {
     switch (index) {
       case 0:
@@ -38,9 +45,6 @@ class HomeController extends GetxController {
       if (value != null) {
         if (value['status'] ?? false) {
           bannerData.value = value['data'];
-          //  NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
-          // getNotifiactionCount.value = model.data!.notificationCount!.toInt();
-          // if (model.message!.isNotEmpty) {}
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
@@ -86,5 +90,56 @@ class HomeController extends GetxController {
         AppUtils.showErrorSnackBar(bodyText: resp.message ?? "");
       }
     }
+  }
+
+  //// Normal Market bids
+  RxList<MarketBidHistoryList> marketBidHistoryList = <MarketBidHistoryList>[].obs;
+  RxInt offset = 0.obs;
+  RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
+  DateTime startEndDate = DateTime.now();
+  void marketBidsByUserId() {
+    UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
+    ApiService().bidHistoryByUserId(userId: userData.id.toString()).then(
+      (value) async {
+        if (value['status']) {
+          if (value['data'] != null) {
+            MarketBidHistory model = MarketBidHistory.fromJson(value['data']);
+            marketBidHistoryList.value = model.rows ?? <MarketBidHistoryList>[];
+          }
+        } else {
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        }
+      },
+    );
+  }
+
+  ///// notifications
+
+  RxList<NotificationData> notificationData = <NotificationData>[].obs;
+  void getNotificationsData() async {
+    ApiService().getAllNotifications().then((value) async {
+      if (value['status']) {
+        GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
+        notificationData.value = model.data!.rows as List<NotificationData>;
+        if (model.message!.isNotEmpty) {
+          // AppUtils.showSuccessSnackBar(
+          //     bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+        }
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+      }
+    });
+  }
+
+  void resetNotificationCount() async {
+    ApiService().resetNotification().then((value) async {
+      if (value['status']) {
+        NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
+        getNotificationCount.value = model.data!.notificationCount!.toInt();
+        if (model.message!.isNotEmpty) {}
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+      }
+    });
   }
 }

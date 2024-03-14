@@ -10,10 +10,10 @@ import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/user_details_model.dart';
 
 class MyAccountPageController extends GetxController {
-  var bankNameController = TextEditingController();
-  var accHolderNameController = TextEditingController();
-  var accNoController = TextEditingController();
-  var ifscCodeController = TextEditingController();
+  TextEditingController bankNameController = TextEditingController();
+  TextEditingController accHolderNameController = TextEditingController();
+  TextEditingController accNoController = TextEditingController();
+  TextEditingController ifscCodeController = TextEditingController();
   UserDetailsModel userDetailsModel = UserDetailsModel();
   RxBool isEditDetails = false.obs;
   RxString accountName = "".obs;
@@ -32,9 +32,7 @@ class MyAccountPageController extends GetxController {
       callGetBankDetails(userId);
       walletbalance.walletBalance.refresh();
     } else {
-      AppUtils.showErrorSnackBar(
-        bodyText: "SOMETHINGWENTWRONG".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);
     }
   }
 
@@ -70,23 +68,13 @@ class MyAccountPageController extends GetxController {
           AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
         isEditDetails.value = model.data!.isEditPermission ?? false;
-        accountName.value = model.data!.accountHolderName ?? "";
-        bankName.value = model.data!.bankName ?? "";
-        accountNumber.value = model.data!.accountNumber ?? "";
-        ifcsCode.value = model.data!.iFSCCode ?? "";
         bankNameController.text = model.data!.bankName ?? "Null From API";
         accHolderNameController.text = model.data!.accountHolderName ?? "Null From API";
         accNoController.text = model.data!.accountNumber ?? "Null From API";
         ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
-        // gPayNumberController.text = model.data!.gpayNumber ?? "Null From API";
-        // paytmNumberController.text = model.data!.paytmNumber ?? "Null From API";
-        // bhimUpiController.text = model.data!.bhimUPI ?? "Null From API";
         bankId = model.data!.id ?? 0;
       } else {
         isEditDetails.value = true;
-        // AppUtils.showErrorSnackBar(
-        //   bodyText: value['message'] ?? "",
-        // );
       }
     });
   }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/dimentions.dart';
@@ -14,14 +15,10 @@ class StarLineGameModesPage extends StatelessWidget {
   StarLineGameModesPage({super.key});
   var walletController = Get.put(WalletController());
   final controller = Get.put(StarLineGameModesPageController());
-  var verticalSpace = SizedBox(
-    height: Dimensions.h10,
-  );
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // controller.getBidListData();
     return WillPopScope(
       onWillPop: () async {
         controller.onBackButton();
@@ -36,9 +33,7 @@ class StarLineGameModesPage extends StatelessWidget {
           ),
           actions: [
             InkWell(
-              onTap: () {
-                //  Get.offAndToNamed(AppRoutName.transactionPage);
-              },
+              onTap: () {},
               child: Row(
                 children: [
                   SizedBox(
@@ -74,62 +69,55 @@ class StarLineGameModesPage extends StatelessWidget {
         ),
         body: Obx(
           () => SizedBox(
-            child: controller.gameModesList.isEmpty
-                ? _buildCustomAboutBoxDialog()
-                : Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Dimensions.w10, vertical: Dimensions.h5),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            child: cardWidget(controller, size),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.w10, vertical: Dimensions.h5),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(child: cardWidget(controller, size)),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
     );
   }
 
-  void showCustomAboutBoxDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: AppColors.black.withOpacity(0.3), // Transparent background
-      barrierDismissible:
-          false, // Prevent users from dismissing the dialog by tapping outside
-      builder: (context) => _buildCustomAboutBoxDialog(),
-    );
-  }
+  // void showCustomAboutBoxDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: AppColors.black.withOpacity(0.3), // Transparent background
+  //     barrierDismissible: false, // Prevent users from dismissing the dialog by tapping outside
+  //     builder: (context) => _buildCustomAboutBoxDialog(),
+  //   );
+  // }
 
-  Widget _buildCustomAboutBoxDialog() {
-    return Dialog(
-      backgroundColor: AppColors.transparent,
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const CircularProgressIndicator(),
-            SizedBox(width: Dimensions.w10),
-            Text(
-              "PLEASEWAIT".tr,
-              style: CustomTextStyle.textPTsansBold
-                  .copyWith(fontSize: Dimensions.h15),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildCustomAboutBoxDialog() {
+  //   return Dialog(
+  //     backgroundColor: AppColors.transparent,
+  //     child: Container(
+  //       padding: const EdgeInsets.all(16.0),
+  //       decoration: BoxDecoration(
+  //         color: AppColors.white,
+  //         borderRadius: BorderRadius.circular(8.0),
+  //       ),
+  //       child: Row(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           const CircularProgressIndicator(),
+  //           SizedBox(width: Dimensions.w10),
+  //           Text(
+  //             "PLEASEWAIT".tr,
+  //             style: CustomTextStyle.textPTsansBold.copyWith(fontSize: Dimensions.h15),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget cardWidget(StarLineGameModesPageController controller, Size size) {
     return Padding(
@@ -139,10 +127,7 @@ class StarLineGameModesPage extends StatelessWidget {
         shrinkWrap: true,
         itemCount: controller.gameModesList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: Dimensions.h140,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 2),
+            crossAxisCount: 2, mainAxisExtent: Dimensions.h140, crossAxisSpacing: 5, mainAxisSpacing: 2),
         itemBuilder: (context, index) {
           return Padding(
             padding: index % 2 == 0
@@ -178,10 +163,7 @@ class StarLineGameModesPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(17.0),
                         child: Image.network(
-                          controller.gameModesList
-                              .elementAt(index)
-                              .image
-                              .toString(),
+                          controller.gameModesList.elementAt(index).image.toString(),
                           height: Dimensions.h10,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(Icons.error);
@@ -200,10 +182,8 @@ class StarLineGameModesPage extends StatelessWidget {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              controller.gameModesList.elementAt(index).name ??
-                                  "",
-                              style: CustomTextStyle.textRobotoSansBold
-                                  .copyWith(fontSize: Dimensions.h14),
+                              controller.gameModesList.elementAt(index).name ?? "",
+                              style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                             ),
                           ),
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+
 import '../../../components/simple_button_with_corner.dart';
 import '../../../helper_files/custom_text_style.dart';
 import '../../../helper_files/dimentions.dart';
@@ -28,12 +29,10 @@ class GiveFeedbackPage extends StatelessWidget {
               children: [
                 Text(
                   "FEEDBACK".tr,
-                  style: CustomTextStyle.textPTsansMedium.copyWith(
-                      fontWeight: FontWeight.w500, fontSize: Dimensions.h14),
+                  style:
+                      CustomTextStyle.textPTsansMedium.copyWith(fontWeight: FontWeight.w500, fontSize: Dimensions.h14),
                 ),
-                SizedBox(
-                  height: Dimensions.h10,
-                ),
+                SizedBox(height: Dimensions.h10),
                 RoundedCornerEditText2(
                   isEnabled: true,
                   controller: controller.feedbackController,
@@ -42,9 +41,7 @@ class GiveFeedbackPage extends StatelessWidget {
                   hintText: "",
                   keyboardType: TextInputType.multiline,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -65,9 +62,7 @@ class GiveFeedbackPage extends StatelessWidget {
                         if (controller.feedbackController.text != "") {
                           controller.addFeedbackApi(5);
                         } else {
-                          AppUtils.showErrorSnackBar(
-                            bodyText: "You can't submit empty Feedback",
-                          );
+                          AppUtils.showErrorSnackBar(bodyText: "You can't submit empty Feedback");
                         }
                       },
                     ),
@@ -119,10 +114,8 @@ class RoundedCornerEditText2 extends StatelessWidget {
       minLines: minLines,
       keyboardType: keyboardType,
       cursorColor: AppColors.appbarColor,
-      style: CustomTextStyle.textPTsansMedium.copyWith(
-          color: AppColors.black,
-          fontWeight: FontWeight.normal,
-          fontSize: Dimensions.h16),
+      style: CustomTextStyle.textPTsansMedium
+          .copyWith(color: AppColors.black, fontWeight: FontWeight.normal, fontSize: Dimensions.h16),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(Dimensions.h10),
         focusColor: AppColors.black,

@@ -1,21 +1,18 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/models/market_bid_history.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/get_feedback_by_id_api_response_model.dart';
-import '../../../models/normal_market_bid_history_response_model.dart';
 
 class MoreListController extends GetxController {
   UserDetailsModel userData = UserDetailsModel();
-  RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
-  RxList<MarketBidHistoryList> marketBidHistoryList = <MarketBidHistoryList>[].obs;
+  // RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
+  // RxList<MarketBidHistoryList> marketBidHistoryList = <MarketBidHistoryList>[].obs;
   RxBool isStarline = false.obs;
   int offset = 0;
   RxString walletBalance = "00".obs;
@@ -28,19 +25,7 @@ class MoreListController extends GetxController {
     walletBalance.refresh();
     getUserBalance();
     walletBalance.refresh();
-    getMarketBidsByUserId(
-        lazyLoad: false,
-        endDate: DateFormat('yyyy-MM-dd').format(startEndDate),
-        startDate: DateFormat('yyyy-MM-dd').format(startEndDate));
     super.onInit();
-  }
-
-  @override
-  void dispose() {
-    marketHistoryList.clear();
-    // scrollController.removeListener(_scrollListner);
-    // scrollController.dispose();
-    super.dispose();
   }
 
   Future<void> getUserData() async {
@@ -89,18 +74,12 @@ class MoreListController extends GetxController {
             tempRatings = 0.00;
           }
         } else {
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
         if (tempRatings > 0.00) {
-          AppUtils().showRateUsBoxDailog((rat) {
-            addRating(rat);
-          }, tempRatings);
+          AppUtils().showRateUsBoxDailog((rat) => addRating(rat), tempRatings);
         } else {
-          AppUtils().showRateUsBoxDailog((rat) {
-            addRating(rat);
-          }, 0);
+          AppUtils().showRateUsBoxDailog((rat) => addRating(rat), 0);
         }
       },
     );
@@ -120,9 +99,7 @@ class MoreListController extends GetxController {
         Get.back();
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -132,35 +109,5 @@ class MoreListController extends GetxController {
     if (isSharing.value) {
       Share.share("http://spl.live");
     }
-  }
-
-  void getMarketBidsByUserId({
-    required bool lazyLoad,
-    required String startDate,
-    required String endDate,
-  }) {
-    ApiService()
-        .getBidHistoryByUserId(
-      userId: userData.id.toString(),
-      startDate: startDate,
-      endDate: endDate,
-      limit: "5000",
-      offset: offset.toString(),
-      isStarline: false,
-    )
-        .then(
-      (value) async {
-        if (value['status']) {
-          if (value['data'] != null) {
-            NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
-            lazyLoad
-                ? marketBidHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
-                : marketBidHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
-          }
-        } else {
-          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-        }
-      },
-    );
   }
 }

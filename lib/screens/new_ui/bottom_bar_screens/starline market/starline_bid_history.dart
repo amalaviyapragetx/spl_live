@@ -161,7 +161,6 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                     style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h14),
                   ),
                   Text(
-                    // "446-47-359",
                     bidNumber,
                     style: CustomTextStyle.textRobotoSansBold,
                   ),
@@ -196,16 +195,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                     ),
                   ),
                   const Expanded(child: SizedBox()),
-                  // Text(
-                  //   "Balance",
-                  //   style: CustomTextStyle.textRobotoSansLight,
-                  // ),
                   SizedBox(width: Dimensions.w5),
-                  // Image.asset(
-                  //   ConstantImage.ruppeeBlueIcon,
-                  //   height: 25,
-                  //   width: 25,
-                  // ),
                   SizedBox(width: Dimensions.w5),
                   Text(
                     ballance,

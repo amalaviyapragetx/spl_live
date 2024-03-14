@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/bidList_for_market.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/constant_image.dart';
@@ -12,21 +13,17 @@ import 'controller/selectbid_page_controller.dart';
 
 class SelectedBidsPage extends StatelessWidget {
   SelectedBidsPage({super.key});
-  var controller = Get.put(SelectBidPageController());
-  // var controller = Get.put(SelectBidPageController());
+  final controller = Get.put(SelectBidPageController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // controller.newBidListreaddata();
     return Obx(
       () => Scaffold(
         appBar: AppUtils().simpleAppbar(
           appBarTitle: controller.marketName.value,
           actions: [
             InkWell(
-              onTap: () {
-                //  Get.offAndToNamed(AppRoutName.transactionPage);
-              },
+              onTap: () {},
               child: Row(
                 children: [
                   SizedBox(
@@ -74,53 +71,10 @@ class SelectedBidsPage extends StatelessWidget {
                       return BidHistoryList(
                         marketName: controller.checkType(index),
                         bidType: controller.bidType.toString(),
-                        bidCoin: controller
-                            .requestModel.value.bids![index].coins
-                            .toString(),
-                        bidNo: controller.requestModel.value.bids![index].bidNo
-                            .toString(),
+                        bidCoin: controller.requestModel.value.bids![index].coins.toString(),
+                        bidNo: controller.requestModel.value.bids![index].bidNo.toString(),
                         onDelete: () => controller.onDeleteBids(index),
                       );
-                      // return Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: DecoratedBox(
-                      //     decoration: BoxDecoration(
-                      //         border: Border.all(),
-                      //         borderRadius:
-                      //             BorderRadius.circular(Dimensions.h5)),
-                      //     child: ListTile(
-                      //       dense: true,
-                      //       visualDensity: const VisualDensity(vertical: -2),
-                      //       title: Text(
-                      //         "${controller.requestModel.value.bids![index].gameModeName} - ",
-                      //         style: CustomTextStyle.textRobotoSansLight
-                      //             .copyWith(fontSize: Dimensions.h12),
-                      //       ),
-                      //       subtitle: Padding(
-                      //         padding: const EdgeInsets.only(top: 2.0),
-                      //         child: Text(
-                      //           "Bid no. : ${controller.requestModel.value.bids![index].bidNo} , Coins : ${controller.requestModel.value.bids![index].coins}",
-                      //           style: CustomTextStyle.textRobotoSansLight
-                      //               .copyWith(fontSize: Dimensions.h12),
-                      //         ),
-                      //       ),
-                      //       trailing: InkWell(
-                      //         onTap: () {
-                      //           controller.onDeleteBids(index);
-                      //         },
-                      //         child: Container(
-                      //           color: AppColors.transparent,
-                      //           height: Dimensions.h30,
-                      //           width: Dimensions.w30,
-                      //           child: SvgPicture.asset(
-                      //             ConstantImage.trashIcon,
-                      //             fit: BoxFit.cover,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // );
                     },
                   ),
                 ),
@@ -195,8 +149,7 @@ class SelectedBidsPage extends StatelessWidget {
               ),
               child: Text(
                 "TOTALCOIN".tr,
-                style: CustomTextStyle.textRobotoSansMedium
-                    .copyWith(color: AppColors.white, fontSize: Dimensions.h18),
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white, fontSize: Dimensions.h18),
                 // style: TextStyle(
                 // color: AppColors.white,
                 // fontSize: Dimensions.h18,
@@ -208,9 +161,7 @@ class SelectedBidsPage extends StatelessWidget {
                 Container(
                   height: Dimensions.h30,
                   width: Dimensions.w30,
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(25)),
+                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(25)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SvgPicture.asset(
@@ -244,7 +195,6 @@ class SelectedBidsPage extends StatelessWidget {
     return Obx(
       () => Container(
         width: size.width,
-        height: Dimensions.h45,
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -267,21 +217,14 @@ class SelectedBidsPage extends StatelessWidget {
   }
 
   Widget nameColumn(
-      {required String titleText,
-      required String subText,
-      required Color textColor,
-      required Color textColor2}) {
+      {required String titleText, required String subText, required Color textColor, required Color textColor2}) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 5,
-        bottom: 2,
-      ),
+      padding: const EdgeInsets.only(top: 5, bottom: 2),
       child: SizedBox(
-        // color: AppColors.balanceCoinsColor,
-
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 textAlign: TextAlign.center,

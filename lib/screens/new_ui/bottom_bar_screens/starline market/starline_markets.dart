@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/controller/starline_market_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
@@ -24,8 +25,10 @@ class StarlineDailyMarketData extends StatefulWidget {
 }
 
 class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
-  final homeCon = Get.find<HomeController>();
-  final starlineCon = Get.find<StarlineMarketController>();
+  final starlineCon = Get.put<StarlineMarketController>(StarlineMarketController());
+  final homeCon = Get.put<HomeController>(HomeController());
+  final walletCon = Get.put<WalletController>(WalletController());
+
   @override
   void initState() {
     super.initState();
@@ -41,7 +44,7 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
           e.isSelected.value = false;
         }
         if (starlineCon.selectedIndex.value == null) {
-          Get.back();
+          Get.offAllNamed(AppRoutName.dashBoardPage);
         }
         starlineCon.selectedIndex.value = null;
         return false;
@@ -67,14 +70,18 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                   ),
                 ),
               ),
-              Text(
-                "1000".toString().length > 8 ? "1000".toString().split(".").toString() : "10",
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                  color: AppColors.white,
-                  fontSize: 20,
+              Obx(
+                () => Text(
+                  walletCon.walletBalance.toString().length > 8
+                      ? walletCon.walletBalance.toString().split(".").toString()
+                      : walletCon.walletBalance.toString(),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    color: AppColors.white,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ],

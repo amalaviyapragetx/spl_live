@@ -68,8 +68,7 @@ class StarlineBidsPage extends StatelessWidget {
           height: size.height,
           width: size.width,
           child: Obx(
-            () => controller.requestModel.value.bids != null &&
-                    controller.requestModel.value.bids!.isNotEmpty
+            () => controller.requestModel.value.bids != null && controller.requestModel.value.bids!.isNotEmpty
                 ? SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(children: [
@@ -83,12 +82,8 @@ class StarlineBidsPage extends StatelessWidget {
                             return BidHistoryList(
                               marketName: controller.checkType(index),
                               bidType: "",
-                              bidCoin: controller
-                                  .requestModel.value.bids![index].coins
-                                  .toString(),
-                              bidNo: controller
-                                  .requestModel.value.bids![index].bidNo
-                                  .toString(),
+                              bidCoin: controller.requestModel.value.bids![index].coins.toString(),
+                              bidNo: controller.requestModel.value.bids![index].bidNo.toString(),
                               onDelete: () => controller.onDeleteBids(index),
                             );
                             // return Padding(
@@ -179,15 +174,9 @@ class StarlineBidsPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: Dimensions.h20,
-                      ),
-                      SizedBox(
-                        height: Dimensions.h20,
-                      ),
-                      SizedBox(
-                        height: Dimensions.h20,
-                      ),
+                      SizedBox(height: Dimensions.h20),
+                      SizedBox(height: Dimensions.h20),
+                      SizedBox(height: Dimensions.h20),
                     ]),
                   )
                 : Container(),
@@ -202,7 +191,6 @@ class StarlineBidsPage extends StatelessWidget {
     return Obx(
       () => Container(
         width: size.width,
-
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -225,18 +213,13 @@ class StarlineBidsPage extends StatelessWidget {
   }
 
   Widget nameColumn(
-      {required String titleText,
-      required String subText,
-      required Color textColor,
-      required Color textColor2}) {
+      {required String titleText, required String subText, required Color textColor, required Color textColor2}) {
     return Padding(
       padding: const EdgeInsets.only(
         top: 5,
         bottom: 2,
       ),
       child: SizedBox(
-        // color: AppColors.balanceCoinsColor,
-
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0),
           child: Column(
@@ -267,63 +250,4 @@ class StarlineBidsPage extends StatelessWidget {
       ),
     );
   }
-
-  // bottomNavigationBar(String totalAmount) {
-  //   return SafeArea(
-  //     child: Container(
-  //       height: Dimensions.h50,
-  //       color: AppColors.appbarColor,
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: [
-  //           Padding(
-  //             padding: EdgeInsets.symmetric(
-  //               horizontal: Dimensions.commonPaddingForScreen,
-  //             ),
-  //             child: Text(
-  //               "TOTALCOIN".tr,
-  //               style: CustomTextStyle.textRobotoSansMedium
-  //                   .copyWith(color: AppColors.white, fontSize: Dimensions.h18),
-  //               // style: TextStyle(
-  //               // color: AppColors.white,
-  //               // fontSize: Dimensions.h18,
-  //               // // ),
-  //             ),
-  //           ),
-  //           Row(
-  //             children: [
-  //               Container(
-  //                 height: Dimensions.h30,
-  //                 width: Dimensions.w30,
-  //                 decoration: BoxDecoration(
-  //                     color: AppColors.white,
-  //                     borderRadius: BorderRadius.circular(25)),
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.all(8.0),
-  //                   child: SvgPicture.asset(
-  //                     ConstantImage.rupeeImage,
-  //                     fit: BoxFit.contain,
-  //                     color: AppColors.appbarColor,
-  //                   ),
-  //                 ),
-  //               ),
-  //               Padding(
-  //                 padding: EdgeInsets.symmetric(
-  //                   horizontal: Dimensions.commonPaddingForScreen,
-  //                 ),
-  //                 child: Text(
-  //                   totalAmount,
-  //                   style: TextStyle(
-  //                     color: AppColors.white,
-  //                     fontSize: Dimensions.h18,
-  //                   ),
-  //                 ),
-  //               )
-  //             ],
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

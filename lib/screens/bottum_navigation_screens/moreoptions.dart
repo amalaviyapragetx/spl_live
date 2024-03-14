@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -10,18 +11,20 @@ import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/ui_utils.dart';
-import '../home_screen/controller/homepage_controller.dart';
 import 'controller/bottum_navigation_controller.dart';
 
-class MoreOptions extends StatelessWidget {
+class MoreOptions extends StatefulWidget {
   const MoreOptions({super.key});
 
   @override
+  State<MoreOptions> createState() => _MoreOptionsState();
+}
+
+class _MoreOptionsState extends State<MoreOptions> {
+  final controller = Get.put(MoreListController());
+  final homeController = Get.find<HomeController>();
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    var controller = Get.put(MoreListController());
-    var homeController = Get.put(HomePageController());
-    // ignore: sized_box_for_whitespace
     return Column(
       children: [
         AppUtils().simpleAppbar(
@@ -68,10 +71,9 @@ class MoreOptions extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  height: Dimensions.h15,
-                ),
+                SizedBox(height: Dimensions.h15),
                 listItems(
                     onTap: () => Get.toNamed(AppRoutName.profilePage),
                     iconData: ConstantImage.profileIconSVG,
@@ -99,7 +101,7 @@ class MoreOptions extends StatelessWidget {
                     onTap: () {
                       homeController.pageWidget.value = 1;
                       homeController.currentIndex.value = 1;
-                      homeController.marketBidsByUserId(lazyLoad: false);
+                      homeController.marketBidsByUserId();
                     },
                     iconData: ConstantImage.clockIcon,
                     text: "BIDDINGHISTORY".tr),
@@ -149,6 +151,7 @@ Widget listItems({required Function() onTap, required String iconData, required 
   return InkWell(
     onTap: onTap,
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(
           height: Dimensions.h30,

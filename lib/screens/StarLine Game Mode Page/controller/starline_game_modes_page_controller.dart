@@ -8,6 +8,7 @@ import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/screens/new_ui/bottom_bar_screens/starline%20market/starline_markets.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
@@ -40,7 +41,7 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   onBackButton() async {
-    Get.offAllNamed(AppRoutName.dashBoardPage);
+    Get.offAll(() => const StarlineDailyMarketData());
     requestModel.value.bids?.clear();
     GetStorage().write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
   }
@@ -92,8 +93,6 @@ class StarLineGameModesPageController extends GetxController {
 
   void onTapOfGameModeTile(int index) async {
     bool isBulkMode = false;
-    bool normalMode = false;
-
     switch (gameModesList[index].name) {
       case "Single Ank":
         isBulkMode = false;

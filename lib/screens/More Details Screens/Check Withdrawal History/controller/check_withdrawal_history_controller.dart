@@ -33,10 +33,6 @@ class CheckWithdrawalPageController extends GetxController {
             lazyLoad
                 ? withdrawalRequestList.addAll(model.data ?? <WithdrawalRequestList>[])
                 : withdrawalRequestList.value = model.data ?? <WithdrawalRequestList>[];
-          } else {
-            // AppUtils.showErrorSnackBar(
-            //   bodyText: value['message'] ?? "",
-            // );
           }
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
