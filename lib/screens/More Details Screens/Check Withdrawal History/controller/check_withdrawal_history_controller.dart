@@ -20,8 +20,8 @@ class CheckWithdrawalPageController extends GetxController {
     final data = GetStorage().read(ConstantsVariables.userData);
     userData = UserDetailsModel.fromJson(data);
     userId = userData.id;
-    getWithdrawalHistoryByUserId(lazyLoad: false);
     walletController.walletBalance.refresh();
+    getWithdrawalHistoryByUserId(lazyLoad: false);
   }
 
   void getWithdrawalHistoryByUserId({required bool lazyLoad}) async {

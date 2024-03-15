@@ -142,123 +142,122 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Obx(
-                  () => homeCon.bannerData.isNotEmpty
-                      ? CarouselSlider(
-                          items: homeCon.bannerData.map((element) {
-                            return Builder(
-                              builder: (context) {
-                                return Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(element.banner ?? ""),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ));
-                              },
-                            );
-                          }).toList(),
-                          options: CarouselOptions(
-                            height: Dimensions.h90,
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                            aspectRatio: 15 / 4,
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            enableInfiniteScroll: true,
-                            autoPlayAnimationDuration: const Duration(milliseconds: 600),
-                            viewportFraction: 1,
-                          ),
-                        )
-                      : SizedBox(
-                          height: 100,
-                          child: Center(
-                            child: Icon(
-                              Icons.error_outline,
-                              color: AppColors.black,
+          body: Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Obx(
+                      () => homeCon.bannerData.isNotEmpty
+                          ? CarouselSlider(
+                              items: homeCon.bannerData.map((element) {
+                                return Builder(
+                                  builder: (context) {
+                                    return Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(element.banner ?? ""),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ));
+                                  },
+                                );
+                              }).toList(),
+                              options: CarouselOptions(
+                                height: Dimensions.h90,
+                                enlargeCenterPage: true,
+                                autoPlay: true,
+                                aspectRatio: 15 / 4,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enableInfiniteScroll: true,
+                                autoPlayAnimationDuration: const Duration(milliseconds: 600),
+                                viewportFraction: 1,
+                              ),
+                            )
+                          : SizedBox(
+                              height: 100,
+                              child: Center(
+                                child: Icon(
+                                  Icons.error_outline,
+                                  color: AppColors.black,
+                                ),
+                              ),
+                            ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () => Get.to(() => StarlineDailyMarketData()),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: AppColors.appbarColor,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset(
+                                    ConstantImage.starLineIcon,
+                                    height: 30,
+                                    color: AppColors.white,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "SPL STARLINE",
+                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                      color: AppColors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => Get.to(() => StarlineDailyMarketData()),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: AppColors.appbarColor,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                ConstantImage.starLineIcon,
-                                height: 30,
-                                color: AppColors.white,
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () => Get.to(() => AddFund()),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: AppColors.appbarColor,
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              const SizedBox(height: 5),
-                              Text(
-                                "SPL STARLINE",
-                                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                  color: AppColors.white,
-                                ),
-                              )
-                            ],
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset(
+                                    ConstantImage.addFundIcon,
+                                    height: 30,
+                                    color: AppColors.white,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "ADD FUND",
+                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                      color: AppColors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                        )
+                      ],
                     ),
-                    const SizedBox(width: 15),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => Get.to(() => AddFund()),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: AppColors.appbarColor,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                ConstantImage.addFundIcon,
-                                height: 30,
-                                color: AppColors.white,
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                "ADD FUND",
-                                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                  color: AppColors.white,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
+                    const SizedBox(height: 10),
+                    NormalMarketsList(normalMarketList: homeCon.normalMarketList),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: NormalMarketsList(normalMarketList: homeCon.normalMarketList),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
