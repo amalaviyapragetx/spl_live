@@ -236,7 +236,6 @@ class WalletController extends GetxController {
               }
             }
           }
-          //    AppUtils.showSuccessSnackBar(bodyText: value.message ?? "");
         } else {
           AppUtils.showErrorSnackBar(bodyText: value.message ?? "");
         }

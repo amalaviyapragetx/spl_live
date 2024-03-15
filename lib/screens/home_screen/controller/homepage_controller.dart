@@ -928,6 +928,7 @@ class HomePageController extends GetxController {
     ApiService().getTickets().then((value) async {
       debugPrint("benner Response Api ------------- :- $value");
       if (value['status']) {
+        newTicketsList.clear();
         List data = value['data'];
         for (int i = 0; i < data.length; i++) {
           newTicketsList.add(TicketModel(name: data[i], isSelected: false.obs));

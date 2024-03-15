@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
@@ -30,19 +31,17 @@ class _MoreOptionsState extends State<MoreOptions> {
         AppUtils().simpleAppbar(
           appBarTitle: "",
           leadingWidht: Dimensions.w200,
-          leading: Container(
-            child: Row(
-              children: [
-                SizedBox(width: Dimensions.w15),
-                Text(
-                  "MORE".tr,
-                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                    fontSize: Dimensions.h20,
-                    color: AppColors.white,
-                  ),
+          leading: Row(
+            children: [
+              SizedBox(width: Dimensions.w15),
+              Text(
+                "MORE".tr,
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  fontSize: Dimensions.h18,
+                  color: AppColors.white,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           actions: [
             Padding(
@@ -78,10 +77,10 @@ class _MoreOptionsState extends State<MoreOptions> {
                     onTap: () => Get.toNamed(AppRoutName.profilePage),
                     iconData: ConstantImage.profileIconSVG,
                     text: "MYPROFILE".tr),
-                listItems(
-                    onTap: () => Get.toNamed(AppRoutName.myAccountPage),
-                    iconData: ConstantImage.bakAccount,
-                    text: "MYACCOUNT".tr),
+                // listItems(
+                //     onTap: () => Get.toNamed(AppRoutName.myAccountPage),
+                //     iconData: ConstantImage.bakAccount,
+                //     text: "MYACCOUNT".tr),
                 listItems(
                     onTap: () => Get.toNamed(AppRoutName.gameRatePage),
                     iconData: ConstantImage.gameRate,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/components/common_wallet_list.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
@@ -36,54 +35,20 @@ class _SPLWalletState extends State<SPLWallet> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Obx(() => walletCon.selectedIndex.value == null
-            ? Container(
-                color: AppColors.appbarColor,
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-                child: SafeArea(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SvgPicture.asset(
-                            ConstantImage.walletAppbar,
-                            height: 25,
-                            width: 30,
-                            color: AppColors.white,
-                          ),
-                          const SizedBox(width: 5),
-                          GetBuilder<WalletController>(
-                            builder: (con) => Flexible(
-                              child: Text(
-                                con.walletBalance.value,
-                                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                  fontSize: Dimensions.h16,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          "WALLET".tr,
-                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.white,
-                            fontSize: Dimensions.h20,
-                          ),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                    ],
+        Obx(
+          () => walletCon.selectedIndex.value == null
+              ? GetBuilder<WalletController>(
+                  builder: (con) => CommonAppBar(
+                    walletBalance: con.walletBalance.value,
+                    title: "WALLET".tr,
+                    titleTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                      fontSize: Dimensions.h16,
+                      color: AppColors.white,
+                    ),
                   ),
-                ),
-              )
-            : Container()),
+                )
+              : const SizedBox(),
+        ),
         Obx(
           () => walletCon.selectedIndex.value != null
               ? currentWidget(walletCon.selectedIndex.value)

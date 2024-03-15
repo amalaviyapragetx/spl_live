@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/controller/passbook_controller.dart';
-import 'package:spllive/helper_files/constant_image.dart';
-import 'package:spllive/helper_files/ui_utils.dart';
 
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/common_utils.dart';
@@ -37,64 +35,37 @@ class _PassBookState extends State<PassBook> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppUtils().simpleAppbar(
-          appBarTitle: "",
-          leadingWidht: 900,
-          leading: SizedBox(
-            child: Row(
-              children: [
-                SizedBox(width: Dimensions.w15),
-                SvgPicture.asset(
-                  ConstantImage.walletAppbar,
-                  height: 25,
-                  width: 30,
-                  color: AppColors.white,
-                ),
-                SizedBox(width: Dimensions.w5),
-                GetBuilder<WalletController>(
-                  builder: (con) => Text(
-                    con.walletBalance.value,
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      fontSize: Dimensions.h16,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(width: Dimensions.w10),
-                Center(
-                  child: Text(
-                    "Passbook",
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      fontSize: Dimensions.h20,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                const Expanded(child: SizedBox()),
-                SizedBox(width: Dimensions.w80),
-                GestureDetector(
-                  onTap: () {
-                    if (homeController.pageWidget.value == 3) {
-                      if (MediaQuery.of(context).orientation == Orientation.portrait) {
-                        SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
-                      } else {
-                        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-                      }
-                    } else {
-                      SystemChrome.setPreferredOrientations(
-                          [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
-                    }
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(Dimensions.h8),
-                    child: Icon(
-                      Icons.flip,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-              ],
+        GetBuilder<WalletController>(
+          builder: (con) => CommonAppBar(
+            walletBalance: con.walletBalance.value,
+            title: "Passbook",
+            titleTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+              fontSize: Dimensions.h17,
+              color: AppColors.white,
             ),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  if (homeController.pageWidget.value == 3) {
+                    if (MediaQuery.of(context).orientation == Orientation.portrait) {
+                      SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+                    } else {
+                      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+                    }
+                  } else {
+                    SystemChrome.setPreferredOrientations(
+                        [DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(Dimensions.h8),
+                  child: Icon(
+                    Icons.flip,
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         Obx(

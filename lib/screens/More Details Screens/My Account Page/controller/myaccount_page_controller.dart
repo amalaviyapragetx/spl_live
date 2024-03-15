@@ -67,6 +67,10 @@ class MyAccountPageController extends GetxController {
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
+        bankNameController.clear();
+        accHolderNameController.clear();
+        accNoController.clear();
+        ifscCodeController.clear();
         isEditDetails.value = model.data!.isEditPermission ?? false;
         bankNameController.text = model.data!.bankName ?? "Null From API";
         accHolderNameController.text = model.data!.accountHolderName ?? "Null From API";

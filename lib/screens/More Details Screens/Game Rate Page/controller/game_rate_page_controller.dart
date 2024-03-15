@@ -15,12 +15,6 @@ class GameRatePageController extends GetxController {
     getGameRates(forStarlineGameModes: false);
   }
 
-  @override
-  void onClose() {}
-
-  @override
-  void onReady() {}
-
   void getGameRates({required bool forStarlineGameModes}) {
     ApiService().getGameRates(forStarlineGameModes: forStarlineGameModes).then((value) async {
       if (value['status']) {

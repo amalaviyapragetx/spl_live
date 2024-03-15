@@ -162,7 +162,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getBankDetails(body) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.getBankDetails,
@@ -184,7 +184,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> editBankDetails(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).put(
       ApiUtils.editBankDetails,
       body,
       headers: headersWithToken,
@@ -804,6 +804,28 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
+  Future<dynamic> getStarlineBanner() async {
+    Future.delayed(const Duration(milliseconds: 2), () {
+      AppUtils.showProgressDialog(isCancellable: false);
+    });
+
+    await initApiService();
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+      ApiUtils.getStarlineBanner,
+      headers: headersWithToken,
+    );
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
   // Future<dynamic> starlineMarketBidHistory({
   //   required String userId,
   //   required String limit,
@@ -1156,7 +1178,6 @@ class ApiService extends GetConnect implements GetxService {
       final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).put(
           ApiUtils.putWalletTransactionStatus, {"id": transactionId},
           headers: headersWithToken, query: {"search": ""});
-
       if (response.status.hasError) {
         if (response.status.code != null && response.status.code == 401) {
           tokenExpired();

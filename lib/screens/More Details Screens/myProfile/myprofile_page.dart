@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
+import 'package:spllive/models/commun_models/user_details_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/More%20Details%20Screens/myProfile/controller/myprofile_page_controller.dart';
-import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   String gender = '';
-  var controller = Get.put(MyProfilePageController());
-  var homeController = Get.put(HomePageController());
+  final controller = Get.put(MyProfilePageController());
+  @override
+  void initState() {
+    super.initState();
+    controller.userDetailsModel.value = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,27 +50,29 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "User Name : ${homeController.userData.userName ?? ""}",
-                        // style: TextStyle(fontSize: 17, color: AppColors.black),\
-                        textAlign: TextAlign.start,
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          fontSize: Dimensions.h15,
+                Obx(
+                  () => Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "User Name : ${controller.userDetailsModel.value.userName ?? ""}",
+                          // style: TextStyle(fontSize: 17, color: AppColors.black),\
+                          textAlign: TextAlign.start,
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                            fontSize: Dimensions.h15,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Mobile No : ${homeController.userData.phoneNumber ?? ""} ",
-                        // style: TextStyle(fontSize: 17, color: AppColors.black),\
-                        textAlign: TextAlign.start,
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          fontSize: Dimensions.h15,
+                        Text(
+                          "Mobile No : ${controller.userDetailsModel.value.phoneNumber ?? ""} ",
+                          // style: TextStyle(fontSize: 17, color: AppColors.black),\
+                          textAlign: TextAlign.start,
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                            fontSize: Dimensions.h15,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

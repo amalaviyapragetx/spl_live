@@ -32,7 +32,7 @@ class MPINPageView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: Get.height * 0.3),
+          SizedBox(height: Get.height * 0.18),
           Center(
             child: SizedBox(
               height: Dimensions.h100,

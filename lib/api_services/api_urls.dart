@@ -17,7 +17,8 @@ class ApiUtils {
   static String resetPassword = '$baseURL/auth/resetPassword';
   static String changePassword = '$baseURL/auth/changePassword';
   static String getBankDetails = '$baseURL/bank/getByUserId';
-  static String editBankDetails = '$baseURL/bank/createOrUpdate';
+  // static String editBankDetails = '$baseURL/bank/createOrUpdate';
+  static String editBankDetails = '$baseURL/bank/update';
   static String getDailyMarkets = '$baseURL/market/getDailyMarket';
   static String getGameModes =
       '$baseURL/market/getGameModeForMarket/'; //pass 0 for open 1 for close then pass market id like 0/4
@@ -81,4 +82,5 @@ class ApiUtils {
   static String getApk = "$baseURL/public/apk/spl_live.apk";
   static String getTickets = "$baseURL/wallet/addFund";
   static String getBankHistory = "$baseURL/bank/bankHistory/";
+  static String getStarlineBanner = "$baseURL/banner/getAll";
 }

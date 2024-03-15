@@ -42,12 +42,11 @@ class HomeController extends GetxController {
 
   void getBannerData() async {
     ApiService().getBennerData().then((value) async {
-      if (value != null) {
-        if (value['status'] ?? false) {
-          bannerData.value = value['data'];
-        } else {
-          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-        }
+      BannerModel model = BannerModel.fromJson(value);
+      if (model.status ?? false) {
+        bannerData.value = model.data ?? [];
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: model.message ?? "");
       }
     });
   }

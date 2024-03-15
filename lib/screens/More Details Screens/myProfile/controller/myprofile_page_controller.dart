@@ -8,9 +8,10 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../models/commun_models/user_details_model.dart';
 
 class MyProfilePageController extends GetxController {
-  UserDetailsModel userDetailsModel = UserDetailsModel();
+  Rx<UserDetailsModel> userDetailsModel = UserDetailsModel().obs;
   RxBool value = true.obs;
   File? myimagepath;
+
   void navigateTo(context, routeString) {
     Get.toNamed(routeString);
   }

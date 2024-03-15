@@ -30,9 +30,12 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             homeCon.pageWidget.value == 2 ||
             homeCon.pageWidget.value == 3 ||
             homeCon.pageWidget.value == 4) {
-          homeCon.pageWidget.value = 0;
-          homeCon.currentIndex.value = 0;
-          walletCon.selectedIndex.value = null;
+          if (walletCon.selectedIndex.value != null) {
+            walletCon.selectedIndex.value = null;
+          } else {
+            homeCon.pageWidget.value = 0;
+            homeCon.currentIndex.value = 0;
+          }
           SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
           return false;
         } else if (homeCon.pageWidget.value == 5) {
@@ -40,21 +43,78 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           homeCon.currentIndex.value = 4;
           return false;
         } else {
-          // if (homeCon.widgetContainer.value != 0) {
-          //   homeCon.widgetContainer.value = 0;
-          //   return false;
-          // } else {
-          return await showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) => onExitAlert(context, onCancel: () {
-                  Navigator.of(context).pop(false);
-                }, onExit: () {
-                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                }),
-              ) ??
-              false;
-          // }
+          // await Get.dialog(
+          //   barrierDismissible: false,
+          //   ConstrainedBox(
+          //     constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
+          //     child: AlertDialog(
+          //       insetPadding: EdgeInsets.all(10),
+          //       contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
+          //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          //       content: SizedBox(
+          //         width: double.infinity,
+          //         child: Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             Text(
+          //               'Exit App',
+          //               style: CustomTextStyle.textRobotoSansMedium.copyWith(
+          //                 color: AppColors.appbarColor,
+          //                 fontWeight: FontWeight.w700,
+          //                 fontSize: 20,
+          //               ),
+          //             ),
+          //             Text(
+          //               'Are you sure you want to exit the app?',
+          //               textAlign: TextAlign.center,
+          //               style: CustomTextStyle.textRobotoSansMedium.copyWith(
+          //                 fontSize: Dimensions.h15,
+          //               ),
+          //             ),
+          //             const SizedBox(height: 10),
+          //             Row(
+          //               mainAxisAlignment: MainAxisAlignment.end,
+          //               children: [
+          //                 InkWell(
+          //                   onTap: () => Get.back(),
+          //                   child: Center(
+          //                     child: Text(
+          //                       'Cancel',
+          //                       style: CustomTextStyle.textRobotoSansBold.copyWith(
+          //                         color: AppColors.appbarColor,
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 SizedBox(width: 10),
+          //                 InkWell(
+          //                   onTap: () => Navigator.of(context).pop(false),
+          //                   child: Center(
+          //                     child: Text(
+          //                       'Exit',
+          //                       style: CustomTextStyle.textRobotoSansBold.copyWith(
+          //                         color: AppColors.redColor,
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          await showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => onExitAlert(context, onCancel: () {
+              Navigator.of(context).pop(false);
+            }, onExit: () {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            }),
+          );
+          return false;
         }
       },
       child: Scaffold(
@@ -68,6 +128,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             type: BottomNavigationBarType.fixed,
             currentIndex: homeCon.pageWidget.value,
             selectedItemColor: AppColors.appbarColor,
+            unselectedLabelStyle: CustomTextStyle.textPTsansMedium.copyWith(fontSize: 12),
             selectedLabelStyle: CustomTextStyle.textPTsansMedium.copyWith(fontSize: 12),
             onTap: (v) {
               homeCon.pageWidget.value = v;
@@ -126,9 +187,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     );
   }
 
-  Padding onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
+  onExitAlert(BuildContext context, {required Function() onExit, required Function() onCancel}) {
     return Padding(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       child: AlertDialog(
         title: Text(
           'Exit App',

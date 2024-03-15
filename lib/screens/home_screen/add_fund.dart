@@ -61,7 +61,11 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        walletCon.selectedIndex.value = null;
+        if (walletCon.selectedIndex.value != null) {
+          walletCon.selectedIndex.value = null;
+        } else {
+          Get.back();
+        }
         return false;
       },
       child: Material(
@@ -80,35 +84,25 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SvgPicture.asset(
-                            ConstantImage.walletAppbar,
-                            height: 25,
-                            width: 30,
-                            color: AppColors.white,
-                          ),
+                          InkWell(
+                              onTap: () {
+                                if (walletCon.selectedIndex.value != null) {
+                                  walletCon.selectedIndex.value = null;
+                                } else {
+                                  Get.back();
+                                }
+                              },
+                              child: Icon(Icons.arrow_back, color: AppColors.white)),
                           const SizedBox(width: 5),
-                          GetBuilder<WalletController>(
-                            builder: (con) => Flexible(
-                              child: Text(
-                                con.walletBalance.value,
-                                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                  fontSize: Dimensions.h16,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                       const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          "Add Fund",
-                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.white,
-                            fontSize: Dimensions.h20,
-                          ),
+                      Text(
+                        textAlign: TextAlign.center,
+                        "Add Fund",
+                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                          color: AppColors.white,
+                          fontSize: Dimensions.h17,
                         ),
                       ),
                       const Expanded(child: SizedBox()),

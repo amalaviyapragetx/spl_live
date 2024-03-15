@@ -40,7 +40,7 @@ class _SetMPINPageState extends State<SetMPINPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: Get.height * 0.2),
+            SizedBox(height: Get.height * 0.15),
             Center(
               child: SizedBox(
                 height: Dimensions.h100,

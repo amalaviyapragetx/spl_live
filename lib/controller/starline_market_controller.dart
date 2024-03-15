@@ -121,11 +121,30 @@ class StarlineMarketController extends GetxController {
           starlineChartTime.value = model.data!.markets as List<Markets>;
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
+  }
+
+  RxString bannerImage = "".obs;
+  RxBool bannerLoad = false.obs;
+  void getStarlineBanner() async {
+    try {
+      bannerLoad.value = true;
+      ApiService().getStarlineBanner().then((value) async {
+        if (value['status']) {
+          bannerLoad.value = false;
+          bannerImage.value = value['data'][0]['Banner'];
+          // "Banner" -> "https://vishnulive.in:9870/public/banner/Test-1.png"
+        } else {
+          bannerLoad.value = false;
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        }
+      });
+    } catch (e) {
+      bannerLoad.value = false;
+      print(e);
+    }
   }
 }
 
