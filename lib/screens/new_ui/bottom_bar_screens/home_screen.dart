@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     walletCon.getUserBalance();
     homeCon.getBannerData();
     homeCon.getDailyMarkets();
-    homeCon.getNotificationCount();
+    homeCon.getNotificationCountData();
     homeCon.getNotificationsData();
   }
 
@@ -79,21 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             actions: [
-              homeCon.notificationCount.value == null || homeCon.notificationCount.value == 0
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: InkWell(
-                        onTap: () => Get.toNamed(AppRoutName.notificationPage),
-                        child: Icon(
-                          Icons.notifications_active,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(right: 12, top: 17, bottom: 17),
-                      child: Badge(
-                        smallSize: Dimensions.h9,
+              Obx(
+                () => homeCon.notificationCount.value == null || homeCon.notificationCount.value == 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 12),
                         child: InkWell(
                           onTap: () => Get.toNamed(AppRoutName.notificationPage),
                           child: Icon(
@@ -101,8 +90,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: AppColors.white,
                           ),
                         ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(right: 12, top: 17, bottom: 17),
+                        child: Badge(
+                          smallSize: Dimensions.h9,
+                          child: InkWell(
+                            onTap: () => Get.toNamed(AppRoutName.notificationPage),
+                            child: Icon(
+                              Icons.notifications_active,
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 17),
                 child: InkWell(
@@ -142,121 +144,119 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          body: Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Obx(
-                      () => homeCon.bannerData.isNotEmpty
-                          ? CarouselSlider(
-                              items: homeCon.bannerData.map((element) {
-                                return Builder(
-                                  builder: (context) {
-                                    return Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: NetworkImage(element.banner ?? ""),
-                                              fit: BoxFit.cover,
-                                            ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Obx(
+                    () => homeCon.bannerData.isNotEmpty
+                        ? CarouselSlider(
+                            items: homeCon.bannerData.map((element) {
+                              return Builder(
+                                builder: (context) {
+                                  return Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(element.banner ?? ""),
+                                            fit: BoxFit.cover,
                                           ),
-                                        ));
-                                  },
-                                );
-                              }).toList(),
-                              options: CarouselOptions(
-                                height: Dimensions.h90,
-                                enlargeCenterPage: true,
-                                autoPlay: true,
-                                aspectRatio: 15 / 4,
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enableInfiniteScroll: true,
-                                autoPlayAnimationDuration: const Duration(milliseconds: 600),
-                                viewportFraction: 1,
-                              ),
-                            )
-                          : SizedBox(
-                              height: 100,
-                              child: Center(
-                                child: Icon(
-                                  Icons.error_outline,
-                                  color: AppColors.black,
-                                ),
+                                        ),
+                                      ));
+                                },
+                              );
+                            }).toList(),
+                            options: CarouselOptions(
+                              height: Dimensions.h90,
+                              enlargeCenterPage: true,
+                              autoPlay: true,
+                              aspectRatio: 15 / 4,
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              enableInfiniteScroll: true,
+                              autoPlayAnimationDuration: const Duration(milliseconds: 600),
+                              viewportFraction: 1,
+                            ),
+                          )
+                        : SizedBox(
+                            height: 100,
+                            child: Center(
+                              child: Icon(
+                                Icons.error_outline,
+                                color: AppColors.black,
                               ),
                             ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => Get.to(() => StarlineDailyMarketData()),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                color: AppColors.appbarColor,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(
-                                    ConstantImage.starLineIcon,
-                                    height: 30,
+                          ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Get.to(() => StarlineDailyMarketData()),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: AppColors.appbarColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  ConstantImage.starLineIcon,
+                                  height: 30,
+                                  color: AppColors.white,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  "SPL STARLINE",
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                     color: AppColors.white,
                                   ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    "SPL STARLINE",
-                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                      color: AppColors.white,
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ),
                         ),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => Get.to(() => AddFund()),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                color: AppColors.appbarColor,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(
-                                    ConstantImage.addFundIcon,
-                                    height: 30,
+                      ),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Get.to(() => AddFund()),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: AppColors.appbarColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  ConstantImage.addFundIcon,
+                                  height: 30,
+                                  color: AppColors.white,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  "ADD FUND",
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                     color: AppColors.white,
                                   ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    "ADD FUND",
-                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                      color: AppColors.white,
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    NormalMarketsList(normalMarketList: homeCon.normalMarketList),
-                  ],
-                ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  NormalMarketsList(normalMarketList: homeCon.normalMarketList),
+                ],
               ),
             ),
           ),
@@ -275,11 +275,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Obx(
                             () => ListView.builder(
                               padding: EdgeInsets.zero,
+                              shrinkWrap: true,
                               itemCount: homeCon.notificationData.length,
                               itemBuilder: (context, index) {
-                                return notificationWidget(
-                                  notificationHeader: homeCon.notificationData[index].title ?? "",
-                                  notificationSubTitle: homeCon.notificationData[index].description ?? "",
+                                return Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: notificationWidget(
+                                    notificationHeader: homeCon.notificationData[index].title ?? "",
+                                    notificationSubTitle: homeCon.notificationData[index].description ?? "",
+                                  ),
                                 );
                               },
                             ),
@@ -319,39 +323,59 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget notificationWidget({String? notificationHeader, String? notificationSubTitle}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
       child: Container(
-        width: double.infinity,
+        width: Get.width,
         decoration: BoxDecoration(
           color: AppColors.white,
           boxShadow: [
             BoxShadow(
               spreadRadius: 1,
               color: AppColors.grey.withOpacity(0.5),
-              blurRadius: 5,
-              offset: const Offset(0, 3),
+              blurRadius: 8,
+              offset: const Offset(0, 0),
             ),
           ],
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.h8),
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: Dimensions.h5),
-              Text(
-                notificationHeader ?? "",
-                style: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h14,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                gradient: LinearGradient(
+                  colors: [AppColors.wpColor1, AppColors.wpColor2],
                 ),
               ),
-              SizedBox(height: Dimensions.h5),
-              Align(
-                alignment: Alignment.topLeft,
-                child: SizedBox(
-                  child: Text(
+              child: Center(
+                child: Text(
+                  notificationHeader ?? "",
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
+                    color: AppColors.white,
+                    fontSize: Dimensions.h14,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: Dimensions.h5),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Dear Players,",
+                    textAlign: TextAlign.start,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: Dimensions.h5),
+                  Text(
                     notificationSubTitle ?? "",
                     textAlign: TextAlign.start,
                     style: CustomTextStyle.textRobotoSansLight.copyWith(
@@ -359,10 +383,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: Dimensions.h13,
                     ),
                   ),
-                ),
+                  SizedBox(height: Dimensions.h5),
+                  Text(
+                    "Regards",
+                    textAlign: TextAlign.start,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h13,
+                    ),
+                  ),
+                  Text(
+                    "SPL ADMIN",
+                    textAlign: TextAlign.start,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

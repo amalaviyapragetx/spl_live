@@ -45,13 +45,13 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
         walletCon.getUserBalance();
         break;
       case AppLifecycleState.inactive:
-        print("App is in an inactive state");
+        //  print("App is in an inactive state");
         break;
       case AppLifecycleState.paused:
-        print("App is in the background");
+        //    print("App is in the background");
         break;
       case AppLifecycleState.detached:
-        print("App is detached");
+        //print("App is detached");
         break;
       default:
     }

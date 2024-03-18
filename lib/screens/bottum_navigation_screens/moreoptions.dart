@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../helper_files/constant_image.dart';
-import '../../helper_files/ui_utils.dart';
 import 'controller/bottum_navigation_controller.dart';
 
 class MoreOptions extends StatefulWidget {
@@ -29,20 +26,25 @@ class _MoreOptionsState extends State<MoreOptions> {
     return Column(
       children: [
         AppUtils().simpleAppbar(
-          appBarTitle: "",
-          leadingWidht: Dimensions.w200,
-          leading: Row(
-            children: [
-              SizedBox(width: Dimensions.w15),
-              Text(
-                "MORE".tr,
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                  fontSize: Dimensions.h18,
-                  color: AppColors.white,
-                ),
-              ),
-            ],
+          appBarTitle: "SPL".tr,
+          centerTitle: true,
+          appBarTitlestyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+            fontSize: Dimensions.h18,
+            color: AppColors.white,
           ),
+          // leadingWidht: Dimensions.w200,
+          // leading: Row(
+          //   children: [
+          //     SizedBox(width: Dimensions.w15),
+          //     Text(
+          //       "MORE".tr,
+          //       style: CustomTextStyle.textRobotoSansMedium.copyWith(
+          //         fontSize: Dimensions.h18,
+          //         color: AppColors.white,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
@@ -72,23 +74,69 @@ class _MoreOptionsState extends State<MoreOptions> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: Dimensions.h15),
+                SizedBox(height: Dimensions.h10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(width: Dimensions.w10),
+                    SizedBox(
+                      child: Icon(
+                        Icons.person_outline,
+                        color: AppColors.appbarColor,
+                        size: 60,
+                      ),
+                      // child: Image.asset(
+                      //   ConstantImage.splLogo,
+                      //   fit: BoxFit.contain,
+                      // ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "User Name : ${controller.userData.userName ?? ""}",
+                            // style: TextStyle(fontSize: 17, color: AppColors.black),\
+                            textAlign: TextAlign.start,
+                            style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                              fontSize: Dimensions.h15,
+                            ),
+                          ),
+                          Text(
+                            "Mobile No : ${controller.userData.phoneNumber ?? ""} ",
+                            // style: TextStyle(fontSize: 17, color: AppColors.black),\
+                            textAlign: TextAlign.start,
+                            style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                              fontSize: Dimensions.h15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(color: AppColors.grey, endIndent: 10, indent: 20),
+                SizedBox(height: Dimensions.h5),
                 listItems(
                     onTap: () => Get.toNamed(AppRoutName.profilePage),
-                    iconData: ConstantImage.profileIconSVG,
-                    text: "MYPROFILE".tr),
-                // listItems(
-                //     onTap: () => Get.toNamed(AppRoutName.myAccountPage),
-                //     iconData: ConstantImage.bakAccount,
-                //     text: "MYACCOUNT".tr),
+                    iconData: ConstantImage.bakAccount,
+                    text: "Change Password".tr),
                 listItems(
-                    onTap: () => Get.toNamed(AppRoutName.gameRatePage),
-                    iconData: ConstantImage.gameRate,
-                    text: "GAMERATE".tr),
+                    onTap: () {
+                      homeController.pageWidget.value = 2;
+                      homeController.currentIndex.value = 2;
+                    },
+                    iconData: ConstantImage.walletAppbar,
+                    text: "Wallet".tr),
                 listItems(
-                    onTap: () => Get.toNamed(AppRoutName.notificationDetailsPage),
-                    iconData: ConstantImage.notifiacation,
-                    text: "NOTIFICATIONS".tr),
+                    onTap: () {
+                      homeController.pageWidget.value = 1;
+                      homeController.currentIndex.value = 1;
+                      homeController.marketBidsByUserId();
+                    },
+                    iconData: ConstantImage.clockIcon,
+                    text: "Bid History".tr),
                 listItems(
                     onTap: () {
                       homeController.pageWidget.value = 2;
@@ -97,45 +145,45 @@ class _MoreOptionsState extends State<MoreOptions> {
                     iconData: ConstantImage.plusIcon,
                     text: "ADDFUND".tr),
                 listItems(
-                    onTap: () {
-                      homeController.pageWidget.value = 1;
-                      homeController.currentIndex.value = 1;
-                      homeController.marketBidsByUserId();
-                    },
-                    iconData: ConstantImage.clockIcon,
-                    text: "BIDDINGHISTORY".tr),
+                    onTap: () => Get.toNamed(AppRoutName.gameRatePage),
+                    iconData: ConstantImage.gameRate,
+                    text: "GAMERATE".tr),
                 listItems(
-                    onTap: () {
-                      GetStorage().write(ConstantsVariables.withDrawal, true);
-                      homeController.pageWidget.value = 2;
-                      homeController.currentIndex.value = 2;
-                      // Get.toNamed(AppRoutName.withdrawalpage);
-                    },
-                    iconData: ConstantImage.withDrawalIcon,
-                    text: "WITHDRAWAL_TXT1".tr),
-                listItems(
-                    onTap: () => Get.toNamed(AppRoutName.transactionPage),
-                    iconData: ConstantImage.addFundIcon,
-                    text: "TRANSACTIONHISTORY".tr),
+                    onTap: () => Get.toNamed(AppRoutName.notificationDetailsPage),
+                    iconData: ConstantImage.notifiacation,
+                    text: "NOTIFICATIONS".tr),
+                // listItems(
+                //     onTap: () {
+                //       GetStorage().write(ConstantsVariables.withDrawal, true);
+                //       homeController.pageWidget.value = 2;
+                //       homeController.currentIndex.value = 2;
+                //       // Get.toNamed(AppRoutName.withdrawalpage);
+                //     },
+                //     iconData: ConstantImage.withDrawalIcon,
+                //     text: "WITHDRAWAL_TXT1".tr),
+                // listItems(
+                //     onTap: () => Get.toNamed(AppRoutName.transactionPage),
+                //     iconData: ConstantImage.addFundIcon,
+                //     text: "TRANSACTIONHISTORY".tr),
                 listItems(
                   onTap: () => Get.toNamed(AppRoutName.feedBackPage),
                   iconData: ConstantImage.giveFeedbackIcon,
-                  text: "GIVEFEEDBACK".tr,
+                  text: "Give Review".tr,
                 ),
                 listItems(
                   onTap: () => controller.getFeedbackAndRatingsById(),
                   iconData: ConstantImage.rateusStartIcon,
                   text: "RATEUS".tr,
                 ),
-                listItems(
-                  onTap: () => Get.toNamed(AppRoutName.aboutPage),
-                  iconData: ConstantImage.infoIcon,
-                  text: "ABOUTUS".tr,
-                ),
+                // listItems(
+                //   onTap: () => Get.toNamed(AppRoutName.aboutPage),
+                //   iconData: ConstantImage.infoIcon,
+                //   text: "ABOUTUS".tr,
+                // ),
                 listItems(
                   onTap: () => controller.callLogout(),
                   iconData: ConstantImage.signOutIcon,
-                  text: "SIGNOUT".tr,
+                  text: "Log Out",
                 ),
               ],
             ),
@@ -156,9 +204,7 @@ Widget listItems({required Function() onTap, required String iconData, required 
           height: Dimensions.h30,
           child: Row(
             children: [
-              SizedBox(
-                width: Dimensions.w20,
-              ),
+              SizedBox(width: Dimensions.w20),
               Padding(
                 padding: const EdgeInsets.only(top: 3),
                 child: SizedBox(
@@ -182,8 +228,8 @@ Widget listItems({required Function() onTap, required String iconData, required 
         ),
         Divider(
           color: AppColors.grey,
-          endIndent: 10,
-          indent: 50,
+          endIndent: 50,
+          indent: 20,
         )
       ],
     ),

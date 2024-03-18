@@ -125,43 +125,47 @@ class CreateWithDrawalPageController extends GetxController {
         if (model.message!.isNotEmpty) {
           if (model.message == "Withdrawal request created successfully") {
             return Get.dialog(
-              barrierDismissible: false,
+              barrierDismissible: true,
               ConstrainedBox(
                 constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
-                child: AlertDialog(
-                  insetPadding: EdgeInsets.all(10),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                  content: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Stack(
                       children: [
-                        Icon(Icons.check, size: Dimensions.h60, color: AppColors.green),
-                        const SizedBox(height: 20),
-                        Text(
-                          model.message ?? "",
-                          textAlign: TextAlign.center,
-                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.appbarColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
+                        Dialog(
+                          insetPadding: EdgeInsets.all(10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.check, size: Dimensions.h60, color: AppColors.green),
+                                const SizedBox(height: 20),
+                                Text(
+                                  model.message ?? "",
+                                  textAlign: TextAlign.center,
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                    color: AppColors.appbarColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        InkWell(
-                          onTap: () => Get.back(),
-                          child: Container(
-                            decoration:
-                                BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
-                            height: Dimensions.h40,
-                            width: Dimensions.w150,
-                            child: Center(
-                              child: Text(
-                                'OK',
-                                style:
-                                    CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
+                        Positioned(
+                          right: 5,
+                          child: GestureDetector(
+                            onTap: () => Get.back(),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.black,
                               ),
+                              padding: EdgeInsets.all(4.0),
+                              child: Icon(Icons.close, color: Colors.white, size: 18),
                             ),
                           ),
                         ),
@@ -172,44 +176,48 @@ class CreateWithDrawalPageController extends GetxController {
               ),
             );
           } else {
-            return Get.dialog(
+            Get.dialog(
               barrierDismissible: false,
               ConstrainedBox(
                 constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
-                child: AlertDialog(
-                  insetPadding: EdgeInsets.all(10),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                  content: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Stack(
                       children: [
-                        SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
-                        const SizedBox(height: 20),
-                        Text(
-                          model.message ?? "",
-                          textAlign: TextAlign.center,
-                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.appbarColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
+                        Dialog(
+                          insetPadding: EdgeInsets.all(10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
+                                const SizedBox(height: 20),
+                                Text(
+                                  model.message ?? "",
+                                  textAlign: TextAlign.center,
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                    color: AppColors.appbarColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        InkWell(
-                          onTap: () => Get.back(),
-                          child: Container(
-                            decoration:
-                                BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
-                            height: Dimensions.h40,
-                            width: Dimensions.w150,
-                            child: Center(
-                              child: Text(
-                                'OK',
-                                style:
-                                    CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
+                        Positioned(
+                          right: 5,
+                          child: GestureDetector(
+                            onTap: () => Get.back(),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.black,
                               ),
+                              padding: EdgeInsets.all(4.0),
+                              child: Icon(Icons.close, color: Colors.white, size: 18),
                             ),
                           ),
                         ),

@@ -35,11 +35,8 @@ class NotificationPage extends StatelessWidget {
                     itemCount: controller.notificationData.length,
                     itemBuilder: (context, index) {
                       return notificationWidget(size,
-                          notifiactionHeder:
-                              controller.notificationData[index].title ?? "",
-                          notifiactionSubTitle:
-                              controller.notificationData[index].description ??
-                                  "");
+                          notifiactionHeder: controller.notificationData[index].title ?? "",
+                          notifiactionSubTitle: controller.notificationData[index].description ?? "");
                     },
                   ),
                 )),
@@ -51,9 +48,7 @@ class NotificationPage extends StatelessWidget {
     );
   }
 
-  Widget notificationWidget(Size size,
-      {required String notifiactionHeder,
-      required String notifiactionSubTitle}) {
+  Widget notificationWidget(Size size, {required String notifiactionHeder, required String notifiactionSubTitle}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
       child: Container(
@@ -64,34 +59,50 @@ class NotificationPage extends StatelessWidget {
             BoxShadow(
               spreadRadius: 1,
               color: AppColors.grey.withOpacity(0.5),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
+              blurRadius: 8,
+              offset: const Offset(0, 0),
             ),
           ],
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.h8),
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: Dimensions.h5,
-              ),
-              Text(
-                notifiactionHeder,
-                style: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: AppColors.black,
-                  fontSize: Dimensions.h14,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                gradient: LinearGradient(
+                  colors: [AppColors.wpColor1, AppColors.wpColor2],
                 ),
               ),
-              SizedBox(
-                height: Dimensions.h5,
+              child: Center(
+                child: Text(
+                  notifiactionHeder,
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(
+                    color: AppColors.white,
+                    fontSize: Dimensions.h14,
+                  ),
+                ),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: SizedBox(
-                  child: Text(
+            ),
+            SizedBox(height: Dimensions.h5),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Dear Players,",
+                    textAlign: TextAlign.start,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: Dimensions.h5),
+                  Text(
                     notifiactionSubTitle,
                     textAlign: TextAlign.start,
                     style: CustomTextStyle.textRobotoSansLight.copyWith(
@@ -99,10 +110,28 @@ class NotificationPage extends StatelessWidget {
                       fontSize: Dimensions.h13,
                     ),
                   ),
-                ),
+                  SizedBox(height: Dimensions.h5),
+                  Text(
+                    "Regards",
+                    textAlign: TextAlign.start,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h13,
+                    ),
+                  ),
+                  Text(
+                    "SPL ADMIN",
+                    textAlign: TextAlign.start,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

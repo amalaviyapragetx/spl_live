@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 
 import 'Push Notification/notificationservices.dart';
@@ -24,11 +25,13 @@ Future<void> _firebaseMessegingBackgroundHendler(RemoteMessage msg) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Permission.notification.request();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessegingBackgroundHendler);
   await GetStorage.init();
   final appStateListener = AppStateListener();
   WidgetsBinding.instance.addObserver(appStateListener);
+
   runApp(const MyApp());
 }
 
@@ -50,7 +53,6 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().firebaseInit(context);
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) => GetStorage().write(ConstantsVariables.fcmToken, value));
-
     super.initState();
   }
 

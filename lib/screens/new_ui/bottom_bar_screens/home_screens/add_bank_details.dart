@@ -180,7 +180,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
       ConstrainedBox(
         constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
         child: AlertDialog(
-          insetPadding: EdgeInsets.zero,
+          insetPadding: EdgeInsets.symmetric(vertical: 10),
           contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
           content: SizedBox(
@@ -192,6 +192,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                 const SizedBox(height: 20),
                 Text(
                   "Please Contact Admin to edit",
+                  textAlign: TextAlign.center,
                   style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     color: AppColors.appbarColor,
                     fontWeight: FontWeight.w700,
@@ -200,6 +201,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                 ),
                 Text(
                   "Bank details",
+                  textAlign: TextAlign.center,
                   style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     color: AppColors.appbarColor,
                     fontWeight: FontWeight.w700,

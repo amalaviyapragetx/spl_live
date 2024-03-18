@@ -17,180 +17,176 @@ class NormalMarketsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () {
-        return normalMarketList != null
-            ? normalMarketList!.isNotEmpty
-                ? Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: InkWell(
-                          onTap: () {
-                            launch("https://wa.me/+917769826748/?text=hi");
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: Dimensions.h30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              gradient: LinearGradient(
-                                colors: [AppColors.wpColor1, AppColors.wpColor2],
+      () => normalMarketList != null
+          ? normalMarketList!.isNotEmpty
+              ? Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: InkWell(
+                        onTap: () => launch("https://wa.me/+917769826748/?text=hi"),
+                        child: Container(
+                          width: double.infinity,
+                          height: Dimensions.h30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            gradient: LinearGradient(
+                              colors: [AppColors.wpColor1, AppColors.wpColor2],
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Image.asset(
+                                  ConstantImage.whatsaapIcon,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Image.asset(
-                                    ConstantImage.whatsaapIcon,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "+91 7769826748",
-                                  style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
-                                ),
-                              ],
-                            ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "+91 7769826748",
+                                style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      GridView.builder(
-                        padding: EdgeInsets.all(Dimensions.h5),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: Get.width / 2,
-                          mainAxisExtent: Get.width / 2.4,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 10,
-                        ),
-                        itemCount: normalMarketList?.length ?? 0,
-                        itemBuilder: (context, i) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
-                            child: GestureDetector(
-                              onTap: () => normalMarketList![i].isBidOpenForClose == true
-                                  ? normalMarketList![i].isBidOpenForClose ?? false
-                                      ? Get.toNamed(AppRoutName.gameModePage, arguments: normalMarketList?[i])
-                                      : AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!")
-                                  : null,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      spreadRadius: 0.2,
-                                      color: AppColors.grey,
-                                      blurRadius: 3.5,
-                                      offset: const Offset(2, 4),
-                                    )
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(Dimensions.h10),
-                                  border: Border.all(color: Colors.red, width: 1),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(height: Dimensions.h10),
-                                    Text(
-                                      "${normalMarketList![i].openTime ?? " "} | ${normalMarketList![i].closeTime ?? ""}",
-                                      style: CustomTextStyle.textRobotoSansLight.copyWith(fontWeight: FontWeight.w300),
+                    ),
+                    GridView.builder(
+                      padding: EdgeInsets.all(Dimensions.h5),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: Get.width / 2,
+                        mainAxisExtent: Get.width / 2.4,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: normalMarketList?.length ?? 0,
+                      itemBuilder: (context, i) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
+                          child: GestureDetector(
+                            onTap: () => normalMarketList![i].isBidOpenForClose == true
+                                ? normalMarketList![i].isBidOpenForClose ?? false
+                                    ? Get.toNamed(AppRoutName.gameModePage, arguments: normalMarketList?[i])
+                                    : AppUtils.showErrorSnackBar(bodyText: "Bidding is Closed!!!!")
+                                : null,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    spreadRadius: 0.2,
+                                    color: AppColors.grey,
+                                    blurRadius: 3.5,
+                                    offset: const Offset(2, 4),
+                                  )
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(Dimensions.h10),
+                                border: Border.all(color: Colors.red, width: 1),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(height: Dimensions.h10),
+                                  Text(
+                                    "${normalMarketList![i].openTime ?? " "} | ${normalMarketList![i].closeTime ?? ""}",
+                                    style: CustomTextStyle.textRobotoSansLight.copyWith(fontWeight: FontWeight.w300),
+                                  ),
+                                  Text(
+                                    normalMarketList?[i].market ?? "",
+                                    // "MADHUR DAY",
+                                    style: CustomTextStyle.textPTsansBold.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: Dimensions.h14,
                                     ),
-                                    Text(
-                                      normalMarketList?[i].market ?? "",
-                                      // "MADHUR DAY",
-                                      style: CustomTextStyle.textPTsansBold.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: Dimensions.h14,
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      buildResult(
+                                          isOpenResult: true,
+                                          resultDeclared: normalMarketList![i].isOpenResultDeclared ?? false,
+                                          result: normalMarketList![i].openResult ?? 0),
+                                      buildResult(
+                                        isOpenResult: false,
+                                        resultDeclared: normalMarketList![i].isCloseResultDeclared ?? false,
+                                        result: normalMarketList![i].closeResult ?? 0,
+                                      )
+                                    ],
+                                  ),
+                                  Container(
+                                    height: Dimensions.h25,
+                                    width: Dimensions.w80,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.blueButton, borderRadius: BorderRadius.circular(25)),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        buildResult(
-                                            isOpenResult: true,
-                                            resultDeclared: normalMarketList![i].isOpenResultDeclared ?? false,
-                                            result: normalMarketList![i].openResult ?? 0),
-                                        buildResult(
-                                          isOpenResult: false,
-                                          resultDeclared: normalMarketList![i].isCloseResultDeclared ?? false,
-                                          result: normalMarketList![i].closeResult ?? 0,
-                                        )
-                                      ],
-                                    ),
-                                    Container(
-                                      height: Dimensions.h25,
-                                      width: Dimensions.w80,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.blueButton, borderRadius: BorderRadius.circular(25)),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          FittedBox(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: Dimensions.w15, bottom: 2),
-                                              child: Text(
-                                                "PLAY2".tr,
-                                                style: TextStyle(
-                                                  color: AppColors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                        FittedBox(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: Dimensions.w15, bottom: 2),
+                                            child: Text(
+                                              "PLAY2".tr,
+                                              style: TextStyle(
+                                                color: AppColors.white,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ),
-                                          FittedBox(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(right: 3.0),
-                                              child: Icon(Icons.play_circle_fill, color: AppColors.white),
-                                            ),
+                                        ),
+                                        FittedBox(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(right: 3.0),
+                                            child: Icon(Icons.play_circle_fill, color: AppColors.white),
                                           ),
-                                        ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: Dimensions.h5),
+                                  Container(
+                                    height: Dimensions.h30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade400.withOpacity(0.8),
+                                      borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
                                       ),
                                     ),
-                                    SizedBox(height: Dimensions.h5),
-                                    Container(
-                                      height: Dimensions.h30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade400.withOpacity(0.8),
-                                        borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          normalMarketList![i].isBidOpenForClose == true
-                                              ? "Bidding is Open"
-                                              : "Bidding is Closed",
-                                          style: normalMarketList![i].isBidOpenForClose == true
-                                              ? CustomTextStyle.textPTsansMedium.copyWith(
-                                                  color: AppColors.greenShade,
-                                                  fontWeight: FontWeight.w500,
-                                                )
-                                              : CustomTextStyle.textPTsansMedium.copyWith(
-                                                  color: AppColors.redColor,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                        ),
+                                    child: Center(
+                                      child: Text(
+                                        normalMarketList![i].isBidOpenForClose == true
+                                            ? "Bidding is Open"
+                                            : "Bidding is Closed",
+                                        style: normalMarketList![i].isBidOpenForClose == true
+                                            ? CustomTextStyle.textPTsansMedium.copyWith(
+                                                color: AppColors.greenShade,
+                                                fontWeight: FontWeight.w500,
+                                              )
+                                            : CustomTextStyle.textPTsansMedium.copyWith(
+                                                color: AppColors.redColor,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ],
-                  )
-                : const Center(child: Text("No Data Found"))
-            : const SizedBox();
-      },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                )
+              : const Center(child: Text("No Data Found"))
+          : const SizedBox(),
     );
   }
 

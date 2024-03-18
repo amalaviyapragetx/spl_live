@@ -315,7 +315,7 @@ class HomePageController extends GetxController {
         }
       });
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -747,6 +747,8 @@ class HomePageController extends GetxController {
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
         getNotifiactionCount.value = model.data!.notificationCount == null ? 0 : model.data!.notificationCount!.toInt();
+
+        if (getNotifiactionCount.value > 0) {}
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }

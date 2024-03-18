@@ -721,7 +721,7 @@ class ApiService extends GetConnect implements GetxService {
     required String? startDate,
     required String? endDate,
   }) async {
-    // AppUtils.showProgressDialog(isCancellable: false);
+    AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
@@ -810,10 +810,8 @@ class ApiService extends GetConnect implements GetxService {
     });
 
     await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      ApiUtils.getStarlineBanner,
-      headers: headersWithToken,
-    );
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true)
+        .get(ApiUtils.getStarlineBanner, headers: headersWithToken, query: {});
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -894,13 +892,22 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> bidHistoryByUserId({String? userId}) async {
+  Future<dynamic> bidHistoryByUserId(
+      {String? userId, String? gameType, String? winningStatus, List<int>? markets}) async {
     try {
       AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
       final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-        "${ApiUtils.bidHistory}?id=$userId&limit=5000&offset=0",
+        ApiUtils.bidHistory,
         headers: headersWithToken,
+        query: {
+          "id": userId,
+          "limit": "5000",
+          "offset": "0",
+          "bidType": gameType,
+          "winningStatus": winningStatus,
+          "markets": markets?.join(","),
+        },
       );
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();
@@ -910,7 +917,7 @@ class ApiService extends GetConnect implements GetxService {
         return response.body;
       }
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -1157,7 +1164,7 @@ class ApiService extends GetConnect implements GetxService {
           "${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}",
           headers: headersWithToken,
           query: {"search": ""});
-      print("${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}");
+      // print("${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}");
       if (response.status.hasError) {
         if (response.status.code != null && response.status.code == 401) {
           tokenExpired();
@@ -1167,7 +1174,7 @@ class ApiService extends GetConnect implements GetxService {
         return FundTransactionModel.fromJson(response.body);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return null;
     }
   }
@@ -1187,7 +1194,7 @@ class ApiService extends GetConnect implements GetxService {
         return response.body;
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return null;
     }
   }
@@ -1207,7 +1214,7 @@ class ApiService extends GetConnect implements GetxService {
         return BankHistory.fromJson(response.body);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return null;
     }
   }
@@ -1228,7 +1235,28 @@ class ApiService extends GetConnect implements GetxService {
         return TicketsModel.fromJson(response.body);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
+      return null;
+    }
+  }
+
+  Future<dynamic> getMarketsData({String? date}) async {
+    try {
+      await initApiService();
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true)
+          .get(ApiUtils.getMarketsData, headers: headersWithToken, query: {
+        "date": date,
+      });
+      if (response.status.hasError) {
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        return response.body;
+      }
+    } catch (e) {
+      // print(e.toString());
       return null;
     }
   }
@@ -1254,7 +1282,7 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
-      print(e.toString());
+      // print(e.toString());
       return null;
     }
   }

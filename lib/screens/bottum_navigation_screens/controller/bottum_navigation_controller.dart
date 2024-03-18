@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -36,9 +39,32 @@ class MoreListController extends GetxController {
   void callLogout() async {
     ApiService().logout().then((value) async {
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        // AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         GetStorage().erase();
         Get.offAllNamed(AppRoutName.walcomeScreen);
+        Get.defaultDialog(
+          title: "",
+          titleStyle: const TextStyle(fontSize: 0),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.thumb_up_alt_outlined,
+                size: 60,
+                color: AppColors.appbarColor,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                value['message'] ?? "Logout Successful",
+                textAlign: TextAlign.center,
+                style: CustomTextStyle.textRamblaBold.copyWith(
+                  color: AppColors.appbarColor,
+                  fontSize: 26,
+                ),
+              ),
+            ],
+          ),
+        );
       } else {
         AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }

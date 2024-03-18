@@ -29,6 +29,7 @@ class DailyMarketApiResponseModel {
 
 class MarketData {
   int? id;
+  int? marketId;
   String? market;
   String? openTime;
   String? closeTime;
@@ -60,11 +61,13 @@ class MarketData {
     this.isCoinDistributedForClose,
     this.isActive,
     this.isBlocked,
+    this.marketId,
   });
 
   MarketData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     market = json['Market'];
+    marketId = json['MarketId'];
     openTime = json['OpenTime'];
     closeTime = json['CloseTime'];
     date = json['Date'];
@@ -84,6 +87,7 @@ class MarketData {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['Market'] = market;
+    data['MarketId'] = marketId;
     data['OpenTime'] = openTime;
     data['CloseTime'] = closeTime;
     data['Date'] = date;

@@ -27,8 +27,14 @@ class AppUtils {
     statusBarBrightness: Brightness.dark, //<-- For iOS SEE HERE (dark icons)
   );
 
-  AppBar simpleAppbar(
-      {required String appBarTitle, List<Widget>? actions, Widget? leading, double? leadingWidht, bool? centerTitle}) {
+  AppBar simpleAppbar({
+    required String appBarTitle,
+    List<Widget>? actions,
+    Widget? leading,
+    double? leadingWidht,
+    bool? centerTitle,
+    TextStyle? appBarTitlestyle,
+  }) {
     return AppBar(
       backgroundColor: AppColors.appbarColor,
       shadowColor: AppColors.white,
@@ -38,7 +44,7 @@ class AppUtils {
       leadingWidth: leadingWidht,
       title: Text(
         appBarTitle,
-        style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white),
+        style: appBarTitlestyle ?? CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white),
       ),
       actions: actions,
     );

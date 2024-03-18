@@ -36,18 +36,6 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
     return Scaffold(
       appBar: AppUtils().simpleAppbar(
         appBarTitle: "Withdrawal Fund",
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.all(10.0),
-        //     child: InkWell(
-        //       onTap: () => _showExitDialog(),
-        //       child: Icon(
-        //         Icons.note_alt_rounded,
-        //         color: AppColors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
       body: SafeArea(
         child: Padding(
@@ -275,38 +263,38 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
       ),
     );
   }
-
-  void _showExitDialog() {
-    Get.defaultDialog(
-      barrierDismissible: false,
-      title: "Contact Admin",
-      onWillPop: () async => false,
-      titleStyle: CustomTextStyle.textRobotoSansMedium,
-      content: Column(
-        children: [Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)],
-      ),
-      actions: [
-        InkWell(
-          onTap: () async {
-            Get.back();
-          },
-          child: Container(
-            color: AppColors.appbarColor,
-            height: Dimensions.h40,
-            width: Dimensions.w150,
-            child: Center(
-              child: Text(
-                'OK',
-                style: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  //
+  // void _showExitDialog() {
+  //   Get.defaultDialog(
+  //     barrierDismissible: false,
+  //     title: "Contact Admin",
+  //     onWillPop: () async => false,
+  //     titleStyle: CustomTextStyle.textRobotoSansMedium,
+  //     content: Column(
+  //       children: [Text("SNACKMSG_TEXT".tr, style: CustomTextStyle.textRobotoSansMedium)],
+  //     ),
+  //     actions: [
+  //       InkWell(
+  //         onTap: () async {
+  //           Get.back();
+  //         },
+  //         child: Container(
+  //           color: AppColors.appbarColor,
+  //           height: Dimensions.h40,
+  //           width: Dimensions.w150,
+  //           child: Center(
+  //             child: Text(
+  //               'OK',
+  //               style: CustomTextStyle.textRobotoSansBold.copyWith(
+  //                 color: AppColors.white,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   // AlertDialog onExitAlert(BuildContext context,
   Padding listTileDetails({required String text, required String value}) {

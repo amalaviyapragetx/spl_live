@@ -35,6 +35,9 @@ class StarlineMarketController extends GetxController {
         StarLineDailyMarketApiResponseModel responseModel = StarLineDailyMarketApiResponseModel.fromJson(value);
         starLineMarketList.value = responseModel.data ?? <StarlineMarketData>[];
         marketListForResult.value = responseModel.data ?? <StarlineMarketData>[];
+        starLineMarketList.forEach((e) {
+          filterMarketList.add(FilterModel(isSelected: false.obs, name: e.time, id: e.starlineMarketId));
+        });
         if (starLineMarketList.isNotEmpty) {
           var biddingOpenMarketList =
               starLineMarketList.where((element) => element.isBidOpen == true && element.isBlocked == false).toList();
@@ -100,6 +103,9 @@ class StarlineMarketController extends GetxController {
             lazyLoad
                 ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
                 : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
+            if (isSelectedWinStatusIndex.value != null || selectedFilterMarketList.isNotEmpty) {
+              Get.back();
+            }
           }
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
@@ -146,6 +152,15 @@ class StarlineMarketController extends GetxController {
       print(e);
     }
   }
+
+  List<FilterModel> filterMarketList = [];
+  List<FilterModel> winStatusList = [
+    FilterModel(id: 1, name: 'Win', isSelected: false.obs),
+    FilterModel(id: 2, name: 'Loss', isSelected: false.obs),
+    FilterModel(id: 3, name: 'Pending', isSelected: false.obs)
+  ];
+  var isSelectedWinStatusIndex = Rxn<int>();
+  RxList<int> selectedFilterMarketList = <int>[].obs;
 }
 
 class StarlineFilterModel {
@@ -155,4 +170,12 @@ class StarlineFilterModel {
   final void Function()? onTap;
 
   StarlineFilterModel({this.image, this.name, this.onTap, required this.isSelected});
+}
+
+class FilterModel {
+  final int? id;
+  final String? name;
+  final RxBool isSelected;
+
+  FilterModel({this.id, this.name, required this.isSelected});
 }

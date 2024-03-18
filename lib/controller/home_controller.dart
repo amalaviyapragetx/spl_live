@@ -24,6 +24,7 @@ class HomeController extends GetxController {
   final notificationCount = Rxn<int>();
   RxList<BannerData> bannerData = <BannerData>[].obs;
   RxList<MarketData> normalMarketList = <MarketData>[].obs;
+  RxList<MarketData> normalMarketFilterList = <MarketData>[].obs;
   RxInt getNotificationCount = 0.obs;
   getDashBoardPages(index) {
     switch (index) {
@@ -58,6 +59,9 @@ class HomeController extends GetxController {
       if (resp.status ?? false) {
         if (resp.data != null && resp.data!.isNotEmpty) {
           normalMarketList.value = resp.data!;
+          normalMarketList.forEach((e) {
+            filterMarketList.add(FilterModel(isSelected: false.obs, name: e.market, id: e.marketId));
+          });
           noMarketFound.value = false;
           var biddingOpenMarketList = normalMarketList
               .where((element) =>
@@ -96,14 +100,40 @@ class HomeController extends GetxController {
   RxInt offset = 0.obs;
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   DateTime startEndDate = DateTime.now();
-  void marketBidsByUserId() {
+  List<FilterModel> winStatusList = [
+    FilterModel(id: 1, name: 'Win', isSelected: false.obs),
+    FilterModel(id: 2, name: 'Loss', isSelected: false.obs),
+    FilterModel(id: 3, name: 'Pending', isSelected: false.obs)
+  ];
+  List<FilterModel> gameTypeList = [
+    FilterModel(id: 1, name: "OPEN", isSelected: false.obs),
+    FilterModel(id: 2, name: "CLOSE", isSelected: false.obs),
+  ];
+  List<FilterModel> filterMarketList = [];
+  var isSelectedGameIndex = Rxn<int>();
+  var isSelectedWinStatusIndex = Rxn<int>();
+  RxList<int> selectedFilterMarketList = <int>[].obs;
+
+  void marketBidsByUserId() async {
     UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
-    ApiService().bidHistoryByUserId(userId: userData.id.toString()).then(
+    ApiService()
+        .bidHistoryByUserId(
+      userId: userData.id.toString(),
+      gameType: "${isSelectedGameIndex.value}",
+      winningStatus: "${isSelectedWinStatusIndex.value}",
+      markets: selectedFilterMarketList.value,
+    )
+        .then(
       (value) async {
         if (value['status']) {
           if (value['data'] != null) {
             MarketBidHistory model = MarketBidHistory.fromJson(value['data']);
             marketBidHistoryList.value = model.rows ?? <MarketBidHistoryList>[];
+            if (isSelectedGameIndex.value != null ||
+                isSelectedWinStatusIndex.value != null ||
+                selectedFilterMarketList.isNotEmpty) {
+              Get.back();
+            }
           }
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
@@ -135,10 +165,35 @@ class HomeController extends GetxController {
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
         getNotificationCount.value = model.data!.notificationCount!.toInt();
+
         if (model.message!.isNotEmpty) {}
       } else {
         AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
+
+  void getNotificationCountData() async {
+    ApiService().getNotificationCount().then((value) async {
+      if (value['status']) {
+        NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
+        getNotificationCount.value = model.data!.notificationCount == null ? 0 : model.data!.notificationCount!.toInt();
+        if (model.message!.isNotEmpty) {
+          AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
+        }
+      } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+      }
+    });
+  }
+}
+
+class FilterModel {
+  final int? id;
+  final String? name;
+  final RxBool isSelected;
+
+  FilterModel({this.id, this.name, required this.isSelected});
 }

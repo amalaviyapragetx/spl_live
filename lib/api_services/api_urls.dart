@@ -83,4 +83,5 @@ class ApiUtils {
   static String getTickets = "$baseURL/wallet/addFund";
   static String getBankHistory = "$baseURL/bank/bankHistory/";
   static String getStarlineBanner = "$baseURL/banner/getAll";
+  static String getMarketsData = "$baseURL/market/marketsByDate";
 }

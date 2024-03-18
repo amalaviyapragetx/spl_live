@@ -37,6 +37,256 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
               fontSize: Dimensions.h17,
               color: AppColors.white,
             ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () => {
+                    Get.dialog(
+                      barrierDismissible: false,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
+                        child: Dialog(
+                          insetPadding: const EdgeInsets.all(10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
+                                  decoration: BoxDecoration(color: AppColors.appbarColor),
+                                  child: Text(
+                                    "SET FILTER",
+                                    textAlign: TextAlign.center,
+                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: Get.height / 1.2,
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                  decoration: BoxDecoration(color: AppColors.white),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "Game Type",
+                                          textAlign: TextAlign.center,
+                                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                            color: AppColors.black,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Obx(
+                                          () => Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: homeCon.gameTypeList
+                                                .map(
+                                                  (e) => Row(
+                                                    children: [
+                                                      Checkbox(
+                                                        activeColor: AppColors.appbarColor,
+                                                        value: e.isSelected.value,
+                                                        onChanged: (bool? value) {
+                                                          homeCon.gameTypeList
+                                                              .forEach((e) => e.isSelected.value = false);
+                                                          e.isSelected.value = value ?? false;
+                                                          if (e.isSelected.value) {
+                                                            homeCon.isSelectedGameIndex.value = e.id;
+                                                          }
+                                                        },
+                                                      ),
+                                                      Text(
+                                                        e.name ?? "",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.black),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                                .toList(),
+                                          ),
+                                        ),
+                                        Text(
+                                          "Winning Status",
+                                          textAlign: TextAlign.center,
+                                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                            color: AppColors.black,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Obx(
+                                          () => Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: homeCon.winStatusList
+                                                .map(
+                                                  (e) => Row(
+                                                    children: [
+                                                      Checkbox(
+                                                        activeColor: AppColors.appbarColor,
+                                                        value: e.isSelected.value,
+                                                        onChanged: (bool? value) {
+                                                          homeCon.winStatusList
+                                                              .forEach((e) => e.isSelected.value = false);
+                                                          e.isSelected.value = value ?? false;
+                                                          if (e.isSelected.value) {
+                                                            homeCon.isSelectedWinStatusIndex.value = e.id;
+                                                          }
+                                                        },
+                                                      ),
+                                                      Text(
+                                                        e.name ?? "",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.black),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                                .toList(),
+                                          ),
+                                        ),
+                                        Text(
+                                          "Markets",
+                                          textAlign: TextAlign.center,
+                                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                            color: AppColors.black,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Obx(
+                                          () => Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: homeCon.filterMarketList
+                                                .map(
+                                                  (e) => Row(
+                                                    children: [
+                                                      Checkbox(
+                                                        activeColor: AppColors.appbarColor,
+                                                        value: e.isSelected.value,
+                                                        onChanged: (bool? value) {
+                                                          e.isSelected.value = value ?? false;
+                                                          if (e.isSelected.value) {
+                                                            homeCon.selectedFilterMarketList.add(e.id ?? 0);
+                                                            print(homeCon.selectedFilterMarketList.value);
+                                                          }
+                                                        },
+                                                      ),
+                                                      Text(
+                                                        e.name ?? "",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.black),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                                .toList(),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    homeCon.marketBidHistoryList.clear();
+                                                    homeCon.marketBidsByUserId();
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.appbarColor,
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "SUBMIT",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Expanded(
+                                                child: InkWell(
+                                                  onTap: () => Get.back(),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.appbarColor,
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "CANCEL",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  },
+                  child: Obx(
+                    () => homeCon.selectedFilterMarketList.isNotEmpty ||
+                            homeCon.isSelectedWinStatusIndex.value != null ||
+                            homeCon.isSelectedGameIndex.value != null
+                        ? InkWell(
+                            onTap: () {
+                              homeCon.selectedFilterMarketList.value = [];
+                              homeCon.filterMarketList.forEach((e) => e.isSelected.value = false);
+                              homeCon.isSelectedWinStatusIndex.value = null;
+                              homeCon.isSelectedGameIndex.value = null;
+                              homeCon.gameTypeList.forEach((e) => e.isSelected.value = false);
+                              homeCon.winStatusList.forEach((e) => e.isSelected.value = false);
+                              homeCon.marketBidsByUserId();
+                            },
+                            child: Stack(
+                              children: [
+                                SvgPicture.asset(ConstantImage.filter),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.redColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
+                                    color: AppColors.white,
+                                    size: 10,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        : SvgPicture.asset(ConstantImage.filter),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
         Expanded(

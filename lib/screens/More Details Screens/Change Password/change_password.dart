@@ -22,7 +22,7 @@ class ChangePasswordPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Change Password"),
+      appBar: AppUtils().simpleAppbar(appBarTitle: "Change Mobile Pin"),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -66,8 +66,7 @@ class ChangePasswordPage extends StatelessWidget {
                             return null;
                           },
                           onTap: () {
-                            controller.isObscureOldPassword.value =
-                                !controller.isObscureOldPassword.value;
+                            controller.isObscureOldPassword.value = !controller.isObscureOldPassword.value;
                           },
                         ),
                       ),
@@ -111,8 +110,7 @@ class ChangePasswordPage extends StatelessWidget {
                             return null;
                           },
                           onTap: () {
-                            controller.isObscureNewPassword.value =
-                                !controller.isObscureNewPassword.value;
+                            controller.isObscureNewPassword.value = !controller.isObscureNewPassword.value;
                           },
                         ),
                       ),
@@ -132,9 +130,7 @@ class ChangePasswordPage extends StatelessWidget {
                         ),
                       ),
               ),
-              SizedBox(
-                height: Dimensions.h5,
-              ),
+              SizedBox(height: Dimensions.h5),
               Padding(
                 padding: EdgeInsets.all(Dimensions.r8),
                 child: Column(
@@ -143,13 +139,9 @@ class ChangePasswordPage extends StatelessWidget {
                     Text(
                       "CONFIRMPASSWORD".tr,
                       style: CustomTextStyle.textPTsansMedium.copyWith(
-                          color: AppColors.appbarColor,
-                          fontSize: Dimensions.h15,
-                          fontWeight: FontWeight.bold),
+                          color: AppColors.appbarColor, fontSize: Dimensions.h15, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
-                      height: Dimensions.h11,
-                    ),
+                    SizedBox(height: Dimensions.h11),
                     Obx(
                       () => EdittextFieldwithvalidation(
                         controller: controller.confirmPassword,
@@ -167,8 +159,7 @@ class ChangePasswordPage extends StatelessWidget {
                         //   return null;
                         // },
                         onTap: () {
-                          controller.isObscureConfirmPassword.value =
-                              !controller.isObscureConfirmPassword.value;
+                          controller.isObscureConfirmPassword.value = !controller.isObscureConfirmPassword.value;
                         },
                       ),
                     ),
@@ -176,8 +167,7 @@ class ChangePasswordPage extends StatelessWidget {
                         ? Container()
                         : Container(
                             alignment: Alignment.centerLeft,
-                            padding:
-                                EdgeInsets.symmetric(vertical: Dimensions.r8),
+                            padding: EdgeInsets.symmetric(vertical: Dimensions.r8),
                             child: Text(
                               controller.confirmPasswordMessage.value,
                               style: TextStyle(color: AppColors.redColor),

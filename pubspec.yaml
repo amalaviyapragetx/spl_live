@@ -64,6 +64,8 @@ dependencies:
   in_app_update: ^4.2.2
   upgrader: ^6.5.0
   ota_update: ^6.0.0
+  flutter_jailbreak_detection: ^1.10.0
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:
