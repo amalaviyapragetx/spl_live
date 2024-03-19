@@ -149,20 +149,6 @@ class _GameRatePageState extends State<GameRatePage> {
                         itemCount: controller.starlineMarketModel.value.data?.length ?? 0,
                       ),
                     ),
-                    // Obx(
-                    //   () => ListView.builder(
-
-                    //     physics: const NeverScrollableScrollPhysics(),
-                    //     itemCount: controller.starlineMarketModel.value.data?.length,
-                    //     itemBuilder: (context, index) {
-                    //       return listTile(
-                    //         titleText: controller.starlineMarketModel.value.data?.elementAt(index).name ?? '',
-                    //         trailing:
-                    //             "${controller.starlineMarketModel.value.data?.elementAt(index).baseRate ?? ""} KA ${controller.starlineMarketModel.value.data?.elementAt(index).rate ?? ""}",
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
                   ],
                 ),
               )
