@@ -16,11 +16,11 @@ class StarlineMarketController extends GetxController {
   RxList<StarlineFilterModel> starlineButtonList = [
     StarlineFilterModel(
       isSelected: false.obs,
-      name: "Bid History",
+      name: "BID HISTORY",
       image: ConstantImage.bidHistoryIcon,
     ),
-    StarlineFilterModel(isSelected: false.obs, name: "Result History", image: ConstantImage.resultHistoryIcons),
-    StarlineFilterModel(isSelected: false.obs, name: "Chart", image: ConstantImage.chartIcon),
+    StarlineFilterModel(isSelected: false.obs, name: "RESULT HISTORY", image: ConstantImage.resultHistoryIcons),
+    StarlineFilterModel(isSelected: false.obs, name: "CHART", image: ConstantImage.chartIcon),
   ].obs;
   RxList<StarlineMarketData> starLineMarketList = <StarlineMarketData>[].obs;
   RxList<StarlineMarketData> marketList = <StarlineMarketData>[].obs;
@@ -149,7 +149,7 @@ class StarlineMarketController extends GetxController {
       });
     } catch (e) {
       bannerLoad.value = false;
-      print(e);
+      //  print(e);
     }
   }
 

@@ -37,7 +37,6 @@ class InactivityController extends GetxController {
 
   ifUserLogedIn() async {
     bool alreadyLoggedIn = getStoredUserData();
-
     bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
     bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
     bool userLogin = GetStorage().read(ConstantsVariables.timeOut) ?? false;
@@ -55,7 +54,6 @@ class InactivityController extends GetxController {
     bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
     bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
     bool userLogin = GetStorage().read(ConstantsVariables.timeOut) ?? false;
-
     if (userLogin) {
       if (alreadyLoggedIn) {
         if (isActive && isVerified) {
@@ -160,8 +158,8 @@ class InactivityController extends GetxController {
     //   ),
     // );
     Get.defaultDialog(
-      // barrierDismissible: false,
-      // onWillPop: () async => false,
+      barrierDismissible: false,
+      onWillPop: () async => false,
       title: "",
       titlePadding: EdgeInsets.zero,
       content: Column(

@@ -29,7 +29,7 @@ class ApiService extends GetConnect implements GetxService {
       headers = {"Accept": "application/json"};
       headersWithToken = {"Accept": "application/json", "Authorization": "Bearer $authToken"};
     });
-    print(authToken);
+    //  print(authToken);
   }
 
   Future<dynamic> signUpAPI(body) async {
@@ -162,8 +162,8 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getBankDetails(body) async {
-    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
+    AppUtils.showProgressDialog(isCancellable: false);
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.getBankDetails,
       body,
@@ -721,7 +721,7 @@ class ApiService extends GetConnect implements GetxService {
     required String? startDate,
     required String? endDate,
   }) async {
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
       "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
@@ -1201,19 +1201,23 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<BankHistory?> getBankHistory({String? id}) async {
     try {
+      AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
       final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true)
           .get("${ApiUtils.getBankHistory}$id", headers: headersWithToken, query: {"search": ""});
 
       if (response.status.hasError) {
+        AppUtils.hideProgressDialog();
         if (response.status.code != null && response.status.code == 401) {
           tokenExpired();
         }
         return Future.error(response.statusText!);
       } else {
+        AppUtils.hideProgressDialog();
         return BankHistory.fromJson(response.body);
       }
     } catch (e) {
+      AppUtils.hideProgressDialog();
       // print(e.toString());
       return null;
     }

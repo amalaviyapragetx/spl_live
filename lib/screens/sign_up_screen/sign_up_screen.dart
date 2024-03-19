@@ -19,7 +19,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size.height);
+
     return Scaffold(
       //  resizeToAvoidBottomInset: false,
       appBar: AppBar(

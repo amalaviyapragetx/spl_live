@@ -935,7 +935,6 @@ class HomePageController extends GetxController {
         for (int i = 0; i < data.length; i++) {
           newTicketsList.add(TicketModel(name: data[i], isSelected: false.obs));
         }
-        print(newTicketsList);
       } else {
         AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }

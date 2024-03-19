@@ -113,7 +113,7 @@ class SplashController extends GetxController {
       if (value != null) {
         if (value['status']) {
           if (value['data'] != appVersion) {
-            print(value['data']);
+            // print(value['data']);
             _showExitDialog();
           }
         } else {

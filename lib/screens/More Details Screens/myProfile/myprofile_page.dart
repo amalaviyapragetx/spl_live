@@ -89,7 +89,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   cardListwidget(String text, {required Function() onTap}) {
     return Container(
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(10.0), boxShadow: [
+      decoration:
+          BoxDecoration(color: AppColors.changePassTileColor, borderRadius: BorderRadius.circular(10.0), boxShadow: [
         BoxShadow(offset: Offset(0, 0), blurRadius: 2, spreadRadius: 1, color: AppColors.black.withOpacity(0.2)),
       ]),
       child: SizedBox(

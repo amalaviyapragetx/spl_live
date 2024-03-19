@@ -36,6 +36,7 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     return WillPopScope(
       onWillPop: () async {
         for (var e in starlineCon.starlineButtonList) {
@@ -131,7 +132,7 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 5),
                                 child: Container(
-                                  padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
                                   decoration: BoxDecoration(
                                     color: AppColors.white,
                                     // color: e.isSelected.value ? AppColors.grey : AppColors.appbarColor,
@@ -158,13 +159,18 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                                       ),
                                       const SizedBox(height: 5),
                                       Obx(
-                                        () => Text(e.name ?? "",
-                                            style: CustomTextStyle.textPTsansMedium.copyWith(
-                                                color: e.isSelected.value ? AppColors.appbarColor : AppColors.black,
-                                                letterSpacing: 1,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize:
-                                                    e.name == "Result History" ? Dimensions.h10 : Dimensions.h11)),
+                                        () => Text(
+                                          e.name ?? "",
+                                          style: CustomTextStyle.textPTsansMedium.copyWith(
+                                              color: e.isSelected.value ? AppColors.appbarColor : AppColors.black,
+                                              letterSpacing: 1,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: e.name?.toLowerCase() == "result history"
+                                                  ? MediaQuery.of(context).size.width > 360
+                                                      ? Dimensions.h10
+                                                      : 10.5
+                                                  : Dimensions.h10),
+                                        ),
                                       ),
                                     ],
                                   ),

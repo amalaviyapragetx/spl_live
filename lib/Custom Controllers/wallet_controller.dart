@@ -68,7 +68,7 @@ class WalletController extends GetxController {
   }
 
   RxList<BankHistoryData> bankHistoryData = <BankHistoryData>[].obs;
-  void getBankHistory() {
+  void getBankHistory() async {
     UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
     ApiService().getBankHistory(id: userData.id.toString()).then((value) async {
       if (value?.status ?? false) {

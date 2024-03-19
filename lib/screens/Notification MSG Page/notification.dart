@@ -103,7 +103,7 @@ class NotificationPage extends StatelessWidget {
                   ),
                   SizedBox(height: Dimensions.h5),
                   Text(
-                    notifiactionSubTitle,
+                    notifiactionSubTitle.trim(),
                     textAlign: TextAlign.start,
                     style: CustomTextStyle.textRobotoSansLight.copyWith(
                       color: AppColors.black,

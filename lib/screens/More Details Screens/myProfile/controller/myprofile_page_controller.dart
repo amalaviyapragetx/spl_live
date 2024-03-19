@@ -28,7 +28,7 @@ class MyProfilePageController extends GetxController {
       myimagepath = imagelocation;
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print("Failed to Select Image $e");
+        // print("Failed to Select Image $e");
       }
     }
   }

@@ -137,8 +137,6 @@ class _PassBookState extends State<PassBook> {
   }
 
   table() {
-    print(passBookCon.passBookModelData.toJson());
-
     return Obx(
       () => passBookCon.passBookModelData.isNotEmpty
           ? DataTable(

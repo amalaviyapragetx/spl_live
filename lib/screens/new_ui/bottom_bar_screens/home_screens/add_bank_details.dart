@@ -125,8 +125,25 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                       ),
                       const SizedBox(height: 15),
                       Obx(
-                        () => controller.isEditDetails.value
-                            ? RoundedCornerButton(
+                        () => !controller.isEditDetails.value
+                            ? controller.accHolderNameController.text.isNotEmpty
+                                ? RoundedCornerButton(
+                                    text: "EDIT BANK DETAILS",
+                                    color: AppColors.wpColor1,
+                                    borderColor: AppColors.appbarColor,
+                                    fontSize: Dimensions.h13,
+                                    fontWeight: FontWeight.bold,
+                                    fontColor: AppColors.black,
+                                    letterSpacing: 1,
+                                    borderRadius: 5,
+                                    borderWidth: 0,
+                                    textStyle: CustomTextStyle.textPTsansMedium,
+                                    onTap: () => _showExitDialog(),
+                                    height: 40,
+                                    width: 200,
+                                  )
+                                : Container()
+                            : RoundedCornerButton(
                                 text: "SUBMIT",
                                 color: AppColors.appbarColor,
                                 borderColor: AppColors.appbarColor,
@@ -138,21 +155,6 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                                 borderWidth: 0,
                                 textStyle: CustomTextStyle.textPTsansMedium,
                                 onTap: () => controller.validationFied(),
-                                height: 40,
-                                width: 200,
-                              )
-                            : RoundedCornerButton(
-                                text: "EDIT BANK DETAILS",
-                                color: AppColors.wpColor1,
-                                borderColor: AppColors.appbarColor,
-                                fontSize: Dimensions.h13,
-                                fontWeight: FontWeight.bold,
-                                fontColor: AppColors.black,
-                                letterSpacing: 1,
-                                borderRadius: 5,
-                                borderWidth: 0,
-                                textStyle: CustomTextStyle.textPTsansMedium,
-                                onTap: () => _showExitDialog(),
                                 height: 40,
                                 width: 200,
                               ),

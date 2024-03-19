@@ -37,14 +37,14 @@ class MyAccountPageController extends GetxController {
   }
 
   void validationFied() {
-    if (bankNameController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "Enter name of the bank");
-    } else if (accHolderNameController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "Enter Account Holder Name");
-    } else if (accNoController.text.isEmpty) {
+    if (accNoController.text.isEmpty) {
       AppUtils.showErrorSnackBar(bodyText: "Enter Account Number");
     } else if (ifscCodeController.text.isEmpty) {
       AppUtils.showErrorSnackBar(bodyText: "Enter Ifsc Code");
+    } else if (accHolderNameController.text.isEmpty) {
+      AppUtils.showErrorSnackBar(bodyText: "Enter Account Holder Name");
+    } else if (bankNameController.text.isEmpty) {
+      AppUtils.showErrorSnackBar(bodyText: "Enter name of the bank");
     } else {
       onTapOfEditDetails();
       Get.back();
@@ -60,9 +60,13 @@ class MyAccountPageController extends GetxController {
     }
   }
 
+  RxBool loadGetBalance = false.obs;
+
   void callGetBankDetails(String userId) async {
+    loadGetBalance.value = true;
     ApiService().getBankDetails({"id": userId, "userId": userId}).then((value) async {
       if (value['status']) {
+        loadGetBalance.value = false;
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
@@ -78,6 +82,7 @@ class MyAccountPageController extends GetxController {
         ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
         bankId = model.data!.id ?? 0;
       } else {
+        loadGetBalance.value = false;
         isEditDetails.value = true;
       }
     });

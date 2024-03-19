@@ -45,7 +45,6 @@ class TransactionHistoryPageController extends GetxController {
       (value) async {
         if (value['status']) {
           transactionModel.value = PaymentTransactionModel.fromJson(value);
-          print(transactionModel.value.data?.rows?.length ?? 0);
         } else {
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",

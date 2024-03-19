@@ -22,7 +22,7 @@ class ChangePasswordPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppUtils().simpleAppbar(appBarTitle: "Change Mobile Pin"),
+      appBar: AppUtils().simpleAppbar(appBarTitle: "Change Password"),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -48,9 +48,7 @@ class ChangePasswordPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: Dimensions.h11,
-                      ),
+                      SizedBox(height: Dimensions.h11),
                       Obx(
                         () => EdittextFieldwithvalidation(
                           controller: controller.oldPassword,

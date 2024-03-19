@@ -7,93 +7,166 @@ import '../../../helper_files/dimentions.dart';
 import '../../../helper_files/ui_utils.dart';
 import 'controller/game_rate_page_controller.dart';
 
-class GameRatePage extends StatelessWidget {
+class GameRatePage extends StatefulWidget {
   GameRatePage({super.key});
 
-  var controller = Get.put(GameRatePageController());
+  @override
+  State<GameRatePage> createState() => _GameRatePageState();
+}
+
+class _GameRatePageState extends State<GameRatePage> {
+  final controller = Get.put(GameRatePageController());
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppUtils().simpleAppbar(appBarTitle: "GAME RATES"),
+      appBar: AppUtils().simpleAppbar(appBarTitle: "Game Rates"),
       body: SingleChildScrollView(
-        child: SizedBox(
-          height: size.height,
-          width: size.width,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(Dimensions.r8),
-                  child: Container(
-                    height: size.height / 1.8,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(Dimensions.r5),
-                      border: Border.all(width: 0.2, color: AppColors.grey),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(Dimensions.r5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.black.withOpacity(0.25),
+                      offset: const Offset(0, 0),
+                      blurRadius: 5,
+                      spreadRadius: 0,
                     ),
-                    child: Column(
-                      children: [
-                        Row(
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: Text(
+                        "MARKETGAMEWINRATIO".tr,
+                        textAlign: TextAlign.center,
+                        style: CustomTextStyle.textPTsansMedium.copyWith(
+                          color: AppColors.appbarColor,
+                          fontSize: Dimensions.h18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Obx(
+                      () => ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => Row(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                Dimensions.r15,
-                                Dimensions.r15,
-                                Dimensions.r15,
-                                Dimensions.r10,
-                              ),
+                            Expanded(
                               child: Text(
-                                "MARKETGAMEWINRATIO".tr,
-                                style:
-                                    CustomTextStyle.textPTsansMedium.copyWith(
-                                  color: AppColors.appbarColor,
-                                  fontSize: Dimensions.h18,
-                                  fontWeight: FontWeight.bold,
+                                controller.normalMarketModel.value.data?[index].name ?? "",
+                                style: CustomTextStyle.textAllerta.copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                "${controller.normalMarketModel.value.data?[index].baseRate ?? ""} = ${controller.normalMarketModel.value.data?.elementAt(index).rate ?? ""}",
+                                textAlign: TextAlign.start,
+                                style: CustomTextStyle.textAllerta.copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        marketWinRatio()
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(Dimensions.r8),
-                  height: size.height / 3.1,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(Dimensions.r5),
-                    border: Border.all(
-                      width: 0.2,
-                      color: const Color.fromARGB(255, 214, 209, 209),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(Dimensions.r15,
-                            Dimensions.r25, Dimensions.r15, Dimensions.r15),
-                        child: Text(
-                          "STARLINEGAMEWINRATIO".tr,
-                          style: CustomTextStyle.textPTsansMedium.copyWith(
-                              color: AppColors.appbarColor,
-                              fontSize: Dimensions.h18,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        separatorBuilder: (context, index) => const SizedBox(height: 10),
+                        itemCount: controller.normalMarketModel.value.data?.length ?? 0,
                       ),
-                      starlineGameWinRatio()
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 25),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(Dimensions.r5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.black.withOpacity(0.25),
+                      offset: const Offset(0, 0),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        "STARLINEGAMEWINRATIO".tr,
+                        textAlign: TextAlign.center,
+                        style: CustomTextStyle.textPTsansMedium.copyWith(
+                            color: AppColors.appbarColor, fontSize: Dimensions.h18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Obx(
+                      () => ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                controller.starlineMarketModel.value.data?[index].name ?? "",
+                                style: CustomTextStyle.textAllerta.copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                "${controller.starlineMarketModel.value.data?[index].baseRate ?? ""} = ${controller.normalMarketModel.value.data?.elementAt(index).rate ?? ""}",
+                                textAlign: TextAlign.start,
+                                style: CustomTextStyle.textAllerta.copyWith(
+                                  color: AppColors.black,
+                                  fontSize: Dimensions.h14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        separatorBuilder: (context, index) => const SizedBox(height: 10),
+                        itemCount: controller.starlineMarketModel.value.data?.length ?? 0,
+                      ),
+                    ),
+                    // Obx(
+                    //   () => ListView.builder(
+
+                    //     physics: const NeverScrollableScrollPhysics(),
+                    //     itemCount: controller.starlineMarketModel.value.data?.length,
+                    //     itemBuilder: (context, index) {
+                    //       return listTile(
+                    //         titleText: controller.starlineMarketModel.value.data?.elementAt(index).name ?? '',
+                    //         trailing:
+                    //             "${controller.starlineMarketModel.value.data?.elementAt(index).baseRate ?? ""} KA ${controller.starlineMarketModel.value.data?.elementAt(index).rate ?? ""}",
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -102,77 +175,82 @@ class GameRatePage extends StatelessWidget {
 
   Widget marketWinRatio() {
     return Obx(
-      () => Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.normalMarketModel.value.data?.length,
-          itemBuilder: (context, index) {
-            return listTile(
-              titleText: controller.normalMarketModel.value.data
-                      ?.elementAt(index)
-                      .name ??
-                  "",
-              trailing:
-                  "${controller.normalMarketModel.value.data?.elementAt(index).baseRate ?? ""} KA ${controller.normalMarketModel.value.data?.elementAt(index).rate ?? ""}",
-            );
-          },
-        ),
+      () => ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.normalMarketModel.value.data?.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.all(Dimensions.h9),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    controller.normalMarketModel.value.data?.elementAt(index).name ?? "",
+                    style: CustomTextStyle.textAllerta.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h14,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    "${controller.normalMarketModel.value.data?.elementAt(index).baseRate ?? ""} = ${controller.normalMarketModel.value.data?.elementAt(index).rate ?? ""}",
+                    style: CustomTextStyle.textAllerta.copyWith(
+                      color: AppColors.black,
+                      fontSize: Dimensions.h14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget starlineGameWinRatio() {
-    return Obx(
-      () => Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.starlineMarketModel.value.data?.length,
-          itemBuilder: (context, index) {
-            return listTile(
-              titleText: controller.starlineMarketModel.value.data
-                      ?.elementAt(index)
-                      .name ??
-                  '',
-              trailing:
-                  "${controller.starlineMarketModel.value.data?.elementAt(index).baseRate ?? ""} KA ${controller.starlineMarketModel.value.data?.elementAt(index).rate ?? ""}",
-            );
-          },
-        ),
-      ),
-    );
-  }
+  // Widget starlineGameWinRatio() {
+  //   return Obx(
+  //     () => ListView.builder(
+  //       physics: const NeverScrollableScrollPhysics(),
+  //       itemCount: controller.starlineMarketModel.value.data?.length,
+  //       itemBuilder: (context, index) {
+  //         return listTile(
+  //           titleText: controller.starlineMarketModel.value.data?[index].name ?? '',
+  //           trailing:
+  //               "${controller.starlineMarketModel.value.data?[index].baseRate ?? ""} KA ${controller.starlineMarketModel.value.data?.elementAt(index).rate ?? ""}",
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
-  Widget listTile({required String titleText, required String trailing}) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(Dimensions.h9),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  titleText,
-                  style: CustomTextStyle.textAllerta.copyWith(
-                    color: AppColors.black,
-                    fontSize: Dimensions.h14,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  trailing,
-                  style: CustomTextStyle.textAllerta.copyWith(
-                    color: AppColors.black,
-                    fontSize: Dimensions.h14,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget listTile({required String titleText, required String trailing}) {
+  //   return Padding(
+  //     padding: EdgeInsets.all(Dimensions.h9),
+  //     child: Row(
+  //       children: [
+  //         Expanded(
+  //           child: Text(
+  //             titleText,
+  //             style: CustomTextStyle.textAllerta.copyWith(
+  //               color: AppColors.black,
+  //               fontSize: Dimensions.h14,
+  //             ),
+  //           ),
+  //         ),
+  //         Expanded(
+  //           child: Text(
+  //             trailing,
+  //             style: CustomTextStyle.textAllerta.copyWith(
+  //               color: AppColors.black,
+  //               fontSize: Dimensions.h14,
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
