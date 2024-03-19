@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/controller/home_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -21,6 +22,7 @@ class MoreOptions extends StatefulWidget {
 class _MoreOptionsState extends State<MoreOptions> {
   final controller = Get.put(MoreListController());
   final homeController = Get.find<HomeController>();
+  final walletCon = Get.put<WalletController>(WalletController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -141,6 +143,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                     onTap: () {
                       homeController.pageWidget.value = 2;
                       homeController.currentIndex.value = 2;
+                      walletCon.selectedIndex.value = 0;
                     },
                     iconData: ConstantImage.plusIcon,
                     text: "ADDFUND".tr),

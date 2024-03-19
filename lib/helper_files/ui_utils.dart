@@ -39,7 +39,7 @@ class AppUtils {
       backgroundColor: AppColors.appbarColor,
       shadowColor: AppColors.white,
       elevation: 0,
-      centerTitle: centerTitle,
+      centerTitle: centerTitle ?? true,
       leading: leading,
       leadingWidth: leadingWidht,
       title: Text(

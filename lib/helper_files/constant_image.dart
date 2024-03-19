@@ -24,6 +24,7 @@ class ConstantImage {
   static String playIcon = "assets/images/circle_filled_play_ic_icon.svg";
   static String plusIcon = "assets/images/plus_circled_icon.svg";
   static String clockIcon = "assets/images/alarm_icon.svg";
+  static String clockStIcon = "assets/images/clock_st.svg";
   static String withDrawalIcon = "assets/images/wallet_sharp_icon.svg";
   static String rateusStartIcon = "assets/images/star_rateus_icon.svg";
   static String giveFeedbackIcon = "assets/images/give_feedback_icon.svg";

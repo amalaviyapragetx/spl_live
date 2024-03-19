@@ -102,6 +102,8 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                                           e.isSelected.value = value ?? false;
                                                           if (e.isSelected.value) {
                                                             homeCon.isSelectedGameIndex.value = e.id;
+                                                          } else {
+                                                            homeCon.isSelectedGameIndex.value = null;
                                                           }
                                                         },
                                                       ),
@@ -140,6 +142,8 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                                           e.isSelected.value = value ?? false;
                                                           if (e.isSelected.value) {
                                                             homeCon.isSelectedWinStatusIndex.value = e.id;
+                                                          } else {
+                                                            homeCon.isSelectedWinStatusIndex.value = null;
                                                           }
                                                         },
                                                       ),
@@ -167,25 +171,43 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: homeCon.filterMarketList
                                                 .map(
-                                                  (e) => Row(
-                                                    children: [
-                                                      Checkbox(
-                                                        activeColor: AppColors.appbarColor,
-                                                        value: e.isSelected.value,
-                                                        onChanged: (bool? value) {
-                                                          e.isSelected.value = value ?? false;
-                                                          if (e.isSelected.value) {
-                                                            homeCon.selectedFilterMarketList.add(e.id ?? 0);
-                                                            print(homeCon.selectedFilterMarketList.value);
-                                                          }
-                                                        },
+                                                  (e) => Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                              blurRadius: 6.97777795791626,
+                                                              spreadRadius: 0.8722222447395325,
+                                                              offset: Offset(0, 0),
+                                                              color: AppColors.black.withOpacity(0.25))
+                                                        ],
+                                                        color: AppColors.white,
                                                       ),
-                                                      Text(
-                                                        e.name ?? "",
-                                                        style: CustomTextStyle.textRobotoSansMedium
-                                                            .copyWith(color: AppColors.black),
+                                                      child: Row(
+                                                        children: [
+                                                          Checkbox(
+                                                            activeColor: AppColors.appbarColor,
+                                                            value: e.isSelected.value,
+                                                            onChanged: (bool? value) {
+                                                              e.isSelected.value = value ?? false;
+                                                              if (e.isSelected.value) {
+                                                                homeCon.selectedFilterMarketList.add(e.id ?? 0);
+                                                                print(homeCon.selectedFilterMarketList.value);
+                                                              } else {
+                                                                homeCon.selectedFilterMarketList.clear();
+                                                              }
+                                                            },
+                                                          ),
+                                                          Text(
+                                                            e.name ?? "",
+                                                            style: CustomTextStyle.textRobotoSansMedium
+                                                                .copyWith(color: AppColors.black),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 )
                                                 .toList(),

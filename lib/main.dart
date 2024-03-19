@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -45,15 +47,33 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final con = Get.put(InactivityController());
+  final con = Get.put<InactivityController>(InactivityController());
+  bool _jailbroken = false;
   @override
   void initState() {
+    super.initState();
     NotificationServices().requestNotificationPermission();
     HttpOverrides.global = MyHttpOverrides();
     NotificationServices().firebaseInit(context);
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) => GetStorage().write(ConstantsVariables.fcmToken, value));
-    super.initState();
+    initPlatformState();
+  }
+
+  Future<void> initPlatformState() async {
+    bool jailbroken;
+    try {
+      jailbroken = await FlutterJailbreakDetection.jailbroken;
+    } on PlatformException {
+      jailbroken = true;
+    }
+    if (!mounted) return;
+    setState(() {
+      _jailbroken = jailbroken;
+      if (_jailbroken) {
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      }
+    });
   }
 
   @override
@@ -118,7 +138,7 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 class AppStateListener extends WidgetsBindingObserver {
-  final con = Get.put(InactivityController());
+  final con = Get.put<InactivityController>(InactivityController());
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);

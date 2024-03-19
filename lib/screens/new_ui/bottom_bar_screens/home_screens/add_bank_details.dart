@@ -137,16 +137,11 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                                 borderRadius: 5,
                                 borderWidth: 0,
                                 textStyle: CustomTextStyle.textPTsansMedium,
-                                onTap: () => controller.callEditBankDetailsApi(),
+                                onTap: () => controller.validationFied(),
                                 height: 40,
                                 width: 200,
                               )
-                            : Container(),
-                      ),
-                      const SizedBox(height: 20),
-                      Obx(
-                        () => controller.isEditDetails.value != true
-                            ? RoundedCornerButton(
+                            : RoundedCornerButton(
                                 text: "EDIT BANK DETAILS",
                                 color: AppColors.wpColor1,
                                 borderColor: AppColors.appbarColor,
@@ -160,8 +155,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                                 onTap: () => _showExitDialog(),
                                 height: 40,
                                 width: 200,
-                              )
-                            : Container(),
+                              ),
                       ),
                     ],
                   ),

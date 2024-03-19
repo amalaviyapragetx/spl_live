@@ -2,17 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
 
 import '../../helper_files/constant_image.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import 'controller/mpin_page_controller.dart';
 
-class MPINPageView extends StatelessWidget {
+class MPINPageView extends StatefulWidget {
   MPINPageView({Key? key}) : super(key: key);
 
+  @override
+  State<MPINPageView> createState() => _MPINPageViewState();
+}
+
+class _MPINPageViewState extends State<MPINPageView> {
   final controller = Get.find<MPINPageController>();
+  @override
+  void initState() {
+    super.initState();
+    GetStorage().write(ConstantsVariables.timeOut, false);
+  }
 
   @override
   Widget build(BuildContext context) {
