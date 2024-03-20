@@ -128,6 +128,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                     onTap: () {
                       homeController.pageWidget.value = 2;
                       homeController.currentIndex.value = 2;
+                      walletCon.selectedIndex.value = null;
                     },
                     iconData: ConstantImage.walletAppbar,
                     text: "Wallet".tr),

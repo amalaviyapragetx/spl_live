@@ -92,28 +92,39 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                               mainAxisSize: MainAxisSize.min,
                                               children: homeCon.gameTypeList
                                                   .map(
-                                                    (e) => Row(
-                                                      children: [
-                                                        Checkbox(
-                                                          activeColor: AppColors.appbarColor,
-                                                          value: e.isSelected.value,
-                                                          onChanged: (bool? value) {
-                                                            homeCon.gameTypeList
-                                                                .forEach((e) => e.isSelected.value = false);
-                                                            e.isSelected.value = value ?? false;
-                                                            if (e.isSelected.value) {
-                                                              homeCon.isSelectedGameIndex.value = e.id;
-                                                            } else {
-                                                              homeCon.isSelectedGameIndex.value = null;
-                                                            }
-                                                          },
-                                                        ),
-                                                        Text(
-                                                          e.name ?? "",
-                                                          style: CustomTextStyle.textRobotoSansMedium
-                                                              .copyWith(color: AppColors.black),
-                                                        ),
-                                                      ],
+                                                    (e) => InkWell(
+                                                      onTap: () {
+                                                        homeCon.gameTypeList.forEach((e) => e.isSelected.value = false);
+                                                        e.isSelected.value = !e.isSelected.value;
+                                                        if (e.isSelected.value) {
+                                                          homeCon.isSelectedGameIndex.value = e.id;
+                                                        } else {
+                                                          homeCon.isSelectedGameIndex.value = null;
+                                                        }
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Checkbox(
+                                                            activeColor: AppColors.appbarColor,
+                                                            value: e.isSelected.value,
+                                                            onChanged: (bool? value) {
+                                                              homeCon.gameTypeList
+                                                                  .forEach((e) => e.isSelected.value = false);
+                                                              e.isSelected.value = value ?? false;
+                                                              if (e.isSelected.value) {
+                                                                homeCon.isSelectedGameIndex.value = e.id;
+                                                              } else {
+                                                                homeCon.isSelectedGameIndex.value = null;
+                                                              }
+                                                            },
+                                                          ),
+                                                          Text(
+                                                            e.name ?? "",
+                                                            style: CustomTextStyle.textRobotoSansMedium
+                                                                .copyWith(color: AppColors.black),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   )
                                                   .toList(),
@@ -132,28 +143,40 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                               mainAxisSize: MainAxisSize.min,
                                               children: homeCon.winStatusList
                                                   .map(
-                                                    (e) => Row(
-                                                      children: [
-                                                        Checkbox(
-                                                          activeColor: AppColors.appbarColor,
-                                                          value: e.isSelected.value,
-                                                          onChanged: (bool? value) {
-                                                            homeCon.winStatusList
-                                                                .forEach((e) => e.isSelected.value = false);
-                                                            e.isSelected.value = value ?? false;
-                                                            if (e.isSelected.value) {
-                                                              homeCon.isSelectedWinStatusIndex.value = e.id;
-                                                            } else {
-                                                              homeCon.isSelectedWinStatusIndex.value = null;
-                                                            }
-                                                          },
-                                                        ),
-                                                        Text(
-                                                          e.name ?? "",
-                                                          style: CustomTextStyle.textRobotoSansMedium
-                                                              .copyWith(color: AppColors.black),
-                                                        ),
-                                                      ],
+                                                    (e) => InkWell(
+                                                      onTap: () {
+                                                        homeCon.winStatusList
+                                                            .forEach((e) => e.isSelected.value = false);
+                                                        e.isSelected.value = !e.isSelected.value;
+                                                        if (e.isSelected.value) {
+                                                          homeCon.isSelectedWinStatusIndex.value = e.id;
+                                                        } else {
+                                                          homeCon.isSelectedWinStatusIndex.value = null;
+                                                        }
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Checkbox(
+                                                            activeColor: AppColors.appbarColor,
+                                                            value: e.isSelected.value,
+                                                            onChanged: (bool? value) {
+                                                              homeCon.winStatusList
+                                                                  .forEach((e) => e.isSelected.value = false);
+                                                              e.isSelected.value = value ?? false;
+                                                              if (e.isSelected.value) {
+                                                                homeCon.isSelectedWinStatusIndex.value = e.id;
+                                                              } else {
+                                                                homeCon.isSelectedWinStatusIndex.value = null;
+                                                              }
+                                                            },
+                                                          ),
+                                                          Text(
+                                                            e.name ?? "",
+                                                            style: CustomTextStyle.textRobotoSansMedium
+                                                                .copyWith(color: AppColors.black),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   )
                                                   .toList(),
@@ -200,27 +223,37 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                                                   ],
                                                                   color: AppColors.white,
                                                                 ),
-                                                                child: Row(
-                                                                  children: [
-                                                                    Checkbox(
-                                                                      activeColor: AppColors.appbarColor,
-                                                                      value: e.isSelected.value,
-                                                                      onChanged: (bool? value) {
-                                                                        e.isSelected.value = value ?? false;
-                                                                        if (e.isSelected.value) {
-                                                                          homeCon.selectedFilterMarketList
-                                                                              .add(e.id ?? 0);
-                                                                        } else {
-                                                                          homeCon.selectedFilterMarketList.clear();
-                                                                        }
-                                                                      },
-                                                                    ),
-                                                                    Text(
-                                                                      e.name ?? "",
-                                                                      style: CustomTextStyle.textRobotoSansMedium
-                                                                          .copyWith(color: AppColors.black),
-                                                                    ),
-                                                                  ],
+                                                                child: InkWell(
+                                                                  onTap: () {
+                                                                    e.isSelected.value = !e.isSelected.value;
+                                                                    if (e.isSelected.value) {
+                                                                      homeCon.selectedFilterMarketList.add(e.id ?? 0);
+                                                                    } else {
+                                                                      homeCon.selectedFilterMarketList.clear();
+                                                                    }
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                        activeColor: AppColors.appbarColor,
+                                                                        value: e.isSelected.value,
+                                                                        onChanged: (bool? value) {
+                                                                          e.isSelected.value = value ?? false;
+                                                                          if (e.isSelected.value) {
+                                                                            homeCon.selectedFilterMarketList
+                                                                                .add(e.id ?? 0);
+                                                                          } else {
+                                                                            homeCon.selectedFilterMarketList.clear();
+                                                                          }
+                                                                        },
+                                                                      ),
+                                                                      Text(
+                                                                        e.name ?? "",
+                                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                                            .copyWith(color: AppColors.black),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),

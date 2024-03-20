@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/controller/starline_market_controller.dart';
@@ -45,6 +46,14 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
         if (starlineCon.selectedIndex.value == null) {
           Get.offAllNamed(AppRoutName.dashBoardPage);
         }
+        starlineCon.selectedFilterMarketList.value = [];
+        starlineCon.filterMarketList.forEach((e) => e.isSelected.value = false);
+        starlineCon.isSelectedWinStatusIndex.value = null;
+        starlineCon.winStatusList.forEach((e) => e.isSelected.value = false);
+        starlineCon.getMarketBidsByUserId(
+            lazyLoad: false,
+            endDate: DateFormat('yyyy-MM-dd').format(starlineCon.startEndDate),
+            startDate: DateFormat('yyyy-MM-dd').format(starlineCon.startEndDate));
         starlineCon.selectedIndex.value = null;
         return false;
       },

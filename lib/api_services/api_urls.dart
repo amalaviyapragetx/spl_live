@@ -1,10 +1,10 @@
 class ApiUtils {
   // Spl Production
-  // static String baseURL = "https://vishnulive.in:9870";
+  static String baseURL = "https://vishnulive.in:9870";
   // local url
   // static String baseURL = "http://192.168.29.246:8082";
-  static String baseURL = "http://192.168.29.153:8080";
-  // static String baseURL = "http://10.0.0.201:8080";
+  // static String baseURL = "http://192.168.29.153:8080";
+  // static String baseURL = "http://192.168.29.226:9867";
 
   // endpoints
   static String signUP = '$baseURL/auth/signup';

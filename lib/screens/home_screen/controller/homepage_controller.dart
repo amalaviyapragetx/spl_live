@@ -867,7 +867,6 @@ class HomePageController extends GetxController {
         if (value['status']) {
           if (value['data'] != null) {
             MarketBidHistory model = MarketBidHistory.fromJson(value['data']);
-
             lazyLoad
                 ? marketBidHistoryList.addAll(model.rows ?? <MarketBidHistoryList>[])
                 : marketBidHistoryList.value = model.rows ?? <MarketBidHistoryList>[];

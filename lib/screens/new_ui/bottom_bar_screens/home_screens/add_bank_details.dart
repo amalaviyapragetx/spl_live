@@ -176,8 +176,8 @@ class _AddBankDetailsState extends State<AddBankDetails> {
       ConstrainedBox(
         constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
         child: AlertDialog(
-          insetPadding: EdgeInsets.symmetric(vertical: 10),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
+          insetPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
           content: SizedBox(
             width: double.infinity,
@@ -192,7 +192,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                   style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     color: AppColors.appbarColor,
                     fontWeight: FontWeight.w700,
-                    fontSize: 20,
+                    fontSize: Dimensions.h16,
                   ),
                 ),
                 Text(
@@ -201,7 +201,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                   style: CustomTextStyle.textRobotoSansMedium.copyWith(
                     color: AppColors.appbarColor,
                     fontWeight: FontWeight.w700,
-                    fontSize: 20,
+                    fontSize: Dimensions.h16,
                   ),
                 ),
                 const SizedBox(height: 10),

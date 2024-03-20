@@ -99,13 +99,11 @@ class StarlineMarketController extends GetxController {
       (value) async {
         if (value['status']) {
           if (value['data'] != null) {
+            marketHistoryList.clear();
             NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
             lazyLoad
                 ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
                 : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
-            if (isSelectedWinStatusIndex.value != null || selectedFilterMarketList.isNotEmpty) {
-              Get.back();
-            }
           }
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
@@ -150,6 +148,21 @@ class StarlineMarketController extends GetxController {
     } catch (e) {
       bannerLoad.value = false;
       //  print(e);
+    }
+  }
+
+  onTapWinList(e, value) {
+    winStatusList.forEach((j) => j.isSelected.value = false);
+    if (e.isSelected.value) {
+      e.isSelected.value = false;
+    } else {
+      e.isSelected.value = true;
+    }
+    e.isSelected.value = value ?? false;
+    if (e.isSelected.value) {
+      isSelectedWinStatusIndex.value = e.id;
+    } else {
+      isSelectedWinStatusIndex.value = null;
     }
   }
 

@@ -20,7 +20,6 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
   final starlineCon = Get.find<StarlineMarketController>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     starlineCon.getMarketBidsByUserId(
         lazyLoad: false,
@@ -128,28 +127,40 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: starlineCon.winStatusList
                                               .map(
-                                                (e) => Row(
-                                                  children: [
-                                                    Checkbox(
-                                                      activeColor: AppColors.appbarColor,
-                                                      value: e.isSelected.value,
-                                                      onChanged: (bool? value) {
-                                                        starlineCon.winStatusList
-                                                            .forEach((e) => e.isSelected.value = false);
-                                                        e.isSelected.value = value ?? false;
-                                                        if (e.isSelected.value) {
-                                                          starlineCon.isSelectedWinStatusIndex.value = e.id;
-                                                        } else {
-                                                          starlineCon.isSelectedWinStatusIndex.value = null;
-                                                        }
-                                                      },
-                                                    ),
-                                                    Text(
-                                                      e.name ?? "",
-                                                      style: CustomTextStyle.textRobotoSansMedium
-                                                          .copyWith(color: AppColors.black),
-                                                    ),
-                                                  ],
+                                                (e) => InkWell(
+                                                  onTap: () {
+                                                    starlineCon.winStatusList
+                                                        .forEach((j) => j.isSelected.value = false);
+                                                    e.isSelected.value = !e.isSelected.value;
+                                                    if (e.isSelected.value) {
+                                                      starlineCon.isSelectedWinStatusIndex.value = e.id;
+                                                    } else {
+                                                      starlineCon.isSelectedWinStatusIndex.value = null;
+                                                    }
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Checkbox(
+                                                        activeColor: AppColors.appbarColor,
+                                                        value: e.isSelected.value,
+                                                        onChanged: (bool? value) {
+                                                          starlineCon.winStatusList
+                                                              .forEach((e) => e.isSelected.value = false);
+                                                          e.isSelected.value = value ?? false;
+                                                          if (e.isSelected.value) {
+                                                            starlineCon.isSelectedWinStatusIndex.value = e.id;
+                                                          } else {
+                                                            starlineCon.isSelectedWinStatusIndex.value = null;
+                                                          }
+                                                        },
+                                                      ),
+                                                      Text(
+                                                        e.name ?? "",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.black),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               )
                                               .toList(),
@@ -184,39 +195,49 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                                         (e) => Padding(
                                                           padding: const EdgeInsets.symmetric(
                                                               vertical: 5.0, horizontal: 5.0),
-                                                          child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(10),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                    blurRadius: 6.97777795791626,
-                                                                    spreadRadius: 0.8722222447395325,
-                                                                    offset: Offset(0, 0),
-                                                                    color: AppColors.black.withOpacity(0.25))
-                                                              ],
-                                                              color: AppColors.white,
-                                                            ),
-                                                            child: Row(
-                                                              children: [
-                                                                Checkbox(
-                                                                  activeColor: AppColors.appbarColor,
-                                                                  value: e.isSelected.value,
-                                                                  onChanged: (bool? value) {
-                                                                    e.isSelected.value = value ?? false;
-                                                                    if (e.isSelected.value) {
-                                                                      starlineCon.selectedFilterMarketList
-                                                                          .add(e.id ?? 0);
-                                                                    } else {
-                                                                      starlineCon.selectedFilterMarketList.clear();
-                                                                    }
-                                                                  },
-                                                                ),
-                                                                Text(
-                                                                  e.name ?? "",
-                                                                  style: CustomTextStyle.textRobotoSansMedium
-                                                                      .copyWith(color: AppColors.black),
-                                                                ),
-                                                              ],
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              e.isSelected.value = !e.isSelected.value;
+                                                              if (e.isSelected.value) {
+                                                                starlineCon.selectedFilterMarketList.add(e.id ?? 0);
+                                                              } else {
+                                                                starlineCon.selectedFilterMarketList.clear();
+                                                              }
+                                                            },
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      blurRadius: 6.97777795791626,
+                                                                      spreadRadius: 0.8722222447395325,
+                                                                      offset: Offset(0, 0),
+                                                                      color: AppColors.black.withOpacity(0.25))
+                                                                ],
+                                                                color: AppColors.white,
+                                                              ),
+                                                              child: Row(
+                                                                children: [
+                                                                  Checkbox(
+                                                                    activeColor: AppColors.appbarColor,
+                                                                    value: e.isSelected.value,
+                                                                    onChanged: (bool? value) {
+                                                                      e.isSelected.value = value ?? false;
+                                                                      if (e.isSelected.value) {
+                                                                        starlineCon.selectedFilterMarketList
+                                                                            .add(e.id ?? 0);
+                                                                      } else {
+                                                                        starlineCon.selectedFilterMarketList.clear();
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                  Text(
+                                                                    e.name ?? "",
+                                                                    style: CustomTextStyle.textRobotoSansMedium
+                                                                        .copyWith(color: AppColors.black),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
@@ -245,7 +266,6 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                         Expanded(
                                           child: InkWell(
                                             onTap: () {
-                                              starlineCon.marketHistoryList.clear();
                                               starlineCon.getMarketBidsByUserId(
                                                   lazyLoad: false,
                                                   endDate: DateFormat('yyyy-MM-dd').format(starlineCon.startEndDate),
