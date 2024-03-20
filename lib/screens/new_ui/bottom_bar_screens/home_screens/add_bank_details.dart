@@ -126,23 +126,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                       const SizedBox(height: 15),
                       Obx(
                         () => !controller.isEditDetails.value
-                            ? controller.accHolderNameController.text.isNotEmpty
-                                ? RoundedCornerButton(
-                                    text: "EDIT BANK DETAILS",
-                                    color: AppColors.wpColor1,
-                                    borderColor: AppColors.appbarColor,
-                                    fontSize: Dimensions.h13,
-                                    fontWeight: FontWeight.bold,
-                                    fontColor: AppColors.black,
-                                    letterSpacing: 1,
-                                    borderRadius: 5,
-                                    borderWidth: 0,
-                                    textStyle: CustomTextStyle.textPTsansMedium,
-                                    onTap: () => _showExitDialog(),
-                                    height: 40,
-                                    width: 200,
-                                  )
-                                : Container()
+                            ? const SizedBox()
                             : RoundedCornerButton(
                                 text: "SUBMIT",
                                 color: AppColors.appbarColor,
@@ -159,6 +143,25 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                                 width: 200,
                               ),
                       ),
+                      Obx(
+                        () => controller.isEditDetailsButton.value
+                            ? RoundedCornerButton(
+                                text: "EDIT BANK DETAILS",
+                                color: AppColors.wpColor1,
+                                borderColor: AppColors.appbarColor,
+                                fontSize: Dimensions.h13,
+                                fontWeight: FontWeight.bold,
+                                fontColor: AppColors.black,
+                                letterSpacing: 1,
+                                borderRadius: 5,
+                                borderWidth: 0,
+                                textStyle: CustomTextStyle.textPTsansMedium,
+                                onTap: () => _showExitDialog(),
+                                height: 40,
+                                width: 200,
+                              )
+                            : Container(),
+                      ),
                     ],
                   ),
                 ),
@@ -174,15 +177,15 @@ class _AddBankDetailsState extends State<AddBankDetails> {
     Get.dialog(
       barrierDismissible: false,
       ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
+        constraints: BoxConstraints(maxHeight: Get.width - 30, minWidth: Get.width - 40),
         child: AlertDialog(
           insetPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
           content: SizedBox(
             width: double.infinity,
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
                 const SizedBox(height: 20),

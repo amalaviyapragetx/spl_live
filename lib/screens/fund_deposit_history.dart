@@ -71,10 +71,11 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                 () => Expanded(
                   child: walletCon.fundTransactionList.isNotEmpty
                       ? Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          padding: const EdgeInsets.all(15),
                           child: ListView.separated(
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
+                            padding: EdgeInsets.zero,
                             separatorBuilder: (context, index) => const SizedBox(height: 20),
                             itemCount: walletCon.fundTransactionList.length,
                             itemBuilder: (context, i) {

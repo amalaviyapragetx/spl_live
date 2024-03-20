@@ -1,8 +1,8 @@
 class ApiUtils {
   // Spl Production
-  static String baseURL = "https://vishnulive.in:9870";
+  // static String baseURL = "https://vishnulive.in:9870";
   // local url
-  // static String baseURL = "http://192.168.29.246:8082";
+  static String baseURL = "http://192.168.29.246:8082";
   // static String baseURL = "http://192.168.29.153:8080";
   // static String baseURL = "http://192.168.29.226:9867";
 
@@ -46,7 +46,7 @@ class ApiUtils {
   static String starlineMarketBidHistory = '$baseURL/bid/starline/getByUserId';
   static String changeMPIN = "$baseURL/auth/mPin/change";
   static String webStarLinechar = "$baseURL/web/starlineChart";
-  static String dailyStarlineMarketBidHistory = "$baseURL/bid/getAllBidByDailyStarlineMarketId";
+  // static String dailyStarlineMarketBidHistory = "$baseURL/bid/getAllBidByDailyStarlineMarketId";
   static String spdptp = "$baseURL/gameMode/getSPDPTPPana";
   static String panelGroup = "$baseURL/gameMode/getPanelGroupPana";
   static String spMotor = "$baseURL/gameMode/getSPMotorPana";

@@ -103,7 +103,7 @@ class HomeController extends GetxController {
   List<FilterModel> winStatusList = [
     FilterModel(id: 1, name: 'Win', isSelected: false.obs),
     FilterModel(id: 2, name: 'Loss', isSelected: false.obs),
-    FilterModel(id: 3, name: 'Pending', isSelected: false.obs)
+    FilterModel(id: 0, name: 'Pending', isSelected: false.obs)
   ];
   List<FilterModel> gameTypeList = [
     FilterModel(id: 1, name: "OPEN", isSelected: false.obs),
@@ -118,11 +118,10 @@ class HomeController extends GetxController {
     UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
     ApiService()
         .bidHistoryByUserId(
-      userId: userData.id.toString(),
-      gameType: "${isSelectedGameIndex.value}",
-      winningStatus: "${isSelectedWinStatusIndex.value}",
-      markets: selectedFilterMarketList.value,
-    )
+            userId: userData.id.toString(),
+            gameType: "${isSelectedGameIndex.value}",
+            winningStatus: "${isSelectedWinStatusIndex.value}",
+            markets: selectedFilterMarketList.value)
         .then(
       (value) async {
         if (value['status']) {

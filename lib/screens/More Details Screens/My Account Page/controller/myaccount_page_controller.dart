@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
 import '../../../../api_services/api_service.dart';
@@ -16,21 +15,20 @@ class MyAccountPageController extends GetxController {
   TextEditingController ifscCodeController = TextEditingController();
   UserDetailsModel userDetailsModel = UserDetailsModel();
   RxBool isEditDetails = false.obs;
+  RxBool isEditDetailsButton = false.obs;
   RxString accountName = "".obs;
   RxString bankName = "".obs;
   RxString accountNumber = "".obs;
   RxString ifcsCode = "".obs;
-  var userId = "";
+  RxString userId = "".obs;
   int bankId = 0;
-  var walletbalance = Get.put(WalletController());
 
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
     final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    userId = userData.id == null ? "" : userData.id.toString();
+    userId.value = userData.id.toString();
     if (userId.isNotEmpty) {
-      callGetBankDetails(userId);
-      walletbalance.walletBalance.refresh();
+      callGetBankDetails();
     } else {
       AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);
     }
@@ -54,7 +52,6 @@ class MyAccountPageController extends GetxController {
   void onTapOfEditDetails() async {
     if (isEditDetails.value) {
       callEditBankDetailsApi();
-      walletbalance.walletBalance.refresh();
     } else {
       AppUtils.showErrorSnackBar(bodyText: "CONTACTADMINTOEDITDETAILS".tr);
     }
@@ -62,9 +59,9 @@ class MyAccountPageController extends GetxController {
 
   RxBool loadGetBalance = false.obs;
 
-  void callGetBankDetails(String userId) async {
+  void callGetBankDetails() {
     loadGetBalance.value = true;
-    ApiService().getBankDetails({"id": userId, "userId": userId}).then((value) async {
+    ApiService().getBankDetails({"id": userId.value, "userId": userId.value}).then((value) async {
       if (value['status']) {
         loadGetBalance.value = false;
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
@@ -76,12 +73,22 @@ class MyAccountPageController extends GetxController {
         accNoController.clear();
         ifscCodeController.clear();
         isEditDetails.value = model.data!.isEditPermission ?? false;
-        bankNameController.text = model.data!.bankName ?? "Null From API";
-        accHolderNameController.text = model.data!.accountHolderName ?? "Null From API";
-        accNoController.text = model.data!.accountNumber ?? "Null From API";
-        ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
+        bankNameController.text = model.data!.bankName ?? "";
+        accHolderNameController.text = model.data!.accountHolderName ?? "";
+        accNoController.text = model.data!.accountNumber ?? "";
+        ifscCodeController.text = model.data!.iFSCCode ?? "";
         bankId = model.data!.id ?? 0;
+        if (model.data != null) {
+          isEditDetailsButton.value = true;
+        } else {
+          isEditDetailsButton.value = false;
+        }
       } else {
+        if (value['data'] != null) {
+          isEditDetailsButton.value = true;
+        } else {
+          isEditDetailsButton.value = false;
+        }
         loadGetBalance.value = false;
         isEditDetails.value = true;
       }
@@ -93,11 +100,16 @@ class MyAccountPageController extends GetxController {
       if (value['status']) {
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         isEditDetails.value = false;
-        bankNameController.text = model.data!.bankName ?? "Null From API";
-        accHolderNameController.text = model.data!.accountHolderName ?? "Null From API";
-        accNoController.text = model.data!.accountNumber ?? "Null From API";
-        ifscCodeController.text = model.data!.iFSCCode ?? "Null From API";
+        bankNameController.text = model.data!.bankName ?? "";
+        accHolderNameController.text = model.data!.accountHolderName ?? "";
+        accNoController.text = model.data!.accountNumber ?? "";
+        ifscCodeController.text = model.data!.iFSCCode ?? "";
         bankId = model.data!.id ?? 0;
+        if (model.data != null) {
+          isEditDetailsButton.value = true;
+        } else {
+          isEditDetailsButton.value = false;
+        }
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
         isEditDetails.value = true;
@@ -109,7 +121,7 @@ class MyAccountPageController extends GetxController {
   Future<Map> ediBankDetailsBody() async {
     var ediBankDetailsBody = {
       //  "id": bankId,
-      "userId": int.parse(userId),
+      "userId": int.parse(userId.value),
       "bankName": bankNameController.text,
       "accountHolderName": accHolderNameController.text,
       "accountNumber": accNoController.text,

@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/helper_files/custom_text_style.dart';
+import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/BankHistory.dart';
 import 'package:spllive/models/FundTransactionModel.dart';
@@ -720,13 +724,23 @@ class ApiService extends GetConnect implements GetxService {
     required bool isStarline,
     required String? startDate,
     required String? endDate,
+    String? winningStatus,
+    List<int>? markets,
   }) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
-      headers: headersWithToken,
-    );
+        "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
+        headers: headersWithToken,
+        query: {
+          "id": userId,
+          "limit": limit,
+          "offset": offset,
+          "startDate": startDate,
+          "endDate": endDate,
+          "winningStatus": winningStatus,
+          "markets": markets?.join(","),
+        });
     if (response.status.hasError) {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
@@ -1112,7 +1126,7 @@ class ApiService extends GetConnect implements GetxService {
     );
     if (response.status.hasError) {
       // AppUtils.hideProgressDialog();s
-      return response.body;
+      return Future.error(response.statusText!);
     } else {
       // AppUtils.hideProgressDialog();
 
@@ -1127,7 +1141,7 @@ class ApiService extends GetConnect implements GetxService {
     );
 
     if (response.status.hasError) {
-      return response.body;
+      return Future.error(response.statusText!);
     } else {
       return response.body;
     }
@@ -1147,7 +1161,7 @@ class ApiService extends GetConnect implements GetxService {
         if (response.status.code != null && response.status.code == 401) {
           tokenExpired();
         }
-        return response.body;
+        return Future.error(response.statusText!);
       } else {
         AppUtils.hideProgressDialog();
         return response.body;
@@ -1201,7 +1215,7 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<BankHistory?> getBankHistory({String? id}) async {
     try {
-      AppUtils.showProgressDialog(isCancellable: false);
+      // AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
       final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true)
           .get("${ApiUtils.getBankHistory}$id", headers: headersWithToken, query: {"search": ""});

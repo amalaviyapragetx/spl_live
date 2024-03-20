@@ -35,6 +35,7 @@ class StarlineMarketController extends GetxController {
         StarLineDailyMarketApiResponseModel responseModel = StarLineDailyMarketApiResponseModel.fromJson(value);
         starLineMarketList.value = responseModel.data ?? <StarlineMarketData>[];
         marketListForResult.value = responseModel.data ?? <StarlineMarketData>[];
+        filterMarketList.clear();
         starLineMarketList.forEach((e) {
           filterMarketList.add(FilterModel(isSelected: false.obs, name: e.time, id: e.starlineMarketId));
         });
@@ -89,12 +90,15 @@ class StarlineMarketController extends GetxController {
   }) {
     ApiService()
         .getBidHistoryByUserId(
-            userId: userData.id.toString(),
-            startDate: startDate,
-            endDate: endDate,
-            limit: "5000",
-            offset: offset.value.toString(),
-            isStarline: true)
+      userId: userData.id.toString(),
+      startDate: startDate,
+      endDate: endDate,
+      limit: "5000",
+      offset: offset.value.toString(),
+      isStarline: true,
+      winningStatus: "${isSelectedWinStatusIndex.value}",
+      markets: selectedFilterMarketList.value,
+    )
         .then(
       (value) async {
         if (value['status']) {
@@ -170,7 +174,7 @@ class StarlineMarketController extends GetxController {
   List<FilterModel> winStatusList = [
     FilterModel(id: 1, name: 'Win', isSelected: false.obs),
     FilterModel(id: 2, name: 'Loss', isSelected: false.obs),
-    FilterModel(id: 3, name: 'Pending', isSelected: false.obs)
+    FilterModel(id: 0, name: 'Pending', isSelected: false.obs)
   ];
   var isSelectedWinStatusIndex = Rxn<int>();
   RxList<int> selectedFilterMarketList = <int>[].obs;

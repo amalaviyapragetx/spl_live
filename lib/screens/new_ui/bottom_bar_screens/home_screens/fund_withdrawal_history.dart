@@ -80,8 +80,9 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                       : SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+                            padding: const EdgeInsets.all(15),
                             child: ListView.separated(
+                              padding: EdgeInsets.zero,
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               separatorBuilder: (context, index) => const SizedBox(height: 20),

@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
+import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -15,9 +17,21 @@ import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
 import 'controller/sign_in_screen_controller.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   final controller = Get.find<SignInPageController>();
+  @override
+  void initState() {
+    super.initState();
+    GetStorage().write(ConstantsVariables.timeOut, false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

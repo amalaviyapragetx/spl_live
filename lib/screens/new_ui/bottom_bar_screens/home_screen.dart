@@ -167,15 +167,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return Builder(
                                   builder: (context) {
                                     return Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: NetworkImage(element.banner ?? ""),
-                                              fit: BoxFit.cover,
-                                            ),
+                                      padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+                                      child: Image(
+                                        image: NetworkImage(element.banner ?? ""),
+                                        errorBuilder: (context, error, stackTrace) => Center(
+                                          child: Icon(
+                                            Icons.error_outline,
+                                            color: AppColors.appbarColor,
+                                            size: 35,
                                           ),
-                                        ));
+                                        ),
+                                      ),
+                                      // child: Container(
+                                      //   decoration: BoxDecoration(
+                                      //     image: DecorationImage(
+                                      //       image: NetworkImage(element.banner ?? ""),
+                                      //       fit: BoxFit.cover,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                    );
                                   },
                                 );
                               }).toList(),
