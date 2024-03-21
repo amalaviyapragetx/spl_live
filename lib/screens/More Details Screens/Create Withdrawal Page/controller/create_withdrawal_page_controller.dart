@@ -45,7 +45,6 @@ class CreateWithDrawalPageController extends GetxController {
 
   void callGetBankDetails(String userId) async {
     ApiService().getBankDetails({"id": userId}).then((value) async {
-      BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
       if (value['status']) {
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         accountName.value = model.data!.accountHolderName ?? "";

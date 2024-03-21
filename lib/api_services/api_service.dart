@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/custom_text_style.dart';
-import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/BankHistory.dart';
 import 'package:spllive/models/FundTransactionModel.dart';
@@ -1232,7 +1228,6 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
-      // print(e.toString());
       return null;
     }
   }

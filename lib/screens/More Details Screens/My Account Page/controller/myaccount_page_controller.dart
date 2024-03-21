@@ -78,17 +78,12 @@ class MyAccountPageController extends GetxController {
         accNoController.text = model.data!.accountNumber ?? "";
         ifscCodeController.text = model.data!.iFSCCode ?? "";
         bankId = model.data!.id ?? 0;
-        if (model.data != null) {
-          isEditDetailsButton.value = true;
-        } else {
+        if (model.data!.isEditPermission ?? false) {
           isEditDetailsButton.value = false;
+        } else {
+          isEditDetailsButton.value = true;
         }
       } else {
-        if (value['data'] != null) {
-          isEditDetailsButton.value = true;
-        } else {
-          isEditDetailsButton.value = false;
-        }
         loadGetBalance.value = false;
         isEditDetails.value = true;
       }
@@ -99,16 +94,16 @@ class MyAccountPageController extends GetxController {
     ApiService().editBankDetails(await ediBankDetailsBody()).then((value) async {
       if (value['status']) {
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
-        isEditDetails.value = false;
+        isEditDetails.value = model.data?.isEditPermission ?? false;
         bankNameController.text = model.data!.bankName ?? "";
         accHolderNameController.text = model.data!.accountHolderName ?? "";
         accNoController.text = model.data!.accountNumber ?? "";
         ifscCodeController.text = model.data!.iFSCCode ?? "";
         bankId = model.data!.id ?? 0;
-        if (model.data != null) {
-          isEditDetailsButton.value = true;
-        } else {
+        if (value ?? false) {
           isEditDetailsButton.value = false;
+        } else {
+          isEditDetailsButton.value = true;
         }
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {

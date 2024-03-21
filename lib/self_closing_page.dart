@@ -32,7 +32,7 @@ class InactivityController extends GetxController {
   }
 
   void onUserInteraction(PointerEvent event) {
-    print(_inactivityDuration.inSeconds);
+    // print(_inactivityDuration.inSeconds);
     _resetInactivityTimer();
   }
 
