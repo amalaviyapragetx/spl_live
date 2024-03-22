@@ -175,7 +175,7 @@ class GamePageController extends GetxController {
     }
     var data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    requestModel.userId = userData.id;
+    // requestModel.userId = userData.id;
     requestModel.bidType = biddingType.value;
     requestModel.dailyMarketId = marketId;
   }

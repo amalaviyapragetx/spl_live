@@ -2,10 +2,10 @@ class ApiUtils {
   // Spl Production
   // static String baseURL = "https://vishnulive.in:9870";
   // local url
-  static String baseURL = "http://192.168.29.246:8082";
+  // static String baseURL = "http://192.168.29.246:8082";
   // static String baseURL = "http://192.168.29.153:8080";
   // static String baseURL = "http://192.168.29.226:9867";
-  // static String baseURL = "http://10.0.0.201:8080";
+  static String baseURL = "http://10.0.0.201:8080";
 
   // endpoints
   static String signUP = '$baseURL/auth/signup';
@@ -18,7 +18,6 @@ class ApiUtils {
   static String resetPassword = '$baseURL/auth/resetPassword';
   static String changePassword = '$baseURL/auth/changePassword';
   static String getBankDetails = '$baseURL/bank/getByUserId';
-  // static String editBankDetails = '$baseURL/bank/createOrUpdate';
   static String editBankDetails = '$baseURL/bank/update';
   static String getDailyMarkets = '$baseURL/market/getDailyMarket';
   static String getGameModes =
@@ -29,25 +28,21 @@ class ApiUtils {
   static String createStarLineMarketBid = '$baseURL/bid/starlineBidCreate';
   static String getDailyStarLineMarkets = '$baseURL/starline/getDailyStarlineMarket';
   static String createWithdrawalRequest = '$baseURL/withdraw/createRequest';
-  // static String getWithdrawalRequestTime = '$baseURL/withdraw/getRequestTime';
   static String getWithdrawalHistoryByUserId = '$baseURL/withdraw/getRequestByUserId/';
   static String getStarlineGameRates = '$baseURL/game/getAll/';
   static String createFeedback = '$baseURL/feedback/create';
   static String getFeedbackAndRatingsById = '$baseURL/feedback/getById/';
-  // static String getTransactionHistory = '$baseURL/bid/getByUserId';
   static String getTransactionHistory = '$baseURL/payment/getUserPayments';
   static String verifyMPIN = '$baseURL/auth/mPin/verify';
   static String forgotMPIN = '$baseURL/auth/mPin/forgot';
   // new api endpoints
   static String setUserDetails = '$baseURL/auth/setUserDetails';
-  // static String setDeviceDetails = '$baseURL/auth/setDeviceDetails';
   static String setMPIN = '$baseURL/auth/mPin/set';
   static String getBalance = '$baseURL/wallet/getBalance';
   static String normalMarketBidHistory = '$baseURL/bid/getByUserId';
   static String starlineMarketBidHistory = '$baseURL/bid/starline/getByUserId';
   static String changeMPIN = "$baseURL/auth/mPin/change";
   static String webStarLinechar = "$baseURL/web/starlineChart";
-  // static String dailyStarlineMarketBidHistory = "$baseURL/bid/getAllBidByDailyStarlineMarketId";
   static String spdptp = "$baseURL/gameMode/getSPDPTPPana";
   static String panelGroup = "$baseURL/gameMode/getPanelGroupPana";
   static String spMotor = "$baseURL/gameMode/getSPMotorPana";
@@ -57,7 +52,6 @@ class ApiUtils {
   static String choicePanaSPDP = "$baseURL/gameMode/getChoicePanaSPDPTP";
   static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
   static String passBookApi = "$baseURL/user/getUserPassbookDetails";
-  // static String marketbidHistory = "$baseURL/bid/getBidHistory";
   static String bidHistory = "$baseURL/bid/getByUserId";
   static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
   static String getNotificationCount = "$baseURL/notification/getNotificationCount";

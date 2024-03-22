@@ -58,7 +58,7 @@ class StarlineBidsController extends GetxController {
     requestModel.value.dailyStarlineMarketId = marketData.value.id;
     var data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    requestModel.value.userId = userData.id;
+    // requestModel.value.userId = userData.id;
 
     // GetStorage().write(ConstantsVariables.playMore, false);
     // var hh = GetStorage().read(ConstantsVariables.playMore);

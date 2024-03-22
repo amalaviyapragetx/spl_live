@@ -355,7 +355,7 @@ class StarlineNewGamePageController extends GetxController {
     requestModel.value.dailyStarlineMarketId = marketData.value.id;
     var data = await GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    requestModel.value.userId = userData.id;
+    // requestModel.value.userId = userData.id;
 
     await loadJsonFile();
     List<String> tempValidationList = [];

@@ -131,7 +131,7 @@ class NewGamemodePageController extends GetxController {
     requestModel.value.bidType = bidType;
     final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    requestModel.value.userId = userData.id;
+    // requestModel.value.userId = userData.id;
     requestModel.value.bidType = biddingType.value;
     requestModel.value.dailyMarketId = marketId;
     RxBool showNumbersLine = false.obs;

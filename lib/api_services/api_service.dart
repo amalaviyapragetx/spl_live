@@ -729,7 +729,6 @@ class ApiService extends GetConnect implements GetxService {
         "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
         headers: headersWithToken,
         query: {
-          "id": userId,
           "limit": limit,
           "offset": offset,
           "startDate": startDate,
@@ -911,7 +910,6 @@ class ApiService extends GetConnect implements GetxService {
         ApiUtils.bidHistory,
         headers: headersWithToken,
         query: {
-          "id": userId,
           "limit": "5000",
           "offset": "0",
           "bidType": gameType,

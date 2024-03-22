@@ -78,6 +78,5 @@ class Bids {
 //     coins = 1;
 //     remarks = "test remakred";
 //     gameModeName = "Single Ank";
-        
-// }
 
+// }

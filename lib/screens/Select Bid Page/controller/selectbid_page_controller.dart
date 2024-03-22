@@ -49,7 +49,7 @@ class SelectBidPageController extends GetxController {
     requestModel.value.bids = arguments["bidsList"];
     final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    requestModel.value.userId = userData.id;
+    // requestModel.value.userId = userData.id;
     requestModel.value.bidType = arguments["biddingType"];
     requestModel.value.dailyMarketId = arguments["marketId"];
 
