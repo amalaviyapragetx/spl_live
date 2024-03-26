@@ -22,15 +22,15 @@ class WithdrawalPageController extends GetxController {
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     userId = userData.id == null ? "" : userData.id.toString();
     if (userId.isNotEmpty) {
-      callGetBankDetails(userId);
+      callGetBankDetails();
       walletbalance.refresh();
     } else {
       AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);
     }
   }
 
-  void callGetBankDetails(String userId) async {
-    ApiService().getBankDetails({"id": userId}).then((value) async {
+  void callGetBankDetails() async {
+    ApiService().getBankDetails().then((value) async {
       if (value['status']) {
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         if (model.message!.isNotEmpty) {

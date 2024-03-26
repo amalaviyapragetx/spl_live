@@ -61,7 +61,7 @@ class MyAccountPageController extends GetxController {
 
   void callGetBankDetails() {
     loadGetBalance.value = true;
-    ApiService().getBankDetails({"id": userId.value, "userId": userId.value}).then((value) async {
+    ApiService().getBankDetails().then((value) async {
       if (value['status']) {
         loadGetBalance.value = false;
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);

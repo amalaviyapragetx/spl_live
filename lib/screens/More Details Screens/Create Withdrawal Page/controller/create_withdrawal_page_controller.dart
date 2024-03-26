@@ -37,14 +37,14 @@ class CreateWithDrawalPageController extends GetxController {
     userId = userData.id == null ? "" : userData.id.toString();
 
     if (userId.isNotEmpty) {
-      callGetBankDetails(userId);
+      callGetBankDetails();
     } else {
       AppUtils.showErrorSnackBar(bodyText: "SOMETHINGWENTWRONG".tr);
     }
   }
 
-  void callGetBankDetails(String userId) async {
-    ApiService().getBankDetails({"id": userId}).then((value) async {
+  void callGetBankDetails() async {
+    ApiService().getBankDetails().then((value) async {
       if (value['status']) {
         BankDetailsResponseModel model = BankDetailsResponseModel.fromJson(value);
         accountName.value = model.data!.accountHolderName ?? "";

@@ -161,12 +161,11 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getBankDetails(body) async {
+  Future<dynamic> getBankDetails() async {
     await initApiService();
     AppUtils.showProgressDialog(isCancellable: false);
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.getBankDetails,
-      body,
       headers: headersWithToken,
     );
     if (response.status.hasError) {
@@ -929,31 +928,31 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> getNewMarketBidlistData({
-    required String dailyMarketId,
-    required String limit,
-    required String offset,
-    required String bidType,
-  }) async {
-    await initApiService();
-
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType",
-      //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
-      headers: headersWithToken,
-    );
-    if (response.status.hasError) {
-      if (response.status.code != null && response.status.code == 401) {
-        tokenExpired();
-      }
-      AppUtils.hideProgressDialog();
-
-      return Future.error(response.statusText!);
-    } else {
-      AppUtils.hideProgressDialog();
-      return response.body;
-    }
-  }
+  // Future<dynamic> getNewMarketBidlistData({
+  //   required String dailyMarketId,
+  //   required String limit,
+  //   required String offset,
+  //   required String bidType,
+  // }) async {
+  //   await initApiService();
+  //
+  //   final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+  //     "${ApiUtils.marketBidNewLists}?dailyMarketId=$dailyMarketId&limit=$limit&offset=$offset&bidType=$bidType",
+  //     //  "${ApiUtils.dailyStarlineMarketBidHistory}?id=$userId&limit=$limit&offset=$offset",
+  //     headers: headersWithToken,
+  //   );
+  //   if (response.status.hasError) {
+  //     if (response.status.code != null && response.status.code == 401) {
+  //       tokenExpired();
+  //     }
+  //     AppUtils.hideProgressDialog();
+  //
+  //     return Future.error(response.statusText!);
+  //   } else {
+  //     AppUtils.hideProgressDialog();
+  //     return response.body;
+  //   }
+  // }
   ///////// Notifications ///////////
 
   Future<dynamic> getNotificationCount() async {
@@ -1111,22 +1110,22 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<dynamic> appKilledStateApi() async {
-    //AppUtils.showProgressDialog(isCancellable: false);
-    await initApiService();
-    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      ApiUtils.appKillApi,
-      headers: headersWithToken,
-    );
-    if (response.status.hasError) {
-      // AppUtils.hideProgressDialog();s
-      return Future.error(response.statusText!);
-    } else {
-      // AppUtils.hideProgressDialog();
-
-      return response.body;
-    }
-  }
+  // Future<dynamic> appKilledStateApi() async {
+  //   //AppUtils.showProgressDialog(isCancellable: false);
+  //   await initApiService();
+  //   final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+  //     ApiUtils.appKillApi,
+  //     headers: headersWithToken,
+  //   );
+  //   if (response.status.hasError) {
+  //     // AppUtils.hideProgressDialog();s
+  //     return Future.error(response.statusText!);
+  //   } else {
+  //     // AppUtils.hideProgressDialog();
+  //
+  //     return response.body;
+  //   }
+  // }
 
   Future<dynamic> getAppVersion() async {
     await initApiService();
@@ -1207,12 +1206,15 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<BankHistory?> getBankHistory({String? id}) async {
+  Future<BankHistory?> getBankHistory() async {
     try {
       // AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
-      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true)
-          .get("${ApiUtils.getBankHistory}$id", headers: headersWithToken, query: {"search": ""});
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
+        ApiUtils.getBankHistory,
+        headers: headersWithToken,
+        query: {"search": ""},
+      );
 
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();

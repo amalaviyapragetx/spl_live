@@ -17,7 +17,9 @@ class ApiUtils {
   static String logout = '$baseURL/auth/logout';
   static String resetPassword = '$baseURL/auth/resetPassword';
   static String changePassword = '$baseURL/auth/changePassword';
-  static String getBankDetails = '$baseURL/bank/getByUserId';
+  // 26/03
+  // static String getBankDetails = '$baseURL/bank/getByUserId';
+  static String getBankDetails = '$baseURL/bank/getUserDetails';
   static String editBankDetails = '$baseURL/bank/update';
   static String getDailyMarkets = '$baseURL/market/getDailyMarket';
   static String getGameModes =
@@ -53,7 +55,7 @@ class ApiUtils {
   static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
   static String passBookApi = "$baseURL/user/getUserPassbookDetails";
   static String bidHistory = "$baseURL/bid/getByUserId";
-  static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
+  // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
   static String getNotificationCount = "$baseURL/notification/getNotificationCount";
   static String getAllNotifications = "$baseURL/notification/getAll?search=&limit=10&offset=0";
   static String resetNotificationCount = "$baseURL/notification/resetCount";
@@ -61,12 +63,12 @@ class ApiUtils {
   /// new Rating Api
   static String rateAppApi = "$baseURL/feedback/createRating";
 
-  // Notifiaction Api
+  // Notification Api
   static String marketNotification = "$baseURL/notification/updateNotificationStatus";
   static String bennerApi = "$baseURL/banner/getAll";
   static String fcmToken = "$baseURL/auth/setFCMToken";
   static String getVersion = "$baseURL/auth/appVersion";
-  static String appKillApi = "$baseURL/user/log/out";
+  // static String appKillApi = "$baseURL/user/log/out";
   static String addFund = "$baseURL/payment/process";
 
   ///
