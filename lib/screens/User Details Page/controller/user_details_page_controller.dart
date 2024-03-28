@@ -21,7 +21,7 @@ class UserDetailsPageController extends GetxController {
   void onTapOfVisibilityIcon(RxBool visibility) => visibility.value = !visibility.value;
 
   void onTapOfRegister() {
-    if (fullNameController.text.isEmpty) {
+    if (fullNameController.text.trim().isEmpty) {
       AppUtils.showErrorSnackBar(bodyText: "ENTERFULLNAME".tr);
     } else if (fullNameController.text.length < 6 && pattern.hasMatch(fullNameController.text.toString())) {
       AppUtils.showErrorSnackBar(
@@ -29,25 +29,15 @@ class UserDetailsPageController extends GetxController {
     } else if (userNameController.text.isEmpty) {
       AppUtils.showErrorSnackBar(bodyText: "ENTERUSERNAME".tr);
     } else if (passwordController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERPASSWORD".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERPASSWORD".tr);
     } else if (passwordController.text.toString().length < 6) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "MINSIXCHAR".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "MINSIXCHAR".tr);
     } else if (confirmPasswordController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERCONFIRMPASSWORD".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERCONFIRMPASSWORD".tr);
     } else if (confirmPasswordController.text.toString().length < 6) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "MINSIXCHAR".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "MINSIXCHAR".tr);
     } else if (passwordController.text != confirmPasswordController.text) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "PASSWORDDOESNTMATCHED".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "PASSWORDDOESNTMATCHED".tr);
     } else {
       // var userDetails = UserDetails(
       //   fullName: fullNameController.text,
