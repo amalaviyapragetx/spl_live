@@ -94,14 +94,14 @@ class _NormalGamePageState extends State<NormalGamePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     mainAxisAlignment: controller.gameMode.value.name != null
-                        ? controller.gameMode.value.name!.toUpperCase().contains("JODI")
+                        ? (controller.gameMode.value.name ?? "").toUpperCase().contains("JODI")
                             ? MainAxisAlignment.center
                             : MainAxisAlignment.spaceBetween
                         : MainAxisAlignment.center,
                     children: [
                       Text(
                         // controller.gameMode.value.name.toString(),
-                        controller.gameMode.value.name!.toUpperCase(),
+                        (controller.gameMode.value.name ?? "").toUpperCase(),
                         style: CustomTextStyle.textRobotoSansBold.copyWith(
                           color: AppColors.appbarColor,
                           fontSize: Dimensions.h18,
@@ -109,7 +109,7 @@ class _NormalGamePageState extends State<NormalGamePage> {
                       ),
                       Text(
                         // "",
-                        controller.gameMode.value.name!.toUpperCase().contains("JODI")
+                        (controller.gameMode.value.name ?? "").toUpperCase().contains("JODI")
                             ? ""
                             : controller.biddingType.value.toUpperCase(),
                         style: CustomTextStyle.textRobotoSansBold.copyWith(
@@ -121,7 +121,7 @@ class _NormalGamePageState extends State<NormalGamePage> {
                   ),
                 ),
                 verticalSpace,
-                controller.gameMode.value.name!.toUpperCase().contains("SPDP")
+                (controller.gameMode.value.name ?? "").toUpperCase().contains("SPDP")
                     ? Obx(
                         () => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -169,8 +169,8 @@ class _NormalGamePageState extends State<NormalGamePage> {
                         ),
                       )
                     : Container(),
-                controller.gameMode.value.name!.toUpperCase().contains("SPDP") ? verticalSpace : Container(),
-                controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")
+                (controller.gameMode.value.name ?? "").toUpperCase().contains("SPDP") ? verticalSpace : Container(),
+                (controller.gameMode.value.name ?? "").toUpperCase().contains("ODD EVEN")
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -253,7 +253,7 @@ class _NormalGamePageState extends State<NormalGamePage> {
                                     focusNode: controller.leftFocusNode,
                                     formatter: [FilteringTextInputFormatter.digitsOnly],
                                     onChanged: (val) {
-                                      if (val!.length == controller.panaControllerLength.value) {
+                                      if (val?.length == controller.panaControllerLength.value) {
                                         controller.leftFocusNode.nextFocus();
                                         controller.middleFocusNode.requestFocus();
                                       }
@@ -270,7 +270,7 @@ class _NormalGamePageState extends State<NormalGamePage> {
                                 ),
                               ),
                             ),
-                            controller.gameMode.value.name!.toUpperCase() == "DIGITS BASED JODI"
+                            (controller.gameMode.value.name ?? "").toUpperCase() == "DIGITS BASED JODI"
                                 ? Container()
                                 : Expanded(
                                     child: Padding(
@@ -307,7 +307,7 @@ class _NormalGamePageState extends State<NormalGamePage> {
                                           formatter: [FilteringTextInputFormatter.digitsOnly],
                                           focusNode: controller.middleFocusNode,
                                           onChanged: (val) {
-                                            if (val!.length == controller.panaControllerLength.value) {
+                                            if (val?.length == controller.panaControllerLength.value) {
                                               controller.middleFocusNode.nextFocus();
                                               controller.rightFocusNode.requestFocus();
                                             }
@@ -357,7 +357,7 @@ class _NormalGamePageState extends State<NormalGamePage> {
                                   formatter: [FilteringTextInputFormatter.digitsOnly],
                                   focusNode: controller.rightFocusNode,
                                   onChanged: (val) {
-                                    if (val!.length == controller.panaControllerLength.value) {
+                                    if (val?.length == controller.panaControllerLength.value) {
                                       controller.rightFocusNode.nextFocus();
                                       controller.coinFocusNode.requestFocus();
                                     }
@@ -415,7 +415,8 @@ class _NormalGamePageState extends State<NormalGamePage> {
                               ),
                               formatter: [FilteringTextInputFormatter.digitsOnly],
                               focusNode: controller.coinFocusNode,
-                              autofocus: controller.gameMode.value.name!.toUpperCase() == "ODD EVEN" ? true : false,
+                              autofocus:
+                                  (controller.gameMode.value.name ?? "").toUpperCase() == "ODD EVEN" ? true : false,
                               onChanged: (val) {
                                 if (val != null) {
                                   if (val.characters.characterAt(0) == Characters("0")) {
@@ -485,9 +486,10 @@ class _NormalGamePageState extends State<NormalGamePage> {
                                 // controller.coinsFocusNode.unfocus();
                                 // controller.openFocusNode.requestFocus();
                                 //   controller.onTapOfAddButton();
-                                if (controller.gameMode.value.name!.toUpperCase().contains("ODD EVEN")) {
+                                if ((controller.gameMode.value.name ?? "").toUpperCase().contains("ODD EVEN")) {
                                   controller.onTapAddOddEven();
-                                } else if (controller.gameMode.value.name!.toUpperCase() == "DIGITS BASED JODI") {
+                                } else if ((controller.gameMode.value.name ?? "").toUpperCase() ==
+                                    "DIGITS BASED JODI") {
                                   controller.newDigitBasedData();
                                   // controller.digitsBasedJodiData();
                                 } else if (controller.gameMode.value.name == "Choice Pana SPDP") {
@@ -697,7 +699,7 @@ class _NormalGamePageState extends State<NormalGamePage> {
                   ? Container()
                   : Text(
                       textAlign: TextAlign.center,
-                      titleText!,
+                      titleText ?? "",
                       style: CustomTextStyle.textRobotoSansMedium.copyWith(
                         color: textColor,
                         fontSize: Dimensions.h13,

@@ -20,7 +20,6 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
   @override
   void initState() {
     super.initState();
-    walletCon.getTransactionHistory(false);
     walletCon.getBankHistory();
   }
 

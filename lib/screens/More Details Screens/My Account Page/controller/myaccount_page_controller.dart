@@ -78,10 +78,18 @@ class MyAccountPageController extends GetxController {
         accNoController.text = model.data!.accountNumber ?? "";
         ifscCodeController.text = model.data!.iFSCCode ?? "";
         bankId = model.data!.id ?? 0;
-        if (model.data!.isEditPermission ?? false) {
-          isEditDetailsButton.value = false;
+        if (model.data != null) {
+          if (model.data!.isEditPermission ?? false) {
+            isEditDetailsButton.value = false;
+          } else {
+            isEditDetailsButton.value = true;
+          }
         } else {
-          isEditDetailsButton.value = true;
+          if (model.data!.isEditPermission ?? false) {
+            isEditDetailsButton.value = false;
+          } else {
+            isEditDetailsButton.value = true;
+          }
         }
       } else {
         loadGetBalance.value = false;
@@ -100,7 +108,7 @@ class MyAccountPageController extends GetxController {
         accNoController.text = model.data!.accountNumber ?? "";
         ifscCodeController.text = model.data!.iFSCCode ?? "";
         bankId = model.data!.id ?? 0;
-        if (value ?? false) {
+        if (model.data?.isEditPermission ?? false) {
           isEditDetailsButton.value = false;
         } else {
           isEditDetailsButton.value = true;

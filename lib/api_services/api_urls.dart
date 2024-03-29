@@ -77,7 +77,7 @@ class ApiUtils {
   static String checkUserName = "$baseURL/user/checkUsername";
   static String getApk = "$baseURL/public/apk/spl_live.apk";
   static String getTickets = "$baseURL/wallet/addFund";
-  static String getBankHistory = "$baseURL/bank/bankHistory/";
+  static String getBankHistory = "$baseURL/bank/userBankHistory";
   static String getStarlineBanner = "$baseURL/banner/getAll";
   static String getMarketsData = "$baseURL/market/marketsByDate";
 }
