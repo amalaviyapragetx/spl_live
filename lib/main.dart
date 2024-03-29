@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().firebaseInit(context);
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) => GetStorage().write(ConstantsVariables.fcmToken, value));
-    initPlatformState();
+    // initPlatformState();
   }
 
   Future<void> initPlatformState() async {
@@ -81,31 +81,39 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (context, child) {
-        return Listener(
-          onPointerSignal: con.userLogIn,
-          onPointerDown: con.userLogIn,
-          onPointerMove: con.userLogIn,
-          onPointerUp: con.userLogIn,
-          child: GetMaterialApp(
-            title: 'SPL app',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              scaffoldBackgroundColor: AppColors.white,
-              dialogTheme: DialogTheme(surfaceTintColor: AppColors.white),
-              appBarTheme: AppBarTheme(
-                iconTheme: IconThemeData(color: AppColors.white),
-                scrolledUnderElevation: 0,
+        return RawKeyboardListener(
+          autofocus: true,
+          focusNode: FocusNode(),
+          onKey: (e) {
+            print("fsdhgfdhs");
+            con.resetInactivityTimer();
+          },
+          child: Listener(
+            onPointerSignal: con.userLogIn,
+            onPointerDown: con.userLogIn,
+            onPointerMove: con.userLogIn,
+            onPointerUp: con.userLogIn,
+            child: GetMaterialApp(
+              title: 'SPL app',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                scaffoldBackgroundColor: AppColors.white,
+                dialogTheme: DialogTheme(surfaceTintColor: AppColors.white),
+                appBarTheme: AppBarTheme(
+                  iconTheme: IconThemeData(color: AppColors.white),
+                  scrolledUnderElevation: 0,
+                ),
               ),
+              defaultTransition: Transition.fadeIn,
+              debugShowCheckedModeBanner: false,
+              navigatorKey: navigatorKey,
+              // transitionDuration: const Duration(milliseconds: 500),
+              translations: AppLocalization(),
+              locale: getLocale(),
+              initialBinding: InitialBindings(),
+              initialRoute: AppRoutName.splashScreen,
+              getPages: AppRoutes.pages,
             ),
-            defaultTransition: Transition.fadeIn,
-            debugShowCheckedModeBanner: false,
-            navigatorKey: navigatorKey,
-            // transitionDuration: const Duration(milliseconds: 500),
-            translations: AppLocalization(),
-            locale: getLocale(),
-            initialBinding: InitialBindings(),
-            initialRoute: AppRoutName.splashScreen,
-            getPages: AppRoutes.pages,
           ),
         );
       },

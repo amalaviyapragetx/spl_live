@@ -748,7 +748,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> changePassword(body) async {
-    // AppUtils.showProgressDialog(isCancellable: false);
+    AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.changePassword,

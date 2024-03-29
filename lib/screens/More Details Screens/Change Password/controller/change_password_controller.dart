@@ -34,16 +34,19 @@ class ChangepasswordPageController extends GetxController {
 
   onChanged(String value) {
     if (value.isEmpty) {
+      isValidate.value = false;
       oldPasswordMessage.value = "";
-    } else if (value.length < 6) {
-      oldPasswordMessage.value = "Password cannot be less than 6 characters";
-    } else {
+    } /* else if (value.length < 6) {
+      // oldPasswordMessage.value = "Password cannot be less than 6 characters";
+    }*/
+    else {
       oldPasswordMessage.value = "";
     }
   }
 
   onChanged2(String value) {
     if (value.isEmpty) {
+      isValidate.value = false;
       newPasswordMessage.value = "";
     } else if (value.length < 6) {
       newPasswordMessage.value = "Password cannot be less than 6 characters";
@@ -54,6 +57,7 @@ class ChangepasswordPageController extends GetxController {
 
   onChanged3(String value) {
     if (value.isEmpty) {
+      isValidate.value = false;
       confirmPasswordMessage.value = "";
     } else if (value.length < 6) {
       confirmPasswordMessage.value = "Password cannot be less than 6 characters";
@@ -97,10 +101,17 @@ class ChangepasswordPageController extends GetxController {
 
   void changePasswordApi() async {
     ApiService().changePassword(await changePassBody()).then((value) async {
+      print(value);
       if (value['status']) {
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.offAndToNamed(AppRoutName.profilePage);
       } else {
+        AppUtils.showErrorSnackBar(
+          bodyText: value['message'] ?? "",
+        );
+        // if(value['status']==2){
+        //   oldPasswordMessage.value =value['message']??"";
+        // }
         // AppUtils.showErrorSnackBar(
         //   bodyText: value['message'] ?? "",
         // );
@@ -128,6 +139,7 @@ class ChangepasswordPageController extends GetxController {
       // );
       confirmPasswordMessage.value = "Enter Confirm Password";
     } else {
+      print("fshdgfjsd");
       changePasswordApi();
     }
   }

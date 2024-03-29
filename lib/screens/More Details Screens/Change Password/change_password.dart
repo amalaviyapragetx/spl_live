@@ -57,12 +57,12 @@ class ChangePasswordPage extends StatelessWidget {
                           onChanged: (value) {
                             controller.onChanged(value);
                           },
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Password is required';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Password is required';
+                          //   }
+                          //   return null;
+                          // },
                           onTap: () {
                             controller.isObscureOldPassword.value = !controller.isObscureOldPassword.value;
                           },
@@ -190,33 +190,19 @@ class ChangePasswordPage extends StatelessWidget {
               SizedBox(
                 height: Dimensions.h5,
               ),
-              Obx(() => !controller.isValidate.value
-                  ? Align(
-                      alignment: Alignment.center,
-                      child: ButtonWidget(
-                        onTap: () {
-                          controller.onTapConfirmPass();
-                        },
-                        text: "SUBMIT",
-                        buttonColor: AppColors.grey,
-                        height: Dimensions.h30,
-                        width: size.width / 1.2,
-                        radius: Dimensions.h20,
-                      ),
-                    )
-                  : Align(
-                      alignment: Alignment.center,
-                      child: ButtonWidget(
-                        onTap: () {
-                          controller.onTapConfirmPass();
-                        },
-                        text: "SUBMIT",
-                        buttonColor: AppColors.appbarColor,
-                        height: Dimensions.h30,
-                        width: size.width / 1.2,
-                        radius: Dimensions.h20,
-                      ),
-                    ))
+              Obx(() => Align(
+                    alignment: Alignment.center,
+                    child: ButtonWidget(
+                      onTap: () {
+                        controller.onTapConfirmPass();
+                      },
+                      text: "SUBMIT",
+                      buttonColor: !controller.isValidate.value ? AppColors.grey : AppColors.appbarColor,
+                      height: Dimensions.h30,
+                      width: size.width / 1.2,
+                      radius: Dimensions.h20,
+                    ),
+                  ))
             ],
           ),
         ),
