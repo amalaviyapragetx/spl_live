@@ -41,8 +41,7 @@ class ChangeMpinPageController extends GetxController {
   void changePasswordApi() async {
     ApiService().changeMPIN(await changePassBody()).then((value) async {
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(
-            bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.offAndToNamed(AppRoutName.profilePage);
       } else {
         AppUtils.showErrorSnackBar(
@@ -67,18 +66,23 @@ class ChangeMpinPageController extends GetxController {
       confirmPinMessage.value = "pin is required";
     } else if (value.length != 4) {
       confirmPinMessage.value = "Pin must be 4 digit";
-    } else if (value == newMPIN.text) {
-      isValidate.value = true;
-      confirmPinMessage.value = "Pin Matched";
-    } else if (value != newMPIN.text) {
-      isValidate.value = false;
-      confirmPinMessage.value = "Pin does not match";
     } else {
       confirmPinMessage.value = "";
+    }
+    if (value == newMPIN.text) {
+      isValidate.value = true;
+      confirmPinMessage.value = "Pin Matched";
+    }
+    if (value != newMPIN.text) {
+      isValidate.value = false;
+      confirmPinMessage.value = "Pin does not match";
     }
   }
 
   onChanged2(String value) {
+    print(value);
+    print(reEnterMPIN.text);
+    print("fhdsfjkhsdkjh");
     if (value.isEmpty) {
       newPinMessage.value = "pin is required";
     } else if (value.length != 4) {
@@ -86,14 +90,25 @@ class ChangeMpinPageController extends GetxController {
     } else {
       newPinMessage.value = "";
     }
+
+    if (value == reEnterMPIN.text) {
+      isValidate.value = true;
+
+      confirmPinMessage.value = "Pin Matched";
+    }
+    if (value != reEnterMPIN.text) {
+      isValidate.value = false;
+      confirmPinMessage.value = "Pin does not match";
+    }
   }
 
   onChanged1(String value) {
     if (value.isEmpty) {
       oldPinMessage.value = "pin is required";
-    } else if (value.length != 4) {
+    } /* else if (value.length != 4) {
       oldPinMessage.value = "Pin must be 4 digit";
-    } else {
+    }*/
+    else {
       oldPinMessage.value = "";
     }
   }

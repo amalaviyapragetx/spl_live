@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final homeCon = Get.find<HomeController>();
   final starlineCon = Get.find<StarlineMarketController>();
   final walletCon = Get.find<WalletController>();
+
   @override
   void initState() {
     super.initState();

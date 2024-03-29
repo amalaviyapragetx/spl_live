@@ -24,8 +24,9 @@ class InactivityController extends GetxController {
     userLogIn;
   }
 
-  void _resetInactivityTimer() {
+  void resetInactivityTimer() {
     _inactivityTimer?.cancel();
+    print("fkhgfkjsdfhds");
     _inactivityTimer = Timer(_inactivityDuration, () {
       _showExitDialog();
     });
@@ -33,7 +34,7 @@ class InactivityController extends GetxController {
 
   void onUserInteraction(PointerEvent event) {
     // print(_inactivityDuration.inSeconds);
-    _resetInactivityTimer();
+    resetInactivityTimer();
   }
 
   ifUserLogedIn() async {
@@ -44,7 +45,7 @@ class InactivityController extends GetxController {
     if (userLogin) {
       if (alreadyLoggedIn) {
         if (isActive && isVerified) {
-          _resetInactivityTimer();
+          resetInactivityTimer();
         }
       }
     }
