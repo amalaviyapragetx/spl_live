@@ -103,8 +103,8 @@ class ChangepasswordPageController extends GetxController {
     ApiService().changePassword(await changePassBody()).then((value) async {
       print(value);
       if (value['status']) {
+        Get.back();
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        Get.offAndToNamed(AppRoutName.profilePage);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

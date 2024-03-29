@@ -64,8 +64,6 @@ class MPINPageController extends GetxController {
           if (userData != null) {
             String authToken = userData['Token'] ?? "Null From API";
             GetStorage().write(ConstantsVariables.authToken, authToken);
-          } else {
-            AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
           }
           Get.offAllNamed(AppRoutName.dashBoardPage);
         } else {

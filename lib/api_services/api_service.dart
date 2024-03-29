@@ -757,13 +757,14 @@ class ApiService extends GetConnect implements GetxService {
     );
 
     if (response.status.hasError) {
-      // AppUtils.hideProgressDialog();
+      AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
 
       return response.body;
     } else {
+      AppUtils.hideProgressDialog();
       return response.body;
     }
   }

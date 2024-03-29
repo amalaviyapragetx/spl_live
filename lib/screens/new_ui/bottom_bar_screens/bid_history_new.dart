@@ -9,6 +9,7 @@ import 'package:spllive/helper_files/common_utils.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/helper_files/ui_utils.dart';
 
 class BidHistoryNew extends StatefulWidget {
   const BidHistoryNew({super.key});
@@ -283,8 +284,14 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                             Expanded(
                                               child: InkWell(
                                                 onTap: () {
-                                                  homeCon.marketBidHistoryList.clear();
-                                                  homeCon.marketBidsByUserId();
+                                                  if (homeCon.isSelectedGameIndex.value != null ||
+                                                      homeCon.isSelectedWinStatusIndex.value != null ||
+                                                      homeCon.selectedFilterMarketList.isNotEmpty) {
+                                                    homeCon.marketBidHistoryList.clear();
+                                                    homeCon.marketBidsByUserId();
+                                                  } else {
+                                                    AppUtils.showErrorSnackBar(bodyText: "Please select any filter");
+                                                  }
                                                 },
                                                 child: Container(
                                                   decoration: BoxDecoration(

@@ -33,7 +33,6 @@ void main() async {
   await GetStorage.init();
   final appStateListener = AppStateListener();
   WidgetsBinding.instance.addObserver(appStateListener);
-
   runApp(const MyApp());
 }
 
@@ -57,7 +56,7 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().firebaseInit(context);
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) => GetStorage().write(ConstantsVariables.fcmToken, value));
-    // initPlatformState();
+    //   initPlatformState();
   }
 
   Future<void> initPlatformState() async {
@@ -84,15 +83,15 @@ class _MyAppState extends State<MyApp> {
         return RawKeyboardListener(
           autofocus: true,
           focusNode: FocusNode(),
-          onKey: (e) {
-            print("fsdhgfdhs");
-            con.resetInactivityTimer();
-          },
+          onKey: (e) => con.resetInactivityTimer(),
           child: Listener(
             onPointerSignal: con.userLogIn,
             onPointerDown: con.userLogIn,
             onPointerMove: con.userLogIn,
             onPointerUp: con.userLogIn,
+            onPointerHover: con.userLogIn,
+            onPointerPanZoomStart: con.userLogIn,
+            onPointerPanZoomUpdate: con.userLogIn,
             child: GetMaterialApp(
               title: 'SPL app',
               theme: ThemeData(

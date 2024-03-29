@@ -20,45 +20,37 @@ class InactivityController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    ifUserLogedIn();
     userLogIn;
   }
 
   void resetInactivityTimer() {
     _inactivityTimer?.cancel();
-    print("fkhgfkjsdfhds");
-    _inactivityTimer = Timer(_inactivityDuration, () {
-      _showExitDialog();
-    });
+    _inactivityTimer = Timer(_inactivityDuration, () => _showExitDialog());
   }
 
   void onUserInteraction(PointerEvent event) {
-    // print(_inactivityDuration.inSeconds);
     resetInactivityTimer();
   }
 
-  ifUserLogedIn() async {
-    bool alreadyLoggedIn = getStoredUserData();
-    bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
-    bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin = GetStorage().read(ConstantsVariables.timeOut) ?? false;
-    if (userLogin) {
-      if (alreadyLoggedIn) {
-        if (isActive && isVerified) {
-          resetInactivityTimer();
-        }
-      }
-    }
-  }
+  // ifUserLogedIn() async {
+  //   bool alreadyLoggedIn = getStoredUserData();
+  //   bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
+  //   bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
+  //   bool userLogin = GetStorage().read(ConstantsVariables.timeOut) ?? false;
+  //   if (userLogin) {
+  //     if (alreadyLoggedIn) {
+  //       if (isActive && isVerified) {
+  //         resetInactivityTimer();
+  //       }
+  //     }
+  //   }
+  // }
 
   userLogIn(PointerEvent event) async {
     bool alreadyLoggedIn = getStoredUserData();
-    bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
-    bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
-    bool userLogin = GetStorage().read(ConstantsVariables.timeOut) ?? false;
-    if (userLogin) {
+    if (GetStorage().read(ConstantsVariables.timeOut) != null && GetStorage().read(ConstantsVariables.timeOut)) {
       if (alreadyLoggedIn) {
-        if (isActive && isVerified) {
+        if (GetStorage().read(ConstantsVariables.isActive) && GetStorage().read(ConstantsVariables.isVerified)) {
           onUserInteraction(event);
         }
       }
@@ -87,83 +79,12 @@ class InactivityController extends GetxController {
   }
 
   void _showExitDialog() {
-    // Get.dialog(
-    //   barrierDismissible: false,
-    //   ConstrainedBox(
-    //     constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
-    //     child: AlertDialog(
-    //       insetPadding: EdgeInsets.symmetric(vertical: 10),
-    //       contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
-    //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-    //       content: SizedBox(
-    //         width: double.infinity,
-    //         child: Column(
-    //           mainAxisSize: MainAxisSize.min,
-    //           children: [
-    //             SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
-    //             const SizedBox(height: 20),
-    //             Text(
-    //               "Bank details",
-    //               textAlign: TextAlign.center,
-    //               style: CustomTextStyle.textRobotoSansMedium.copyWith(
-    //                 color: AppColors.appbarColor,
-    //                 fontWeight: FontWeight.w700,
-    //                 fontSize: 20,
-    //               ),
-    //             ),
-    //             const SizedBox(height: 10),
-    //             InkWell(
-    //               onTap: () {
-    //                 bool alreadyLoggedIn = getStoredUserData();
-    //                 bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
-    //                 bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;
-    //                 GetStorage().write(ConstantsVariables.timeOut, false);
-    //                 final timeOut = GetStorage().read(ConstantsVariables.timeOut);
-    //                 if (timeOut != null) {
-    //                   if (timeOut) {
-    //                     if (alreadyLoggedIn) {
-    //                       if (isActive && isVerified) {
-    //                         Get.offAllNamed(
-    //                           AppRoutName.mPINPage,
-    //                           arguments: {"id": _userDetailsModel.id},
-    //                         );
-    //                         _inactivityTimer?.cancel();
-    //                       }
-    //                     } else {
-    //                       _inactivityTimer?.cancel();
-    //                     }
-    //                   } else {
-    //                     Get.offAllNamed(
-    //                       AppRoutName.mPINPage,
-    //                       arguments: {"id": _userDetailsModel.id},
-    //                     );
-    //                     _inactivityTimer?.cancel();
-    //                   }
-    //                 }
-    //               },
-    //               child: Container(
-    //                 decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
-    //                 height: Dimensions.h40,
-    //                 width: Dimensions.w150,
-    //                 child: Center(
-    //                   child: Text(
-    //                     'LOGIN AGAIN',
-    //                     style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
     Get.defaultDialog(
       barrierDismissible: false,
       onWillPop: () async => false,
       title: "",
       titlePadding: EdgeInsets.zero,
+      titleStyle: const TextStyle(fontSize: 0),
       content: Column(
         children: [
           SizedBox(

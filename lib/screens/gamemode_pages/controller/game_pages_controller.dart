@@ -284,7 +284,7 @@ class GameModePagesController extends GetxController {
     // playmore = GetStorage().read(ConstantsVariables.playMore);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
     // requestModel.value.userId = userData.id;
-    selectedBidsList.value = GetStorage().read(ConstantsVariables.bidsList) ?? [];
+    selectedBidsList.value = GetStorage().read(ConstantsVariables.bidsList);
     requestModel.refresh();
   }
 }

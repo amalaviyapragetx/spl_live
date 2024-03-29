@@ -67,7 +67,10 @@ class UserDetailsPage extends StatelessWidget {
                   maxLength: 100,
                   keyboardType: TextInputType.text,
                   autofocus: true,
-                  formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]+$'))],
+                  formatter: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]+$')),
+                    LengthLimitingTextInputFormatter(50)
+                  ],
                   //focusNode: controller.fullNameFocusNode,
                 ),
                 SizedBox(height: Dimensions.h15),
@@ -76,7 +79,10 @@ class UserDetailsPage extends StatelessWidget {
                   textController: controller.userNameController,
                   maxLength: 100,
                   keyboardType: TextInputType.text,
-                  formatter: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$'))],
+                  formatter: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$')),
+                    LengthLimitingTextInputFormatter(20)
+                  ],
                   // onFieldSubmitted: (v) => controller.checkUserName(username: v),
                   // onTapOutside: (v) {
                   //   controller.checkUserName(username: controller.userNameController.text);

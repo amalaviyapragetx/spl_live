@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../../api_services/api_service.dart';
 
@@ -41,8 +40,8 @@ class ChangeMpinPageController extends GetxController {
   void changePasswordApi() async {
     ApiService().changeMPIN(await changePassBody()).then((value) async {
       if (value['status']) {
+        Get.back();
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
-        Get.offAndToNamed(AppRoutName.profilePage);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",
@@ -80,9 +79,6 @@ class ChangeMpinPageController extends GetxController {
   }
 
   onChanged2(String value) {
-    print(value);
-    print(reEnterMPIN.text);
-    print("fhdsfjkhsdkjh");
     if (value.isEmpty) {
       newPinMessage.value = "pin is required";
     } else if (value.length != 4) {

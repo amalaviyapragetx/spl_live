@@ -8,6 +8,7 @@ import 'package:spllive/helper_files/common_utils.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+import 'package:spllive/helper_files/ui_utils.dart';
 
 class StarlineBidHistory extends StatefulWidget {
   const StarlineBidHistory({super.key});
@@ -189,7 +190,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                                 padding: const EdgeInsets.all(10.0),
                                                 child: ListView(
                                                   shrinkWrap: true,
-                                                  physics: BouncingScrollPhysics(),
+                                                  physics: const BouncingScrollPhysics(),
                                                   children: starlineCon.filterMarketList
                                                       .map(
                                                         (e) => Padding(
@@ -211,7 +212,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                                                   BoxShadow(
                                                                       blurRadius: 6.97777795791626,
                                                                       spreadRadius: 0.8722222447395325,
-                                                                      offset: Offset(0, 0),
+                                                                      offset: const Offset(0, 0),
                                                                       color: AppColors.black.withOpacity(0.25))
                                                                 ],
                                                                 color: AppColors.white,
@@ -266,10 +267,16 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                         Expanded(
                                           child: InkWell(
                                             onTap: () {
-                                              starlineCon.getMarketBidsByUserId(
-                                                  lazyLoad: false,
-                                                  endDate: DateFormat('yyyy-MM-dd').format(starlineCon.startEndDate),
-                                                  startDate: DateFormat('yyyy-MM-dd').format(starlineCon.startEndDate));
+                                              if (starlineCon.isSelectedWinStatusIndex.value != null ||
+                                                  starlineCon.selectedFilterMarketList.isNotEmpty) {
+                                                starlineCon.getMarketBidsByUserId(
+                                                    lazyLoad: false,
+                                                    endDate: DateFormat('yyyy-MM-dd').format(starlineCon.startEndDate),
+                                                    startDate:
+                                                        DateFormat('yyyy-MM-dd').format(starlineCon.startEndDate));
+                                              } else {
+                                                AppUtils.showErrorSnackBar(bodyText: "Please select any filter");
+                                              }
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
