@@ -72,6 +72,11 @@ class ChangeMpinPageController extends GetxController {
       isValidate.value = true;
       confirmPinMessage.value = "Pin Matched";
     }
+    if (oldMPIN.text.length == 4 && reEnterMPIN.text.length == 4 && newMPIN.text.length == 4) {
+      isValidate.value = true;
+    } else {
+      isValidate.value = false;
+    }
     if (value != newMPIN.text) {
       isValidate.value = false;
       confirmPinMessage.value = "Pin does not match";
@@ -89,8 +94,12 @@ class ChangeMpinPageController extends GetxController {
 
     if (value == reEnterMPIN.text) {
       isValidate.value = true;
-
       confirmPinMessage.value = "Pin Matched";
+      if (oldMPIN.text.length == 4 && reEnterMPIN.text.length == 4 && newMPIN.text.length == 4) {
+        isValidate.value = true;
+      } else {
+        isValidate.value = false;
+      }
     }
     if (value != reEnterMPIN.text) {
       isValidate.value = false;
@@ -101,11 +110,13 @@ class ChangeMpinPageController extends GetxController {
   onChanged1(String value) {
     if (value.isEmpty) {
       oldPinMessage.value = "pin is required";
-    } /* else if (value.length != 4) {
-      oldPinMessage.value = "Pin must be 4 digit";
-    }*/
-    else {
+    } else {
       oldPinMessage.value = "";
+    }
+    if (oldMPIN.text.length == 4 && reEnterMPIN.text.length == 4 && newMPIN.text.length == 4) {
+      isValidate.value = true;
+    } else {
+      isValidate.value = false;
     }
   }
 }

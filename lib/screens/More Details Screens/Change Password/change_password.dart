@@ -171,9 +171,7 @@ class ChangePasswordPage extends StatelessWidget {
                               style: TextStyle(color: AppColors.redColor),
                             ),
                           )),
-                    SizedBox(
-                      height: Dimensions.h5,
-                    ),
+                    SizedBox(height: Dimensions.h5),
                     // Padding(
                     //   padding: EdgeInsets.all(Dimensions.r8),
                     //   child: Text(
@@ -187,22 +185,20 @@ class ChangePasswordPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: Dimensions.h5,
-              ),
-              Obx(() => Align(
-                    alignment: Alignment.center,
-                    child: ButtonWidget(
-                      onTap: () {
-                        controller.onTapConfirmPass();
-                      },
-                      text: "SUBMIT",
-                      buttonColor: !controller.isValidate.value ? AppColors.grey : AppColors.appbarColor,
-                      height: Dimensions.h30,
-                      width: size.width / 1.2,
-                      radius: Dimensions.h20,
-                    ),
-                  ))
+              SizedBox(height: Dimensions.h5),
+              Obx(
+                () => Align(
+                  alignment: Alignment.center,
+                  child: ButtonWidget(
+                    onTap: () => !controller.isValidate.value ? null : controller.onTapConfirmPass(),
+                    text: "SUBMIT",
+                    buttonColor: !controller.isValidate.value ? AppColors.grey : AppColors.appbarColor,
+                    height: Dimensions.h30,
+                    width: size.width / 1.2,
+                    radius: Dimensions.h20,
+                  ),
+                ),
+              )
             ],
           ),
         ),

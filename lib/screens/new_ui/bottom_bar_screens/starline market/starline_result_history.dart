@@ -23,47 +23,50 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
       () => Column(
         children: [
           SizedBox(height: Dimensions.h11),
-          SizedBox(
-            height: 45,
-            child: TextField(
-              controller: starlineCon.dateInputForResultHistory,
-              style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
-              decoration: InputDecoration(
-                hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-                hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                  color: AppColors.appbarColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: SizedBox(
+              height: 45,
+              child: TextField(
+                controller: starlineCon.dateInputForResultHistory,
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
+                decoration: InputDecoration(
+                  hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                  hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    color: AppColors.appbarColor,
+                  ),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
+                  filled: true,
+                  fillColor: AppColors.grey.withOpacity(0.15),
+                  prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
                 ),
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
-                filled: true,
-                fillColor: AppColors.grey.withOpacity(0.15),
-                prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: starlineCon.bidHistoryDate,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101));
+
+                  if (pickedDate != null) {
+                    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                    String formattedDate2 = DateFormat('dd-MM-yyyy').format(pickedDate);
+                    starlineCon.dateInputForResultHistory.text = formattedDate2;
+
+                    starlineCon.getDailyStarLineMarkets(startDate: formattedDate, endDate: formattedDate);
+                    starlineCon.bidHistoryDate = pickedDate;
+                  }
+                },
               ),
-              readOnly: true,
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: starlineCon.bidHistoryDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101));
-
-                if (pickedDate != null) {
-                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                  String formattedDate2 = DateFormat('dd-MM-yyyy').format(pickedDate);
-                  starlineCon.dateInputForResultHistory.text = formattedDate2;
-
-                  starlineCon.getDailyStarLineMarkets(startDate: formattedDate, endDate: formattedDate);
-                  starlineCon.bidHistoryDate = pickedDate;
-                }
-              },
             ),
           ),
           SizedBox(height: Dimensions.h11),
           starlineCon.marketListForResult.isNotEmpty
               ? ListView.builder(
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: starlineCon.marketListForResult.length,

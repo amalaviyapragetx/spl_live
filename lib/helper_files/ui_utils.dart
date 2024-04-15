@@ -10,6 +10,7 @@ import 'package:spllive/helper_files/dimentions.dart';
 
 class AppUtils {
   static bool isProgressVisible = false;
+  static bool isVisibleSnackBar = false;
   static SystemUiOverlayStyle toolBarStyleLight = const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     // <-- SEE HERE
@@ -201,7 +202,7 @@ class AppUtils {
 
 //common method for showing progress dialog
   static void showProgressDialog({isCancellable = false}) async {
-    if (!isProgressVisible) {
+    if (!isProgressVisible && !Get.isSnackbarOpen) {
       Get.dialog(
         Center(
           child: SizedBox(
@@ -239,7 +240,9 @@ class AppUtils {
 
   //common method for show error snack-bar
   static void showErrorSnackBar({required String bodyText, Duration? duration}) {
-    Get.closeCurrentSnackbar();
+    if (Get.isDialogOpen == true) {
+      Get.closeCurrentSnackbar();
+    }
     Get.snackbar(
       "",
       "",

@@ -72,11 +72,11 @@ class MyAccountPageController extends GetxController {
         accHolderNameController.clear();
         accNoController.clear();
         ifscCodeController.clear();
-        isEditDetails.value = model.data!.isEditPermission ?? false;
-        bankNameController.text = model.data!.bankName ?? "";
-        accHolderNameController.text = model.data!.accountHolderName ?? "";
-        accNoController.text = model.data!.accountNumber ?? "";
-        ifscCodeController.text = model.data!.iFSCCode ?? "";
+        isEditDetails.value = model.data?.isEditPermission ?? false;
+        bankNameController.text = model.data?.bankName ?? "";
+        accHolderNameController.text = model.data?.accountHolderName ?? "";
+        accNoController.text = model.data?.accountNumber ?? "";
+        ifscCodeController.text = model.data?.iFSCCode ?? "";
         bankId = model.data!.id ?? 0;
         if (model.data != null) {
           if (model.data!.isEditPermission ?? false) {

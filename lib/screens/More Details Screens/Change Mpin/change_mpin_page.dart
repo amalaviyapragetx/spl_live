@@ -54,9 +54,7 @@ class ChangeMpinPage extends StatelessWidget {
                         hintText: "OLDPINTEXT".tr,
                         maxLength: 4,
                         keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         obscureText: controller.isObscureOldPin.value,
                         onChanged: (value) {
                           controller.onChanged1(value);
@@ -66,8 +64,7 @@ class ChangeMpinPage extends StatelessWidget {
                           }
                         },
                         onTap: () {
-                          controller.isObscureOldPin.value =
-                              !controller.isObscureOldPin.value;
+                          controller.isObscureOldPin.value = !controller.isObscureOldPin.value;
                         },
                       ),
                     ),
@@ -104,9 +101,7 @@ class ChangeMpinPage extends StatelessWidget {
                         hintText: "NEWPINTEXT".tr,
                         maxLength: 4,
                         keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         obscureText: controller.isObscureNewPin.value,
                         onChanged: (value) {
                           controller.onChanged2(value);
@@ -116,8 +111,7 @@ class ChangeMpinPage extends StatelessWidget {
                           }
                         },
                         onTap: () {
-                          controller.isObscureNewPin.value =
-                              !controller.isObscureNewPin.value;
+                          controller.isObscureNewPin.value = !controller.isObscureNewPin.value;
                         },
                       ),
                     ),
@@ -154,19 +148,16 @@ class ChangeMpinPage extends StatelessWidget {
                         () => EdittextFieldwithvalidation(
                           focusNode: controller.reEnterMPINFocusNode,
                           controller: controller.reEnterMPIN,
-                          hintText: "NEWPINTEXT".tr,
+                          hintText: "CONFIRMPINTEXT".tr,
                           maxLength: 4,
                           keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           obscureText: controller.isObscureConfirmPin.value,
                           onChanged: (value) {
                             controller.onChanged3(value);
                           },
                           onTap: () {
-                            controller.isObscureConfirmPin.value =
-                                !controller.isObscureConfirmPin.value;
+                            controller.isObscureConfirmPin.value = !controller.isObscureConfirmPin.value;
                           },
                         ),
                       ),
@@ -175,8 +166,7 @@ class ChangeMpinPage extends StatelessWidget {
                             ? Container()
                             : Container(
                                 alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: Dimensions.r8),
+                                padding: EdgeInsets.symmetric(vertical: Dimensions.r8),
                                 child: Text(
                                   controller.confirmPinMessage.value,
                                   style: TextStyle(color: AppColors.redColor),
@@ -201,9 +191,7 @@ class ChangeMpinPage extends StatelessWidget {
                 Obx(
                   () => controller.isValidate.value == true
                       ? ButtonWidget(
-                          onTap: () {
-                            controller.changePasswordApi();
-                          },
+                          onTap: () => controller.isValidate.value ? controller.changePasswordApi() : null,
                           text: "SUBMIT".tr,
                           buttonColor: AppColors.appbarColor,
                           height: Dimensions.h30,

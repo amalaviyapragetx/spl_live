@@ -155,7 +155,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                                   child: RichText(
                                                     textAlign: TextAlign.start,
                                                     text: TextSpan(
-                                                      text: "Remarks",
+                                                      text: "Remarks ",
                                                       style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                                         fontSize: 15,
                                                         color: AppColors.black,
@@ -202,9 +202,10 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                               ),
                                               Row(
                                                 children: [
-                                                  controller.withdrawalRequestList[i].status == "Pending"
+                                                  controller.withdrawalRequestList[i].status?.toLowerCase() == "pending"
                                                       ? SvgPicture.asset(ConstantImage.sendWatchIcon, height: 15)
-                                                      : controller.withdrawalRequestList[i].status == "Ok"
+                                                      : controller.withdrawalRequestList[i].status?.toLowerCase() ==
+                                                              "accepted"
                                                           ? Icon(Icons.check_circle, color: AppColors.green)
                                                           : Container(
                                                               padding: const EdgeInsets.all(2.0),
@@ -220,19 +221,23 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                                                 ),
                                                               ),
                                                             ),
-                                                  // SvgPicture.asset(ConstantImage.clockSvg, height: 15),
                                                   const SizedBox(width: 5),
                                                   Text(
-                                                    controller.withdrawalRequestList[i].status == "Ok"
-                                                        ? "Success"
-                                                        : controller.withdrawalRequestList[i].status == "F"
-                                                            ? "Failed"
-                                                            : controller.withdrawalRequestList[i].status ?? "",
+                                                    controller.withdrawalRequestList[i].status?.toLowerCase() ==
+                                                            "accepted"
+                                                        ? "Accepted"
+                                                        : controller.withdrawalRequestList[i].status?.toLowerCase() ==
+                                                                "rejected"
+                                                            ? "Rejected"
+                                                            : controller.withdrawalRequestList[i].status ?? "Pending",
                                                     style: CustomTextStyle.textRobotoSansBold.copyWith(
                                                       fontSize: 15,
-                                                      color: controller.withdrawalRequestList[i].status == "Pending"
+                                                      color: controller.withdrawalRequestList[i].status
+                                                                  ?.toLowerCase() ==
+                                                              "pending"
                                                           ? AppColors.appbarColor
-                                                          : controller.withdrawalRequestList[i].status == "Ok"
+                                                          : controller.withdrawalRequestList[i].status?.toLowerCase() ==
+                                                                  "accepted"
                                                               ? AppColors.green
                                                               : AppColors.redColor,
                                                     ),

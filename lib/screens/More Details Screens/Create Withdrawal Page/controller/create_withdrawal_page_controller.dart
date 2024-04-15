@@ -110,9 +110,7 @@ class CreateWithDrawalPageController extends GetxController {
   String getRandomString(int length) => String.fromCharCodes(
         Iterable.generate(
           length,
-          (_) => _chars.codeUnitAt(
-            _rnd.nextInt(_chars.length),
-          ),
+          (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length)),
         ),
       );
 
@@ -125,16 +123,18 @@ class CreateWithDrawalPageController extends GetxController {
           if (model.message == "Withdrawal request created successfully") {
             return Get.dialog(
               barrierDismissible: true,
+              useSafeArea: true,
               ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
+                constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 40, maxWidth: Get.width - 30),
                 child: Center(
                   child: SingleChildScrollView(
                     child: Stack(
                       children: [
                         Dialog(
-                          insetPadding: EdgeInsets.all(10),
+                          insetPadding: const EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                          child: SizedBox(
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
                             width: double.infinity,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -163,8 +163,8 @@ class CreateWithDrawalPageController extends GetxController {
                                 shape: BoxShape.circle,
                                 color: AppColors.black,
                               ),
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(Icons.close, color: Colors.white, size: 18),
+                              padding: const EdgeInsets.all(4.0),
+                              child: const Icon(Icons.close, color: Colors.white, size: 18),
                             ),
                           ),
                         ),
@@ -177,16 +177,18 @@ class CreateWithDrawalPageController extends GetxController {
           } else {
             Get.dialog(
               barrierDismissible: false,
+              useSafeArea: true,
               ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
+                constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 60, maxWidth: Get.width - 50),
                 child: Center(
                   child: SingleChildScrollView(
                     child: Stack(
                       children: [
                         Dialog(
-                          insetPadding: EdgeInsets.all(10),
+                          insetPadding: const EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                          child: SizedBox(
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
                             width: double.infinity,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -215,8 +217,8 @@ class CreateWithDrawalPageController extends GetxController {
                                 shape: BoxShape.circle,
                                 color: AppColors.black,
                               ),
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(Icons.close, color: Colors.white, size: 18),
+                              padding: const EdgeInsets.all(4.0),
+                              child: const Icon(Icons.close, color: Colors.white, size: 18),
                             ),
                           ),
                         ),

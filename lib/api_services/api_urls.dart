@@ -2,8 +2,9 @@ class ApiUtils {
   // Spl Production
   // static String baseURL = "https://vishnulive.in:9870";
   // local url
-  static String baseURL = "http://192.168.29.246:8080";
-  // static String baseURL = "http://192.168.29.153:8080";
+  // static String baseURL = "http://192.168.29.246:8080";
+  static String baseURL = "http://192.168.29.153:8080";
+  // static String baseURL = "http://192.168.29.143:8085";
   // static String baseURL = "http://10.0.0.201:8080";
 
   // endpoints
@@ -54,7 +55,6 @@ class ApiUtils {
   static String digitsBasedJodi = "$baseURL/gameMode/digitBasedJodi";
   static String passBookApi = "$baseURL/user/getUserPassbookDetails";
   static String bidHistory = "$baseURL/bid/getByUserId";
-  // static String marketBidNewLists = "$baseURL/bid/getBidHistoryByBidType";
   static String getNotificationCount = "$baseURL/notification/getNotificationCount";
   static String getAllNotifications = "$baseURL/notification/getAll?search=&limit=10&offset=0";
   static String resetNotificationCount = "$baseURL/notification/resetCount";
