@@ -134,7 +134,7 @@ class HomePageController extends GetxController {
     Timer(const Duration(seconds: 1), () {
       GetStorage().write(ConstantsVariables.starlineConnect, false);
     });
-    debugPrint("///////////////setboolData////////////////");
+
     getBennerData();
   }
 
@@ -147,7 +147,6 @@ class HomePageController extends GetxController {
   }
 
   Future<void> handleRefresh() async {
-    debugPrint("///////////////handleRefresh///////////////");
     // await Future.delayed(const Duration(seconds: 1));
     setboolData();
     callMarketsApi();
@@ -970,7 +969,6 @@ class HomePageController extends GetxController {
 
   void resetNotificationCount() async {
     ApiService().resetNotification().then((value) async {
-      debugPrint("Notifiaction Count Api ------------- :- $value");
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
         getNotifiactionCount.value = model.data!.notificationCount!.toInt();
@@ -983,7 +981,6 @@ class HomePageController extends GetxController {
 
   void getBennerData() async {
     ApiService().getBennerData().then((value) async {
-      debugPrint("benner Response Api ------------- :- $value");
       if (value['status']) {
         BennerModel model = BennerModel.fromJson(value);
         bennerData.value = model.data as List<BennerData>;

@@ -323,9 +323,7 @@ class _SangamPagesState extends State<SangamPages> {
                           return matches;
                         }
                       },
-                      onSelected: (String selection) {
-                        debugPrint('Selected Suggestion of auto complete text field is $selection');
-                      },
+                      onSelected: (String selection) {},
                       fieldViewBuilder: (BuildContext context, TextEditingController textEditingController,
                           FocusNode focusNode, VoidCallback onFieldSubmitted) {
                         return TextFormField(

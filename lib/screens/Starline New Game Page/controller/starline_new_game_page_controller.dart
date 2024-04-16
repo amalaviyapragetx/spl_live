@@ -430,9 +430,7 @@ class StarlineNewGamePageController extends GetxController {
       List<String>? data = choisePanaSPDPTP[panaType[i]];
       if (data != null) {
         panaArray.addAll(data);
-      } else {
-        debugPrint("Error");
-      }
+      } else {}
     }
     var a = panaArray.where((num1) {
       // if ((left.isNotEmpty && num1[0] != left)) {

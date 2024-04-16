@@ -141,7 +141,7 @@ class NormalGamePageController extends GetxController {
       if (data != null) {
         panaArray.addAll(data);
       } else {
-        debugPrint("Error");
+        // debugPrint("Error");
       }
     }
     var a = panaArray.where((num1) {

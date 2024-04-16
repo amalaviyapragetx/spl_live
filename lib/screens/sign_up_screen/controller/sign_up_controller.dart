@@ -27,7 +27,6 @@ class SignUpPageController extends GetxController {
           "countryCode": countryCode.value,
           "phoneNumber": mobileNumberController.text,
         });
-        print(value);
       } else {
         AppUtils.showErrorSnackBar(
           bodyText: value['message'] ?? "",

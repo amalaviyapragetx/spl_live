@@ -101,7 +101,7 @@ class SetMPINPageController extends GetxController {
         }
       });
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 

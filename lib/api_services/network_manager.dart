@@ -21,8 +21,7 @@ class GetXNetworkManager extends GetxController {
   @override
   void onInit() {
     getConnectionType();
-    _streamSubscription =
-        _connectivity.onConnectivityChanged.listen(_updateState);
+    _streamSubscription = _connectivity.onConnectivityChanged.listen(_updateState);
     super.onInit();
   }
 

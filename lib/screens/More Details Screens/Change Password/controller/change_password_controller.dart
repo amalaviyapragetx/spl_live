@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/routes/app_routes_name.dart';
 
 import '../../../../api_services/api_service.dart';
 import '../../../../helper_files/constant_variables.dart';
@@ -101,7 +100,7 @@ class ChangepasswordPageController extends GetxController {
 
   void changePasswordApi() async {
     ApiService().changePassword(await changePassBody()).then((value) async {
-      print(value);
+      // print(value);
       if (value['status']) {
         Get.back();
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
