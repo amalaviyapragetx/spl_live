@@ -66,7 +66,7 @@ class StarLineGamePageController extends GetxController {
   RxList<StarLineBids> bidList = <StarLineBids>[].obs;
   @override
   void onInit() {
-    getArguments();
+    // getArguments();
     super.onInit();
   }
 

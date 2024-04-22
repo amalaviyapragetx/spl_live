@@ -138,7 +138,6 @@ class ChangepasswordPageController extends GetxController {
       // );
       confirmPasswordMessage.value = "Enter Confirm Password";
     } else {
-      print("fshdgfjsd");
       changePasswordApi();
     }
   }

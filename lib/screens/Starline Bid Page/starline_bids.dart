@@ -163,9 +163,7 @@ class StarlineBidsPage extends StatelessWidget {
                                 borderRadius: Dimensions.r5,
                                 borderWidth: 1,
                                 textStyle: CustomTextStyle.textRobotoSansMedium,
-                                onTap: () {
-                                  controller.showConfirmationDialog(context);
-                                },
+                                onTap: () => controller.showConfirmationDialog(context),
                                 //onTap: () {},
                                 height: Dimensions.h30,
                                 width: double.infinity,

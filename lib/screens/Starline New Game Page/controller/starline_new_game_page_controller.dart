@@ -19,7 +19,6 @@ import '../../../models/commun_models/starline_bid_request_model.dart';
 import '../../../models/commun_models/user_details_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starline_game_modes_api_response_model.dart';
-import '../../../routes/app_routes_name.dart';
 
 class StarlineNewGamePageController extends GetxController {
   Rx<StarLineGameMod> gameMode = StarLineGameMod().obs;
@@ -301,25 +300,27 @@ class StarlineNewGamePageController extends GetxController {
     ApiService().createStarLineMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
         selectedBidsList.clear();
-        Get.offAllNamed(
-          AppRoutName.starLineGameModesPage, arguments: marketData.value,
-          // "gameMode": gameMode.value,
-          // "getBidData": getBidData,
-          // "getBIdType": getBIdType,
-          // "gameModeName": gameModeName
-        );
+        Get.back();
+        Get.back();
+        // Get.offAllNamed(
+        //   AppRoutName.starLineGameModesPage, arguments: marketData.value,
+        //   // "gameMode": gameMode.value,
+        //   // "getBidData": getBidData,
+        //   // "getBIdType": getBIdType,
+        //   // "gameModeName": gameModeName
+        // );
         if (value['data'] == false) {
           selectedBidsList.clear();
-          Get.offAllNamed(
-            AppRoutName.starLineGameModesPage, arguments: marketData.value,
-            // "gameMode": gameMode.value,
-            // "getBidData": getBidData,
-            // "getBIdType": getBIdType,
-            // "gameModeName": gameModeName
-          );
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          Get.back();
+          Get.back();
+          // Get.offAllNamed(
+          //   AppRoutName.starLineGameModesPage, arguments: marketData.value,
+          //   // "gameMode": gameMode.value,
+          //   // "getBidData": getBidData,
+          //   // "getBIdType": getBIdType,
+          //   // "gameModeName": gameModeName
+          // );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         } else {
           AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }

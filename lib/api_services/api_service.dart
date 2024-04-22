@@ -42,7 +42,6 @@ class ApiService extends GetConnect implements GetxService {
       headers: headers,
       // contentType: contentType,
     );
-    print("fsdjfghdfjsd");
     print(response.body);
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();

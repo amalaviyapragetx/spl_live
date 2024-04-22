@@ -44,12 +44,12 @@ class StarlineBidsController extends GetxController {
 
   void playMore() {
     GetStorage().write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
-    Get.offAndToNamed(AppRoutName.starLineGameModesPage);
+    Get.back();
+    // Get.offAndToNamed(AppRoutName.starLineGameModesPage);
   }
 
   Future<void> getArguments() async {
     showData();
-
     gameMode.value = arguments['gameMode'];
     marketData.value = arguments['marketData'];
     requestModel.value.bids = arguments['bidsList'];
@@ -80,10 +80,7 @@ class StarlineBidsController extends GetxController {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                // Handle cancel button press
-                Get.back();
-              },
+              onPressed: () => Get.back(),
               child: Text(
                 'CANCLE',
                 style: CustomTextStyle.textPTsansBold.copyWith(
@@ -133,16 +130,20 @@ class StarlineBidsController extends GetxController {
   void createMarketBidApi() async {
     ApiService().createStarLineMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
-        Get.offAllNamed(
-          AppRoutName.starLineGameModesPage,
-          arguments: marketData.value,
-        );
+        Get.back();
+        Get.back();
+        // Get.offAllNamed(
+        //   AppRoutName.starLineGameModesPage,
+        //   arguments: marketData.value,
+        // );
         //  Get.offAndToNamed(AppRoutName.dashBoardPage);
         if (value['data'] == false) {
-          Get.offAllNamed(
-            AppRoutName.starLineGameModesPage,
-            arguments: marketData.value,
-          );
+          Get.back();
+          Get.back();
+          // Get.offAllNamed(
+          //   AppRoutName.starLineGameModesPage,
+          //   arguments: marketData.value,
+          // );
           // Get.offAndToNamed(AppRoutName.dashBoardPage);
           AppUtils.showErrorSnackBar(
             bodyText: value['message'] ?? "",

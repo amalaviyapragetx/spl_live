@@ -246,8 +246,6 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                 borderWidth: 0,
                 textStyle: CustomTextStyle.textGothamMedium,
                 onTap: () async {
-                  print("fsdkfjsdhfkjsdh");
-
                   if (homeCon.addFundCon.text.isEmpty) {
                     AppUtils.showErrorSnackBar(bodyText: "Please enter amount");
                   } else {

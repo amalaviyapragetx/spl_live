@@ -299,13 +299,8 @@ class HomePageController extends GetxController {
   }
 
   Future<void> addFund({String? amount}) async {
-    // await _launchUrl(Uri.parse(
-    //     "upi://pay?ver=01&mode=15&am=10.00&mam=10.00&cu=INR&pa=absolut.transglobal%40timecosmos&pn=TRANSGLOBAL+MARKETING+SERVICES+PRIVATE+LIMITED&mc=5816&tr=ABSOLUT2204202422038&tn=QR&mid=THORN2245&msid=TRANS-5477&mtid=TRANS-5477&category=02&url=http://connect.absolutepe.com/"));
-    // //
     try {
       ApiService().addFund(amount: amount).then((value) async {
-        print("Fdsfkjsdhfkjdsh");
-        print(value);
         if (value['status']) {
           if (value['data'] != null) {
             // if ( canLaunchUrl(Uri.parse(value['data']['qrString']))) {
@@ -402,8 +397,6 @@ class HomePageController extends GetxController {
         throw Exception('Could not launch $url');
       }
     } catch (e) {
-      print('fsdjfhsdfskd');
-      print(e);
       Get.defaultDialog(
         backgroundColor: AppColors.white,
         title: "Error",
