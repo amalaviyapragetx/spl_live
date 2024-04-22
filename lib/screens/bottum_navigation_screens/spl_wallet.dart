@@ -33,7 +33,7 @@ class _SPLWalletState extends State<SPLWallet> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      // mainAxisSize: MainAxisSize.min,
       children: [
         Obx(
           () => walletCon.selectedIndex.value == null

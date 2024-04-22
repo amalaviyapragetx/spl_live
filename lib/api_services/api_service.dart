@@ -35,13 +35,15 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> signUpAPI(body) async {
     AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
+
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.signUP,
       body,
       headers: headers,
       // contentType: contentType,
     );
-
+    print("fsdjfghdfjsd");
+    print(response.body);
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
@@ -1147,7 +1149,7 @@ class ApiService extends GetConnect implements GetxService {
       await initApiService();
       final response = await GetConnect(timeout: Duration(seconds: 20), allowAutoSignedCert: true).post(
         ApiUtils.addFund,
-        {"amount": "$amount.00", "type": "Deposit"},
+        {"amount": "$amount.00"},
         headers: headersWithToken,
       );
       if (response.status.hasError) {
