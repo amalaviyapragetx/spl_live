@@ -13,8 +13,10 @@ class PassbookHistoryController extends GetxController {
 
   final int itemLimit = 30;
   RxInt offset = 0.obs;
+  RxBool isLoad = false.obs;
   void getPassBookData({required bool lazyLoad, required String offset}) {
     UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
+    isLoad.value = true;
     ApiService()
         .getPassBookData(
       userId: userData.id.toString(),
@@ -24,6 +26,7 @@ class PassbookHistoryController extends GetxController {
     )
         .then((value) async {
       if (value['status']) {
+        isLoad.value = false;
         if (value['data'] != null) {
           PassbookModel model = PassbookModel.fromJson(value);
           passbookCount.value = int.parse(model.data!.count!.toString());
@@ -31,6 +34,7 @@ class PassbookHistoryController extends GetxController {
           passBookModelData.refresh();
         }
       } else {
+        isLoad.value = false;
         AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });

@@ -69,24 +69,30 @@ class _PassBookState extends State<PassBook> {
           ),
         ),
         Obx(
-          () => passBookCon.passBookModelData.isNotEmpty
+          () => passBookCon.isLoad.value
               ? Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: table(),
-                    ),
+                  child: Center(
+                    child: CircularProgressIndicator(color: AppColors.appbarColor),
                   ),
                 )
-              : Expanded(
-                  child: Center(
-                    child: Text(
-                      "There is no data",
-                      style: TextStyle(color: AppColors.black),
+              : passBookCon.passBookModelData.isNotEmpty
+                  ? Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: table(),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: Center(
+                        child: Text(
+                          "There is no data",
+                          style: TextStyle(color: AppColors.black),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
         ),
         Obx(
           () => passBookCon.passBookModelData.isNotEmpty

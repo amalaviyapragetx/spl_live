@@ -303,12 +303,7 @@ class HomePageController extends GetxController {
       ApiService().addFund(amount: amount).then((value) async {
         if (value['status']) {
           if (value['data'] != null) {
-            // if ( canLaunchUrl(Uri.parse(value['data']['qrString']))) {
             await _launchUrl(Uri.parse(Uri.decodeFull(value['data']['upiId'])));
-
-            // } else {
-            //   AppUtils.showErrorSnackBar(bodyText: "Payment app not installed");
-            // }
           }
         } else {
           if (value['message'].toString().toLowerCase().contains("payment closed between")) {

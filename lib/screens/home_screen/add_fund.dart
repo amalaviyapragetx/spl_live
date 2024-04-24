@@ -250,7 +250,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                     AppUtils.showErrorSnackBar(bodyText: "Please enter amount");
                   } else {
                     if (homeCon.addFundCon.text.isNotEmpty) {
-                      if (int.parse(homeCon.addFundCon.text) < 1) {
+                      if (int.parse(homeCon.addFundCon.text) < 100) {
                         AppUtils.showErrorSnackBar(bodyText: "Please add minimum amount of ₹ 100");
                       } else {
                         walletCon.isCallDialog.value = true;
