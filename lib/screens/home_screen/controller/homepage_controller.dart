@@ -303,7 +303,8 @@ class HomePageController extends GetxController {
       ApiService().addFund(amount: amount).then((value) async {
         if (value['status']) {
           if (value['data'] != null) {
-            await _launchUrl(Uri.parse(Uri.decodeFull(value['data']['upiId'])));
+            // await _launchUrl(Uri.parse(Uri.decodeFull(value['data']['upiId'])));
+            await _launchUrl(Uri.parse(value['data']['qrString']));
           }
         } else {
           if (value['message'].toString().toLowerCase().contains("payment closed between")) {
@@ -348,41 +349,41 @@ class HomePageController extends GetxController {
         }
       });
     } catch (e) {
-      Get.defaultDialog(
-        barrierDismissible: false,
-        title: "",
-        titleStyle: const TextStyle(fontSize: 0),
-        onWillPop: () async => false,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "helo",
-              textAlign: TextAlign.center,
-              style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                color: AppColors.appbarColor,
-                fontWeight: FontWeight.w700,
-                fontSize: Dimensions.h17,
-              ),
-            ),
-            const SizedBox(height: 10),
-            InkWell(
-              onTap: () => Get.back(),
-              child: Container(
-                decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
-                height: Dimensions.h40,
-                width: Dimensions.w150,
-                child: Center(
-                  child: Text(
-                    'OK',
-                    style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+      // Get.defaultDialog(
+      //   barrierDismissible: false,
+      //   title: "",
+      //   titleStyle: const TextStyle(fontSize: 0),
+      //   onWillPop: () async => false,
+      //   content: Column(
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: [
+      //       Text(
+      //         "helo",
+      //         textAlign: TextAlign.center,
+      //         style: CustomTextStyle.textRobotoSansMedium.copyWith(
+      //           color: AppColors.appbarColor,
+      //           fontWeight: FontWeight.w700,
+      //           fontSize: Dimensions.h17,
+      //         ),
+      //       ),
+      //       const SizedBox(height: 10),
+      //       InkWell(
+      //         onTap: () => Get.back(),
+      //         child: Container(
+      //           decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
+      //           height: Dimensions.h40,
+      //           width: Dimensions.w150,
+      //           child: Center(
+      //             child: Text(
+      //               'OK',
+      //               style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // );
     }
   }
 

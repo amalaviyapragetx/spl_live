@@ -1169,7 +1169,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<FundTransactionModel?> getTransactionHistory() async {
     try {
       await initApiService();
-      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
           "${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}",
           headers: headersWithToken,
           query: {"search": ""});

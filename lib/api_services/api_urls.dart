@@ -2,11 +2,13 @@ class ApiUtils {
   // Spl Production
   // static String baseURL = "https://vishnulive.in:9870";
   // local url
-  // static String baseURL = "http://192.168.29.246:8080";
-  // static String baseURL = "http://192.168.29.153:8080";
+  static String baseURL = "http://192.168.29.246:8080";
+  // static String baseURL = "http://192.168.29.137:9867";
   // static String baseURL = "http://192.168.29.143:8085";
   // static String baseURL = "http://10.0.0.201:8080";
-  static String baseURL = "https://192.168.29.201:8659";
+  // static String baseURL = "https://192.168.29.201:8659";
+  // static String baseURL = "https://3966-2405-201-2023-a83c-f8a0-8fc6-84b6-3f5";
+  // static String baseURL = "https://ba75-2405-201-2023-a83c-f8a0-8fc6-84b6-3f5a.ngrok-free.app";
 
   // endpoints
   static String signUP = '$baseURL/auth/signup';
