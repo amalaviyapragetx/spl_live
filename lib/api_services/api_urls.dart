@@ -2,8 +2,10 @@ class ApiUtils {
   // Spl Production
   // static String baseURL = "https://vishnulive.in:9870";
   // local url
-  // static String baseURL = "http://192.168.29.246:8080";
-  static String baseURL = "http://15.207.71.94:9867";
+  static String baseURL = "http://192.168.29.246:8080";
+
+  // StagingURl
+  // static String baseURL = "http://15.207.71.94:9867";
   // static String baseURL = "http://192.168.29.201:8659";
   // static String baseURL = "http://192.168.29.137:9867";
   // static String baseURL = "http://192.168.29.143:8085";

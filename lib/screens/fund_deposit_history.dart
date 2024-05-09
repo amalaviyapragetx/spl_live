@@ -53,7 +53,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                           const SizedBox(width: 5),
                         ],
                       ),
-                      const SizedBox(width: 10),
+                      const Expanded(child: SizedBox()),
                       Text(
                         textAlign: TextAlign.center,
                         "Fund deposit history",
