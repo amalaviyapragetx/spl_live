@@ -398,7 +398,7 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${ApiUtils.getFeedbackAndRatingsById}$userId",
+      "${ApiUtils.getFeedbackAndRatingsById}",
       headers: headersWithToken,
     );
     if (response.status.hasError) {
@@ -420,7 +420,7 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${ApiUtils.getWithdrawalHistoryByUserId}$userId",
+      "${ApiUtils.getWithdrawalHistoryByUserId}",
       headers: headersWithToken,
     );
 
@@ -726,7 +726,7 @@ class ApiService extends GetConnect implements GetxService {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-        "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
+        "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
         headers: headersWithToken,
         query: {
           "limit": limit,
@@ -890,7 +890,7 @@ class ApiService extends GetConnect implements GetxService {
     //  AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${ApiUtils.passBookApi}/$userId?isAll=$isAll&limit=$limit&offset=$offset",
+      "${ApiUtils.passBookApi}/?isAll=$isAll&limit=$limit&offset=$offset",
       headers: headersWithToken,
     );
     if (response.status.hasError) {

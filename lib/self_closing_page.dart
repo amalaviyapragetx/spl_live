@@ -25,7 +25,9 @@ class InactivityController extends GetxController {
 
   void resetInactivityTimer() {
     _inactivityTimer?.cancel();
-    _inactivityTimer = Timer(_inactivityDuration, () => _showExitDialog());
+    if (GetStorage().read(ConstantsVariables.authToken) != null) {
+      _inactivityTimer = Timer(_inactivityDuration, () => _showExitDialog());
+    }
   }
 
   void onUserInteraction(PointerEvent event) {
