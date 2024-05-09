@@ -474,8 +474,12 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+<<<<<<< HEAD
+      "${ApiUtils.getFeedbackAndRatingsById}",
+=======
       // "${ApiUtils.getFeedbackAndRatingsById}$userId",
       ApiUtils.getFeedbackAndRatingsById,
+>>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
     if (kDebugMode) {
@@ -500,8 +504,12 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+<<<<<<< HEAD
+      "${ApiUtils.getWithdrawalHistoryByUserId}",
+=======
       // "${ApiUtils.getWithdrawalHistoryByUserId}$userId",
       ApiUtils.getWithdrawalHistoryByUserId,
+>>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
 
@@ -833,7 +841,7 @@ class ApiService extends GetConnect implements GetxService {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-        "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?id=$userId&limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
+        "${isStarline ? ApiUtils.starlineMarketBidHistory : ApiUtils.normalMarketBidHistory}?limit=$limit&offset=$offset&startDate=$startDate&endDate=$endDate",
         headers: headersWithToken,
         query: {
           "limit": limit,
@@ -1034,7 +1042,7 @@ class ApiService extends GetConnect implements GetxService {
     //  AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-      "${ApiUtils.passBookApi}/$userId?isAll=$isAll&limit=$limit&offset=$offset",
+      "${ApiUtils.passBookApi}/?isAll=$isAll&limit=$limit&offset=$offset",
       headers: headersWithToken,
     );
     if (response.status.hasError) {
