@@ -11,51 +11,55 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? walletBalance;
   final TextStyle? titleTextStyle;
   final List<Widget>? actions;
-  const CommonAppBar({
+  Widget? leading;
+
+  CommonAppBar({
     super.key,
     this.title,
     this.actions,
     this.walletBalance,
     this.titleTextStyle,
+    this.leading,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColors.appbarColor,
-      title: Text(title ?? "", style: TextStyle(color: AppColors.white, fontSize: 20)),
+      title: Text(title ?? "", style: CustomTextStyle.textRobotoMedium.copyWith(color: AppColors.white, fontSize: 22)),
       titleTextStyle: titleTextStyle,
       actions: actions,
       automaticallyImplyLeading: false,
       centerTitle: true,
-      leadingWidth: Get.width * 0.35,
-      leading: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(width: Dimensions.w5),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15.0),
-            child: SizedBox(
-              width: Dimensions.w40,
-              child: SvgPicture.asset(
-                ConstantImage.walletAppbar,
-                color: AppColors.white,
+      leadingWidth: leading == null ? Get.width * 0.35 : Get.width * 0.10,
+      leading: leading ??
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: Dimensions.w5),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                child: SizedBox(
+                  width: Dimensions.w40,
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    color: AppColors.white,
+                  ),
+                ),
               ),
-            ),
+              Text(
+                walletBalance ?? "",
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  color: AppColors.white,
+                  fontSize: Dimensions.h16,
+                ),
+              ),
+            ],
           ),
-          Text(
-            walletBalance ?? "",
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: CustomTextStyle.textRobotoSansMedium.copyWith(
-              color: AppColors.white,
-              fontSize: Dimensions.h16,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

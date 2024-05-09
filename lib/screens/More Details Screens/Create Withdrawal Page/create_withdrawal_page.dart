@@ -68,7 +68,7 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                         children: [
                           Text(
                             "WALLETBALANCE".tr,
-                            style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h22),
+                            style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h22),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -84,7 +84,7 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                               SizedBox(width: Dimensions.w10),
                               Text(
                                 walletCon.walletBalance.value ?? "",
-                                style: CustomTextStyle.textRobotoSansMedium
+                                style: CustomTextStyle.textRobotoMedium
                                     .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
                               ),
                             ],
@@ -100,12 +100,12 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                         FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
                       ],
                       keyboardType: TextInputType.number,
-                      style: CustomTextStyle.textGothamMedium,
+                      style: CustomTextStyle.textRobotoMedium,
                       cursorColor: AppColors.appbarColor,
                       decoration: InputDecoration(
                         isDense: true,
                         hintText: "Enter Amount",
-                        hintStyle: CustomTextStyle.textGothamMedium,
+                        hintStyle: CustomTextStyle.textRobotoMedium,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(Dimensions.r10),
                           borderSide: BorderSide(color: Colors.black.withOpacity(0.5)),
@@ -133,7 +133,7 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                         letterSpacing: 0,
                         borderRadius: Dimensions.r5,
                         borderWidth: 1,
-                        textStyle: CustomTextStyle.textRobotoSansMedium,
+                        textStyle: CustomTextStyle.textRobotoMedium,
                         onTap: () => controller.createWithdrawalRequest(),
                         height: Dimensions.h35,
                         width: Get.width / 2.5,
@@ -167,13 +167,13 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                                 ),
                                 Text(
                                   "+91 7769826748",
-                                  style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
+                                  style: CustomTextStyle.textRobotoMedium.copyWith(color: AppColors.white),
                                 ),
                               ],
                             ),
                             Text(
                               "Whatsapp for any queries",
-                              style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
+                              style: CustomTextStyle.textRobotoMedium.copyWith(color: AppColors.white),
                             ),
                           ],
                         ),

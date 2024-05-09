@@ -28,11 +28,11 @@ class SignUpScreen extends StatelessWidget {
       ),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.w35),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: Get.height * 0.15),
               SizedBox(
@@ -81,7 +81,7 @@ class SignUpScreen extends StatelessWidget {
                 height: Dimensions.h30,
                 width: double.infinity,
               ),
-              SizedBox(height: Get.height * 0.1),
+              // SizedBox(height: Get.height * 0.1),
             ],
           ),
         ),

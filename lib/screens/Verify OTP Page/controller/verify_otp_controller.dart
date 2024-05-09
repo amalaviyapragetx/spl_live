@@ -37,9 +37,11 @@ class VerifyOTPController extends GetxController {
 
   void onTapOfContinue() {
     if (otp.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTEROTP".tr);
+      AppUtils().accountFlowDialog(msg: "ENTEROTP".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTEROTP".tr);
     } else if (otp.value.length < 6) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDOTP".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERVALIDOTP".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDOTP".tr);
     } else {
       verifyOTP ? callVerifyOTPApi() : callVerifyUserApi();
     }
@@ -66,10 +68,12 @@ class VerifyOTPController extends GetxController {
           GetStorage().write(ConstantsVariables.id, value['data']['Id']);
           Get.toNamed(AppRoutName.userDetailsPage);
         } else {
-          AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
+          AppUtils().accountFlowDialog(msg: "Something went wrong!!!");
+          // AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
       } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        AppUtils().accountFlowDialog(msg: value['message']);
+        // AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -86,12 +90,14 @@ class VerifyOTPController extends GetxController {
             AppRoutName.setMPINPage,
           );
         } else {
-          AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
+          AppUtils().accountFlowDialog(msg: "Something went wrong!!!");
+          // AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils().accountFlowDialog(msg: value['message']);
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
       }
     });
   }
@@ -103,9 +109,10 @@ class VerifyOTPController extends GetxController {
         _startTimer();
         AppUtils.showSuccessSnackBar(bodyText: "${value['message']}", headerText: "SUCCESSMESSAGE".tr);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils().accountFlowDialog(msg: value['message']);
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
       }
     });
   }

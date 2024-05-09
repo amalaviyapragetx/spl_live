@@ -66,6 +66,7 @@ dependencies:
   ota_update: ^6.0.0
   flutter_jailbreak_detection: ^1.10.0
   permission_handler: ^11.3.0
+#  colorful_safe_area: ^1.0.0
 
 
 
@@ -136,7 +137,9 @@ flutter:
         - asset: assets/fonts/Gotham/GothamBold.ttf
         - asset: assets/fonts/Gotham/GothamMedium.ttf
         - asset: assets/fonts/Gotham/GothamLight.ttf
-
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/inter_regular.ttf
   
   #   - family: Trajan Pro
   #     fonts:

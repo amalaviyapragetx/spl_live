@@ -13,6 +13,8 @@ class GiveFeedbackPageController extends GetxController {
   var feedbackModel = GetFeedbackByIdApiResponseModel().obs;
   UserDetailsModel userDetailsModel = UserDetailsModel();
 
+  RxBool isGiveFeedback = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -20,9 +22,12 @@ class GiveFeedbackPageController extends GetxController {
   }
 
   void addFeedbackApi(ratingValue) async {
+    isGiveFeedback.value = true;
     ApiService().createFeedback(await createFeedbackBody(ratingValue)).then((value) async {
       if (value['status']) {
-        Get.back();
+        isGiveFeedback.value = false;
+        feedbackController.clear();
+        // Get.back();
         AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {
         AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");

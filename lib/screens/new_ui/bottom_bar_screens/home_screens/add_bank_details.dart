@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/common_textfield_border.dart';
@@ -22,8 +23,10 @@ class AddBankDetails extends StatefulWidget {
 class _AddBankDetailsState extends State<AddBankDetails> {
   final homeCon = Get.put(HomePageController());
   final walletCon = Get.find<WalletController>();
+
   // var walletCon = Get.find<WalletController>();
   final controller = Get.put<MyAccountPageController>(MyAccountPageController());
+
   // final exitController = Get.put<DoubleTapExitController>(DoubleTapExitController());
   @override
   void initState() {
@@ -47,45 +50,64 @@ class _AddBankDetailsState extends State<AddBankDetails> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                color: AppColors.appbarColor,
-                padding: const EdgeInsets.all(10),
-                child: SafeArea(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              walletCon.selectedIndex.value = null;
-                              controller.bankNameController.clear();
-                              controller.accHolderNameController.clear();
-                              controller.accNoController.clear();
-                              controller.ifscCodeController.clear();
-                            },
-                            child: Icon(Icons.arrow_back, color: AppColors.white),
-                          ),
-                          const SizedBox(width: 5),
-                        ],
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          "Add bank details",
-                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.white,
-                            fontSize: Dimensions.h17,
-                          ),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                    ],
-                  ),
+              CommonAppBar(
+                title: "Add bank details",
+                titleTextStyle: CustomTextStyle.textRobotoMedium.copyWith(
+                  fontSize: Dimensions.h17,
+                  color: AppColors.white,
                 ),
+                leading: GestureDetector(
+                    onTap: () {
+                      walletCon.selectedIndex.value = null;
+                      controller.bankNameController.clear();
+                      controller.accHolderNameController.clear();
+                      controller.accNoController.clear();
+                      controller.ifscCodeController.clear();
+                      Get.back();
+                    },
+                    child: Icon(Icons.arrow_back, size: 28)),
               ),
+              // Container(
+              //   color: AppColors.appbarColor,
+              //   padding: const EdgeInsets.all(10),
+              //   child: SafeArea(
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Row(
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: [
+              //             InkWell(
+              //               onTap: () {
+              //                 walletCon.selectedIndex.value = null;
+              //                 controller.bankNameController.clear();
+              //                 controller.accHolderNameController.clear();
+              //                 controller.accNoController.clear();
+              //                 controller.ifscCodeController.clear();
+              //               },
+              //               child: Icon(Icons.arrow_back, color: AppColors.white),
+              //             ),
+              //             const SizedBox(width: 5),
+              //           ],
+              //         ),
+              //         const Expanded(child: SizedBox()),
+              //         Expanded(
+              //           child: Text(
+              //             textAlign: TextAlign.center,
+              //             "Add bank details",
+              //             maxLines: 2,
+              //             overflow: TextOverflow.visible,
+              //             style: CustomTextStyle.textRobotoSansMedium.copyWith(
+              //               color: AppColors.white,
+              //               fontSize: Dimensions.h17,
+              //             ),
+              //           ),
+              //         ),
+              //         const Expanded(child: SizedBox()),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: Dimensions.h10),
               Expanded(
                 child: SingleChildScrollView(
@@ -155,7 +177,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                                 letterSpacing: 1,
                                 borderRadius: 5,
                                 borderWidth: 0,
-                                textStyle: CustomTextStyle.textPTsansMedium,
+                                textStyle: CustomTextStyle.textRobotoMedium,
                                 onTap: () => _showExitDialog(),
                                 height: 40,
                                 width: 200,
@@ -192,7 +214,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                 Text(
                   "Please Contact Admin to edit",
                   textAlign: TextAlign.center,
-                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  style: CustomTextStyle.textRamblaMedium.copyWith(
                     color: AppColors.appbarColor,
                     fontWeight: FontWeight.w700,
                     fontSize: Dimensions.h16,
@@ -201,7 +223,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                 Text(
                   "Bank details",
                   textAlign: TextAlign.center,
-                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                  style: CustomTextStyle.textRamblaMedium.copyWith(
                     color: AppColors.appbarColor,
                     fontWeight: FontWeight.w700,
                     fontSize: Dimensions.h16,

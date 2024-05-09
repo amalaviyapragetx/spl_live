@@ -30,10 +30,11 @@ class CreateWithDrawalPageController extends GetxController {
   final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
   final walletCon = Get.put<WalletController>(WalletController());
+
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
     final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-
+    print("userIduserId ${userId}");
     userId = userData.id == null ? "" : userData.id.toString();
 
     if (userId.isNotEmpty) {

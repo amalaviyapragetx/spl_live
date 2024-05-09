@@ -20,9 +20,9 @@ class NormalMarketsList extends StatelessWidget {
       () => normalMarketList != null
           ? normalMarketList!.isNotEmpty
               ? Column(
-                  children: [
+                  children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: const EdgeInsets.symmetric(vertical: 14.0),
                       child: InkWell(
                         onTap: () => launch("https://wa.me/+917769826748/?text=hi"),
                         child: Container(
@@ -47,7 +47,7 @@ class NormalMarketsList extends StatelessWidget {
                               const SizedBox(width: 4),
                               Text(
                                 "+91 7769826748",
-                                style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white),
+                                style: CustomTextStyle.textRobotoMedium.copyWith(color: AppColors.white),
                               ),
                             ],
                           ),
@@ -55,14 +55,14 @@ class NormalMarketsList extends StatelessWidget {
                       ),
                     ),
                     GridView.builder(
-                      padding: EdgeInsets.all(Dimensions.h5),
+                      // padding: EdgeInsets.all(Dimensions.h5),
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: Get.width / 2,
                         mainAxisExtent: Get.width / 2.4,
-                        crossAxisSpacing: 0,
-                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 4,
+                        mainAxisSpacing: 16,
                       ),
                       itemCount: normalMarketList?.length ?? 0,
                       itemBuilder: (context, i) {
@@ -95,13 +95,13 @@ class NormalMarketsList extends StatelessWidget {
                                   SizedBox(height: Dimensions.h10),
                                   Text(
                                     "${normalMarketList![i].openTime ?? " "} | ${normalMarketList![i].closeTime ?? ""}",
-                                    style: CustomTextStyle.textRobotoSansLight.copyWith(fontWeight: FontWeight.w300),
+                                    style: CustomTextStyle.textRobotoMedium.copyWith(fontWeight: FontWeight.w400),
                                   ),
                                   Text(
                                     normalMarketList?[i].market ?? "",
                                     // "MADHUR DAY",
-                                    style: CustomTextStyle.textPTsansBold.copyWith(
-                                      fontWeight: FontWeight.w800,
+                                    style: CustomTextStyle.textRobotoMedium.copyWith(
+                                      fontWeight: FontWeight.w600,
                                       fontSize: Dimensions.h14,
                                     ),
                                   ),
@@ -198,7 +198,7 @@ class NormalMarketsList extends StatelessWidget {
       }
       return Text(
         isOpenResult ? "$result - ${sum % 10}" : "${sum % 10} - $result",
-        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+        style: CustomTextStyle.textRobotoMedium.copyWith(
           fontSize: Dimensions.h13,
           fontWeight: FontWeight.bold,
           color: AppColors.redColor,
@@ -208,7 +208,7 @@ class NormalMarketsList extends StatelessWidget {
     } else if (result == 0 && result.toString().isNotEmpty && resultDeclared) {
       return Text(
         isOpenResult ? "000 - $result" : "$result - 000",
-        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+        style: CustomTextStyle.textRobotoMedium.copyWith(
           fontSize: Dimensions.h13,
           fontWeight: FontWeight.bold,
           color: AppColors.redColor,

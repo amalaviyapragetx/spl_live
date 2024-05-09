@@ -427,13 +427,13 @@ class HomeScreenUtils {
                                     child: Text(
                                       marketData.isBidOpenForClose == true ? "Bidding is Open" : "Bidding is Closed",
                                       style: marketData.isBidOpenForClose == true
-                                          ? CustomTextStyle.textPTsansMedium.copyWith(
+                                          ? CustomTextStyle.textRobotoMedium.copyWith(
                                               color: AppColors.greenShade,
-                                              fontWeight: FontWeight.w500,
+                                              fontWeight: FontWeight.w400,
                                             )
-                                          : CustomTextStyle.textPTsansMedium.copyWith(
+                                          : CustomTextStyle.textRobotoMedium.copyWith(
                                               color: AppColors.redColor,
-                                              fontWeight: FontWeight.w500,
+                                              fontWeight: FontWeight.w400,
                                             ),
                                     ),
                                   ),
@@ -463,13 +463,7 @@ class HomeScreenUtils {
           FittedBox(
             child: Padding(
               padding: EdgeInsets.only(left: Dimensions.w15, bottom: 2),
-              child: Text(
-                "PLAY2".tr,
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text("PLAY2".tr, style: CustomTextStyle.textRobotoSlabMedium),
             ),
           ),
           FittedBox(
@@ -478,6 +472,7 @@ class HomeScreenUtils {
               child: Icon(
                 Icons.play_circle_fill,
                 color: AppColors.white,
+                size: 16,
               ),
             ),
           ),

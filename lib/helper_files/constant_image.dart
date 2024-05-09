@@ -50,4 +50,21 @@ class ConstantImage {
   static String sendWatchIcon = "assets/images/send_watch_icon.svg";
   static String filter = "assets/images/filter.svg";
   static String close = "assets/images/close.svg";
+
+  static String stopWatch_1 = "assets/images/stop_watch_1.svg";
+  static String stopWatch_2 = "assets/images/stop_watch_2.svg";
+  static String stopWatch_3 = "assets/images/stop_watch_3.svg";
+  static String stopWatch_4 = "assets/images/stop_watch_4.svg";
+  static String stopWatch_5 = "assets/images/stop_watch_5.svg";
+  static String stopWatch_6 = "assets/images/stop_watch_6.svg";
+  static String stopWatch_7 = "assets/images/stop_watch_7.svg";
+  static String stopWatch_8 = "assets/images/stop_watch_8.svg";
+  static String stopWatch_9 = "assets/images/stop_watch_9.svg";
+  static String stopWatch_10 = "assets/images/stop_watch_10.svg";
+  static String stopWatch_11 = "assets/images/stop_watch_11.svg";
+  static String stopWatch_12 = "assets/images/stop_watch_12.svg";
+  static String bid_histroy_bottom = "assets/images/bid_histroy_bottom.svg";
+  static String market_result = "assets/images/market_result.svg";
+  static String starline_bid_history = "assets/images/starline_bid_history.svg";
+  static String starline_res_history = "assets/images/starline_res_history.svg";
 }

@@ -81,6 +81,7 @@ class UserDetailsPage extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   formatter: [
                     FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$')),
+                    FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
                     LengthLimitingTextInputFormatter(20)
                   ],
                   // onFieldSubmitted: (v) => controller.checkUserName(username: v),

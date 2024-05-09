@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
-import 'package:spllive/screens/new_ui/bottom_bar_screens/set_filter.dart';
 
 import '../../helper_files/common_utils.dart';
 import '../../helper_files/constant_image.dart';
@@ -55,10 +54,10 @@ class BidHistory extends StatelessWidget {
               ),
             ],
           ),
-          actions: [
-            InkWell(onTap: () => Get.to(() => const SetFilter()), child: SvgPicture.asset(ConstantImage.filter)),
-            SizedBox(width: Dimensions.w10),
-          ],
+          // actions: [
+          //   InkWell(onTap: () => Get.to(() => const SetFilter()), child: SvgPicture.asset(ConstantImage.filter)),
+          //   SizedBox(width: Dimensions.w10),
+          // ],
         ),
         Expanded(
           child: bidHistoryList(),

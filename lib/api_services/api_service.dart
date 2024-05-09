@@ -1,9 +1,13 @@
+import 'dart:developer' as developer;
+
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/BankHistory.dart';
 import 'package:spllive/models/FundTransactionModel.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
+import 'package:spllive/models/get_withdrawal_time.dart';
 import 'package:spllive/models/tikets_model.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -17,6 +21,7 @@ class ApiService extends GetConnect implements GetxService {
   String contentType = "";
   String authToken = '';
   final allowAutoSignedCert = true;
+
   @override
   void onInit() {
     allowAutoSignedCert = true;
@@ -42,7 +47,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headers,
       // contentType: contentType,
     );
-    print(response.body);
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
@@ -62,7 +69,9 @@ class ApiService extends GetConnect implements GetxService {
         body,
         headers: headers,
       );
-
+      if (kDebugMode) {
+        developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+      }
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();
         AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
@@ -85,7 +94,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headers,
       // contentType: contentType,
     );
-
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
 
@@ -105,6 +116,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
       // contentType: contentType,
     );
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
 
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
@@ -127,7 +141,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headers,
       // contentType: contentType,
     );
-
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -149,7 +165,9 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
       // contentType: contentType,
     );
-
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -169,6 +187,9 @@ class ApiService extends GetConnect implements GetxService {
       ApiUtils.getBankDetails,
       headers: headersWithToken,
     );
+    if (kDebugMode) {
+      developer.log("RESPONSE HEADER URl:  ${response.request?.url} RESPONSE : ${response.body} ");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -212,6 +233,9 @@ class ApiService extends GetConnect implements GetxService {
       ApiUtils.getDailyMarkets,
       headers: headersWithToken,
     );
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -326,6 +350,58 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
     );
 
+    if (kDebugMode) {
+      developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
+    }
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      // if (response.status.code != null && response.status.code == 401) {
+      //   tokenExpired();
+      // }
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getResultHistory({
+    required String? startDate,
+  }) async {
+    await initApiService();
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+      "${ApiUtils.getDailyStarLineMarkets}?startDate=$startDate&endDate=$startDate",
+      headers: headersWithToken,
+    );
+
+    if (kDebugMode) {
+      developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
+    }
+    if (response.status.hasError) {
+      AppUtils.hideProgressDialog();
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getMarketsHistory({
+    required String? startDate,
+  }) async {
+    Future.delayed(const Duration(milliseconds: 2), () {
+      AppUtils.showProgressDialog(isCancellable: false);
+    });
+
+    await initApiService();
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+      "${ApiUtils.marketResult}?date=$startDate",
+      headers: headersWithToken,
+    );
+
+    if (kDebugMode) {
+      developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       // if (response.status.code != null && response.status.code == 401) {
@@ -398,9 +474,17 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+<<<<<<< HEAD
       "${ApiUtils.getFeedbackAndRatingsById}",
+=======
+      // "${ApiUtils.getFeedbackAndRatingsById}$userId",
+      ApiUtils.getFeedbackAndRatingsById,
+>>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -420,10 +504,18 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+<<<<<<< HEAD
       "${ApiUtils.getWithdrawalHistoryByUserId}",
+=======
+      // "${ApiUtils.getWithdrawalHistoryByUserId}$userId",
+      ApiUtils.getWithdrawalHistoryByUserId,
+>>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
 
+    if (kDebugMode) {
+      developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -532,7 +624,9 @@ class ApiService extends GetConnect implements GetxService {
       body,
       headers: headersWithToken,
     );
-
+    if (kDebugMode) {
+      developer.log("Resqeust URL  ${response.request?.url} response ${response.body}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -713,13 +807,34 @@ class ApiService extends GetConnect implements GetxService {
     } catch (e) {}
   }
 
+  Future<dynamic> getWithBankDetails() async {
+    try {
+      await initApiService();
+      final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
+        ApiUtils.checkBankDetails,
+        headers: headersWithToken,
+      );
+      if (kDebugMode) {
+        developer.log("RESPONSE : ${response.body} RESPONSE request?.url:  ${response.request?.url}");
+      }
+      if (response.status.hasError) {
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        return response.body;
+      }
+    } catch (e) {}
+  }
+
   Future<dynamic> getBidHistoryByUserId({
     required String userId,
     required String limit,
     required String offset,
     required bool isStarline,
     required String? startDate,
-    required String? endDate,
+    String? endDate,
     String? winningStatus,
     List<int>? markets,
   }) async {
@@ -736,6 +851,43 @@ class ApiService extends GetConnect implements GetxService {
           "winningStatus": winningStatus,
           "markets": markets?.join(","),
         });
+    if (kDebugMode) {
+      developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
+    }
+    if (response.status.hasError) {
+      if (response.status.code != null && response.status.code == 401) {
+        tokenExpired();
+      }
+      AppUtils.hideProgressDialog();
+      return Future.error(response.statusText!);
+    } else {
+      AppUtils.hideProgressDialog();
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getStarBidHistoryByUserId({
+    required String userId,
+    required String limit,
+    required String offset,
+    required bool isStarline,
+    required String? startDate,
+    String? winningStatus,
+    List<int>? markets,
+  }) async {
+    // AppUtils.showProgressDialog(isCancellable: false);
+    await initApiService();
+    final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true)
+        .get(ApiUtils.starlineMarketBidHistory, headers: headersWithToken, query: {
+      "limit": limit,
+      "offset": offset,
+      "date": startDate,
+      "winningStatus": winningStatus,
+      "markets": markets?.join(","),
+    });
+    if (kDebugMode) {
+      developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
+    }
     if (response.status.hasError) {
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
@@ -903,7 +1055,7 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> bidHistoryByUserId(
-      {String? userId, String? gameType, String? winningStatus, List<int>? markets}) async {
+      {String? userId, String? gameType, String? winningStatus, List<int>? markets, String? date}) async {
     try {
       AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
@@ -916,8 +1068,12 @@ class ApiService extends GetConnect implements GetxService {
           "bidType": gameType,
           "winningStatus": winningStatus,
           "markets": markets?.join(","),
+          "date": date,
         },
       );
+      if (kDebugMode) {
+        developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body}");
+      }
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();
         return Future.error(response.statusText!);
@@ -999,6 +1155,10 @@ class ApiService extends GetConnect implements GetxService {
       ApiUtils.resetNotificationCount,
       headers: headersWithToken,
     );
+    if (kDebugMode) {
+      developer.log(
+          "RESPONSE : ${response.body} RESPONSE REQUEST URI:  ${response.request?.url} RESPONSE REQUEST HEDER:  ${response.request?.headers}");
+    }
     if (response.status.hasError) {
       // if (response.status.code != null && response.status.code == 401) {
       //   tokenExpired();
@@ -1062,6 +1222,9 @@ class ApiService extends GetConnect implements GetxService {
       ApiUtils.bennerApi,
       headers: headersWithToken,
     );
+    if (kDebugMode) {
+      developer.log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -1151,6 +1314,40 @@ class ApiService extends GetConnect implements GetxService {
         {"amount": "$amount.00"},
         headers: headersWithToken,
       );
+      if (kDebugMode) {
+        developer.log(
+            "RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} RESPONSE STATUS CODE:  ${headersWithToken} ");
+      }
+      if (response.status.hasError) {
+        AppUtils.hideProgressDialog();
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        AppUtils.hideProgressDialog();
+        return response.body;
+      }
+    } catch (e) {
+      AppUtils.hideProgressDialog();
+    }
+  }
+
+  Future<dynamic> getPaymentStatus(paymentId) async {
+    try {
+      AppUtils.showProgressDialog(isCancellable: false);
+      await initApiService();
+      final response = await GetConnect(timeout: Duration(seconds: 20), allowAutoSignedCert: true).post(
+        ApiUtils.paymentStatus,
+        {"paymentId": paymentId},
+        // {"paymentId": 25},
+        headers: headersWithToken,
+      );
+      if (kDebugMode) {
+        developer.log(
+            "RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} RESPONSE STATUS CODE:  ${response.statusCode} ");
+      }
+
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();
         if (response.status.code != null && response.status.code == 401) {
@@ -1173,6 +1370,9 @@ class ApiService extends GetConnect implements GetxService {
           "${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}",
           headers: headersWithToken,
           query: {"search": ""});
+      if (kDebugMode) {
+        developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
+      }
       // print("${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}");
       if (response.status.hasError) {
         if (response.status.code != null && response.status.code == 401) {
@@ -1227,6 +1427,32 @@ class ApiService extends GetConnect implements GetxService {
       } else {
         AppUtils.hideProgressDialog();
         return BankHistory.fromJson(response.body);
+      }
+    } catch (e) {
+      AppUtils.hideProgressDialog();
+      return null;
+    }
+  }
+
+  Future<GetWithdrawalTiming?> getWithDrawalTime() async {
+    try {
+      await initApiService();
+      final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
+        ApiUtils.getWithdrawal,
+        headers: headersWithToken,
+      );
+      if (kDebugMode) {
+        developer.log("RESPONSE HEADER url:  ${response.request?.url} RESPONSE : ${response.body} ");
+      }
+      if (response.status.hasError) {
+        AppUtils.hideProgressDialog();
+        if (response.status.code != null && response.status.code == 401) {
+          tokenExpired();
+        }
+        return Future.error(response.statusText!);
+      } else {
+        AppUtils.hideProgressDialog();
+        return GetWithdrawalTiming.fromJson(response.body);
       }
     } catch (e) {
       AppUtils.hideProgressDialog();

@@ -52,7 +52,9 @@ class SignInPageController extends GetxController {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
       } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        print("value['message'].length >= 15 ${value['message'].length}");
+        print("value['message'].length >= 15 ${value['message'].length <= 17}");
+        AppUtils().accountFlowDialog(msg: value['message']);
       }
     });
   }
@@ -61,11 +63,14 @@ class SignInPageController extends GetxController {
     FocusManager.instance.primaryFocus?.unfocus();
     Get.closeAllSnackbars();
     if (mobileNumberController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERMOBILENUMBER".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
     } else if (mobileNumberController.text.length < 10) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERVALIDNUMBER".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
     } else if (passwordController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERPASSWORD".tr);
+      AppUtils().accountFlowDialog(msg: "Please_enter_password".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERPASSWORD".tr);
     } else {
       callSignInApi();
     }

@@ -33,6 +33,12 @@ void main() async {
   await GetStorage.init();
   final appStateListener = AppStateListener();
   WidgetsBinding.instance.addObserver(appStateListener);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: AppColors.appBlueDarkColor,
+    statusBarBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
   runApp(const MyApp());
 }
 
@@ -48,6 +54,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final con = Get.put<InactivityController>(InactivityController());
   bool _jailbroken = false;
+
   @override
   void initState() {
     super.initState();
@@ -77,6 +84,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarColor: AppColors.appBlueDarkColor,
+    //   statusBarBrightness: Brightness.dark,
+    //   statusBarIconBrightness: Brightness.light,
+    //   systemNavigationBarIconBrightness: Brightness.dark,
+    // ));
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (context, child) {
@@ -146,6 +159,7 @@ class MyHttpOverrides extends HttpOverrides {
 
 class AppStateListener extends WidgetsBindingObserver {
   final con = Get.put<InactivityController>(InactivityController());
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
