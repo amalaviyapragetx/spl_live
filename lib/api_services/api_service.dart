@@ -474,12 +474,7 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-<<<<<<< HEAD
-      "${ApiUtils.getFeedbackAndRatingsById}",
-=======
-      // "${ApiUtils.getFeedbackAndRatingsById}$userId",
       ApiUtils.getFeedbackAndRatingsById,
->>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
     if (kDebugMode) {
@@ -504,12 +499,8 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-<<<<<<< HEAD
-      "${ApiUtils.getWithdrawalHistoryByUserId}",
-=======
       // "${ApiUtils.getWithdrawalHistoryByUserId}$userId",
       ApiUtils.getWithdrawalHistoryByUserId,
->>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
 
@@ -1045,6 +1036,11 @@ class ApiService extends GetConnect implements GetxService {
       "${ApiUtils.passBookApi}/?isAll=$isAll&limit=$limit&offset=$offset",
       headers: headersWithToken,
     );
+
+    if (kDebugMode) {
+      developer.log(
+          "RESPONSE HEADER:  ${response.request?.url}  RESPONSE HEADER:  ${response.request?.headers} RESPONSE : ${response.body}");
+    }
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       return Future.error(response.statusText!);
@@ -1259,11 +1255,16 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> fcmToken(body) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
+    print("djsdhsjds ${body}");
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.fcmToken,
       body,
       headers: headersWithToken,
     );
+    if (kDebugMode) {
+      developer
+          .log("RESPONSE : ${response.body} RESPONSE HEADER:  ${response.request?.url} ${response.request?.headers}");
+    }
     if (response.status.hasError) {
       //  AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -1339,8 +1340,8 @@ class ApiService extends GetConnect implements GetxService {
       await initApiService();
       final response = await GetConnect(timeout: Duration(seconds: 20), allowAutoSignedCert: true).post(
         ApiUtils.paymentStatus,
-        {"paymentId": paymentId},
-        // {"paymentId": 25},
+        // {"paymentId": paymentId},
+        {"paymentId": 25},
         headers: headersWithToken,
       );
       if (kDebugMode) {
@@ -1523,7 +1524,6 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
-      // print(e.toString());
       return null;
     }
   }

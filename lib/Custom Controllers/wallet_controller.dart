@@ -350,9 +350,9 @@ class WalletController extends GetxController {
               Container(
                 padding: const EdgeInsets.all(4.0),
                 decoration: BoxDecoration(
-                  color: value['data']['Status'] == "Pending" || value['data']['Status'] == "Processing"
+                  color: value['data']['Status'] == "Pending" || value['data']['Status'] == "InProcess"
                       ? Colors.yellow.shade600
-                      : value['data']['Status'] == "Ok"
+                      : value['data']['Status'] == "Success"
                           ? Colors.green
                           : Colors.red,
                   shape: BoxShape.circle,
@@ -361,9 +361,9 @@ class WalletController extends GetxController {
                   child: Icon(
                     value['data']['Status'] == "Pending"
                         ? Icons.pending_actions
-                        : value['data']['Status'] == "Ok"
+                        : value['data']['Status'] == "Success"
                             ? Icons.check_rounded
-                            : value['data']['Status'] == "Processing"
+                            : value['data']['Status'] == "InProcess"
                                 ? Icons.check_rounded
                                 : Icons.close,
                     color: AppColors.white,
@@ -373,28 +373,31 @@ class WalletController extends GetxController {
               ),
               const SizedBox(height: 15),
               Text(
-                "Payment ${value['data']['Status'] == "Pending" ? "Pending" : value['data']['Status'] == "Ok" ? "Successful" : value['data']['Status'] == "Processing" ? "Processing" : "Failed"}",
+                "Payment ${value['data']['Status'] == "Pending" ? "Pending" : value['data']['Status'] == "Success" ? "Successful" : value['data']['Status'] == "InProcess" ? "Processing" : "Failed"}",
                 style: CustomTextStyle.textRobotoSansBold.copyWith(
-                  color: value['data']['Status'] == "Pending" || value['data']['Status'] == "Processing"
+                  color: value['data']['Status'] == "Pending" || value['data']['Status'] == "InProcess"
                       ? Colors.yellow.shade600
-                      : value['data']['Status'] == "Ok"
+                      : value['data']['Status'] == "Success"
                           ? Colors.green
                           : Colors.red,
                 ),
               ),
-              Visibility(visible: value['data']['Status'] == "Ok", child: const SizedBox(height: 10)),
+              Visibility(visible: value['data']['Status'] == "Success", child: const SizedBox(height: 10)),
               Visibility(
-                visible: value['data']['Status'] == "Ok",
+                visible: value['data']['Status'] == "Success",
                 child: Text(
                   "We have received the payment of",
                   style: CustomTextStyle.textRobotoSansMedium,
                   textAlign: TextAlign.center,
                 ),
               ),
-              Text(
-                "\n₹ ${value['data']['Amount']}",
-                style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 20),
-                textAlign: TextAlign.center,
+              Visibility(
+                visible: value['data']['Amount'] != null,
+                child: Text(
+                  "\n₹ ${value['data']['Amount']}",
+                  style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(height: 10),
               Padding(

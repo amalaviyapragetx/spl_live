@@ -14,8 +14,8 @@ import 'models/commun_models/user_details_model.dart';
 import 'routes/app_routes_name.dart';
 
 class InactivityController extends GetxController {
-  Timer? _inactivityTimer;
-  final Duration _inactivityDuration = const Duration(seconds: 180);
+  Timer? inactivityTimer;
+  final Duration inactivityDuration = const Duration(seconds: 180);
 
   @override
   void onInit() async {
@@ -24,9 +24,9 @@ class InactivityController extends GetxController {
   }
 
   void resetInactivityTimer() {
-    _inactivityTimer?.cancel();
+    inactivityTimer?.cancel();
     if (GetStorage().read(ConstantsVariables.authToken) != null) {
-      _inactivityTimer = Timer(_inactivityDuration, () => _showExitDialog());
+      inactivityTimer = Timer(inactivityDuration, () => _showExitDialog());
     }
   }
 
@@ -61,7 +61,7 @@ class InactivityController extends GetxController {
 
   @override
   void onClose() {
-    _inactivityTimer?.cancel();
+    inactivityTimer?.cancel();
     super.onClose();
   }
 
@@ -121,17 +121,17 @@ class InactivityController extends GetxController {
                       AppRoutName.mPINPage,
                       arguments: {"id": _userDetailsModel.id},
                     );
-                    _inactivityTimer?.cancel();
+                    inactivityTimer?.cancel();
                   }
                 } else {
-                  _inactivityTimer?.cancel();
+                  inactivityTimer?.cancel();
                 }
               } else {
                 Get.offAllNamed(
                   AppRoutName.mPINPage,
                   arguments: {"id": _userDetailsModel.id},
                 );
-                _inactivityTimer?.cancel();
+                inactivityTimer?.cancel();
               }
             }
           },

@@ -9,9 +9,21 @@ import 'package:spllive/routes/app_routes_name.dart';
 import '../../components/simple_button_with_corner.dart';
 import 'controller/welcome_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
   var controller = Get.put(WelcomeScreenController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var verticalSpace = SizedBox(height: Dimensions.h10);

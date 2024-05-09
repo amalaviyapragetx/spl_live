@@ -63,6 +63,7 @@ class _MyAppState extends State<MyApp> {
     NotificationServices().firebaseInit(context);
     NotificationServices().setuoIntrectMessege(context);
     NotificationServices().getDeviceToken().then((value) => GetStorage().write(ConstantsVariables.fcmToken, value));
+    print("ConstantsVariables.fcmTokenConstantsVariables.fcmToken ${GetStorage().read(ConstantsVariables.fcmToken)}");
     //   initPlatformState();
   }
 
