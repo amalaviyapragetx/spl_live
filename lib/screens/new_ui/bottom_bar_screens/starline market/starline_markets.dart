@@ -24,8 +24,6 @@ class StarlineDailyMarketData extends StatefulWidget {
 
 class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
   final starlineCon = Get.put<StarlineMarketController>(StarlineMarketController());
-  // final homeCon = Get.put<HomeController>(HomeController());
-  // final walletCon = Get.put<WalletController>(WalletController());
 
   @override
   void initState() {
@@ -37,9 +35,9 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
     return WillPopScope(
       onWillPop: () async {
+        print("************************************************");
         for (var e in starlineCon.starlineButtonList) {
           e.isSelected.value = false;
         }
@@ -57,13 +55,13 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
         starlineCon.selectedIndex.value = null;
         return false;
       },
-      child: RefreshIndicator(
-        onRefresh: () async {
-          starlineCon.getStarlineBanner();
-          starlineCon.getDailyStarLineMarkets();
-        },
-        child: Scaffold(
-          body: Column(
+      child: Scaffold(
+        body: RefreshIndicator(
+          onRefresh: () async {
+            starlineCon.getStarlineBanner();
+            starlineCon.getDailyStarLineMarkets();
+          },
+          child: Column(
             children: [
               GetBuilder<WalletController>(
                 builder: (c) => CommonAppBar(

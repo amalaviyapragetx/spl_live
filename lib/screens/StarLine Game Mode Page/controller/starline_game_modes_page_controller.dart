@@ -8,7 +8,6 @@ import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
-import 'package:spllive/screens/new_ui/bottom_bar_screens/starline%20market/starline_markets.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/common_utils.dart';
@@ -41,7 +40,8 @@ class StarLineGameModesPageController extends GetxController {
   }
 
   onBackButton() async {
-    Get.offAll(() => const StarlineDailyMarketData());
+    Get.back();
+    // Get.offAll(() => const StarlineDailyMarketData());
     requestModel.value.bids?.clear();
     GetStorage().write(ConstantsVariables.starlineBidsList, requestModel.value.bids);
   }
@@ -183,9 +183,7 @@ class StarLineGameModesPageController extends GetxController {
         Get.back();
         if (value['data'] == false) {
           Get.back();
-          AppUtils.showErrorSnackBar(
-            bodyText: value['message'] ?? "",
-          );
+          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         } else {
           AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         }
@@ -193,9 +191,7 @@ class StarLineGameModesPageController extends GetxController {
         GetStorage().remove(ConstantsVariables.marketName);
         GetStorage().remove(ConstantsVariables.biddingType);
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }
@@ -215,10 +211,7 @@ class StarLineGameModesPageController extends GetxController {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                // Handle cancel button press
-                Get.back();
-              },
+              onPressed: () => Get.back(),
               child: Text(
                 'CANCLE',
                 style: CustomTextStyle.textPTsansBold.copyWith(
@@ -228,9 +221,7 @@ class StarLineGameModesPageController extends GetxController {
               ),
             ),
             TextButton(
-              onPressed: () {
-                createMarketBidApi();
-              },
+              onPressed: () => createMarketBidApi(),
               child: Text(
                 'OKAY',
                 style: CustomTextStyle.textPTsansBold.copyWith(

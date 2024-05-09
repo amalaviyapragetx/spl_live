@@ -243,7 +243,6 @@ class CreateWithDrawalPageController extends GetxController {
       "requestId": getRandomString(10),
       "amount": amountTextController.text
     };
-
     return createWithdrawalRequestBody;
   }
 }

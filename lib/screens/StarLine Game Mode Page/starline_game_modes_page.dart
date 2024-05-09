@@ -11,10 +11,16 @@ import '../../helper_files/dimentions.dart';
 import 'controller/starline_game_modes_page_controller.dart';
 
 // ignore: must_be_immutable
-class StarLineGameModesPage extends StatelessWidget {
+class StarLineGameModesPage extends StatefulWidget {
   StarLineGameModesPage({super.key});
+
+  @override
+  State<StarLineGameModesPage> createState() => _StarLineGameModesPageState();
+}
+
+class _StarLineGameModesPageState extends State<StarLineGameModesPage> {
+  final controller = Get.put<StarLineGameModesPageController>(StarLineGameModesPageController());
   var walletController = Get.put(WalletController());
-  final controller = Get.put(StarLineGameModesPageController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,38 +38,35 @@ class StarLineGameModesPage extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
           ),
           actions: [
-            InkWell(
-              onTap: () {},
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: Dimensions.h20,
-                    width: Dimensions.w25,
-                    child: SvgPicture.asset(
-                      ConstantImage.walletAppbar,
-                      color: AppColors.white,
-                      fit: BoxFit.fill,
-                    ),
+            Row(
+              children: [
+                SizedBox(
+                  height: Dimensions.h20,
+                  width: Dimensions.w25,
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    color: AppColors.white,
+                    fit: BoxFit.fill,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: Dimensions.r8,
-                      bottom: Dimensions.r5,
-                      left: Dimensions.r10,
-                      right: Dimensions.r10,
-                    ),
-                    child: Obx(
-                      () => Text(
-                        walletController.walletBalance.toString(),
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                          color: AppColors.white,
-                          fontSize: Dimensions.h17,
-                        ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: Dimensions.r8,
+                    bottom: Dimensions.r5,
+                    left: Dimensions.r10,
+                    right: Dimensions.r10,
+                  ),
+                  child: Obx(
+                    () => Text(
+                      walletController.walletBalance.toString(),
+                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        color: AppColors.white,
+                        fontSize: Dimensions.h17,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
@@ -87,38 +90,6 @@ class StarLineGameModesPage extends StatelessWidget {
   }
 
   // void showCustomAboutBoxDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     barrierColor: AppColors.black.withOpacity(0.3), // Transparent background
-  //     barrierDismissible: false, // Prevent users from dismissing the dialog by tapping outside
-  //     builder: (context) => _buildCustomAboutBoxDialog(),
-  //   );
-  // }
-
-  // Widget _buildCustomAboutBoxDialog() {
-  //   return Dialog(
-  //     backgroundColor: AppColors.transparent,
-  //     child: Container(
-  //       padding: const EdgeInsets.all(16.0),
-  //       decoration: BoxDecoration(
-  //         color: AppColors.white,
-  //         borderRadius: BorderRadius.circular(8.0),
-  //       ),
-  //       child: Row(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: [
-  //           const CircularProgressIndicator(),
-  //           SizedBox(width: Dimensions.w10),
-  //           Text(
-  //             "PLEASEWAIT".tr,
-  //             style: CustomTextStyle.textPTsansBold.copyWith(fontSize: Dimensions.h15),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget cardWidget(StarLineGameModesPageController controller, Size size) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -134,9 +105,7 @@ class StarLineGameModesPage extends StatelessWidget {
                 ? const EdgeInsets.only(left: 25, top: 10, bottom: 5, right: 7)
                 : const EdgeInsets.only(top: 10, bottom: 5, right: 25, left: 7),
             child: InkWell(
-              onTap: () {
-                controller.onTapOfGameModeTile(index);
-              },
+              onTap: () => controller.onTapOfGameModeTile(index),
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.white,

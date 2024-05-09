@@ -55,13 +55,9 @@ class SignUpPageController extends GetxController {
     FocusManager.instance.primaryFocus?.unfocus();
     Get.closeCurrentSnackbar();
     if (mobileNumberController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERMOBILENUMBER".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
     } else if (mobileNumberController.text.toString().length < 10) {
-      AppUtils.showErrorSnackBar(
-        bodyText: "ENTERVALIDNUMBER".tr,
-      );
+      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
     } else {
       callSignUpApi();
     }

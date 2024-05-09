@@ -32,7 +32,7 @@ class ForgotPasswordController extends GetxController {
             ConstantsVariables.phoneNumber: mobileNumberController.text,
             ConstantsVariables.countryCode: countryCode.value
           });
-          print(value);
+          // print(value);
         } else {
           Get.toNamed(AppRoutName.userDetailsPage);
         }

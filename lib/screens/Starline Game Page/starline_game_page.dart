@@ -26,6 +26,12 @@ class _StarLineGamePageState extends State<StarLineGamePage> {
   final walletController = Get.put(WalletController());
 
   @override
+  void initState() {
+    super.initState();
+    controller.getArguments();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Obx(

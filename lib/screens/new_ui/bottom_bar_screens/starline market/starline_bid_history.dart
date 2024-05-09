@@ -177,81 +177,87 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                             fontSize: 20,
                                           ),
                                         ),
-                                        Obx(
-                                          () => Expanded(
-                                            child: ScrollbarTheme(
-                                              data: ScrollbarThemeData(
-                                                thumbColor: MaterialStateProperty.all<Color>(AppColors.appbarColor),
-                                                trackColor: MaterialStateProperty.all<Color>(AppColors.appbarColor),
-                                              ),
-                                              child: Scrollbar(
-                                                trackVisibility: true,
-                                                thickness: 5,
-                                                radius: const Radius.circular(20),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
-                                                  child: ListView(
-                                                    shrinkWrap: true,
-                                                    physics: const BouncingScrollPhysics(),
-                                                    children: starlineCon.filterMarketList
-                                                        .map(
-                                                          (e) => Padding(
-                                                            padding: const EdgeInsets.symmetric(
-                                                                vertical: 5.0, horizontal: 5.0),
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                e.isSelected.value = !e.isSelected.value;
-                                                                if (e.isSelected.value) {
-                                                                  starlineCon.selectedFilterMarketList.add(e.id ?? 0);
-                                                                } else {
-                                                                  starlineCon.selectedFilterMarketList.clear();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(10),
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                        blurRadius: 6.97777795791626,
-                                                                        spreadRadius: 0.8722222447395325,
-                                                                        offset: const Offset(0, 0),
-                                                                        color: AppColors.black.withOpacity(0.25))
-                                                                  ],
-                                                                  color: AppColors.white,
-                                                                ),
-                                                                child: Row(
-                                                                  children: [
-                                                                    Checkbox(
-                                                                      activeColor: AppColors.appbarColor,
-                                                                      value: e.isSelected.value,
-                                                                      onChanged: (bool? value) {
-                                                                        e.isSelected.value = value ?? false;
-                                                                        if (e.isSelected.value) {
-                                                                          starlineCon.selectedFilterMarketList
-                                                                              .add(e.id ?? 0);
-                                                                        } else {
-                                                                          starlineCon.selectedFilterMarketList.clear();
-                                                                        }
-                                                                      },
+                                        starlineCon.filterMarketList.isEmpty
+                                            ? const Text("No market find")
+                                            : Obx(
+                                                () => Expanded(
+                                                  child: ScrollbarTheme(
+                                                    data: ScrollbarThemeData(
+                                                      thumbColor:
+                                                          MaterialStateProperty.all<Color>(AppColors.appbarColor),
+                                                      trackColor:
+                                                          MaterialStateProperty.all<Color>(AppColors.appbarColor),
+                                                    ),
+                                                    child: Scrollbar(
+                                                      trackVisibility: true,
+                                                      thickness: 5,
+                                                      radius: const Radius.circular(20),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(10.0),
+                                                        child: ListView(
+                                                          shrinkWrap: true,
+                                                          physics: const BouncingScrollPhysics(),
+                                                          children: starlineCon.filterMarketList
+                                                              .map(
+                                                                (e) => Padding(
+                                                                  padding: const EdgeInsets.symmetric(
+                                                                      vertical: 5.0, horizontal: 5.0),
+                                                                  child: InkWell(
+                                                                    onTap: () {
+                                                                      e.isSelected.value = !e.isSelected.value;
+                                                                      if (e.isSelected.value) {
+                                                                        starlineCon.selectedFilterMarketList
+                                                                            .add(e.id ?? 0);
+                                                                      } else {
+                                                                        starlineCon.selectedFilterMarketList.clear();
+                                                                      }
+                                                                    },
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
+                                                                        borderRadius: BorderRadius.circular(10),
+                                                                        boxShadow: [
+                                                                          BoxShadow(
+                                                                              blurRadius: 6.97777795791626,
+                                                                              spreadRadius: 0.8722222447395325,
+                                                                              offset: const Offset(0, 0),
+                                                                              color: AppColors.black.withOpacity(0.25))
+                                                                        ],
+                                                                        color: AppColors.white,
+                                                                      ),
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Checkbox(
+                                                                            activeColor: AppColors.appbarColor,
+                                                                            value: e.isSelected.value,
+                                                                            onChanged: (bool? value) {
+                                                                              e.isSelected.value = value ?? false;
+                                                                              if (e.isSelected.value) {
+                                                                                starlineCon.selectedFilterMarketList
+                                                                                    .add(e.id ?? 0);
+                                                                              } else {
+                                                                                starlineCon.selectedFilterMarketList
+                                                                                    .clear();
+                                                                              }
+                                                                            },
+                                                                          ),
+                                                                          Text(
+                                                                            e.name ?? "",
+                                                                            style: CustomTextStyle.textRobotoSansMedium
+                                                                                .copyWith(color: AppColors.black),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
-                                                                    Text(
-                                                                      e.name ?? "",
-                                                                      style: CustomTextStyle.textRobotoSansMedium
-                                                                          .copyWith(color: AppColors.black),
-                                                                    ),
-                                                                  ],
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                        .toList(),
+                                                              )
+                                                              .toList(),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ),

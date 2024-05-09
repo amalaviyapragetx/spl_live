@@ -299,21 +299,12 @@ class HomePageController extends GetxController {
   }
 
   Future<void> addFund({String? amount}) async {
-    // await _launchUrl(Uri.parse(
-    //     "upi://pay?ver=01&mode=15&am=10.00&mam=10.00&cu=INR&pa=absolut.transglobal%40timecosmos&pn=TRANSGLOBAL+MARKETING+SERVICES+PRIVATE+LIMITED&mc=5816&tr=ABSOLUT2204202422038&tn=QR&mid=THORN2245&msid=TRANS-5477&mtid=TRANS-5477&category=02&url=http://connect.absolutepe.com/"));
-    // //
     try {
       ApiService().addFund(amount: amount).then((value) async {
-        print("Fdsfkjsdhfkjdsh");
-        print(value);
         if (value['status']) {
           if (value['data'] != null) {
-            // if ( canLaunchUrl(Uri.parse(value['data']['qrString']))) {
-            await _launchUrl(Uri.parse(Uri.decodeFull(value['data']['upiId'])));
-
-            // } else {
-            //   AppUtils.showErrorSnackBar(bodyText: "Payment app not installed");
-            // }
+            // await _launchUrl(Uri.parse(Uri.decodeFull(value['data']['upiId'])));
+            await _launchUrl(Uri.parse(value['data']['qrString']));
           }
         } else {
           if (value['message'].toString().toLowerCase().contains("payment closed between")) {
@@ -358,41 +349,41 @@ class HomePageController extends GetxController {
         }
       });
     } catch (e) {
-      Get.defaultDialog(
-        barrierDismissible: false,
-        title: "",
-        titleStyle: const TextStyle(fontSize: 0),
-        onWillPop: () async => false,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "helo",
-              textAlign: TextAlign.center,
-              style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                color: AppColors.appbarColor,
-                fontWeight: FontWeight.w700,
-                fontSize: Dimensions.h17,
-              ),
-            ),
-            const SizedBox(height: 10),
-            InkWell(
-              onTap: () => Get.back(),
-              child: Container(
-                decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
-                height: Dimensions.h40,
-                width: Dimensions.w150,
-                child: Center(
-                  child: Text(
-                    'OK',
-                    style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+      // Get.defaultDialog(
+      //   barrierDismissible: false,
+      //   title: "",
+      //   titleStyle: const TextStyle(fontSize: 0),
+      //   onWillPop: () async => false,
+      //   content: Column(
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: [
+      //       Text(
+      //         "helo",
+      //         textAlign: TextAlign.center,
+      //         style: CustomTextStyle.textRobotoSansMedium.copyWith(
+      //           color: AppColors.appbarColor,
+      //           fontWeight: FontWeight.w700,
+      //           fontSize: Dimensions.h17,
+      //         ),
+      //       ),
+      //       const SizedBox(height: 10),
+      //       InkWell(
+      //         onTap: () => Get.back(),
+      //         child: Container(
+      //           decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
+      //           height: Dimensions.h40,
+      //           width: Dimensions.w150,
+      //           child: Center(
+      //             child: Text(
+      //               'OK',
+      //               style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // );
     }
   }
 
@@ -402,8 +393,6 @@ class HomePageController extends GetxController {
         throw Exception('Could not launch $url');
       }
     } catch (e) {
-      print('fsdjfhsdfskd');
-      print(e);
       Get.defaultDialog(
         backgroundColor: AppColors.white,
         title: "Error",

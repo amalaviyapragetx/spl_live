@@ -18,8 +18,6 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       //  resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -65,8 +63,7 @@ class SignUpScreen extends StatelessWidget {
                 maxLines: 1,
                 minLines: 1,
                 isEnabled: true,
-                maxLength: 10,
-                formatter: [FilteringTextInputFormatter.digitsOnly],
+                formatter: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
               ),
               SizedBox(height: Dimensions.h20),
               RoundedCornerButton(
