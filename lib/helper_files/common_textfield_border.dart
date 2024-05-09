@@ -83,15 +83,15 @@ class CommonTextFieldBorder extends StatelessWidget {
           prefixIcon: prefix,
           labelText: labelText,
           suffixIcon: suffix,
-          labelStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+          labelStyle: CustomTextStyle.textRobotoMedium.copyWith(
             color: hintTextColor ?? AppColors.black,
             fontWeight: hintTextFontWeight ?? FontWeight.w700,
-            fontSize: hintTextFontSize ?? 14,
+            fontSize: hintTextFontSize ?? 16,
           ),
-          hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+          hintStyle: CustomTextStyle.textRobotoMedium.copyWith(
             color: hintTextColor ?? AppColors.black,
             fontWeight: hintTextFontWeight ?? FontWeight.w600,
-            fontSize: hintTextFontSize ?? 18,
+            fontSize: hintTextFontSize ?? 20,
           ),
           fillColor: fillColor ?? AppColors.white,
           border: OutlineInputBorder(

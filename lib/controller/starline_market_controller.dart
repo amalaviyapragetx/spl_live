@@ -7,6 +7,7 @@ import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/commun_models/user_details_model.dart';
+import 'package:spllive/models/market_history.dart';
 import 'package:spllive/models/normal_market_bid_history_response_model.dart';
 import 'package:spllive/models/starline_daily_market_api_response.dart';
 import 'package:spllive/models/starlinechar_model/new_starlinechart_model.dart';
@@ -14,11 +15,11 @@ import 'package:spllive/models/starlinechar_model/new_starlinechart_model.dart';
 class StarlineMarketController extends GetxController {
   final selectedIndex = Rxn<int>();
   RxList<StarlineFilterModel> starlineButtonList = [
-    StarlineFilterModel(
-      isSelected: false.obs,
-      name: "BID HISTORY",
-      image: ConstantImage.bidHistoryIcon,
-    ),
+    // StarlineFilterModel(
+    //   isSelected: false.obs,
+    //   name: "BID HISTORY",
+    //   image: ConstantImage.bidHistoryIcon,
+    // ),
     StarlineFilterModel(isSelected: false.obs, name: "RESULT HISTORY", image: ConstantImage.resultHistoryIcons),
     StarlineFilterModel(isSelected: false.obs, name: "CHART", image: ConstantImage.chartIcon),
   ].obs;
@@ -27,7 +28,12 @@ class StarlineMarketController extends GetxController {
   RxList<StarlineMarketData> marketListForResult = <StarlineMarketData>[].obs;
   DateTime startEndDate = DateTime.now();
   DateTime bidHistoryDate = DateTime.now();
-  TextEditingController dateInputForResultHistory = TextEditingController();
+  String? starlineMarketDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  TextEditingController dateInputForResultHistory =
+      TextEditingController(text: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+
+  RxList<MarketHistoryList> marketHistoryListt = <MarketHistoryList>[].obs;
+  RxBool isMarketResults = false.obs;
 
   getDailyStarLineMarkets({String? startDate, String? endDate}) async {
     ApiService().getDailyStarLineMarkets(startDate: startDate ?? "", endDate: endDate ?? "").then((value) async {
@@ -39,6 +45,7 @@ class StarlineMarketController extends GetxController {
         starLineMarketList.forEach((e) {
           filterMarketList.add(FilterModel(isSelected: false.obs, name: e.time, id: e.starlineMarketId));
         });
+        print("filterMarketList ${filterMarketList.length}");
         if (starLineMarketList.isNotEmpty) {
           var biddingOpenMarketList =
               starLineMarketList.where((element) => element.isBidOpen == true && element.isBlocked == false).toList();
@@ -70,12 +77,61 @@ class StarlineMarketController extends GetxController {
     });
   }
 
+  TextEditingController dateResultHistory =
+      TextEditingController(text: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+
+  getResultHistory(String? startDate) async {
+    ApiService()
+        .getResultHistory(
+      startDate: startDate,
+    )
+        .then((value) async {
+      if (value['status']) {
+        StarLineDailyMarketApiResponseModel responseModel = StarLineDailyMarketApiResponseModel.fromJson(value);
+        marketListForResult.value = responseModel.data ?? <StarlineMarketData>[];
+        AppUtils.hideProgressDialog();
+        if (marketListForResult.isNotEmpty) {
+          marketListForResult.sort((a, b) {
+            DateTime dateTimeA = DateFormat('hh:mm a').parse(a.time ?? "00:00 AM");
+            DateTime dateTimeB = DateFormat('hh:mm a').parse(b.time ?? "00:00 AM");
+            return dateTimeA.compareTo(dateTimeB);
+          });
+        }
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+      }
+    });
+  }
+
+  getDailyMarketsResults() async {
+    isMarketResults.value = true;
+    ApiService()
+        .getMarketsHistory(
+      startDate: starlineMarketDate.toString().isEmpty ? null : starlineMarketDate.toString(),
+    )
+        .then((value) async {
+      if (value['status'] == true) {
+        MarketHistoryModel marketHistory = MarketHistoryModel.fromJson(value);
+        marketHistoryListt.value = marketHistory.data!;
+        isMarketResults.value = false;
+        update();
+      } else {
+        isMarketResults.value = false;
+        marketHistoryListt.clear();
+        print("isMarketResults.value ${isMarketResults.value} ${marketHistoryListt.value.length}");
+        update();
+      }
+    });
+  }
+
   ////// StarLine Bid history
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   TextEditingController dateinput = TextEditingController();
+  String? date;
   RxInt offset = 0.obs;
   UserDetailsModel userData = UserDetailsModel();
   RxBool isStarline = false.obs;
+  RxBool isStarlineBidHistory = false.obs;
 
   getUserData() async {
     final data = GetStorage().read(ConstantsVariables.userData);
@@ -83,16 +139,39 @@ class StarlineMarketController extends GetxController {
     // callFcmApi(userData.id);
   }
 
-  void getMarketBidsByUserId({
-    required bool lazyLoad,
-    required String startDate,
-    required String endDate,
-  }) {
+  void getMarketBidsByUserId() {
+    isStarlineBidHistory.value == true;
+    print("sjahsja ${date}");
     ApiService()
-        .getBidHistoryByUserId(
+        .getStarBidHistoryByUserId(
       userId: userData.id.toString(),
-      startDate: startDate,
-      endDate: endDate,
+      startDate: date == "null" ? null : date,
+      limit: "5000",
+      offset: offset.value.toString(),
+      isStarline: true,
+      winningStatus: "${isSelectedWinStatusIndex.value}",
+      markets: selectedFilterMarketList.value,
+    )
+        .then(
+      (value) async {
+        if (value['status']) {
+          if (value['data'] != null) {
+            NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
+            marketHistoryList.value = model.data?.resultArr;
+            isStarlineBidHistory.value == false;
+          }
+        } else {
+          isStarlineBidHistory.value == false;
+        }
+      },
+    );
+  }
+
+  void getStarlineBidsByUserId() {
+    ApiService()
+        .getStarBidHistoryByUserId(
+      userId: userData.id.toString(),
+      startDate: dateinput.text.isEmpty ? null : dateinput.text,
       limit: "5000",
       offset: offset.value.toString(),
       isStarline: true,
@@ -105,9 +184,7 @@ class StarlineMarketController extends GetxController {
           if (value['data'] != null) {
             marketHistoryList.clear();
             NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
-            lazyLoad
-                ? marketHistoryList.addAll(model.data?.resultArr ?? <ResultArr>[])
-                : marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
+            marketHistoryList.value = model.data?.resultArr ?? <ResultArr>[];
           }
         } else {
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
@@ -120,6 +197,7 @@ class StarlineMarketController extends GetxController {
 
   RxList<StarLineDateTime> starlineChartDateAndTime = <StarLineDateTime>[].obs;
   RxList<Markets> starlineChartTime = <Markets>[].obs;
+
   void callGetStarLineChart() async {
     ApiService().getStarlineChar().then((value) async {
       if (value['status']) {
@@ -136,6 +214,7 @@ class StarlineMarketController extends GetxController {
 
   RxString bannerImage = "".obs;
   RxBool bannerLoad = false.obs;
+
   void getStarlineBanner() async {
     try {
       bannerLoad.value = true;
@@ -183,7 +262,7 @@ class StarlineMarketController extends GetxController {
 class StarlineFilterModel {
   final String? image;
   final String? name;
-  final RxBool isSelected;
+  RxBool isSelected = false.obs;
   final void Function()? onTap;
 
   StarlineFilterModel({this.image, this.name, this.onTap, required this.isSelected});

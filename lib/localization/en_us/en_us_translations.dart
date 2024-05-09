@@ -2,7 +2,7 @@ final Map<String, String> enUs = {
   "SPL": "SPL",
   "MARKET": "MARKET",
   "STARLINE": "STARLINE",
-  "WELCOMEBACK": "Welcome Back",
+  "WELCOMEBACK": "Welcome Back!",
   "WELCOME": "Welcome",
   "SIGNIN": "Login",
   "SIGNUP": "I'am a new user, Register",
@@ -117,6 +117,9 @@ final Map<String, String> enUs = {
   "ENTERMOBILENUMBER": "Enter mobile number",
   "ENTERWHATSAPPNUMBER": "Enter what's app number",
   "ENTERPASSWORD": "Enter new password",
+
+  "Please_enter_password": "Please enter password",
+
   "ENTERCONFIRMPASSWORD": "Confirm password",
   "ENTERVALIDPASSWORD": "Enter valid password",
   "ENTERVALIDCONFIRMPASSWORD": "Enter valid confirm password",

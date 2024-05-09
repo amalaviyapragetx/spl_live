@@ -28,9 +28,10 @@ class SignUpPageController extends GetxController {
           "phoneNumber": mobileNumberController.text,
         });
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
+        AppUtils().accountFlowDialog(msg: value['message']);
       }
     });
   }
@@ -55,9 +56,11 @@ class SignUpPageController extends GetxController {
     FocusManager.instance.primaryFocus?.unfocus();
     Get.closeCurrentSnackbar();
     if (mobileNumberController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERMOBILENUMBER".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
     } else if (mobileNumberController.text.toString().length < 10) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERVALIDNUMBER".tr);
     } else {
       callSignUpApi();
     }

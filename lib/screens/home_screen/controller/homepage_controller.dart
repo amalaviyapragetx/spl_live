@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/routes/app_routes_name.dart';
 import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
+import 'package:spllive/screens/bottum_navigation_screens/bid_history.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -29,8 +31,6 @@ import '../../../models/notifiaction_models/notification_count_model.dart';
 import '../../../models/passbook_page_model.dart';
 import '../../../models/starline_daily_market_api_response.dart';
 import '../../../models/starlinechar_model/new_starlinechart_model.dart';
-import '../../../routes/app_routes_name.dart';
-import '../../bottum_navigation_screens/bid_history.dart';
 import '../../bottum_navigation_screens/moreoptions.dart';
 import '../../bottum_navigation_screens/passbook_page.dart';
 import '../utils/home_screen_utils.dart';
@@ -70,6 +70,7 @@ class HomePageController extends GetxController {
   RxList<MarketBidHistory> marketbidhistory1 = <MarketBidHistory>[].obs;
   RxList<dynamic> result = [].obs;
   Rx<Bidhistorymodel> bidMarketModel = Bidhistorymodel().obs;
+
   // Rx<MarketBidHistory> marketBidHistory = MarketBidHistory().obs;
   RxList<MarketBidHistoryList> marketBidHistoryList = <MarketBidHistoryList>[].obs;
   DateTime startEndDate = DateTime.now();
@@ -304,6 +305,7 @@ class HomePageController extends GetxController {
         if (value['status']) {
           if (value['data'] != null) {
             // await _launchUrl(Uri.parse(Uri.decodeFull(value['data']['upiId'])));
+            walletController.addFundID = value['data']['id'];
             await _launchUrl(Uri.parse(value['data']['qrString']));
           }
         } else {
@@ -427,6 +429,7 @@ class HomePageController extends GetxController {
   }
 
   TextEditingController addFundCon = TextEditingController();
+
   Widget getDashBoardPages(index, size, BuildContext context, {required String notifictionCount}) {
     switch (index) {
       case 0:
@@ -794,6 +797,7 @@ class HomePageController extends GetxController {
   }
 
   var cellValue;
+
   void callGetStarLineChart() async {
     ApiService().getStarlineChar().then((value) async {
       if (value['status']) {
@@ -991,6 +995,7 @@ class HomePageController extends GetxController {
   }
 
   RxList<TicketModel> newTicketsList = <TicketModel>[].obs;
+
   void getTickets() async {
     ApiService().getTickets().then((value) async {
       if (value['status']) {

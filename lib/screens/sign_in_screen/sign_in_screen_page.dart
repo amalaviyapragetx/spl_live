@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:get_storage/get_storage.dart' show GetStorage;
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
@@ -42,10 +42,9 @@ class _SignInScreenState extends State<SignInScreen> {
         systemOverlayStyle: AppUtils.toolBarStyleDark,
       ),
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            SizedBox(height: Get.height * 0.1),
+            // SizedBox(height: Get.height * 0.1),
             SizedBox(
               height: Dimensions.h70,
               width: Dimensions.w150,
@@ -54,21 +53,21 @@ class _SignInScreenState extends State<SignInScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(height: Dimensions.h20),
+            SizedBox(height: Dimensions.h18),
             Text(
               "WELCOMEBACK".tr,
-              style: CustomTextStyle.textPTsansMedium.copyWith(
-                fontWeight: FontWeight.w500,
-                fontSize: Dimensions.h12,
+              style: CustomTextStyle.textRobotoMedium.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: Dimensions.h22,
                 letterSpacing: 1,
-                color: AppColors.black.withAlpha(200),
+                color: AppColors.appbarColor,
               ),
             ),
             Text(
               "SIGNIN".tr,
-              style: CustomTextStyle.textRobotoSlabBold.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: Dimensions.h20,
+              style: CustomTextStyle.textRobotoMedium.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: Dimensions.h22,
                 letterSpacing: 1,
                 color: AppColors.appbarColor,
               ),
@@ -120,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   _buildSignInForm() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.h20),
+      padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
       child: Obx(
         () => Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -141,13 +140,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 text: "SIGNIN".tr,
                 color: AppColors.appbarColor,
                 borderColor: AppColors.appbarColor,
-                fontSize: Dimensions.h12,
-                fontWeight: FontWeight.w300,
+                fontSize: Dimensions.h14,
+                fontWeight: FontWeight.w500,
                 fontColor: AppColors.white,
                 letterSpacing: 0,
                 borderRadius: Dimensions.r25,
                 borderWidth: 1,
-                textStyle: CustomTextStyle.textRobotoSansLight,
+                textStyle: CustomTextStyle.textRobotoMedium,
                 onTap: () => controller.onTapOfSignIn(),
                 height: Dimensions.h30,
                 width: double.infinity,
@@ -162,14 +161,14 @@ class _SignInScreenState extends State<SignInScreen> {
               child: RoundedCornerButton(
                 text: "FORGOTPASS".tr,
                 color: AppColors.white,
-                borderColor: AppColors.appbarColor,
+                borderColor: AppColors.appBlueColor,
                 fontSize: Dimensions.h12,
-                fontWeight: FontWeight.w300,
-                fontColor: AppColors.appbarColor,
+                fontWeight: FontWeight.w500,
+                fontColor: AppColors.appBlueColor,
                 letterSpacing: 0,
                 borderRadius: Dimensions.r25,
                 borderWidth: 1,
-                textStyle: CustomTextStyle.textRobotoSansLight,
+                textStyle: CustomTextStyle.textRobotoMedium,
                 onTap: () => Get.toNamed(AppRoutName.forgotPasswordPage),
                 height: Dimensions.h30,
                 width: double.infinity,
@@ -195,8 +194,8 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         Text(
           "OR",
-          style: CustomTextStyle.textRobotoSlabMedium.copyWith(
-              fontSize: Dimensions.h20, color: AppColors.greyShade.withOpacity(0.6), fontWeight: FontWeight.w300),
+          style: CustomTextStyle.textInterRegular.copyWith(
+              fontSize: Dimensions.h18, color: AppColors.greyShade.withOpacity(0.6), fontWeight: FontWeight.w400),
         ),
         Expanded(
           child: Divider(

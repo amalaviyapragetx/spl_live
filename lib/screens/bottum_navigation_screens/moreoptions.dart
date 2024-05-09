@@ -23,6 +23,7 @@ class _MoreOptionsState extends State<MoreOptions> {
   final controller = Get.put(MoreListController());
   final homeController = Get.find<HomeController>();
   final walletCon = Get.put<WalletController>(WalletController());
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +31,7 @@ class _MoreOptionsState extends State<MoreOptions> {
         AppUtils().simpleAppbar(
           appBarTitle: "SPL".tr,
           centerTitle: true,
-          appBarTitlestyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+          appBarTitlestyle: CustomTextStyle.textRobotoMedium.copyWith(
             fontSize: Dimensions.h18,
             color: AppColors.white,
           ),
@@ -136,7 +137,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                     onTap: () {
                       homeController.pageWidget.value = 1;
                       homeController.currentIndex.value = 1;
-                      homeController.marketBidsByUserId();
+                      // homeController.marketBidsByUserId();
                     },
                     iconData: ConstantImage.clockIcon,
                     text: "Bid History".tr),
@@ -226,7 +227,7 @@ Widget listItems({required Function() onTap, required String iconData, required 
               ),
               Text(text,
                   style:
-                      CustomTextStyle.textPTsansMedium.copyWith(fontSize: Dimensions.h14, fontWeight: FontWeight.w500))
+                      CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h14, fontWeight: FontWeight.w500))
             ],
           ),
         ),

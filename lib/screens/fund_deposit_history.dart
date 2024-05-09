@@ -123,6 +123,31 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                               Expanded(
                                                 flex: 1,
                                                 child: Text(
+                                                  "Order Id",
+                                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                    color: AppColors.textColor,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  ": ${walletCon.fundTransactionList[i].orderId}",
+                                                  style: CustomTextStyle.textRobotoSansMedium
+                                                      .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
                                                   "Payment Mode",
                                                   style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                                     color: AppColors.textColor,
@@ -148,10 +173,10 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                               Expanded(
                                                 flex: 1,
                                                 child: Text(
-                                                  "Order Id",
+                                                  "Transaction ID",
                                                   style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                                     color: AppColors.textColor,
-                                                    fontSize: 15,
+                                                    fontSize: Get.width > 410 ? Dimensions.h13 : Dimensions.h12,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
@@ -160,7 +185,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                               Expanded(
                                                 flex: 2,
                                                 child: Text(
-                                                  ": ${walletCon.fundTransactionList[i].orderId}",
+                                                  ":  ${walletCon.fundTransactionList[i].clientRefId}",
                                                   style: CustomTextStyle.textRobotoSansMedium
                                                       .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
                                                 ),

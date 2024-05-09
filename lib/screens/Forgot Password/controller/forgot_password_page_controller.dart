@@ -37,18 +37,21 @@ class ForgotPasswordController extends GetxController {
           Get.toNamed(AppRoutName.userDetailsPage);
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
+        AppUtils().accountFlowDialog(msg: value['message']);
       }
     });
   }
 
   void onTapOfContinue() {
     if (mobileNumberController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERMOBILENUMBER".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERMOBILENUMBER".tr);
     } else if (mobileNumberController.text.length < 10) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERVALIDNUMBER".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDNUMBER".tr);
     } else {
       callForgotPasswordApi();
     }

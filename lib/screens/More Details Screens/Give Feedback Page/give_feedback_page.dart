@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 
@@ -30,7 +31,7 @@ class GiveFeedbackPage extends StatelessWidget {
                 Text(
                   "FEEDBACK".tr,
                   style:
-                      CustomTextStyle.textPTsansMedium.copyWith(fontWeight: FontWeight.w500, fontSize: Dimensions.h14),
+                      CustomTextStyle.textRobotoMedium.copyWith(fontWeight: FontWeight.w400, fontSize: Dimensions.h14),
                 ),
                 SizedBox(height: Dimensions.h10),
                 RoundedCornerEditText2(
@@ -42,31 +43,32 @@ class GiveFeedbackPage extends StatelessWidget {
                   keyboardType: TextInputType.multiline,
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RoundedCornerButton(
-                      height: Dimensions.h30,
-                      width: Dimensions.w130,
-                      letterSpacing: 0,
-                      color: AppColors.appbarColor,
-                      fontSize: Dimensions.h16,
-                      fontWeight: FontWeight.bold,
-                      text: "SUBMIT".tr,
-                      textStyle: CustomTextStyle.textPTsansMedium,
-                      borderRadius: Dimensions.r50,
-                      borderColor: AppColors.appbarColor,
-                      borderWidth: 1,
-                      fontColor: AppColors.white,
-                      onTap: () {
-                        if (controller.feedbackController.text != "") {
-                          controller.addFeedbackApi(5);
-                        } else {
-                          AppUtils.showErrorSnackBar(bodyText: "You can't submit empty Feedback");
-                        }
-                      },
-                    ),
-                  ],
+                Center(
+                  child: controller.isGiveFeedback == false
+                      ? RoundedCornerButton(
+                          height: Dimensions.h30,
+                          width: Dimensions.w130,
+                          letterSpacing: 0,
+                          color: AppColors.appbarColor,
+                          fontSize: Dimensions.h14,
+                          fontWeight: FontWeight.bold,
+                          text: "SUBMIT".tr,
+                          textStyle: CustomTextStyle.textRobotoMedium,
+                          borderRadius: Dimensions.r5,
+                          borderColor: AppColors.appbarColor,
+                          borderWidth: 1,
+                          fontColor: AppColors.white,
+                          onTap: () {
+                            if (controller.feedbackController.text != "") {
+                              controller.addFeedbackApi(5);
+                            } else {
+                              AppUtils.showErrorSnackBar(bodyText: "You can't submit empty Feedback");
+                            }
+                          },
+                        )
+                      : CircularProgressIndicator(
+                          color: AppColors.appBlueColor,
+                        ),
                 ),
               ],
             ),
@@ -113,6 +115,9 @@ class RoundedCornerEditText2 extends StatelessWidget {
       maxLines: maxLines,
       minLines: minLines,
       keyboardType: keyboardType,
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
+      ],
       cursorColor: AppColors.appbarColor,
       style: CustomTextStyle.textPTsansMedium
           .copyWith(color: AppColors.black, fontWeight: FontWeight.normal, fontSize: Dimensions.h16),

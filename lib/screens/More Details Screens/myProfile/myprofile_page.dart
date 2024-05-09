@@ -101,10 +101,8 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text(
             text,
             // "Change Password",
-            style: CustomTextStyle.textPTsansMedium.copyWith(
-              color: AppColors.black,
-              fontSize: Dimensions.h16,
-            ),
+            style: CustomTextStyle.textRobotoMedium
+                .copyWith(color: AppColors.black, fontSize: Dimensions.h16, fontWeight: FontWeight.w600),
           ),
           trailing: const Icon(
             Icons.arrow_forward_ios_rounded,

@@ -1,22 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:spllive/api_services/api_service.dart';
+import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/banner_model.dart';
 import 'package:spllive/models/commun_models/user_details_model.dart';
 import 'package:spllive/models/daily_market_api_response_model.dart';
+import 'package:spllive/models/filter_model.dart';
 import 'package:spllive/models/market_bid_history.dart';
 import 'package:spllive/models/normal_market_bid_history_response_model.dart';
 import 'package:spllive/models/notifiaction_models/get_all_notification_model.dart';
 import 'package:spllive/models/notifiaction_models/notification_count_model.dart';
+import 'package:spllive/screens/bottum_navigation_screens/bid_history_bottom.dart';
 import 'package:spllive/screens/bottum_navigation_screens/moreoptions.dart';
 import 'package:spllive/screens/bottum_navigation_screens/passbook_page.dart';
 import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screen.dart';
-
-import '../screens/new_ui/bottom_bar_screens/bid_history_new.dart';
 
 class HomeController extends GetxController {
   RxInt currentIndex = 0.obs;
@@ -26,12 +28,18 @@ class HomeController extends GetxController {
   RxList<MarketData> normalMarketList = <MarketData>[].obs;
   RxList<MarketData> normalMarketFilterList = <MarketData>[].obs;
   RxInt getNotificationCount = 0.obs;
+  final selectedIndex = Rxn<int>();
+
+  TextEditingController dateInputForResultHistory = TextEditingController();
+  String? date;
+  DateTime bidHistoryDate = DateTime.now();
+
   getDashBoardPages(index) {
     switch (index) {
       case 0:
         return const HomeScreen();
       case 1:
-        return BidHistoryNew();
+        return BidHistoryBottom();
       case 2:
         return SPLWallet();
       case 3:
@@ -40,6 +48,25 @@ class HomeController extends GetxController {
         return MoreOptions();
     }
   }
+
+  final RxList<FilterModel> filterDateList = [
+    FilterModel(
+      image: ConstantImage.bid_histroy_bottom,
+      name: "Bid History",
+    ),
+    FilterModel(
+      image: ConstantImage.market_result,
+      name: "Market Results",
+    ),
+    FilterModel(
+      image: ConstantImage.starline_bid_history,
+      name: "Starline Bid History",
+    ),
+    FilterModel(
+      image: ConstantImage.starline_res_history,
+      name: "Starline Result History",
+    ),
+  ].obs;
 
   void getBannerData() async {
     ApiService().getBennerData().then((value) async {
@@ -60,7 +87,12 @@ class HomeController extends GetxController {
         if (resp.data != null && resp.data!.isNotEmpty) {
           normalMarketList.value = resp.data!;
           normalMarketList.forEach((e) {
-            filterMarketList.add(FilterModel(isSelected: false.obs, name: e.market, id: e.marketId));
+            filterMarketList.add(FilterModelHome(
+              isSelected: false.obs,
+              name: e.market,
+              id: e.marketId,
+            ));
+            print("hdsjhdjs ${filterMarketList.length}");
           });
           noMarketFound.value = false;
           var biddingOpenMarketList = normalMarketList
@@ -100,33 +132,37 @@ class HomeController extends GetxController {
   RxInt offset = 0.obs;
   RxList<ResultArr> marketHistoryList = <ResultArr>[].obs;
   DateTime startEndDate = DateTime.now();
-  List<FilterModel> winStatusList = [
-    FilterModel(id: 1, name: 'Win', isSelected: false.obs),
-    FilterModel(id: 2, name: 'Loss', isSelected: false.obs),
-    FilterModel(id: 0, name: 'Pending', isSelected: false.obs)
+  List<FilterModelHome> winStatusList = [
+    FilterModelHome(id: 1, name: 'Win', isSelected: false.obs),
+    FilterModelHome(id: 2, name: 'Loss', isSelected: false.obs),
+    FilterModelHome(id: 0, name: 'Pending', isSelected: false.obs)
   ];
-  List<FilterModel> gameTypeList = [
-    FilterModel(id: 1, name: "OPEN", isSelected: false.obs),
-    FilterModel(id: 2, name: "CLOSE", isSelected: false.obs),
+  List<FilterModelHome> gameTypeList = [
+    FilterModelHome(id: 1, name: "OPEN", isSelected: false.obs),
+    FilterModelHome(id: 2, name: "CLOSE", isSelected: false.obs),
   ];
-  List<FilterModel> filterMarketList = [];
+  RxList<FilterModelHome> filterMarketList = <FilterModelHome>[].obs;
   var isSelectedGameIndex = Rxn<int>();
   var isSelectedWinStatusIndex = Rxn<int>();
   RxList<int> selectedFilterMarketList = <int>[].obs;
+  RxBool isBidHistory = false.obs;
 
-  void marketBidsByUserId() async {
+  void bidsHistoryByUserId() async {
     UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
+    isBidHistory.value = true;
     ApiService()
         .bidHistoryByUserId(
             userId: userData.id.toString(),
             gameType: "${isSelectedGameIndex.value}",
             winningStatus: "${isSelectedWinStatusIndex.value}",
-            markets: selectedFilterMarketList.value)
+            markets: selectedFilterMarketList.value,
+            date: date.toString().isEmpty ? null : date)
         .then(
       (value) async {
         if (value['status']) {
           if (value['data'] != null) {
             MarketBidHistory model = MarketBidHistory.fromJson(value['data']);
+            isBidHistory.value = false;
             marketBidHistoryList.value = model.rows ?? <MarketBidHistoryList>[];
             if (isSelectedGameIndex.value != null ||
                 isSelectedWinStatusIndex.value != null ||
@@ -135,7 +171,8 @@ class HomeController extends GetxController {
             }
           }
         } else {
-          AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+          isBidHistory.value = false;
+          // AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
       },
     );
@@ -189,10 +226,14 @@ class HomeController extends GetxController {
   }
 }
 
-class FilterModel {
+class FilterModelHome {
   final int? id;
   final String? name;
   final RxBool isSelected;
 
-  FilterModel({this.id, this.name, required this.isSelected});
+  FilterModelHome({
+    this.id,
+    this.name,
+    required this.isSelected,
+  });
 }

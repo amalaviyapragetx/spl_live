@@ -50,114 +50,121 @@ class _HomeScreenState extends State<HomeScreen> {
         homeCon.getNotificationCountData();
         homeCon.getNotificationsData();
       },
-      child: Stack(
-        children: [
-          Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.appbarColor,
-              title: Text("SPL", style: TextStyle(color: AppColors.white)),
-              centerTitle: true,
-              leadingWidth: Get.width * 0.4,
-              leading: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: Dimensions.w5),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: SizedBox(
-                      width: Dimensions.w40,
-                      child: SvgPicture.asset(
-                        ConstantImage.walletAppbar,
-                        color: AppColors.white,
-                      ),
-                    ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: AppColors.appbarColor,
+          title: Text("SPL",
+              style: CustomTextStyle.textRamblaMedium
+                  .copyWith(color: Colors.white, fontSize: Dimensions.h20, fontWeight: FontWeight.w700)),
+          centerTitle: true,
+          leadingWidth: Get.width * 0.4,
+          leading: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: Dimensions.w5),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                child: SizedBox(
+                  width: Dimensions.w40,
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    color: AppColors.white,
                   ),
-                  Obx(
-                    () => Text(
-                      walletCon.walletBalance.toString().length > 8
-                          ? walletCon.walletBalance.toString().split(".").toString()
-                          : walletCon.walletBalance.toString(),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                        color: AppColors.white,
-                        fontSize: Dimensions.h16,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-              actions: [
-                Obx(
-                  () => homeCon.notificationCount.value == null || homeCon.notificationCount.value == 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: InkWell(
-                            onTap: () => Get.toNamed(AppRoutName.notificationPage),
-                            child: Icon(
-                              Icons.notifications_active,
-                              color: AppColors.white,
-                            ),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(right: 12, top: 17, bottom: 17),
-                          child: Badge(
-                            smallSize: Dimensions.h9,
-                            child: InkWell(
-                              onTap: () => Get.toNamed(AppRoutName.notificationPage),
-                              child: Icon(
-                                Icons.notifications_active,
-                                color: AppColors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 17),
-                  child: InkWell(
-                    onTap: () => launch("https://t.me/satta_matka_kalyan_bazar_milan"),
-                    child: Container(
-                      decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
-                      child: Transform.rotate(
-                        angle: 180 * 3.14 / 48,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 5, top: 5, left: 5, right: 3),
-                          child: Icon(
-                            Icons.send,
-                            size: 11,
-                            color: AppColors.appbarColor,
-                          ),
-                        ),
-                      ),
-                    ),
+              Obx(
+                () => Text(
+                  walletCon.walletBalance.toString().length > 8
+                      ? walletCon.walletBalance.toString().split(".").toString()
+                      : walletCon.walletBalance.toString(),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: CustomTextStyle.textRobotoMedium.copyWith(
+                    color: AppColors.white,
+                    fontSize: Dimensions.h16,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
-                  child: InkWell(
-                    onTap: () => Share.share("https://spl.live"),
-                    child: Container(
-                      decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4),
+              ),
+            ],
+          ),
+          actions: [
+            Obx(
+              () => homeCon.notificationCount.value == null || homeCon.notificationCount.value == 0
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: InkWell(
+                        onTap: () => Get.toNamed(AppRoutName.notificationPage),
                         child: Icon(
-                          Icons.share,
-                          size: 11,
-                          color: AppColors.appbarColor,
+                          Icons.notifications_active,
+                          color: AppColors.white,
+                          size: 21,
                         ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 12, top: 17, bottom: 17),
+                      child: Badge(
+                        smallSize: Dimensions.h9,
+                        child: InkWell(
+                          onTap: () => Get.toNamed(AppRoutName.notificationPage),
+                          child: Icon(
+                            Icons.notifications_active,
+                            color: AppColors.white,
+                            size: 21,
+                          ),
+                        ),
+                      ),
+                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 17),
+              child: InkWell(
+                onTap: () => launch("https://t.me/satta_matka_kalyan_bazar_milan"),
+                child: Container(
+                  height: 23,
+                  decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
+                  child: Transform.rotate(
+                    angle: 180 * 3.14 / 48,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5, top: 5, left: 5, right: 3),
+                      child: Icon(
+                        Icons.send,
+                        size: 11,
+                        color: AppColors.appbarColor,
                       ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-            body: SingleChildScrollView(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
+              child: InkWell(
+                onTap: () => Share.share("https://spl.live"),
+                child: Container(
+                  height: 23,
+                  decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Icon(
+                      Icons.share,
+                      size: 11,
+                      color: AppColors.appbarColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
@@ -224,27 +231,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: AppColors.appbarColor,
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: Column(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
                                     ConstantImage.starLineIcon,
                                     height: 30,
                                     color: AppColors.white,
                                   ),
-                                  const SizedBox(height: 5),
+                                  const SizedBox(width: 15),
                                   Text(
                                     "SPL STARLINE",
-                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                      color: AppColors.white,
-                                    ),
+                                    style: CustomTextStyle.textRobotoMedium
+                                        .copyWith(color: AppColors.white, fontWeight: FontWeight.w600),
                                   )
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: InkWell(
                             onTap: () => Get.to(() => AddFund()),
@@ -254,20 +261,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: AppColors.appbarColor,
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: Column(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
                                     ConstantImage.addFundIcon,
                                     height: 30,
                                     color: AppColors.white,
                                   ),
-                                  const SizedBox(height: 5),
+                                  SizedBox(width: 15),
                                   Text(
                                     "ADD FUND",
-                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                      color: AppColors.white,
-                                    ),
+                                    style: CustomTextStyle.textRobotoMedium
+                                        .copyWith(color: AppColors.white, fontWeight: FontWeight.w600),
                                   )
                                 ],
                               ),
@@ -276,70 +283,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    // const SizedBox(height: 10),
                     NormalMarketsList(normalMarketList: homeCon.normalMarketList),
                   ],
                 ),
               ),
             ),
-          ),
-          Obx(
-            () => homeCon.getNotificationCount.value > 0
-                ? Stack(
-                    children: [
-                      Material(
-                        color: AppColors.black.withOpacity(0.4),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20.0, right: 20.0, top: Dimensions.h95, bottom: 60.0),
-                          child: Container(
-                            color: AppColors.white,
-                            width: double.infinity,
-                            child: Obx(
-                              () => ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: homeCon.notificationData.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: notificationWidget(
-                                      notificationHeader: homeCon.notificationData[index].title ?? "",
-                                      notificationSubTitle: homeCon.notificationData[index].description ?? "",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Material(
-                        color: AppColors.transparent,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: Dimensions.h87, bottom: 8.0),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: InkWell(
-                              onTap: () {
-                                homeCon.resetNotificationCount();
-                                homeCon.getNotificationCount.refresh();
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(Dimensions.r10),
+            Obx(
+              () => homeCon.getNotificationCount.value > 0
+                  ? Stack(
+                      children: [
+                        Material(
+                          color: AppColors.black.withOpacity(0.4),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: Dimensions.h95, bottom: 60.0),
+                            child: Container(
+                              color: AppColors.white,
+                              width: double.infinity,
+                              child: Obx(
+                                () => ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: homeCon.notificationData.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: notificationWidget(
+                                        notificationHeader: homeCon.notificationData[index].title ?? "",
+                                        notificationSubTitle: homeCon.notificationData[index].description ?? "",
+                                      ),
+                                    );
+                                  },
                                 ),
-                                child: Icon(Icons.close, color: AppColors.redColor),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                : Container(),
-          )
-        ],
+                        Material(
+                          color: AppColors.transparent,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: Dimensions.h87, bottom: 8.0),
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: InkWell(
+                                onTap: () {
+                                  homeCon.resetNotificationCount();
+                                  homeCon.getNotificationCount.refresh();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(Dimensions.r10),
+                                  ),
+                                  child: Icon(Icons.close, color: AppColors.redColor),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+            )
+          ],
+        ),
       ),
     );
   }

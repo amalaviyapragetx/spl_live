@@ -42,7 +42,7 @@ class CommonWalletList extends StatelessWidget {
               SizedBox(width: Dimensions.w15),
               Text(
                 title ?? "",
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: Dimensions.h18),
+                style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h18),
               ),
             ],
           ),

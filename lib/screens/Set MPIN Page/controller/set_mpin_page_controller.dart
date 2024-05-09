@@ -55,15 +55,20 @@ class SetMPINPageController extends GetxController {
 
   void onTapOfContinue() {
     if (mpin.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERMPIN".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERMPIN".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERMPIN".tr);
     } else if (mpin.value.length < 4) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDMPIN".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERVALIDMPIN".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDMPIN".tr);
     } else if (confirmMpin.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERCONFIRMMPIN".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERCONFIRMMPIN".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERCONFIRMMPIN".tr);
     } else if (confirmMpin.value.length < 4) {
-      AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDCONFIRMMPIN".tr);
+      AppUtils().accountFlowDialog(msg: "ENTERVALIDCONFIRMMPIN".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "ENTERVALIDCONFIRMMPIN".tr);
     } else if (mpin.value != confirmMpin.value) {
-      AppUtils.showErrorSnackBar(bodyText: "MPINDOWSNTMATCHED".tr);
+      AppUtils().accountFlowDialog(msg: "MPINDOWSNTMATCHED".tr);
+      // AppUtils.showErrorSnackBar(bodyText: "MPINDOWSNTMATCHED".tr);
     } else {
       _fromLoginPage ? callSetMpinApi() : callSetUserDetailsApi();
     }
@@ -231,9 +236,10 @@ class SetMPINPageController extends GetxController {
           AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
         }
       } else {
-        AppUtils.showErrorSnackBar(
-          bodyText: value['message'] ?? "",
-        );
+        AppUtils().accountFlowDialog(msg: value['message']);
+        // AppUtils.showErrorSnackBar(
+        //   bodyText: value['message'] ?? "",
+        // );
       }
     });
   }

@@ -168,7 +168,7 @@ class AppUtils {
               child: Transform.rotate(
                 angle: 180 * 3.14 / 48,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 5, top: 5, left: 5, right: 3),
+                  padding: const EdgeInsets.only(bottom: 5, top: 5, left: 5, right: 3),
                   child: Icon(
                     Icons.send,
                     size: 11,
@@ -186,7 +186,7 @@ class AppUtils {
             child: Container(
               decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
               child: Padding(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: Icon(
                   Icons.share,
                   size: 11,
@@ -300,145 +300,197 @@ class AppUtils {
   Future<dynamic> showRateUsBoxDailog(Function callCreateRatingApi, double? givenRatings) async {
     double tempRatings = 0.00;
     IconData? selectedIcon;
-
-    return Get.dialog(
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimensions.w15, vertical: Dimensions.h220),
-        child: Container(
-          decoration: BoxDecoration(
+    return Get.defaultDialog(
+      barrierDismissible: false,
+      onWillPop: () async => false,
+      title: "",
+      titleStyle: const TextStyle(fontSize: 0),
+      backgroundColor: AppColors.white,
+      content: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(Dimensions.r18),
+          ),
+        ),
+        child: Center(
+          child: Material(
             color: Colors.white,
             borderRadius: BorderRadius.all(
               Radius.circular(Dimensions.r18),
             ),
-          ),
-          child: Center(
-            child: Material(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(Dimensions.r18),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: Dimensions.h2,
+                left: Dimensions.h2,
+                right: Dimensions.h2,
               ),
-              child: Padding(
-                padding: EdgeInsets.all(Dimensions.h10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Rate SPL live App",
-                      style: CustomTextStyle.textPTsansMedium.copyWith(
-                        color: AppColors.grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: Dimensions.h20,
-                        letterSpacing: 1.29,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Rate SPL live App",
+                        style: CustomTextStyle.textRobotoMedium.copyWith(
+                          color: AppColors.grey,
+                          fontWeight: FontWeight.w600,
+                          fontSize: Dimensions.h20,
+                          letterSpacing: 1.29,
+                        ),
                       ),
-                    ),
-                    RatingBar.builder(
-                      initialRating: givenRatings != null || givenRatings!.toDouble() != 0.0 ? givenRatings : 0,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: false,
-                      itemCount: 5,
-                      itemSize: Dimensions.h37,
-                      ignoreGestures: givenRatings.toDouble() != 0.0 ? true : false,
-                      glowColor: AppColors.appbarColor,
-                      unratedColor: AppColors.grey,
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      RatingBar.builder(
+                        initialRating: givenRatings != null || givenRatings!.toDouble() != 0.0 ? givenRatings : 0,
+                        minRating: 0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: false,
+                        itemCount: 5,
+                        itemSize: Dimensions.h35,
+                        ignoreGestures: givenRatings.toDouble() != 0.0 ? true : false,
+                        glowColor: AppColors.appbarColor,
+                        unratedColor: AppColors.grey,
 
-                      itemPadding: EdgeInsets.symmetric(horizontal: Dimensions.w4),
-                      itemBuilder: (context, index) {
-                        if (index >= tempRatings) {
-                          if (givenRatings.toDouble() != 0.0) {
+                        itemPadding: EdgeInsets.symmetric(horizontal: Dimensions.w4),
+                        itemBuilder: (context, index) {
+                          if (index >= tempRatings) {
+                            if (givenRatings.toDouble() != 0.0) {
+                              return Icon(
+                                selectedIcon ?? Icons.star_rounded,
+                                color: AppColors.appbarColor,
+                                size: 35,
+                              );
+                            } else {
+                              // Unrated items
+                              return Icon(
+                                selectedIcon ?? Icons.star_border_rounded,
+                                color: AppColors.grey,
+                                size: 35,
+                              );
+                            }
+                          } else {
+                            // Rated items
                             return Icon(
-                              selectedIcon ?? Icons.star,
+                              selectedIcon ?? Icons.star_rounded,
                               color: AppColors.appbarColor,
                               size: 35,
                             );
-                          } else {
-                            // Unrated items
-                            return Icon(
-                              selectedIcon ?? Icons.star_border,
-                              color: AppColors.grey,
-                              size: 35,
-                            );
                           }
-                        } else {
-                          // Rated items
-                          return Icon(
-                            selectedIcon ?? Icons.star,
-                            color: AppColors.appbarColor,
-                            size: 35,
-                          );
-                        }
-                      },
-                      onRatingUpdate: (rating) async {
-                        tempRatings = rating;
-                      },
-                      //updateOnDrag: true,
-                      tapOnlyMode: true,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        InkWell(
-                          onTap: () => Get.back(),
-                          child: Container(
-                            height: Dimensions.h50,
-                            width: Dimensions.w130,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(Dimensions.h5),
-                              border: Border.all(
-                                color: AppColors.white,
-                                width: 2.0,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "CANCEL",
-                                style: CustomTextStyle.textPTsansMedium.copyWith(
-                                  color: AppColors.redColor,
-                                  fontSize: Dimensions.h18,
-                                ),
-                              ),
+                        },
+                        onRatingUpdate: (rating) async {
+                          tempRatings = rating;
+                        },
+                        //updateOnDrag: true,
+                        tapOnlyMode: true,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () => Get.back(),
+                        child: Center(
+                          child: Text(
+                            "CANCEL",
+                            style: CustomTextStyle.textPTsansMedium.copyWith(
+                              color: AppColors.redColor,
+                              fontSize: Dimensions.h18,
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            if (givenRatings.toDouble() != 0.00) {
-                              AppUtils.showErrorSnackBar(bodyText: "You can not add ratings multiple times!!!");
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          if (givenRatings.toDouble() != 0.00) {
+                            AppUtils.showErrorSnackBar(bodyText: "You can not add ratings multiple times!!!");
+                          } else {
+                            if (tempRatings < 1.00) {
+                              AppUtils.showErrorSnackBar(bodyText: "Please Add Ratings");
                             } else {
-                              if (tempRatings < 1.00) {
-                                AppUtils.showErrorSnackBar(bodyText: "Please Add Ratings");
-                              } else {
-                                callCreateRatingApi(tempRatings);
-                              }
+                              callCreateRatingApi(tempRatings);
                             }
-                          },
-                          child: Container(
-                            height: Dimensions.h50,
-                            width: Dimensions.w130,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(Dimensions.h5), color: AppColors.white),
-                            child: Center(
-                              child: Text(
-                                "SUBMIT",
-                                style: CustomTextStyle.textPTsansMedium.copyWith(
-                                  color: AppColors.appbarColor,
-                                  fontSize: Dimensions.h18,
-                                ),
-                              ),
+                          }
+                        },
+                        child: Center(
+                          child: Text(
+                            "SUBMIT",
+                            style: CustomTextStyle.textPTsansMedium.copyWith(
+                              color: AppColors.appbarColor,
+                              fontSize: Dimensions.h18,
                             ),
                           ),
                         ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
         ),
       ),
-      barrierDismissible: true,
+    );
+  }
+
+  accountFlowDialog({String? msg}) {
+    return Get.defaultDialog(
+      barrierDismissible: false,
+      onWillPop: () async => false,
+      title: "",
+      titlePadding: EdgeInsets.zero,
+      titleStyle: const TextStyle(fontSize: 0),
+      backgroundColor: AppColors.white,
+      content: Column(
+        children: [
+          SizedBox(height: Dimensions.h20),
+          Center(
+            child: Text(
+              msg ?? "",
+              textAlign: TextAlign.center,
+              style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                fontSize: Dimensions.h15,
+                color: AppColors.appbarColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ],
+      ),
+      actions: [
+        InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: Container(
+            height: Dimensions.h30,
+            width: Get.width / 2.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.appbarColor,
+            ),
+            child: Center(
+              child: Text(
+                'Ok',
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

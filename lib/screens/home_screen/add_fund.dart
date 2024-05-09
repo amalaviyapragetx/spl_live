@@ -14,6 +14,7 @@ import '../../helper_files/ui_utils.dart';
 
 class AddFund extends StatefulWidget {
   final String? wallet;
+
   const AddFund({super.key, this.wallet});
 
   @override
@@ -42,7 +43,9 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
-        walletCon.getTransactionHistory(true);
+        if (walletCon.addFundID != null) {
+          walletCon.paymentStatus(walletCon.addFundID);
+        }
         walletCon.getUserBalance();
         break;
       case AppLifecycleState.inactive:
@@ -97,11 +100,11 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                           const SizedBox(width: 5),
                         ],
                       ),
-                      const SizedBox(width: 10),
+                      const Expanded(child: SizedBox()),
                       Text(
                         textAlign: TextAlign.center,
                         "Add Fund",
-                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                        style: CustomTextStyle.textRobotoMedium.copyWith(
                           color: AppColors.white,
                           fontSize: Dimensions.h17,
                         ),
@@ -134,7 +137,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                     children: [
                       Text(
                         "WALLETBALANCE".tr,
-                        style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h22),
+                        style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h22),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +155,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                           ),
                           Text(
                             walletCon.walletBalance.value ?? "",
-                            style: CustomTextStyle.textRobotoSansMedium
+                            style: CustomTextStyle.textRobotoMedium
                                 .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
                           ),
                         ],
@@ -176,7 +179,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                   decoration: InputDecoration(
                     isDense: true,
                     hintText: "Enter Amount",
-                    hintStyle: CustomTextStyle.textGothamMedium,
+                    hintStyle: CustomTextStyle.textRobotoMedium,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimensions.r10),
                       borderSide: BorderSide(color: Colors.black.withOpacity(0.5)),
@@ -219,7 +222,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                           child: Center(
                             child: Text(
                               "₹ ${homeCon.newTicketsList[index].name}",
-                              style: CustomTextStyle.textGothamMedium.copyWith(
+                              style: CustomTextStyle.textRobotoMedium.copyWith(
                                 fontSize: 16,
                                 color:
                                     homeCon.newTicketsList[index].isSelected.value ? AppColors.white : AppColors.black,
@@ -246,7 +249,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                   letterSpacing: 0,
                   borderRadius: Dimensions.r5,
                   borderWidth: 0,
-                  textStyle: CustomTextStyle.textGothamMedium,
+                  textStyle: CustomTextStyle.textRobotoMedium,
                   onTap: () async {
                     if (homeCon.addFundCon.text.isEmpty) {
                       AppUtils.showErrorSnackBar(bodyText: "Please enter amount");
@@ -270,7 +273,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
               const SizedBox(height: 10),
               Text(
                 "Pay using any UPI app",
-                style: CustomTextStyle.textPTsansMedium.copyWith(
+                style: CustomTextStyle.textRobotoMedium.copyWith(
                   fontSize: 16,
                   color: AppColors.black,
                 ),

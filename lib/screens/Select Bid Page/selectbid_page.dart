@@ -80,7 +80,7 @@ class SelectedBidsPage extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Expanded(
+                    /*Expanded(
                       child: Padding(
                         padding: EdgeInsets.all(Dimensions.w5),
                         child: RoundedCornerButton(
@@ -99,10 +99,10 @@ class SelectedBidsPage extends StatelessWidget {
                           width: double.infinity,
                         ),
                       ),
-                    ),
+                    ),*/
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.all(Dimensions.w5),
+                        padding: EdgeInsets.all(Dimensions.w10),
                         child: RoundedCornerButton(
                           text: "SUBMIT".tr,
                           color: AppColors.appbarColor,

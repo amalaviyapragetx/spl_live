@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/app_colors.dart';
@@ -9,6 +10,7 @@ import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/models/BankHistory.dart';
 import 'package:spllive/models/FundTransactionModel.dart';
 import 'package:spllive/models/filter_model.dart';
+import 'package:spllive/models/get_withdrawal_time.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
 import '../api_services/api_service.dart';
@@ -18,6 +20,10 @@ class WalletController extends GetxController {
   final selectedIndex = Rxn<int>();
   RxBool isCallDialog = false.obs;
 
+  RxBool isCheckBankDetails = false.obs;
+  RxBool isLoad = false.obs;
+
+  Rx<GetWithdrawalData> getWithdrawalData = GetWithdrawalData().obs;
   final RxList<FilterModel> filterDateList = [
     FilterModel(
       image: ConstantImage.addFundIconInWallet,
@@ -45,6 +51,8 @@ class WalletController extends GetxController {
     ),
   ].obs;
 
+  var addFundID;
+
   @override
   void onInit() {
     getUserBalance();
@@ -64,10 +72,77 @@ class WalletController extends GetxController {
     });
   }
 
+  void getCheckBankDetails() {
+    isLoad.value = true;
+    ApiService().getWithBankDetails().then((value) async {
+      if (value['status']) {
+        if (value['data'] != null) {
+          var isDetail = value['data']['hasBankDetail'] ?? false;
+          isCheckBankDetails.value = isDetail;
+          if (isCheckBankDetails.value == true) {
+            isLoad.value = false;
+            Get.toNamed(AppRoutName.createWithDrawalPage);
+          } else {
+            isLoad.value = false;
+            Get.dialog(
+              barrierDismissible: false,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
+                child: AlertDialog(
+                  insetPadding: EdgeInsets.zero,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  content: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Please Add Bank Details",
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.appbarColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                            selectedIndex.value = 2;
+                          },
+                          child: Container(
+                            decoration:
+                                BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
+                            height: Dimensions.h40,
+                            width: Dimensions.w150,
+                            child: Center(
+                              child: Text(
+                                'OK',
+                                style:
+                                    CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+        }
+      }
+    });
+  }
+
   RxList<BankHistoryData> bankHistoryData = <BankHistoryData>[].obs;
+  RxBool isCheck = false.obs;
+
   void getBankHistory() async {
-    // remove User ID
-    //   UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
     ApiService().getBankHistory().then((value) async {
       if (value?.status ?? false) {
         bankHistoryData.value = value?.data ?? [];
@@ -77,9 +152,23 @@ class WalletController extends GetxController {
     });
   }
 
+  void getWithdrawalTiming() async {
+    isCheck.value = true;
+    ApiService().getWithDrawalTime().then((value) async {
+      if (value?.status ?? false) {
+        getWithdrawalData.value = value!.data!;
+        isCheck.value = false;
+      } else {
+        isCheck.value = false;
+        AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
+      }
+    });
+  }
+
   // transaction
 
   RxList<FundTransactionList> fundTransactionList = <FundTransactionList>[].obs;
+
   void getTransactionHistory(bool view) {
     ApiService().getTransactionHistory().then((value) async {
       if (value != null) {
@@ -239,6 +328,102 @@ class WalletController extends GetxController {
         }
       } else {
         AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
+      }
+    });
+  }
+
+  void paymentStatus(paymentId) {
+    ApiService().getPaymentStatus(paymentId).then((value) async {
+      if (value['data']['Status'] != null) {
+        Get.defaultDialog(
+          barrierDismissible: false,
+          onWillPop: () async => false,
+          title: "",
+          titleStyle: CustomTextStyle.textRobotoSansBold.copyWith(
+            color: AppColors.appbarColor,
+            fontSize: 0,
+          ),
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  color: value['data']['Status'] == "Pending" || value['data']['Status'] == "Processing"
+                      ? Colors.yellow.shade600
+                      : value['data']['Status'] == "Ok"
+                          ? Colors.green
+                          : Colors.red,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Icon(
+                    value['data']['Status'] == "Pending"
+                        ? Icons.pending_actions
+                        : value['data']['Status'] == "Ok"
+                            ? Icons.check_rounded
+                            : value['data']['Status'] == "Processing"
+                                ? Icons.check_rounded
+                                : Icons.close,
+                    color: AppColors.white,
+                    size: 40,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              Text(
+                "Payment ${value['data']['Status'] == "Pending" ? "Pending" : value['data']['Status'] == "Ok" ? "Successful" : value['data']['Status'] == "Processing" ? "Processing" : "Failed"}",
+                style: CustomTextStyle.textRobotoSansBold.copyWith(
+                  color: value['data']['Status'] == "Pending" || value['data']['Status'] == "Processing"
+                      ? Colors.yellow.shade600
+                      : value['data']['Status'] == "Ok"
+                          ? Colors.green
+                          : Colors.red,
+                ),
+              ),
+              Visibility(visible: value['data']['Status'] == "Ok", child: const SizedBox(height: 10)),
+              Visibility(
+                visible: value['data']['Status'] == "Ok",
+                child: Text(
+                  "We have received the payment of",
+                  style: CustomTextStyle.textRobotoSansMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Text(
+                "\n₹ ${value['data']['Amount']}",
+                style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RoundedCornerButton(
+                  text: "OK".tr,
+                  color: AppColors.appbarColor,
+                  borderColor: AppColors.appbarColor,
+                  fontSize: Dimensions.h15,
+                  fontWeight: FontWeight.w500,
+                  fontColor: AppColors.white,
+                  letterSpacing: 0,
+                  borderRadius: Dimensions.r5,
+                  borderWidth: 0,
+                  textStyle: CustomTextStyle.textGothamMedium,
+                  onTap: () {
+                    getUserBalance();
+                    walletBalance.refresh();
+                    Get.offAllNamed(AppRoutName.dashBoardPage);
+                  },
+                  height: 40,
+                  width: Get.width / 2.8,
+                ),
+              )
+            ],
+          ),
+        );
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value["message"]);
       }
     });
   }
