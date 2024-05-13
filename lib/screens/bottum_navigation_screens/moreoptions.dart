@@ -123,7 +123,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                 SizedBox(height: Dimensions.h5),
                 listItems(
                     onTap: () => Get.toNamed(AppRoutName.profilePage),
-                    iconData: ConstantImage.bakAccount,
+                    iconData: ConstantImage.bankAccountNew,
                     text: "Change Password".tr),
                 listItems(
                     onTap: () {
@@ -177,7 +177,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                 ),
                 listItems(
                   onTap: () => controller.getFeedbackAndRatingsById(),
-                  iconData: ConstantImage.rateusStartIcon,
+                  iconData: ConstantImage.rateNew,
                   text: "RATEUS".tr,
                 ),
                 // listItems(
@@ -187,7 +187,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                 // ),
                 listItems(
                   onTap: () => controller.callLogout(),
-                  iconData: ConstantImage.signOutIcon,
+                  iconData: ConstantImage.logoutNew,
                   text: "Log Out",
                 ),
               ],

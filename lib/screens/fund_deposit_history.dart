@@ -56,7 +56,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                       const Expanded(child: SizedBox()),
                       Text(
                         textAlign: TextAlign.center,
-                        "Fund deposit history",
+                        "Fund Deposit History",
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.white,
                           fontSize: Dimensions.h17,

@@ -55,7 +55,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                       const Expanded(child: SizedBox()),
                       Text(
                         textAlign: TextAlign.center,
-                        "Fund withdrawal history",
+                        "Fund Withdrawal History",
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.white,
                           fontSize: Dimensions.h17,

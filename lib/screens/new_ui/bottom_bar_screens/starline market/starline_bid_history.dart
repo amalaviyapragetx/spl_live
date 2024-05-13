@@ -417,27 +417,29 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                         children: [
                           SizedBox(height: Dimensions.h11),
                           Obx(
-                            () => ListView.builder(
-                              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                              itemCount: starlineCon.marketHistoryList.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return listveiwTransaction(
-                                  isWin: starlineCon.marketHistoryList[index].isWin ?? false,
-                                  requestId: starlineCon.marketHistoryList[index].requestId ?? "",
-                                  // bidTime: DateFormat('dd/MM/yyyy hh:mm:ss a')
-                                  //     .format(DateTime.parse(starlineCon.marketHistoryList[index].bidTime.toString()))
-                                  //     .toString(),
-                                  bidTime: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
-                                      starlineCon.marketHistoryList[index].bidTime.toString()),
-                                  ballance: " ${starlineCon.marketHistoryList[index].balance.toString()} ",
-                                  coins: starlineCon.marketHistoryList[index].coins.toString(),
-                                  bidNumber:
-                                      "${starlineCon.marketHistoryList[index].gameMode ?? ""} ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
-                                  marketName: starlineCon.marketHistoryList[index].marketName ?? "00:00 AM",
-                                );
-                              },
+                            () => Expanded(
+                              child: ListView.builder(
+                                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                itemCount: starlineCon.marketHistoryList.length,
+                                shrinkWrap: true,
+                                // physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return listveiwTransaction(
+                                    isWin: starlineCon.marketHistoryList[index].isWin ?? false,
+                                    requestId: starlineCon.marketHistoryList[index].requestId ?? "",
+                                    // bidTime: DateFormat('dd/MM/yyyy hh:mm:ss a')
+                                    //     .format(DateTime.parse(starlineCon.marketHistoryList[index].bidTime.toString()))
+                                    //     .toString(),
+                                    bidTime: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
+                                        starlineCon.marketHistoryList[index].bidTime.toString()),
+                                    ballance: " ${starlineCon.marketHistoryList[index].balance.toString()} ",
+                                    coins: starlineCon.marketHistoryList[index].coins.toString(),
+                                    bidNumber:
+                                        "${starlineCon.marketHistoryList[index].gameMode ?? ""} ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
+                                    marketName: starlineCon.marketHistoryList[index].marketName ?? "00:00 AM",
+                                  );
+                                },
+                              ),
                             ),
                           )
                         ],

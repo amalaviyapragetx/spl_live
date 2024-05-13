@@ -22,6 +22,10 @@ class ConstantImage {
   static String openStarsSvg = "assets/images/open_star_svg.svg";
   static String closeStarsSvg = "assets/images/close_star_svg.svg";
   static String bakAccount = "assets/images/bankAccount.svg";
+  static String bankAccountNew = "assets/images/bankAccountNew.svg";
+  static String rateNew = "assets/images/rateNew.svg";
+  static String logoutNew = "assets/images/logoutNew.svg";
+
   static String gameRate = "assets/images/bidhistory_list_icon.svg";
   static String notifiacation = "assets/images/notification.svg";
   static String playIcon = "assets/images/circle_filled_play_ic_icon.svg";

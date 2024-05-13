@@ -51,7 +51,7 @@ class _AddBankDetailsState extends State<AddBankDetails> {
             mainAxisSize: MainAxisSize.min,
             children: [
               CommonAppBar(
-                title: "Add bank details",
+                title: "Add Bank Details",
                 titleTextStyle: CustomTextStyle.textRobotoMedium.copyWith(
                   fontSize: Dimensions.h17,
                   color: AppColors.white,
