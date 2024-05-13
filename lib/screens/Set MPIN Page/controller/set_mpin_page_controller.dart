@@ -115,7 +115,6 @@ class SetMPINPageController extends GetxController {
 
   callFcmApi(userId) async {
     var token = GetStorage().read(ConstantsVariables.fcmToken);
-    print("@@@@@@ ${token}");
     Timer(const Duration(seconds: 2), () {
       fsmApiCall(userId, token);
     });
@@ -123,7 +122,6 @@ class SetMPINPageController extends GetxController {
 
   fcmBody(userId, fcmToken) async {
     var token = await NotificationServices().getDeviceToken();
-    print("token ${token}");
     var a = {
       "id": userId,
       "fcmToken": token,
