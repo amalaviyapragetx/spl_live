@@ -38,8 +38,11 @@ class ConstantImage {
   static String withDrawalPageIcon = "assets/images/bid_History_Icon.svg";
   static String clockSvg = "assets/images/clock.svg";
   static String withDrawalFundIcon = "assets/images/vaadin_money-withdraw.svg";
+  static String addBankDeatils = "assets/images/add_bank_details.svg";
+  static String bankChangeDeatils = "assets/images/bank_chang_history.svg";
   static String addFundIconInWallet = "assets/images/majesticons_rupee-circle-line.svg";
   static String fundDepositIcon = "assets/images/fund_deposit_icon.svg";
+  static String fundWithdrawalHistory = "assets/images/fund_withdrawal_history.svg";
   static String gPay = "assets/images/GooglePay.png";
   static String icici_bank = "assets/images/icici_bank.png";
   static String paytm = "assets/images/paytm.png";

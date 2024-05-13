@@ -34,7 +34,7 @@ class WalletController extends GetxController {
       name: "Withdrawal Fund",
     ),
     FilterModel(
-      image: ConstantImage.withDrawalFundIcon,
+      image: ConstantImage.addBankDeatils,
       name: "Add bank details",
     ),
     FilterModel(
@@ -42,11 +42,11 @@ class WalletController extends GetxController {
       name: "Fund deposit history",
     ),
     FilterModel(
-      image: ConstantImage.fundDepositIcon,
+      image: ConstantImage.fundWithdrawalHistory,
       name: "Fund withdrawal history",
     ),
     FilterModel(
-      image: ConstantImage.withDrawalFundIcon,
+      image: ConstantImage.bankChangeDeatils,
       name: "Bank Changes history",
     ),
   ].obs;
