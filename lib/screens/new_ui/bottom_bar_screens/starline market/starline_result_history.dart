@@ -80,80 +80,84 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
               ),
               SizedBox(height: Dimensions.h11),
               starlineCon.marketListForResult.isNotEmpty
-                  ? ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: starlineCon.marketListForResult.length,
-                      itemBuilder: (context, index) {
-                        print(
-                            "starlineCon.marketListForResult[index].time ${starlineCon.marketListForResult[index].time}");
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 18.0),
-                          child: Container(
-                            height: Dimensions.h50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: AppColors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  spreadRadius: 0.2,
-                                  color: AppColors.black,
-                                  blurStyle: BlurStyle.outer,
-                                  blurRadius: 2.5,
-                                  offset: const Offset(2, 2),
-                                )
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(width: Dimensions.w20),
-                                SizedBox(
-                                    width: Dimensions.w35,
-                                    child: SvgPicture.asset(
-                                      clockIcon(
-                                          starlineCon.marketListForResult[index].time?.split(":")[0] ?? "00:00 AM"),
+                  ? Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        shrinkWrap: true,
+                        itemCount: starlineCon.marketListForResult.length,
+                        itemBuilder: (context, index) {
+                          print(starlineCon.marketListForResult.length);
+                          print(starlineCon.marketListForResult[index].time);
+                          // print(
+                          //     "starlineCon.marketListForResult[index].time ${starlineCon.marketListForResult[index].time}");
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 18.0),
+                            child: Container(
+                              height: Dimensions.h50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    spreadRadius: 0.2,
+                                    color: AppColors.black,
+                                    blurStyle: BlurStyle.outer,
+                                    blurRadius: 2.5,
+                                    offset: const Offset(2, 2),
+                                  )
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  SizedBox(width: Dimensions.w20),
+                                  SizedBox(
+                                      width: Dimensions.w35,
+                                      child: SvgPicture.asset(
+                                        clockIcon(
+                                            starlineCon.marketListForResult[index].time?.split(":")[0] ?? "00:00 AM"),
+                                        color: AppColors.appbarColor,
+                                      )),
+                                  Icon(Icons.watch, color: AppColors.black),
+                                  SizedBox(width: Dimensions.w10),
+                                  Text(
+                                    starlineCon.marketListForResult[index].time ?? "00:00 AM",
+                                    style: CustomTextStyle.textRobotoSansBold.copyWith(
+                                      fontSize: Dimensions.h15,
                                       color: AppColors.appbarColor,
-                                    )),
-                                // Icon(Icons.watch, color: AppColors.black),
-                                SizedBox(width: Dimensions.w10),
-                                Text(
-                                  starlineCon.marketListForResult[index].time ?? "00:00 AM",
-                                  style: CustomTextStyle.textRobotoSansBold.copyWith(
-                                    fontSize: Dimensions.h15,
-                                    color: AppColors.appbarColor,
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(width: Dimensions.w10),
-                                ),
-                                getResult(
-                                          starlineCon.marketListForResult[index].isResultDeclared ?? false,
-                                          starlineCon.marketListForResult[index].result ?? 0,
-                                        ) !=
-                                        "***-*"
-                                    ? Padding(
-                                        padding: EdgeInsets.only(right: Dimensions.h50),
-                                        child: Text(
-                                          getResult(
+                                  Expanded(
+                                    child: SizedBox(width: Dimensions.w10),
+                                  ),
+                                  getResult(
                                             starlineCon.marketListForResult[index].isResultDeclared ?? false,
                                             starlineCon.marketListForResult[index].result ?? 0,
+                                          ) !=
+                                          "***-*"
+                                      ? Padding(
+                                          padding: EdgeInsets.only(right: Dimensions.h50),
+                                          child: Text(
+                                            getResult(
+                                              starlineCon.marketListForResult[index].isResultDeclared ?? false,
+                                              starlineCon.marketListForResult[index].result ?? 0,
+                                            ),
+                                            style:
+                                                CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h15),
                                           ),
-                                          style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h15),
-                                        ),
-                                      )
-                                    : Padding(
-                                        padding: EdgeInsets.only(right: Dimensions.h50),
-                                        child: SvgPicture.asset(
-                                          ConstantImage.openStarsSvg,
-                                          width: Dimensions.w60,
-                                        ),
-                                      )
-                              ],
+                                        )
+                                      : Padding(
+                                          padding: EdgeInsets.only(right: Dimensions.h50),
+                                          child: SvgPicture.asset(
+                                            ConstantImage.openStarsSvg,
+                                            width: Dimensions.w60,
+                                          ),
+                                        )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     )
                   : Container(
                       height: Dimensions.h35,
@@ -201,9 +205,9 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
         return ConstantImage.stopWatch_5;
       case "6":
         return ConstantImage.stopWatch_6;
-      case "":
+      case "7":
         return ConstantImage.stopWatch_7;
-      case "8:00":
+      case "8":
         return ConstantImage.stopWatch_8;
       case "9":
         return ConstantImage.stopWatch_9;

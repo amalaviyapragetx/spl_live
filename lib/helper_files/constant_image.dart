@@ -12,9 +12,12 @@ class ConstantImage {
   static String bidHistoryListIcon = "assets/images/bidhistory_list_icon.svg";
   static String homeIcon = "assets/images/home_icon.svg";
   static String chartIcon = "assets/images/chart_icon.svg";
+  static String chartNewIcon = "assets/images/chartNewIcon.svg";
   static String resultHistoryIcons = "assets/images/result_history.svg";
+  static String resultHistoryNew = "assets/images/resultHistoryNew.svg";
   static String starLineIcon = "assets/images/starline_icon.svg";
   static String moreIcon = "assets/images/more_Icon.svg";
+  static String moreImage = "assets/images/moreImage.svg";
   static String marketIcon = "assets/images/market_icon.svg";
   static String openStarsSvg = "assets/images/open_star_svg.svg";
   static String closeStarsSvg = "assets/images/close_star_svg.svg";

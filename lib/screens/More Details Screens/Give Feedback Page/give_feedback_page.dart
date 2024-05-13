@@ -59,7 +59,9 @@ class GiveFeedbackPage extends StatelessWidget {
                           borderWidth: 1,
                           fontColor: AppColors.white,
                           onTap: () {
-                            if (controller.feedbackController.text != "") {
+                            if (controller.feedbackController.text.isNotEmpty) {
+                              // print(
+                              //     "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ feed backe :-    ${controller.feedbackController.text}");
                               controller.addFeedbackApi(5);
                             } else {
                               AppUtils.showErrorSnackBar(bodyText: "You can't submit empty Feedback");

@@ -29,7 +29,7 @@ class _MoreOptionsState extends State<MoreOptions> {
     return Column(
       children: [
         AppUtils().simpleAppbar(
-          appBarTitle: "SPL".tr,
+          appBarTitle: "MORE".tr,
           centerTitle: true,
           appBarTitlestyle: CustomTextStyle.textRobotoMedium.copyWith(
             fontSize: Dimensions.h18,
@@ -173,7 +173,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                 listItems(
                   onTap: () => Get.toNamed(AppRoutName.feedBackPage),
                   iconData: ConstantImage.giveFeedbackIcon,
-                  text: "Give Review".tr,
+                  text: "GIVEFEEDBACK".tr,
                 ),
                 listItems(
                   onTap: () => controller.getFeedbackAndRatingsById(),
@@ -193,7 +193,14 @@ class _MoreOptionsState extends State<MoreOptions> {
               ],
             ),
           ),
-        )
+        ),
+        Text(
+          "Version: 2.0.1",
+          textAlign: TextAlign.center,
+          style: CustomTextStyle.textRobotoSansMedium
+              .copyWith(fontSize: Dimensions.h14, color: AppColors.textColor, fontWeight: FontWeight.w400),
+        ),
+        const SizedBox(height: 10),
       ],
     );
   }
