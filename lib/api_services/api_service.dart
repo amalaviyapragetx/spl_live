@@ -474,12 +474,7 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-<<<<<<< HEAD
-      "${ApiUtils.getFeedbackAndRatingsById}",
-=======
-      // "${ApiUtils.getFeedbackAndRatingsById}$userId",
       ApiUtils.getFeedbackAndRatingsById,
->>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
     if (kDebugMode) {
@@ -504,12 +499,7 @@ class ApiService extends GetConnect implements GetxService {
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
-<<<<<<< HEAD
-      "${ApiUtils.getWithdrawalHistoryByUserId}",
-=======
-      // "${ApiUtils.getWithdrawalHistoryByUserId}$userId",
       ApiUtils.getWithdrawalHistoryByUserId,
->>>>>>> 49701633f1c45f56d462ad246b5a19b7a3e4619b
       headers: headersWithToken,
     );
 
@@ -1259,6 +1249,8 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> fcmToken(body) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
+    print(body);
+    print("fkjdshfksdfsldjflskd");
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.fcmToken,
       body,
