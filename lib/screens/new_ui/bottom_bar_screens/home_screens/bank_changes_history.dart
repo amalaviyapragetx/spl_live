@@ -25,10 +25,10 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         walletCon.selectedIndex.value = null;
-        return false;
       },
       child: Expanded(
         child: Material(

@@ -22,26 +22,30 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   final walletCon = Get.put<WalletController>(WalletController());
   final starlineCon = Get.put<StarlineMarketController>(StarlineMarketController());
   final passbookCon = Get.put<PassbookHistoryController>(PassbookHistoryController());
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         if (homeCon.pageWidget.value == 1 ||
             homeCon.pageWidget.value == 2 ||
             homeCon.pageWidget.value == 3 ||
             homeCon.pageWidget.value == 4) {
+          print("OR VALUE: ${homeCon.pageWidget.value}");
           if (walletCon.selectedIndex.value != null) {
             walletCon.selectedIndex.value = null;
+            print("OR VALUE: 1");
           } else {
             homeCon.pageWidget.value = 0;
             homeCon.currentIndex.value = 0;
+            print("OR VALUE: 111");
           }
           SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
-          return false;
         } else if (homeCon.pageWidget.value == 5) {
           homeCon.pageWidget.value = 4;
           homeCon.currentIndex.value = 4;
-          return false;
+          print("OR VALUE: 122");
         } else {
           // await Get.dialog(
           //   barrierDismissible: false,
@@ -105,6 +109,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           //       ),
           //     ),
           //   ),
+          print("OR VALUE: 12222");
           await showDialog(
             barrierDismissible: false,
             context: context,
@@ -114,7 +119,6 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               SystemChannels.platform.invokeMethod('SystemNavigator.pop');
             }),
           );
-          return false;
         }
       },
       child: Scaffold(

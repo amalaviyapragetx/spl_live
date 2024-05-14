@@ -36,14 +36,14 @@ class _AddBankDetailsState extends State<AddBankDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         walletCon.selectedIndex.value = null;
         controller.bankNameController.clear();
         controller.accHolderNameController.clear();
         controller.accNoController.clear();
         controller.ifscCodeController.clear();
-        return false;
       },
       child: Material(
         child: Column(

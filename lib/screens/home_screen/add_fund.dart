@@ -63,14 +63,14 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         if (walletCon.selectedIndex.value != null) {
           walletCon.selectedIndex.value = null;
         } else {
           Get.back();
         }
-        return false;
       },
       child: Material(
         child: SingleChildScrollView(

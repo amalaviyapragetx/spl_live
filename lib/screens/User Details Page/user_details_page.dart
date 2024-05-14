@@ -17,18 +17,18 @@ class UserDetailsPage extends StatelessWidget {
   final controller = Get.find<UserDetailsPageController>();
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         return await showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (context) => onExitAlert(context, onCancel: () {
-                Navigator.of(context).pop(false);
-              }, onExit: () {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              }),
-            ) ??
-            false;
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => onExitAlert(context, onCancel: () {
+            Navigator.of(context).pop(false);
+          }, onExit: () {
+            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+          }),
+        );
       },
       child: Scaffold(
         backgroundColor: AppColors.white,

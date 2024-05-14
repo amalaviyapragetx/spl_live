@@ -17,11 +17,11 @@ class GameModePage extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.checkBids();
     Size size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         controller.onBackButton();
         walletController.walletBalance.refresh();
-        return false;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,

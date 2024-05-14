@@ -33,8 +33,9 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         print("************************************************");
         for (var e in starlineCon.starlineButtonList) {
           e.isSelected.value = false;
@@ -49,7 +50,6 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
         // starlineCon.getMarketBidsByUserId();
         // starlineCon.getStarlineBidsByUserId();
         starlineCon.selectedIndex.value = null;
-        return false;
       },
       child: Scaffold(
         body: RefreshIndicator(
