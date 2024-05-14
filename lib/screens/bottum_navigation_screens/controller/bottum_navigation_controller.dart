@@ -6,6 +6,7 @@ import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
+import 'package:spllive/self_closing_page.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../helper_files/constant_variables.dart';
@@ -22,6 +23,8 @@ class MoreListController extends GetxController {
   double ratingValue = 0.00;
   RxBool isSharing = false.obs;
   DateTime startEndDate = DateTime.now();
+  final con = Get.find<InactivityController>();
+
   @override
   void onInit() {
     getUserData();
@@ -40,6 +43,8 @@ class MoreListController extends GetxController {
     ApiService().logout().then((value) async {
       if (value['status']) {
         // AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        // ApiUtils().inactivityTimer?.cancel();
+        con.inactivityTimer?.cancel();
         GetStorage().erase();
         Get.offAllNamed(AppRoutName.walcomeScreen);
         Get.defaultDialog(

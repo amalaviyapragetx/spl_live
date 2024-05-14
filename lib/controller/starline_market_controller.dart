@@ -20,8 +20,8 @@ class StarlineMarketController extends GetxController {
     //   name: "BID HISTORY",
     //   image: ConstantImage.bidHistoryIcon,
     // ),
-    StarlineFilterModel(isSelected: false.obs, name: "RESULT HISTORY", image: ConstantImage.resultHistoryIcons),
-    StarlineFilterModel(isSelected: false.obs, name: "CHART", image: ConstantImage.chartIcon),
+    StarlineFilterModel(isSelected: false.obs, name: "RESULT HISTORY", image: ConstantImage.resultHistoryNew),
+    StarlineFilterModel(isSelected: false.obs, name: "CHART", image: ConstantImage.chartNewIcon),
   ].obs;
   RxList<StarlineMarketData> starLineMarketList = <StarlineMarketData>[].obs;
   RxList<StarlineMarketData> marketList = <StarlineMarketData>[].obs;

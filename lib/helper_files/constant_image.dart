@@ -12,13 +12,20 @@ class ConstantImage {
   static String bidHistoryListIcon = "assets/images/bidhistory_list_icon.svg";
   static String homeIcon = "assets/images/home_icon.svg";
   static String chartIcon = "assets/images/chart_icon.svg";
+  static String chartNewIcon = "assets/images/chartNewIcon.svg";
   static String resultHistoryIcons = "assets/images/result_history.svg";
+  static String resultHistoryNew = "assets/images/resultHistoryNew.svg";
   static String starLineIcon = "assets/images/starline_icon.svg";
   static String moreIcon = "assets/images/more_Icon.svg";
+  static String moreImage = "assets/images/moreImage.svg";
   static String marketIcon = "assets/images/market_icon.svg";
   static String openStarsSvg = "assets/images/open_star_svg.svg";
   static String closeStarsSvg = "assets/images/close_star_svg.svg";
   static String bakAccount = "assets/images/bankAccount.svg";
+  static String bankAccountNew = "assets/images/bankAccountNew.svg";
+  static String rateNew = "assets/images/rateNew.svg";
+  static String logoutNew = "assets/images/logoutNew.svg";
+
   static String gameRate = "assets/images/bidhistory_list_icon.svg";
   static String notifiacation = "assets/images/notification.svg";
   static String playIcon = "assets/images/circle_filled_play_ic_icon.svg";
@@ -38,8 +45,11 @@ class ConstantImage {
   static String withDrawalPageIcon = "assets/images/bid_History_Icon.svg";
   static String clockSvg = "assets/images/clock.svg";
   static String withDrawalFundIcon = "assets/images/vaadin_money-withdraw.svg";
+  static String addBankDeatils = "assets/images/add_bank_details.svg";
+  static String bankChangeDeatils = "assets/images/bank_chang_history.svg";
   static String addFundIconInWallet = "assets/images/majesticons_rupee-circle-line.svg";
   static String fundDepositIcon = "assets/images/fund_deposit_icon.svg";
+  static String fundWithdrawalHistory = "assets/images/fund_withdrawal_history.svg";
   static String gPay = "assets/images/GooglePay.png";
   static String icici_bank = "assets/images/icici_bank.png";
   static String paytm = "assets/images/paytm.png";

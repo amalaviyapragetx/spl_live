@@ -37,7 +37,7 @@ class CommonWalletList extends StatelessWidget {
               SizedBox(width: Dimensions.w10),
               SvgPicture.asset(
                 image ?? "",
-                height: Dimensions.h17,
+                height: Dimensions.h23,
               ),
               SizedBox(width: Dimensions.w15),
               Text(

@@ -61,67 +61,67 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                         child: Dialog(
                           insetPadding: const EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                          child: Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(vertical: 5),
-                                  decoration: BoxDecoration(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                decoration: BoxDecoration(
+                                    color: AppColors.appbarColor,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0))),
+                                child: Text(
+                                  "SET FILTER",
+                                  textAlign: TextAlign.center,
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                    color: AppColors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
+                                  controller: starlineCon.dateinput,
+                                  decoration: InputDecoration(
+                                    hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                                    hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                       color: AppColors.appbarColor,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0))),
-                                  child: Text(
-                                    "SET FILTER",
-                                    textAlign: TextAlign.center,
-                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                      color: AppColors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20,
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextField(
-                                    style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
-                                    controller: starlineCon.dateinput,
-                                    decoration: InputDecoration(
-                                      hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-                                      hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                        color: AppColors.appbarColor,
-                                      ),
-                                      border: const OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      contentPadding:
-                                          EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
-                                      filled: true,
-                                      fillColor: AppColors.grey.withOpacity(0.15),
-                                      prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
+                                    border: const OutlineInputBorder(
+                                      borderSide: BorderSide.none,
                                     ),
-                                    readOnly: true,
-                                    onTap: () async {
-                                      DateTime? pickedDate = await showDatePicker(
-                                          context: context,
-                                          initialDate: starlineCon.startEndDate,
-                                          firstDate: DateTime(2000),
-                                          lastDate: DateTime(2101));
-                                      if (pickedDate != null) {
-                                        starlineCon.startEndDate = pickedDate;
-                                        starlineCon.date = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                        starlineCon.dateinput.text = DateFormat('dd-MM-yyyy').format(pickedDate);
-                                      }
-                                    },
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
+                                    filled: true,
+                                    fillColor: AppColors.grey.withOpacity(0.15),
+                                    prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
                                   ),
+                                  readOnly: true,
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                        context: context,
+                                        initialDate: starlineCon.startEndDate,
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2101));
+                                    if (pickedDate != null) {
+                                      starlineCon.startEndDate = pickedDate;
+                                      starlineCon.date = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                      starlineCon.dateinput.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+                                    }
+                                  },
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    // height: Get.height / 1.2,
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                                    decoration: BoxDecoration(color: AppColors.white),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  // height: Get.height / 1.2,
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                  decoration: BoxDecoration(color: AppColors.white),
+                                  child: SingleChildScrollView(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
@@ -267,79 +267,76 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                     ),
                                   ),
                                 ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (starlineCon.isSelectedWinStatusIndex.value != null ||
-                                                      starlineCon.selectedFilterMarketList.isNotEmpty) {
-                                                    starlineCon.getMarketBidsByUserId();
-                                                  } else {
-                                                    AppUtils.showErrorSnackBar(bodyText: "Please select any filter");
-                                                  }
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.appbarColor,
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  padding: const EdgeInsets.all(10),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "SUBMIT",
-                                                      style: CustomTextStyle.textRobotoSansMedium
-                                                          .copyWith(color: AppColors.white),
-                                                    ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                if (starlineCon.isSelectedWinStatusIndex.value != null ||
+                                                    starlineCon.selectedFilterMarketList.isNotEmpty) {
+                                                  starlineCon.getMarketBidsByUserId();
+                                                } else {
+                                                  AppUtils.showErrorSnackBar(bodyText: "Please select any filter");
+                                                }
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.appbarColor,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                padding: const EdgeInsets.all(10),
+                                                child: Center(
+                                                  child: Text(
+                                                    "SUBMIT",
+                                                    style: CustomTextStyle.textRobotoSansMedium
+                                                        .copyWith(color: AppColors.white),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(width: 10),
-                                            Expanded(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  starlineCon.selectedFilterMarketList.value = [];
-                                                  starlineCon.filterMarketList
-                                                      .forEach((e) => e.isSelected.value = false);
-                                                  starlineCon.isSelectedWinStatusIndex.value = null;
-                                                  starlineCon.winStatusList.forEach((e) => e.isSelected.value = false);
-                                                  Get.back();
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.appbarColor,
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  padding: const EdgeInsets.all(10),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "CANCEL",
-                                                      style: CustomTextStyle.textRobotoSansMedium
-                                                          .copyWith(color: AppColors.white),
-                                                    ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                starlineCon.selectedFilterMarketList.value = [];
+                                                starlineCon.filterMarketList.forEach((e) => e.isSelected.value = false);
+                                                starlineCon.isSelectedWinStatusIndex.value = null;
+                                                starlineCon.winStatusList.forEach((e) => e.isSelected.value = false);
+                                                Get.back();
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.appbarColor,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                padding: const EdgeInsets.all(10),
+                                                child: Center(
+                                                  child: Text(
+                                                    "CANCEL",
+                                                    style: CustomTextStyle.textRobotoSansMedium
+                                                        .copyWith(color: AppColors.white),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 20.0,
-                                )
-                              ],
-                            ),
+                              ),
+                              SizedBox(height: 20)
+                            ],
                           ),
                         ),
                       ),
@@ -420,27 +417,29 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                         children: [
                           SizedBox(height: Dimensions.h11),
                           Obx(
-                            () => ListView.builder(
-                              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                              itemCount: starlineCon.marketHistoryList.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return listveiwTransaction(
-                                  isWin: starlineCon.marketHistoryList[index].isWin ?? false,
-                                  requestId: starlineCon.marketHistoryList[index].requestId ?? "",
-                                  // bidTime: DateFormat('dd/MM/yyyy hh:mm:ss a')
-                                  //     .format(DateTime.parse(starlineCon.marketHistoryList[index].bidTime.toString()))
-                                  //     .toString(),
-                                  bidTime: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
-                                      starlineCon.marketHistoryList[index].bidTime.toString()),
-                                  ballance: " ${starlineCon.marketHistoryList[index].balance.toString()} ",
-                                  coins: starlineCon.marketHistoryList[index].coins.toString(),
-                                  bidNumber:
-                                      "${starlineCon.marketHistoryList[index].gameMode ?? ""} ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
-                                  marketName: starlineCon.marketHistoryList[index].marketName ?? "00:00 AM",
-                                );
-                              },
+                            () => Expanded(
+                              child: ListView.builder(
+                                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                itemCount: starlineCon.marketHistoryList.length,
+                                shrinkWrap: true,
+                                // physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return listveiwTransaction(
+                                    isWin: starlineCon.marketHistoryList[index].isWin ?? false,
+                                    requestId: starlineCon.marketHistoryList[index].requestId ?? "",
+                                    // bidTime: DateFormat('dd/MM/yyyy hh:mm:ss a')
+                                    //     .format(DateTime.parse(starlineCon.marketHistoryList[index].bidTime.toString()))
+                                    //     .toString(),
+                                    bidTime: CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(
+                                        starlineCon.marketHistoryList[index].bidTime.toString()),
+                                    ballance: " ${starlineCon.marketHistoryList[index].balance.toString()} ",
+                                    coins: starlineCon.marketHistoryList[index].coins.toString(),
+                                    bidNumber:
+                                        "${starlineCon.marketHistoryList[index].gameMode ?? ""} ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
+                                    marketName: starlineCon.marketHistoryList[index].marketName ?? "00:00 AM",
+                                  );
+                                },
+                              ),
                             ),
                           )
                         ],

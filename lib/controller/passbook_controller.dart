@@ -12,7 +12,7 @@ class PassbookHistoryController extends GetxController {
   RxInt passbookCount = 0.obs;
 
   final int itemLimit = 30;
-  RxInt offset = 0.obs;
+  RxInt offset = 1.obs;
   RxBool isLoad = false.obs;
   void getPassBookData({required bool lazyLoad, required String offset}) {
     UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
@@ -41,11 +41,21 @@ class PassbookHistoryController extends GetxController {
   }
 
   int calculateTotalPages() {
-    var passbookValue = (passbookCount.value / itemLimit).ceil() - 1;
+    var passbookValue = (passbookCount.value / itemLimit).ceil();
     var passbookValueZero = (passbookCount.value / itemLimit).ceil();
+
+    print("passbookValue ${(passbookCount.value / itemLimit).ceil() - 1}");
+
+    print("passbookValue11 ${(passbookCount.value / itemLimit).ceil()}");
+
+    print("passbookValue22 ${passbookCount.value < 30}");
+    print("passbookValue22 ${passbookCount.value}");
+
     if (passbookCount.value < 30) {
+      print("passbookValue IN");
       return passbookValueZero;
     } else {
+      print("passbookValue ${passbookValue}");
       return passbookValue;
     }
   }
@@ -63,7 +73,7 @@ class PassbookHistoryController extends GetxController {
   }
 
   void prevPage() {
-    if (offset.value > 0) {
+    if (offset.value > 1) {
       passBookModelData.clear();
       offset.value--;
       num = num - itemLimit;

@@ -173,10 +173,14 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 label: "Passbook",
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  ConstantImage.moreIcon,
+                icon: Container(
+                  width: 20,
                   height: 15,
-                  color: homeCon.pageWidget.value == 4 ? AppColors.appbarColor : AppColors.black,
+                  child: SvgPicture.asset(
+                    ConstantImage.moreImage,
+                    width: 15,
+                    color: homeCon.pageWidget.value == 4 ? AppColors.appbarColor : AppColors.black,
+                  ),
                 ),
                 label: "More",
               )

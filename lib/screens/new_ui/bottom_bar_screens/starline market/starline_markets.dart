@@ -76,7 +76,7 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.h7),
+                    padding: EdgeInsets.symmetric(horizontal: 5),
                     child: Column(
                       children: [
                         const SizedBox(height: 10),
@@ -174,7 +174,7 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                                           e.image ?? "",
                                           height: Dimensions.h22,
                                           width: Dimensions.w22,
-                                          color: AppColors.appbarColor,
+                                          // color: AppColors.appbarColor,
                                         ),
                                         const SizedBox(width: 5),
                                         Text(
@@ -205,8 +205,8 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                                 maxCrossAxisExtent: Get.width / 2,
-                                mainAxisExtent: Get.width / 2.6,
-                                crossAxisSpacing: 14,
+                                mainAxisExtent: Get.width / 2.5,
+                                crossAxisSpacing: 7,
                                 mainAxisSpacing: Dimensions.h10),
                             itemCount: starlineCon.starLineMarketList.length ?? 0,
                             itemBuilder: (context, i) {

@@ -29,7 +29,7 @@ class _MoreOptionsState extends State<MoreOptions> {
     return Column(
       children: [
         AppUtils().simpleAppbar(
-          appBarTitle: "SPL".tr,
+          appBarTitle: "MORE".tr,
           centerTitle: true,
           appBarTitlestyle: CustomTextStyle.textRobotoMedium.copyWith(
             fontSize: Dimensions.h18,
@@ -123,7 +123,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                 SizedBox(height: Dimensions.h5),
                 listItems(
                     onTap: () => Get.toNamed(AppRoutName.profilePage),
-                    iconData: ConstantImage.bakAccount,
+                    iconData: ConstantImage.bankAccountNew,
                     text: "Change Password".tr),
                 listItems(
                     onTap: () {
@@ -173,11 +173,11 @@ class _MoreOptionsState extends State<MoreOptions> {
                 listItems(
                   onTap: () => Get.toNamed(AppRoutName.feedBackPage),
                   iconData: ConstantImage.giveFeedbackIcon,
-                  text: "Give Review".tr,
+                  text: "GIVEFEEDBACK".tr,
                 ),
                 listItems(
                   onTap: () => controller.getFeedbackAndRatingsById(),
-                  iconData: ConstantImage.rateusStartIcon,
+                  iconData: ConstantImage.rateNew,
                   text: "RATEUS".tr,
                 ),
                 // listItems(
@@ -187,13 +187,20 @@ class _MoreOptionsState extends State<MoreOptions> {
                 // ),
                 listItems(
                   onTap: () => controller.callLogout(),
-                  iconData: ConstantImage.signOutIcon,
+                  iconData: ConstantImage.logoutNew,
                   text: "Log Out",
                 ),
               ],
             ),
           ),
-        )
+        ),
+        Text(
+          "Version: 2.0.1",
+          textAlign: TextAlign.center,
+          style: CustomTextStyle.textRobotoSansMedium
+              .copyWith(fontSize: Dimensions.h14, color: AppColors.textColor, fontWeight: FontWeight.w400),
+        ),
+        const SizedBox(height: 10),
       ],
     );
   }

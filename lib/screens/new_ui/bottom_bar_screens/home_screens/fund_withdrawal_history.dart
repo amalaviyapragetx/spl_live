@@ -52,15 +52,16 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                           const SizedBox(width: 5),
                         ],
                       ),
-                      const SizedBox(width: 10),
+                      const Expanded(child: SizedBox()),
                       Text(
                         textAlign: TextAlign.center,
-                        "Fund withdrawal history",
+                        "Fund Withdrawal History",
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.white,
                           fontSize: Dimensions.h17,
                         ),
                       ),
+                      const Expanded(child: SizedBox()),
                     ],
                   ),
                 ),

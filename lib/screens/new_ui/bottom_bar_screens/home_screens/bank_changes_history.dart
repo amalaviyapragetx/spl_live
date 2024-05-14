@@ -50,10 +50,10 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
                           const SizedBox(width: 5),
                         ],
                       ),
-                      const SizedBox(width: 10),
+                      const Expanded(child: SizedBox()),
                       Text(
                         textAlign: TextAlign.center,
-                        "Bank change history",
+                        "Bank Change History",
                         style: CustomTextStyle.textRobotoSansMedium.copyWith(
                           color: AppColors.white,
                           fontSize: Dimensions.h17,

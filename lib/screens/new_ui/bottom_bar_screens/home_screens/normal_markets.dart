@@ -61,8 +61,8 @@ class NormalMarketsList extends StatelessWidget {
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: Get.width / 2,
                         mainAxisExtent: Get.width / 2.4,
-                        crossAxisSpacing: 4,
-                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 10,
                       ),
                       itemCount: normalMarketList?.length ?? 0,
                       itemBuilder: (context, i) {

@@ -463,7 +463,8 @@ class AppUtils {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          )
+          ),
+          SizedBox(height: Dimensions.h20),
         ],
       ),
       actions: [

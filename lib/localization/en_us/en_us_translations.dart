@@ -92,7 +92,7 @@ final Map<String, String> enUs = {
   // drawer names
   "MYPROFILE": "My profile",
   "MYACCOUNT": "My Bank Account",
-  "GAMERATE": "Game rate",
+  "GAMERATE": "Game Rates",
   "NOTIFICATIONS": "Notifications",
   "HOWTOPLAY": "How To Play",
   "PLAY2": "PLAY",
@@ -100,7 +100,7 @@ final Map<String, String> enUs = {
   "BIDDINGHISTORY": "Bidding History",
   "WITHDRAWAL_TXT1": "WithDrawal",
   "TRANSACTIONHISTORY": "Transaction History",
-  "GIVEFEEDBACK": "Give feedback",
+  "GIVEFEEDBACK": "Give Feedback",
   "RATEUS": "Rate Us",
   "STARLINETERMS&CONDITION": "Starling Terms & Condition",
   "ABOUTUS": "About Us",

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:spllive/Push%20Notification/notificationservices.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -95,6 +96,8 @@ class SetMPINPageController extends GetxController {
             GetStorage().write(ConstantsVariables.userData, userData);
             GetStorage().write(ConstantsVariables.isUserDetailSet, isUserDetailSet);
             GetStorage().write(ConstantsVariables.id, userData["Id"]);
+            print(
+                "ConstantsVariables.fcmTokenConstantsVariables.fcmToken ${GetStorage().read(ConstantsVariables.fcmToken)}");
             callFcmApi(userData["Id"]);
           } else {
             AppUtils.showErrorSnackBar(bodyText: "Something went wrong!!!");
@@ -117,10 +120,11 @@ class SetMPINPageController extends GetxController {
     });
   }
 
-  fcmBody(userId, fcmToken) {
+  fcmBody(userId, fcmToken) async {
+    var token = await NotificationServices().getDeviceToken();
     var a = {
       "id": userId,
-      "fcmToken": fcmToken,
+      "fcmToken": token,
     };
     return a;
   }
@@ -128,6 +132,7 @@ class SetMPINPageController extends GetxController {
   void fsmApiCall(userId, fcmToken) async {
     ApiService().fcmToken(await fcmBody(userId, fcmToken)).then((value) async {
       if (value['status']) {
+        print("ConstantsVariables.fcmTokenConstantsVariables.fcmToken ${ConstantsVariables.fcmToken}");
         // AppUtils.showSuccessSnackBar(
         //     bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
       } else {

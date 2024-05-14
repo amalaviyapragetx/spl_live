@@ -1249,8 +1249,6 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> fcmToken(body) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    print(body);
-    print("fkjdshfksdfsldjflskd");
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.fcmToken,
       body,
@@ -1515,7 +1513,6 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       AppUtils.hideProgressDialog();
-      // print(e.toString());
       return null;
     }
   }

@@ -101,7 +101,7 @@ class NotificationServices {
       android: androidNotificationDetails,
       //  iOS: iosNotificationDetails,
     );
-    _flutterLocalNotificationsPlugin.show(1, message.notification?.title.toString() ?? "dsadas",
+    _flutterLocalNotificationsPlugin.show(1, "message.notification?.title.toString()",
         message.notification?.body.toString() ?? "sdasd", notificationDetails);
   }
 

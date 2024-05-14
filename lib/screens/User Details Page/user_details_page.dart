@@ -68,7 +68,9 @@ class UserDetailsPage extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   autofocus: true,
                   formatter: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]+$')),
+                    // FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                    FilteringTextInputFormatter.allow(RegExp("[a-z A-Z ']")),
+                    FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
                     LengthLimitingTextInputFormatter(50)
                   ],
                   //focusNode: controller.fullNameFocusNode,
