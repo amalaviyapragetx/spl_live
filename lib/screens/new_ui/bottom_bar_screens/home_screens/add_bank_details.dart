@@ -45,151 +45,147 @@ class _AddBankDetailsState extends State<AddBankDetails> {
         controller.ifscCodeController.clear();
         return false;
       },
-      child: Expanded(
-        child: Material(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CommonAppBar(
-                title: "Add Bank Details",
-                titleTextStyle: CustomTextStyle.textRobotoMedium.copyWith(
-                  fontSize: Dimensions.h17,
-                  color: AppColors.white,
-                ),
-                leading: GestureDetector(
-                    onTap: () {
-                      walletCon.selectedIndex.value = null;
-                      controller.bankNameController.clear();
-                      controller.accHolderNameController.clear();
-                      controller.accNoController.clear();
-                      controller.ifscCodeController.clear();
-                      Get.back();
-                    },
-                    child: Icon(Icons.arrow_back, size: 28)),
+      child: Material(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CommonAppBar(
+              title: "Add Bank Details",
+              titleTextStyle: CustomTextStyle.textRobotoMedium.copyWith(
+                fontSize: Dimensions.h17,
+                color: AppColors.white,
               ),
-              // Container(
-              //   color: AppColors.appbarColor,
-              //   padding: const EdgeInsets.all(10),
-              //   child: SafeArea(
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Row(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: [
-              //             InkWell(
-              //               onTap: () {
-              //                 walletCon.selectedIndex.value = null;
-              //                 controller.bankNameController.clear();
-              //                 controller.accHolderNameController.clear();
-              //                 controller.accNoController.clear();
-              //                 controller.ifscCodeController.clear();
-              //               },
-              //               child: Icon(Icons.arrow_back, color: AppColors.white),
-              //             ),
-              //             const SizedBox(width: 5),
-              //           ],
-              //         ),
-              //         const Expanded(child: SizedBox()),
-              //         Expanded(
-              //           child: Text(
-              //             textAlign: TextAlign.center,
-              //             "Add bank details",
-              //             maxLines: 2,
-              //             overflow: TextOverflow.visible,
-              //             style: CustomTextStyle.textRobotoSansMedium.copyWith(
-              //               color: AppColors.white,
-              //               fontSize: Dimensions.h17,
-              //             ),
-              //           ),
-              //         ),
-              //         const Expanded(child: SizedBox()),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: Dimensions.h10),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Obx(
-                        () => CommonTextFieldBorder(
-                          con: controller.accNoController,
-                          labelText: "Account No.",
-                          keyBoardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          readOnly: !controller.isEditDetails.value,
-                        ),
-                      ),
-                      Obx(
-                        () => CommonTextFieldBorder(
-                          con: controller.ifscCodeController,
-                          labelText: "IFSC Code",
-                          readOnly: !controller.isEditDetails.value,
-                        ),
-                      ),
-                      Obx(
-                        () => CommonTextFieldBorder(
-                          con: controller.accHolderNameController,
-                          labelText: "Account Holder Name",
-                          readOnly: !controller.isEditDetails.value,
-                        ),
-                      ),
-                      Obx(
-                        () => CommonTextFieldBorder(
-                          con: controller.bankNameController,
-                          labelText: "Bank Name",
-                          readOnly: !controller.isEditDetails.value,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Obx(
-                        () => !controller.isEditDetails.value
-                            ? const SizedBox()
-                            : RoundedCornerButton(
-                                text: "SUBMIT",
-                                color: AppColors.appbarColor,
-                                borderColor: AppColors.appbarColor,
-                                fontSize: Dimensions.h13,
-                                fontWeight: FontWeight.bold,
-                                fontColor: AppColors.white,
-                                letterSpacing: 1,
-                                borderRadius: 5,
-                                borderWidth: 0,
-                                textStyle: CustomTextStyle.textPTsansMedium,
-                                onTap: () => controller.validationFied(),
-                                height: 40,
-                                width: 200,
-                              ),
-                      ),
-                      Obx(
-                        () => controller.isEditDetailsButton.value
-                            ? RoundedCornerButton(
-                                text: "EDIT BANK DETAILS",
-                                color: AppColors.wpColor1,
-                                borderColor: AppColors.appbarColor,
-                                fontSize: Dimensions.h13,
-                                fontWeight: FontWeight.bold,
-                                fontColor: AppColors.black,
-                                letterSpacing: 1,
-                                borderRadius: 5,
-                                borderWidth: 0,
-                                textStyle: CustomTextStyle.textRobotoMedium,
-                                onTap: () => _showExitDialog(),
-                                height: 40,
-                                width: 200,
-                              )
-                            : Container(),
-                      ),
-                    ],
+              leading: GestureDetector(
+                  onTap: () {
+                    walletCon.selectedIndex.value = null;
+                    controller.bankNameController.clear();
+                    controller.accHolderNameController.clear();
+                    controller.accNoController.clear();
+                    controller.ifscCodeController.clear();
+                    Get.back();
+                  },
+                  child: Icon(Icons.arrow_back, size: 28)),
+            ),
+            // Container(
+            //   color: AppColors.appbarColor,
+            //   padding: const EdgeInsets.all(10),
+            //   child: SafeArea(
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Row(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: [
+            //             InkWell(
+            //               onTap: () {
+            //                 walletCon.selectedIndex.value = null;
+            //                 controller.bankNameController.clear();
+            //                 controller.accHolderNameController.clear();
+            //                 controller.accNoController.clear();
+            //                 controller.ifscCodeController.clear();
+            //               },
+            //               child: Icon(Icons.arrow_back, color: AppColors.white),
+            //             ),
+            //             const SizedBox(width: 5),
+            //           ],
+            //         ),
+            //         const Expanded(child: SizedBox()),
+            //         Expanded(
+            //           child: Text(
+            //             textAlign: TextAlign.center,
+            //             "Add bank details",
+            //             maxLines: 2,
+            //             overflow: TextOverflow.visible,
+            //             style: CustomTextStyle.textRobotoSansMedium.copyWith(
+            //               color: AppColors.white,
+            //               fontSize: Dimensions.h17,
+            //             ),
+            //           ),
+            //         ),
+            //         const Expanded(child: SizedBox()),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            SizedBox(height: Dimensions.h10),
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Obx(
+                    () => CommonTextFieldBorder(
+                      con: controller.accNoController,
+                      labelText: "Account No.",
+                      keyBoardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      readOnly: !controller.isEditDetails.value,
+                    ),
                   ),
-                ),
+                  Obx(
+                    () => CommonTextFieldBorder(
+                      con: controller.ifscCodeController,
+                      labelText: "IFSC Code",
+                      readOnly: !controller.isEditDetails.value,
+                    ),
+                  ),
+                  Obx(
+                    () => CommonTextFieldBorder(
+                      con: controller.accHolderNameController,
+                      labelText: "Account Holder Name",
+                      readOnly: !controller.isEditDetails.value,
+                    ),
+                  ),
+                  Obx(
+                    () => CommonTextFieldBorder(
+                      con: controller.bankNameController,
+                      labelText: "Bank Name",
+                      readOnly: !controller.isEditDetails.value,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Obx(
+                    () => !controller.isEditDetails.value
+                        ? const SizedBox()
+                        : RoundedCornerButton(
+                            text: "SUBMIT",
+                            color: AppColors.appbarColor,
+                            borderColor: AppColors.appbarColor,
+                            fontSize: Dimensions.h13,
+                            fontWeight: FontWeight.bold,
+                            fontColor: AppColors.white,
+                            letterSpacing: 1,
+                            borderRadius: 5,
+                            borderWidth: 0,
+                            textStyle: CustomTextStyle.textPTsansMedium,
+                            onTap: () => controller.validationFied(),
+                            height: 40,
+                            width: 200,
+                          ),
+                  ),
+                  Obx(
+                    () => controller.isEditDetailsButton.value
+                        ? RoundedCornerButton(
+                            text: "EDIT BANK DETAILS",
+                            color: AppColors.wpColor1,
+                            borderColor: AppColors.appbarColor,
+                            fontSize: Dimensions.h13,
+                            fontWeight: FontWeight.bold,
+                            fontColor: AppColors.black,
+                            letterSpacing: 1,
+                            borderRadius: 5,
+                            borderWidth: 0,
+                            textStyle: CustomTextStyle.textRobotoMedium,
+                            onTap: () => _showExitDialog(),
+                            height: 40,
+                            width: 200,
+                          )
+                        : Container(),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
