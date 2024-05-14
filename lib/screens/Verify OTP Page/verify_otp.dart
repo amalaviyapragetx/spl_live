@@ -30,7 +30,7 @@ class VerifyOTPPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: Get.height * 0.25),
+            SizedBox(height: Get.height * 0.15),
             Center(
               child: SizedBox(
                 height: Dimensions.h100,

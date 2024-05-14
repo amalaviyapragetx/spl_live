@@ -40,10 +40,11 @@ class _SetMPINPageState extends State<SetMPINPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: Get.height * 0.15),
+            SizedBox(height: 35),
+            // SizedBox(height: Get.height * 0.1),
             Center(
               child: SizedBox(
-                height: Dimensions.h100,
+                height: Dimensions.h70,
                 width: Dimensions.w150,
                 child: Image.asset(
                   ConstantImage.splLogo,
@@ -104,7 +105,7 @@ class _SetMPINPageState extends State<SetMPINPage> {
               height: Dimensions.h30,
               width: double.infinity,
             ),
-            SizedBox(height: Get.height * 0.3),
+            SizedBox(height: Get.height * 0.4),
           ],
         ),
       ),

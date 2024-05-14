@@ -39,7 +39,7 @@ class UserDetailsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: Get.height * 0.15),
+                SizedBox(height: Get.height * 0.11),
                 Center(
                   child: SizedBox(
                     height: Dimensions.h70,
