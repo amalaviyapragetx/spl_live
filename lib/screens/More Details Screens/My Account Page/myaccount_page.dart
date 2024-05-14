@@ -29,8 +29,11 @@ class _MyAccountPageState extends State<MyAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: exitController.onWillPop,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
+        exitController.onWillPop();
+      },
       child: Scaffold(
         appBar: AppUtils().simpleAppbar(
           appBarTitle: "MYACCOUNT".tr,

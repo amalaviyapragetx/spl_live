@@ -25,10 +25,10 @@ class _StarLineGameModesPageState extends State<StarLineGameModesPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         controller.onBackButton();
-        return false;
       },
       child: Scaffold(
         appBar: AppUtils().simpleAppbar(

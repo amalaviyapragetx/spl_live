@@ -37,11 +37,11 @@ class _NewGameModePageState extends State<NewGameModePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         controller.onClose();
         Get.offAndToNamed(AppRoutName.gameModePage, arguments: controller.marketValue.value);
-        return false;
       },
       child: Obx(
         () => Scaffold(

@@ -29,10 +29,10 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         walletController.selectedIndex.value = null;
-        return false;
       },
       child: Column(
         children: [
