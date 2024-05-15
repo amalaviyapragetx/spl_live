@@ -86,10 +86,6 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
                         shrinkWrap: true,
                         itemCount: starlineCon.marketListForResult.length,
                         itemBuilder: (context, index) {
-                          print(starlineCon.marketListForResult.length);
-                          print(starlineCon.marketListForResult[index].time);
-                          // print(
-                          //     "starlineCon.marketListForResult[index].time ${starlineCon.marketListForResult[index].time}");
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 18.0),
                             child: Container(
@@ -117,7 +113,6 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
                                             starlineCon.marketListForResult[index].time?.split(":")[0] ?? "00:00 AM"),
                                         color: AppColors.appbarColor,
                                       )),
-                                  Icon(Icons.watch, color: AppColors.black),
                                   SizedBox(width: Dimensions.w10),
                                   Text(
                                     starlineCon.marketListForResult[index].time ?? "00:00 AM",

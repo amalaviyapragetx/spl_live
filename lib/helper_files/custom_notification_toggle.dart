@@ -402,8 +402,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     }
   }
 
-  /// This method is called in two [GestureDetector]s because only one
-  /// [GestureDetector.onTapUp] will be triggered.
   void _onTap(TapProperties<T> info) {
     if (!_isActive) return;
     final result = widget.onTap?.call(info);
@@ -418,11 +416,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     _setAnimationInfo(_animationInfo.setLoading(b), setState: true);
   }
 
-  /// Checks if the current value has a different position than the indicator
-  /// and starts an animation if necessary.
-  ///
-  /// IMPORTANT: This must be called in [didUpdateWidget] because it updates
-  /// [_currentIndex] also.
   void _checkValuePosition() {
     _currentIndex = widget.values.indexOf(widget.current);
     if (_animationInfo.toggleMode == ToggleMode.dragged) return;
@@ -433,8 +426,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     }
   }
 
-  /// Returns the value position by the local position of the cursor.
-  /// It is mainly intended as a helper function for the build method.
   double _doubleFromPosition(double x, DetailedGlobalToggleProperties<T> properties) {
     double result =
         (x.clamp(properties.indicatorSize.width / 2, properties.switchSize.width - properties.indicatorSize.width / 2) -
@@ -462,8 +453,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     widget.positionListener?.call(value);
   }
 
-  /// Returns the [TogglePosition] by the position value.
-  /// It is mainly intended as a helper function for the build method.
   TogglePosition<T> _togglePositionFromPositionValue(double position) {
     final index = position.round();
     return TogglePosition(
@@ -473,8 +462,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     );
   }
 
-  /// Returns the [TogglePosition] by the local position of the cursor.
-  /// It is mainly intended as a helper function for the build method.
   TogglePosition<T> _togglePositionFromRealPosition(double x, DetailedGlobalToggleProperties<T> properties) {
     return _togglePositionFromPositionValue(_doubleFromPosition(x, properties));
   }
@@ -573,13 +560,10 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
                           width = constraints.minWidth;
                         }
 
-                        // The additional width of the indicator's hitbox needed
-                        // to reach the minTouchTargetSize.
                         double dragDif = indicatorSize.width < widget.minTouchTargetSize
                             ? (widget.minTouchTargetSize - indicatorSize.width)
                             : 0;
 
-                        // The local position of the indicator.
                         double position = (indicatorSize.width + spacing) * positionValue + indicatorSize.width / 2;
 
                         double leftPosition = textDirection == TextDirection.rtl ? width - position : position;
@@ -650,9 +634,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
                             child: SizedBox(
                               width: width,
                               height: height,
-                              // manual check if cursor is above indicator
-                              // to make sure that GestureDetector and MouseRegion match.
-                              // TODO: one widget for _DragRegion and GestureDetector to avoid redundancy
                               child: _HoverRegion(
                                 hoverCursor: widget.cursors.tapCursor,
                                 hoverCheck: (pos) =>
@@ -693,7 +674,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
                                     onHorizontalDragEnd: (details) {
                                       _onDragEnd();
                                     },
-                                    // DecoratedBox for gesture detection
                                     child: DecoratedBox(
                                         position: DecorationPosition.background,
                                         decoration: const BoxDecoration(),
@@ -718,7 +698,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     );
   }
 
-  /// The builder of the icons for [IconArrangement.overlap].
   List<Widget> _buildBackgroundStack(BuildContext context, DetailedGlobalToggleProperties<T> properties) {
     return [
       ...Iterable.generate(widget.values.length, (i) {
@@ -736,7 +715,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
           ),
         );
       }),
-      // shows horizontal overlapping for FittingMode.none in debug mode
       Row(
         children: [
           SizedBox(
@@ -748,7 +726,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     ];
   }
 
-  /// The builder of the icons for [IconArrangement.row].
   List<Widget> _buildBackgroundRow(BuildContext context, DetailedGlobalToggleProperties<T> properties) {
     final length = properties.values.length;
     return [
@@ -778,7 +755,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     ];
   }
 
-  /// Animates the indicator to a specific item by its index.
   void _animateTo(int index, {double? current}) {
     if (_animationInfo.toggleMode == ToggleMode.dragged) return;
     if (_appearingController.value > 0.0) {
@@ -795,8 +771,6 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     _appearingController.forward();
   }
 
-  /// Starts the dragging of the indicator and starts the animation to
-  /// the current cursor position.
   void _onDragged(double indexPosition, double pos) {
     if (!_isActive) return;
     _setAnimationInfo(_animationInfo.dragged(indexPosition, pos: pos));
@@ -805,14 +779,11 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     _controller.forward(from: 0.0);
   }
 
-  /// Updates the current drag position.
   void _onDragUpdate(double indexPosition) {
     if (_animationInfo.toggleMode != ToggleMode.dragged) return;
     _setAnimationInfo(_animationInfo.dragged(indexPosition), setState: true);
   }
 
-  /// Ends the dragging of the indicator and starts an animation
-  /// to the new value if necessary.
   void _onDragEnd() {
     if (_animationInfo.toggleMode != ToggleMode.dragged) return;
     int index = _animationInfo.end.round();
@@ -822,22 +793,18 @@ class _CustomNotificationSwitchState<T> extends State<CustomNotificationSwitch<T
     _checkValuePosition();
   }
 
-  /// Cancels drag because of loading or inactivity
   void _cancelDrag() {
     _setAnimationInfo(_animationInfo.none());
     _checkValuePosition();
   }
 
-  /// Returns the [TextDirection] of the widget.
   TextDirection _textDirectionOf(BuildContext context) =>
       widget.textDirection ?? Directionality.maybeOf(context) ?? TextDirection.ltr;
 }
 
 class _AnimationInfo {
-  /// The start position of the current animation.
   final double start;
 
-  /// The end position of the current animation.
   final double end;
 
   final ToggleMode toggleMode;
@@ -897,25 +864,11 @@ class _AnimationInfo {
 }
 
 class ToggleCursors {
-  /// [MouseCursor] to show when not hovering an indicator or a tappable icon.
-  ///
-  /// This defaults to [MouseCursor.defer] if [onTap] is [null]
-  /// and to [SystemMouseCursors.click] otherwise.
   final MouseCursor? defaultCursor;
-
-  /// [MouseCursor] to show when hovering an tappable icon.
   final MouseCursor tapCursor;
-
-  /// [MouseCursor] to show when grabbing the indicators.
   final MouseCursor draggingCursor;
-
-  /// [MouseCursor] to show when hovering the indicators.
   final MouseCursor dragCursor;
-
-  /// [MouseCursor] to show during loading.
   final MouseCursor loadingCursor;
-
-  /// [MouseCursor] to show when [active] is set to [false].
   final MouseCursor inactiveCursor;
 
   const ToggleCursors({
@@ -1010,8 +963,6 @@ class _HoverRegionState extends State<_HoverRegion> {
   @override
   Widget build(BuildContext context) {
     if (_position != null) _updateHovering(_position!, rebuild: false);
-    // Listener is necessary because MouseRegion.onHover only gets triggered
-    // without buttons pressed
     return Listener(
       behavior: HitTestBehavior.translucent,
       onPointerHover: _updatePointer,
@@ -1142,6 +1093,5 @@ Widget _defaultIndicatorAppearingBuilder(BuildContext context, double value, Wid
   return Transform.scale(scale: value, child: indicator);
 }
 
-// global parameter default values
 const _defaultIndicatorAppearingAnimationDuration = Duration(milliseconds: 350);
 const _defaultIndicatorAppearingAnimationCurve = Curves.easeOutBack;

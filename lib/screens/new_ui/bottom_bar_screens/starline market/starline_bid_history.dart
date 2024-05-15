@@ -54,6 +54,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () => {
+                    starlineCon.date = DateFormat('yyyy-MM-dd').format(DateTime.now()),
                     Get.dialog(
                       barrierDismissible: false,
                       ConstrainedBox(

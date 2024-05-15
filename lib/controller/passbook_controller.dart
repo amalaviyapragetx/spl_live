@@ -43,19 +43,9 @@ class PassbookHistoryController extends GetxController {
   int calculateTotalPages() {
     var passbookValue = (passbookCount.value / itemLimit).ceil();
     var passbookValueZero = (passbookCount.value / itemLimit).ceil();
-
-    print("passbookValue ${(passbookCount.value / itemLimit).ceil() - 1}");
-
-    print("passbookValue11 ${(passbookCount.value / itemLimit).ceil()}");
-
-    print("passbookValue22 ${passbookCount.value < 30}");
-    print("passbookValue22 ${passbookCount.value}");
-
     if (passbookCount.value < 30) {
-      print("passbookValue IN");
       return passbookValueZero;
     } else {
-      print("passbookValue ${passbookValue}");
       return passbookValue;
     }
   }

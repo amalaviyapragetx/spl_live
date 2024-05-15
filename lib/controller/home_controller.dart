@@ -49,6 +49,16 @@ class HomeController extends GetxController {
     }
   }
 
+  resetAllBidHistoryData() {
+    selectedFilterMarketList.value = [];
+    filterMarketList.forEach((e) => e.isSelected.value = false);
+    isSelectedWinStatusIndex.value = null;
+    isSelectedGameIndex.value = null;
+    gameTypeList.forEach((e) => e.isSelected.value = false);
+    winStatusList.forEach((e) => e.isSelected.value = false);
+    Get.back();
+  }
+
   final RxList<FilterModel> filterDateList = [
     FilterModel(
       image: ConstantImage.bid_histroy_bottom,

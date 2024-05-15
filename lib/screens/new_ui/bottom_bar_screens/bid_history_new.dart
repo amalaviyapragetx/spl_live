@@ -40,13 +40,7 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
             ),
             leading: GestureDetector(
                 onTap: () {
-                  homeCon.selectedFilterMarketList.value = [];
-                  homeCon.filterMarketList.forEach((e) => e.isSelected.value = false);
-                  homeCon.isSelectedWinStatusIndex.value = null;
-                  homeCon.isSelectedGameIndex.value = null;
-                  homeCon.gameTypeList.forEach((e) => e.isSelected.value = false);
-                  homeCon.winStatusList.forEach((e) => e.isSelected.value = false);
-                  Get.back();
+                  homeCon.resetAllBidHistoryData();
                 },
                 child: Icon(Icons.arrow_back, size: 28)),
             actions: [
@@ -54,6 +48,7 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () => {
+                    homeCon.date = DateFormat('yyyy-MM-dd').format(DateTime.now()),
                     Get.dialog(
                       barrierDismissible: false,
                       ConstrainedBox(
@@ -383,7 +378,9 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                             const SizedBox(width: 10),
                                             Expanded(
                                               child: InkWell(
-                                                onTap: () => Get.back(),
+                                                onTap: () {
+                                                 homeCon.resetAllBidHistoryData();
+                                                },
                                                 child: Container(
                                                   decoration: BoxDecoration(
                                                     color: AppColors.appbarColor,
