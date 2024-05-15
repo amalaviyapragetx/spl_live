@@ -26,6 +26,7 @@ class ResetPasswordPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 40),
             _buildChangePasswordForm(context),
           ],
         ),
@@ -39,19 +40,18 @@ class ResetPasswordPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // SizedBox(height: 10),
           Center(
             child: SizedBox(
-              height: Dimensions.h80,
-              width: Dimensions.w200,
+              height: Dimensions.h70,
+              width: Dimensions.w150,
               child: Image.asset(
                 ConstantImage.splLogo,
                 fit: BoxFit.contain,
               ),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Center(
             child: Text(
               "RESETPASSWORD".tr,

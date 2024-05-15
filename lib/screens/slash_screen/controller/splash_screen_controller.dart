@@ -4,8 +4,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:ota_update/ota_update.dart';
-import 'package:spllive/api_services/api_urls.dart';
 import 'package:spllive/components/DeviceInfo/device_info.dart';
 import 'package:spllive/routes/app_routes_name.dart';
 
@@ -217,37 +215,37 @@ class SplashController extends GetxController {
       ),
       actions: [
         InkWell(
-          onTap: () async {
-            load.value = true;
-            // launch("https://spl.live");
-            try {
-              OtaUpdate().execute(ApiUtils.getApk).listen(
-                (OtaEvent event) {
-                  if (event.status == OtaStatus.DOWNLOADING) {
-                    load.value = true;
-                  } else if (event.status == OtaStatus.CANCELED) {
-                    load.value = false;
-                    AppUtils.showErrorSnackBar(bodyText: "Download Canceled");
-                  } else if (event.status == OtaStatus.DOWNLOAD_ERROR) {
-                    load.value = false;
-                    AppUtils.showErrorSnackBar(bodyText: "Download error");
-                  } else if (event.status == OtaStatus.INTERNAL_ERROR) {
-                    load.value = false;
-                    AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
-                  } else if (event.status == OtaStatus.PERMISSION_NOT_GRANTED_ERROR) {
-                    load.value = false;
-                  } else {
-                    load.value = false;
-                  }
-                  update();
-                },
-                onDone: () => load.value = false,
-              );
-            } catch (e) {
-              print('Failed to make OTA update. Details: $e');
-            }
-            update();
-          },
+          // onTap: () async {
+          //   load.value = true;
+          //   // launch("https://spl.live");
+          //   try {
+          //     OtaUpdate().execute(ApiUtils.getApk).listen(
+          //       (OtaEvent event) {
+          //         if (event.status == OtaStatus.DOWNLOADING) {
+          //           load.value = true;
+          //         } else if (event.status == OtaStatus.CANCELED) {
+          //           load.value = false;
+          //           AppUtils.showErrorSnackBar(bodyText: "Download Canceled");
+          //         } else if (event.status == OtaStatus.DOWNLOAD_ERROR) {
+          //           load.value = false;
+          //           AppUtils.showErrorSnackBar(bodyText: "Download error");
+          //         } else if (event.status == OtaStatus.INTERNAL_ERROR) {
+          //           load.value = false;
+          //           AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
+          //         } else if (event.status == OtaStatus.PERMISSION_NOT_GRANTED_ERROR) {
+          //           load.value = false;
+          //         } else {
+          //           load.value = false;
+          //         }
+          //         update();
+          //       },
+          //       onDone: () => load.value = false,
+          //     );
+          //   } catch (e) {
+          //     print('Failed to make OTA update. Details: $e');
+          //   }
+          //   update();
+          // },
           child: Container(
             color: AppColors.appbarColor,
             height: Dimensions.h40,
