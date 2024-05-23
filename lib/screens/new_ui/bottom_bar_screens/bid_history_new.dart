@@ -578,20 +578,18 @@ Widget listveiwTransactionNew({
                     gameMode,
                     style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12),
                   ),
-                  // SizedBox(
-                  //   width: 180,
+
+                  // Row(
+                  //   children: [
+                  //     SvgPicture.asset(
+                  //       ConstantImage.walletAppbar,
+                  //       height: Dimensions.h13,
+                  //     ),
+                  //     SizedBox(width: Dimensions.w8),
+                  //     Text(ballance, style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12)),
+                  //     SizedBox(height: Dimensions.h8),
+                  //   ],
                   // ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        ConstantImage.walletAppbar,
-                        height: Dimensions.h13,
-                      ),
-                      SizedBox(width: Dimensions.w8),
-                      Text(ballance, style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12)),
-                      SizedBox(height: Dimensions.h8),
-                    ],
-                  ),
                 ],
               ),
             ),
@@ -603,6 +601,17 @@ Widget listveiwTransactionNew({
                   Text(
                     requestId,
                     style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12),
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        ConstantImage.walletAppbar,
+                        height: Dimensions.h15,
+                      ),
+                      SizedBox(width: Dimensions.w8),
+                      Text(ballance, style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12)),
+                      SizedBox(height: Dimensions.h8),
+                    ],
                   ),
                 ],
               ),

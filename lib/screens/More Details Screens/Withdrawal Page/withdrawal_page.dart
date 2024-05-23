@@ -187,6 +187,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Row(
@@ -203,22 +204,54 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                             ),
                             const SizedBox(width: 10),
                             Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Text(
-                                  textAlign: TextAlign.start,
-                                  "Withdrawal request processing time minimum 60 min to 24 Hrs ",
-                                  style: CustomTextStyle.textRobotoSansLight.copyWith(
-                                    color: AppColors.black,
-                                    fontSize: Dimensions.h13,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "Withdrawal request processing time minimum 60 min to 24 Hrs",
+                                    textAlign: TextAlign.start,
+                                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                                      color: AppColors.black,
+                                      fontSize: Dimensions.h12,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
-                            const SizedBox(width: 10),
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(height: 10),
+
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      //   child: Row(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       Text(
+                      //         "Note :",
+                      //         textAlign: TextAlign.start,
+                      //         style: CustomTextStyle.textRamblaBold.copyWith(
+                      //           color: AppColors.appbarColor,
+                      //           fontSize: Dimensions.h18,
+                      //         ),
+                      //       ),
+                      //       const SizedBox(width: 10),
+                      //       Expanded(
+                      //         child: Text(
+                      //           textAlign: TextAlign.start,
+                      //           "Withdrawal request processing time minimum 60 min to 24 Hrs ",
+                      //           style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      //             color: AppColors.black,
+                      //             fontSize: Dimensions.h13,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(width: 10),
+                      //     ],
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

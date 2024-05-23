@@ -124,7 +124,7 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40.0),
                       child: RoundedCornerButton(
-                        text: "Submit",
+                        text: "SUBMIT",
                         color: AppColors.appbarColor,
                         borderColor: AppColors.appbarColor,
                         fontSize: Dimensions.h15,
