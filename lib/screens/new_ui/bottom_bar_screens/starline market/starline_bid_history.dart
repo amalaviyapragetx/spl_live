@@ -439,7 +439,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                       ballance: " ${starlineCon.marketHistoryList[index].balance.toString()} ",
                                       coins: starlineCon.marketHistoryList[index].coins.toString(),
                                       bidNumber:
-                                          "${starlineCon.marketHistoryList[index].gameMode ?? ""} ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
+                                          "${starlineCon.marketHistoryList[index].gameMode ?? ""} : ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
                                       marketName: starlineCon.marketHistoryList[index].marketName ?? "00:00 AM",
                                     );
                                   },

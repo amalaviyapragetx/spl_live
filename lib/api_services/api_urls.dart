@@ -6,12 +6,12 @@ class ApiUtils {
 
   // StagingURl
   // static String baseURL = "http://15.207.71.94:9867";
-  // static String baseURL = "http://3.110.8.245:9867";
+  static String baseURL = "http://3.110.8.245:9867";
 
   // local url
   // static String baseURL = "http://192.168.29.201:8659";
   // static String baseURL = "http://192.168.29.137:9867";
-  static String baseURL = "http://192.168.29.49:8080";
+  // static String baseURL = "http://192.168.29.49:8080";
   // static String baseURL = "http://10.0.0.201:8080";
   // static String baseURL = "https://192.168.29.201:8659";
   // static String baseURL = "https://3966-2405-201-2023-a83c-f8a0-8fc6-84b6-3f5";
