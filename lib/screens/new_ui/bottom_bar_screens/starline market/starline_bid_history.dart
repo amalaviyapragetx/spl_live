@@ -70,7 +70,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                 padding: const EdgeInsets.symmetric(vertical: 5),
                                 decoration: BoxDecoration(
                                     color: AppColors.appbarColor,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0))),
                                 child: Text(
                                   "SET FILTER",
@@ -436,7 +436,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                     ballance: " ${starlineCon.marketHistoryList[index].balance.toString()} ",
                                     coins: starlineCon.marketHistoryList[index].coins.toString(),
                                     bidNumber:
-                                        "${starlineCon.marketHistoryList[index].gameMode ?? ""} ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
+                                        "${starlineCon.marketHistoryList[index].gameMode ?? ""}: ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
                                     marketName: starlineCon.marketHistoryList[index].marketName ?? "00:00 AM",
                                   );
                                 },
@@ -490,12 +490,12 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                   const Expanded(child: SizedBox()),
                   SizedBox(width: Dimensions.w5),
                   SizedBox(width: Dimensions.w5),
-                  Text("POINTS :", style: CustomTextStyle.textRobotoSansLight),
+                  Text("Points : ", style: CustomTextStyle.textRobotoMedium),
                   Text(
                     coins,
                     style: CustomTextStyle.textRobotoSansLight.copyWith(
                       fontSize: Dimensions.h14,
-                      color: AppColors.balanceCoinsColor,
+                      color: AppColors.appBlueColor,
                     ),
                   ),
                 ],
@@ -507,23 +507,23 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                 children: [
                   Text(
                     bidNumber,
-                    style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h14),
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h14),
                     textAlign: TextAlign.left,
                   ),
                   const Expanded(child: SizedBox()),
                   SizedBox(width: Dimensions.w5),
                   SizedBox(width: Dimensions.w5),
-                  SvgPicture.asset(
-                    ConstantImage.walletAppbar,
-                    height: Dimensions.h13,
-                  ),
-                  Text(
-                    ballance,
-                    style: CustomTextStyle.textRobotoSansLight.copyWith(
-                      fontSize: Dimensions.h14,
-                      color: AppColors.balanceCoinsColor,
-                    ),
-                  ),
+                  // SvgPicture.asset(
+                  //   ConstantImage.walletAppbar,
+                  //   height: Dimensions.h13,
+                  // ),
+                  // Text(
+                  //   ballance,
+                  //   style: CustomTextStyle.textRobotoSansLight.copyWith(
+                  //     fontSize: Dimensions.h14,
+                  //     color: AppColors.black,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -539,6 +539,18 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                   ),
                   const Expanded(child: SizedBox()),
                   SizedBox(width: Dimensions.w5),
+                  SizedBox(width: Dimensions.w5),
+                  SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    height: Dimensions.h15,
+                  ),
+                  Text(
+                    ballance,
+                    style: CustomTextStyle.textRobotoSansLight.copyWith(
+                      fontSize: Dimensions.h14,
+                      color: AppColors.black,
+                    ),
+                  ),
                 ],
               ),
             ),

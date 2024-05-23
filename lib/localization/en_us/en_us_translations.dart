@@ -211,7 +211,7 @@ final Map<String, String> enUs = {
   "ABOUTAPP": "ABOUT APP",
   "SPLNOTIFICATION": "Spl Notification",
   "MARKETNOTIFICATION": "Market Notification",
-  "STARLINENOTIFICATION": "StarLine Notification",
+  "STARLINENOTIFICATION": "Starline Notification",
   "STARLINEGAMEWINRATIO2": "Starline Game Win Ratio",
   "FEEDBACK": "Write your feedback",
 
