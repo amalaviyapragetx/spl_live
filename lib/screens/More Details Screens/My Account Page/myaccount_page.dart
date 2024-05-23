@@ -32,6 +32,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         exitController.onWillPop();
       },
       child: Scaffold(

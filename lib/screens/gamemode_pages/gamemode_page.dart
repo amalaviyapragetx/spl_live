@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
@@ -19,7 +19,10 @@ class GameModePage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return PopScope(
       canPop: false,
-      onPopInvoked: (value) async {
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
         controller.onBackButton();
         walletController.walletBalance.refresh();
       },

@@ -221,10 +221,8 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
       for (int i = result; i > 0; i = (i / 10).floor()) {
         sum += (i % 10);
       }
-      print("sasasasa$result - ${sum % 10} ");
       return "$result - ${sum % 10}";
     } else {
-      print("dldfdfdfl");
       return "***-*";
     }
   }

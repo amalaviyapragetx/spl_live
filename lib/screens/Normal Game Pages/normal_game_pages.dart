@@ -40,6 +40,9 @@ class _NormalGamePageState extends State<NormalGamePage> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         controller.onClose();
         Get.offAndToNamed(AppRoutName.gameModePage, arguments: controller.marketValue.value);
       },

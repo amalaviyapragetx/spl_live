@@ -872,7 +872,7 @@ class ApiService extends GetConnect implements GetxService {
         .get(ApiUtils.starlineMarketBidHistory, headers: headersWithToken, query: {
       "limit": limit,
       "offset": offset,
-      "date": startDate,
+      "startDate": startDate,
       "winningStatus": winningStatus,
       "markets": markets?.join(","),
     });
@@ -1068,7 +1068,8 @@ class ApiService extends GetConnect implements GetxService {
         },
       );
       if (kDebugMode) {
-        developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body}");
+        developer
+            .log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} djhhs ${response.headers}");
       }
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();

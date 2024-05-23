@@ -141,7 +141,6 @@ class StarlineMarketController extends GetxController {
 
   void getMarketBidsByUserId() {
     isStarlineBidHistory.value == true;
-    print("sjahsja ${date}");
     ApiService()
         .getStarBidHistoryByUserId(
       userId: userData.id.toString(),
@@ -247,6 +246,19 @@ class StarlineMarketController extends GetxController {
     } else {
       isSelectedWinStatusIndex.value = null;
     }
+  }
+
+  restStartLineBidHistory() {
+    Get.back();
+    for (var e in starlineButtonList) {
+      e.isSelected.value = false;
+    }
+    selectedFilterMarketList.value = [];
+    filterMarketList.forEach((e) => e.isSelected.value = false);
+    isSelectedWinStatusIndex.value = null;
+    winStatusList.forEach((e) => e.isSelected.value = false);
+    dateinput.clear();
+    date = null;
   }
 
   List<FilterModel> filterMarketList = [];

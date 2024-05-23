@@ -29,464 +29,474 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          CommonAppBar(
-            title: "Bid History",
-            titleTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-              fontSize: Dimensions.h17,
-              color: AppColors.white,
-            ),
-            leading: GestureDetector(
-                onTap: () {
-                  homeCon.resetAllBidHistoryData();
-                },
-                child: Icon(Icons.arrow_back, size: 28)),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () => {
-                    homeCon.date = DateFormat('yyyy-MM-dd').format(DateTime.now()),
-                    Get.dialog(
-                      barrierDismissible: false,
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: Get.height, minWidth: Get.width - 30),
-                        child: Dialog(
-                          insetPadding: const EdgeInsets.all(10),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                          child: SizedBox(
-                            height: double.infinity,
-                            width: double.infinity,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(vertical: 5),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.appbarColor,
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10.0), topLeft: Radius.circular(10.0))),
-                                      child: Text(
-                                        "SET FILTER",
-                                        textAlign: TextAlign.center,
-                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: TextField(
-                                        controller: homeCon.dateInputForResultHistory,
-                                        style:
-                                            CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
-                                        decoration: InputDecoration(
-                                          hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-                                          hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                            color: AppColors.appbarColor,
-                                          ),
-                                          border: const OutlineInputBorder(
-                                            borderSide: BorderSide.none,
-                                          ),
-                                          contentPadding:
-                                              EdgeInsets.symmetric(horizontal: Dimensions.w8, vertical: Dimensions.h10),
-                                          filled: true,
-                                          fillColor: AppColors.grey.withOpacity(0.15),
-                                          prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
-                                        ),
-                                        readOnly: true,
-                                        onTap: () async {
-                                          DateTime? pickedDate = await showDatePicker(
-                                              context: context,
-                                              initialDate: homeCon.bidHistoryDate,
-                                              firstDate: DateTime(2000),
-                                              lastDate: DateTime(2101));
-
-                                          if (pickedDate != null) {
-                                            homeCon.bidHistoryDate = pickedDate;
-
-                                            homeCon.dateInputForResultHistory.text =
-                                                DateFormat('dd-MM-yyyy').format(pickedDate);
-                                            homeCon.date = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
+    return PopScope(
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        homeCon.resetAllBidHistoryData();
+      },
+      canPop: false,
+      child: Scaffold(
+        body: Column(
+          children: [
+            CommonAppBar(
+              title: "Bid History",
+              titleTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                fontSize: Dimensions.h17,
+                color: AppColors.white,
+              ),
+              leading: GestureDetector(
+                  onTap: () {
+                    homeCon.resetAllBidHistoryData();
+                  },
+                  child: Icon(Icons.arrow_back, size: 28)),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () => {
+                      homeCon.date = DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                      Get.dialog(
+                        barrierDismissible: false,
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: Get.height, minWidth: Get.width - 30),
+                          child: Dialog(
+                            insetPadding: const EdgeInsets.all(10),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                            child: SizedBox(
+                              height: double.infinity,
+                              width: double.infinity,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
                                         width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                        decoration: BoxDecoration(color: AppColors.white),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              "Game Type",
-                                              textAlign: TextAlign.center,
-                                              style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                                color: AppColors.black,
-                                                fontSize: 20,
-                                              ),
+                                        padding: const EdgeInsets.symmetric(vertical: 5),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.appbarColor,
+                                            borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(10.0), topLeft: Radius.circular(10.0))),
+                                        child: Text(
+                                          "SET FILTER",
+                                          textAlign: TextAlign.center,
+                                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: TextField(
+                                          controller: homeCon.dateInputForResultHistory,
+                                          style: CustomTextStyle.textRobotoSansMedium
+                                              .copyWith(color: AppColors.appbarColor),
+                                          decoration: InputDecoration(
+                                            hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                                            hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                              color: AppColors.appbarColor,
                                             ),
-                                            Obx(
-                                              () => Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: homeCon.gameTypeList
-                                                    .map(
-                                                      (e) => InkWell(
-                                                        onTap: () {
-                                                          homeCon.gameTypeList
-                                                              .forEach((e) => e.isSelected.value = false);
-                                                          e.isSelected.value = !e.isSelected.value;
-                                                          if (e.isSelected.value) {
-                                                            homeCon.isSelectedGameIndex.value = e.id;
-                                                          } else {
-                                                            homeCon.isSelectedGameIndex.value = null;
-                                                          }
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Checkbox(
-                                                              activeColor: AppColors.appbarColor,
-                                                              value: e.isSelected.value,
-                                                              onChanged: (bool? value) {
-                                                                homeCon.gameTypeList
-                                                                    .forEach((e) => e.isSelected.value = false);
-                                                                e.isSelected.value = value ?? false;
-                                                                if (e.isSelected.value) {
-                                                                  homeCon.isSelectedGameIndex.value = e.id;
-                                                                } else {
-                                                                  homeCon.isSelectedGameIndex.value = null;
-                                                                }
-                                                              },
-                                                            ),
-                                                            Text(
-                                                              e.name ?? "",
-                                                              style: CustomTextStyle.textRobotoSansMedium
-                                                                  .copyWith(color: AppColors.black),
-                                                            ),
-                                                          ],
+                                            border: const OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                            ),
+                                            contentPadding: EdgeInsets.symmetric(
+                                                horizontal: Dimensions.w8, vertical: Dimensions.h10),
+                                            filled: true,
+                                            fillColor: AppColors.grey.withOpacity(0.15),
+                                            prefixIcon: Icon(Icons.calendar_month_sharp, color: AppColors.appbarColor),
+                                          ),
+                                          readOnly: true,
+                                          onTap: () async {
+                                            DateTime? pickedDate = await showDatePicker(
+                                                context: context,
+                                                initialDate: homeCon.bidHistoryDate,
+                                                firstDate: DateTime(2000),
+                                                lastDate: DateTime(2101));
+
+                                            if (pickedDate != null) {
+                                              homeCon.bidHistoryDate = pickedDate;
+
+                                              homeCon.dateInputForResultHistory.text =
+                                                  DateFormat('dd-MM-yyyy').format(pickedDate);
+                                              homeCon.date = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                          decoration: BoxDecoration(color: AppColors.white),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "Game Type",
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                  color: AppColors.black,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              Obx(
+                                                () => Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: homeCon.gameTypeList
+                                                      .map(
+                                                        (e) => InkWell(
+                                                          onTap: () {
+                                                            homeCon.gameTypeList
+                                                                .forEach((e) => e.isSelected.value = false);
+                                                            e.isSelected.value = !e.isSelected.value;
+                                                            if (e.isSelected.value) {
+                                                              homeCon.isSelectedGameIndex.value = e.id;
+                                                            } else {
+                                                              homeCon.isSelectedGameIndex.value = null;
+                                                            }
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                activeColor: AppColors.appbarColor,
+                                                                value: e.isSelected.value,
+                                                                onChanged: (bool? value) {
+                                                                  homeCon.gameTypeList
+                                                                      .forEach((e) => e.isSelected.value = false);
+                                                                  e.isSelected.value = value ?? false;
+                                                                  if (e.isSelected.value) {
+                                                                    homeCon.isSelectedGameIndex.value = e.id;
+                                                                  } else {
+                                                                    homeCon.isSelectedGameIndex.value = null;
+                                                                  }
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                e.name ?? "",
+                                                                style: CustomTextStyle.textRobotoSansMedium
+                                                                    .copyWith(color: AppColors.black),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
-                                                    .toList(),
+                                                      )
+                                                      .toList(),
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "Winning Status",
-                                              textAlign: TextAlign.center,
-                                              style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                                color: AppColors.black,
-                                                fontSize: 20,
+                                              Text(
+                                                "Winning Status",
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                  color: AppColors.black,
+                                                  fontSize: 20,
+                                                ),
                                               ),
-                                            ),
-                                            Obx(
-                                              () => Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: homeCon.winStatusList
-                                                    .map(
-                                                      (e) => InkWell(
-                                                        onTap: () {
-                                                          homeCon.winStatusList
-                                                              .forEach((e) => e.isSelected.value = false);
-                                                          e.isSelected.value = !e.isSelected.value;
-                                                          if (e.isSelected.value) {
-                                                            homeCon.isSelectedWinStatusIndex.value = e.id;
-                                                          } else {
-                                                            homeCon.isSelectedWinStatusIndex.value = null;
-                                                          }
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Checkbox(
-                                                              activeColor: AppColors.appbarColor,
-                                                              value: e.isSelected.value,
-                                                              onChanged: (bool? value) {
-                                                                homeCon.winStatusList
-                                                                    .forEach((e) => e.isSelected.value = false);
-                                                                e.isSelected.value = value ?? false;
-                                                                if (e.isSelected.value) {
-                                                                  homeCon.isSelectedWinStatusIndex.value = e.id;
-                                                                } else {
-                                                                  homeCon.isSelectedWinStatusIndex.value = null;
-                                                                }
-                                                              },
-                                                            ),
-                                                            Text(
-                                                              e.name ?? "",
-                                                              style: CustomTextStyle.textRobotoSansMedium
-                                                                  .copyWith(color: AppColors.black),
-                                                            ),
-                                                          ],
+                                              Obx(
+                                                () => Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: homeCon.winStatusList
+                                                      .map(
+                                                        (e) => InkWell(
+                                                          onTap: () {
+                                                            homeCon.winStatusList
+                                                                .forEach((e) => e.isSelected.value = false);
+                                                            e.isSelected.value = !e.isSelected.value;
+                                                            if (e.isSelected.value) {
+                                                              homeCon.isSelectedWinStatusIndex.value = e.id;
+                                                            } else {
+                                                              homeCon.isSelectedWinStatusIndex.value = null;
+                                                            }
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                activeColor: AppColors.appbarColor,
+                                                                value: e.isSelected.value,
+                                                                onChanged: (bool? value) {
+                                                                  homeCon.winStatusList
+                                                                      .forEach((e) => e.isSelected.value = false);
+                                                                  e.isSelected.value = value ?? false;
+                                                                  if (e.isSelected.value) {
+                                                                    homeCon.isSelectedWinStatusIndex.value = e.id;
+                                                                  } else {
+                                                                    homeCon.isSelectedWinStatusIndex.value = null;
+                                                                  }
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                e.name ?? "",
+                                                                style: CustomTextStyle.textRobotoSansMedium
+                                                                    .copyWith(color: AppColors.black),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
-                                                    .toList(),
+                                                      )
+                                                      .toList(),
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "Markets",
-                                              textAlign: TextAlign.center,
-                                              style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                                color: AppColors.black,
-                                                fontSize: 20,
+                                              Text(
+                                                "Markets",
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                  color: AppColors.black,
+                                                  fontSize: 20,
+                                                ),
                                               ),
-                                            ),
-                                            homeCon.filterMarketList.isEmpty
-                                                ? const Text("No market find")
-                                                : Obx(
-                                                    () => Expanded(
-                                                      child: ScrollbarTheme(
-                                                        data: ScrollbarThemeData(
-                                                          thumbColor:
-                                                              MaterialStateProperty.all<Color>(AppColors.appbarColor),
-                                                          trackColor:
-                                                              MaterialStateProperty.all<Color>(AppColors.appbarColor),
-                                                        ),
-                                                        child: Scrollbar(
-                                                          trackVisibility: true,
-                                                          thickness: 5,
-                                                          radius: const Radius.circular(20),
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.all(10.0),
-                                                            child: ListView(
-                                                              shrinkWrap: true,
-                                                              physics: const BouncingScrollPhysics(),
-                                                              children: homeCon.filterMarketList
-                                                                  .map(
-                                                                    (e) => Padding(
-                                                                      padding: const EdgeInsets.symmetric(
-                                                                          vertical: 5.0, horizontal: 5.0),
-                                                                      child: Container(
-                                                                        decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(10),
-                                                                          boxShadow: [
-                                                                            BoxShadow(
-                                                                                blurRadius: 6.97777795791626,
-                                                                                spreadRadius: 0.8722222447395325,
-                                                                                offset: const Offset(0, 0),
-                                                                                color:
-                                                                                    AppColors.black.withOpacity(0.25))
-                                                                          ],
-                                                                          color: AppColors.white,
-                                                                        ),
-                                                                        child: InkWell(
-                                                                          onTap: () {
-                                                                            e.isSelected.value = !e.isSelected.value;
-                                                                            if (e.isSelected.value) {
-                                                                              homeCon.selectedFilterMarketList
-                                                                                  .add(e.id ?? 0);
-                                                                            } else {
-                                                                              homeCon.selectedFilterMarketList.clear();
-                                                                            }
-                                                                          },
-                                                                          child: Row(
-                                                                            children: [
-                                                                              Checkbox(
-                                                                                activeColor: AppColors.appbarColor,
-                                                                                value: e.isSelected.value,
-                                                                                onChanged: (bool? value) {
-                                                                                  e.isSelected.value = value ?? false;
-                                                                                  if (e.isSelected.value) {
-                                                                                    homeCon.selectedFilterMarketList
-                                                                                        .add(e.id ?? 0);
-                                                                                  } else {
-                                                                                    homeCon.selectedFilterMarketList
-                                                                                        .clear();
-                                                                                  }
-                                                                                },
-                                                                              ),
-                                                                              Text(
-                                                                                e.name ?? "",
-                                                                                style: CustomTextStyle
-                                                                                    .textRobotoSansMedium
-                                                                                    .copyWith(color: AppColors.black),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 5.0,
-                                                                              )
+                                              homeCon.filterMarketList.isEmpty
+                                                  ? const Text("No market find")
+                                                  : Obx(
+                                                      () => Expanded(
+                                                        child: ScrollbarTheme(
+                                                          data: ScrollbarThemeData(
+                                                            thumbColor:
+                                                                MaterialStateProperty.all<Color>(AppColors.appbarColor),
+                                                            trackColor:
+                                                                MaterialStateProperty.all<Color>(AppColors.appbarColor),
+                                                          ),
+                                                          child: Scrollbar(
+                                                            trackVisibility: true,
+                                                            thickness: 5,
+                                                            radius: const Radius.circular(20),
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.all(10.0),
+                                                              child: ListView(
+                                                                shrinkWrap: true,
+                                                                physics: const BouncingScrollPhysics(),
+                                                                children: homeCon.filterMarketList
+                                                                    .map(
+                                                                      (e) => Padding(
+                                                                        padding: const EdgeInsets.symmetric(
+                                                                            vertical: 5.0, horizontal: 5.0),
+                                                                        child: Container(
+                                                                          decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.circular(10),
+                                                                            boxShadow: [
+                                                                              BoxShadow(
+                                                                                  blurRadius: 6.97777795791626,
+                                                                                  spreadRadius: 0.8722222447395325,
+                                                                                  offset: const Offset(0, 0),
+                                                                                  color:
+                                                                                      AppColors.black.withOpacity(0.25))
                                                                             ],
+                                                                            color: AppColors.white,
+                                                                          ),
+                                                                          child: InkWell(
+                                                                            onTap: () {
+                                                                              e.isSelected.value = !e.isSelected.value;
+                                                                              if (e.isSelected.value) {
+                                                                                homeCon.selectedFilterMarketList
+                                                                                    .add(e.id ?? 0);
+                                                                              } else {
+                                                                                homeCon.selectedFilterMarketList
+                                                                                    .clear();
+                                                                              }
+                                                                            },
+                                                                            child: Row(
+                                                                              children: [
+                                                                                Checkbox(
+                                                                                  activeColor: AppColors.appbarColor,
+                                                                                  value: e.isSelected.value,
+                                                                                  onChanged: (bool? value) {
+                                                                                    e.isSelected.value = value ?? false;
+                                                                                    if (e.isSelected.value) {
+                                                                                      homeCon.selectedFilterMarketList
+                                                                                          .add(e.id ?? 0);
+                                                                                    } else {
+                                                                                      homeCon.selectedFilterMarketList
+                                                                                          .clear();
+                                                                                    }
+                                                                                  },
+                                                                                ),
+                                                                                Text(
+                                                                                  e.name ?? "",
+                                                                                  style: CustomTextStyle
+                                                                                      .textRobotoSansMedium
+                                                                                      .copyWith(color: AppColors.black),
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  height: 5.0,
+                                                                                )
+                                                                              ],
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  )
-                                                                  .toList(),
+                                                                    )
+                                                                    .toList(),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                            const SizedBox(height: 15),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (homeCon.isSelectedGameIndex.value != null ||
-                                                      homeCon.isSelectedWinStatusIndex.value != null ||
-                                                      homeCon.selectedFilterMarketList.isNotEmpty) {
-                                                    homeCon.marketBidHistoryList.clear();
-                                                    homeCon.bidsHistoryByUserId();
-                                                  } else {
-                                                    AppUtils.showErrorSnackBar(bodyText: "Please select any filter");
-                                                  }
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.appbarColor,
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  padding: const EdgeInsets.all(10),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "SUBMIT",
-                                                      style: CustomTextStyle.textRobotoSansMedium
-                                                          .copyWith(color: AppColors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Expanded(
-                                              child: InkWell(
-                                                onTap: () {
-                                                 homeCon.resetAllBidHistoryData();
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.appbarColor,
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  padding: const EdgeInsets.all(10),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "CANCEL",
-                                                      style: CustomTextStyle.textRobotoSansMedium
-                                                          .copyWith(color: AppColors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                              const SizedBox(height: 15),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    if (homeCon.isSelectedGameIndex.value != null ||
+                                                        homeCon.isSelectedWinStatusIndex.value != null ||
+                                                        homeCon.selectedFilterMarketList.isNotEmpty) {
+                                                      homeCon.marketBidHistoryList.clear();
+                                                      homeCon.bidsHistoryByUserId();
+                                                    } else {
+                                                      AppUtils.showErrorSnackBar(bodyText: "Please select any filter");
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.appbarColor,
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "SUBMIT",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Expanded(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    homeCon.resetAllBidHistoryData();
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.appbarColor,
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "CANCEL",
+                                                        style: CustomTextStyle.textRobotoSansMedium
+                                                            .copyWith(color: AppColors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  },
-                  child: Obx(
-                    () => homeCon.selectedFilterMarketList.isNotEmpty ||
-                            homeCon.isSelectedWinStatusIndex.value != null ||
-                            homeCon.isSelectedGameIndex.value != null
-                        ? InkWell(
-                            onTap: () {
-                              homeCon.selectedFilterMarketList.value = [];
-                              homeCon.filterMarketList.forEach((e) => e.isSelected.value = false);
-                              homeCon.isSelectedWinStatusIndex.value = null;
-                              homeCon.isSelectedGameIndex.value = null;
-                              homeCon.gameTypeList.forEach((e) => e.isSelected.value = false);
-                              homeCon.winStatusList.forEach((e) => e.isSelected.value = false);
-                              homeCon.bidsHistoryByUserId();
-                            },
-                            child: Stack(
-                              children: [
-                                SvgPicture.asset(ConstantImage.filter),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.redColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.close,
-                                    color: AppColors.white,
-                                    size: 10,
-                                  ),
-                                )
-                              ],
+                      )
+                    },
+                    child: Obx(
+                      () => homeCon.selectedFilterMarketList.isNotEmpty ||
+                              homeCon.isSelectedWinStatusIndex.value != null ||
+                              homeCon.isSelectedGameIndex.value != null
+                          ? InkWell(
+                              onTap: () {
+                                homeCon.selectedFilterMarketList.value = [];
+                                homeCon.filterMarketList.forEach((e) => e.isSelected.value = false);
+                                homeCon.isSelectedWinStatusIndex.value = null;
+                                homeCon.isSelectedGameIndex.value = null;
+                                homeCon.gameTypeList.forEach((e) => e.isSelected.value = false);
+                                homeCon.winStatusList.forEach((e) => e.isSelected.value = false);
+                                homeCon.bidsHistoryByUserId();
+                              },
+                              child: Stack(
+                                children: [
+                                  SvgPicture.asset(ConstantImage.filter),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.redColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: AppColors.white,
+                                      size: 10,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          : SvgPicture.asset(ConstantImage.filter),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: Obx(
+                () => homeCon.isBidHistory.value == false
+                    ? homeCon.marketBidHistoryList.isEmpty
+                        ? Center(
+                            child: Text(
+                              "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
+                              style: CustomTextStyle.textPTsansMedium.copyWith(
+                                fontSize: Dimensions.h13,
+                                color: AppColors.black,
+                              ),
                             ),
                           )
-                        : SvgPicture.asset(ConstantImage.filter),
-                  ),
-                ),
-              )
-            ],
-          ),
-          Expanded(
-            child: Obx(
-              () => homeCon.isBidHistory.value == false
-                  ? homeCon.marketBidHistoryList.isEmpty
-                      ? Center(
-                          child: Text(
-                            "NOHISTORYAVAILABLEFORLAST7DAYS".tr,
-                            style: CustomTextStyle.textPTsansMedium.copyWith(
-                              fontSize: Dimensions.h13,
-                              color: AppColors.black,
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
-                          itemCount: homeCon.marketBidHistoryList.length,
-                          itemBuilder: (context, index) {
-                            var data = homeCon.marketBidHistoryList[index];
-                            return listveiwTransactionNew(
-                              requestId: "Bid Id :  ${data.requestId ?? ""}",
-                              isWin: data.isWin ?? false,
-                              bidNo: data.bidNo.toString(),
-                              ballance: data.balance.toString(),
-                              coins: data.coins.toString(),
-                              closeTime: CommonUtils().formatStringToHHMMA(data.closeTime ?? ""),
-                              openTime: CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
-                              transactiontype: data.marketName.toString(),
-                              timeDate:
-                                  CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(data.bidTime.toString()),
-                              marketName: data.transactionType ?? "",
-                              gameMode: data.gameMode ?? "",
-                              bidType: data.bidType ?? "",
-                            );
-                          },
-                        )
-                  : Center(child: CircularProgressIndicator(color: AppColors.appBlueColor)),
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.h10),
+                            itemCount: homeCon.marketBidHistoryList.length,
+                            itemBuilder: (context, index) {
+                              var data = homeCon.marketBidHistoryList[index];
+                              return listveiwTransactionNew(
+                                requestId: "Bid Id :  ${data.requestId ?? ""}",
+                                isWin: data.isWin ?? false,
+                                bidNo: data.bidNo.toString(),
+                                ballance: data.balance.toString(),
+                                coins: data.coins.toString(),
+                                closeTime: CommonUtils().formatStringToHHMMA(data.closeTime ?? ""),
+                                openTime: CommonUtils().formatStringToHHMMA(data.openTime ?? ""),
+                                transactiontype: data.marketName.toString(),
+                                timeDate:
+                                    CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA(data.bidTime.toString()),
+                                marketName: data.transactionType ?? "",
+                                gameMode: data.gameMode ?? "",
+                                bidType: data.bidType ?? "",
+                              );
+                            },
+                          )
+                    : Center(child: CircularProgressIndicator(color: AppColors.appBlueColor)),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

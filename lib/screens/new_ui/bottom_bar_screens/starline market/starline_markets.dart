@@ -36,6 +36,9 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         print("************************************************");
         for (var e in starlineCon.starlineButtonList) {
           e.isSelected.value = false;

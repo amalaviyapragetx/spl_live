@@ -28,6 +28,9 @@ class _StarLineGameModesPageState extends State<StarLineGameModesPage> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         controller.onBackButton();
       },
       child: Scaffold(
