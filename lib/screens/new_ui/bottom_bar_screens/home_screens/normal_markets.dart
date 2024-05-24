@@ -22,7 +22,7 @@ class NormalMarketsList extends StatelessWidget {
               ? Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 14.0),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: InkWell(
                         onTap: () => launch("https://wa.me/+917769826748/?text=hi"),
                         child: Container(

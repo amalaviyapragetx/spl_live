@@ -135,8 +135,8 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             type: BottomNavigationBarType.fixed,
             currentIndex: homeCon.pageWidget.value,
             selectedItemColor: AppColors.appbarColor,
-            unselectedLabelStyle: CustomTextStyle.textPTsansMedium.copyWith(fontSize: 12),
-            selectedLabelStyle: CustomTextStyle.textPTsansMedium.copyWith(fontSize: 12),
+            unselectedLabelStyle: CustomTextStyle.textPTsansMedium.copyWith(fontSize: 14),
+            selectedLabelStyle: CustomTextStyle.textPTsansMedium.copyWith(fontSize: 14),
             onTap: (v) {
               homeCon.pageWidget.value = v;
               if (homeCon.pageWidget.value == 2) {
@@ -148,34 +148,46 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             },
             items: [
               BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  ConstantImage.homeIcon,
-                  height: 15,
-                  color: homeCon.pageWidget.value == 0 ? AppColors.appbarColor : AppColors.black,
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 4),
+                  child: SvgPicture.asset(
+                    ConstantImage.homeIcon,
+                    height: 15,
+                    color: homeCon.pageWidget.value == 0 ? AppColors.appbarColor : AppColors.black,
+                  ),
                 ),
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  ConstantImage.bidHistoryListIcon,
-                  height: 15,
-                  color: homeCon.pageWidget.value == 1 ? AppColors.appbarColor : AppColors.black,
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 4),
+                  child: SvgPicture.asset(
+                    ConstantImage.bidHistoryListIcon,
+                    height: 15,
+                    color: homeCon.pageWidget.value == 1 ? AppColors.appbarColor : AppColors.black,
+                  ),
                 ),
                 label: "Bid History",
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  ConstantImage.walletAppbar,
-                  height: 15,
-                  color: homeCon.pageWidget.value == 2 ? AppColors.appbarColor : AppColors.black,
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 4),
+                  child: SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    height: 15,
+                    color: homeCon.pageWidget.value == 2 ? AppColors.appbarColor : AppColors.black,
+                  ),
                 ),
                 label: "Wallet",
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  ConstantImage.passBookIcon,
-                  height: 15,
-                  color: homeCon.pageWidget.value == 3 ? AppColors.appbarColor : AppColors.black,
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 4),
+                  child: SvgPicture.asset(
+                    ConstantImage.passBookIcon,
+                    height: 15,
+                    color: homeCon.pageWidget.value == 3 ? AppColors.appbarColor : AppColors.black,
+                  ),
                 ),
                 label: "Passbook",
               ),
@@ -183,8 +195,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 icon: Container(
                   width: 20,
                   height: 15,
+                  margin: EdgeInsets.only(bottom: 4),
                   child: SvgPicture.asset(
-                    ConstantImage.moreImage,
+                    ConstantImage.moreIcon,
                     width: 15,
                     color: homeCon.pageWidget.value == 4 ? AppColors.appbarColor : AppColors.black,
                   ),
