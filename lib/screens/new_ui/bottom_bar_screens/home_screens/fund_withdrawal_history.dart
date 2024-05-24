@@ -114,7 +114,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "₹ ${controller.withdrawalRequestList[i].requestedAmount}",
+                                                    "Amount: ₹${controller.withdrawalRequestList[i].requestedAmount}",
                                                     style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                                       color: AppColors.appbarColor,
                                                       fontSize: 18,
@@ -139,10 +139,10 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
-                                                const SizedBox(width: 10),
+                                                const SizedBox(width: 30),
                                                 Expanded(
                                                   child: Text(
-                                                    controller.withdrawalRequestList[i].requestId ?? "",
+                                                    ": ${controller.withdrawalRequestList[i].requestId ?? " "}",
                                                     style: CustomTextStyle.textRobotoSansMedium
                                                         .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
                                                   ),
@@ -156,7 +156,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                                   child: RichText(
                                                     textAlign: TextAlign.start,
                                                     text: TextSpan(
-                                                      text: "Remarks ",
+                                                      text: "Remarks: ",
                                                       style: CustomTextStyle.textRobotoSansMedium.copyWith(
                                                         fontSize: 15,
                                                         color: AppColors.black,
