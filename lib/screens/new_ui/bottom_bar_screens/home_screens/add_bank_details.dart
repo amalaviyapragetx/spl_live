@@ -39,6 +39,9 @@ class _AddBankDetailsState extends State<AddBankDetails> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         walletCon.selectedIndex.value = null;
         controller.bankNameController.clear();
         controller.accHolderNameController.clear();

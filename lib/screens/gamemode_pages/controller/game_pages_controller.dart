@@ -97,6 +97,7 @@ class GameModePagesController extends GetxController {
   }
 
   onBackButton() async {
+    print("kdskdjdskjskd");
     // var hh = GetStorage().read(ConstantsVariables.playMore);
     // if (!hh) {
     // var bidList = GetStorage().read(ConstantsVariables.bidsList);
@@ -258,6 +259,7 @@ class GameModePagesController extends GetxController {
         "totalAmount": totalAmount.value,
       });
     } else {
+      print("nkjcnxcnxkjn");
       Future.delayed(
         Duration(milliseconds: 200),
         () => Get.toNamed(AppRoutName.newGameModePage, arguments: {

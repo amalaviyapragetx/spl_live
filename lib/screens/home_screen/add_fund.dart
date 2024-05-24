@@ -66,6 +66,9 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         if (walletCon.selectedIndex.value != null) {
           walletCon.selectedIndex.value = null;
         } else {

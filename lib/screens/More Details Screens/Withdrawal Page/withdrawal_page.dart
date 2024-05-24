@@ -32,6 +32,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         walletController.selectedIndex.value = null;
       },
       child: Column(

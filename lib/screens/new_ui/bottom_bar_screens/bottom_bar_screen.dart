@@ -28,6 +28,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         if (homeCon.pageWidget.value == 1 ||
             homeCon.pageWidget.value == 2 ||
             homeCon.pageWidget.value == 3 ||

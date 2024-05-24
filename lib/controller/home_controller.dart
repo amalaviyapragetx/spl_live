@@ -50,13 +50,14 @@ class HomeController extends GetxController {
   }
 
   resetAllBidHistoryData() {
+    print("sjdsdjds");
+    Get.back();
     selectedFilterMarketList.value = [];
     filterMarketList.forEach((e) => e.isSelected.value = false);
     isSelectedWinStatusIndex.value = null;
     isSelectedGameIndex.value = null;
     gameTypeList.forEach((e) => e.isSelected.value = false);
     winStatusList.forEach((e) => e.isSelected.value = false);
-    Get.back();
   }
 
   final RxList<FilterModel> filterDateList = [
@@ -102,7 +103,6 @@ class HomeController extends GetxController {
               name: e.market,
               id: e.marketId,
             ));
-            print("hdsjhdjs ${filterMarketList.length}");
           });
           noMarketFound.value = false;
           var biddingOpenMarketList = normalMarketList

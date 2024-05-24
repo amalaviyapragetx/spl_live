@@ -31,6 +31,9 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         walletCon.selectedIndex.value = null;
       },
       child: Expanded(

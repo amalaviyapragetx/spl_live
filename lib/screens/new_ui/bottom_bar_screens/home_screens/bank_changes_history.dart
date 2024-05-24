@@ -28,6 +28,9 @@ class _BankChangeHistoryState extends State<BankChangeHistory> {
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
+        if (value) {
+          return;
+        }
         walletCon.selectedIndex.value = null;
       },
       child: Expanded(
