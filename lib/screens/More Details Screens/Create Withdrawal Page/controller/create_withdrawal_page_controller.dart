@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
+import 'package:spllive/components/simple_button_with_corner.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
@@ -151,24 +152,44 @@ class CreateWithDrawalPageController extends GetxController {
                                     fontSize: 20,
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RoundedCornerButton(
+                                    text: "OK".tr,
+                                    color: AppColors.appbarColor,
+                                    borderColor: AppColors.appbarColor,
+                                    fontSize: Dimensions.h15,
+                                    fontWeight: FontWeight.w500,
+                                    fontColor: AppColors.white,
+                                    letterSpacing: 0,
+                                    borderRadius: Dimensions.r5,
+                                    borderWidth: 0,
+                                    textStyle: CustomTextStyle.textGothamMedium,
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    height: 40,
+                                    width: Get.width / 2.8,
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ),
-                        Positioned(
-                          right: 5,
-                          child: GestureDetector(
-                            onTap: () => Get.back(),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.black,
-                              ),
-                              padding: const EdgeInsets.all(4.0),
-                              child: const Icon(Icons.close, color: Colors.white, size: 18),
-                            ),
-                          ),
-                        ),
+                        // Positioned(
+                        //   right: 5,
+                        //   child: GestureDetector(
+                        //     onTap: () => Get.back(),
+                        //     child: Container(
+                        //       decoration: BoxDecoration(
+                        //         shape: BoxShape.circle,
+                        //         color: AppColors.black,
+                        //       ),
+                        //       padding: const EdgeInsets.all(4.0),
+                        //       child: const Icon(Icons.close, color: Colors.white, size: 18),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

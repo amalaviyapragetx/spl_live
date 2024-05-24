@@ -207,7 +207,6 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                                 );
                               }).toList(),
                             ),
-                            const SizedBox(height: 10),
                             Obx(
                               () => GridView.builder(
                                 padding: EdgeInsets.all(Dimensions.h5),
