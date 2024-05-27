@@ -54,7 +54,7 @@ class NotificationDetailsPage extends StatelessWidget {
                         current: controller.marketNotificationFromLocal.value,
                         values: [false, true],
                         spacing: 0.0,
-                        indicatorSize: Size.square(30.0),
+                        indicatorSize: Size.square(25.0),
                         animationDuration: const Duration(milliseconds: 200),
                         animationCurve: Curves.linear,
                         onChanged: (value) {
@@ -78,9 +78,9 @@ class NotificationDetailsPage extends StatelessWidget {
                             alignment: Alignment.center,
                             children: [
                               Positioned(
-                                  left: 10.0,
-                                  right: 10.0,
-                                  height: 15.0,
+                                  left: 8.0,
+                                  right: 8.0,
+                                  height: 13.0,
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       color: Color.lerp(Colors.black26, AppColors.appToggleBGColor, global.position),
@@ -167,7 +167,7 @@ class NotificationDetailsPage extends StatelessWidget {
                         current: controller.starlineNotificationFromLocal.value,
                         values: [false, true],
                         spacing: 0.0,
-                        indicatorSize: Size.square(30.0),
+                        indicatorSize: Size.square(25.0),
                         animationDuration: const Duration(milliseconds: 200),
                         animationCurve: Curves.linear,
                         onChanged: (value) {
@@ -190,9 +190,9 @@ class NotificationDetailsPage extends StatelessWidget {
                             alignment: Alignment.center,
                             children: [
                               Positioned(
-                                  left: 10.0,
-                                  right: 10.0,
-                                  height: 15.0,
+                                  left: 8.0,
+                                  right: 8.0,
+                                  height: 13.0,
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       color: Color.lerp(Colors.black26, AppColors.appToggleBGColor, global.position),

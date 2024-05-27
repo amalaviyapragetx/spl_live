@@ -476,7 +476,7 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                             itemBuilder: (context, index) {
                               var data = homeCon.marketBidHistoryList[index];
                               return listveiwTransactionNew(
-                                requestId: "Bid Id :  ${data.requestId ?? ""}",
+                                requestId: "Bid Id  : ${data.requestId ?? ""}",
                                 isWin: data.isWin ?? false,
                                 bidNo: data.bidNo.toString(),
                                 ballance: data.balance.toString(),
@@ -524,10 +524,10 @@ Widget listveiwTransactionNew({
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              spreadRadius: 0.5,
+              spreadRadius: 0.4,
               color: AppColors.grey,
               blurRadius: 2,
-              offset: const Offset(2, 4),
+              offset: const Offset(1, 2),
             )
           ],
           border: Border.all(width: 0.2),
@@ -537,8 +537,11 @@ Widget listveiwTransactionNew({
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.h10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -547,10 +550,15 @@ Widget listveiwTransactionNew({
                     style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h14),
                   ),
                   SizedBox(width: Dimensions.w5),
-                  Text(
-                    bidNo,
-                    style: CustomTextStyle.textRobotoMedium
-                        .copyWith(color: AppColors.appbarColor, fontSize: Dimensions.h13),
+                  Column(
+                    children: [
+                      const SizedBox(height: 2),
+                      Text(
+                        bidNo,
+                        style: CustomTextStyle.textRobotoMedium
+                            .copyWith(color: AppColors.appbarColor, fontSize: Dimensions.h13),
+                      ),
+                    ],
                   ),
                   const Expanded(child: SizedBox()),
                   Row(
@@ -569,14 +577,20 @@ Widget listveiwTransactionNew({
                 ],
               ),
             ),
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.h8, vertical: Dimensions.h3),
+              padding: EdgeInsets.symmetric(
+                horizontal: Dimensions.h10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     gameMode,
-                    style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12),
+                    style: CustomTextStyle.textRobotoMedium
+                        .copyWith(fontSize: Dimensions.h12, fontWeight: FontWeight.w500),
                   ),
 
                   // Row(
@@ -593,14 +607,20 @@ Widget listveiwTransactionNew({
                 ],
               ),
             ),
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.h8, vertical: Dimensions.h3),
+              padding: EdgeInsets.symmetric(
+                horizontal: Dimensions.h10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     requestId,
-                    style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12),
+                    style: CustomTextStyle.textRobotoMedium
+                        .copyWith(fontSize: Dimensions.h12, fontWeight: FontWeight.w500),
                   ),
                   Row(
                     children: [
@@ -609,18 +629,23 @@ Widget listveiwTransactionNew({
                         height: Dimensions.h15,
                       ),
                       SizedBox(width: Dimensions.w8),
-                      Text(ballance, style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h12)),
+                      Text(ballance,
+                          style: CustomTextStyle.textRobotoMedium
+                              .copyWith(fontSize: Dimensions.h12, fontWeight: FontWeight.w500)),
                       SizedBox(height: Dimensions.h8),
                     ],
                   ),
                 ],
               ),
             ),
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(Dimensions.h8),
               decoration: BoxDecoration(
-                color: AppColors.greyShade.withOpacity(0.4),
+                color: AppColors.greyShade.withOpacity(0.2),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(Dimensions.r8),
                   bottomRight: Radius.circular(Dimensions.r8),

@@ -210,11 +210,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                   ),
                   const SizedBox(height: 5),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Column(
-                      children: [
-                        Row(
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
                           children: [
                             Expanded(
                               child: InkWell(
@@ -277,9 +277,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           ],
                         ),
-                        NormalMarketsList(normalMarketList: homeCon.normalMarketList),
-                      ],
-                    ),
+                      ),
+                      NormalMarketsList(normalMarketList: homeCon.normalMarketList),
+                    ],
                   ),
                 ],
               ),

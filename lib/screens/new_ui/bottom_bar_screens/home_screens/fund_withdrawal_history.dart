@@ -96,13 +96,16 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                   decoration: BoxDecoration(
                                     color: AppColors.white,
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: AppColors.black),
+                                    border: Border.all(width: 0.2),
                                     boxShadow: [
                                       BoxShadow(
-                                        spreadRadius: 0.8722222447395325,
-                                        blurRadius: 6.97777795791626,
-                                        offset: const Offset(0, 0),
-                                        color: AppColors.black.withOpacity(0.25),
+                                        spreadRadius: 0.4,
+                                        // spreadRadius: 0.8722222447395325,
+                                        blurRadius: 2,
+                                        // blurRadius: 6.97777795791626,
+                                        offset: const Offset(1, 2),
+                                        // color: AppColors.black.withOpacity(0.25),
+                                        color: AppColors.grey,
                                       )
                                     ],
                                   ),
@@ -185,7 +188,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                       Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: AppColors.greyShade.withOpacity(0.4),
+                                          color: AppColors.greyShade.withOpacity(0.2),
                                           borderRadius: BorderRadius.only(
                                             bottomLeft: Radius.circular(Dimensions.r8),
                                             bottomRight: Radius.circular(Dimensions.r8),
@@ -220,7 +223,7 @@ class _FundWithdrawalHistoryState extends State<FundWithdrawalHistory> {
                                                               child: Center(
                                                                 child: Icon(
                                                                   Icons.close,
-                                                                  color: AppColors.grey,
+                                                                  color: AppColors.white,
                                                                   size: 15,
                                                                 ),
                                                               ),

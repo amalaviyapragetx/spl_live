@@ -116,7 +116,8 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                               ),
                                               Text(
                                                 "Deposit",
-                                                style: CustomTextStyle.textRobotoSansMedium.copyWith(fontSize: 15),
+                                                style: CustomTextStyle.textRobotoSansMedium
+                                                    .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                                               ),
                                             ],
                                           ),
@@ -201,7 +202,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                     Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: AppColors.greyShade.withOpacity(0.4),
+                                        color: AppColors.greyShade.withOpacity(0.2),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(Dimensions.r8),
                                           bottomRight: Radius.circular(Dimensions.r8),
@@ -235,7 +236,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                                             child: Center(
                                                               child: Icon(
                                                                 Icons.close,
-                                                                color: AppColors.grey,
+                                                                color: AppColors.white,
                                                                 size: 15,
                                                               ),
                                                             ),

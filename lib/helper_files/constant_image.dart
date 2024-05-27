@@ -25,6 +25,7 @@ class ConstantImage {
   static String bankAccountNew = "assets/images/bankAccountNew.svg";
   static String rateNew = "assets/images/rateNew.svg";
   static String logoutNew = "assets/images/logoutNew.svg";
+  static String logOutDialog = "assets/images/LogOut_Dialog.svg";
 
   static String gameRate = "assets/images/bidhistory_list_icon.svg";
   static String notifiacation = "assets/images/notification.svg";

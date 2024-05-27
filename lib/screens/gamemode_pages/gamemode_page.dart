@@ -6,7 +6,6 @@ import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/screens/gamemode_pages/controller/game_pages_controller.dart';
 
 class GameModePage extends StatelessWidget {
@@ -28,11 +27,15 @@ class GameModePage extends StatelessWidget {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppUtils().simpleAppbar(
-          appBarTitle: controller.marketValue.value.market ?? "",
-          leading: IconButton(
-            onPressed: () => controller.onBackButton(),
-            icon: const Icon(Icons.arrow_back),
+
+        appBar: AppBar(
+          backgroundColor: AppColors.appbarColor,
+          shadowColor: AppColors.white,
+          elevation: 0,
+          centerTitle: false,
+          title: Text(
+            controller.marketValue.value.market ?? "",
+            style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white),
           ),
           actions: [
             InkWell(
@@ -72,6 +75,51 @@ class GameModePage extends StatelessWidget {
             ),
           ],
         ),
+        // appBar: AppUtils().simpleAppbar(
+        //   appBarTitle: controller.marketValue.value.market ?? "",
+        //   centerTitle: false,
+        //   leading: IconButton(
+        //     onPressed: () => controller.onBackButton(),
+        //     icon: const Icon(Icons.arrow_back),
+        //   ),
+        //   actions: [
+        //     InkWell(
+        //       onTap: () {
+        //         //  Get.offAndToNamed(AppRoutName.transactionPage);
+        //       },
+        //       child: Row(
+        //         children: [
+        //           SizedBox(
+        //             height: Dimensions.h20,
+        //             width: Dimensions.w25,
+        //             child: SvgPicture.asset(
+        //               ConstantImage.walletAppbar,
+        //               color: AppColors.white,
+        //               fit: BoxFit.fill,
+        //             ),
+        //           ),
+        //           Padding(
+        //             padding: EdgeInsets.only(
+        //               top: Dimensions.r8,
+        //               bottom: Dimensions.r5,
+        //               left: Dimensions.r10,
+        //               right: Dimensions.r10,
+        //             ),
+        //             child: Obx(
+        //               () => Text(
+        //                 walletController.walletBalance.toString(),
+        //                 style: CustomTextStyle.textRobotoSansMedium.copyWith(
+        //                   color: AppColors.white,
+        //                   fontSize: Dimensions.h17,
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
         body: Obx(
           () {
             return SizedBox(

@@ -40,7 +40,7 @@ class AppUtils {
       backgroundColor: AppColors.appbarColor,
       shadowColor: AppColors.white,
       elevation: 0,
-      centerTitle: centerTitle ?? true,
+      centerTitle: centerTitle ?? false,
       leading: leading,
       leadingWidth: leadingWidht,
       title: Text(
@@ -317,14 +317,12 @@ class AppUtils {
         child: Center(
           child: Material(
             color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(Dimensions.r18),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(Dimensions.r18)),
             child: Padding(
               padding: EdgeInsets.only(
-                top: Dimensions.h2,
-                left: Dimensions.h2,
-                right: Dimensions.h2,
+                top: Dimensions.h5,
+                left: Dimensions.h5,
+                right: Dimensions.h5,
               ),
               child: Stack(
                 alignment: Alignment.bottomCenter,
@@ -342,9 +340,7 @@ class AppUtils {
                           letterSpacing: 1.29,
                         ),
                       ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
+                      const SizedBox(height: 15),
                       RatingBar.builder(
                         initialRating: givenRatings != null || givenRatings!.toDouble() != 0.0 ? givenRatings : 0,
                         minRating: 0,
@@ -388,13 +384,11 @@ class AppUtils {
                         //updateOnDrag: true,
                         tapOnlyMode: true,
                       ),
-                      const SizedBox(
-                        height: 50,
-                      )
+                      const SizedBox(height: 50)
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InkWell(
                         onTap: () => Get.back(),
@@ -408,7 +402,8 @@ class AppUtils {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      // const Spacer(),
+                      const SizedBox(width: 25),
                       InkWell(
                         onTap: () {
                           if (givenRatings.toDouble() != 0.00) {

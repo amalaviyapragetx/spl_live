@@ -419,7 +419,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: Dimensions.h11),
+                            SizedBox(height: Dimensions.h5),
                             Obx(
                               () => Expanded(
                                 child: ListView.builder(
@@ -439,7 +439,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                       ballance: " ${starlineCon.marketHistoryList[index].balance.toString()} ",
                                       coins: starlineCon.marketHistoryList[index].coins.toString(),
                                       bidNumber:
-                                          "${starlineCon.marketHistoryList[index].gameMode ?? ""} : ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
+                                          "${starlineCon.marketHistoryList[index].gameMode ?? ""}: ${starlineCon.marketHistoryList[index].bidNo ?? ""}",
                                       marketName: starlineCon.marketHistoryList[index].marketName ?? "00:00 AM",
                                     );
                                   },
@@ -469,10 +469,10 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              spreadRadius: 1,
+              spreadRadius: 0.4,
               color: AppColors.grey,
-              blurRadius: 10,
-              offset: const Offset(7, 4),
+              blurRadius: 2,
+              offset: const Offset(1, 1),
             ),
           ],
           border: Border.all(width: 0.87),
@@ -483,8 +483,13 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: EdgeInsets.symmetric(
+                horizontal: Dimensions.h10,
+              ),
               child: Row(
                 children: [
                   Text(
@@ -505,8 +510,13 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                 ],
               ),
             ),
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: EdgeInsets.symmetric(
+                horizontal: Dimensions.h10,
+              ),
               child: Row(
                 children: [
                   Text(
@@ -515,8 +525,8 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                     textAlign: TextAlign.left,
                   ),
                   const Expanded(child: SizedBox()),
-                  SizedBox(width: Dimensions.w5),
-                  SizedBox(width: Dimensions.w5),
+                  // SizedBox(width: Dimensions.w5),
+                  // SizedBox(width: Dimensions.w5),
                   // SvgPicture.asset(
                   //   ConstantImage.walletAppbar,
                   //   height: Dimensions.h13,
@@ -531,13 +541,18 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                 ],
               ),
             ),
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Padding(
-              padding: EdgeInsets.all(Dimensions.h8),
+              padding: EdgeInsets.symmetric(
+                horizontal: Dimensions.h10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Bid Id : $requestId",
+                    "Bid Id  : $requestId",
                     style:
                         CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h12, color: AppColors.black),
                   ),
@@ -558,11 +573,14 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                 ],
               ),
             ),
+            SizedBox(
+              height: Dimensions.h10,
+            ),
             Container(
               height: Dimensions.h30,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppColors.greyShade.withOpacity(0.4),
+                color: AppColors.greyShade.withOpacity(0.2),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(Dimensions.r8),
                   bottomRight: Radius.circular(Dimensions.r8),

@@ -89,6 +89,7 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 18.0),
                             child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
                               height: Dimensions.h50,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
@@ -104,48 +105,46 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
                                 ],
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(width: Dimensions.w20),
-                                  SizedBox(
-                                      width: Dimensions.w35,
-                                      child: SvgPicture.asset(
-                                        clockIcon(
-                                            starlineCon.marketListForResult[index].time?.split(":")[0] ?? "00:00 AM"),
-                                        color: AppColors.appbarColor,
-                                      )),
-                                  SizedBox(width: Dimensions.w10),
-                                  Text(
-                                    starlineCon.marketListForResult[index].time ?? "00:00 AM",
-                                    style: CustomTextStyle.textRobotoSansBold.copyWith(
-                                      fontSize: Dimensions.h15,
-                                      color: AppColors.appbarColor,
-                                    ),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                          width: Dimensions.w35,
+                                          child: SvgPicture.asset(
+                                            clockIcon(starlineCon.marketListForResult[index].time?.split(":")[0] ??
+                                                "00:00 AM"),
+                                            color: AppColors.appbarColor,
+                                          )),
+                                      SizedBox(width: Dimensions.w10),
+                                      Text(
+                                        starlineCon.marketListForResult[index].time ?? "00:00 AM",
+                                        style: CustomTextStyle.textRobotoSansBold.copyWith(
+                                          fontSize: Dimensions.h15,
+                                          color: AppColors.appbarColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Expanded(
-                                    child: SizedBox(width: Dimensions.w10),
-                                  ),
+
+                                  // Expanded(
+                                  //   child: SizedBox(width: Dimensions.w10),
+                                  // ),
                                   getResult(
                                             starlineCon.marketListForResult[index].isResultDeclared ?? false,
                                             starlineCon.marketListForResult[index].result ?? 0,
                                           ) !=
                                           "***-*"
-                                      ? Padding(
-                                          padding: EdgeInsets.only(right: Dimensions.h50),
-                                          child: Text(
-                                            getResult(
-                                              starlineCon.marketListForResult[index].isResultDeclared ?? false,
-                                              starlineCon.marketListForResult[index].result ?? 0,
-                                            ),
-                                            style:
-                                                CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h15),
+                                      ? Text(
+                                          getResult(
+                                            starlineCon.marketListForResult[index].isResultDeclared ?? false,
+                                            starlineCon.marketListForResult[index].result ?? 0,
                                           ),
+                                          style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: Dimensions.h15),
                                         )
-                                      : Padding(
-                                          padding: EdgeInsets.only(right: Dimensions.h50),
-                                          child: SvgPicture.asset(
-                                            ConstantImage.openStarsSvg,
-                                            width: Dimensions.w60,
-                                          ),
+                                      : SvgPicture.asset(
+                                          ConstantImage.openStarsSvg,
+                                          width: Dimensions.w60,
                                         )
                                 ],
                               ),

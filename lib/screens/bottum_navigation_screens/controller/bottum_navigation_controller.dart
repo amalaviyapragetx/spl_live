@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/helper_files/app_colors.dart';
+import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
@@ -53,11 +55,15 @@ class MoreListController extends GetxController {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.thumb_up_alt_outlined,
-                size: 60,
-                color: AppColors.appbarColor,
+              SvgPicture.asset(
+                ConstantImage.logOutDialog,
+                height: 60,
               ),
+              // Icon(
+              //   Icons.thumb_up_alt_outlined,
+              //   size: 60,
+              //   color: AppColors.appbarColor,
+              // ),
               const SizedBox(height: 10),
               Text(
                 value['message'] ?? "Logout Successful",

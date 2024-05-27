@@ -51,7 +51,7 @@ class _NewGameModePageState extends State<NewGameModePage> {
           appBar: AppBar(
             backgroundColor: AppColors.appbarColor,
             shadowColor: AppColors.white,
-            centerTitle: true,
+            centerTitle: false,
             elevation: 0,
             title: GetBuilder<NewGamemodePageController>(
               builder: (c) => Text(
