@@ -143,6 +143,7 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                     InkWell(
                       onTap: () => launch("https://wa.me/+917769826748/?text=hi"),
                       child: Container(
+                        padding: const EdgeInsets.all(5.0),
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
@@ -156,14 +157,11 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Image.asset(
-                                    ConstantImage.whatsaapIcon,
-                                    fit: BoxFit.contain,
-                                    width: 24,
-                                    height: 24,
-                                  ),
+                                Image.asset(
+                                  ConstantImage.whatsaapIcon,
+                                  fit: BoxFit.contain,
+                                  width: 24,
+                                  height: 24,
                                 ),
                                 Text(
                                   "+91 7769826748",

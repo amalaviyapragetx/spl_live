@@ -101,12 +101,18 @@ class NotificationServices {
       android: androidNotificationDetails,
       //  iOS: iosNotificationDetails,
     );
-    _flutterLocalNotificationsPlugin.show(1, "message.notification?.title.toString()",
-        message.notification?.body.toString() ?? "sdasd", notificationDetails);
+    print(message.notification?.title);
+    print(message.notification?.body);
+    print("fksdjfhsd");
+
+    _flutterLocalNotificationsPlugin.show(1, "${message.notification?.title.toString()}",
+        message.notification?.body.toString() ?? "", notificationDetails);
   }
 
   Future<String> getDeviceToken() async {
     String? token = await messaging.getToken();
+    print("dajkhdaskd");
+    print(token);
     return token!;
   }
 

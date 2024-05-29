@@ -17,6 +17,7 @@ import '../../../../helper_files/ui_utils.dart';
 import '../../../../models/bank_details_model.dart';
 import '../../../../models/commun_models/response_model.dart';
 import '../../../../models/commun_models/user_details_model.dart';
+import '../../../../routes/app_routes_name.dart';
 
 class CreateWithDrawalPageController extends GetxController {
   TextEditingController amountTextController = TextEditingController();
@@ -121,10 +122,11 @@ class CreateWithDrawalPageController extends GetxController {
       if (value['status']) {
         ResponseModel model = ResponseModel.fromJson(value);
         amountTextController.clear();
+
         if (model.message!.isNotEmpty) {
           if (model.message == "Withdrawal request created successfully") {
             return Get.dialog(
-              barrierDismissible: true,
+              barrierDismissible: false,
               useSafeArea: true,
               ConstrainedBox(
                 constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 40, maxWidth: Get.width - 30),
@@ -166,7 +168,9 @@ class CreateWithDrawalPageController extends GetxController {
                                     borderWidth: 0,
                                     textStyle: CustomTextStyle.textGothamMedium,
                                     onTap: () {
-                                      Get.back();
+                                      Get.offAllNamed(
+                                        AppRoutName.dashBoardPage,
+                                      );
                                     },
                                     height: 40,
                                     width: Get.width / 2.8,
@@ -197,6 +201,7 @@ class CreateWithDrawalPageController extends GetxController {
               ),
             );
           } else {
+            print("fskjfhsdfsdl");
             Get.dialog(
               barrierDismissible: false,
               useSafeArea: true,
@@ -226,21 +231,29 @@ class CreateWithDrawalPageController extends GetxController {
                                     fontSize: 20,
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RoundedCornerButton(
+                                    text: "OK".tr,
+                                    color: AppColors.appbarColor,
+                                    borderColor: AppColors.appbarColor,
+                                    fontSize: Dimensions.h15,
+                                    fontWeight: FontWeight.w500,
+                                    fontColor: AppColors.white,
+                                    letterSpacing: 0,
+                                    borderRadius: Dimensions.r5,
+                                    borderWidth: 0,
+                                    textStyle: CustomTextStyle.textGothamMedium,
+                                    onTap: () {
+                                      Get.offAllNamed(
+                                        AppRoutName.dashBoardPage,
+                                      );
+                                    },
+                                    height: 40,
+                                    width: Get.width / 2.8,
+                                  ),
+                                )
                               ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 5,
-                          child: GestureDetector(
-                            onTap: () => Get.back(),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.black,
-                              ),
-                              padding: const EdgeInsets.all(4.0),
-                              child: const Icon(Icons.close, color: Colors.white, size: 18),
                             ),
                           ),
                         ),

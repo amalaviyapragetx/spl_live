@@ -78,11 +78,11 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
                   },
                 ),
               ),
-              SizedBox(height: Dimensions.h11),
+              SizedBox(height: 10.0),
               starlineCon.marketListForResult.isNotEmpty
                   ? Expanded(
                       child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5.0),
                         shrinkWrap: true,
                         itemCount: starlineCon.marketListForResult.length,
                         itemBuilder: (context, index) {

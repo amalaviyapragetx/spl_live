@@ -388,29 +388,12 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                       ? Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
-                            child: Container(
-                              height: Dimensions.h35,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.grey.shade300,
-                                boxShadow: [
-                                  BoxShadow(
-                                    spreadRadius: 0.2,
-                                    color: AppColors.grey,
-                                    blurRadius: 1,
-                                    offset: const Offset(0, 2),
-                                  )
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "NOBIDHISTORY".tr,
-                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                    fontSize: Dimensions.h16,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
+                            child: Text(
+                              "NOBIDHISTORY".tr,
+                              style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                fontSize: Dimensions.h16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.grey.shade600,
                               ),
                             ),
                           ),
