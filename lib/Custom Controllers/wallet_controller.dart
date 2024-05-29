@@ -45,10 +45,10 @@ class WalletController extends GetxController {
       image: ConstantImage.fundWithdrawalHistory,
       name: "Fund Withdrawal History",
     ),
-    FilterModel(
-      image: ConstantImage.bankChangeDeatils,
-      name: "Bank Changes History",
-    ),
+    // FilterModel(
+    //   image: ConstantImage.bankChangeDeatils,
+    //   name: "Bank Changes History",
+    // ),
   ].obs;
 
   var addFundID;
