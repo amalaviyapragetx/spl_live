@@ -51,6 +51,12 @@ class NotificationDetailsPage extends StatelessWidget {
                     ),
                     Obx(
                       () => CustomNotificationSwitch<bool>(
+                        onTap: (value) {
+                          print("fsdjfgdsfsd");
+                          print(value.tapped!.value);
+                          controller.marketNotificationFromLocal.value = !controller.marketNotificationFromLocal.value;
+                          controller.callNotification();
+                        },
                         current: controller.marketNotificationFromLocal.value,
                         values: [false, true],
                         spacing: 0.0,
@@ -66,12 +72,6 @@ class NotificationDetailsPage extends StatelessWidget {
                           return const SizedBox();
                         },
                         cursors: ToggleCursors(defaultCursor: SystemMouseCursors.click),
-                        onTap: (value) {
-                          // print("valuevalue ${value.tapped!.value}");
-                          // controller.marketNotificationFromLocal.value = value.tapped!.value;
-                          // print("valuevalue 111${controller.marketNotificationFromLocal.value}");
-                          // // controller.callNotification();
-                        },
                         iconsTappable: false,
                         wrapperBuilder: (context, global, child) {
                           return Stack(
@@ -164,6 +164,14 @@ class NotificationDetailsPage extends StatelessWidget {
                     ),
                     Obx(
                       () => CustomNotificationSwitch<bool>(
+                        onTap: (value) {
+                          print("fsdkjfhsd");
+                          print(value.tapped?.value);
+                          controller.starlineNotificationFromLocal.value =
+                              !controller.starlineNotificationFromLocal.value;
+
+                          controller.callNotification();
+                        },
                         current: controller.starlineNotificationFromLocal.value,
                         values: [false, true],
                         spacing: 0.0,

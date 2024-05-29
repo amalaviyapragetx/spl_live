@@ -183,6 +183,7 @@ class NormalMarketsList extends StatelessWidget {
                         );
                       },
                     ),
+                    const SizedBox(height: 5),
                   ],
                 )
               : const Center(child: Text("No Data Found"))
