@@ -22,7 +22,7 @@ class NormalMarketsList extends StatelessWidget {
               ? Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       child: InkWell(
                         onTap: () => launch("https://wa.me/+917769826748/?text=hi"),
                         child: Container(
@@ -55,7 +55,7 @@ class NormalMarketsList extends StatelessWidget {
                       ),
                     ),
                     GridView.builder(
-                      // padding: EdgeInsets.all(Dimensions.h5),
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

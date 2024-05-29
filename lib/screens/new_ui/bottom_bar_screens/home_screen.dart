@@ -165,14 +165,15 @@ class _HomeScreenState extends State<HomeScreen> {
             SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(height: 8),
                   Obx(
                     () => homeCon.bannerData.isNotEmpty
                         ? CarouselSlider(
                             items: homeCon.bannerData.map((element) {
                               return Builder(
                                 builder: (context) {
-                                  return Container(
-                                    width: double.infinity,
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
                                     child: Image(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(element.banner ?? ""),
@@ -213,14 +214,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
                           children: [
                             Expanded(
                               child: InkWell(
                                 onTap: () => Get.to(() => StarlineDailyMarketData()),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  padding: const EdgeInsets.symmetric(vertical: 12),
                                   decoration: BoxDecoration(
                                     color: AppColors.appbarColor,
                                     borderRadius: BorderRadius.circular(8),
@@ -250,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: InkWell(
                                 onTap: () => Get.to(() => AddFund()),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  padding: const EdgeInsets.symmetric(vertical: 12),
                                   decoration: BoxDecoration(
                                     color: AppColors.appbarColor,
                                     borderRadius: BorderRadius.circular(8),
