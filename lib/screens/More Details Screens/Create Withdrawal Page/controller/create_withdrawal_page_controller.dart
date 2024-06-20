@@ -36,9 +36,7 @@ class CreateWithDrawalPageController extends GetxController {
   Future<void> fetchStoredUserDetailsAndGetBankDetailsByUserId() async {
     final data = GetStorage().read(ConstantsVariables.userData);
     UserDetailsModel userData = UserDetailsModel.fromJson(data);
-    print("userIduserId ${userId}");
     userId = userData.id == null ? "" : userData.id.toString();
-
     if (userId.isNotEmpty) {
       callGetBankDetails();
     } else {
@@ -201,7 +199,6 @@ class CreateWithDrawalPageController extends GetxController {
               ),
             );
           } else {
-            print("fskjfhsdfsdl");
             Get.dialog(
               barrierDismissible: false,
               useSafeArea: true,

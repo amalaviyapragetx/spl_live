@@ -302,6 +302,8 @@ class HomePageController extends GetxController {
   Future<void> addFund({String? amount}) async {
     try {
       ApiService().addFund(amount: amount).then((value) async {
+        print("Fsdfkjsdhfkj");
+        print(value);
         if (value['status']) {
           if (value['data'] != null) {
             // await _launchUrl(Uri.parse(Uri.decodeFull(value['data']['upiId'])));

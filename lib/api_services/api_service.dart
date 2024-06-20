@@ -34,7 +34,6 @@ class ApiService extends GetConnect implements GetxService {
       headers = {"Accept": "application/json"};
       headersWithToken = {"Accept": "application/json", "Authorization": "Bearer $authToken"};
     });
-    //  print(authToken);
   }
 
   Future<dynamic> signUpAPI(body) async {
@@ -210,7 +209,6 @@ class ApiService extends GetConnect implements GetxService {
       body,
       headers: headersWithToken,
     );
-
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -1078,9 +1076,7 @@ class ApiService extends GetConnect implements GetxService {
         AppUtils.hideProgressDialog();
         return response.body;
       }
-    } catch (e) {
-      // print(e);
-    }
+    } catch (e) {}
   }
 
   // Future<dynamic> getNewMarketBidlistData({
@@ -1256,7 +1252,7 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> fcmToken(body) async {
     // AppUtils.showProgressDialog(isCancellable: false);
     await initApiService();
-    print("djsdhsjds ${body}");
+
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).post(
       ApiUtils.fcmToken,
       body,
@@ -1318,7 +1314,7 @@ class ApiService extends GetConnect implements GetxService {
       );
       if (kDebugMode) {
         developer.log(
-            "RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} RESPONSE STATUS CODE:  ${headersWithToken} ");
+            "RESPONSE HEADER: ${response.status.code} ${response.request?.url} RESPONSE : ${response.body} RESPONSE STATUS CODE:  ${headersWithToken} ");
       }
       if (response.status.hasError) {
         AppUtils.hideProgressDialog();
@@ -1365,17 +1361,20 @@ class ApiService extends GetConnect implements GetxService {
     }
   }
 
-  Future<FundTransactionModel?> getTransactionHistory() async {
+  Future<FundTransactionModel?> getTransactionHistory(limit, offset) async {
     try {
       await initApiService();
       final response = await GetConnect(timeout: const Duration(seconds: 15), allowAutoSignedCert: true).get(
-          "${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}",
-          headers: headersWithToken,
-          query: {"search": ""});
+        "${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}?limit=${limit}&offset=${offset}",
+        headers: headersWithToken,
+      );
+      print("Fsdkfjhsfkjhdskfh");
+      print(headersWithToken);
+      print(FundTransactionModel.fromJson(response.body));
       if (kDebugMode) {
         developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
       }
-      // print("${ApiUtils.getWalletTransactionHistory}/${GetStorage().read(ConstantsVariables.id)}");
+
       if (response.status.hasError) {
         if (response.status.code != null && response.status.code == 401) {
           tokenExpired();
@@ -1385,7 +1384,7 @@ class ApiService extends GetConnect implements GetxService {
         return FundTransactionModel.fromJson(response.body);
       }
     } catch (e) {
-      // print(e.toString());
+      print(e.toString());
       return null;
     }
   }
@@ -1405,7 +1404,6 @@ class ApiService extends GetConnect implements GetxService {
         return response.body;
       }
     } catch (e) {
-      // print(e.toString());
       return null;
     }
   }
@@ -1478,7 +1476,6 @@ class ApiService extends GetConnect implements GetxService {
         return TicketsModel.fromJson(response.body);
       }
     } catch (e) {
-      // print(e.toString());
       return null;
     }
   }
@@ -1499,7 +1496,6 @@ class ApiService extends GetConnect implements GetxService {
         return response.body;
       }
     } catch (e) {
-      // print(e.toString());
       return null;
     }
   }

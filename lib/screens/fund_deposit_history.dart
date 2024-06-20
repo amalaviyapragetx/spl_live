@@ -23,6 +23,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
   @override
   void initState() {
     super.initState();
+    walletCon.fundTransactionList.value.clear();
     walletCon.getTransactionHistory(false);
   }
 
@@ -76,6 +77,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                       ? Padding(
                           padding: const EdgeInsets.all(15),
                           child: ListView.separated(
+                            controller: walletCon.fundDepositeHistoryScrollController,
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
@@ -139,7 +141,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                               Expanded(
                                                 flex: 2,
                                                 child: Text(
-                                                  ": ${walletCon.fundTransactionList[i].orderId}",
+                                                  ": ${walletCon.fundTransactionList[i].orderId ?? ""}",
                                                   style: CustomTextStyle.textRobotoSansMedium
                                                       .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
                                                 ),
@@ -172,30 +174,34 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                             ],
                                           ),
                                           const SizedBox(height: 2),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                  "Transaction ID",
-                                                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                                    color: AppColors.textColor,
-                                                    fontSize: Get.width > 410 ? Dimensions.h13 : Dimensions.h12,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
+                                          walletCon.fundTransactionList[i].clientRefId == null
+                                              ? Container(
+                                                  height: Dimensions.h13,
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text(
+                                                        "Transaction ID",
+                                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                          color: AppColors.textColor,
+                                                          fontSize: Get.width > 410 ? Dimensions.h13 : Dimensions.h12,
+                                                          fontWeight: FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Text(
+                                                        ":  ${walletCon.fundTransactionList[i].clientRefId}",
+                                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                            color: AppColors.black, fontWeight: FontWeight.w400),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Expanded(
-                                                flex: 2,
-                                                child: Text(
-                                                  ":  ${walletCon.fundTransactionList[i].clientRefId}",
-                                                  style: CustomTextStyle.textRobotoSansMedium
-                                                      .copyWith(color: AppColors.black, fontWeight: FontWeight.w400),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
                                         ],
                                       ),
                                     ),
@@ -217,16 +223,17 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                             Expanded(
                                               child: Text(
                                                 CommonUtils().convertUtcToIstFormatStringToDDMMYYYYHHMMA2(
-                                                    walletCon.fundTransactionList[i].createdAt ?? ""),
+                                                    walletCon.fundTransactionList[i].createdAt.toString()),
                                                 style: CustomTextStyle.textRobotoSansBold.copyWith(fontSize: 15),
                                               ),
                                             ),
                                             Row(
                                               children: [
-                                                walletCon.fundTransactionList[i].status == "Pending"
-                                                    ? SvgPicture.asset(ConstantImage.sendWatchIcon, height: 15)
-                                                    : walletCon.fundTransactionList[i].status == "Ok"
-                                                        ? Icon(Icons.check_circle, color: AppColors.green)
+                                                walletCon.fundTransactionList[i].paymentMode == "Manual" ||
+                                                        walletCon.fundTransactionList[i].status == "Success"
+                                                    ? Icon(Icons.check_circle, color: AppColors.green)
+                                                    : walletCon.fundTransactionList[i].status == "Pending"
+                                                        ? SvgPicture.asset(ConstantImage.sendWatchIcon, height: 15)
                                                         : Container(
                                                             padding: const EdgeInsets.all(2.0),
                                                             decoration: BoxDecoration(
@@ -243,17 +250,20 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                                                           ),
                                                 const SizedBox(width: 5),
                                                 Text(
-                                                  walletCon.fundTransactionList[i].status?.toLowerCase() == "ok"
+                                                  walletCon.fundTransactionList[i].paymentMode == "Manual" ||
+                                                          walletCon.fundTransactionList[i].status?.toLowerCase() ==
+                                                              "Success"
                                                       ? "Success"
                                                       : walletCon.fundTransactionList[i].status?.toLowerCase() == "f"
                                                           ? "Failed"
                                                           : walletCon.fundTransactionList[i].status ?? "",
                                                   style: CustomTextStyle.textRobotoSansBold.copyWith(
                                                     fontSize: 15,
-                                                    color: walletCon.fundTransactionList[i].status == "Pending"
-                                                        ? AppColors.appbarColor
-                                                        : walletCon.fundTransactionList[i].status == "Ok"
-                                                            ? AppColors.green
+                                                    color: walletCon.fundTransactionList[i].paymentMode == "Manual" ||
+                                                            walletCon.fundTransactionList[i].status == "Success"
+                                                        ? AppColors.green
+                                                        : walletCon.fundTransactionList[i].status == "Pending"
+                                                            ? AppColors.appbarColor
                                                             : AppColors.redColor,
                                                   ),
                                                 ),
@@ -274,6 +284,7 @@ class _FundDipositHistoryState extends State<FundDipositHistory> {
                         ),
                 ),
               ),
+              Obx(() => walletCon.isMoreLoading.value == true ? CircularProgressIndicator() : Container())
             ],
           ),
         ),

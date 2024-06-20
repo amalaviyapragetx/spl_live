@@ -51,129 +51,53 @@ class WalletController extends GetxController {
     // ),
   ].obs;
 
+  ScrollController fundDepositeHistoryScrollController = ScrollController();
+  RxInt totalPage = 0.obs;
+  RxInt currentPage = 0.obs;
+  RxBool isMoreLoading = false.obs;
+  RxBool isLoading = false.obs;
+
   var addFundID;
 
   @override
   void onInit() {
     getUserBalance();
+    fundDepositeHistoryScrollController.addListener(homeScrollListener);
     super.onInit();
   }
 
-  void getUserBalance() {
-    ApiService().getBalance().then((value) async {
-      if (value['status']) {
-        if (value['data'] != null) {
-          var tempBalance = value['data']['Amount'] ?? 00;
-          walletBalance.value = tempBalance.toString();
-        }
-      } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-      }
-    });
+  homeScrollListener() {
+    print("fksdfgdjksggf");
+    if ((fundDepositeHistoryScrollController.position.pixels ==
+            fundDepositeHistoryScrollController.position.maxScrollExtent) &&
+        isMoreLoading.value == false &&
+        (totalPage.value > fundTransactionList.value.length)) {
+      getTransactionHistory(false);
+    }
   }
 
-  void getCheckBankDetails() {
-    isLoad.value = true;
-    ApiService().getWithBankDetails().then((value) async {
-      if (value['status']) {
-        if (value['data'] != null) {
-          var isDetail = value['data']['hasBankDetail'] ?? false;
-          isCheckBankDetails.value = isDetail;
-          if (isCheckBankDetails.value == true) {
-            isLoad.value = false;
-            Get.toNamed(AppRoutName.createWithDrawalPage);
-          } else {
-            isLoad.value = false;
-            Get.dialog(
-              barrierDismissible: false,
-              ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
-                child: AlertDialog(
-                  insetPadding: EdgeInsets.zero,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                  content: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
-                        const SizedBox(height: 20),
-                        Text(
-                          "Please Add Bank Details",
-                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                            color: AppColors.appbarColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                            selectedIndex.value = 2;
-                          },
-                          child: Container(
-                            decoration:
-                                BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
-                            height: Dimensions.h40,
-                            width: Dimensions.w150,
-                            child: Center(
-                              child: Text(
-                                'OK',
-                                style:
-                                    CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }
-        }
-      }
-    });
-  }
+  Future<void> getTransactionHistory(bool view) async {
+    if (fundTransactionList.value.length == 0) {
+      isLoading.value = true;
+    } else {
+      isMoreLoading.value = true;
 
-  RxList<BankHistoryData> bankHistoryData = <BankHistoryData>[].obs;
-  RxBool isCheck = false.obs;
+      update();
+    }
 
-  void getBankHistory() async {
-    ApiService().getBankHistory().then((value) async {
-      if (value?.status ?? false) {
-        bankHistoryData.value = value?.data ?? [];
-      } else {
-        AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
-      }
-    });
-  }
-
-  void getWithdrawalTiming() async {
-    isCheck.value = true;
-    ApiService().getWithDrawalTime().then((value) async {
-      if (value?.status ?? false) {
-        getWithdrawalData.value = value!.data!;
-        isCheck.value = false;
-      } else {
-        isCheck.value = false;
-        AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
-      }
-    });
-  }
-
-  // transaction
-
-  RxList<FundTransactionList> fundTransactionList = <FundTransactionList>[].obs;
-
-  void getTransactionHistory(bool view) {
-    ApiService().getTransactionHistory().then((value) async {
+    ApiService().getTransactionHistory(10, fundTransactionList.value.length).then((value) async {
+      print("fsdkfjhsdkjfhdsj");
+      print(value);
       if (value != null) {
         if (value.status ?? false) {
-          fundTransactionList.value = value.data?.rows ?? [];
+          value.fundTransactionList?.forEach((element) {
+            fundTransactionList.value.add(element);
+          });
+          fundTransactionList.refresh();
+          update();
+          totalPage.value = value.count!;
+          isMoreLoading.value = false;
+          isLoading.value = false;
           if (view) {
             if (isCallDialog.value) {
               if (fundTransactionList[0].status == "Ok") {
@@ -324,13 +248,127 @@ class WalletController extends GetxController {
             }
           }
         } else {
+          isMoreLoading.value = false;
+          isLoading.value = false;
           AppUtils.showErrorSnackBar(bodyText: value.message ?? "");
         }
       } else {
+        isMoreLoading.value = false;
+        isLoading.value = false;
         AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
       }
     });
   }
+
+  void getUserBalance() {
+    ApiService().getBalance().then((value) async {
+      if (value['status']) {
+        if (value['data'] != null) {
+          var tempBalance = value['data']['Amount'] ?? 00;
+          walletBalance.value = tempBalance.toString();
+        }
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+      }
+    });
+  }
+
+  void getCheckBankDetails() {
+    isLoad.value = true;
+    ApiService().getWithBankDetails().then((value) async {
+      if (value['status']) {
+        if (value['data'] != null) {
+          var isDetail = value['data']['hasBankDetail'] ?? false;
+          isCheckBankDetails.value = isDetail;
+          if (isCheckBankDetails.value == true) {
+            isLoad.value = false;
+            Get.toNamed(AppRoutName.createWithDrawalPage);
+          } else {
+            isLoad.value = false;
+            Get.dialog(
+              barrierDismissible: false,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
+                child: AlertDialog(
+                  insetPadding: EdgeInsets.zero,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  content: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Please Add Bank Details",
+                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                            color: AppColors.appbarColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                            selectedIndex.value = 2;
+                          },
+                          child: Container(
+                            decoration:
+                                BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
+                            height: Dimensions.h40,
+                            width: Dimensions.w150,
+                            child: Center(
+                              child: Text(
+                                'OK',
+                                style:
+                                    CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+        }
+      }
+    });
+  }
+
+  RxList<BankHistoryData> bankHistoryData = <BankHistoryData>[].obs;
+  RxBool isCheck = false.obs;
+
+  void getBankHistory() async {
+    ApiService().getBankHistory().then((value) async {
+      if (value?.status ?? false) {
+        bankHistoryData.value = value?.data ?? [];
+      } else {
+        AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
+      }
+    });
+  }
+
+  void getWithdrawalTiming() async {
+    isCheck.value = true;
+    ApiService().getWithDrawalTime().then((value) async {
+      if (value?.status ?? false) {
+        getWithdrawalData.value = value!.data!;
+        isCheck.value = false;
+      } else {
+        isCheck.value = false;
+        AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
+      }
+    });
+  }
+
+  // transaction
+
+  RxList<FundTransactionList> fundTransactionList = <FundTransactionList>[].obs;
 
   void paymentStatus(paymentId) {
     ApiService().getPaymentStatus(paymentId).then((value) async {

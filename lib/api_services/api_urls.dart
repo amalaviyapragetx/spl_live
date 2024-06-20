@@ -2,11 +2,12 @@ class ApiUtils {
   // Spl Production
   // static String baseURL = "https://vishnulive.in:9870";
   // local url
-  // static String baseURL = "http://192.168.29.246:8080";
+  static String baseURL = "http://192.168.29.246:8080";
 
   // StagingURl
   // static String baseURL = "http://15.207.71.94:9867";
-  static String baseURL = "http://3.110.8.245:9867";
+  // static String baseURL = "http://3.110.8.245:9867";
+  // static String baseURL = "http://192.168.29.246:8080";
 
   // local url
   // static String baseURL = "http://192.168.29.201:8659";
@@ -81,7 +82,7 @@ class ApiUtils {
   static String addFund = "$baseURL/payment/process";
 
   ///
-  static String getWalletTransactionHistory = "$baseURL/payment/user";
+  static String getWalletTransactionHistory = "$baseURL/payment/getByUserId";
   static String putWalletTransactionStatus = "$baseURL/payment/ReadPaymentNotification";
   static String getAllPackages = "$baseURL/payment/getAllPackages";
   static String checkUserName = "$baseURL/user/checkUsername";
