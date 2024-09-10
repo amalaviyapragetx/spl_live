@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/screens/gamemode_pages/controller/game_pages_controller.dart';
+
+import '../../helper_files/constant_image.dart';
 
 class GameModePage extends StatelessWidget {
   GameModePage({super.key});

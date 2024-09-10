@@ -32,10 +32,7 @@ class BidHistoryList extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-                blurRadius: 1,
-                spreadRadius: 3,
-                color: AppColors.grey.withOpacity(0.2),
-                offset: const Offset(0, 1)),
+                blurRadius: 1, spreadRadius: 3, color: AppColors.grey.withOpacity(0.2), offset: const Offset(0, 1)),
           ],
         ),
         child: Row(
@@ -91,13 +88,10 @@ class BidHistoryList extends StatelessWidget {
                 SizedBox(
                   width: Dimensions.w110,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 25),
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 25),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: bidType == ""
-                              ? AppColors.white
-                              : AppColors.appbarColor.withOpacity(0.25),
+                          color: bidType == "" ? AppColors.white : AppColors.appbarColor.withOpacity(0.25),
                           borderRadius: BorderRadius.circular(25)),
                       child: Center(
                         child: Text(

@@ -56,163 +56,165 @@ class _StarlineChartState extends State<StarlineChart> {
                       ),
                     ),
                   )
-                : SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Row(
-                      children: [
-                        Obx(() => DataTable(
-                              horizontalMargin: 0,
-                              columnSpacing: 0,
-                              showBottomBorder: false,
-                              headingRowHeight: Dimensions.h30,
-                              dataRowHeight: Dimensions.h40,
-                              columns: [
-                                DataColumn(
-                                  label: SingleChildScrollView(
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    child: Container(
-                                      height: Dimensions.h30,
-                                      width: Dimensions.w100,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.appbarColor, border: Border.all(color: AppColors.white)),
-                                      child: Center(
-                                        child: Text(
-                                          'Date',
-                                          style: TextStyle(color: AppColors.white),
+                : Expanded(
+                    child: SingleChildScrollView(
+                      child: Row(
+                        children: [
+                          Obx(() => DataTable(
+                                horizontalMargin: 0,
+                                columnSpacing: 0,
+                                showBottomBorder: false,
+                                headingRowHeight: Dimensions.h30,
+                                dataRowHeight: Dimensions.h40,
+                                columns: [
+                                  DataColumn(
+                                    label: SingleChildScrollView(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      child: Container(
+                                        height: Dimensions.h30,
+                                        width: Dimensions.w100,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.appbarColor, border: Border.all(color: AppColors.white)),
+                                        child: Center(
+                                          child: Text(
+                                            'Date',
+                                            style: TextStyle(color: AppColors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                              rows: List<DataRow>.generate(
-                                starlineCon.starlineChartDateAndTime.length,
-                                // 10,
-                                (index) {
-                                  return DataRow(
-                                    cells: [
-                                      DataCell(
-                                        Center(
-                                          child: Text(
-                                            starlineCon.starlineChartDateAndTime[index].date ?? "",
-                                            //"2023-08-13",
-                                            textAlign: TextAlign.center,
-                                            style: CustomTextStyle.textRobotoMedium.copyWith(
-                                              fontSize: 15.0,
+                                ],
+                                rows: List<DataRow>.generate(
+                                  starlineCon.starlineChartDateAndTime.length,
+                                  // 10,
+                                  (index) {
+                                    return DataRow(
+                                      cells: [
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              starlineCon.starlineChartDateAndTime[index].date ?? "",
+                                              //"2023-08-13",
+                                              textAlign: TextAlign.center,
+                                              style: CustomTextStyle.textRobotoMedium.copyWith(
+                                                fontSize: 15.0,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            )),
-                        Expanded(
-                            child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Obx(
-                            () => DataTable(
-                              headingRowHeight: Dimensions.h30,
-                              dataRowHeight: Dimensions.h40,
-                              horizontalMargin: 0,
-                              headingRowColor: MaterialStateColor.resolveWith(
-                                (states) => Colors.white,
-                              ),
-                              rows: List<DataRow>.generate(
-                                starlineCon.starlineChartDateAndTime.length,
-                                (i) {
-                                  return DataRow(
-                                      color: MaterialStateColor.resolveWith(
-                                        (states) => Colors.white,
-                                      ),
-                                      cells: List<DataCell>.generate(
-                                        starlineCon.starlineChartTime.length,
-                                        //13,
-                                        (j) {
-                                          final time = starlineCon.starlineChartTime[j];
-                                          final timeData = starlineCon.starlineChartDateAndTime[i].time?.firstWhere(
-                                            (item) => item.marketName == time.marketName,
-                                            orElse: () => Time(),
-                                          );
-                                          return DataCell(
-                                            Container(
-                                              height: Dimensions.h40,
-                                              width: Dimensions.w100,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(color: AppColors.grey.withOpacity(0.2)),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(3.0),
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    SizedBox(
-                                                      height: Dimensions.h13,
-                                                      child: FittedBox(
-                                                        fit: BoxFit.fitHeight,
+                                      ],
+                                    );
+                                  },
+                                ),
+                              )),
+                          Expanded(
+                              child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Obx(
+                              () => DataTable(
+                                headingRowHeight: Dimensions.h30,
+                                dataRowHeight: Dimensions.h40,
+                                horizontalMargin: 0,
+                                headingRowColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.white,
+                                ),
+                                rows: List<DataRow>.generate(
+                                  starlineCon.starlineChartDateAndTime.length,
+                                  (i) {
+                                    return DataRow(
+                                        color: MaterialStateColor.resolveWith(
+                                          (states) => Colors.white,
+                                        ),
+                                        cells: List<DataCell>.generate(
+                                          starlineCon.starlineChartTime.length,
+                                          //13,
+                                          (j) {
+                                            final time = starlineCon.starlineChartTime[j];
+                                            final timeData = starlineCon.starlineChartDateAndTime[i].time?.firstWhere(
+                                              (item) => item.marketName == time.marketName,
+                                              orElse: () => Time(),
+                                            );
+                                            return DataCell(
+                                              Container(
+                                                height: Dimensions.h40,
+                                                width: Dimensions.w100,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(color: AppColors.grey.withOpacity(0.2)),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(3.0),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      SizedBox(
+                                                        height: Dimensions.h13,
+                                                        child: FittedBox(
+                                                          fit: BoxFit.fitHeight,
+                                                          child: Text(
+                                                            timeData!.result != null
+                                                                ? getResult2(true, timeData.result)
+                                                                : "***",
+                                                            textAlign: TextAlign.center,
+                                                            style: CustomTextStyle.textRobotoSansMedium,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      timeData.result != null
+                                                          ? SizedBox(
+                                                              height: Dimensions.h2,
+                                                            )
+                                                          : const SizedBox(),
+                                                      Expanded(
                                                         child: Text(
-                                                          timeData!.result != null
-                                                              ? getResult2(true, timeData.result)
-                                                              : "***",
+                                                          timeData.result != null
+                                                              ? getResult3(true, timeData.result)
+                                                              : "*",
                                                           textAlign: TextAlign.center,
-                                                          style: CustomTextStyle.textRobotoSansMedium,
+                                                          style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                                            fontSize: Dimensions.h14,
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                    timeData.result != null
-                                                        ? SizedBox(
-                                                            height: Dimensions.h2,
-                                                          )
-                                                        : const SizedBox(),
-                                                    Expanded(
-                                                      child: Text(
-                                                        timeData.result != null
-                                                            ? getResult3(true, timeData.result)
-                                                            : "*",
-                                                        textAlign: TextAlign.center,
-                                                        style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                                                          fontSize: Dimensions.h14,
-                                                          fontWeight: FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      ));
-                                },
-                              ),
-                              columnSpacing: 0,
-                              columns: List<DataColumn>.generate(
-                                starlineCon.starlineChartTime.length,
-                                //10,
-                                (index) {
-                                  return DataColumn(
-                                    label: Container(
-                                      height: Dimensions.h30,
-                                      width: Dimensions.w100,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.appbarColor, border: Border.all(color: AppColors.white)),
-                                      child: Center(
-                                        child: Text(
-                                          starlineCon.starlineChartTime[index].marketName ?? "",
-                                          // "11:00 AM",
-                                          textAlign: TextAlign.center,
-                                          style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white),
+                                            );
+                                          },
+                                        ));
+                                  },
+                                ),
+                                columnSpacing: 0,
+                                columns: List<DataColumn>.generate(
+                                  starlineCon.starlineChartTime.length,
+                                  //10,
+                                  (index) {
+                                    return DataColumn(
+                                      label: Container(
+                                        height: Dimensions.h30,
+                                        width: Dimensions.w100,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.appbarColor, border: Border.all(color: AppColors.white)),
+                                        child: Center(
+                                          child: Text(
+                                            starlineCon.starlineChartTime[index].marketName ?? "",
+                                            // "11:00 AM",
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.white),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ))
-                      ],
+                          ))
+                        ],
+                      ),
                     ),
                   ),
           ),

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/controller/starline_market_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+
+import '../../../../components/common_appbar.dart';
 
 class StarlineResultHistory extends StatefulWidget {
   const StarlineResultHistory({super.key});
@@ -21,6 +22,7 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
 
   @override
   void initState() {
+    starlineCon.dateResultHistory.text = DateFormat('dd-MM-yyyy').format(DateTime.now());
     starlineCon.getResultHistory(DateFormat('yyyy-MM-dd').format(DateTime.now()));
     super.initState();
   }
@@ -187,23 +189,23 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
 
   clockIcon(time) {
     switch (time) {
-      case "1":
+      case "01":
         return ConstantImage.stopWatch_1;
-      case "2":
+      case "02":
         return ConstantImage.stopWatch_2;
-      case "3":
+      case "03":
         return ConstantImage.stopWatch_3;
-      case "4":
+      case "04":
         return ConstantImage.stopWatch_4;
-      case "5":
+      case "05":
         return ConstantImage.stopWatch_5;
-      case "6":
+      case "06":
         return ConstantImage.stopWatch_6;
-      case "7":
+      case "07":
         return ConstantImage.stopWatch_7;
-      case "8":
+      case "08":
         return ConstantImage.stopWatch_8;
-      case "9":
+      case "09":
         return ConstantImage.stopWatch_9;
       case "10":
         return ConstantImage.stopWatch_10;

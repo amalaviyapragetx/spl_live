@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/controller/starline_market_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
+
+import '../../../../components/common_appbar.dart';
 
 class MarketHistory extends StatefulWidget {
   const MarketHistory({super.key});
@@ -21,6 +22,11 @@ class _MarketHistoryState extends State<MarketHistory> {
 
   @override
   void initState() {
+    print("fsdkjfhsdkjfhdk");
+    controller.starlineMarketDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    controller.dateInputForResultHistory.text = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+    controller.update();
     controller.getDailyMarketsResults();
   }
 

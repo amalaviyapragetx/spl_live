@@ -139,7 +139,7 @@ class StarlineMarketController extends GetxController {
     // callFcmApi(userData.id);
   }
 
-  void getMarketBidsByUserId() {
+  Future<void> getMarketBidsByUserId() async {
     isStarlineBidHistory.value == true;
     ApiService()
         .getStarBidHistoryByUserId(
@@ -220,7 +220,28 @@ class StarlineMarketController extends GetxController {
       ApiService().getStarlineBanner().then((value) async {
         if (value['status']) {
           bannerLoad.value = false;
-          bannerImage.value = value['data'][0]['Banner'];
+          var bannerlist = await (value['data'] as List)
+              .where(
+                (element) => element["Key"] == "starlinePageBanner" && element["IsActive"] == true,
+              )
+              .toList();
+
+          print("fdskfhgsdjkfhsdks");
+          print(bannerlist);
+          if ((bannerlist as List).isNotEmpty) {
+            bannerImage.value = bannerlist[0]['Banner'];
+          } else {
+            bannerImage.value = "";
+          }
+          // for (var i in (value['data'] as List)) {
+          //   print(i);
+          //   print("fsdkfjhsdfkjhjk");
+          //   if (i["Key"] == "starlinePageBanner" && i["IsActive"] == true) {
+          //     bannerImage.value = i['Banner'];
+          //     break;
+          //   }
+          // }
+
           // "Banner" -> "https://vishnulive.in:9870/public/banner/Test-1.png"
         } else {
           bannerLoad.value = false;

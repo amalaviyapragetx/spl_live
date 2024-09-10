@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/bidlist_for_market.dart';
-import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/screens/New%20GameModes/controller/new_gamemode_page_controller.dart';
 
@@ -12,6 +11,7 @@ import '../../components/auto_complete_text_field_with_suggestion.dart';
 import '../../components/edit_text_field_with_icon.dart';
 import '../../components/simple_button_with_corner.dart';
 import '../../helper_files/app_colors.dart';
+import '../../helper_files/constant_image.dart';
 import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
 import '../../routes/app_routes_name.dart';

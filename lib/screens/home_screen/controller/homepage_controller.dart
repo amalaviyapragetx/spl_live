@@ -834,11 +834,11 @@ class HomePageController extends GetxController {
     });
   }
 
-  void getMarketBidsByUserId({
+  Future<void> getMarketBidsByUserId({
     required bool lazyLoad,
     required String startDate,
     required String endDate,
-  }) {
+  }) async {
     ApiService()
         .getBidHistoryByUserId(
       userId: userData.id.toString(),

@@ -22,7 +22,7 @@ class SignUpPageController extends GetxController {
   void callSignUpApi() async {
     ApiService().signUpAPI(await signUpBody()).then((value) async {
       if (value['data'] != null && value['status']) {
-        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        // AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         Get.toNamed(AppRoutName.verifyOTPPage, arguments: {
           "countryCode": countryCode.value,
           "phoneNumber": mobileNumberController.text,

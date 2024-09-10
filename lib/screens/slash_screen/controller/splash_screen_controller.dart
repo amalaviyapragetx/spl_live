@@ -126,6 +126,8 @@ class SplashController extends GetxController {
   }
 
   Future<void> checkLogin() async {
+    print(GetStorage().read(ConstantsVariables.authToken));
+    print("Fsdljkfhsdfsdjflk");
     bool alreadyLoggedIn = await getStoredUserData();
     bool isActive = GetStorage().read(ConstantsVariables.isActive) ?? false;
     bool isVerified = GetStorage().read(ConstantsVariables.isVerified) ?? false;

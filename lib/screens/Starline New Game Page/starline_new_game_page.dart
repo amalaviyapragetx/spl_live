@@ -780,7 +780,6 @@ class StarLineNewGamePage extends StatelessWidget {
     return Obx(
       () => Container(
         width: size.width,
-
         color: AppColors.appbarColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

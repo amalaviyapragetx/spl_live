@@ -86,19 +86,17 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                       //                               :
                       Obx(() => starlineCon.bannerLoad.value
                               ? Center(child: CircularProgressIndicator(color: AppColors.appbarColor))
-                              : AspectRatio(
-                                  aspectRatio: 15 / 4,
-                                  child: Container(
-                                    width: double.infinity,
-                                    child: Image(
-                                      image: NetworkImage(starlineCon.bannerImage.value),
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) => Center(
-                                        child: Icon(
-                                          Icons.error_outline,
-                                          color: AppColors.appbarColor,
-                                          size: 35,
-                                        ),
+                              : Container(
+                                  width: double.infinity,
+                                  height: 120,
+                                  child: Image(
+                                    image: NetworkImage(starlineCon.bannerImage.value),
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) => Center(
+                                      child: Icon(
+                                        Icons.error_outline,
+                                        color: AppColors.appbarColor,
+                                        size: 35,
                                       ),
                                     ),
                                   ),
@@ -129,11 +127,11 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                           //   ),
                           ),
                       const SizedBox(height: 10),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: Column(
-                          children: [
-                            Row(
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Row(
                               children: starlineCon.starlineButtonList.map((e) {
                                 print("hhhh ${e.isSelected.value}");
                                 return Expanded(
@@ -207,19 +205,28 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                                 );
                               }).toList(),
                             ),
-                            Obx(
-                              () => GridView.builder(
-                                padding: EdgeInsets.all(Dimensions.h5),
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: Get.width / 2,
-                                    mainAxisExtent: Get.width / 2.5,
-                                    crossAxisSpacing: 7,
-                                    mainAxisSpacing: Dimensions.h10),
-                                itemCount: starlineCon.starLineMarketList.length ?? 0,
-                                itemBuilder: (context, i) {
-                                  return InkWell(
+                          ),
+                          Obx(
+                            () => GridView.builder(
+                              padding: EdgeInsets.all(Dimensions.h5),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: Get.width / 2,
+                                mainAxisExtent: Get.width / 2.5,
+                                crossAxisSpacing: 0,
+                                mainAxisSpacing: 10,
+                              ),
+                              // gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              //     maxCrossAxisExtent: Get.width / 2,
+                              //     mainAxisExtent: Get.width / 2.5,
+                              //     crossAxisSpacing: 7,
+                              //     mainAxisSpacing: Dimensions.h10),
+                              itemCount: starlineCon.starLineMarketList.length ?? 0,
+                              itemBuilder: (context, i) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: Dimensions.h5),
+                                  child: InkWell(
                                     onTap: () {
                                       if (starlineCon.starLineMarketList[i].isBidOpen ?? false) {
                                         if (starlineCon.starLineMarketList[i].isBidOpen ?? false) {
@@ -318,12 +325,12 @@ class _StarlineDailyMarketDataState extends State<StarlineDailyMarketData> {
                                         ],
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
+                                  ),
+                                );
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -33,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    print(GetStorage().read(ConstantsVariables.authToken));
+    print("Fsdljkfhsdfsdjflk");
     GetStorage().write(ConstantsVariables.timeOut, true);
     walletCon.getUserBalance();
     homeCon.getBannerData();
@@ -43,6 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("fdsfdsjfhkfkjsdhjk");
+    print(homeCon.notificationData.length);
     return RefreshIndicator(
       onRefresh: () async {
         homeCon.getBannerData();
@@ -169,7 +173,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Obx(
                     () => homeCon.bannerData.isNotEmpty
                         ? CarouselSlider(
-                            items: homeCon.bannerData.map((element) {
+                            items: homeCon.bannerData
+                                .where((p0) => p0.isActive! && p0.key != "starlinePageBanner")
+                                .map((element) {
                               return Builder(
                                 builder: (context) {
                                   return Padding(
@@ -285,69 +291,143 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Obx(
-              () => homeCon.getNotificationCount.value > 0
-                  ? Stack(
-                      children: [
-                        Material(
-                          color: AppColors.black.withOpacity(0.4),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: Dimensions.h95, bottom: 60.0),
-                            child: Container(
-                              color: AppColors.white,
-                              width: double.infinity,
-                              child: Obx(
-                                () => ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount: homeCon.notificationData.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
+
+            Obx(() {
+              return homeCon.getNotificationCount.value > 0
+                  ? Container(
+                      height: Get.height,
+                      width: Get.width,
+                      color: AppColors.black.withOpacity(0.4),
+                      padding: EdgeInsets.only(left: 20.0, right: 10.0, top: 85, bottom: 60.0),
+                      child: Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 10, right: 10),
+                            color: Colors.white,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  for (var index = 0; index < homeCon.notificationData.length; index++)
+                                    Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: notificationWidget(
                                         notificationHeader: homeCon.notificationData[index].title ?? "",
                                         notificationSubTitle: homeCon.notificationData[index].description ?? "",
+                                        image: homeCon.notificationData[index].notification,
                                       ),
-                                    );
-                                  },
-                                ),
+                                    )
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                        Material(
-                          color: AppColors.transparent,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: Dimensions.h87, bottom: 8.0),
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: InkWell(
-                                onTap: () {
-                                  homeCon.resetNotificationCount();
-                                  homeCon.getNotificationCount.refresh();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius: BorderRadius.circular(Dimensions.r10),
-                                  ),
-                                  child: Icon(Icons.close, color: AppColors.redColor),
+                          Positioned(
+                            right: 5,
+                            top: 0,
+                            child: InkWell(
+                              onTap: () {
+                                homeCon.resetNotificationCount();
+                                homeCon.getNotificationCount.refresh();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(Dimensions.r10),
                                 ),
+                                child: Icon(Icons.close, color: AppColors.redColor),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
-                  : Container(),
-            )
+                  : Container();
+            })
+            // Obx(
+            //   () =>
+            /*homeCon.getNotificationCount.value > 0
+                  ?*/
+            // Stack(
+            //   children: [
+            //     Container(
+            //       width: Get.width,
+            //       height: Get.height,
+            //       color: AppColors.black.withOpacity(0.4),
+            //     ),
+            //     Padding(
+            //       padding: EdgeInsets.only(left: 20.0, right: 20.0, top: Dimensions.h95, bottom: 60.0),
+            //       child: Container(
+            //         color: AppColors.white,
+            //         width: Get.width,
+            //         child: Obx(
+            //           () => SingleChildScrollView(
+            //             child: Column(
+            //               children: [
+            //                 for (var index = 0; index < homeCon.notificationData.length; index++)
+            //                   Padding(
+            //                     padding: const EdgeInsets.all(5.0),
+            //                     child: notificationWidget(
+            //                       notificationHeader: homeCon.notificationData[index].title ?? "",
+            //                       notificationSubTitle: homeCon.notificationData[index].description ?? "",
+            //                     ),
+            //                   )
+            //                 // ListView.builder(
+            //                 //   padding: EdgeInsets.zero,
+            //                 //   shrinkWrap: true,
+            //                 //   itemCount: homeCon.notificationData.length,
+            //                 //   physics: NeverScrollableScrollPhysics(),
+            //                 //   itemBuilder: (context, index) {
+            //                 //     return Padding(
+            //                 //       padding: const EdgeInsets.all(5.0),
+            //                 //       child: notificationWidget(
+            //                 //         notificationHeader: homeCon.notificationData[index].title ?? "",
+            //                 //         notificationSubTitle: homeCon.notificationData[index].description ?? "",
+            //                 //       ),
+            //                 //     );
+            //                 //   },
+            //                 // ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     Material(
+            //       color: AppColors.transparent,
+            //       child: Padding(
+            //         padding: EdgeInsets.only(
+            //           top: Dimensions.h87,
+            //           bottom: 8.0,
+            //           right: 10.0,
+            //         ),
+            //         child: Align(
+            //           alignment: Alignment.topRight,
+            //           child: InkWell(
+            //             onTap: () {
+            //               homeCon.resetNotificationCount();
+            //               homeCon.getNotificationCount.refresh();
+            //             },
+            //             child: Container(
+            //               decoration: BoxDecoration(
+            //                 color: AppColors.white,
+            //                 borderRadius: BorderRadius.circular(Dimensions.r10),
+            //               ),
+            //               child: Icon(Icons.close, color: AppColors.redColor),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // : Container(),
+            // )
           ],
         ),
       ),
     );
   }
 
-  Widget notificationWidget({String? notificationHeader, String? notificationSubTitle}) {
+  Widget notificationWidget({String? notificationHeader, String? notificationSubTitle, String? image}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
       child: Container(
@@ -410,6 +490,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: Dimensions.h5),
+                  Visibility(
+                    visible: image != null,
+                    child: Container(
+                      // width: double.infinity,
+                      // height: 120,
+                      child: Image(
+                        image: NetworkImage(image ?? ""),
+                        // fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Center(
+                          child: Icon(
+                            Icons.error_outline,
+                            color: AppColors.appbarColor,
+                            size: 35,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Visibility(visible: image != null, child: SizedBox(height: Dimensions.h5)),
                   Text(
                     "Regards",
                     textAlign: TextAlign.start,

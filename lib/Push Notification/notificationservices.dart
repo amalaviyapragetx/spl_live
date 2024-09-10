@@ -105,8 +105,8 @@ class NotificationServices {
     print(message.notification?.body);
     print("fksdjfhsd");
 
-    _flutterLocalNotificationsPlugin.show(1, "${message.notification?.title.toString()}",
-        message.notification?.body.toString() ?? "", notificationDetails);
+    _flutterLocalNotificationsPlugin.show(
+        1, "${message.notification?.title ?? ""}", message.notification?.body ?? "", notificationDetails);
   }
 
   Future<String> getDeviceToken() async {

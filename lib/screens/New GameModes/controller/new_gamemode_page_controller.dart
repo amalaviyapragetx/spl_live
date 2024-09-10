@@ -199,6 +199,8 @@ class NewGamemodePageController extends GetxController {
         showNumbersLine.value = false;
         // _tempValidationList = jsonModel.triplePana!;
         // suggestionList.value = jsonModel.triplePana!;
+        print(jsonModel.spdptpChart!);
+        print("fsdfhdfkhsdlskdjflksflk");
         spdptplistFromModel = jsonModel.spdptpChart!;
         for (var e in spdptpList) {
           tempValidationList = e;
@@ -293,8 +295,15 @@ class NewGamemodePageController extends GetxController {
   }
 
   List<String> getSPDPTPPana(int singleAnk) {
+    print("fksfghsdkjhfksfksfk");
+    print(singleAnk);
     List<String> pana = [];
+    print(digitsForSPDPTP);
+    print("fslfslfkdjslksdflsd");
+
     var result = spdptplistFromModel![digitsForSPDPTP[singleAnk]];
+    print(result);
+    print("kjfdhskfjsdhfkjsdhf");
     for (int i = 0; i < selectedValues.length; i++) {
       List<String> data = result[selectedValues[i]];
       for (int j = 0; j < data.length; j++) {
@@ -636,6 +645,8 @@ class NewGamemodePageController extends GetxController {
   }
 
   gmaemodeNames() {
+    print(gameMode.value.name!);
+    print("fskjfhsdkjfhsdk");
     switch (gameMode.value.name!) {
       case "SP Motor":
         return getSPMotorPana(int.parse(autoCompleteFieldController.text));
@@ -673,17 +684,23 @@ class NewGamemodePageController extends GetxController {
           );
         } else {
           spdptpList = gmaemodeNames();
-
+          print("Fslksjdflksdjflksdf");
+          print(spdptpList);
+          print(selectedBidsList);
           if (spdptpList.isNotEmpty) {
             for (var i = 0; i < spdptpList.length; i++) {
               addedNormalBidValue = spdptpList[i].toString();
               var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
+              print("Fdsfkljsdlfkjfkld");
+              print(existingIndex);
               if (existingIndex != -1) {
                 selectedBidsList[existingIndex].coins =
                     (selectedBidsList[existingIndex].coins! + int.parse(coinController.text));
                 digitList.clear();
                 coinController.clear();
               } else {
+                print("gdfkjjghjkhdfelse");
+                print(existingIndex);
                 selectedBidsList.insert(
                   0,
                   Bids(
@@ -697,6 +714,9 @@ class NewGamemodePageController extends GetxController {
                 );
               }
             }
+            print("fgdiguhdfgkldfgj");
+
+            print(selectedBidsList[0].bidNo);
             _calculateTotalAmount();
           } else {
             AppUtils.showErrorSnackBar(

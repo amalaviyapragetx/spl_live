@@ -202,6 +202,7 @@ class AppUtils {
 
 //common method for showing progress dialog
   static void showProgressDialog({isCancellable = false}) async {
+    print("jhgkjfhskfsfksdd");
     if (!isProgressVisible && !Get.isSnackbarOpen) {
       Get.dialog(
         Center(

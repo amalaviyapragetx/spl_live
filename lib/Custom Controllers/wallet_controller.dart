@@ -79,6 +79,7 @@ class WalletController extends GetxController {
   Future<void> getTransactionHistory(bool view) async {
     if (fundTransactionList.value.length == 0) {
       isLoading.value = true;
+      update();
     } else {
       isMoreLoading.value = true;
 

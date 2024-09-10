@@ -339,7 +339,7 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<dynamic> getDailyStarLineMarkets({required String startDate, required String endDate}) async {
     Future.delayed(const Duration(milliseconds: 2), () {
-      AppUtils.showProgressDialog(isCancellable: false);
+      // AppUtils.showProgressDialog(isCancellable: false);
     });
 
     await initApiService();
@@ -388,7 +388,7 @@ class ApiService extends GetConnect implements GetxService {
     required String? startDate,
   }) async {
     Future.delayed(const Duration(milliseconds: 2), () {
-      AppUtils.showProgressDialog(isCancellable: false);
+      // AppUtils.showProgressDialog(isCancellable: false);
     });
 
     await initApiService();
@@ -1051,8 +1051,10 @@ class ApiService extends GetConnect implements GetxService {
   Future<dynamic> bidHistoryByUserId(
       {String? userId, String? gameType, String? winningStatus, List<int>? markets, String? date}) async {
     try {
-      AppUtils.showProgressDialog(isCancellable: false);
+      // AppUtils.showProgressDialog(isCancellable: false);
       await initApiService();
+      print("fsdjfhdgsk");
+      print(headersWithToken);
       final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
         ApiUtils.bidHistory,
         headers: headersWithToken,

@@ -2,12 +2,12 @@ class ApiUtils {
   // Spl Production
   // static String baseURL = "https://vishnulive.in:9870";
   // local url
-  static String baseURL = "http://192.168.29.246:8080";
+  static String baseURL = "http://192.168.29.49:8080";
 
   // StagingURl
   // static String baseURL = "http://15.207.71.94:9867";
   // static String baseURL = "http://3.110.8.245:9867";
-  // static String baseURL = "http://192.168.29.246:8080";
+  // static String baseURL = "http://192.168.29.49:8080";
 
   // local url
   // static String baseURL = "http://192.168.29.201:8659";
@@ -87,6 +87,8 @@ class ApiUtils {
   static String getAllPackages = "$baseURL/payment/getAllPackages";
   static String checkUserName = "$baseURL/user/checkUsername";
   static String getApk = "$baseURL/public/apk/spl_live.apk";
+  // static String getApk =
+  //     "https://fs4.fastupload.io/39f07e1a206e3740/app-release.apk?download_token=a904bf4dc9b637464da1d021b9a9f3d7d24c07827ecff34bccf86740fba2746d";
   static String getTickets = "$baseURL/wallet/addFund";
   static String getBankHistory = "$baseURL/bank/userBankHistory";
   static String getWithdrawal = "$baseURL/withdraw/dailyWithdrawalInfo";

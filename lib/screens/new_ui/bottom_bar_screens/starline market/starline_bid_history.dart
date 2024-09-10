@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/controller/starline_market_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/common_utils.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/helper_files/ui_utils.dart';
+
+import '../../../../components/common_appbar.dart';
+import '../../../../helper_files/ui_utils.dart';
 
 class StarlineBidHistory extends StatefulWidget {
   const StarlineBidHistory({super.key});
@@ -24,6 +25,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
   @override
   void initState() {
     super.initState();
+    print("fsdjfgsdkjfhsdkf");
     starlineCon.getMarketBidsByUserId();
     starlineCon.getDailyStarLineMarkets();
   }

@@ -52,6 +52,7 @@ class HomeController extends GetxController {
   resetAllBidHistoryData() {
     print("sjdsdjds");
     Get.back();
+    date = null;
     selectedFilterMarketList.value = [];
     filterMarketList.forEach((e) => e.isSelected.value = false);
     isSelectedWinStatusIndex.value = null;
@@ -158,6 +159,8 @@ class HomeController extends GetxController {
   RxBool isBidHistory = false.obs;
 
   void bidsHistoryByUserId() async {
+    print(isSelectedGameIndex.value);
+    print("Fdskfjhsfksdfdklh");
     UserDetailsModel userData = UserDetailsModel.fromJson(GetStorage().read(ConstantsVariables.userData));
     isBidHistory.value = true;
     ApiService()
@@ -195,7 +198,12 @@ class HomeController extends GetxController {
     ApiService().getAllNotifications().then((value) async {
       if (value['status']) {
         GetAllNotificationsData model = GetAllNotificationsData.fromJson(value);
+
         notificationData.value = model.data!.rows as List<NotificationData>;
+
+        // for (var i = 0; i < 10; i++) {
+        //   notificationData.value.addAll(model.data!.rows as List<NotificationData>);
+        // }
         if (model.message!.isNotEmpty) {
           // AppUtils.showSuccessSnackBar(
           //     bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
@@ -223,6 +231,8 @@ class HomeController extends GetxController {
     ApiService().getNotificationCount().then((value) async {
       if (value['status']) {
         NotifiactionCountModel model = NotifiactionCountModel.fromJson(value);
+        print(model.data!.notificationCount);
+        print("Fsdmfgsdfsghjkhj");
         getNotificationCount.value = model.data!.notificationCount == null ? 0 : model.data!.notificationCount!.toInt();
         if (model.message!.isNotEmpty) {
           AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);

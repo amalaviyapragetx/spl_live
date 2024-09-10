@@ -81,7 +81,7 @@ class VerifyOTPController extends GetxController {
   void callVerifyOTPApi() async {
     ApiService().verifyOTP({"otp": otp.value}).then((value) async {
       if (value['status']) {
-        AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
+        // AppUtils.showSuccessSnackBar(bodyText: value['message'] ?? "", headerText: "SUCCESSMESSAGE".tr);
         var userData = value['data'];
         String authToken = userData['Token'] ?? "Null From API";
         GetStorage().write(ConstantsVariables.authToken, authToken);
