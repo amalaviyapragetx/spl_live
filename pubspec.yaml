@@ -1,0 +1,97 @@
+name: spl_new
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 2.0.1+1
+
+environment:
+  sdk: ^3.5.3
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+  cupertino_icons: ^1.0.8
+  flutter_screenutil: ^5.7.0
+  get: ^4.6.6
+  http: ^1.2.2
+  get_storage: ^2.1.1
+  carousel_slider: ^5.0.0
+  connectivity_plus: ^4.0.1
+  flutter_svg: ^2.0.14
+#  pin_code_fields: ^8.0.1
+  device_info_plus: ^11.1.1
+  package_info_plus: ^8.1.1
+  intl: ^0.18.1
+  cached_network_image: ^3.4.1
+  flutter_rating_bar: ^4.0.1
+  url_launcher: ^6.3.1
+  share_plus: ^10.1.1
+  image_picker: ^1.1.2
+  flutter_pin_code_fields: ^2.2.0
+  flutter_local_notifications: ^18.0.1
+  firebase_messaging: ^15.1.5
+  firebase_core: ^3.8.0
+  #  geolocator: ^10.0.1
+  #  geocoding: ^2.1.0
+  #  flutter_jailbreak_detection: ^1.10.0
+  #  unique_identifier: ^0.3.0
+#  in_app_update: ^4.2.3
+#  upgrader: ^11.3.0
+  ota_update: ^6.0.0
+#  flutter_jailbreak_detection: ^1.10.0
+  permission_handler: ^11.3.1
+#  colorful_safe_area: ^1.0.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+
+flutter:
+
+
+  uses-material-design: true
+
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/JSON File/
+
+
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/roboto_slab/RobotoSlab-Bold.ttf
+        - asset: assets/fonts/roboto_slab/RobotoSlab-Medium.ttf
+        - asset: assets/fonts/roboto_slab/RobotoSlab-Regular.ttf
+    - family: PTsans
+      fonts:
+        - asset: assets/fonts/pt_sans/PTSans-Bold.ttf
+        - asset: assets/fonts/pt_sans/PTSans-Regular.ttf
+    - family: RobotoSans
+      fonts:
+        - asset: assets/fonts/roboto_sans/Roboto-Bold.ttf
+        - asset: assets/fonts/roboto_sans/Roboto-Medium.ttf
+        - asset: assets/fonts/roboto_sans/Roboto-Regular.ttf
+    - family: Allerta
+      fonts:
+        - asset: assets/fonts/Allerta/Allerta-Regular.ttf
+    - family: Rambla
+      fonts:
+        - asset: assets/fonts/rambla/Rambla-Bold.ttf
+    - family: Gotham
+      fonts:
+        - asset: assets/fonts/Gotham/GothamBold.ttf
+        - asset: assets/fonts/Gotham/GothamMedium.ttf
+        - asset: assets/fonts/Gotham/GothamLight.ttf
