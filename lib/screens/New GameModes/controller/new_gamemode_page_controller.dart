@@ -356,13 +356,18 @@ class NewGamemodePageController extends GetxController {
     } else {
       singleAnk = newResult;
     }
-
+    print("fksdjfhdsk");
+    print(singleAnk);
     return singleAnk;
   }
 
   List<String> getPanelGroupPana(int pana) {
     List<String> bids = [];
     String? digit = digitsPanel[int.parse(getSingleDigit(pana))];
+    print(digit);
+    print(pana);
+    print("fdkfhsdfkjsdkl");
+    print(panelGroupChart);
     List<List<String>>? values = panelGroupChart[digit];
     if (values != null) {
       for (int i = 0; i < values.length; i++) {
@@ -425,7 +430,7 @@ class NewGamemodePageController extends GetxController {
   void onTapOfAddButton() {
     // FocusManager.instance.primaryFocus?.unfocus();
     isBulkMode.value = false;
-
+    print("fsdfhdgsfjhsksfd");
     if (!isBulkMode.value) {
       if (_validationListForNormalMode.contains(addedNormalBidValue) == false) {
         AppUtils.showErrorSnackBar(
@@ -448,8 +453,10 @@ class NewGamemodePageController extends GetxController {
           bodyText: "You can not add more than 10000 points",
         );
       } else {
+        print("Fdfjhsdgfkj");
         if (spdptpList.isEmpty) {
           var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);
+          print(existingIndex);
           if (existingIndex != -1) {
             // If the bidNo already exists in selectedBidsList, update coins value.
             selectedBidsList[existingIndex].coins =
@@ -581,6 +588,8 @@ class NewGamemodePageController extends GetxController {
   }
 
   void createMarketBidApi() async {
+    print(requestModel.toJson());
+    print("fdsjfgsdjkfkjhfj");
     ApiService().createMarketBid(requestModel.toJson()).then(
       (value) async {
         if (value['status']) {
@@ -748,6 +757,10 @@ class NewGamemodePageController extends GetxController {
           );
           focusNode.previousFocus();
         } else {
+          print("jgdhfgkhdf");
+          print(selectedBidsList);
+          print(spdptpList);
+
           for (var i = 0; i < spdptpList.length; i++) {
             addedNormalBidValue = spdptpList[i].toString();
             var existingIndex = selectedBidsList.indexWhere((element) => element.bidNo == addedNormalBidValue);

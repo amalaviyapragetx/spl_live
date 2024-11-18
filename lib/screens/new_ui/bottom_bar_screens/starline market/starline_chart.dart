@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spllive/components/common_appbar.dart';
 import 'package:spllive/controller/starline_market_controller.dart';
-import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/models/starlinechar_model/new_starlinechart_model.dart';
+
+import '../../../../helper_files/app_colors.dart';
+import '../../../../helper_files/custom_text_style.dart';
+import '../../../../models/starlinechar_model/new_starlinechart_model.dart';
 
 class StarlineChart extends StatefulWidget {
   const StarlineChart({super.key});

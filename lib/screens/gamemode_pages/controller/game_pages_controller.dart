@@ -260,6 +260,7 @@ class GameModePagesController extends GetxController {
       });
     } else {
       print("nkjcnxcnxkjn");
+      print(selectedBidsList);
       Future.delayed(
         Duration(milliseconds: 200),
         () => Get.toNamed(AppRoutName.newGameModePage, arguments: {

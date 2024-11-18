@@ -32,7 +32,7 @@ class SignInPageController extends GetxController {
     ApiService().signInAPI({
       "phoneNumber": mobileNumberController.text,
       "password": passwordController.text,
-      "countryCode": "+92",
+      "countryCode": "+91",
       "deviceId": DeviceInfo.deviceId,
     }).then((value) async {
       if (value['status']) {

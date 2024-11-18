@@ -37,6 +37,8 @@ class _NewGameModePageState extends State<NewGameModePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print("fsdfjkdhsfkjd");
+    print(controller.selectedBidsList);
     return PopScope(
       canPop: false,
       onPopInvoked: (value) async {
@@ -338,6 +340,8 @@ class _NewGameModePageState extends State<NewGameModePage> {
                   onTap: () {
                     // controller.coinsFocusNode.unfocus();
                     // controller.openFocusNode.requestFocus();
+                    print(controller.gameMode.value.name);
+                    print("Fsfkjdhsfkjh");
                     if ((controller.gameMode.value.name ?? "").toUpperCase() == "SPDPTP") {
                       if (controller.autoCompleteFieldController.text.isEmpty) {
                         AppUtils.showErrorSnackBar(
@@ -366,6 +370,8 @@ class _NewGameModePageState extends State<NewGameModePage> {
                           bodyText: "Please enter valid ${controller.gameMode.value.name!.toLowerCase()}",
                         );
                       } else {
+                        print("gkdfhgdkf");
+                        print(controller.selectedBidsList);
                         controller.pennleDataOnTapSave();
                       }
                     } else if ((controller.gameMode.value.name ?? "").toUpperCase() == "GROUP JODI") {
@@ -473,6 +479,8 @@ class _NewGameModePageState extends State<NewGameModePage> {
   }
 
   Widget bidList(Size size) {
+    print("Fsdfldjkfkj");
+    print(controller.selectedBidsList);
     return Obx(
       () => controller.selectedBidsList.isEmpty
           ? Container()

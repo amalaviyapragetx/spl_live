@@ -88,6 +88,7 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
                         shrinkWrap: true,
                         itemCount: starlineCon.marketListForResult.length,
                         itemBuilder: (context, index) {
+                          print(starlineCon.marketListForResult[index].time);
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 18.0),
                             child: Container(

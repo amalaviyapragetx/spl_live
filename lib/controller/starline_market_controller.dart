@@ -202,6 +202,7 @@ class StarlineMarketController extends GetxController {
       if (value['status']) {
         NewStarLineChartModel model = NewStarLineChartModel.fromJson(value);
         starlineChartDateAndTime.value = model.data!.data!;
+
         for (var i = 0; i < model.data!.markets!.length; i++) {
           starlineChartTime.value = model.data!.markets as List<Markets>;
         }

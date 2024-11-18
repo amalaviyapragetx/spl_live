@@ -311,45 +311,80 @@ class HomePageController extends GetxController {
             await _launchUrl(Uri.parse(value['data']['qrString']));
           }
         } else {
-          if (value['message'].toString().toLowerCase().contains("payment closed between")) {
-            Get.defaultDialog(
-              barrierDismissible: false,
-              title: "",
-              titleStyle: const TextStyle(fontSize: 0),
-              onWillPop: () async => false,
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    value['message'],
-                    textAlign: TextAlign.center,
-                    style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      color: AppColors.appbarColor,
-                      fontWeight: FontWeight.w700,
-                      fontSize: Dimensions.h17,
-                    ),
+          Get.defaultDialog(
+            barrierDismissible: false,
+            title: "",
+            titleStyle: const TextStyle(fontSize: 0),
+            onWillPop: () async => false,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  value['message'],
+                  textAlign: TextAlign.center,
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    color: AppColors.appbarColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: Dimensions.h17,
                   ),
-                  const SizedBox(height: 10),
-                  InkWell(
-                    onTap: () => Get.back(),
-                    child: Container(
-                      decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
-                      height: Dimensions.h40,
-                      width: Dimensions.w150,
-                      child: Center(
-                        child: Text(
-                          'OK',
-                          style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
-                        ),
+                ),
+                const SizedBox(height: 10),
+                InkWell(
+                  onTap: () => Get.back(),
+                  child: Container(
+                    decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
+                    height: Dimensions.h40,
+                    width: Dimensions.w150,
+                    child: Center(
+                      child: Text(
+                        'OK',
+                        style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
                       ),
                     ),
                   ),
-                ],
-              ),
-            );
-          } else {
-            AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
-          }
+                ),
+              ],
+            ),
+          );
+          // if (value['message'].toString().toLowerCase().contains("payment closed between")) {
+          //   Get.defaultDialog(
+          //     barrierDismissible: false,
+          //     title: "",
+          //     titleStyle: const TextStyle(fontSize: 0),
+          //     onWillPop: () async => false,
+          //     content: Column(
+          //       mainAxisSize: MainAxisSize.min,
+          //       children: [
+          //         Text(
+          //           value['message'],
+          //           textAlign: TextAlign.center,
+          //           style: CustomTextStyle.textRobotoSansMedium.copyWith(
+          //             color: AppColors.appbarColor,
+          //             fontWeight: FontWeight.w700,
+          //             fontSize: Dimensions.h17,
+          //           ),
+          //         ),
+          //         const SizedBox(height: 10),
+          //         InkWell(
+          //           onTap: () => Get.back(),
+          //           child: Container(
+          //             decoration: BoxDecoration(color: AppColors.appbarColor, borderRadius: BorderRadius.circular(8)),
+          //             height: Dimensions.h40,
+          //             width: Dimensions.w150,
+          //             child: Center(
+          //               child: Text(
+          //                 'OK',
+          //                 style: CustomTextStyle.textRobotoSansBold.copyWith(color: AppColors.white, fontSize: 18),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   );
+          // } else {
+          //   AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+          // }
         }
       });
     } catch (e) {
