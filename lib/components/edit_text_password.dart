@@ -18,10 +18,12 @@ class EdittextFieldwithvalidation extends StatelessWidget {
     this.keyboardType,
     this.focusNode,
     this.autofocus,
+    this.autovalidateMode,
   });
 
   final TextEditingController controller;
   final bool obscureText;
+
   final String hintText;
   final Function() onTap;
   final Function(String) onChanged;
@@ -31,6 +33,7 @@ class EdittextFieldwithvalidation extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
   final bool? autofocus;
+  final bool? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +47,7 @@ class EdittextFieldwithvalidation extends StatelessWidget {
       focusNode: focusNode,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
+      autovalidateMode: autovalidateMode == true ? AutovalidateMode.always : AutovalidateMode.disabled,
       decoration: InputDecoration(
         counterText: "",
         fillColor: AppColors.grey.withOpacity(0.2),

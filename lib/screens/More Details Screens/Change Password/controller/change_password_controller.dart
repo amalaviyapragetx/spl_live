@@ -44,13 +44,31 @@ class ChangepasswordPageController extends GetxController {
   }
 
   onChanged2(String value) {
+    print("fsdifhsdfjdskljflkdlk");
     if (value.isEmpty) {
       isValidate.value = false;
       newPasswordMessage.value = "";
     } else if (value.length < 6) {
+      isValidate.value = false;
       newPasswordMessage.value = "Password cannot be less than 6 characters";
-    } else {
+    } /*else if (value == confirmPassword.text) {
+      isValidate.value = true;
       newPasswordMessage.value = "";
+    }*/
+    else if (value != confirmPassword.text) {
+      isValidate.value = false;
+      newPasswordMessage.value = "";
+      if (confirmPassword.text.isNotEmpty) {
+        confirmPasswordMessage.value = "Password does Not Matched";
+      }
+      // newPasswordMessage.value = "Password does Not Matched";
+    } else {
+      print("fgdjghdf");
+      isValidate.value = true;
+      newPasswordMessage.value = "";
+      if (value == confirmPassword.text) {
+        confirmPasswordMessage.value = "";
+      }
     }
   }
 
@@ -59,14 +77,13 @@ class ChangepasswordPageController extends GetxController {
       isValidate.value = false;
       confirmPasswordMessage.value = "";
     } else if (value.length < 6) {
+      isValidate.value = false;
       confirmPasswordMessage.value = "Password cannot be less than 6 characters";
-    } else if (value == newPassword.text) {
-      isValidate.value = true;
-      confirmPasswordMessage.value = "";
     } else if (value != newPassword.text) {
       isValidate.value = false;
       confirmPasswordMessage.value = "Password does Not Matched";
     } else {
+      isValidate.value = true;
       confirmPasswordMessage.value = "";
     }
   }

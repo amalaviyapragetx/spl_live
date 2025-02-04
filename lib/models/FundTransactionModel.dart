@@ -38,7 +38,7 @@ class FundTransactionModel {
 class FundTransactionList {
   dynamic id;
   int? userId;
-  int? amount;
+  double? amount;
   String? paymentMode;
   String? orderId;
   DateTime? createdAt;
@@ -63,7 +63,7 @@ class FundTransactionList {
   factory FundTransactionList.fromJson(Map<String, dynamic> json) => FundTransactionList(
         id: json["id"],
         userId: json["UserId"],
-        amount: json["Amount"],
+        amount: double.parse(json["Amount"].toString() ?? "0.0"),
         paymentMode: json["PaymentMode"],
         orderId: json["OrderId"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),

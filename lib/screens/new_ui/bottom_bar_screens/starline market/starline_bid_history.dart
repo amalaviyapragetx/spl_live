@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -26,8 +27,10 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
   void initState() {
     super.initState();
     print("fsdjfgsdkjfhsdkf");
-    starlineCon.getMarketBidsByUserId();
-    starlineCon.getDailyStarLineMarkets();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      starlineCon.getMarketBidsByUserId();
+      starlineCon.getDailyStarLineMarkets();
+    });
   }
 
   @override
@@ -108,7 +111,7 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                                           context: context,
                                           initialDate: starlineCon.startEndDate,
                                           firstDate: DateTime(2000),
-                                          lastDate: DateTime(2101));
+                                          lastDate: DateTime.now());
                                       if (pickedDate != null) {
                                         starlineCon.startEndDate = pickedDate;
                                         starlineCon.date = DateFormat('yyyy-MM-dd').format(pickedDate);
@@ -548,11 +551,15 @@ class _StarlineBidHistoryState extends State<StarlineBidHistory> {
                     ConstantImage.walletAppbar,
                     height: Dimensions.h15,
                   ),
-                  Text(
-                    ballance,
-                    style: CustomTextStyle.textRobotoSansLight.copyWith(
-                      fontSize: Dimensions.h14,
-                      color: AppColors.black,
+                  Flexible(
+                    child: Text(
+                      ballance,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: CustomTextStyle.textRobotoSansLight.copyWith(
+                        fontSize: Dimensions.h14,
+                        color: AppColors.black,
+                      ),
                     ),
                   ),
                 ],

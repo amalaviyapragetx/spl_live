@@ -68,10 +68,11 @@ class UserDetailsPage extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   autofocus: true,
                   formatter: [
+                    FullNameInputFormatter(),
+                    LengthLimitingTextInputFormatter(50),
                     // FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
-                    FilteringTextInputFormatter.allow(RegExp("[a-z A-Z ']")),
-                    FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
-                    LengthLimitingTextInputFormatter(50)
+                    // FilteringTextInputFormatter.allow(RegExp("[a-z A-Z ']")),
+                    // FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
                   ],
                   //focusNode: controller.fullNameFocusNode,
                 ),
@@ -81,17 +82,32 @@ class UserDetailsPage extends StatelessWidget {
                   textController: controller.userNameController,
                   maxLength: 100,
                   keyboardType: TextInputType.text,
+                  autofocus: true,
                   formatter: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s]+$')),
-                    FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
+                    UsernameInputFormatter(),
+                    // FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                    // FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9' ]+")),
+                    // FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
                     LengthLimitingTextInputFormatter(20)
                   ],
-                  // onFieldSubmitted: (v) => controller.checkUserName(username: v),
-                  // onTapOutside: (v) {
-                  //   controller.checkUserName(username: controller.userNameController.text);
-                  // }
-                  //  focusNode: controller.userNameFocusNode,
+                  //focusNode: controller.fullNameFocusNode,
                 ),
+                // _buildNormalField(
+                //   hintText: "Enter User Name".tr,
+                //   textController: controller.userNameController,
+                //   maxLength: 100,
+                //   keyboardType: TextInputType.text,
+                //   formatter: [
+                //     FilteringTextInputFormatter.allow(RegExp("[a-z A-Z ']")),
+                //     // FilteringTextInputFormatter.deny(RegExp(r'\s+'), replacementString: " "),
+                //     LengthLimitingTextInputFormatter(20)
+                //   ],
+                //   // onFieldSubmitted: (v) => controller.checkUserName(username: v),
+                //   // onTapOutside: (v) {
+                //   //   controller.checkUserName(username: controller.userNameController.text);
+                //   // }
+                //   //  focusNode: controller.userNameFocusNode,
+                // ),
                 SizedBox(height: Dimensions.h15),
                 _buildPasswordField(
                   hintText: "Enter Password".tr,
@@ -260,5 +276,38 @@ class UserDetailsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class UsernameInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    // Regex to allow alphanumeric, underscore, and dot characters only
+    final regex = RegExp(r'^[a-zA-Z0-9._]*$');
+
+    if (regex.hasMatch(newValue.text)) {
+      return newValue;
+    }
+    // If the new value doesn't match the regex, return the old value
+    return oldValue;
+  }
+}
+
+class FullNameInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    // Regex to allow only alphabetic characters and spaces
+    final regex = RegExp(r'^[a-zA-Z\s]*$');
+
+    if (regex.hasMatch(newValue.text)) {
+      // Prevent multiple spaces in a row or leading spaces
+      final sanitizedText = newValue.text.replaceAll(RegExp(r'\s+'), ' ');
+      return newValue.copyWith(
+        text: sanitizedText,
+        selection: TextSelection.collapsed(offset: sanitizedText.length),
+      );
+    }
+    // If the new value doesn't match, return the old value
+    return oldValue;
   }
 }

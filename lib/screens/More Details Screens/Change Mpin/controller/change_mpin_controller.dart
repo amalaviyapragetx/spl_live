@@ -70,7 +70,7 @@ class ChangeMpinPageController extends GetxController {
     }
     if (value == newMPIN.text) {
       isValidate.value = true;
-      confirmPinMessage.value = "Pin Matched";
+      confirmPinMessage.value = "";
     }
     if (oldMPIN.text.length == 4 && reEnterMPIN.text.length == 4 && newMPIN.text.length == 4) {
       isValidate.value = true;
@@ -94,7 +94,7 @@ class ChangeMpinPageController extends GetxController {
 
     if (value == reEnterMPIN.text) {
       isValidate.value = true;
-      confirmPinMessage.value = "Pin Matched";
+      confirmPinMessage.value = "";
       if (oldMPIN.text.length == 4 && reEnterMPIN.text.length == 4 && newMPIN.text.length == 4) {
         isValidate.value = true;
       } else {

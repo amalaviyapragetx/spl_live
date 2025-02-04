@@ -6,14 +6,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
 import 'package:spllive/controller/home_controller.dart';
-import 'package:spllive/controller/starline_market_controller.dart';
 import 'package:spllive/helper_files/app_colors.dart';
 import 'package:spllive/helper_files/constant_image.dart';
 import 'package:spllive/helper_files/constant_variables.dart';
 import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/routes/app_routes_name.dart';
-import 'package:spllive/screens/home_screen/add_fund.dart';
 import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screens/normal_markets.dart';
 import 'package:spllive/screens/new_ui/bottom_bar_screens/starline%20market/starline_markets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final homeCon = Get.find<HomeController>();
-  final starlineCon = Get.find<StarlineMarketController>();
+
   final walletCon = Get.find<WalletController>();
 
   @override
@@ -79,16 +77,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Obx(
-                () => Text(
-                  walletCon.walletBalance.toString().length > 8
-                      ? walletCon.walletBalance.toString().split(".").toString()
-                      : walletCon.walletBalance.toString(),
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyle.textRobotoMedium.copyWith(
-                    color: AppColors.white,
-                    fontSize: Dimensions.h16,
+                () => Flexible(
+                  child: Text(
+                    /*    walletCon.walletBalance.toString().length > 8
+                        ? walletCon.walletBalance.toString().split(".").toString()
+                        :*/
+                    walletCon.walletBalance.toString(),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: CustomTextStyle.textRobotoMedium.copyWith(
+                      color: AppColors.white,
+                      fontSize: Dimensions.h16,
+                    ),
                   ),
                 ),
               ),
@@ -255,7 +256,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: InkWell(
-                                onTap: () => Get.to(() => AddFund()),
+                                onTap: () {
+                                  print("fskdjfgdsjkffsd");
+                                  homeCon.pageWidget.value = 2;
+
+                                  walletCon.selectedIndex.value = 0;
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 12),
                                   decoration: BoxDecoration(

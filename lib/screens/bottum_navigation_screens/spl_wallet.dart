@@ -1,82 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
-import 'package:spllive/components/common_appbar.dart';
-import 'package:spllive/components/common_wallet_list.dart';
-import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/custom_text_style.dart';
-import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/screens/More%20Details%20Screens/Withdrawal%20Page/withdrawal_page.dart';
-import 'package:spllive/screens/fund_deposit_history.dart';
-import 'package:spllive/screens/home_screen/add_fund.dart';
-import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
-import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screens/add_bank_details.dart';
-import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screens/fund_withdrawal_history.dart';
+
+import '../../Custom Controllers/wallet_controller.dart';
+import '../../components/common_appbar.dart';
+import '../../components/common_wallet_list.dart';
+import '../../helper_files/app_colors.dart';
+import '../../helper_files/custom_text_style.dart';
+import '../../helper_files/dimentions.dart';
+import '../More Details Screens/Withdrawal Page/withdrawal_page.dart';
+import '../fund_deposit_history.dart';
+import '../home_screen/add_fund.dart';
+import '../new_ui/bottom_bar_screens/home_screens/add_bank_details.dart';
+import '../new_ui/bottom_bar_screens/home_screens/fund_withdrawal_history.dart';
 
 class SPLWallet extends StatefulWidget {
-  const SPLWallet({super.key});
+  const SPLWallet({super.key, this.selectedIndex});
+
+  final selectedIndex;
 
   @override
   State<SPLWallet> createState() => _SPLWalletState();
 }
 
 class _SPLWalletState extends State<SPLWallet> {
-  final homeCon = Get.put(HomePageController());
-  var walletCon = Get.find<WalletController>();
   @override
   void initState() {
     super.initState();
-    walletCon.getUserBalance();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      // mainAxisSize: MainAxisSize.min,
-      children: [
-        Obx(
-          () => walletCon.selectedIndex.value == null
-              ? GetBuilder<WalletController>(
-                  builder: (con) => CommonAppBar(
-                    walletBalance: con.walletBalance.value,
-                    title: "WALLET".tr,
-                    titleTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
-                      fontSize: Dimensions.h16,
-                      color: AppColors.white,
-                    ),
-                  ),
-                )
-              : const SizedBox(),
-        ),
-        Obx(
-          () => walletCon.selectedIndex.value != null
-              ? currentWidget(walletCon.selectedIndex.value)
-              : Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount: walletCon.filterDateList.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => CommonWalletList(
-                        title: walletCon.filterDateList[index].name,
-                        image: walletCon.filterDateList[index].image,
-                        onTap: () {
-                          // if (walletCon.filterDateList[index].name == "Withdrawal Fund") {
-                          //   homeCon.pageWidget.value = 5;
-                          //   homeCon.currentIndex.value = 5;
-                          // } else {
-                          walletCon.selectedIndex.value = index;
-                          // }
-                        },
-                      ),
-                    ),
-                  ),
+    return GetBuilder<WalletController>(
+        init: WalletController()..init(widget.selectedIndex),
+        builder: (controller) {
+          return Scaffold(
+            body: Column(
+              children: [
+                Obx(
+                  () => controller.selectedIndex.value == null
+                      ? CommonAppBar(
+                          walletBalance: controller.walletBalance.value,
+                          title: "WALLET".tr,
+                          titleTextStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
+                            fontSize: Dimensions.h16,
+                            color: AppColors.white,
+                          ),
+                        )
+                      : appbarWidget(controller),
                 ),
-        ),
-      ],
-    );
+                Obx(
+                  () => controller.selectedIndex.value != null
+                      ? currentWidget(controller.selectedIndex.value)
+                      : Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: controller.filterDateList.length,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, index) => CommonWalletList(
+                                title: controller.filterDateList[index].name,
+                                image: controller.filterDateList[index].image,
+                                onTap: () {
+                                  // if (walletCon.filterDateList[index].name == "Withdrawal Fund") {
+                                  //   homeCon.pageWidget.value = 5;
+                                  //   homeCon.currentIndex.value = 5;
+                                  // } else {
+                                  controller.selectedIndex.value = index;
+                                  // }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   currentWidget(index) {
@@ -92,7 +94,53 @@ class _SPLWalletState extends State<SPLWallet> {
       case 4:
         return const FundWithdrawalHistory();
       /* case 5:
-        return const BankChangeHistory();*/
+       return const BankChangeHistory();*/
     }
+  }
+
+  appbarWidget(controller) {
+    return Container(
+      color: AppColors.appbarColor,
+      padding: const EdgeInsets.all(10),
+      child: SafeArea(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                    onTap: () {
+                      controller.selectedIndex.value = null;
+                      Get.back();
+                    },
+                    child: Icon(Icons.arrow_back, color: AppColors.white)),
+                const SizedBox(width: 5),
+              ],
+            ),
+            const Expanded(child: SizedBox()),
+            Text(
+              textAlign: TextAlign.center,
+              controller.selectedIndex.value == 0
+                  ? "Add Fund"
+                  : controller.selectedIndex.value == 1
+                      ? "Withdrawal Fund"
+                      : controller.selectedIndex.value == 2
+                          ? "Add Bank Details"
+                          : controller.selectedIndex.value == 3
+                              ? "Fund Deposit History"
+                              : controller.selectedIndex.value == 4
+                                  ? "Fund Withdrawal History"
+                                  : "",
+              style: CustomTextStyle.textRobotoMedium.copyWith(
+                color: AppColors.white,
+                fontSize: Dimensions.h17,
+              ),
+            ),
+            const Expanded(child: SizedBox()),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -13,7 +13,7 @@ class CheckWithdrawalPageController extends GetxController {
   RxList<WithdrawalRequestList> withdrawalRequestList = <WithdrawalRequestList>[].obs;
   UserDetailsModel userData = UserDetailsModel();
   int? userId = 0;
-
+  RxBool isloading = false.obs;
   var walletController = Get.put(WalletController());
 
   Future<void> getUserData() async {
@@ -25,9 +25,11 @@ class CheckWithdrawalPageController extends GetxController {
   }
 
   void getWithdrawalHistoryByUserId({required bool lazyLoad}) async {
+    isloading.value = true;
     await ApiService().getWithdrawalHistoryByUserId(userId: userId).then(
       (value) async {
         if (value['status']) {
+          isloading.value = false;
           if (value['data'] != null) {
             WithdrawalRequestResponseModel model = WithdrawalRequestResponseModel.fromJson(value);
             lazyLoad
@@ -35,6 +37,7 @@ class CheckWithdrawalPageController extends GetxController {
                 : withdrawalRequestList.value = model.data ?? <WithdrawalRequestList>[];
           }
         } else {
+          isloading.value = false;
           AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
         }
       },

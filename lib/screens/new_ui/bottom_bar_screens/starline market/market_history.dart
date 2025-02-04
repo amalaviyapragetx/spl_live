@@ -74,7 +74,7 @@ class _MarketHistoryState extends State<MarketHistory> {
                           context: context,
                           initialDate: controller.bidHistoryDate,
                           firstDate: DateTime(2000),
-                          lastDate: DateTime(2101));
+                          lastDate: DateTime.now());
 
                       if (pickedDate != null) {
                         controller.bidHistoryDate = pickedDate;

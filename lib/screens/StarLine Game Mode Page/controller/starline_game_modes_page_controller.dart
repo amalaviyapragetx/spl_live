@@ -1,12 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/custom_text_style.dart';
-import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 
 import '../../../api_services/api_service.dart';
@@ -196,43 +192,43 @@ class StarLineGameModesPageController extends GetxController {
     });
   }
 
-  void showConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirm!'),
-          content: Text(
-            'Do you really wish to submit?',
-            style: CustomTextStyle.textRobotoSansLight.copyWith(
-              color: AppColors.grey,
-              fontSize: Dimensions.h14,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Get.back(),
-              child: Text(
-                'CANCLE',
-                style: CustomTextStyle.textPTsansBold.copyWith(
-                  color: AppColors.appbarColor,
-                  fontSize: Dimensions.h13,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () => createMarketBidApi(),
-              child: Text(
-                'OKAY',
-                style: CustomTextStyle.textPTsansBold.copyWith(
-                  color: AppColors.appbarColor,
-                  fontSize: Dimensions.h13,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void showConfirmationDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Confirm!'),
+  //         content: Text(
+  //           'Do you really wish to submit?',
+  //           style: CustomTextStyle.textRobotoSansLight.copyWith(
+  //             color: AppColors.grey,
+  //             fontSize: Dimensions.h14,
+  //           ),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Get.back(),
+  //             child: Text(
+  //               'CANCLE',
+  //               style: CustomTextStyle.textPTsansBold.copyWith(
+  //                 color: AppColors.appbarColor,
+  //                 fontSize: Dimensions.h13,
+  //               ),
+  //             ),
+  //           ),
+  //           TextButton(
+  //             onPressed: () => createMarketBidApi(),
+  //             child: Text(
+  //               'OKAY',
+  //               style: CustomTextStyle.textPTsansBold.copyWith(
+  //                 color: AppColors.appbarColor,
+  //                 fontSize: Dimensions.h13,
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

@@ -25,7 +25,7 @@ class GetWithdrawalTiming {
 class GetWithdrawalData {
   int? id;
   int? operationalDayId;
-  int? minimumAmount;
+  double? minimumAmount;
   String? openTime;
   String? closeTime;
   bool? isActive;
@@ -45,7 +45,7 @@ class GetWithdrawalData {
   GetWithdrawalData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     operationalDayId = json['OperationalDayId'];
-    minimumAmount = json['MinimumAmount'];
+    minimumAmount = double.parse("${json['MinimumAmount'] ?? "0.0"}");
     openTime = json['OpenTime'];
     closeTime = json['CloseTime'];
     isActive = json['IsActive'];

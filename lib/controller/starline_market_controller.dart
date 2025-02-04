@@ -156,6 +156,7 @@ class StarlineMarketController extends GetxController {
         if (value['status']) {
           if (value['data'] != null) {
             NormalMarketBidHistoryResponseModel model = NormalMarketBidHistoryResponseModel.fromJson(value);
+            marketHistoryList.value.clear();
             marketHistoryList.value = model.data?.resultArr;
             isStarlineBidHistory.value == false;
           }

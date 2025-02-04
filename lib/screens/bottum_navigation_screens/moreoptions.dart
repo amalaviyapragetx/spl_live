@@ -8,7 +8,6 @@ import 'package:spllive/helper_files/custom_text_style.dart';
 import 'package:spllive/helper_files/dimentions.dart';
 import 'package:spllive/helper_files/ui_utils.dart';
 import 'package:spllive/routes/app_routes_name.dart';
-import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screens/add_bank_details.dart';
 
 import '../../helper_files/constant_image.dart';
 import 'controller/bottum_navigation_controller.dart';
@@ -129,7 +128,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                 listItems(
                     onTap: () {
                       homeController.pageWidget.value = 2;
-                      homeController.currentIndex.value = 2;
+
                       walletCon.selectedIndex.value = null;
                     },
                     iconData: ConstantImage.walletAppbar,
@@ -137,19 +136,23 @@ class _MoreOptionsState extends State<MoreOptions> {
                 listItems(
                     onTap: () {
                       homeController.pageWidget.value = 1;
-                      homeController.currentIndex.value = 1;
+
                       // homeController.marketBidsByUserId();
                     },
                     iconData: ConstantImage.clockIcon,
                     text: "Bid History".tr),
                 listItems(
-                    onTap: () => Get.to(() => AddBankDetails()),
+                    onTap: () {
+                      homeController.pageWidget.value = 2;
+
+                      walletCon.selectedIndex.value = 2;
+                    },
                     iconData: ConstantImage.addBankDeatils,
                     text: "Add Bank Details"),
                 listItems(
                     onTap: () {
                       homeController.pageWidget.value = 2;
-                      homeController.currentIndex.value = 2;
+
                       walletCon.selectedIndex.value = 0;
                     },
                     iconData: ConstantImage.plusIcon,

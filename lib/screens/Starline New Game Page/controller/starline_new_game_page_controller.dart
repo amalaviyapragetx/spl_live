@@ -213,6 +213,7 @@ class StarlineNewGamePageController extends GetxController {
   }
 
   Future<void> onTapOfSaveButton(context) async {
+    print("kfhgjdghsfkdsfjksfskhfs");
     if (selectedBidsList.isNotEmpty) {
       requestModel.value.bids = selectedBidsList;
       showConfirmationDialog(context);
@@ -300,6 +301,7 @@ class StarlineNewGamePageController extends GetxController {
     ApiService().createStarLineMarketBid(requestModel.value.toJson()).then((value) async {
       if (value['status']) {
         selectedBidsList.clear();
+        totalAmount.value = "0";
         Get.back();
         Get.back();
         // Get.offAllNamed(
@@ -311,6 +313,7 @@ class StarlineNewGamePageController extends GetxController {
         // );
         if (value['data'] == false) {
           selectedBidsList.clear();
+          totalAmount.value = "0";
           Get.back();
           Get.back();
           // Get.offAllNamed(

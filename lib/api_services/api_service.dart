@@ -181,7 +181,7 @@ class ApiService extends GetConnect implements GetxService {
 
   Future<dynamic> getBankDetails() async {
     await initApiService();
-    AppUtils.showProgressDialog(isCancellable: false);
+    // AppUtils.showProgressDialog(isCancellable: false);
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
       ApiUtils.getBankDetails,
       headers: headersWithToken,
@@ -190,13 +190,13 @@ class ApiService extends GetConnect implements GetxService {
       developer.log("RESPONSE HEADER URl:  ${response.request?.url} RESPONSE : ${response.body} ");
     }
     if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
       return Future.error(response.statusText!);
     } else {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       return response.body;
     }
   }
@@ -324,7 +324,11 @@ class ApiService extends GetConnect implements GetxService {
       headers: headersWithToken,
       // contentType: contentType,
     );
-
+    print(response.request!.url!);
+    print("Fsdkjfhsdkfjhsflksfl");
+    print(response.body);
+    print(response.statusCode);
+    print(response.headers);
     if (response.status.hasError) {
       AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
@@ -491,9 +495,9 @@ class ApiService extends GetConnect implements GetxService {
   }
 
   Future<dynamic> getWithdrawalHistoryByUserId({required int? userId}) async {
-    Future.delayed(const Duration(milliseconds: 2), () {
-      AppUtils.showProgressDialog(isCancellable: false);
-    });
+    // Future.delayed(const Duration(milliseconds: 2), () {
+    //   AppUtils.showProgressDialog(isCancellable: false);
+    // });
 
     await initApiService();
     final response = await GetConnect(timeout: Duration(seconds: 15), allowAutoSignedCert: true).get(
@@ -506,13 +510,13 @@ class ApiService extends GetConnect implements GetxService {
       developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
     }
     if (response.status.hasError) {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       if (response.status.code != null && response.status.code == 401) {
         tokenExpired();
       }
       return Future.error(response.statusText!);
     } else {
-      AppUtils.hideProgressDialog();
+      // AppUtils.hideProgressDialog();
       return response.body;
     }
   }
@@ -1372,11 +1376,13 @@ class ApiService extends GetConnect implements GetxService {
       );
       print("Fsdkfjhsfkjhdskfh");
       print(headersWithToken);
-      print(FundTransactionModel.fromJson(response.body));
+      // print(FundTransactionModel.fromJson(response.body));
       if (kDebugMode) {
         developer.log("RESPONSE HEADER:  ${response.request?.url} RESPONSE : ${response.body} ");
       }
 
+      print("Fsdlfjshfkjdh");
+      print(response.body);
       if (response.status.hasError) {
         if (response.status.code != null && response.status.code == 401) {
           tokenExpired();

@@ -50,6 +50,8 @@ class _BidHistoryBottomState extends State<BidHistoryBottom> {
                       onTap: () {
                         homeCon.selectedIndex.value = index;
                         if (index == 0) {
+                          homeCon.date = null;
+                          homeCon.dateInputForResultHistory.clear();
                           Get.to(() => const BidHistoryNew());
                         } else if (index == 1) {
                           Get.to(() => const MarketHistory());

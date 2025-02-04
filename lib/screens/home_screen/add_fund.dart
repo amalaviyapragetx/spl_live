@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:spllive/Custom%20Controllers/wallet_controller.dart';
-import 'package:spllive/components/simple_button_with_corner.dart';
-import 'package:spllive/helper_files/app_colors.dart';
-import 'package:spllive/helper_files/constant_image.dart';
-import 'package:spllive/helper_files/custom_text_style.dart';
-import 'package:spllive/helper_files/dimentions.dart';
-import 'package:spllive/screens/home_screen/controller/homepage_controller.dart';
 
+import '../../Custom Controllers/wallet_controller.dart';
+import '../../components/simple_button_with_corner.dart';
+import '../../helper_files/app_colors.dart';
+import '../../helper_files/constant_image.dart';
+import '../../helper_files/custom_text_style.dart';
+import '../../helper_files/dimentions.dart';
 import '../../helper_files/ui_utils.dart';
+import 'controller/homepage_controller.dart';
 
 class AddFund extends StatefulWidget {
   final String? wallet;
@@ -81,47 +81,10 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
           child: Column(
             // mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                color: AppColors.appbarColor,
-                padding: const EdgeInsets.all(10),
-                child: SafeArea(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                if (walletCon.selectedIndex.value != null) {
-                                  walletCon.selectedIndex.value = null;
-                                } else {
-                                  Get.back();
-                                }
-                              },
-                              child: Icon(Icons.arrow_back, color: AppColors.white)),
-                          const SizedBox(width: 5),
-                        ],
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Text(
-                        textAlign: TextAlign.center,
-                        "Add Fund",
-                        style: CustomTextStyle.textRobotoMedium.copyWith(
-                          color: AppColors.white,
-                          fontSize: Dimensions.h17,
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
-                  height: Dimensions.h100,
                   width: Get.width,
                   decoration: BoxDecoration(
                     color: AppColors.white,
@@ -142,26 +105,30 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                         "WALLETBALANCE".tr,
                         style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h22),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: Dimensions.w40,
-                            width: Dimensions.w40,
-                            child: SvgPicture.asset(
-                              ConstantImage.walletAppbar,
-                              color: AppColors.appbarColor,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: Dimensions.w40,
+                              width: Dimensions.w40,
+                              child: SvgPicture.asset(
+                                ConstantImage.walletAppbar,
+                                color: AppColors.appbarColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: Dimensions.w10,
-                          ),
-                          Text(
-                            walletCon.walletBalance.value ?? "",
-                            style: CustomTextStyle.textRobotoMedium
-                                .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
-                          ),
-                        ],
+                            Expanded(
+                              child: Text(
+                                walletCon.walletBalance.value ?? "",
+                                textAlign: TextAlign.center,
+                                style: CustomTextStyle.textRobotoMedium
+                                    .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -271,7 +238,7 @@ class _AddFundState extends State<AddFund> with WidgetsBindingObserver {
                   width: Get.width / 2,
                 ),
               ),
-              SizedBox(height: Get.height * 0.08),
+              SizedBox(height: Get.height * 0.06),
               Divider(endIndent: 20, indent: 20, color: AppColors.black),
               const SizedBox(height: 10),
               Text(

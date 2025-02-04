@@ -49,7 +49,7 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                   children: [
                     SizedBox(height: Dimensions.h10),
                     Container(
-                      height: Dimensions.h100,
+                      // height: Dimensions.h100,
                       width: Get.width,
                       decoration: BoxDecoration(
                         color: AppColors.white,
@@ -65,29 +65,37 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "WALLETBALANCE".tr,
                             style: CustomTextStyle.textRobotoMedium.copyWith(fontSize: Dimensions.h22),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: Dimensions.w40,
-                                width: Dimensions.w40,
-                                child: SvgPicture.asset(
-                                  ConstantImage.walletAppbar,
-                                  color: AppColors.appbarColor,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: Dimensions.w40,
+                                  width: Dimensions.w40,
+                                  child: SvgPicture.asset(
+                                    ConstantImage.walletAppbar,
+                                    color: AppColors.appbarColor,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: Dimensions.w10),
-                              Text(
-                                walletCon.walletBalance.value ?? "",
-                                style: CustomTextStyle.textRobotoMedium
-                                    .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
-                              ),
-                            ],
+                                SizedBox(width: Dimensions.w10),
+                                Expanded(
+                                  child: Text(
+                                    walletCon.walletBalance.value ?? "",
+                                    textAlign: TextAlign.center,
+                                    style: CustomTextStyle.textRobotoMedium
+                                        .copyWith(fontSize: Dimensions.h28, color: AppColors.appbarColor),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -134,7 +142,13 @@ class _CreatewithDrawalPageState extends State<CreatewithDrawalPage> {
                         borderRadius: Dimensions.r5,
                         borderWidth: 1,
                         textStyle: CustomTextStyle.textRobotoMedium,
-                        onTap: () => controller.createWithdrawalRequest(),
+                        onTap: () {
+                          if (controller.amountTextController.text.isNotEmpty) {
+                            controller.createWithdrawalRequest();
+                          } else {
+                            AppUtils.showErrorSnackBar(bodyText: "Please Enter Amount");
+                          }
+                        },
                         height: Dimensions.h35,
                         width: Get.width / 2.5,
                       ),

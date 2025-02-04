@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +28,9 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
     super.initState();
     print("fsdkfjhsdkfjdhf");
 
-    homeCon.bidsHistoryByUserId();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      homeCon.bidsHistoryByUserId();
+    });
   }
 
   @override
@@ -59,7 +62,7 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () => {
-                      homeCon.date = DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                      // homeCon.date = DateFormat('yyyy-MM-dd').format(DateTime.now()),
                       Get.dialog(
                         barrierDismissible: false,
                         ConstrainedBox(
@@ -93,7 +96,7 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                     controller: homeCon.dateInputForResultHistory,
                                     style: CustomTextStyle.textRobotoSansMedium.copyWith(color: AppColors.appbarColor),
                                     decoration: InputDecoration(
-                                      hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                                      hintText: "" /*DateFormat('dd-MM-yyyy').format(DateTime.now()).toString()*/,
                                       hintStyle: CustomTextStyle.textRobotoSansMedium.copyWith(
                                         color: AppColors.appbarColor,
                                       ),
@@ -108,11 +111,14 @@ class _BidHistoryNewState extends State<BidHistoryNew> {
                                     ),
                                     readOnly: true,
                                     onTap: () async {
+                                      print(homeCon.date);
+                                      print("fsdlfkjsdfklj");
                                       DateTime? pickedDate = await showDatePicker(
                                           context: context,
-                                          initialDate: homeCon.bidHistoryDate,
+                                          initialDate:
+                                              homeCon.date != null ? DateTime.parse(homeCon.date!) : DateTime.now(),
                                           firstDate: DateTime(2000),
-                                          lastDate: DateTime(2101));
+                                          lastDate: DateTime.now());
 
                                       if (pickedDate != null) {
                                         homeCon.bidHistoryDate = pickedDate;
@@ -607,19 +613,20 @@ Widget listveiwTransactionNew({
                     style: CustomTextStyle.textRobotoMedium
                         .copyWith(fontSize: Dimensions.h12, fontWeight: FontWeight.w500),
                   ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        ConstantImage.walletAppbar,
-                        height: Dimensions.h15,
-                      ),
-                      SizedBox(width: Dimensions.w8),
-                      Text(ballance,
-                          style: CustomTextStyle.textRobotoMedium
-                              .copyWith(fontSize: Dimensions.h12, fontWeight: FontWeight.w500)),
-                      SizedBox(height: Dimensions.h8),
-                    ],
+                  const Expanded(child: SizedBox()),
+                  SvgPicture.asset(
+                    ConstantImage.walletAppbar,
+                    height: Dimensions.h15,
                   ),
+                  SizedBox(width: Dimensions.w8),
+                  Flexible(
+                    child: Text(ballance,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: CustomTextStyle.textRobotoMedium
+                            .copyWith(fontSize: Dimensions.h12, fontWeight: FontWeight.w500)),
+                  ),
+                  SizedBox(height: Dimensions.h8),
                 ],
               ),
             ),

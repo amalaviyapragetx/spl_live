@@ -264,7 +264,68 @@ class CreateWithDrawalPageController extends GetxController {
           // AppUtils.showSuccessSnackBar(bodyText: model.message, headerText: "SUCCESSMESSAGE".tr);
         }
       } else {
-        AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
+        Get.dialog(
+          barrierDismissible: false,
+          useSafeArea: true,
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 60, maxWidth: Get.width - 50),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    Dialog(
+                      insetPadding: const EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(ConstantImage.close, height: Dimensions.h60, width: Dimensions.w60),
+                            const SizedBox(height: 20),
+                            Text(
+                              value['message'] ?? "",
+                              textAlign: TextAlign.center,
+                              style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                                color: AppColors.appbarColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: RoundedCornerButton(
+                                text: "OK".tr,
+                                color: AppColors.appbarColor,
+                                borderColor: AppColors.appbarColor,
+                                fontSize: Dimensions.h15,
+                                fontWeight: FontWeight.w500,
+                                fontColor: AppColors.white,
+                                letterSpacing: 0,
+                                borderRadius: Dimensions.r5,
+                                borderWidth: 0,
+                                textStyle: CustomTextStyle.textGothamMedium,
+                                onTap: () {
+                                  Get.offAllNamed(
+                                    AppRoutName.dashBoardPage,
+                                  );
+                                },
+                                height: 40,
+                                width: Get.width / 2.8,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+        // AppUtils.showErrorSnackBar(bodyText: value['message'] ?? "");
       }
     });
   }

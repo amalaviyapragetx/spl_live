@@ -193,15 +193,19 @@ class BidHistory extends StatelessWidget {
                     // SizedBox(
                     //   width: 180,
                     // ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          ConstantImage.walletAppbar,
-                          height: Dimensions.h13,
-                        ),
-                        SizedBox(width: Dimensions.w8),
-                        Text(ballance, style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h12)),
-                      ],
+
+                    SvgPicture.asset(
+                      ConstantImage.walletAppbar,
+                      height: Dimensions.h13,
+                    ),
+                    SizedBox(width: Dimensions.w8),
+                    Flexible(
+                      child: Text(
+                        ballance,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: CustomTextStyle.textRobotoSansLight.copyWith(fontSize: Dimensions.h12),
+                      ),
                     ),
                   ],
                 ),

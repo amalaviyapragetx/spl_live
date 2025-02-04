@@ -71,7 +71,7 @@ class _StarlineResultHistoryState extends State<StarlineResultHistory> {
                         context: context,
                         initialDate: starlineCon.bidHistoryDate,
                         firstDate: DateTime(2000),
-                        lastDate: DateTime(2101));
+                        lastDate: DateTime.now());
 
                     if (pickedDate != null) {
                       starlineCon.dateResultHistory.text = DateFormat('dd-MM-yyyy').format(pickedDate);

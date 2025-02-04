@@ -35,15 +35,23 @@ class MyAccountPageController extends GetxController {
   }
 
   void validationFied() {
-    if (accNoController.text.isEmpty) {
+    String accNo = accNoController.value.text.trim();
+    String ifscCode = ifscCodeController.value.text.trim().replaceAll(RegExp(r'\s+'), ' ');
+    String accHolderName = accHolderNameController.value.text.trim().replaceAll(RegExp(r'\s+'), ' ');
+    String bankName = bankNameController.value.text.trim().replaceAll(RegExp(r'\s+'), ' ');
+    if (accNo.isEmpty) {
       AppUtils.showErrorSnackBar(bodyText: "Enter Account Number");
-    } else if (ifscCodeController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(bodyText: "Enter Ifsc Code");
-    } else if (accHolderNameController.text.isEmpty) {
+    } else if (ifscCode.isEmpty) {
+      AppUtils.showErrorSnackBar(bodyText: "Enter IFSC Code");
+    } else if (accHolderName.isEmpty) {
       AppUtils.showErrorSnackBar(bodyText: "Enter Account Holder Name");
-    } else if (bankNameController.text.isEmpty) {
+    } else if (bankName.isEmpty) {
       AppUtils.showErrorSnackBar(bodyText: "Enter name of the bank");
     } else {
+      accNoController.value = TextEditingValue(text: accNo);
+      ifscCodeController.value = TextEditingValue(text: ifscCode);
+      accHolderNameController.value = TextEditingValue(text: accHolderName);
+      bankNameController.value = TextEditingValue(text: bankName);
       onTapOfEditDetails();
       Get.back();
     }
@@ -59,8 +67,9 @@ class MyAccountPageController extends GetxController {
 
   RxBool loadGetBalance = false.obs;
 
-  void callGetBankDetails() {
+  Future<void> callGetBankDetails() async {
     loadGetBalance.value = true;
+
     ApiService().getBankDetails().then((value) async {
       if (value['status']) {
         loadGetBalance.value = false;

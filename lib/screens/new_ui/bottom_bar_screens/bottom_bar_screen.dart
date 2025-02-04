@@ -41,77 +41,10 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             print("OR VALUE: 1");
           } else {
             homeCon.pageWidget.value = 0;
-            homeCon.currentIndex.value = 0;
             print("OR VALUE: 111");
           }
           SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
-        } else if (homeCon.pageWidget.value == 5) {
-          homeCon.pageWidget.value = 4;
-          homeCon.currentIndex.value = 4;
-          print("OR VALUE: 122");
         } else {
-          // await Get.dialog(
-          //   barrierDismissible: false,
-          //   ConstrainedBox(
-          //     constraints: BoxConstraints(maxHeight: Get.width, minWidth: Get.width - 30),
-          //     child: AlertDialog(
-          //       insetPadding: EdgeInsets.all(10),
-          //       contentPadding: const EdgeInsets.symmetric(horizontal: 55, vertical: 20),
-          //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          //       content: SizedBox(
-          //         width: double.infinity,
-          //         child: Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             Text(
-          //               'Exit App',
-          //               style: CustomTextStyle.textRobotoSansMedium.copyWith(
-          //                 color: AppColors.appbarColor,
-          //                 fontWeight: FontWeight.w700,
-          //                 fontSize: 20,
-          //               ),
-          //             ),
-          //             Text(
-          //               'Are you sure you want to exit the app?',
-          //               textAlign: TextAlign.center,
-          //               style: CustomTextStyle.textRobotoSansMedium.copyWith(
-          //                 fontSize: Dimensions.h15,
-          //               ),
-          //             ),
-          //             const SizedBox(height: 10),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.end,
-          //               children: [
-          //                 InkWell(
-          //                   onTap: () => Get.back(),
-          //                   child: Center(
-          //                     child: Text(
-          //                       'Cancel',
-          //                       style: CustomTextStyle.textRobotoSansBold.copyWith(
-          //                         color: AppColors.appbarColor,
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 SizedBox(width: 10),
-          //                 InkWell(
-          //                   onTap: () => Navigator.of(context).pop(false),
-          //                   child: Center(
-          //                     child: Text(
-          //                       'Exit',
-          //                       style: CustomTextStyle.textRobotoSansBold.copyWith(
-          //                         color: AppColors.redColor,
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ),
           print("OR VALUE: 12222");
           await showDialog(
             barrierDismissible: false,

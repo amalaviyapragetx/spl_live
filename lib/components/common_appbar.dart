@@ -48,14 +48,16 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              Text(
-                walletBalance ?? "",
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: CustomTextStyle.textRobotoSansMedium.copyWith(
-                  color: AppColors.white,
-                  fontSize: Dimensions.h16,
+              Flexible(
+                child: Text(
+                  walletBalance ?? "",
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: CustomTextStyle.textRobotoSansMedium.copyWith(
+                    color: AppColors.white,
+                    fontSize: Dimensions.h16,
+                  ),
                 ),
               ),
             ],

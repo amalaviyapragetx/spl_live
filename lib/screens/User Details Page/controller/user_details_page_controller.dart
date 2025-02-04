@@ -29,7 +29,7 @@ class UserDetailsPageController extends GetxController {
           .accountFlowDialog(msg: "Full name must be at least 6 characters long and \nshould not contain any numbers");
       // AppUtils.showErrorSnackBar(
       //     bodyText: "Full name must be at least 6 characters long and \nshould not contain any numbers");
-    } else if (userNameController.text.isEmpty) {
+    } else if (userNameController.text.trim().isEmpty) {
       AppUtils().accountFlowDialog(msg: "ENTERUSERNAME".tr);
       // AppUtils.showErrorSnackBar(bodyText: "ENTERUSERNAME".tr);
     } else if (passwordController.text.isEmpty) {

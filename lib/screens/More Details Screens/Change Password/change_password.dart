@@ -63,6 +63,7 @@ class ChangePasswordPage extends StatelessWidget {
                           //   }
                           //   return null;
                           // },
+                          // autovalidateMode: true,
                           onTap: () {
                             controller.isObscureOldPassword.value = !controller.isObscureOldPassword.value;
                           },
@@ -99,14 +100,15 @@ class ChangePasswordPage extends StatelessWidget {
                           onChanged: (value) {
                             controller.onChanged2(value);
                           },
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Password is required';
-                            } else if (value.length < 6) {
-                              return 'Password Cannot be less than 6 characters';
-                            }
-                            return null;
-                          },
+                          // autovalidateMode: true,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Password is required';
+                          //   } else if (value.length < 6) {
+                          //     return 'Password Cannot be less than 6 characters';
+                          //   }
+                          //   return null;
+                          // },
                           onTap: () {
                             controller.isObscureNewPassword.value = !controller.isObscureNewPassword.value;
                           },
@@ -148,6 +150,7 @@ class ChangePasswordPage extends StatelessWidget {
                         onChanged: (value) {
                           controller.onChanged3(value);
                         },
+                        // autovalidateMode: true,
                         // validator: (value) {
                         //   if (value!.isEmpty) {
                         //     return 'Password is required';

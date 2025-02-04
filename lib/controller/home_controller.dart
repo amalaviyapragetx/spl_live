@@ -21,7 +21,6 @@ import 'package:spllive/screens/bottum_navigation_screens/spl_wallet.dart';
 import 'package:spllive/screens/new_ui/bottom_bar_screens/home_screen.dart';
 
 class HomeController extends GetxController {
-  RxInt currentIndex = 0.obs;
   RxInt pageWidget = 0.obs;
   final notificationCount = Rxn<int>();
   RxList<BannerData> bannerData = <BannerData>[].obs;
@@ -177,11 +176,11 @@ class HomeController extends GetxController {
             MarketBidHistory model = MarketBidHistory.fromJson(value['data']);
             isBidHistory.value = false;
             marketBidHistoryList.value = model.rows ?? <MarketBidHistoryList>[];
-            if (isSelectedGameIndex.value != null ||
-                isSelectedWinStatusIndex.value != null ||
-                selectedFilterMarketList.isNotEmpty) {
-              Get.back();
-            }
+            // if (isSelectedGameIndex.value != null ||
+            //     isSelectedWinStatusIndex.value != null ||
+            //     selectedFilterMarketList.isNotEmpty) {
+            //   Get.back();
+            // }
           }
         } else {
           isBidHistory.value = false;

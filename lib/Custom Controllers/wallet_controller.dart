@@ -17,7 +17,7 @@ import '../api_services/api_service.dart';
 
 class WalletController extends GetxController {
   RxString walletBalance = "00".obs;
-  final selectedIndex = Rxn<int>();
+  var selectedIndex = Rxn<int>();
   RxBool isCallDialog = false.obs;
 
   RxBool isCheckBankDetails = false.obs;
@@ -66,6 +66,16 @@ class WalletController extends GetxController {
     super.onInit();
   }
 
+  init(index) {
+    print(index);
+    print("Fsdkfjdhskfjshdfkjd");
+    selectedIndex.value = index;
+
+    selectedIndex.refresh();
+    print(selectedIndex.value);
+    print("Fsdkfjdhskfjshdfkjd");
+  }
+
   homeScrollListener() {
     print("fksdfgdjksggf");
     if ((fundDepositeHistoryScrollController.position.pixels ==
@@ -79,11 +89,8 @@ class WalletController extends GetxController {
   Future<void> getTransactionHistory(bool view) async {
     if (fundTransactionList.value.length == 0) {
       isLoading.value = true;
-      update();
     } else {
       isMoreLoading.value = true;
-
-      update();
     }
 
     ApiService().getTransactionHistory(10, fundTransactionList.value.length).then((value) async {
@@ -95,7 +102,7 @@ class WalletController extends GetxController {
             fundTransactionList.value.add(element);
           });
           fundTransactionList.refresh();
-          update();
+
           totalPage.value = value.count!;
           isMoreLoading.value = false;
           isLoading.value = false;
@@ -354,15 +361,19 @@ class WalletController extends GetxController {
     });
   }
 
+  RxString noTiming = "".obs;
   void getWithdrawalTiming() async {
     isCheck.value = true;
     ApiService().getWithDrawalTime().then((value) async {
       if (value?.status ?? false) {
         getWithdrawalData.value = value!.data!;
+        noTiming.value = "";
         isCheck.value = false;
       } else {
+        noTiming.value = value?.message ?? "";
         isCheck.value = false;
-        AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
+
+        // AppUtils.showErrorSnackBar(bodyText: value?.message ?? "");
       }
     });
   }
