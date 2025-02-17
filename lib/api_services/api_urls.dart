@@ -1,8 +1,8 @@
 class ApiUtils {
   // Spl Production
-  // static String baseURL = "https://vishnulive.in:9870";
+  static String baseURL = "https://vishnulive.in:9870";
   // local url
-  static String baseURL = "http://192.168.29.49:8080";
+  // static String baseURL = "http://192.168.29.49:8080";
 
   // StagingURl
   // static String baseURL = "http://15.207.71.94:9867";
@@ -33,10 +33,8 @@ class ApiUtils {
   static String getBankDetails = '$baseURL/bank/getUserDetails';
   static String editBankDetails = '$baseURL/bank/update';
   static String getDailyMarkets = '$baseURL/market/getDailyMarket';
-  static String getGameModes =
-      '$baseURL/market/getGameModeForMarket/'; //pass 0 for open 1 for close then pass market id like 0/4
-  static String getStarLineGameModes =
-      '$baseURL/starline/getGameModeForStarlineMarket/'; //pass 0 for open 1 for close then pass market id like 0/4
+  static String getGameModes = '$baseURL/market/getGameModeForMarket/'; //pass 0 for open 1 for close then pass market id like 0/4
+  static String getStarLineGameModes = '$baseURL/starline/getGameModeForStarlineMarket/'; //pass 0 for open 1 for close then pass market id like 0/4
   static String createMarketBid = '$baseURL/bid/marketBidcreate';
   static String createStarLineMarketBid = '$baseURL/bid/starlineBidCreate';
   static String getDailyStarLineMarkets = '$baseURL/starline/getDailyStarlineMarket';

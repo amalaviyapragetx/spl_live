@@ -256,12 +256,23 @@ class NewGamemodePageController extends GetxController {
 
   List<String> getTwoDigitPanelPana(int inputNumber) {
     List<int> inputDigits = inputNumber.toString().split('').map(int.parse).toList();
+    print("fsjdgjsdfsjd");
+    print(inputNumber);
+    // print(inputDigits);
 
     bool containsBothInputDigits(String num) {
       String numStr = num.toString();
-      return inputDigits.every((digit) => numStr.contains(digit.toString()));
+      // print(numStr);
+      // return inputDigits.every((digit) => numStr.contains(digit.toString()));
+      if (inputNumber == 0) {
+        return numStr.contains("00");
+      } else {
+        return numStr.contains(inputNumber.toString());
+      }
     }
 
+    print(spdpMotor);
+    print(spdpMotor.where(containsBothInputDigits).toList());
     return spdpMotor.where(containsBothInputDigits).toList();
   }
 
@@ -674,6 +685,7 @@ class NewGamemodePageController extends GetxController {
   }
 
   void pennleDataOnTapSave() async {
+    print("fsdjfgsdjjdfgjfsdf");
     if (gameMode.value.name == "SPDPTP") {
       if (spValue1.value == false && dpValue2.value == false && tpValue3.value == false) {
         AppUtils.showErrorSnackBar(
@@ -736,6 +748,7 @@ class NewGamemodePageController extends GetxController {
         }
       }
     } else {
+      print("dfglkdjfglkdfgdlkjgdkl");
       if (coinController.text.trim().isEmpty || int.parse(coinController.text.trim()) < 1) {
         AppUtils.showErrorSnackBar(
           bodyText: "Please enter valid points",
