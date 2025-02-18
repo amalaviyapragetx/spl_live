@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -67,21 +67,21 @@ class _MyAppState extends State<MyApp> {
     //   initPlatformState();
   }
 
-  Future<void> initPlatformState() async {
-    bool jailbroken;
-    try {
-      jailbroken = await FlutterJailbreakDetection.jailbroken;
-    } on PlatformException {
-      jailbroken = true;
-    }
-    if (!mounted) return;
-    setState(() {
-      _jailbroken = jailbroken;
-      if (_jailbroken) {
-        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-      }
-    });
-  }
+  // Future<void> initPlatformState() async {
+  //   bool jailbroken;
+  //   try {
+  //     jailbroken = await FlutterJailbreakDetection.jailbroken;
+  //   } on PlatformException {
+  //     jailbroken = true;
+  //   }
+  //   if (!mounted) return;
+  //   setState(() {
+  //     _jailbroken = jailbroken;
+  //     if (_jailbroken) {
+  //       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

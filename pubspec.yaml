@@ -40,7 +40,7 @@ dependencies:
   get: ^4.6.5
   http: ^0.13.6
   get_storage: ^2.1.1
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   connectivity_plus: ^4.0.1
   flutter_svg: ^2.0.5
   country_list_pick: ^1.0.1+6
@@ -54,7 +54,7 @@ dependencies:
   share_plus: ^7.0.2
   image_picker: ^1.0.1
   flutter_pin_code_fields: ^2.2.0
-  flutter_local_notifications: ^15.1.1
+  flutter_local_notifications: ^18.0.1
   firebase_messaging: ^14.6.7
   firebase_core: ^2.15.1
 #  geolocator: ^10.0.1
@@ -64,7 +64,6 @@ dependencies:
   in_app_update: ^4.2.2
   upgrader: ^6.5.0
   ota_update: ^6.0.0
-  flutter_jailbreak_detection: ^1.10.0
   permission_handler: ^11.3.0
 #  colorful_safe_area: ^1.0.0
 
