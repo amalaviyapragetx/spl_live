@@ -219,6 +219,7 @@ class SplashController extends GetxController {
     }
   }
 
+  RxString percentage = "0.0".obs;
   downloadApk(String url) async {
     // requestStoragePermission();
     await requestStoragePermission();
@@ -232,6 +233,7 @@ class SplashController extends GetxController {
         print(value);
 
         print(value1);
+        percentage.value = ((value / value1) * 100).toInt().toString();
       });
     } on DioException catch (e) {
       print(e.response);
@@ -317,9 +319,28 @@ class SplashController extends GetxController {
             child: Obx(
               () => Center(
                 child: load.value
-                    ? CircularProgressIndicator(color: AppColors.white)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Downloading ${percentage.value}%',
+                            style: CustomTextStyle.textRobotoSansBold.copyWith(
+                              color: AppColors.white,
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Container(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: AppColors.white,
+                                strokeWidth: 2,
+                              )),
+                        ],
+                      )
                     : Text(
-                        'OK',
+                        'Download',
                         style: CustomTextStyle.textRobotoSansBold.copyWith(
                           color: AppColors.white,
                         ),
