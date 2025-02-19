@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:ota_update/ota_update.dart';
+import 'package:open_filex/open_filex.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../api_services/api_service.dart';
 import '../../../api_services/api_urls.dart';
@@ -201,6 +205,59 @@ class SplashController extends GetxController {
   }
 
   RxBool load = false.obs;
+  requestStoragePermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.storage,
+      Permission.manageExternalStorage, // Needed for Android 10+
+      Permission.requestInstallPackages, // Required for APK installation
+    ].request();
+    if (statuses[Permission.storage]!.isGranted && statuses[Permission.manageExternalStorage]!.isGranted && statuses[Permission.requestInstallPackages]!.isGranted) {
+      print("Storage permission granted.");
+    } else {
+      print("Storage permission denied.");
+      // openAppSettings();
+    }
+  }
+
+  downloadApk(String url) async {
+    // requestStoragePermission();
+    await requestStoragePermission();
+    // final dir = Directory("/storage/emulated/0/Download");
+    final dir = await getTemporaryDirectory();
+    final file = File('${dir!.path}/update.apk');
+    print("djfhsgjhfsdf");
+    print("djfhsgjhfsdf${file.path}");
+    try {
+      await Dio().download(url, file.path, onReceiveProgress: (value, value1) {
+        print(value);
+
+        print(value1);
+      });
+    } on DioException catch (e) {
+      print(e.response);
+    }
+    print("sdfsdfkjhsfkjhfkjsd");
+    installApk(file.path);
+    // return file.path;
+  }
+
+  Future<void> installApk(String filePath) async {
+    print("sdfsdfkjhsfkjhfkjsd");
+    final result = await OpenFilex.open(filePath);
+    print("fdsfkjsdhfksdjfhskjfhkfshkjf${result.type}");
+    if (result.type == ResultType.done) {
+      print("fsdjfgsjfs");
+      load.value = false;
+      // File file = File(filePath);
+      // if (await file.exists()) {
+      //   await file.delete();
+      //   print("File deleted successfully: $filePath");
+      // } else {
+      //   print("File not found: $filePath");
+      // }
+      // Handle the error accordingly
+    }
+  }
 
   void _showExitDialog() {
     Get.defaultDialog(
@@ -224,32 +281,33 @@ class SplashController extends GetxController {
           onTap: () async {
             load.value = true;
             // launch("https://spl.live");
-            try {
-              OtaUpdate().execute(ApiUtils.getApk).listen(
-                (OtaEvent event) {
-                  if (event.status == OtaStatus.DOWNLOADING) {
-                    load.value = true;
-                  } else if (event.status == OtaStatus.CANCELED) {
-                    load.value = false;
-                    AppUtils.showErrorSnackBar(bodyText: "Download Canceled");
-                  } else if (event.status == OtaStatus.DOWNLOAD_ERROR) {
-                    load.value = false;
-                    AppUtils.showErrorSnackBar(bodyText: "Download error");
-                  } else if (event.status == OtaStatus.INTERNAL_ERROR) {
-                    load.value = false;
-                    AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
-                  } else if (event.status == OtaStatus.PERMISSION_NOT_GRANTED_ERROR) {
-                    load.value = false;
-                  } else {
-                    load.value = false;
-                  }
-                  update();
-                },
-                onDone: () => load.value = false,
-              );
-            } catch (e) {
-              print('Failed to make OTA update. Details: $e');
-            }
+            downloadApk(ApiUtils.getApk);
+            // try {
+            //   OtaUpdate().execute(ApiUtils.getApk).listen(
+            //     (OtaEvent event) {
+            //       if (event.status == OtaStatus.DOWNLOADING) {
+            //         load.value = true;
+            //       } else if (event.status == OtaStatus.CANCELED) {
+            //         load.value = false;
+            //         AppUtils.showErrorSnackBar(bodyText: "Download Canceled");
+            //       } else if (event.status == OtaStatus.DOWNLOAD_ERROR) {
+            //         load.value = false;
+            //         AppUtils.showErrorSnackBar(bodyText: "Download error");
+            //       } else if (event.status == OtaStatus.INTERNAL_ERROR) {
+            //         load.value = false;
+            //         AppUtils.showErrorSnackBar(bodyText: "Something went wrong");
+            //       } else if (event.status == OtaStatus.PERMISSION_NOT_GRANTED_ERROR) {
+            //         load.value = false;
+            //       } else {
+            //         load.value = false;
+            //       }
+            //       update();
+            //     },
+            //     onDone: () => load.value = false,
+            //   );
+            // } catch (e) {
+            //   print('Failed to make OTA update. Details: $e');
+            // }
             update();
           },
           child: Container(

@@ -121,14 +121,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
-  csslib:
-    dependency: transitive
-    description:
-      name: csslib
-      sha256: "09bad715f418841f976c77db72d5398dc1253c21fb9c0c7f0b0b985860b2d58e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -161,6 +153,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.2"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "253a18bbd4851fecba42f7343a1df3a9a4c1d31a2c1b37e221086b4fa8c8dbc9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.8.0+1"
+  dio_web_adapter:
+    dependency: transitive
+    description:
+      name: dio_web_adapter
+      sha256: e485c7a39ff2b384fa1d7e09b4e25f755804de8384358049124830b04fc4f93a
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -384,14 +392,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  html:
-    dependency: transitive
-    description:
-      name: html
-      sha256: "1fc58edeaec4307368c60d59b7e15b9d658b57d7f3125098b6294153c75337ec"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.15.5"
   http:
     dependency: "direct main"
     description:
@@ -472,14 +472,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
-  in_app_update:
-    dependency: "direct main"
-    description:
-      name: in_app_update
-      sha256: "489572accaa55b51518b2d64676ca8c3c6d4c989fa53cf718001882237691a3c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.3"
   intl:
     dependency: "direct main"
     description:
@@ -568,22 +560,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  os_detect:
-    dependency: transitive
-    description:
-      name: os_detect
-      sha256: "7d87c0dd98c6faf110d5aa498e9a6df02ffce4bb78cc9cfc8ad02929be9bb71f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3"
-  ota_update:
+  open_filex:
     dependency: "direct main"
     description:
-      name: ota_update
-      sha256: "8c47531b655f8fcf9961dc7758a933a9ccbcbe1c77a7ec52e5c5cfc2ec367ba7"
+      name: open_filex
+      sha256: dcb7bd3d32db8db5260253a62f1564c02c2c8df64bc0187cd213f65f827519bd
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "4.6.0"
   package_info_plus:
     dependency: "direct main"
     description:
@@ -617,7 +601,7 @@ packages:
     source: hosted
     version: "1.1.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
@@ -768,62 +752,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.2"
-  shared_preferences:
-    dependency: transitive
-    description:
-      name: shared_preferences
-      sha256: "846849e3e9b68f3ef4b60c60cf4b3e02e9321bc7f4d8c4692cf87ffa82fc8a3a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.2"
-  shared_preferences_android:
-    dependency: transitive
-    description:
-      name: shared_preferences_android
-      sha256: ea86be7b7114f9e94fddfbb52649e59a03d6627ccd2387ebddcd6624719e9f16
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.5"
-  shared_preferences_foundation:
-    dependency: transitive
-    description:
-      name: shared_preferences_foundation
-      sha256: "6a52cfcdaeac77cad8c97b539ff688ccfc458c007b4db12be584fbe5c0e49e03"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.4"
-  shared_preferences_linux:
-    dependency: transitive
-    description:
-      name: shared_preferences_linux
-      sha256: "580abfd40f415611503cae30adf626e6656dfb2f0cee8f465ece7b6defb40f2f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      sha256: d2ca4132d3946fec2184261726b355836a82c33d7d5b67af32692aff18a4684e
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.2"
-  shared_preferences_windows:
-    dependency: transitive
-    description:
-      name: shared_preferences_windows
-      sha256: "94ef0f72b2d71bc3e700e025db3710911bd51a71cefb65cc609dd0d9a982e3c1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -957,14 +885,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.0"
-  upgrader:
-    dependency: "direct main"
-    description:
-      name: upgrader
-      sha256: eb5a4888873d7998605306c4212491efdff8e59ee609d946dbcd6df83598d004
-      url: "https://pub.dev"
-    source: hosted
-    version: "11.3.1"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1069,14 +989,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  version:
-    dependency: transitive
-    description:
-      name: version
-      sha256: "3d4140128e6ea10d83da32fef2fa4003fccbf6852217bb854845802f04191f94"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
   vm_service:
     dependency: transitive
     description:
