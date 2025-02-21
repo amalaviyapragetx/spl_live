@@ -84,9 +84,10 @@ class ApiUtils {
   static String putWalletTransactionStatus = "$baseURL/payment/ReadPaymentNotification";
   static String getAllPackages = "$baseURL/payment/getAllPackages";
   static String checkUserName = "$baseURL/user/checkUsername";
-  static String getApk = "$baseURL/public/apk/spl_live.apk";
-  // static String getApk =
-  //     "https://fs4.fastupload.io/39f07e1a206e3740/app-release.apk?download_token=a904bf4dc9b637464da1d021b9a9f3d7d24c07827ecff34bccf86740fba2746d";
+  // static String getApk = "$baseURL/public/apk/spl_live.apk";
+  // static String getApk = "https://drive.google.com/file/d/1uUxO2nkL8BPwtSTkUCWu2RUpnQvk9mw2/view?usp=drive_link";
+  static String getApk =
+      "https://storage8.fastupload.io/130449d0a369db6c/app-release_(2).apk?download_token=867b9b7b513952d7270a28139756f5df71fbf0ba29f625b5ea3491e771bb69f4";
   static String getTickets = "$baseURL/wallet/addFund";
   static String getBankHistory = "$baseURL/bank/userBankHistory";
   static String getWithdrawal = "$baseURL/withdraw/dailyWithdrawalInfo";

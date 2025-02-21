@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:open_filex/open_filex.dart';
@@ -231,16 +232,35 @@ class SplashController extends GetxController {
     try {
       await Dio().download(url, file.path, onReceiveProgress: (value, value1) {
         print(value);
-
+        print("fdsfjdsfdsfsfgjsdfh");
         print(value1);
         percentage.value = ((value / value1) * 100).toInt().toString();
       });
+
+      const platform = MethodChannel("com.example.spllive/install_apk");
+      final result = await platform.invokeMethod("installApk", {"apkPath": file.path});
+      print(result);
     } on DioException catch (e) {
+      print("ffjkdsfhskjfhskjfhsdf");
       print(e.response);
     }
     print("sdfsdfkjhsfkjhfkjsd");
-    installApk(file.path);
+
+    // installApkUsingPackageInstaller(file.path);
+    // installApk(file.path);
     // return file.path;
+  }
+
+  void installApkUsingPackageInstaller(String filePath) async {
+    final uri = 'content://com.example.spllive.fileprovider/cache/update.apk';
+
+    // final intent = AndroidIntent(
+    //   action: 'android.intent.action.VIEW',
+    //   data: uri,
+    //   type: 'application/vnd.android.package-archive',
+    //   flags: <int>[Flag.FLAG_GRANT_READ_URI_PERMISSION, Flag.FLAG_ACTIVITY_NEW_TASK],
+    // );
+    // intent.launch();
   }
 
   Future<void> installApk(String filePath) async {

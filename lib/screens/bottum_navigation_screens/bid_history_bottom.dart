@@ -7,7 +7,7 @@ import '../../controller/home_controller.dart';
 import '../../helper_files/app_colors.dart';
 import '../../helper_files/custom_text_style.dart';
 import '../../helper_files/dimentions.dart';
-import '../../models/bid_history_model_new.dart';
+import '../new_ui/bottom_bar_screens/bid_history_new.dart';
 import '../new_ui/bottom_bar_screens/starline market/market_history.dart';
 import '../new_ui/bottom_bar_screens/starline market/starline_bid_history.dart';
 import '../new_ui/bottom_bar_screens/starline market/starline_result_history.dart';
@@ -52,7 +52,7 @@ class _BidHistoryBottomState extends State<BidHistoryBottom> {
                         if (index == 0) {
                           homeCon.date = null;
                           homeCon.dateInputForResultHistory.clear();
-                          Get.to(() =>  BidHistoryNew());
+                          Get.to(() => BidHistoryNew());
                         } else if (index == 1) {
                           Get.to(() => const MarketHistory());
                         } else if (index == 2) {
