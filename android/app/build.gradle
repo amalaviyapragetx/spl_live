@@ -15,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.example.spllive"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -26,15 +26,57 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
+    flavorDimensions "abi"
+//    splits {
+//        abi {
+//            enable true
+//            reset() // Clear default 'all' ABIs
+//            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64','universalApk' // Specify desired ABIs
+//            universalApk true
+//        }
+//    }
+    splits {
+        abi {
+            enable true
+            universalApk true // This line creates the universal APK
+        }
+    }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.spllive"
         minSdk = 21
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        targetSdk = 35
+        versionCode = 1001
+        versionName = flutter.versionName
     }
+//    productFlavors {
+//
+//        arm {
+//            dimension "abi"
+//            versionCode 1100 // Version code for 'armeabi-v7a' split
+//
+//        }
+//
+//        arm64 {
+//            dimension "abi"
+//            versionCode 1110 // Version code for 'arm64-v8a' split
+//
+//        }
+//
+//        x86 {
+//            dimension "abi"
+//            versionCode 1120 // Version code for 'x86' split
+//
+//        }
+//
+//        x86_64 {
+//            dimension "abi"
+//            versionCode 1130 // Version code for 'x86_64' split
+//
+//        }
+//
+//    }
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
