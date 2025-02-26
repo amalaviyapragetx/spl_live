@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:open_filex/open_filex.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -263,23 +263,23 @@ class SplashController extends GetxController {
     // intent.launch();
   }
 
-  Future<void> installApk(String filePath) async {
-    print("sdfsdfkjhsfkjhfkjsd");
-    final result = await OpenFilex.open(filePath);
-    print("fdsfkjsdhfksdjfhskjfhkfshkjf${result.type}");
-    if (result.type == ResultType.done) {
-      print("fsdjfgsjfs");
-      load.value = false;
-      // File file = File(filePath);
-      // if (await file.exists()) {
-      //   await file.delete();
-      //   print("File deleted successfully: $filePath");
-      // } else {
-      //   print("File not found: $filePath");
-      // }
-      // Handle the error accordingly
-    }
-  }
+  // Future<void> installApk(String filePath) async {
+  //   print("sdfsdfkjhsfkjhfkjsd");
+  //   final result = await OpenFilex.open(filePath);
+  //   print("fdsfkjsdhfksdjfhskjfhkfshkjf${result.type}");
+  //   if (result.type == ResultType.done) {
+  //     print("fsdjfgsjfs");
+  //     load.value = false;
+  //     // File file = File(filePath);
+  //     // if (await file.exists()) {
+  //     //   await file.delete();
+  //     //   print("File deleted successfully: $filePath");
+  //     // } else {
+  //     //   print("File not found: $filePath");
+  //     // }
+  //     // Handle the error accordingly
+  //   }
+  // }
 
   void _showExitDialog() {
     Get.defaultDialog(
